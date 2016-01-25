@@ -1,0 +1,31 @@
+plot 1
+	% Campus Student Protest plot
+	% The main purpose of this plot is to refine the PC's personality
+	% traits through interaction with an NPC.
+	rumor <there's going to be a big political protest at the university.>
+	element1 <Character Young Chaotic Passionate Assertive>
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 12000>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <ifG React 19 else GoSquareMan say 1 goto GoRealTalk>
+	goSquareMan <say 2 goto GoRealTalk>
+	goRealTalk <NewChat AddChat 1 AddChat 2>
+	result1 <Say 3 NewChat AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+	result2 <Say 4 NewChat AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+	result3 <AdvancePlot 0 Reputation 2 -5 Say 5 EndChat>
+	result4 <AdvancePlot 0 Reputation 2 1 Say 5 EndChat>
+	result5 <AdvancePlot 0 Reputation 3 3 Say 5 EndChat>
+	result6 <AdvancePlot 0 Reputation 4 3 Say 5 EndChat>
+	Msg1 <Greetings, fellow child of the revolution! The day is upon us when the outdated morality of the bourgeois masses shall be outshone by the light of reason!>
+	Msg2 <The establishment is going down! Your order don't mean nothing anymore. The younger generation has a plan. It's the dawning of the bohemian aquarius!>
+	Msg3 <Don't try to make sense of it. Semantics is one of the ways the Man keeps us down. But when the day comes, you gonna be with us?>
+	Msg4 <I knew you were cool. It's coming, a big movement, a better age. Are you gonna be part of the revolution?>
+	Msg5 <You gotta check your own brain in this, know what I'm saying?>
+	Prompt1 <What the hell are you talking about!?>
+	Prompt2 <Yeah! Right on... er, whatever...>
+	Prompt3 <~Viva la revolution!~>
+	Prompt4 <Definitely not.>
+	Prompt5 <Are you on drugs, or just insane?>
+	Prompt6 <Maybe you should try to relax...>
+end

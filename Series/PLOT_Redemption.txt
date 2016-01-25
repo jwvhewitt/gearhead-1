@@ -1,0 +1,170 @@
+Plot 0
+	name <PLOT: Redemption>
+	% If the PC is seriously wangtta, this mission will give him a chance
+	% to redeem himself. Yay!
+
+	element1 <Character HasMecha Heroic>
+
+	% P1 = Time Limit
+	% P2 = Combat Indicator
+	% P3 = PC's initial Wangtta reputation
+	% P4 = Email Indicator
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 P= 3 PCRep 6>
+	GoCheckTime <if= P2 0 ifG -9 PCRep 6 else GoDelete ifG ComTime P1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	end <if= P2 1 if= SceneID 0 if= T2 0 else GoCheckLoss P= 2 3 Reputation 6 -P3 XPV 100>
+	GoCheckLoss <if= T1 0 P= 2 2 Reputation 6 d5>
+
+	5Min <if= P4 0 ifG -9 PCRep 6 else start if= SceneID EScene 1 if= d3 1 email 1 P= 4 1>
+	msg1 <\ELEMENT 1 @ \SCENE EScene 1 :// If you want to redeem your name, I have a mission for you.>
+	msg1_1 <\ELEMENT 1 @ \SCENE EScene 1 :// I need a mecha pilot immediately, and you're the best one in town. Drat.>
+	msg1_2 <\ELEMENT 1 @ \SCENE EScene 1 :// Come see me about a mission. I think this could be good for you.>
+
+sub
+	Persona 1
+	rumor <!1 has been searching for a desperate mecha pilot to perform a suicide mission.>
+
+	% V1 = Have given mission
+	% V3 = PV of enemy forces
+	% V4 = Reward for success
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 CashPrize V4 AddReact d5 AdvancePlot 0>
+	GoCheckLoss <ifG P2 0 else GoFirstTime Say 2 AdvancePlot 0>
+	GoFirstTime <V= 3 Threat -PCRep 6 100 V= 4 Reward V3 150 ifG PCRep 6 -10 else GoOffer SayAnything AdvancePlot 0>
+	GoOffer <if= V1 1 else GoFirstOffer Say 8  AddChat 6 AddChat 7 AddChat 8>
+	GoFirstOffer <Say 3 AddChat 1 AddChat 2 AddChat 3>
+
+	result1 <NewChat Say 4 Memo 5 V= 1 1 AddChat 6 AddChat 7 AddChat 8>
+
+	result2 <NewChat Say 6 AddChat 4 AddChat 5>
+
+	result3 <NewChat Say 7 AdvancePlot 0>
+
+	result4 <ifG React 50 else GoR4_2 mechaprize .supermek Goto result1>
+	.supermek <Thorshammer.txt>
+	GoR4_2 <ifG React 20 else GoR4_3 mechaprize .goodmek Goto result1>
+	.goodmek <Daum.txt>
+	GoR4_2 <mechaprize .plainmek Goto result1>
+	.plainmek <BuruBuru.txt>
+
+	result5 <NewChat Say 9 AdvancePlot 0>
+
+	result6 <EndChat P= 2 1 Say 10 Goto GoStartCombat>
+	GoStartCombat <SavePos Dynamic 2 V3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	result7 <NewChat Say 11 AddChat 6 AddChat 8>
+
+	result8 <NewChat Say 12>
+
+	Msg1 <The raiders have been stopped! I can't believe you actually did it... Here's your reward.>
+	Msg1_1 <You did it! Nobody else believed in you, and to be honest I didn't either, but you did it! Here's the reward you were promised. Maybe now you'll start getting respect from others.>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <You did it. Here's your pay.>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <You must be pretty happy about that win! Here's the pay you've earned.>
+	CMsg1_3 <ifNPCCheerful Accept>
+	Msg1_5 <That didn't seem so tough. Here's your reward.>
+	CMsg1_5 <ifNPCEasygoing Accept>
+	Msg1_6 <You did it! The enemies have been thoroughly defeated, and \SCENE EScene 1 is safe. Here's your reward.>
+	CMsg1_6 <ifNPCPassionate Accept>
+	Msg1_7 <You made it back alive... too bad. Well, here's your pay, anyhow.>
+	CMsg1_7 <ifG 1 React Accept>
+
+	Msg2 <The town's generator has been destroyed... but, you did your best, I suppose...>
+	Msg2_1 <The enemy mecha broke through our defenses and smashed the generator. Now, we'll be on reserve power until it can be repaired. This is terrible... it was probably a disgruntled former employee of the power company, you know.>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <You lost. I guess the things they say about you are true.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <You didn't manage to stop the mecha from wrecking the generator... but I'm certain you'll manage to clear your name someday.>
+	CMsg2_3 <ifNPCCheerful Accept>
+	Msg2_4 <You failed. I guess you really are a loser.>
+	CMsg2_4 <ifNPCMelancholy Accept>
+	Msg2_5 <You failed. But, it's not the end of the world... just maybe the end of your career...>
+	CMsg2_5 <ifNPCEasygoing Accept>
+	Msg2_6 <How could you fail!? I trusted you to do this, and you couldn't...>
+	CMsg2_6 <ifNPCPassionate Accept>
+	Msg2_7 <As expected, you failed. The mecha defeated you and smashed our generator.>
+	CMsg2_7 <ifG 1 React Accept>
+
+	Msg3 <I have a mecha mission for you, if you're looking for work. I'll be honest, there's not much chance of success... that's why I need a mecha pilot with nothing to lose.>
+	Msg3_1 <There's an emergency in \SCENE EScene 1 . I know that you could use some work... I'll let you have the mission, but I better say that it's going to be difficult.>
+	CMsg3_1 <ifNPCSociable Accept>
+	Msg3_2 <I need a pilot for an immediate mission. It's going to be tough. Are you available?>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <I've got a good offer for you... A pilot is needed for an immediate mission to defend \SCENE EScene 1 . If you succeed, maybe you'll get the respect you deserve.>
+	CMsg3_3 <ifNPCCheerful Accept>
+	Msg3_4 <There's a group of mecha closing in on the city powerplant. I need a pilot to run interception... This may be a suicide mission, though. You've got nothing worth losing. How about taking the job?>
+	CMsg3_4 <ifNPCMelancholy Accept>
+	Msg3_5 <There's trouble at the powerplant. I need a pilot to go defend it. I know you don't have much of a rep, but if you can pull off this mission maybe that'll change.>
+	CMsg3_5 <ifNPCEasygoing Accept>
+	Msg3_7 <I have a job available for a mecha pilot. It's probably a suicide mission, so I want you to take it.>
+	CMsg3_7 <ifG 1 React Accept>
+
+	Msg4 <A group of unidentified mecha is heading towards the city power station. We don't know what they want, but it can't be good. Your job will be to stop them... Do this, and you'll earn $ \VAL V4 plus salvage.>
+	Msg4_1 <The enemy mecha are header for the \SCENE EScene 1 powerplant. They're probably planning to destroy it for whatever nefarious purpose. If you can stop them, you'll get $ \VAL V4 plus salvage...>
+	CMsg4_1 <ifNPCSociable Accept>
+	Msg4_2 <Some mecha are attacking the power plant. Stop them, and you'll earn $ \VAL V4 plus salvage.>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_4 <A team of unregistered mecha is heading for the power plant. This could be the start of an invasion, or worse. Defeat them and you'll earn $ \VAL V4 plus salvage.>
+	CMsg4_4 <ifNPCMelancholy Accept>
+	Msg4_5 <Here's the deal. There are some unknown mecha heading for the power plant; your job is to stop them, or at least slow them down. You'll earn $ \VAL V4 and first salvage rights if you can pull that off.>
+	CMsg4_5 <ifNPCEasygoing Accept>
+	Msg4_6 <This is terrible! A group of mecha is headed for the city power plant, and they must be stopped! If you can do it, you'll earn $ \VAL V4 and salvage. Be prepared to lay down your life for \SCENE EScene 1 !>
+	CMsg4_6 <ifNPCPassionate Accept>
+
+	Msg5 <\ELEMENT 1 in \SCENE EScene 1 offered you a combat mission.>
+
+	Msg6 <If you would agree to help me, I'd provide for you a brand new mecha. Is it a deal?>
+
+	Msg7 <I'm sure another brave volunteer will step forward...>
+
+	Msg8 <Are you ready for the mission yet?>
+
+	Msg9 <It's your decision.>
+
+	Msg10 <Good luck. If you make it back alive, you'll be a hero.>
+	Msg10_1 <It's very important that not a single mecha be allowed to slip through. Do your best, and maybe people will stop calling you a wangtta.>
+	CMsg10_1 <ifNPCSociable Accept>
+	Msg10_2 <Here are the mission coordinates. Report back here when you're done.>
+	CMsg10_2 <ifNPCShy Accept>
+	Msg10_3 <I'm certain you can do this! Good luck.>
+	CMsg10_3 <ifNPCCheerful Accept>
+	Msg10_4 <You'll probably get killed by their superior firepower, but try to make a difference before you go down.>
+	CMsg10_4 <ifNPCMelancholy Accept>
+	Msg10_5 <Do your best.>
+	CMsg10_5 <ifNPCEasygoing Accept>
+	Msg10_6 <Do it for \SCENE EScene 1 !>
+	CMsg10_6 <ifNPCPassionate Accept>
+	Msg10_7 <I suppose I should wish you good luck now... just don't fail us.>
+	CMsg10_7 <ifG 1 React Accept>
+
+	Msg11 <They've been reported as having \VAL V3 threat points worth of mecha. I know, it's not likely that you can take all of that... Just destroy as much as you can.>
+
+	Msg12 <Do whatever it is that you have to do, then come back here and let's start.>
+
+	Prompt1 <I'll do it.>
+	CPrompt1 <ifG PCMeks 0 Accept>
+
+	Prompt2 <Sorry, I don't have a mecha.>
+	CPrompt2 <if= PCMeks 0 Accept>
+
+	Prompt3 <Find someone else for this job.>
+	Prompt3_1 <I'm not interested in suicide missions.>
+
+	Prompt4 <Alright, you have yourself a pilot.>
+	Prompt5 <No way, I don't want to...>
+
+	Prompt6 <Let's get this started.>
+	Prompt6_1 <All ready to go.>
+
+	Prompt7 <How many mecha do they have?>
+	Prompt7_1 <What am I going to be facing?>
+
+	Prompt8 <Give me a minute to prepare.>
+	Prompt8_1 <I need some time to get ready.>
+
+end

@@ -1,0 +1,99 @@
+Plot 0
+	name <Lancemate Justice>
+
+	% Every once in a while, a lancemate will examine his or her
+	% relationship with the PC to see whether it's worth continuing.
+
+	element1 <Character !Lancemate>
+
+	% P1= Initialization Counter
+	% P101 = PC's initial HEROISM
+	% P102 = PC's initial LAWFULNESS
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10000 V= 101 PCRep 1 V= 102 PCRep 2>
+	GoDelete <AdvancePlot 0>
+	GoCheckTime <ifG ComTime V1 ifG NPCRep E1 1 -1 else GoCheckChaos ifG -10 PCRep 1 else GoCheckMinor ifG PCRep 1 V101 else GoQuit Goto  GoWarn>
+	GoCheckMinor <ifG 0 PCRep 1 else GoCheckChaos  ifG V101 PCRep 1 else GoWarn Goto  GoQuit>
+	GoCheckChaos <ifG NPCRep E1 2 0 else GoDelete ifG 0 PCRep 2 else GoDelete ifG PCRep 2 V102 else GoQuit Goto  GoWarn>
+
+	GoQuit <AdvancePlot 1>
+	GoWarn <AdvancePlot 2>
+
+sub
+	Plot 1
+	start <ifPersona E1 else GoDelete ifNPCInPlay E1 else GoEmail ifScene .scenedesc ForceChat E1>
+	GoDelete <AdvancePlot 0>
+	GoEmail <PCNoRelation E1 advanceplot 3  NPCQuitLance E1>
+	.scenedesc <Town>
+	sub
+		Persona 1
+		greeting <NewChat ifScene .scenedesc else GoNotHere Say 1 PCNoRelation E1 NPCQuitLance E1 AdvancePlot 0>
+		GoNotHere <SayAnything>
+		Msg1 <Given the things our lance has been doing, I may no longer stay here with a clean conscience. This is goodbye.>
+		Msg1_1 <I used to believe in you, but now I see how you truly are... I can't remain with the lance any more.>
+		CMsg1_1 <ifG 0 PCRep 1 Accept>
+		Msg1_2 <You've gone too far in breaking the law. I know that I will never be able to trust you... and so, I can no longer travel with you. This is goodbye.>
+		CMsg1_2 <ifG 0 PCRep 2 Accept>
+		Msg1_3 <Your heart is black, and I fear you may be beyond redemption... I can no longer serve beside you.>
+		CMsg1_3 <ifG 0 NPCRep E1 5 Accept>
+		Msg1_4 <I can't stand to be in this lance anymore. I quit.>
+		CMsg1_4 <ifG 0 NPCRep E1 3 Accept>
+		Msg1_5 <It's been fun traveling around with you, but I feel like we've grown apart. So this is going to have to be goodbye... I'm quitting the lance.>
+		CMsg1_5 <ifG NPCRep E1 3 0 Accept>
+		Msg1_6 <May the gods help you, because I fear that I am no longer able to. You have strayed too far down the path of darkness. I'm afraid, this must be goodbye.>
+		CMsg1_6 <ifG 0 NPCRep E1 7 Accept>
+		Msg1_7 <That's it! I've had enough, and I'm quitting the lance!>
+		CMsg1_7 <ifG 0 NPCRep E1 4 Accept>
+		Msg1_8 <You know, I think I'm a pretty laid back person, but sometimes you just have to speak out. Sorry, but I can't abide by the things we've been doing. I'm going to have to leave the group.>
+		CMSg1_8 <ifG NPCRep E1 4 0 Accept>
+
+		Plot 3
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email 1>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		msg1 <\ELEMENT 1 @ \SCENE EScene 1 :// I can no longer fight alongside you. I am hereby severing our relationship.>
+		Msg1_1 <\ELEMENT 1 @ \SCENE EScene 1 :// I used to believe in you, but now I see how you truly are... I can't remain with the lance any more.>
+		CMsg1_1 <ifG 0 PCRep 1 Accept>
+		Msg1_2 <\ELEMENT 1 @ \SCENE EScene 1 :// You've gone too far in breaking the law. I know that I will never be able to trust you... and so, I can no longer travel with you. This is goodbye.>
+		CMsg1_2 <ifG 0 PCRep 2 Accept>
+		Msg1_3 <\ELEMENT 1 @ \SCENE EScene 1 :// Your heart is black, and I fear you may be beyond redemption... I can no longer serve beside you.>
+		CMsg1_3 <ifG 0 NPCRep E1 5 Accept>
+		Msg1_4 <\ELEMENT 1 @ \SCENE EScene 1 :// I can't stand to be in this lance anymore. I quit.>
+		CMsg1_4 <ifG 0 NPCRep E1 3 Accept>
+		Msg1_5 <\ELEMENT 1 @ \SCENE EScene 1 :// It's been fun traveling around with you, but I feel like we've grown apart. So this is going to have to be goodbye... I'm quitting the lance.>
+		CMsg1_5 <ifG NPCRep E1 3 0 Accept>
+		Msg1_6 <\ELEMENT 1 @ \SCENE EScene 1 :// May the gods help you, because I fear that I am no longer able to. You have strayed too far down the path of darkness. I'm afraid, this must be goodbye.>
+		CMsg1_6 <ifG 0 NPCRep E1 7 Accept>
+		Msg1_7 <\ELEMENT 1 @ \SCENE EScene 1 :// That's it! I've had enough, and I'm quitting the lance!>
+		CMsg1_7 <ifG 0 NPCRep E1 4 Accept>
+		Msg1_8 <\ELEMENT 1 @ \SCENE EScene 1 :// You know, I think I'm a pretty laid back person, but I can't abide by the things we've been doing. I'm going to have to leave the group.>
+		CMSg1_8 <ifG NPCRep E1 4 0 Accept>
+
+	end
+
+	Plot 2
+	start <ifPersona E1 else GoDelete ifScene .scenedesc ForceChat E1>
+	GoDelete <AdvancePlot 0>
+	.scenedesc <Town>
+	sub
+		Persona 1
+		greeting <NewChat Say 1 AdvancePlot 0>
+		Msg1 <I don't really like the way our lance has been operating. If things don't change, I may be forced to quit.>
+		Msg1_1 <We've been acting in far too villainous a fashion. If you don't change things, I won't be able to continue with the lance.>
+		CMsg1_1 <ifG 0 PCRep 1 Accept>
+		Msg1_2 <Our lance has been acting outside of the law... I don't like that.>
+		CMsg1_2 <ifG 0 PCRep 2 Accept>
+		Msg1_3 <I don't like the way things have been going, but I'll stay for now.>
+		CMsg1_3 <ifG 0 NPCRep E1 3 Accept>
+		Msg1_4 <I don't like some of the things you've done, \PC , but I still believe in you as our leader. I've decided to stay with the party for now.>
+		CMsg1_4 <ifG NPCRep E1 3 0 Accept>
+		Msg1_5 <Some of the things we've done while I've been a member of your lance have made me feel bad, but things are getting better and I'm sure they're going to keep improving!>
+		CMsg1_5 <ifG NPCRep E1 5 0 Accept>
+		Msg1_6 <Sometimes I don't know who you are, \PC ... I fear that your heart may be darker than mine.>
+		CMsg1_6 <ifG 0 NPCRep E1 5 Accept>
+		Msg1_7 <You know, I don't let things bother me, but some of the things we've done recently just don't sit right in my heart... If things don't get better I may have to quit the lance.>
+		CMsg1_7 <ifG NPCRep E1 4 0 Accept>
+		Msg1_8 <Sometimes you really make me angry... but not enough to leave you behind, not yet...>
+		CMsg1_8 <ifG 0 NPCRep E1 4 Accept>
+	end
+
+end

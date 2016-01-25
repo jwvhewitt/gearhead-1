@@ -1,0 +1,260 @@
+Plot 0
+	name <PLOT: Watch My Truck>
+	% [[Ver1.3]]
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	Element1 <Character Trucker>
+	Element2 <Scene Town Target !Far 1>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  if= L2 1 else GoPCLost V= 2 3  Reputation 6  1>
+	GoPCLost <V= 2 2  Reputation 6 -3>
+
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 ifG RReact E1 d70 V= 3 1 Email d5>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// Bandits are ruining my business. I could use some mecha backup, if you're in the area.>
+	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// Looking for work? I need a mecha to run convoy support. See me in \SCENE EScene 1 for details.>
+	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// Hey Smoker, it's Bandicoot. A trucker friend needs a piggyback. How'd you like to help?>
+	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// Too many damn bandits in \SCENE EScene 1 . A good pilot could make a killing round here protecting truckers.>
+	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// Rabid Child got shot up pretty bad coming here from \ELEMENT 2 . The company could use a pilot to guard our trucks.>
+
+
+sub
+	Persona 1
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <!1 needs a mecha pilot to protect some trucks.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 XPV 50 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 140 V= 4 Reward V3 120 Goto GoCheckEMail>
+
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFriend <ifG React 40 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	GoNoAutomatic <ifG React -d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 Staged .scene V3>
+	.scene <SCENE_ProtectConvoy.txt>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat ifG Intimidation 10 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1>
+
+
+	% The PC tries to get the job via "PLAN B"- be friendly.
+	% This is done with the Conversation skill.
+	result14 <NewChat Reputation 3 d8 ifG Conversation 15 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 Reputation 5 -d6 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <You did it! Our trucks will make it to \SCENE E2 soon. Here's your pay.>
+	Msg2 <Here's your pay for a job well done. Come back sometime and I might have another job for you.>
+	Msg3 <You did well out there. Here's the money you earned.>
+	Msg4 <Nothing like an honest day's wages for an honest day's work. Here's your money.>
+	Msg5 <Good going! Take this cash; you earned it.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <That was a disaster, wasn't it? We're gonna lose out to the competition for sure...>
+	Msg7 <You let the truck get hit. Now my insurance rates are gonna go through the roof...>
+	Msg8 <You blew it. No cash for you today, ya lousy bum!>
+	Msg9 <They smashed our truck... Oh well, such is the price of same-day delivery.>
+	Msg10 <Don't worry about the driver. He'll get workman's comp...>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <A stretch of highway outside of town is notorious for bandit attacks. Your job is to accompany one of our trucks and defend it until it gets past that area. Pay for the job is $ \VAL V4 .>
+	Msg12 <We're very concerned about raider attacks while leaving town. I need you to guard one of our trucks as it passes through a particularly dangerous spot. You'll earn $ \VAL V4 , so long as our truck makes it through in one piece.>
+	Msg13 <You'll need to guard one of our trucks as it passes through "Ravager Alley". I can offer $ \VAL V4 for this mission.>
+	Msg14 <Our convoy will be leaving town via a particularly dangerous stretch of highway that's been abandoned by the guardians. Your job is to keep our truck safe as it runs the guantlet. For doing so, you'll earn $ \VAL V4 .>
+	Msg15 <In order to avoid the highway patrol, we'll be leaving town via a seldom-used back road. Unfortunately that road is frequented by gangs... but as long as we get past them we should make excellent time to \SCENE E2 . Pay is $ \VAL V4 .>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Hey, are you a wandering mecha pilot looking for work? If so, I have just what you'll be needing right here!>
+	Msg17 <I could use a mecha pilot to guard a shipment. You up for that kind of thing?>
+	Msg18 <There's a lot of bandits out there. Our trucks need someone to protect them. Are you looking for a mecha piloting job?>
+	Msg19 <The roads aren't safe anymore. The company needs a mecha pilot to guard a shipment headed for \ELEMENT 2 . Think you'd like to get involved?>
+	Msg20 <I need a pilot to guard a truck. You interested in that kind of work or not? If no, I better go find someone else...>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <We've lost too much money to bandit raids lately. I've got another convoy moving out this afternoon, and I'm worried about it.>
+	Msg22 <Some of the other truckers have been scared because too many shipments have been lost to the bandits. Guess that makes it a pretty good time to have a less-than-stellar sense of self preservation, eh?>
+	Msg23 <The roads between \SCENE EScene 1 and \ELEMENT 2 are maggoty with bandits. It's hardly safe to be a trucker anymore.>
+	Msg24 <I've got a shipment heading out later today, but I'm worried that the highway bandits are going to steal this one too.>
+	Msg25 <I need to send a truck to \ELEMENT 2 , but with all the bandits on the highway I don't know if it'll make it.>
+
+	% 26 - 30 :  Why are you taking such a dangerous route?
+	Msg26 <Look, I don't question you about mecha piloting, don't you question me about trucking. This is the route we're taking. Either you sigh up for the job or I'll find someone who will.>
+	Msg27 <It's much quicker to travel the dangerous roads. There we only have to worry about bandits... if we followed the main roads, we'd have to deal with commuters, traffic police, photo radar...>
+	Msg28 <That's a good question. I'll be sure to look into it. For right now, though, I have a truck ready to move out and no time to think about changing the route.>
+	Msg29 <Beats me.>
+	Msg30 <This is the way we've always done things. If we changed things now, well, we'd be admitting that the bandits have won, wouldn't we?>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <Yeah, I could use someone to guard our trucks. You into that line of work or not?>
+	Msg32 <Are you a pilot? No, I mean a good pilot? I could use someone like that for a delivery...>
+	Msg33 <If you're a mecha pilot looking for work, then I guess you're in luck. I need to hire someone to look after a convoy. You interested?>
+	Msg34 <Want to work for me? I've got a mission coming up that I could use a pilot for.>
+	Msg35 <You bumming around for a job or something? Well, you're lucky, because I have one for you. As long as you're a mecha pilot, that is... A good one, I mean.>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Remember, you just got to get the truck through safely. There's no need to go taking on all the bandits. Good luck, and come back here when you're done.>
+	Msg37 <Protect the truck until it's through the pass. That's all you have to do. Come back when you're finished and I'll pay you then.>
+	Msg38 <Make sure none of them bandits get near that truck! If you can do that, I can set you up with your pay when you gets back.>
+	Msg39 <Protect the truck at all costs. Once it's through the pass, get yourself out of there as well.>
+	Msg40 <Come back here once you've seen the truck to the main road, and I'll set you up with the pay I promised you.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Ready to move out yet? We don't have all day, you know.>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's too bad.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Get everything in order and then hurry back. I've got deadlines, you know.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <I don't think there's anything you can do to help me.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Nah, I don't think so. I better get back to work.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Yeah, but gotta keep trying, right?>
+	% 107 :  Memo
+	msg107 <\ELEMENT 1 in \SCENE EScene 1 offered you a mission to protect a truck from bandits.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <All ready to go!>
+	Prompt2 <I'm ready to move out.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Maybe I better gas up first.>
+	Prompt4 <I'd better get some rest first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <Why do you use such a dangerous road?>
+	Prompt6 <Isn't there a safer way out of town?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <That sounds good.>
+	Prompt8 <I can do that.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Sorry, I'm no pilot.>
+	Prompt10 <I'm not interested in this job.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <You need an ace pilot, like me.>
+	Prompt12 <I've killed lots of bandits before.>
+	Prompt13 <I've got just what you need right here.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <I'm a pilot. Maybe I could help you.>
+	Prompt15 <You need someone to guard your trucks.>
+	Prompt16 <Tell me more, maybe I can help.>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <Isn't it too dangerous?>
+	Prompt18 <Only an idiot would take that job.>
+	Prompt19 <That sounds way too risky.>
+
+
+end
+

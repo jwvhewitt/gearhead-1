@@ -1,0 +1,16 @@
+% Strings used by damage.pp unit
+SupportDesc <Class #>
+Shield_Desc <Defense >
+Usable_Desc <Skill Bonus +#; Range #>
+WEAPONINFO_ARC0 <F90>
+WEAPONINFO_ARC1 <F180>
+WEAPONINFO_ARC2 <360>
+PCS_Fun1 <Memo>
+PCS_Fun2 <, EMail>
+PCS_Fun3 <, Phone>
+PCS_Fun5 <, News>
+MoveSys_Class <Class>
+WAO_0 <Weapon AddOn>
+WAO_1 <Rifle AddOn>
+WAO_2 <Missile Launcher AddOn>
+WAO_3 <Melee AddOn>

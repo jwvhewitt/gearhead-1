@@ -1,0 +1,154 @@
+Plot 0
+	name <Stolen From Museum>
+
+	% An item will be recovered. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	% As long as E3 can be picked up some time, or the code
+	% contained under ".getkey" below is otherwise executed
+	% at some time, what E4 does exactly doesn't matter.
+	Element4 <Character Guardian !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have picked up item
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose GET E3 .getKey Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% As soon as the item is gotten, this plot starts the clue
+	% countdown and loads the next relay. You might want to move
+	% this so that the countdown starts only if the item is given
+	% to E4 or some other condition...
+	.getkey <if= V1 1 S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 P= 3 1 V= 1 2 FacXP+ N1 1>
+	% When the item is used, it reveals the next clue.
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 1 AdvancePlot 0>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+sub
+	Persona 4
+	rumor <!4 is investigating a break-in at the museum.>
+	%  V1 =  Mission Accepted Counter
+	%  V2 =  Message Randomizer
+	greeting <NewChat if= P3 2 else GoCheckWin SayAnything>
+	% Upon winning the mission, you may want to destroy the item if
+	% the NPC takes it. Otherwise the NPC can just let the PC keep it.
+	GoCheckWin <if= P3 1 else GoCheckMission Say d3 P= 3 2 DeleteKeyItem E3 CashPrize Reward Threat S2 100 100 XPV 100 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 105 Goto GoAddComOps>
+	GoDelete <Say 101 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React 10 else GoNoChance V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoNoChance <ifG PCRep 2 -1 else GoPCChaos Say 10 S= 201 0 AdvancePlot 0>
+	GoPCChaos <Say 11 S= 201 0 AdvancePlot 0>
+
+	GoAddComOps <V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat V= 1 1 Memo 104 V= 2 3 V+ 2 d3 Say V2 Goto GoAddComOps>
+	result2 <Goto result1>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result3 <NewChat Say 102 AdvancePlot 0>
+	result4 <Goto result3>
+
+	% For the purposes of this template, I'll use the ITEM DUNGEON scene.
+	result5 <EndChat V= 2 12 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos LoadD .scene V= 2 S2 V+ 2 -d10 PassVar 2 WMThreat S2 TMStockD 3 V2 .mon TMStockD 4 V2 .mon DynaItemTeam E3 5>
+	.scene <SCENE_GuardedMansion.txt>
+	.mon <CRIMINAL ROBOT SYNTH>
+	result6 <Goto result5>
+
+	result7 <NewChat Say 103>
+	result8 <Goto result7>
+
+	%  01 - 03 :  PC has retrieved the item.
+	Msg1 <Good job. I'll return this artifact to the museum, where it can be studied and appreciated by all. Here's a reward for your help.>
+	Msg2 <You got here just in time. I hear that some monks have arrived to examine that artifact you recovered. Here's your reward.>
+	Msg3 <You did a good job. I'll return the artifact to the museum.>
+
+	%  04 - 06 :  Mission description.
+	Msg4 <Actually I have some men working on that, but we could use some help recovering the stolen goods. They're believed to be stored at the criminal's hangout. Could you go there and see what you can recover?>
+	Msg5 <That's not a big problem for us, but I could use someone to go into the criminal's mansion to recover some of the stolen goods. Are you up for that kind of mission?>
+	Msg6 <That's being done as we speak. I do have a mission available, though, if you're interested... I need someone to enter the criminal's mansion and attempt to recover the stolen goods.>
+
+	%  07 - 09 :  PC will be offered the mission here.
+	Msg7 <The museum has been robbed! Several important artifacts were stolen.>
+	Msg8 <There's been a break-in at the museum! The thieves got away with several important artifacts from the Age of Superpowers.>
+	Msg9 <Thieves have stolen seveal important historical artifacts from the museum!>
+
+	%  10 - 12 :  Mission will be implied.
+	Msg10 <There's been a break-in at the museum, but rest assured that the guardians are doing everything we can to catch the thieves.>
+	Msg11 <I'm investigating some thieves who broke into the museum. You wouldn't happen to know anything about that, would you?>
+
+	%  13 - 15 :  Combat is starting.
+	Msg13 <Come back here when you're finished. Be careful... that place is a virtual fortress.>
+	Msg14 <Come back here when you've found something. Be careful- there are a lot of robot guards in that place. It's dangerous.>
+	Msg15 <See what you can find, then come back here. Be careful of the guards and robots they have.>
+
+	%  101 :  The item somehow got destroyed...
+	Msg101 <I guess the artifact is gone forever...>
+
+	%  102 :  The PC refused the mission.
+	Msg102 <I don't find it very interesting either, but it's my job...>
+
+	%  103 :  The PC needs some time to get ready.
+	Msg103 <Make sure you're prepared. The house is heavily defended.>
+
+	%  104 :  Memo
+	Msg104 <\ELEMENT 4 in \SCENE EScene 4 asked you to recover stolen artifacts from a thief's hideout.>
+
+	%  105 :  PC has come back after getting ready
+	Msg105 <Are you ready to see what you can find in the mansion?>
+
+	%  01 - 02 :  PC will accept the mission.
+	Prompt1 <I could help you catch the thieves.>
+	Prompt2 <Do you need any help catching the thieves?>
+
+	%  03 - 04 :  PC doesn't want the mission.
+	Prompt3 <Who'd want to steal that old junk?>
+	Prompt4 <That doesn't concern me.>
+
+	%  05 - 06 :  Start the mission now.
+	Prompt5 <I'll go do that.>
+	Prompt6 <I can recover those for you.>
+
+	%  07 - 08 :  PC needs time to prepare.
+	Prompt7 <Before that, I need to prepare.>
+	Prompt8 <Maybe I should get ready beforehand.>
+
+end
+inv
+	treasure 100
+	name <Antique Steel Case>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNotYet Print 1>
+	GoNotYet <Print 3>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	clue32 <Print 4>
+	Msg1 <On the front of this case is a pair of numbers... If those are global positioning coordinates, they'd point to an area in \SCENE V1 .>
+	Msg2 <You examine the case but can't find anything special about it.>
+	Msg3 <It's an old, empty steel case. Only a real historian could be interested in something like this.>
+	Msg4 <The case isn't locked; it's also empty.>
+
+end

@@ -1,0 +1,440 @@
+Battroid 3
+Name <Ice Wind>
+Desig <CBG-87>
+
+Mod Head
+	Size 1
+	Armor 3
+	sub
+		Sensor 5
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		HoverJet 3
+	end
+	inv
+		BodyArmor 2
+		Fits <Battroid>
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	sub
+		Hand
+		inv
+			Gun 1
+			Name <Sliver Rifle>
+			BV 5
+			Magazine 120
+			Acc -1
+			Range 7
+			sub
+				Ammo 1
+			end
+		end
+
+		Mount
+		Name <Right Arm Mount>
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 3
+
+		Mount
+		Name <Right Leg Mount>
+	end
+	inv
+		LegArmor 2
+		Fits <Battroid>
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 3
+
+		Mount
+		Name <Left Leg Mount>
+	end
+	inv
+		LegArmor 2
+		Fits <Battroid>
+	end
+end
+
+Battroid 3
+Name <Ice Wind>
+Desig <CBG-87b>
+
+Mod Head
+	Size 1
+	Armor 3
+	sub
+		Sensor 5
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		HoverJet 3
+	end
+	inv
+		BodyArmor 2
+		Fits <Battroid>
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	sub
+		Hand
+		inv
+			EMelee 5
+			Name <Beam Sabre>
+			Acc 1
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			Gun 1
+			Name <Sliver Gun>
+			Acc -1
+			Range 3
+			BV 5
+			Magazine 60
+			sub
+				Ammo 1
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+	end
+	inv
+		EShield 3
+		DefBonus 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 3
+
+		Mount
+		Name <Right Leg Mount>
+	end
+	inv
+		LegArmor 2
+		Fits <Battroid>
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 3
+
+		Mount
+		Name <Left Leg Mount>
+	end
+	inv
+		LegArmor 2
+		Fits <Battroid>
+	end
+end
+
+Battroid 3
+Name <Ice Wind>
+Desig <CBG-88d>
+
+Mod Head
+	Size 1
+	Armor 3
+	sub
+		Sensor 5
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		HoverJet 3
+	end
+	inv
+		BodyArmor 2
+		Fits <Battroid>
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	sub
+		Hand
+		inv
+			Gun 8
+			Name <Rail Rifle>
+			Magazine 30
+			Acc 1
+			Range 5
+			Speed 3
+			sub
+				Ammo 8
+			end
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			STC SWML-40
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			STC SWML-40
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 3
+
+		Mount
+		Name <Right Leg Mount>
+		inv
+			STC SWML-40
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 3
+
+		Mount
+		Name <Left Leg Mount>
+		inv
+			STC SWML-40
+		end
+	end
+end
+
+Battroid 3
+Name <Ice Fox>
+Desig <CBG-99>
+
+Mod Head
+	Size 1
+	Armor 3
+	sub
+		Sensor 5
+	end
+	inv
+		HeadArmor 2
+		Mass -3
+		Fits <Battroid>
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		BeamGun 5
+		Name <Combat Laser>
+		Acc 1
+
+		Gyro 2
+
+		TarComp 1
+
+		ArcJet 2
+	end
+	inv
+		BodyArmor 4
+		Mass -5
+		Fits <Battroid>
+		sub
+			ArcJet 3
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	sub
+		Hand
+		inv
+			Gun 1
+			Name <Sliver Rifle>
+			BV 5
+			Magazine 120
+			Acc -1
+			Range 7
+			sub
+				Ammo 1
+			end
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			STC SWML-40
+		end
+
+		ArcJet 1
+	end
+	inv
+		ArmArmor 2
+		Mass -2
+		Fits <Battroid>
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			STC SWML-40
+		end
+
+		ArcJet 1
+	end
+	inv
+		ArmArmor 2
+		Mass -2
+		Fits <Battroid>
+
+		EShield 3
+		DefBonus 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 3
+	sub
+		ArcJet 3
+
+		Mount
+		Name <Right Leg Mount>
+		inv
+			MLauncher 9
+			Name <Rocket Pod>
+			Acc -1
+			Magazine 12
+			sub
+				Rockets 9
+			end
+		end
+	end
+	inv
+		LegArmor 3
+		Mass -3
+		Fits <Battroid>
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 3
+	sub
+		ArcJet 3
+
+		Mount
+		Name <Left Leg Mount>
+		inv
+			MLauncher 9
+			Name <Rocket Pod>
+			Acc -1
+			Magazine 12
+			sub
+				Rockets 9
+			end
+		end
+	end
+	inv
+		LegArmor 3
+		Mass -3
+		Fits <Battroid>
+	end
+end

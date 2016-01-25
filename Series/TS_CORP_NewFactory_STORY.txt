@@ -1,0 +1,36 @@
+Story
+	name <New Factory>
+
+	% A new factory is being built by N1. Members of N1 will
+	% try to make sure everything is going okay, while the
+	% various enemies of N1 will attempt to stop the factory
+	% however they can.
+
+	% N1 is the controlling faction
+	% N2 is the town where the new factory will be built.
+	%   It must be a member of the Federated Territories!
+	element2 <Scene !Member 11>
+
+	%    V1 = Timer
+	%  V101 = Faction Victory Count
+	%  V102 = Enemy Victory Count (if appropriate)
+	%  V103 = How many times PC fought for faction
+	%  V104 = How many times PC fought against faction
+
+	% This story will last for 2 to 4 days.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800>
+	GoCheckTime <ifG ComTime V1 EndStory>
+
+	% Every hour, load a story.
+	hour <storyline .facplot>
+	.facplot <TS_CORP_NewFactory_PLOT_*.txt>
+
+	% Every quarter, print a new news message.
+	quarter <news d5>
+
+	msg1 <\NARRATIVE 1 plans to build new factory in \NARRATIVE 2 .>
+	msg2 <\NARRATIVE 1 factory planned for \NARRATIVE 2 threatened by ravagers.>
+	msg3 <Unknown mecha has attacked \NARRATIVE 1 \NARRATIVE 2 factory project.>
+	Msg4 <New \NARRATIVE 1 factory in \NARRATIVE 2 expected to create jobs.>
+	Msg5 <\NARRATIVE 2 to be the site of a new \NARRATIVE 1 factory.>
+

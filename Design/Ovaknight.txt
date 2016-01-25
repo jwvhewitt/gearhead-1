@@ -1,0 +1,177 @@
+Battroid 7
+Name <Ovaknight>
+Desig <OVK-677>
+sdl_sprite <btr_ovaknight.png>
+Desc <The Federation Defense Force's heavy artillery mecha. The OvaKnight is constructed around a light spaceship engine which powers its devastating core cannon.>
+
+Mod Head
+	Size 5
+	Armor 7
+	Mass -4
+	sub
+		CPit
+		Armor 2
+
+		Sensor 5
+
+		TarComp 3
+
+		ECM 4
+	end
+	inv
+		HeadArmor 5
+		Mass -2
+	end
+
+Mod Body
+	Armor 7
+	Mass -8
+	sub
+		Gyro 3
+
+		Engine 7
+		Armor 2
+		Mass -2
+		HighOutput
+
+		BeamGun 15
+		Name <Plasma Core Cannon>
+		Type <BRUTAL HYPER>
+		Acc 1
+		Speed 1
+
+		Mount
+		Name <Right Weapon Mount>
+		inv
+			STC VC-5
+		end
+
+		Mount
+		Name <Left Weapon Mount>
+		inv
+			STC VC-5
+		end
+
+		STC LAS-5
+		Name <Intercept Laser>
+		Type <INTERCEPT>
+	end
+	inv
+		BodyArmor 8
+		Mass -12
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 6
+	Mass -2
+	sub
+		Hand
+	end
+	inv
+		ArmArmor 5
+		Mass -8
+		sub
+			Gun 5
+			Name <Battle Cannon>
+			Type <ANTIAIR>
+			Range 7
+			Acc -1
+			BV 3
+			Speed 3
+			Magazine 60
+			Mass -5
+			sub
+				Ammo 5
+				Type <ARMORPIERCING>
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 6
+	Mass -2
+	sub
+		Hand
+	end
+	inv
+		ArmArmor 5
+		Mass -8
+		sub
+			Gun 5
+			Name <Battle Cannon>
+			Type <ANTIAIR>
+			Range 7
+			Acc -1
+			BV 3
+			Speed 3
+			Magazine 60
+			Mass -5
+			sub
+				Ammo 5
+				Type <ARMORPIERCING>
+			end
+		end
+	end
+
+Mod Leg
+	Name <Right Leg 1>
+	Size 2
+	Armor 3
+	Mass -2
+	inv
+		LegArmor 3
+		Mass -5
+	end
+
+Mod Leg
+	Name <Left Leg 1>
+	Size 2
+	Armor 3
+	Mass -2
+	inv
+		LegArmor 3
+		Mass -5
+	end
+
+Mod Leg
+	Name <Right Leg 2>
+	Size 3
+	Armor 3
+	Mass -3
+	inv
+		LegArmor 3
+		Mass -5
+	end
+
+Mod Leg
+	Name <Left Leg 2>
+	Size 3
+	Armor 3
+	Mass -3
+	inv
+		LegArmor 3
+		Mass -5
+	end
+
+Mod Leg
+	Name <Right Leg 3>
+	Size 2
+	Armor 3
+	Mass -2
+	inv
+		LegArmor 3
+		Mass -5
+	end
+
+Mod Leg
+	Name <Left Leg 3>
+	Size 2
+	Armor 3
+	Mass -2
+	inv
+		LegArmor 3
+		Mass -5
+	end
+end

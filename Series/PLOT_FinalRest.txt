@@ -1,0 +1,94 @@
+Plot 0
+	name <PLOT: Final Rest>
+
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Phase counter
+
+	Element1 <Character Priest>
+	Element2 <Scene Dungeon Scale0>
+	Element3 <Prefab>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 70000>
+	GotoCheckTime <ifG ComTime V1  if= V2 0  AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	% V2 = Randomizer
+	greeting <NewChat  if= P2 2 else GoCheckOffer  Say 15  AddChat 9  AddChat 10  AddChat 11>
+	GoCheckOffer <if= P2 0 else GoNoOffer  P= 2 1  ifG React 15 else GoNoOffer  ifG PCRep 1 d30 else GoNoOffer  ifG 0 PCRep 7 else GoNoOffer  Say 6  AddChat 1  AddChat 2  AddChat 3>
+	GoNoOffer <ifG React d100 else GoNothing Say d5  AdvancePlot 0>
+	GoNothing <SayAnything  AdvancePlot 0>
+
+	result1 <NewChat  P= 2 2  Memo 20  GiveKeyItem E3  Say 7  AddChat 4  AddChat 5  AddCHat 6>
+	result2 <NewChat  Reputation 7 d10  AddReact -d10  ifG React d100 else GoR2NoLike  Say 8  AddChat 7  AddChat 8>
+	GoR2NoLike <Say 9  AdvancePlot 0>
+	result3 <NewChat  Say 10  AdvancePlot 0>
+	result4 <NewChat  Say 11  Reputation 3 -d3>
+	result5 <NewChat  Say 12  Reputation 7 d6  Reputation 3 d3>
+
+	result6 <NewChat  Say 13>
+	result7 <goto result1>
+	result8 <NewChat  Say 14  AdvancePlot 0>
+	result9 <NewChat if= EScene 3 E2 else GoR9NotThere Reputation 6 1 Reputation 7 -5 Reputation 7 -d5 Say 17 XPV 500 AddReact d8 DeleteKeyItem E3 AdvancePlot 0>
+	GoR9NotThere <Say 21  AddChat 12  AddChat 13>
+	result10 <NewChat  Say 18>
+
+	result11 <NewChat  Say 19  AddReact -10  AddReact -d20  Reputation 2 -5  Reputation 6 -10  AdvancePlot 0>
+	result12 <NewChat  Say 22>
+	result13 <NewChat Say 16  Reputation 2 -10  Reputation 6 -5  AdvancePlot 0>
+
+	Msg1 <All who live must some day pass from this world.>
+	Msg2 <The life of an adventurer is perilous, and frequently far too short.>
+	Msg3 <Our time in this world is measured not by what we have earned, but by what we have done.>
+	Msg4 <Life is measured not by time, but by actions. All people must die but not all truly live.>
+	Msg5 <Life is short and precious. Be midnful of how you spend yours.>
+
+	Msg6 <I may have a task for you. A special package needs to be escorted to its final destination... This is a spiritual matter. It would be greatly appreciated if you could aid us now.>
+	Msg7 <This urn contains the ashes of a poor unfortunate adventurer. The family wishes for it to be placed in \ELEMENT 2 eternally.>
+	Msg8 <I'm afraid that the job does not pay anything. This is simply a mission of charity, if you are still interested in helping.>
+	Msg9 <If it is money you are after, then I am afraid I will have to find someone else for this job. Sorry for wasting your time.>
+	Msg10 <I understand. I will find someone else to complete this task.>
+
+	Msg11 <Well, there wasn't very much of the deceased left to recover... \ELEMENT 2 is apparently a very inhospitable place.>
+	Msg12 <That is good! Come back here once you have placed the urn.>
+	Msg13 <Well, because \ELEMENT 2 is where the deceased departed from this mortal plane. The family thought it appropriate.>
+	Msg14 <In that case, I certainly hope that the future brings you better days. One of the acolytes will no doubt be able to complete this task. Go now in peace.>
+	Msg15 <Welcome back. Have you placed the urn in \ELEMENT 2 yet?>
+
+	Msg16 <I see. Well, I guess there is nothing more to say on the matter.>
+	Msg17 <Very good. The spirit of the deceased can rest peacefully now.>
+	Msg18 <Well, keep working on it. The urn must be placed in \ELEMENT 2 as per the family's wishes.>
+	Msg19 <The urn has been lost!? This most certainly is an unfortunate event... I must get in touch with the family immediately.>
+	Msg20 <\ELEMENT 1 wants you to place the \ELEMENT 3 in \ELEMENT 2>
+
+	Msg21 <Are you absolutely certain that you left the urn in the correct place? It was supposed to go to \ELEMENT 2 you know...>
+	Msg22 <Maybe you should. Come back here again once you're sure.>
+
+	Prompt1 <I'd be glad to help you.>
+	Prompt2 <How much does the job pay?>
+	Prompt3 <Sorry, I'm busy right now.>
+	Prompt4 <It's not very big...>
+	Prompt5 <I'll do it right away!>
+	Prompt6 <Why leave the ashes in a dungeon?>
+	Prompt7 <Okay, I'll do it.>
+	Prompt8 <I can't afford to help you for free.>
+	Prompt9 <I have done as you asked.>
+	Prompt10 <Still working on it...>
+
+	Prompt11 <The urn has been lost...>
+	Prompt12 <Maybe I should go double check...>
+	Prompt13 <Of course I'm certain!>
+
+
+end
+inv
+	Treasure 15000
+	name <Burial Urn>
+	% This item isn't really stolen, but the PC will get in trouble
+	% if he tries to sell it...
+	type <STOLEN>
+
+end

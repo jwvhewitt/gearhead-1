@@ -1,0 +1,19 @@
+Plot 0
+	name <PLOT: Spam Hint>
+
+	% Those extra-random adventures would be impossible if the
+	% PC didn't know where to turn next. So, I present this nice
+	% simple plot, in which an ally of the PC will send the PC
+	% an email to give him a hint in the quest.
+
+	% V1 = Time Limit
+
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 12800 email d5>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+
+	msg1 <SPAM@TRAVEL-WISH:// Enjoy sunny \NARRATIVE 3 ! New vacation packages starting as low as $199 a night.>
+	msg2 <FREE_OFFER@ \NARRATIVE 3 :// Visit House of Hobak and receive free pumpkin sherbert with internet coupon.>
+	Msg3 <HUGE_MECHA@it.could.happen:// Enlargement techniques developed in \NARRATIVE 3 . Don't let other pilots see you small!>
+	Msg4 <Psychic@UNKNOWN:// The thing you seek is in \NARRATIVE 3 . More predictions, just $19/minute.>
+	Msg5 <XX_MECHA@Hot.Times:// Non-accredited degrees from \NARRATIVE 3 trade college now available from $199 up.>
+

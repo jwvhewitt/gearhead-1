@@ -1,0 +1,56 @@
+scene 0 2
+% "Shoot the Messenger" scene
+
+% V1 = Messenger UID
+% V2 = Courier Escape Indicator; if V2=1 then the PC has lost
+% V3 = Courier has been stopped
+
+ForestMap
+
+start <if= V1 0 V= 1 ?M2 UIDSeekEdge V1 2 Alert 1 Compose TD V1 .courierdown>
+
+% Every time the truck moves, check to see if it moves off the map.
+TM2 <ifG LocalY V1 49 GRunAway V1 V= 2 1 Print 2>
+
+Nu1 <if= T1 0 Return>
+
+.courierdown <if= V3 0 Print 3 V= 3 1>
+
+Msg1 <\PILOT L1 is the courier. You must prevent him from escaping off the southern edge of the map.>
+Msg2 <The courier has left this area. Your mission has failed.>
+Msg3 <The courier has been stopped! Your mission is a success.>
+
+sub
+	rect
+	MFX 20
+	MFY 1
+	Width 10
+	Height 50
+	FloorType 6
+	sub
+		rect
+		MFX 21
+		MFY 2
+		Width 8
+		Height 8
+		FloorType 6
+		name <Enemy Start Point>
+	end
+
+	rect
+	Width 3
+	Height 17
+	FloorType 1
+	name <PC Start Point>
+
+
+	Team 1
+	home <PC Start Point>
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	home <Enemy Start Point>
+
+end
+

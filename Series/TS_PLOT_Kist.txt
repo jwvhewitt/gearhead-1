@@ -1,0 +1,92 @@
+Plot 0
+	name <Kist Liberation>
+
+	% E1 is Kist
+	element1 <Scene>
+	stat 1 14
+
+	element2 <Prefab>
+	element3 <Character Bandit !Member 10 !Near 1>
+
+	% P1 = Bone Devil loss count
+	% P2 = PC has contacted the leader of the resistance.
+	% P3 = Combat Indicator
+
+	start <ifPersona E2 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% Every time the bone devils lose, add one point to the victory column.
+	FACLOSE10 <P+ 1 1>
+
+	nu1 <if= T1 0 if= V3 1  V= 3 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V3 1  V= 3 3  Reputation 6  1  Reputation 1 5  XPV 250 Goto GoWin>
+
+	GoWin <SetSceneFaction E1 11 PCEnemy 1401 PCEnemy 1402 PCEnemy 1403 PCEnemy 1404 PCEnemy 1405 PCAlly E2>
+
+
+sub
+	Persona 2
+	rumor <!2 has a lot of secrets.>
+	greeting <NewChat if= P3 3 else GoLose Say 11 AddReact 15 History 12 AdvancePlot 0>
+	GoLose <if= P3 2 else GoNoMission P= 3 0 P= 1 4 Say 10>
+
+	GoNoMission <if= P2 1 else GoFirstTime Goto GoCheckState>
+	% The PC will be told of the resistance if he's well-liked or if he's heroic.
+	GoFirstTime <ifG PCRep 1 25 else GoCheckReact Say 5 Memo 7 P= 2 1 AddChat 1 AddChat 2>
+	GoCheckReact <ifG React 35 else GoNoChance Say 4 Memo 7 P= 2 1 AddChat 1 AddChat 2>
+	GoNoChance <SayAnything>
+
+	% Check the state of the Bone Devil loss counter- if high enough, maybe can drive them away!
+	GoCheckState <ifG P1 1 else GoNotYet Say 3 AddChat 3 AddChat 4>
+	GoNotYet <ifG P1 0 else GoNothing Say 2>
+	GoNothing <Say 1>
+
+	result1 <NewChat Goto GoCheckState>
+	result2 <NewChat Say 6>
+	result3 <EndChat Say 9 Goto GoStartCOmbat>
+	result4 <NewChat Say 8>
+
+	GoStartCombat <SavePos P= 3 1 Dynamic 2 Threat PCRep 6 120 .nu1 .nu2 Encounter 35 55 .edesc PCFEnemy N2>
+	.edesc <!Member 10>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	Msg1 <Right now, the Bone Devils are too strong for us to fight. They've got enough mecha that any action on our part, no matter how quick, would result in Kist being devestated.>
+	Msg2 <Recently the Bone Devils have lost a lot of mecha in battle... But it's still not enough. We can't attack them until we're sure their retaliation won't flatten the village.>
+	Msg3 <The Bone Devils have been losing their fight with the Federation Defense Force... Now is the time for us to act! If we can destroy their last remaining mecha, they'll be forced to leave town!>
+	Msg4 <I need to speak with you... Kist is in trouble. The Bone Devil gang controls this town, doing whatever they want, killing anyone who opposes them. We need allies to drive them out of town for good. Will you join us?>
+	Msg5 <Your heroic deeds are well known to everyone... Our village suffers under the grip of the Bone Devils; we need a hero to help get rid of them. Will you join us?>
+	Msg6 <There may well be no hope for us...>
+	Msg7 <\ELEMENT 2 in Kist asked you to help overthrow the Bone Devil gang.>
+	Msg8 <Please hurry... Kist has suffered long enough!>
+	Msg9 <These coordinates will take you to their secret base. Once there, you can destroy their mecha... Our hopes go with you...>
+	Msg10 <You were defeated... Now the Bone Devils will regroup, move their camp, and hire some reinforcements. We'll have to work harder.>
+	Msg11 <The Bone Devils have been defeated! My village is free... we have no money to reward you with, only our eternal gratitude.>
+	Msg12 <You helped rid Kist of the Bone Devil gang.>
+
+	Prompt1 <I'd like to help you.>
+	Prompt1_1 <Tell me more.>
+	Prompt2 <I don't want to get involved.>
+	Prompt2_1 <That doesn't concern me.>
+	Prompt2_2 <That's your problem, not mine.>
+	Prompt3 <I'm ready to take them!>
+	Prompt4 <Give me some time to get ready.>
+
+
+	Persona 3
+	rumor <!3 has been hunting for the leader of the resistance.>
+	greeting <NewChat Say 1  if# P2 0 AddChat 1>
+	result1 <NewChat Say 2 History 3 DeleteChar E2 CashPrize 400000 Reputation 1 -5 Reputation 2 -15 AdvancePlot 0>
+	Msg1 <There's been some idiots in town who want to stand against the Bone Devils. If you have any info that might lead us to their boss, I could make it worth your while.>
+	Msg2 <No kidding? We can get rid of \SPR E2 right away. Here's a cash reward just like I said... Remember, nobody crosses the Bone Devils and lives to tell about it.>
+	Msg3 <You helped the Bone Devils kill the resistance leader.>
+	Prompt1 <\ELEMENT 2 is the leader.>
+
+end
+inv
+	NPC Soldier
+	job <Citizen>
+	place <1 pass ally>
+	chardesc Heroic Shy Wangtta
+	equipchar 10000
+end

@@ -1,0 +1,17 @@
+Plot 0
+	name <PLOT: Trucker Movement>
+	% Truckers move all over the place.
+
+	Element1 <Character Trucker>
+	Element2 <Scene Town !Far 1>
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10800 MoveChar E1 E2>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <!1 just arrived here in town.>
+	greeting <NewChat SayAnything>
+
+end

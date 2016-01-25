@@ -1,0 +1,15 @@
+% MESSAGES FOR ability.pp UNIT
+MEKDESC_Immobile <*IMMOBILE*>
+MEKDESC_Destroyed <*INOPERATIVE*>
+MEKDESC_NoCockpit <*NO COCKPIT*>
+MEKDESC_Jump <Jump>
+MEKDESC_Hands <Hnd>
+MEKDESC_Mounts <Mnt>
+MEKDESC_ENGINE1 <High-Output Engine>
+EXPAND_RightArm <Right Arm>
+EXPAND_RightHand <Right Hand>
+EXPAND_LeftArm <Left Arm>
+EXPAND_LeftHand <Left Hand>
+EXPAND_RightLeg <Right Leg>
+EXPAND_LeftLeg <Left Leg>
+EXPAND_Clothes <Clothes>

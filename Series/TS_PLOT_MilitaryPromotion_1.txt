@@ -1,0 +1,81 @@
+Plot 0
+	name <Promotion Reward>
+	% The PC has gone up a rank in the military, and will
+	% now get a reward for it.
+
+	% Element 1 is the calling faction
+	% Element 2 is the character who'll give the PC the reward
+	Element2 <Character !Comrade 1>
+
+	% These are faction rewards...
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+
+	% V1 = Email Indicator
+
+	% This plot will remain active until the PC collects his
+	% reward, until the NPC dies, or until the PC is no longer
+	% a member of the calling faction.
+	start <ifPersona E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d5 V= 1 1>
+	GoReschedule <FacVar+ E1 1 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You've earned a promotion. Come see me to accept your reward.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// I have urgent business which requires your attention at once.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Report here for debriefing at once, soldier.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// You have been promoted. Report here to receive your comission.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// Your presence is required at headquarters immediately.>
+
+sub
+	Persona 2
+	% V1 = Faction level the PC is being rewarded for.
+	greeting <NewChat XPV 100 V= 1 FacVar E1 2 V+ 1 1 FacVar= E1 2 V1 AdvancePlot 0 Goto GoL0>
+	GoL0 <ifG 9 V1 else GoBigLevel ifG FXPNeeded V1 PCRep 6 else GoL1 CashPrize Reward Threat FXPNeeded V1 100 250 Say 10>
+	GoL1 <if= V1 1 else GoL2 Say 1 GiveKeyItem E3>
+	GoL2 <if= V1 2 else GoL3 Say 2 MechaPrize .mek1>
+	.mek1 <Kojedo.txt>
+	GoL3 <if= V1 3 else GoL4 Say 3 CashPrize 350000>
+	GoL4 <if= V1 4 else GoL5 Say 4 MechaPrize .mek2>
+	.mek2 <Zerosaiko.txt>
+	GoL5 <if= V1 5 else GoL6 Say 5 GiveKeyItem E4>
+	GoL6 <if= V1 6 else GoL7 Say 6 PCSkill+ 1 1  PCSkill+ 2 1  PCSkill+ 3 1  PCSkill+ 4 1  PCSkill+ 5 1>
+	GoL7 <if= V1 7 else GoL8 Say 7 GiveKeyItem E5>
+	GoL8 <if= V1 8 else GoBigLevel Say 8 MechaPrize .mek3>
+	.mek3 <Ovaknight.txt>
+	GoBigLevel <Say 9 CashPrize 500000>
+
+	Msg1 <You have been promoted to the rank of \FacRank E1 V1 . As such, you have earned the right to wear this dress uniform. Good work, \PC .>
+	Msg2 <As you have been promoted to the rank of \FacRank E1 V1 , you will need a spare mecha. The Kojedo forms the backbone of our border patrol forces. It should serve you well.>
+	Msg3 <You have been promoted to the rank of \FacRank E1 V1 . To mark your new status here is a cash bonus of $350,000.>
+	Msg4 <You have been promoted to the rank of \FacRank E1 V1 . An officer needs a better mecha than you've been given before... This new Zerosaiko should fit the bill nicely.>
+	Msg5 <You have been promoted to the rank of \FacRank E1 V1 . As a symbol of your new station, here is a ceremonial sabre. This is more than just an ornament... you'll find that its monomolecular edge is quite deadly.>
+	Msg6 <You have been promoted to the rank of \FacRank E1 V1 . You should set an example for all of our troops, and so I present you with a course of special officers training. From this moment on you should be a better pilot than before.>
+	Msg7 <You have been promoted to the rank of \FacRank E1 V1 . Here is a new sidearm for you to use... it's a Nova Carbine, smaller than a regular laser rifle but considerably more powerful.>
+	Msg8 <You have been promoted to the rank of \FacRank E1 V1 . You will now pilot the greatest mecha produced in the Federated Territories, the OvaKnight.>
+	Msg9 <Here is a cash reward in recognition of your dedicated service to \ELEMENT 1 .>
+	Msg10 <You have been promoted to the rank of \FacRank E1 V1 . Here is a small cash reward in recognition of your service.>
+
+end
+inv
+	BodyArmor 7
+	name <Military Uniform>
+	mass -11
+
+	Melee 18
+	name <Command Sabre>
+	mass -14
+	type <ArmorPiercing>
+	ACC 2
+	Recharge 8
+
+	BeamGun 10
+	name <Nova Carbine>
+	Range 5
+	ACC 3
+	BV 4
+	Recharge 7
+	Mass -7
+	type <ArmorPiercing>
+
+end

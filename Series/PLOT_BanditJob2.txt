@@ -1,0 +1,154 @@
+Plot 0
+	name <PLOT: BanditJob2>
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Combat Indicator
+
+	element1 <Character Bandit Villainous HasMecha>
+
+	rumor <!1 has dark ambitions.>
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10500>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -10         V= 2 2>
+	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1    V= 2 2>
+
+sub
+	Persona 1
+	% The NPC who will offer the job.
+	% PCs who don't have mecha will be sent elsewhere...
+	% Only PCs with good reaction score will be offered a job.
+	greeting <NewChat ifG PCMeks 0 else GoNoMeks ifG React 65 else GoMedReact Goto GoJobDesc>
+
+	% PCs with a medium reaction score have a chance to get offered a job,
+	% if they make a good impression on the NPC.
+	GoMedReact <ifG React 0 else GoLowReact ifG -10 PCRep 2 else GoLowReact Say 3 AddChat 1 AddChat 2>
+
+	% PCs with a low reaction score will most likely be told to buzz off.
+	GoLowReact <NewChat Say 4>
+
+	% With no meks, the PC won't get offered a job at all, but may be told
+	% about it.
+	GoNoMeks <ifG React 50 else GoNMMedReact Say 1>
+	GoNMMedReact <Say 2>
+
+	% Result 1 -> The player will try to impress the NPC with INTIMIDATION
+	result1 <Reputation 3 1 ifG SkRoll 28 8 else GoNoInt NewChat Say 9 AddChat 4 AddChat 5>
+	GoNoInt <AdvancePlot 0 Reputation 6 -1 Say 6 EndChat>
+
+	% Result 2 -> The player goes quietly away.
+	result2 <NewChat Say 5>
+
+	% Result 4 -> Go straight to the job description.
+	result4 <Goto GoJobDesc>
+
+	% Result 5 -> Go away.
+	result5 <NewChat Say 10>
+
+	% The NPC will describe the job being offered. This will depend upon the
+	% PC's reputation.
+	% V1 = Threat Value of Encounter
+	GoJobDesc <ifG PCRep 6 90 Else GoLvl9 ifG -55 PCRep 2 Else GoLvl9 V= 1 12000000 E= 8 10 Say 11 goto GoChoose>
+	GoLvl9 <ifG PCRep 6 80 Else GoLvl8 ifG -50 PCRep 2 Else GoLvl8 V= 1 6500000 E= 8 9 Say 12 goto GoChoose>
+	GoLvl8 <ifG PCRep 6 70 Else GoLvl7 ifG -45 PCRep 2 Else GoLvl7 V= 1 3300000 E= 8 8 Say 13 goto GoChoose>
+	GoLvl7 <ifG PCRep 6 60 Else GoLvl6 ifG -40 PCRep 2 Else GoLvl6 V= 1 1700000 E= 8 7 Say 14 goto GoChoose>
+	GoLvl6 <ifG PCRep 6 50 Else GoLvl5 ifG -35 PCRep 2 Else GoLvl5 V= 1  900000 E= 8 6 Say 15 goto GoChoose>
+	GoLvl5 <ifG PCRep 6 40 Else GoLvl4 ifG -30 PCRep 2 Else GoLvl4 V= 1  500000 E= 8 5 Say 16 goto GoChoose>
+	GoLvl4 <ifG PCRep 6 30 Else GoLvl3 ifG -25 PCRep 2 Else GoLvl3 V= 1  300000 E= 8 4 Say 17 goto GoChoose>
+	GoLvl3 <ifG PCRep 6 20 Else GoLvl2 V= 1  200000 E= 8 3 Say 18 goto GoChoose>
+	GoLvl2 <ifG PCRep 6 10 Else GoLvl1 V= 1  100000 E= 8 2 Say 19 goto GoChoose>
+	GoLvl1 <ifG PCRep 6  0 Else GoLvl0 V= 1  45000 E= 8 1 Say 20 goto GoChoose>
+	GoLvl0 <V= 1  15000 E= 8 1 Say 20 goto GoChoose>
+
+	% The encounter has been described, and a threat rating been set.
+	% See whether or not the PC will accept the job.
+	GoChoose <NewChat AddChat 6>
+
+	Result6 <EndChat Say 21 Reputation 1 -1 Reputation 2 -2 AddReact 3 P= 2 1 SavePos Dynamic 2 V1 FrzNU1 FrzNU2 Encounter 10 1 .enemydata>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Salvage Return>
+	.enemydata <Villainous Chaotic Young>
+
+	Msg1 <Mecha are power. Without one, you've got nothing.>
+	Msg2 <I've got no time for you right now.>
+	Msg3 <I've got a good plan going on. By tonight I'm gonna be moving up the ranks.>
+	Msg4 <Nothing is for free... If you want anything, you need the power to take it.>
+	Msg5 <Later.>
+	Msg6 <You don't have what it takes. Get out of here.>
+
+	Msg9 <Of course I do. In fact, I could use your help... There are a couple of rivals that have to be eliminated, and I need a good pilot to do that. You in?>
+	Msg10 <Remember, nothing in life is given out for free. If you want something you need the power to take it...>
+
+	Msg11 <Another gang has just recruited an ex-mercenary and all of his equipment. We need to eliminate them before they can move against us. Pay is $180000 for the hit, plus you can keep any leftover meks.>
+	Msg12 <We've been double crossed by another gang. I can give you $100000 to take them all out. I want no survivors. Do what you like with the salvage.>
+	Msg13 <Two of our rivals have just joined forces. They've got a very impressive mecha force now... It's worth $50000 if you can remove them from the game, and you can keep the salvage.>
+	Msg14 <Our guys have been falling behind in the technology curve, but if someone could eliminate the competition's new meks we'd be on top again. How about $30000 for the job? Plus salvage rights, of course.>
+	Msg15 <Some outsiders just moved into town. I don't know where they came from, but they've got some awesome machines. I need them eliminated. The job pays $15000 plus salvage. How about it?>
+	Msg16 <One of the big gangs in the area has been keeping the rest of us down. I need for them to be taken back a notch or two. Upon elimination of the gang I'll give you $7500, and the salvage is yours. What do you say?>
+	Msg17 <A rival gang has just acquired some military grade hardware. I need those meks annihilated as soon as possible. This mission pays $4500 and salvage.>
+	Msg18 <One of the rival gangs has been pushing into our territory. I need someone to teach them a perminant lesson. You'll make $3000 plus whatever salvage is left over. What do you think?>
+	Msg19 <Some young thugs just bought their first armor units... I need you to make sure it's also their last. I'll give you $1500 for the job, along with salvage rights.>
+	Msg20 <A couple of kids got their hands on some light meks and now they think they're a gang. I need you to eliminate them. If you can pull this off it's worth $1000 plus salvage.>
+
+	Msg21 <This is all the information that you need to know. Come back here afterwards and I'll give you your cut.>
+
+	prompt1 <You better have a share for me.>
+	prompt2 <I couldn't care less about your plans.>
+
+	prompt4 <I'm in. Give me the details.>
+	prompt5 <This isn't my kind of job.>
+	prompt6 <Leave those suckers to me.>
+
+
+	Plot 1
+		% The player lost the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <EndChat AdvancePlot 0 Say 1>
+		Msg1 <I don't want to talk about it.>
+	end
+
+	Plot 2
+		% The player won the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat AdvancePlot 0 AddReact 3 if= E8 10 Else GoLvl9 CashPrize 180000 Goto GoSaySomething>
+		GoLvl9 <if= E8 9 Else GoLvl8 CashPrize 100000 Goto GoSaySomething>
+		GoLvl8 <if= E8 8 Else GoLvl7 CashPrize  50000 Goto GoSaySomething>
+		GoLvl7 <if= E8 7 Else GoLvl6 CashPrize  30000 Goto GoSaySomething>
+		GoLvl6 <if= E8 6 Else GoLvl5 CashPrize  15000 Goto GoSaySomething>
+		GoLvl5 <if= E8 5 Else GoLvl4 CashPrize   7500 Goto GoSaySomething>
+		GoLvl4 <if= E8 4 Else GoLvl3 CashPrize   4500 Goto GoSaySomething>
+		GoLvl3 <if= E8 3 Else GoLvl2 CashPrize   3000 Goto GoSaySomething>
+		GoLvl2 <if= E8 2 Else GoLvl1 CashPrize   1500 Goto GoSaySomething>
+		GoLvl1 <CashPrize 1000 Goto GoSaySomething>
+
+		GoSaySomething <if= d6 1 else GoSay2 Say 1>
+		GoSay2 <if= d5 1 else GoSay3 Say 2>
+		GoSay3 <if= d4 1 else GoSay4 Say 3>
+		GoSay4 <if= d3 1 else GoSay5 Say 4>
+		GoSay5 <if= d2 1 else GoSay6 Say 5>
+		GoSay6 <Say 6>
+
+		Msg1 <They won't be bothering me again. Here's your cash.>
+		Msg2 <Remind me never to get on your bad side. Here's your pay for that mission.>
+		Msg3 <Here you go. If I ever need your help again, I'll call.>
+		Msg4 <That was quite a battle. Here's the money we agreed on.>
+		Msg5 <Here's your money.>
+		Msg6 <You're a vicious pilot. That was great. Here's your cash.>
+	end
+
+
+end
+

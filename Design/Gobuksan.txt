@@ -1,0 +1,83 @@
+GroundHugger 5
+Name <Gobuksan>
+Desig <KSP-12>
+
+Mod Body
+	Armor 5
+	Mass -9
+	sub
+		CPit
+		Armor 2
+		Mass -2
+
+		Sensor 6
+
+		Gyro 2
+		Armor 2
+		Mass -2
+
+		Engine 5
+		Armor 2
+		Mass -2
+
+		Mount
+		Name <Right Body Mount>
+		inv
+			STC LAS-10
+			Mass -2
+		end
+
+		Mount
+		Name <Left Body Mount>
+		inv
+			STC LAS-10
+			Mass -2
+		end
+
+		Tracks 8
+		Mass -8
+	end
+	inv
+		BodyArmor 5
+		Fits <Groundhugger>
+		Mass -4
+		sub
+			STC HWML-8
+		end
+	end
+
+Mod Turret
+	Armor 5
+	Mass -5
+	sub
+		STC GR-24
+		Name <Heavy Massdriver>
+		Type <ANTIAIR BRUTAL SCATTER>
+	end
+	inv
+		TurretArmor 5
+		Mass -4
+		sub
+			STC SML-5
+		end
+	end
+
+Mod Storage
+	Size 4
+	Armor 5
+	Mass -3
+	sub
+		Sensor 2
+
+		TarComp 1
+
+		STC LRL-32
+
+		STC AC-2
+		Type <INTERCEPT>
+	end
+	inv
+		StorageArmor 5
+		Mass -5
+	end
+end

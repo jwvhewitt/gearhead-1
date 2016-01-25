@@ -1,0 +1,166 @@
+SPECIFICATIONS FOR THE GEARHEAD MECHA DESCRIPTION LANGUAGE (MDL)
+
+% {Comments}
+	- Any line whose first significant character is a % will
+	  be treated as a comment and its content ignored
+
+Adventure
+	- This command creates a new Adventure gear
+	- Equivalent to GEAR GG_Adventure,0,0
+
+Arch {Archetype Name}
+	- This command is used to create a new CHARACTER gear with
+	  string attribute Name <Archetype Name>
+	- This may be used to create a list of character types for
+	  use in a scenario, without needing to define each NPC
+	  individually.
+
+ARMOR {Value}
+	- Declares armor value for a module
+	- The armor value may be no greater than mecha size
+
+Attribute <{String}>
+	- The format for declaring a string attribute is as above
+	- The string part of the attribute must be enclosed in
+	  alligator mouths as shown
+	- If a line of the file contains a < character, the entire
+	  line is treated as a string attribute and its contents
+	  stored as such
+
+Chara
+	- Creates a new character GEAR
+	- Equivalent to GEAR GG_Chara,0,0
+	- Characters may only be subcomponents to cockpits
+	- Default scale 0, default nature MEAT
+
+CharDesc
+	- Allows certain aspects of a Character gear to be set.
+	- Gender and personality traits may be set using this command.
+	- OLD may be used to set character age past 40, YOUNG to set character
+	  age under 20.
+
+CPIT
+	- Declares a cockpit gear
+
+END
+	- Returns to parent of active gear
+
+GATE {ID}
+	- Adds a MapFeature/Gate to a SCENE gear.
+	- Equivalent to GEAR GG_MapFeature GS_Gate ID
+	- EVENT string attribute can record custom script to be executed
+	  upon entry
+
+GEAR {G} {S} {V}
+	- Lazy way to declare a gear record
+	- New GEAR is placed as the sibling of the current GEAR
+
+Mass {Adjust Value}
+	- Changes the mass of the current gear by a positive or
+	  negative amount.
+
+Mecha {Form} {Size}
+	- Creates a new mecha GEAR
+	- Functionally equivalent to GEAR GG_Mecha,Form,Size
+	- Size may be from 1 to 10
+	- Mecha may only be subcomponents to submecha cockpits
+	- Default scale 2, default nature METAL
+
+MOD {Module Type}
+	- Creates new module as subcom of current PRIMARY
+	- Modules must be placed as either root items
+	  or as the subcoms of masters
+
+NPC {Archetype Name}
+	- Loads the archetype file, copies the desired NPC type,
+	  and gives it a random name.
+	- NPC cannot be the first gear-producing command in a file,
+	  in order to prevent possible infinite recursion.
+
+PERSONA {CID}
+	- This command creates a new persona gear, which is used when
+	  the player tries talking with an NPC
+	- A Character ID can be shared by several NPCs if they react
+	  to the PC in exactly the same way.
+	- Assign a CID to an NPC using the SetPersona command.
+
+ROOM {Width} {Height}
+	- This command adds a MapFeature/Room to the scene
+	- Dimensions given will be partially randomized
+
+SCALE {Scale}
+	- Sets the SCALE field of the current gear
+	- Characters are Scale 0, most mecha are Scale 2
+
+SCENE {Number} {Scale}
+	- Defines a new SCENE gear with the provided ID number
+
+SETALLY {ally 1} {ally 2} ...
+	- Sets allied teams for the current team gear
+	- Sets allied factions for the current faction gear (+10 react)
+
+SETENEMY {enemy 1} {enemy 2} ...
+	- Sets enemy teams for the current team gear
+	- Sets enemy factions for the current faction gear (-10 react)
+
+SETKEYITEM {NID}
+	- Sets a Narrative ID for the current gear.
+	- Key items have special properties; specifically they may be
+	  used by scripting language commands.
+
+SETPERSONA {CID}
+	- Sets a Character ID for the current gear.
+
+SETTEAM {Team ID}
+	- Sets the team for a character or mecha in a scene
+	- Should only be applied to masters, but this is not enforced
+
+SIZE {Value}
+	- Set the V field of a gear to Value
+
+SKILL {Skill ID Code} {Skill Rank}
+	- Sets a skill for an archetype NPC
+	- Skill ID codes may be found in SKILLMAN.TXT
+
+STAT {Slot} {Value}
+	- Lazy way to declare a gear's stats
+
+STATLINE {V1} {V2} {V3} ...
+	- Define stats from 1 to N
+
+SUB , INV
+	- GEAR declaration which follows is placed as child
+	  of current gear
+
+PLOT {ID}
+	- Add a new PLOT gear with the provided ID number.
+	- PLOT ID numbers are not meant to be unique identifiers;
+	  they will be used for identifying subplots when the
+	  plot advances.
+
+TEAM {number}
+	- Adds a new team gear with the specified ID number
+
+****************************
+***  MACRO  DEFINITIONS  ***
+****************************
+
+The file GameData\ghpmacro.txt can be used to define commonly used
+gears. The first character in the macro definition tells what kind of
+macro it is; the rest are parameters to be fed into whatever kind of
+thing is being built.
+
+"G" = Construct a gear. Parameters G, S, V descriptors.
+
+"S" = Assign a stat value. Paramaeters Stat Number, Stat Value.
+
+"N" = Assign a numeric attribute. Parameters G, S, V descriptors.
+
+A parameter can be a straightforward numeric value, like "5" or "-27".
+It can also be variable, read from the gear file being loaded, in which
+case it will be "?". If it is meant to be read from the gear file but
+has a default value, it should be a "?" followed immediately by the
+default, like "?9" or "?-27".
+
+The easiest way to figure it all out may be to go look at
+GameData\ghpmacro.txt and see how it's put together.

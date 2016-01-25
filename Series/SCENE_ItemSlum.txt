@@ -1,0 +1,55 @@
+scene 0 0
+% Enemy stronghold scene
+
+%  Team 2 = Default enemies
+%  Team 3 = WMon enemies
+%  Team 4 = Non-enemy, located in the warehouse
+%  Team 5 = Non-enemy, located in the building
+
+% V1 = If nonzero, have some wandering monsters
+% V2 = 
+
+WildMap
+GapFill <>
+
+start <if# L1 0 MonsterUp 3 L1 L= 1 0>
+
+% If the PC leaves or is killed, return to the calling scene.
+Nu1 <if= T1 0 Return>
+
+sub
+	rect
+	width 5
+	height 5
+	special <StartHere>
+
+	room 8 5
+	name <Warehouse>
+	BorderType 35
+	FloorType 14
+	LockedDoorChance 65
+
+	room 5 6
+	name <Building>
+	LockedDoorChance 55
+
+	Team 1
+	SetEnemy 2 3
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3
+	type <Criminal City>
+
+	Team 3
+	SetEnemy 1
+	SetAlly 2
+	type <Criminal City>
+
+	Team 4
+	home <Warehouse>
+	Team 5
+	home <Building>
+
+end
+

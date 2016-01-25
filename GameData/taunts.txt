@@ -1,0 +1,33 @@
+% NPC chatter file- mostly combat taunts
+CHAT_ATTACK_ALL <We will be victorious!>
+CHAT_ATTACK_T1+ <You will pay for the evil you've done!>
+CHAT_ATTACK_T1- <I will enjoy making you suffer!>
+CHAT_ATTACK_T2+ <Let's try to keep this an honorable duel.>
+CHAT_ATTACK_T2- <You should know, I don't fight fair.>
+CHAT_ATTACK_T3+ <I'm coming for you now!>
+CHAT_ATTACK_T3- <You're making so much noise I could shoot you in the dark.>
+CHAT_ATTACK_T4+ <You look stressed. Maybe you should just give up?>
+CHAT_ATTACK_T4- <Waargh!>
+CHAT_ATTACK_T5+ <This is getting fun!>
+CHAT_ATTACK_T5- <This will all end in tears, for you...>
+CHAT_ATTACK_T6+ <There's no way you can defeat me.>
+CHAT_ATTACK_T6- <I won't be defeated again!>
+CHAT_ATTACK_T7+ <It would be most logical if you gave up right now.>
+CHAT_ATTACK_T7- <I will send you to the other side!>
+CHAT_EJECT_ALL <I'm getting out of here!>
+CHAT_EJECT_ALL <This is enough damage for me...>
+CHAT_EJECT_ALL <I'm not sticking around!>
+CHAT_EJECT_T1+ <I won't throw my life away in vain.>
+CHAT_EJECT_T1- <Don't expect me to forgive anyone who damages my machine!>
+CHAT_EJECT_T2+ <I have dishonored myself on the field of battle...>
+CHAT_EJECT_T2- <You can't catch me that easily!>
+CHAT_EJECT_T3+ <I'd love to stick around some more, but I really must be going...>
+CHAT_EJECT_T3- <...>
+CHAT_EJECT_T4+ <I don't like this mecha anymore. You can have it.>
+CHAT_EJECT_T4- <This isn't the end!!!>
+CHAT_EJECT_T5+ <No fair! I got completely pummeled!>
+CHAT_EJECT_T5- <I don't intend to die just yet...>
+CHAT_EJECT_T6+ <Discretion is the better part of valor...>
+CHAT_EJECT_T6- <I can't believe that I'm losing again!>
+CHAT_EJECT_T7+ <It would be illogical to remain here any longer.>
+CHAT_EJECT_T7- <Heaven can wait...>

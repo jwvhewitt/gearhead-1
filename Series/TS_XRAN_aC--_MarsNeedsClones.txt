@@ -1,0 +1,343 @@
+plot 0
+	name <Mars Needs Clones>
+	% Edited to v0.901 standard
+
+	% The PC will fight his arch-enemy unexpectedly in town...
+	% Then, he'll hear that the arch-enemy has been sighted
+	% in another town...
+	% Then he'll fight the arch-enemy again, but stronger this
+	% time...
+	% Someone has a clone factory set up. The PC will be given
+	% the chance to infiltrate and destroy it. The PC might also
+	% rescue the original version of his arch-enemy, who may then
+	% become an ally.
+
+	Element1 <Grab 3>
+	Element2 <Scene Town Target !Far 1>
+	Element3 <Grab 1>
+	element4 <Prefab>
+	element5 <Prefab>
+	element6 <Faction GoodEnemy>
+	element7 <Prefab>
+
+	% Stage One: The initial fight
+	start <ifPersona E3 else GoEndPlot  if= V1 0 else GoSetOrder V= 1 1 Compose UTD E3 .killerdies MoveChar E3 E1 Goto GoSetOrder>
+	GoEndPlot <S= 101 1 S= 105 -1 XREnemy NAV_XREUnknown AdvancePlot 0>
+	.killerdies <if# V1 5 V= 1 5 ForceChat E3 Print 3 History 2>
+	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
+
+	TM1 <if= SceneID E1 ifNPCinPlay E3 if= V1 1 ifG 6 Range PCUID NPCUID E3  Print 1 ForceChat E3>
+	Msg1 <\ELEMENT 3 strikes up a conversation with you.>
+	Msg2 <You killed a deranged \ELEMENT 3 , whose body then dissolved.>
+	Msg3 <The body of \ELEMENT 3 quickly dissolves into pink goo...>
+
+sub
+	Persona 3
+	rumor <!3 will take a contract to kill anybody, as long as the price is right.>
+	% V2 = Message Randomizer
+	greeting <NewChat ifPersona E3 else GoE3Dead ifG Range PCUID NPCUID E3 6 else GoNoPhone EndChat Say 5> 
+	GoNoPhone <P= 1 2 Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <EndChat Say 2 Reputation 4 -d10 Goto GoStartFight>
+	result2 <EndChat Say 3 Reputation 1 1 Goto GoStartFight>
+	result3 <EndChat Say 4 Reputation 3 -d10 Goto GoStartFight>
+	Msg1 <So \PC , I've found you at last. It's time for us to settle matters once and for all, right here and right now.>
+	Msg1_1 <My old enemy \PC ... This battle between us has destroyed the better part of my soul. Now it is time for us to end it, once and for all.>
+	CMsg1_1 <ifNPCHeroic Accept>
+	Msg1_2 <We meet again, for the last time. Prepare to die.>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <My old enemy \PC ... You have been a good opponent, though all our battles, but that time must now come to an end. The secret I know must go to the grave with me. Prepare to defend yourself, or die at my hand.>
+	CMsg1_3 <ifNPCSociable Accept>
+	Msg1_4 <What wonderful news! \ELEMENT 1 is to be the site of our final, greatest battle! Let us begin...>
+	CMsg1_4 <ifNPCCheerful Accept>
+	Msg1_5 <This charade has continued for long enough. It's time for this to end... one of us will die today...>
+	CMsg1_5 <ifNPCMelancholy Accept>
+	Msg1_6 <All things come to an end, \PC ... It's time to settle matters between us once and for all, right here and right now.>
+	CMsg1_6 <ifNPCEasygoing Accept>
+	Msg1_7 <You have escaped me before, but today I bring you death!!!>
+	CMsg1_7 <ifNPCPassionate Accept>
+	Msg1_8 <Ah, \PC ... You think you have everything all figured out... If you knew what I've seen, you wouldn't be so certain. It's time to end all this fighting we've done... to the death!>
+	CMsg1_8 <if= XRM NAV_XRMResolved Accept>
+
+	Msg2 <That's the spirit! Killing you would be boring if you didn't bother to fight back!>
+	Msg2_1 <I'll try to make sure your end is painless...>
+	CMsg2_1 <ifNPCHeroic Accept>
+	Msg2_2 <Let us begin.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <Whichever one of us wins, they'll tell of our great skill unto the end of the world... which by my calculation isn't too far off.>
+	CMsg2_3 <ifNPCSociable Accept>
+	Msg2_4 <Try to keep this interesting. It would be no good for our final duel to be boring.>
+	CMsg2_4 <ifNPCCheerful Accept>
+	Msg2_5 <May the streets run red...>
+	CMsg2_5 <ifNPCMelancholy Accept>
+	Msg2_6 <We might as well begin right away...>
+	CMsg2_6 <ifNPCEasygoing Accept>
+	Msg2_7 <I will kill you!!!>
+	CMsg2_7 <ifNPCPassionate Accept>
+
+	Msg3 <Oh, what a noble sentiment... Not that it matters to me anymore. They can all be replaced. We can all be replaced.>
+	Msg3_1 <Look upon it as an act of mercy. I have seen the horror that is to be unleashed... It must not be so...>
+	CMsg3_1 <ifNPCHeroic Accept>
+	Msg3_2 <That is of no concern anymore.>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <You don't understand what's going to happen...>
+	CMsg3_3 <ifNPCSociable Accept>
+	Msg3_4 <Oh, that's funny... You're a real comedian! Whether they die now or in a few weeks time makes no difference at all!>
+	CMsg3_4 <ifNPCCheerful Accept>
+	Msg3_5 <In a few days we're all going to be dead anyhow, after the tyrant is reawakened...>
+	CMsg3_5 <ifNPCMelancholy Accept>
+	Msg3_6 <We could move the fight to somewhere more appropriate... but I don't have the patience for it. Prepare to defend yourself!>
+	CMsg3_6 <ifNPCEasygoing Accept>
+	Msg3_7 <Anyone who dies today should thank us, for they will be spared the rebirth of the Lord of Terror!>
+	CMsg3_7 <ifNPCPassionate Accept>
+
+	Msg4 <I have been wondering that very same thing myself... so now, it is time to end our game. Either you will die or I will die, and I can't even manage to care which...>
+	Msg4_1 <I am less than half the human being I once was... perhaps no longer a human being at all...>
+	CMsg4_1 <ifNPCHeroic Accept>
+	Msg4_2 <Enough chatter. Let's begin.>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_3 <Your denials wound me, \PC ... Let's see if I can return the favor with my blade!>
+	CMsg4_3 <ifNPCSociable Accept>
+	Msg4_4 <Ah, how I will miss your wit when you're lying on the ground in several pieces. Let us begin.>
+	CMsg4_4 <ifNPCCheerful ifG PCRep 5 0 Accept>
+	Msg4_5 <Truth be told I never did care for your wisecracks. I won't much miss them when you're gone. Let's begin this fight.>
+	CMsg4_5 <ifNPCMelancholy ifG PCRep 5 0 Accept>
+	Msg4_6 <Who am I... a very good question, one I hope to answer myself one day...>
+	CMsg4_6 <ifNPCEasygoing Accept>
+	Msg4_7 <I am your nemesis, the dark messenger of death... I am a shadow of a more brilliant light and nothing more...>
+	CMsg4_7 <ifNPCPassionate Accept>
+
+	Msg5 <If you have something to say to me, tell me to my face.>
+	Msg5_1 <I'm not home right now.>
+	Msg5_2 <I don't want to talk on the phone.>
+	Prompt1 <Okay, let's do it.>
+	Prompt1_1 <If you want to die I won't disappoint you.>
+	Prompt2 <No, there are innocent people here!>
+	Prompt2_1 <Not here, innocent people may get hurt!>
+	Prompt3 <Uh, who are you again?>
+	Prompt3_1 <Do I know you?>
+	GoStartFight <EndChat SoloAttack E3>
+	GoE3Dead <EndChat Say 101 N= 3 E2 FreezeItem E5 FreezeChar E7 FreezeChar E3 AdvancePlot 1>
+	Msg101 <You haven't won yet... I can still defeat you...>
+	Msg101_1 <If you meet my ghost on the road... kill \spr E3 ...>
+	CMsg101_1 <ifNPCHeroic Accept>
+
+Plot 1
+	% The second fight... The PC will meet the NPC again, this
+	% time in the second town.
+
+	% V1 = Initialization Counter
+
+	% Stage Two: The advanced fight
+	start <if= V1 0 else GoSetOrder V= 1 S103 V+ 1 10 NPCLevel E3 V1 V= 1 1 Compose UTD E3 .killerdies MoveChar E3 E2 Goto GoSetOrder>
+	GoEndPlot <S= 101 1 S= 105 -1 XREnemy NAV_XREUnknown AdvancePlot 0>
+	.killerdies <if# V1 5 V= 1 5 Alert 3 History 2 N= 3 E1 GiveKeyItem E5 FreezeChar E3 ItemVar= E5 1 E1 AdvancePlot 2>
+	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
+
+	TM1 <if= SceneID E2 ifNPCinPlay E3 if= V1 1 ifG 6 Range PCUID NPCUID E3  Print 1 ForceChat E3>
+	Msg1 <\ELEMENT 3 strikes up a conversation with you.>
+	Msg2 <You killed \ELEMENT 3 a second time, with similar results.>
+	Msg3 <The body of \ELEMENT 3 once again dissolves into pink goo... This time, leaving behind a dataslate.>
+
+sub
+	Persona 3
+	% V2 = Message Randomizer
+	greeting <NewChat ifG Range PCUID NPCUID E3 6 else GoNoPhone EndChat Say 5>
+	GoNoPhone <P= 1 2 Say 1 AddChat 1 AddChat 2>
+	result1 <EndChat Say 2 Reputation 4 -d8 Goto GoStartFight>
+	result2 <EndChat Say 2 Reputation 4  d8 Goto GoStartFight>
+	GoStartFight <EndChat SoloAttack E3>
+	Msg1 <\PC , I was informed that you'd try to interfere with our operations here in \ELEMENT 2 . I've been authorized to stop you by whatever means are nessecary. What's the matter... you look like you've seen a ghost?>
+	Msg1_1 <My old enemy \PC ... I don't want to fight you in public like this, but the Eschaton Project would be jeopardized if I allowed you to live. Don't look so shocked, prepare to defend yourself!>
+	CMsg1_1 <ifNPCHeroic Accept>
+	Msg1_2 <I was informed that you'd be investigating our project in \ELEMENT 2 . Your adventure ends here.>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <It's good to finally meet you, \PC . I've heard that you've interfered with many of our plans. The \ELEMENT 2 is too important to let you near it... so now you are going to die.>
+	CMsg1_3 <ifNPCSociable Accept>
+	Msg1_4 <Ah, \PC ... So you survived the handiwork of our associates. Well, you won't live long enough to see what we have planned for \ELEMENT 2 . It really is going to be a better world when we're finished with it.>
+	CMsg1_4 <ifNPCCheerful Accept>
+	Msg1_5 <What does it take to kill you? They said that you defeated our second most powerful operative... second only to me, of course. Now I'll end your life before you have a chance to look around \ELEMENT 2 .>
+	CMsg1_5 <ifNPCMelancholy Accept>
+	Msg1_6 <We've been expecting you in \ELEMENT 2 . It's much easier to wait for my quarry than chase it all over the place... Now, I'm going to have to kill you.>
+	CMsg1_6 <ifNPCEasygoing Accept>
+	Msg1_7 <I've been waiting for the chance to test my skills against you! They say you've already defeated one of our top agents... I can't allow you to get close to our \ELEMENT 2 operations. Now you die!>
+	CMsg1_7 <ifNPCPassionate Accept>
+
+	Msg2 <Let's do this!>
+	Msg2_1 <Try not to hurt any of the civilians, they have no part in our battle...>
+	CMsg2_1 <ifNPCHeroic Accept>
+	Msg2_2 <Let's go.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <I'm going to be famous as the person who killed \PC !>
+	CMsg2_3 <ifNPCSociable ifG PCRep 6 25 Accept>
+	Msg2_4 <Try to keep up with me, it'll make a better show for the onlookers.>
+	CMsg2_4 <ifNPCCheerful Accept>
+	Msg2_5 <Is there anyone who will weep at your death? Or shall we just dump you in an unmarked grave?>
+	CMsg2_5 <ifNPCMelancholy Accept>
+	Msg2_6 <It must be nice to believe that you stand a chance against me... Of course, I know that you don't.>
+	CMsg2_6 <ifNPCEasygoing Accept>
+	Msg2_7 <As you die, know that you've been slain by a superior foe.>
+	CMsg2_7 <ifNPCPassionate Accept>
+
+	Msg5 <If you have something to say to me, tell me to my face.>
+	Msg5_1 <I'm not home right now.>
+	Msg5_2 <I don't want to talk on the phone.>
+	Prompt1 <I killed you once, I can do it again!>
+	Prompt1_1 <Whether once or a hundred times, I'll stop you!>
+	Prompt2 <Let's get this over with.>
+	Prompt2_1 <Why can't you just stay dead?>
+
+	Persona 4
+	rumor <!4 knows something about your enemy.>
+	greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 Addchat 1 Memo 2>
+	GoBeenBefore <SayAnything>
+	result1 <NewChat Say 3>
+	Msg1 <I have some strange news for you about \ELEMENT 3 . I know the two of you fought here recently, and he apparently died... But the guardian office in \ELEMENT 2 claims \OPR E3 's been there all this time!>
+	Msg1_2 <You just fought \ELEMENT 3 , right? Well, according to the Guardian liason in \ELEMENT 2 , \OPR E3 's been there all along.>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <This is strange. I heard about your fight with \ELEMENT 3 , and how \OPR E3 supposedly died. Well, the Guardians in \ELEMENT 2 say they've been staking out \PPR E3 position over there. It certainly seems like \OPR E3 's in two places at once.>
+	CMsg1_3 <ifNPCSociable Accept>
+	Msg1_4 <>
+	CMsg1_4 <ifNPCCheerful Accept>
+	Msg1_5 <>
+	CMsg1_5 <ifNPCMelancholy Accept>
+	Msg1_6 <>
+	CMsg1_6 <ifNPCEasygoing Accept>
+	Msg1_7 <>
+	CMsg1_7 <ifNPCPassionate Accept>
+
+	Msg2 <\ELEMENT 3 has been sighted in \ELEMENT 2 .>
+	Msg3 <\ELEMENT 3 is wanted for a list of crimes as long as a phone book. We've been keeping tabs on \PPR E3 whereabouts for some time now.>
+	Msg3_2 <It's Guardian business. We have our reasons.>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <Haven't you been paying attention? \ELEMENT 3 has a rap sheet a mile long. There's murder, arson, grand theft... It's our job to keep track of criminals like that.>
+	CMsg3_3 <ifNPCSociable Accept>
+	Msg3_4 <Eh, everybody needs a hobby.>
+	CMsg3_4 <ifNPCCheerful Accept>
+	Msg3_5 <\ELEMENT 3 killed my fiance. I will bring \SPR E3 to justice if it's the last thing I do.>
+	CMsg3_5 <ifNPCMelancholy Accept>
+	Msg3_6 <>
+	CMsg3_6 <ifNPCEasygoing Accept>
+	Msg3_7 <\ELEMENT 3 has been involved in some horrifying crimes... I've dedicated myself to bring \SPR E3 to justice. I cannot rest until it is done!>
+	CMsg3_7 <ifNPCPassionate Accept>
+
+	Prompt1 <Why do you care about \ELEMENT 3 ?>
+	Prompt1_1 <Is there anything else you can tell me?>
+
+Plot 2
+	% If the player goes to E1 and uses the crystal key, he will be
+	% able to enter the dungeon.
+
+	start <ifPersona E7 else GoWinMission ifItemOK E5 else GoEndMission if= V1 0 V= 1 1 Compose Key E5 .usekey ifFaction N2 else GoSetFaction>
+	GoSetFaction <N= 2 E6>
+	.usekey <ifYesNo 1 2 3 SavePos MStaged .keyscene S103 .mdesc NPCLevel E7 S103 DynaNPC E7 3 PassVar 1 E3 PassVar 2 E7 SeekGate -1>
+	.keyscene <TS_XRAN_SCENE_MarsNeedsClones.txt>
+	.mdesc <Criminal Robot Synth Hunter-X>
+
+	GoWinMission <S+ 102 1 N= 1 0 N= 3 E2 XREnemy NAV_XREFaction S= 101 1 S= 105 1 AdvancePlot 3>
+	GoEndMission <S= 101 1 AdvancePlot 0>
+
+	Msg1 <This key contains a data map leading to a ruin outside of town. Do you want to go there?>
+	Msg2 <Yes please.>
+	Msg3 <No thank you.>
+
+sub
+	Persona 3
+	greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <EndChat Say 2 MoveChar E3 E1 DeleteChar E7 Print 5>
+	result2 <EndChat Say 3 MoveChar E3 E1 DeleteChar E7 Print 5>
+	result3 <EndChat Say 4 MoveChar E3 E1 DeleteChar E7 Print 5>
+	Msg1 <Ugh... Who are you!? Are you with \NARRATIVE 2 , or did you come to rescue me?>
+	Msg2 <Remember? Wait... You were captured the same time I was, weren't you? We better talk... but not here; I'll meet you again in town.>
+	Msg3 <This place? It's all a blur, but I think I know... We were captured at the same time, weren't we? I have to talk with you... but not here; let's meet again in town.>
+	Msg4 <Kill me again? Oh... I see what \NARRATIVE 2 has done... We must get out of this place. Please believe me. Let's get back to town. I'll tell you there... I think I know everything.>
+	Msg5 <\ELEMENT 3 has left the area.>
+	Prompt1 <Don't you remember me?>
+	Prompt2 <What is this place?>
+	Prompt3 <I came here to kill you one last time!>
+
+	Persona 7
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+	result1 <EndChat Say 2 Goto GoStartFight>
+	result2 <EndChat Say 3 Goto GoStartFight>
+	GoStartFight <History 4 History 5  SoloAttack E7>
+	Msg1 <You? How did you get here? This is an unexpected development, but not entirely unwelcome...>
+	Msg2 <This is the \NARRATIVE 2 clone factory. We copied \ELEMENT 3 as an expendable soldier, but our original attempts were flawed... Now that you are here, I can add you to our tissue bank, and your clones will make powerful warriors for us!>
+	Msg3 <Then you've come to the right place... \NARRATIVE 2 has paid for my cloning research. In exchange, I provide for them expendable soldiers. \ELEMENT 3 was my first test subject, but now I can add you to the tissue bank as well!>
+	Msg4 <You discovered that your enemy \ELEMENT 3 had been a clone.>
+	Msg5 <The clones were manufactured by \NARRATIVE 2 .>
+	Prompt1 <What is this place?>
+	Prompt1_1 <Who are you?>
+	Prompt2 <I'm looking for \ELEMENT 3 .>
+
+
+Plot 3
+	% The plot is finished, but the PC can speak with the former
+	% enemy if he survived.
+	start <if= EScene 3 E1 else GoNoAlly ifPersona E3 else GoDelete Memo 1>
+	GoDelete <AdvancePlot 0>
+	GoNoAlly <DeleteChar E3 AdvancePlot 0>
+	Msg1 <Your old enemy \ELEMENT 3 wanted to speak with you in \ELEMENT 1 .>
+sub
+	Persona 3
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat Say 2 AddChat 3>
+	result2 <NewChat Say 3 AddChat 3>
+	result3 <NewChat Say 4 AddChat 4>
+	result4 <NewChat if= XRM NAV_XRMAmnesia else GoR4NoAm Say 5 XRMystery NAV_XRMNotHuman Goto GoFinishUp>
+	GoR4NoAm <if= XRM NAV_XRMUnknown else GoR4NoUn Say 9 XRMystery NAV_XRMResolved Goto GoFinishUp>
+	GoR4NoUn <Say 6 Goto GoFinishUp>
+	result5 <NewChat Say 7>
+
+	GoFinishUp <PCAlly E3 NPCLevel E3 89 History 8 AdvancePlot 0 AddChat 5>
+
+	Msg1 <That place was the \NARRATIVE 2 clone factory. They made copies of me, which did horrible things to you... I know there's no way you could ever come to trust me.>
+	Msg2 <The clones emulated my memories and combat skills, but they were twisted somehow... Changed to serve only \NARRATIVE 2 . Maybe there was something of myself in them. I want to think they were just monsters.>
+	Msg3 <I want to believe that the clones were no part of me... that they were just monsters, not real people. The process used copied my memories and combat skills, but twisted these to serve only \NARRATIVE 2 . It's a scary technology.>
+	Msg4 <The process uses some kind of Pre-Zero machinery called a BioFac. From what I heard, they need some way to make expendable bodies; they're interested in cloning their elite troops... for what dark purpose I can only guess...>
+	Msg5 <I think I knew you, once... you look like someone who fought with me against \NARRATIVE 2 , and were caught at the same time as I was. I don't know what really happened, or who you really are... But I know I must continue to fight them.>
+	Msg6 <Good question. I guess I was a convenient test subject for their new technology. Who can say what other inventions they're cooking up? I am more determined than ever to stop \NARRATIVE 2 , even at the cost of my own self...>
+	Msg7 <Get back in shape... My body's been in a tank of water for months. Find out what evil my clones have done and try to correct what I can. They will be after me, of course... and you too. I'll aid you when they come.>
+	Msg8 <The original \ELEMENT 3 became your ally.>
+	Msg9 <I was a test of their new technology... I guess you could have just been chosen at random to be my clone's target, to see how effective they really were... Of course, now that you know about their plans, there's no way they'll let you live.>
+
+	Prompt1 <You've got that right.>
+	Prompt2 <Don't be so sure.>
+	Prompt3 <Why did they make these clones?>
+	Prompt3_1 <How did they make these clones?>
+	Prompt4 <Why did they choose you to fight me?>
+	Prompt4_1 <Why did they clone you?>
+	Prompt5 <What will you do now?>
+
+end
+% Plot 3 subcom ending above...
+
+end
+% Plot 2 subcom ending above...
+
+end
+% Plot 1 subcom ending above...
+
+end
+% Plot 0 subcom ending above...
+
+inv
+	NPC Guardian
+	Place <1>
+
+	Treasure 40
+	name <Dataslate>
+	% V1 = Scene where the clone dungeon is
+	use <if= SceneID V1 else GoNotHere ifNoObjections KEY SelfNID Print 1>
+	GoNotHere <Print 1>
+	Msg1 <This crystal key holds a data map which appears to lead to a ruin outside of \SCENE V1 .>
+
+	NPC Scientist
+	EquipChar 20000
+	skill 6 1
+	skill 7 1
+	skill 10 1
+	skill 18 1
+	skill 33 1
+
+end

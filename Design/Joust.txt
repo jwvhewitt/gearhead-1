@@ -1,0 +1,75 @@
+Battroid 4
+Name <Joust>
+Desig <A2400>
+desc <This mecha was designed specifically for arena combat. It has been the first training mecha for many pilots.>
+
+Mod Head
+	Size 2
+	Armor 4
+	sub
+		CPit
+
+		Sensor 5
+	end
+
+Mod Body
+	Armor 4
+	sub
+		MLauncher 3
+		Name <Rocket Pod>
+		Magazine 16
+		sub
+			Rockets 3
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 3
+	Armor 3
+	sub
+		Hand
+		inv
+			EMelee 6
+			Name <Plasma Lance>
+		end
+
+		Gun 2
+		Name <Slug Cannon>
+		BV 2
+		Magazine 30
+		sub
+			Ammo 2
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 3
+	Armor 3
+	sub
+		Hand
+
+		Gun 2
+		Name <Slug Cannon>
+		BV 2
+		Magazine 30
+		sub
+			Ammo 2
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 4
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 4
+	end
+end

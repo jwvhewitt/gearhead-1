@@ -1,0 +1,152 @@
+Plot 0
+	name <Lead Investigator>
+
+	% This plot controls the guardian investigating the murder club.
+	% It doesn't actually contain any adventure bits, but this
+	% guardian can direct the PC to where each of the murder club
+	% members are hiding out.
+
+	Element1 <Grab 2>
+	Element2 <Character Guardian !Far 1>
+
+	% V1 = Initialization Counter
+
+	start <ifPersona E2 else GoDelete if= V1 0 S= 7 E2 S= 8 EScene 2 V= 1 1>
+	GoDelete <S= 4 0 AdvancePlot 0>
+
+	CleanUp <ifG S103 0 else GoRealDelete ifG S202 3 else GoRealDelete AdvancePlot 1>
+	GoRealDelete <AdvancePlot 2>
+
+	% Every 5 minutes, maybe give an email. Quite likely really...
+	5Min <if= d20 1 if= PCFac N1 if= S202 S203 if= S103 0 Email d5 S= 103 1>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// One of the members of the "Murder Club" has been spotted in \NARRATIVE 2 . You should check it out.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// \RANK , proceed to \NARRATIVE 2 and investigate presence of "Murder Club" in that vicinity. Report findings to me.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// \PC , I have a job for you. "Murder Club" is operating in \NARRATIVE 2 . Go there and put a stop to it.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// Latest reports place the "Murder Club" in \NARRATIVE 2 . Go there and investigate. Report to me when finished.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// \NARRATIVE 2 is last known hideout for the "Murder Club". Investigate the situation, then report to me.>
+
+
+sub
+	Persona 2
+	rumor <!2 is the lead investigatior for the "Murder Club" case.>
+	% V2 = Message Randomizer
+	greeting <NewChat if= S103 0 else GoStartWithCase if= PCFac N1 else GoCheckRep Say d3 AddChat d3>
+	GoCheckRep <ifG NPCRep E2 1 0 else GoGNoHero ifG React 0 else GoNoChance ifG 1 PCRep 2 else GoGNoHero V= 2 3 V+ 2 d3 Say V2 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoGNoHero <ifG React d20 else GoNoChance ifG PCRep 2 -1 else GoNoChance V= 2 6 V+ 2 d3 Say V2 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoNoChance <V= 2 9 V+ 2 d3 Say V2>
+
+	% If the number of clues equals the number of wins, then E2
+	% can tell the PC where to head next.
+	GoStartWithCase <NewChat if= S202 S203 else GoCheckClue ifPersona S6 else GoPersonaNotKnown V= 2 15 V+ 2 d5 Say V2>
+	GoPersonaNotKnown <Say 21>
+
+	% If the clue timer has run its course, tell the PC the next
+	% place to go now.
+	GoCheckClue <ifG ComTime S5 else GoMustWait S= 203 S202 V= 2 21 V+ 2 d3 Say V2 V= 2 6 V+ 2 d3 AddChat V2>
+
+	% If the PC must wait, then there's not much else to do
+	% but wait. Bummer.
+	GoMustWait <V= 2 24 V+ 2 d3 Say V2>
+
+	result1 <NewChat S= 103 1 Goto GoStartWithCase>
+	result2 <Goto Result1>
+	result3 <Goto result1>
+
+	result4 <NewChat V= 2 12 V+ 2 d3 Say V2>
+	result5 <Goto Result4>
+	result6 <Goto result4>
+
+	result7 <NewChat ifPersona S6 else GoPersonaNotKnown V= 2 15 V+ 2 d5 Say V2>
+	result8 <Goto Result7>
+	result9 <Goto result7>
+
+	%  01 - 03 :  PC is faction member; automatically offered job.
+	Msg1 <\RANK \PC , it's good to see you. I could really use your help on this "Murder Club" case.>
+	Msg2 <Good to see you \PC . We need all the manpower we have to put this "Murder Club" behind bars. Are you ready to start work on the case?>
+	Msg3 <As you may have heard, a high school murder club has been terrorizing the Federated Territories. We must put a stop to this at once. Your participation is required in this case, \RANK . Are you up to the challenge?>
+
+	%  04 - 06 :  E2 is heroic; PC isn't lawful.
+	Msg4 <I know you're not the kind to work with the Guardians, but I'd like to ask you to assist in a case. There's a high school murder club on the rampage and they must be stopped immediately.>
+	Msg5 <This may suprise you, but I'd like for you to work on a case with us. There's a high school murder club on the loose. They must be brought to justice before any innocent people get hurt.>
+	Msg6 <Hey \PC . I've got a mission for you, despite your shady background... There's a high school murder club on the loose and right now we need the people who might be able to stop it.>
+
+	%  07 - 09 :  E2 isn't heroic; PC must be lawful.
+	Msg7 <As you may have heard, there's a high school murder club on the rampage. We guardians could use some help bringing those killers to justice. Are you interested in taking part?>
+	Msg8 <It's been in the news all over... A high school murder club has been terrorizing the Federated Territories. Well, we could use some help bringing them to justice. If you're interested you can take part.>
+	Msg9 <We've been attempting to stop a high school murder club. I'd like for you to assist on the case, if you're available.>
+
+	%  10 - 12 :  PC is denied mission; NPC will just imply it.
+	Msg10 <I better get back to work. There's a high school murder club on a killing spree, and they must be stopped...>
+	Msg11 <Be careful out there. A high school murder club has gone on a rampage. Nobody is safe.>
+	Msg12 <I know you've heard rumors about a high school murder club, but rest assured that the guardians are doing everything we can to bring the perpetrators to justice.>
+
+	%  13 - 15 :  PC doesn't want the job.
+	Msg13 <Well, be careful out there.>
+	Msg14 <Don't worry. We can catch the bad guys even without your assistance!>
+	Msg15 <Let me know if you change your mind.>
+
+	%  16 - 20 :  General clue reminder.
+	Msg16 <The next member of the murder club is named \PERSONA S6 , and can be found in \NARRATIVE 2 . Go there and see what you come up with.>
+	Msg17 <We've traced club member \PERSONA S6 to \NARRATIVE 2 . You should proceed to that town and attempt to locate the fugitive. Be careful; \OPR S6 may be dangerous.>
+	Msg18 <\NARRATIVE 2 is thought to be the hiding place of \PERSONA S6 , one of the club's members. You should go there and see what you can find. Be careful; even though they're students they're all extremely dangerous.>
+	Msg19 <Club member \PERSONA S6 is known to be in \NARRATIVE 2 right now. You should go there and try to aprehend the fugitive. Be warned, though, that it's not going to be easy.>
+	Msg20 <It's believed that \PERSONA S6 of the murder club is currently in \NARRATIVE 2 . Proceed to that town and attempt capture.>
+
+	%  21      :  Next persona not known; just location clue.
+	Msg21 <A member of the murder club is thought to be in \NARRATIVE 2 right now, though his identity is not positively known. You should go there right away and see if you can find anything.>
+
+	%  22 - 24 :  The next clue has been discovered! Yay!
+	Msg22 <The lab reports have come back. We've discovered the current whereabouts of the murder club.>
+	Msg23 <Our forensics team has just released their findings. I've got the dossier right here.>
+	Msg24 <The results are finally in. We know what's going on with the murder club.>
+
+	%  25 - 27 :  PC must wait for the lab report.
+	Msg25 <Our lab boys are now examining the evidence you recovered. You'll have to come back in a few hours for the results.>
+	Msg26 <We're still analyzing the data from the crime scene. It'll be a while before we know anything new.>
+	Msg27 <The forensics department is combing through the evidence. In a few hours, we might have some useful information.>
+
+	%  01 - 03 :  PC is interested in taking the case.
+	Prompt1 <I'll get to work on it.>
+	Prompt2 <Tell me the mission details.>
+	Prompt3 <Alright, I'll help you.>
+
+	%  04 - 06 :  PC won't take the case.
+	Prompt4 <I have more important things to do.>
+	Prompt5 <Sorry, I can't.>
+	Prompt6 <That's not my kind of job.>
+
+	%  07 - 09 :  Next clue has been discovered.
+	Prompt7 <Well, where's the next one?>
+	Prompt8 <Tell me what you found out.>
+	Prompt9 <What did you find out?>
+
+	Plot 1
+	% Time has run out.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 EMail d5>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// The last members of the murder club have been rounded up. You can come here for your reward.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// Murder club has been defeated. Stop by here; there's a reward for you.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// We've stopped the murder club. Come here for your reward.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// The murder club has been brought to justice. Come here to collect your reward.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// That seems to have been the last of the murder club. I have a reward for your heroic deeds here.>
+	sub
+		Persona 2
+		greeting <NewChat Say d5 Reputation 1 1 CashPrize Threat PCRep 6 2 XPV 100 AddReact d5 AdvancePlot 0>
+		Msg1 <Well done out there. Here's your reward for taking part in the operation.>
+		Msg2 <Your participation was key to bringing the murder club to justice. Here's your reward. You really earned it.>
+		Msg3 <Congratulations, together we've brought an end to the murder club. Maybe we can work together some time again in the future.>
+		Msg4 <Here's your reward. Now, maybe the people in this city can sleep a little easier tonight. The murder club is no more.>
+		Msg5 <The murder club has been brought to justice. That just about wraps up this case... Here's a reward for your participation. Let's work together again in the future.>
+	end
+
+	Plot 2
+	% Time has run out.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 2
+		greeting <NewChat Say 1 AdvancePlot 0>
+		Msg1 <The "Murder Club" investigation has drawn to a close.>
+	end
+
+end

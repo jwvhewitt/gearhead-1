@@ -1,0 +1,17 @@
+Plot 0
+	name <PLOT: Dungeon Treasure>
+	% Very simple plot, this one. Stick a treasure chest in a dungeon and wait for
+	% the PC to discover it.
+
+	element1 <Scene Dungeon>
+	element2 <Prefab>
+
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 GrabItem E2 GSetNAtt 4 2 Reward Threat PCRep 6 100 100 MoveKeyItem E2 E1>
+	GoCheckTime <ifG ComTime V1 DeleteKeyItem E2 AdvancePlot 0>
+
+inv
+	STC CHEST-1
+	hide 10
+	lock 15
+
+end

@@ -1,0 +1,149 @@
+Battroid 5
+Name <Jos>
+Desig <KCF-10c>
+SDL_Sprite <btr_jos.png>
+desc <The Jos is Kettel Industries's premier battroid suit. They are hoping to land a contract with the Solar Navy for this design to replace the ageing Condor mecha.>
+
+Mod Head
+	Size 2
+	Armor 4
+	Mass -4
+	sub
+		Sensor 5
+	end
+	inv
+		HeadArmor 2
+		Name <Helmet>
+		Mass -4
+	end
+
+Mod Body
+	Armor 5
+	Mass -3
+	sub
+		CPit
+
+		Sensor 1
+
+		TarComp 1
+
+		Gyro 2
+
+		EMelee 6
+		Name <Beam Cutter>
+		Acc 2
+		Speed 1
+		Type <INTERCEPT>
+
+		EMelee 6
+		Name <Beam Cutter>
+		Acc 2
+		Speed 1
+		Type <INTERCEPT>
+	end
+	inv
+		BodyArmor 4
+		Name <Torso Armor>
+		Mass -6
+		sub
+			STC VC-5
+			Name <Heavy Vulcan Cannon>
+			Range 5
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 5
+	Mass -1
+	sub
+		Hand
+		inv
+			Melee 10
+			Name <Trident>
+			Type <EXTEND RETURN THROWN>
+			Acc 2
+			Speed 3
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 4
+		Name <Shoulder Plate>
+		Mass -6
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 5
+	Mass -1
+	sub
+		Hand
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 4
+		Name <Shoulder Plate>
+		Mass -6
+
+		Shield 5
+		Name <Body Shield>
+		DefBonus 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 6
+	Armor 5
+	Mass -5
+	sub
+		Mount
+		inv
+			MLauncher 2
+			Name <Missile Pod>
+			Type <SWARM>
+			Range 4
+			Magazine 36
+			sub
+				Rockets 2
+			end
+		end
+
+		ArcJet 5
+	end
+	inv
+		LegArmor 3
+		Name <Knee Plate>
+		Mass -3
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 6
+	Armor 5
+	Mass -5
+	sub
+		Mount
+		inv
+			MLauncher 2
+			Name <Missile Pod>
+			Type <SWARM>
+			Range 4
+			Magazine 36
+			sub
+				Rockets 2
+			end
+		end
+
+		ArcJet 5
+	end
+	inv
+		LegArmor 3
+		Name <Knee Plate>
+		Mass -3
+	end
+end

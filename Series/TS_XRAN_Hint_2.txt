@@ -1,0 +1,26 @@
+Plot 0
+	name <PLOT: Hint>
+
+	% Those extra-random adventures would be impossible if the
+	% PC didn't know where to turn next. So, I present this nice
+	% simple plot, in which an ally of the PC will send the PC
+	% an email to give him a hint in the quest.
+
+	Element1 <Character ArchAlly>
+
+	% V1 = Time Limit
+
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 12800 email d10>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+
+	msg1 <\ELEMENT 1 @ \SCENE EScene 1 :// \NARRATIVE 3 is where it's all going to happen.>
+	msg2 <\ELEMENT 1 @ \SCENE EScene 1 :// There's something in \NARRATIVE 3 you really ought to check out.>
+	Msg3 <\ELEMENT 1 @ \SCENE EScene 1 :// Got some info for you. Something's going down in \NARRATIVE  3 .>
+	Msg4 <\ELEMENT 1 @ \SCENE EScene 1 :// I read something in the newspaper, and think that thing you're looking for may be in \NARRATIVE 3 .>
+	Msg5 <\ELEMENT 1 @ \SCENE EScene 1 :// Ever been to \NARRATIVE 3 ? It's lovely this time of year.>
+	Msg6 <\ELEMENT 1 @ \SCENE EScene 1 :// You need a break. Why don't you take a vacation in \NARRATIVE 3 ?>
+	Msg7 <\ELEMENT 1 @ \SCENE EScene 1 :// If you're interested, the info trail leads to \NARRATIVE 3 .>
+	Msg8 <\ELEMENT 1 @ \SCENE EScene 1 :// I heard there's something interesting in \NARRATIVE 3 . You may want to check it out.>
+	Msg9 <\ELEMENT 1 @ \SCENE EScene 1 :// There's been some strange things happening in \NARRATIVE 3 lately, wouldn't you say?>
+	Msg10 <\ELEMENT 1 @ \SCENE EScene 1 :// I heard someone's been looking for you in \NARRATIVE 3 .>
+

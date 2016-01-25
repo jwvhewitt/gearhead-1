@@ -1,0 +1,122 @@
+Plot 0
+	name <Drug Investigator>
+
+	% This plot contains the monk who will be investigating
+	% the artifact. The PC can always come back to this monk
+	% to learn the results of the investigation.
+
+	element1 <Grab 1>
+	element2 <Character Guardian Lawful Passionate>
+
+	% V101 = Email phase thing
+
+	start <ifPersona E2 else GoCleanDelete>
+
+	% If the master of this plot has died, better load a new
+	% investigative plot.
+	GoCleanDelete <S= 204 0 AdvancePlot 0>
+
+	% At cleanup, delete this plot. If the PC has been given the
+	% mission advance to the plot which will tell him it's over.
+	cleanup <if# S103 0 else GoRealDelete if# S104 0 else GoTimeOver AdvancePlot 2>
+	GoTimeOver <AdvancePlot 1>
+	GoRealDelete <AdvancePlot 0>
+
+	% Every 5 minutes, check for email.
+	5Min <if= d30 1 if= S103 0 else GoCheckUpdate if= PCFac E1 Email 1 S= 103 1 P= 101 S202>
+	GoCheckUpdate <if# P101 S203 ifG ComTime S205 Email 2 P= 101 S203 if# S202 S203 S= 203 S202>
+
+	% Msg1 : Initial message
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// Got an important mission for you. Come see me for the details.>
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The "Pump Pushers" are selling their dirty garbage in \NARRATIVE 2 . Gather evidence, then report to me.>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// There's been trouble with "Pump" in \NARRATIVE 2 . You've been assigned the task of investigation.>
+
+	% Msg2 : Reminder message
+	Msg2_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The lab boys say that the "Pump" came from \NARRATIVE 2 . Follow the trail, see where it leads.>
+	Msg2_2 <\ELEMENT 2 @ \SCENE EScene 2 :// Our clues point to \NARRATIVE 2 ... continue your investigation there.>
+	Msg2_3 <\ELEMENT 2 @ \SCENE EScene 2 :// Just got word in that the "Pump" dealers are operating out of \NARRATIVE 2 . Go sniff them out.>
+	Msg2_4 <\ELEMENT 2 @ \SCENE EScene 2 :// The "Pump" lab could be in \NARRATIVE 2 . See what you can find, then report to me.>
+	Msg2_5 <\ELEMENT 2 @ \SCENE EScene 2 :// >
+
+
+sub
+	Persona 2
+	rumor <>
+	% To start with, check to see whether or not the PC has already
+	% been given this mission.
+	greeting <NewChat if= S103 0 else GoStartWithCase if= PCFac E1 else GoCheckRep Say 1 AddChat 1>
+	GoCheckRep <ifG React d50 else GoNoChance Say 2 AddChat 1 AddChat 2>
+	GoNoChance <Say 3>
+
+	% If the number of clues equals the number of wins, then E2
+	% can tell the PC where to head next.
+	GoStartWithCase <NewChat if= S202 S203 else GoCheckClue  Say 5>
+
+	% If the clue timer has run its course, tell the PC the next
+	% place to go now.
+	GoCheckClue <ifG ComTime S205 else GoMustWait S= 203 S202 Say 6 AddChat 3>
+
+	% If the PC must wait, then there's not much else to do
+	% but wait. Bummer.
+	GoMustWait <Say 7>
+
+	result1 <NewChat S= 103 1 Goto GoStartWithCase>
+
+	result2 <NewChat Say 4>
+
+	result3 <NewChat V= 2 15 V+ 2 d5 Say V2>
+
+	%  01 :  PC is faction member; automatically offered job.
+	Msg1 <>
+
+	%  02 :  PC is liked; will be offered the job.
+	Msg2 <>
+
+	%  03 :  PC is denied mission; NPC will just imply it.
+	Msg3 <>
+
+	%  4 :  PC doesn't want the job.
+	Msg4 <>
+
+	%  5 :  General clue reminder.
+	Msg5 <>
+
+	%  6 :  The next clue has been discovered! Yay!
+	Msg6 <>
+
+	%  07 :  PC must wait for the lab report.
+	Msg7 <>
+
+	%  01 :  PC is interested in taking the case.
+	Prompt1 <I'll get to work on it.>
+
+	%  02 :  PC won't take the case.
+	Prompt2 <I have more important things to do.>
+
+	%  03 :  Next clue has been discovered.
+	Prompt3 <What did you find out?>
+
+
+	Plot 1
+	% This plot exists only to tell the PC that the time is up.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email 1>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+	sub
+		Persona 2
+		greeting <NewChat Say 1 AdvancePlot 0>
+		Msg1 <>
+	end
+
+	Plot 2
+	% This plot exists to reward the PC for solving the case.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email 1>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+	sub
+		Persona 2
+		greeting <NewChat Say 1 CashPrize Reward Threat PCRep 6 100 500 XPV 100 FacXP+ E1 5 AdvancePlot 0>
+		Msg1 <>
+	end
+
+end

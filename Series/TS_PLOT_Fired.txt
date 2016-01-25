@@ -1,0 +1,42 @@
+Plot 0
+	name <PLOT: FIRED!!!>
+
+	% The PC is being fired by his faction. Wahoo.
+
+	% E1 is the calling faction.
+	% E2 is a member of that faction.
+	Element2 <Character !Comrade 1>
+
+	% V1 = Email indicator
+	hour <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 176400 EMail 1 SetPlayerFaction 0 Reputation 6 -30>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// This is to inform you that \ELEMENT 1 shall no longer require your services. All privileges and responsibilities have been cancelled.>
+
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// You will no longer be serving alongside \ELEMENT 1 . As of this minute your position is terminated.>
+	CMsg1_1 <ifNPCHeroic Accept>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// This is a great pleasure... You've been dismissed from \ELEMENT 1 , wangtta. You just didn't measure up.>
+	CMsg1_2 <ifNPCVillainous Accept>
+	Msg1_3 <\ELEMENT 2 @ \SCENE EScene 2 :// For acting against the laws of \ELEMENT 1 , you have been relieved of duty.>
+	CMsg1_3 <ifNPCLawful Accept>
+	Msg1_4 <\ELEMENT 2 @ \SCENE EScene 2 :// You're not one of us anymore. Don't come around here.>
+	CMsg1_4 <ifNPCChaotic Accept>
+	Msg1_5 <\ELEMENT 2 @ \SCENE EScene 2 :// I don't know exactly what you did, but you've been dismissed from \ELEMENT 1 . We probably won't see each other much any more.>
+	CMsg1_5 <ifNPCSociable Accept>
+	Msg1_6 <\ELEMENT 2 @ \SCENE EScene 2 :// You have been dismissed from \ELEMENT 1 . That is all.>
+	CMsg1_6 <ifNPCShy Accept>
+	Msg1_7 <\ELEMENT 2 @ \SCENE EScene 2 :// I regret to inform you that you've been barred from \ELEMENT 1 .>
+	CMsg1_7 <ifNPCEasygoing Accept>
+	Msg1_8 <\ELEMENT 2 @ \SCENE EScene 2 :// You have made yourself an enemy of \ELEMENT 1 , and are henceforth banished from our presence.>
+	CMsg1_8 <ifNPCPassionate Accept>
+	Msg1_9 <\ELEMENT 2 @ \SCENE EScene 2 :// Hey, remember you said you'd like to find a new job? Well, now you can. You've been fired from \ELEMENT 1 .>
+	CMsg1_9 <ifNPCCheerful Accept>
+	Msg1_10 <\ELEMENT 2 @ \SCENE EScene 2 :// You betrayed us. You are no longer of \ELEMENT 1 ; don't ever speak to us again.>
+	CMsg1_10 <ifNPCMelancholy Accept>
+	Msg1_11 <\ELEMENT 2 @ \SCENE EScene 2 :// In accordance with our contract, you have been dismissed from \ELEMENT 1 . All rank and privileges are revoked.>
+	CMsg1_11 <ifNPCPragmatic Accept>
+	Msg1_12 <\ELEMENT 2 @ \SCENE EScene 2 :// You should move on... \ELEMENT 1 no longer requires your services.>
+	CMsg1_12 <ifNPCSpiritual Accept>
+
+

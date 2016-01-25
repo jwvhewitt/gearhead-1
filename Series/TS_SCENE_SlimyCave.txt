@@ -1,0 +1,55 @@
+SCene 0
+% Slimy Cave scene
+% This is an infinite dungeon.
+
+% V3 = *Current Depth
+% V4 = *Current Monster Rating
+% V5 =  Initialization Counter
+
+	special <NoExit>
+	NU1 <if= T1 0 Return SeekGate -1>
+	CaveMap
+	BorderType 15
+	FloorType 14
+	marbletype 7
+
+	start <Print 1 if= V5 0 V= 5 1 MonsterUp 2 V4>
+	Msg1 <You are approximately \VAL V3 meters below the surface.>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Cave Water Sea>
+
+	Team 3
+	home <DownSpot>
+
+	rect
+	width 5
+	height 5
+	FloorType 14
+	sub
+		StairsUp
+		Destination -1
+		use <Print 1 L+ 3 -5 L+ 4 -3 ifG 1 L3 else GoUpStairs Return SeekGate -1>
+		GoUpStairs <LoadD .sitename PassVar 3 L3 PassVar 4 L4 SeekGate 1>
+		.sitename <TS_SCENE_SlimyCave.txt>
+	end
+
+	rect
+	width 5
+	height 5
+	name <DownSpot>
+	FloorType 14
+	sub
+		StairsDown
+		Destination 1
+		use <Print 1 L+ 3 5 L+ 4 3 LoadD .sitename PassVar 3 L3 PassVar 4 L4 SeekGate -1 ifG L3 50 DynaItemTeam 6 3>
+		.sitename <TS_SCENE_SlimyCave.txt>
+		update <ifG L3 50  SetStat STAT_MetaVisibility -1>
+	end
+
+end

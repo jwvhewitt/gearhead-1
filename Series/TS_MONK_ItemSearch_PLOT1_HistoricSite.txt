@@ -1,0 +1,163 @@
+Plot 0
+	name <Historic Site>
+
+	% An item will be found. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	Element4 <Character Old Heroic !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have recovered clue from item
+	%  V4 = Combat Indicator
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	.usekey <if= V3 0 V= 3 1>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V4=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V4 1  V= 4 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V4 1  V= 4 3  Reputation 6  1  XPV 50  S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 Print 101>
+
+	Msg101 <The monsters seem to have been defeated.>
+
+sub
+	Persona 4
+	rumor <!4 is really upset about an old historic site.>
+	%  V1 =  Mission Accepted Counter
+	%  V2 =  Message Randomizer
+	greeting <NewChat if= P4 3 else GoCheckLoss Say d3 AddReact d12 Memo 0 DeleteKeyItem E3 if= P3 1 else GoJustEnd S= 203 P2 Goto GoDelete>
+	GoJustEnd <AdvancePlot 0>
+	GoCheckLoss <if= P4 2 else GoCheckMission V= 2 15 V+ 2 d3 Say V2 DeleteKeyItem E3 AdvancePlot 0>
+
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 105 Goto GoAddComOps>
+	GoDelete <Say 101 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React d30 else GoNoChance V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoNoChance <V= 2 9 V+ 2 d3 Say V2 S= 201 0 AdvancePlot 0>
+
+	GoAddComOps <V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat V= 1 1 Memo 104 V= 2 3 V+ 2 d3 Say V2 Goto GoAddComOps>
+	result2 <Goto result1>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result3 <NewChat Say 102 AdvancePlot 0>
+	result4 <Goto result3>
+
+	% For the purposes of this template, I'll use a combat encounter with
+	% the prop included.
+	result5 <EndChat V= 2 12 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos MDynamic 0 S2 .mon .nu1 .nu2 P= 4 1 DynaItem E3>
+	.mon <MUTANT ANIMAL BUG>
+	.nu1 <if= T1 0 Return>
+	.nu2 <>
+	result6 <Goto result5>
+
+	result7 <NewChat Say 103>
+	result8 <Goto result7>
+
+	%  01 - 03 :  PC has won the mission.
+	Msg1 <You did it! The park has been cleared of vermin... Now it's a safe place to go once again.>
+	Msg2 <Ah, it's good that all those vermin have been cleared out from the park. Now families can go picnic there again.>
+	Msg3 <The monsters have been sent packing. Thank you for helping to clean out the park... Here's your reward.>
+
+	%  04 - 06 :  Mission description.
+	Msg4 <The biggest problem with the park is the monsters. There's too many of them... I guess for a park, any monsters at all is too many. I want you to get rid of them.>
+	Msg5 <Honestly speaking, it's not the grass or the litter that's the main problem. It's the monsters that have moved in. I want you to get rid of the lot of them.>
+	Msg6 <Well, I've found someone to cut the grass, and another person to polish the monolith, but neither of them can go to work until the monsters are gone. I need you to head in and exterminate all the monsters that now live in the park.>
+
+	%  07 - 09 :  PC will be offered the mission here.
+	Msg7 <Our memorial park has fallen into disrepair. It's an old place with structures dating back to the Age of Superpowers. I could use the help of a young, able-bodied person such as yourself to go clean it up.>
+	Msg8 <The old park outside of town has been abandoned in recent years. It's a place full of history... it's got structures dating back as far as the Age of Superpowers. If you're interested in earning a few dollars, how about cleaning it up?>
+	Msg9 <Nobody goes to the memorial park anymore. It's a very old place. They say that the monolith was there from before the Night of Fire. Look, if you aren't busy, I can give you a few dollars to head over that way and clean the place up.>
+
+	%  10 - 12 :  Mission will be implied.
+	Msg10 <Kids these days don't care about the past...>
+	Msg11 <Nobody in town wants to get involved...>
+	Msg12 <It's a shame what's become of the old park...>
+
+	%  13 - 15 :  Combat is starting.
+	Msg13 <Good luck. Remember, it's for the community!>
+	Msg14 <Do a good job on this one and I may be able to find some more work for you!>
+	Msg15 <I'll be waiting right here for you to finish.>
+
+	%  16 - 18 :  PC has lost the mission.
+	Msg16 <So, those monsters were too tough for you? I told them we should clean that place more often...>
+	Msg17 <I'm not suprised that you got your ass kicked. If we cleaned the park more often the monsters wouldn't be able to get so powerful.>
+	Msg18 <Well, I guess that now the park really does belong to the monsters...>
+
+	%  101 :  The item somehow got destroyed...
+	Msg101 <The monolith was destroyed. Not much point in cleaning up the park any more, now is there?>
+
+	%  102 :  The PC refused the mission.
+	Msg102 <That's the trouble... nobody cares about the past anymore!>
+
+	%  103 :  The PC needs some time to get ready.
+	Msg103 <Get yourself ready, then come back.>
+
+	%  104 :  Memo
+	Msg104 <\ELEMENT 4 in \SCENE EScene 4 asked you to remove monsters from the memorial park.>
+
+	%  105 :  PC has come back after getting ready
+	Msg105 <Are you ready yet?>
+
+	%  01 - 02 :  PC will accept the mission.
+	Prompt1 <Alright, I can do that.>
+	Prompt2 <Okay, I'll do that for you.>
+
+	%  03 - 04 :  PC doesn't want the mission.
+	Prompt3 <Sorry, that doesn't sound interesting.>
+	Prompt4 <I'm not interested.>
+
+	%  05 - 06 :  Start the mission now.
+	Prompt5 <I'm ready to do some cleaning!>
+	Prompt6 <All ready to go!>
+
+	%  07 - 08 :  PC needs time to prepare.
+	Prompt7 <I need some time to prepare.>
+	Prompt8 <Give me some time to get ready.>
+
+end
+inv
+	STC MONOLITH
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 4>
+	GoNoSolve <Print 2>
+	Clue37 <Print 3>
+	Clue29 <ifG PCSkillVal 29 V4 else GoDid Mental V= 4 PCSkillVal 29 ifG SkRoll 29 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <If this monolith is an old style phase antenna, it's aligned to receive signals from what is now \SCENE V1 .>
+	Msg2 <You can't determine anything from this monolith.>
+	Msg3 <It's completely featureless. You won't learn anything about it this way.>
+	Msg4 <It's a monolith.>
+
+end

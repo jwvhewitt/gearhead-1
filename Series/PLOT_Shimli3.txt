@@ -1,0 +1,25 @@
+Plot 0
+	name <PLOT: Shimli 3>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Young Sex:F Lawful>
+	rumor <!1 has been reading fashion magazines.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 2 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 2 -1 NewChat Say 4>
+	Msg1 <Er, I have to ask you something. Do you think it's better to always be truthful, or do you think it's sometimes better to lie?>
+	Msg2 <In that case, I think you better know, those shoes really don't go well with that jacket. Try to find something in autumn tones.>
+	Msg3 <Well that's a very helpful answer! I guess I just have to think about this on my own.>
+	Msg4 <Always? I don't know. Incidentally, you look fantastic today! Did you cut your hair?>
+	prompt1 <It's better to be truthful.>
+	prompt2 <It depends on the situation.>
+	prompt3 <It's better to lie. Always.>
+
+end

@@ -1,0 +1,199 @@
+Plot 0
+	% A leader might just give the PC a gift, if the PC is
+	% well-enough liked.
+	name <PLOT: Gift>
+
+	Element1 <Character Leader Renowned Cheerful>
+
+	% Time limit code.
+	START <ifPersona E1 else GoDelete  if= V1 0 else GotoCheckTime  V= 1 ComTime V+ 1 30000>
+	GotoCheckTime <ifG ComTime V1  AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <it's useful to have friends in high places.>
+	greeting <NewChat  AdvancePlot 0  ifG React 90 else GoNoUltra  ifG PCRep 6 d100 else GoNoUltra  ifG PCRep 1 50 else GoUNoHero  ifG NPCRep E1 1 d100 else GoUNoHero  Say 1  AddChat 1 AddChat 2 AddChat 3>
+	GoUNoHero <ifG PCRep 2 d100 else GoUNoLawful  ifG NPCRep E1 2 0 else GoUNoLawful  Say 8  AddChat 7 AddChat 8>
+	GoUNoLawful <ifG PCRep 3 d100 else GoUNoSocial  ifG NPCRep E1 3 0 else GoUNoSocial  Say 14  AddChat 12 AddChat 13 AddChat 14>
+	GoUNoSocial <Say 20  AddChat 16 AddChat 17 AddChat 18>
+
+	GoNoUltra <ifG React 70 else GoNoHigh  ifG NPCRep E1 2 d100 else GoHNoLaw  ifG PCRep 2 75 else GoHMedLaw  ifG PCRep 6 d100 else GoHMedLaw  Say 27 AddChat 22 AddChat 23>
+	GoHMedLaw <ifG PCRep 2 d100 else GoHNoLaw  Say 32  AddChat 26  AddChat 27  AddChat 28>
+	GoHNoLaw <ifG NPCRep E1 1 d25 else GoHNoHero  ifG PCRep 1 75 else GoHMedHero  Say 47  AddChat 37  AddChat 38>
+	GoHMedHero <ifG PCRep 1 d100 else GoHNoHero  ifG PCRep 6 d100 else GoHNoHero  Say 54  AddChat 42  AddChat 43>
+	GoHNoHero <ifG PCRep 6 d100 else GoNothing  Say 37  AddChat 29 AddChat 30 AddChat 31>
+
+	GoNoHigh <ifG React 50 else GoNothing  ifG PCRep 6 d100 else GoNothing  Say 24  AddChat 19 AddChat 20 AddChat 21>
+
+	GoNothing <SayAnything>
+
+	result1 <NewChat Say 2  AddChat 4 AddChat 5 AddChat 6>
+	result2 <NewChat Say 3  Reputation 5 1   AddChat 4 AddChat 5 AddChat 6>
+	result3 <NewChat Say 4  Reputation 5 -1  AddChat 4 AddChat 5 AddChat 6>
+	result4 <NewChat CashPrize 350000  AddReact -5  ifG NPCRep 7 d30 else GoR4NoPrag  Say 12>
+	GoR4NoPrag <Say 5>
+	result5 <NewChat Say 6  CashPrize 100000  AddReact -3  Reputation 6 1  if= PCRep 1 100 else GoR5NoMax  XPV 1000>
+	GoR5NoMax <Reputation 1 d3>
+	result6 <NewChat Say 7  mechaprize .r6mek  AddReact -5  AddChat 41>
+	.r6mek <Jos.txt>
+	result7 <NewChat  Say 9   AddChat 9 AddChat 10 AddChat 11>
+	result8 <NewChat  Say 10  AddChat 9 AddChat 10 AddChat 11  ifG 25 PCRep 2  Reputation 2 -1  Reputation 6 -1>
+	result9 <NewChat  Say 11  Reputation 1 1  if= PCRep 2 100  XPV 1000>
+	result10 <NewChat  CashPrize 200000  AddReact -5  ifG NPCRep 7 d30 else GoR4NoPrag  Say 12>
+	result11 <NewChat  Say 13  MechaPrize .R11mek  AddReact -5  AddChat 41>
+	.r11mek <Daum.txt>
+	result12 <NewChat  Say 15  AddChat 10 AddChat 11 AddChat 15>
+	result13 <NewChat  Say 16  Reputation 3 1  AddChat 10 AddChat 11 AddChat 15>
+	result14 <NewChat  Say 17  Reputation 7 1  AddChat 10 AddChat 11 AddChat 15>
+	result15 <NewChat  Reputation 3 1  ifG Reputation 6 80 else GoR15NoFame  Say 18  XPV 500>
+	GoR15NoFame <Say 19  Reputation 6 d10>
+	result16 <NewChat  Say 21  AddReact -5  CashPrize 100000  AddChat 41>
+	result17 <NewChat  Say 22  AddReact -5  mechaprize .r17mek  AddChat 41>
+	.r17mek <Corsair.txt>
+	result18 <NewChat  Say 23  ifG PCRep 1 0 else GoR18NoHero Reputation 1 1>
+	GoR18NoHero <Reputation 3 -1>
+	result19 <NewChat  Say 25  AddReact -5  CashPrize 50000>
+	result20 <NewChat  Say 26  AddReact -2  ifG PCRep 1 0 else GoR18NoHero Reputation 1 1>
+	result21 <NewChat  Say 25  Reputation 4 -1  AddReact -4  CashPrize 50000>
+	result22 <NewChat  Say 28  AddChat 10 AddChat 11 AddChat 15>
+	result23 <NewChat  Say 29  AddChat 24 AddChat 11 AddChat 25  Reputation 1 1  AddReact -2>
+	result24 <NewChat  Say 30  AddReact 3  AddReact d6  Reputation 1 1>
+	result25 <NewChat  Say 31  CashPrize 150000  AddReact -2>
+	result26 <NewChat  Reputation 3 1  ifG PCRep 6 25 else GoR26NoRespect  Say 33  CashPrize 150000  AddReact -3>
+	GoR26NoRespect <Say 34  Reputation 6 d8  CashPrize 150000  AddReact -4>
+	result27 <NewChat  Say 35  CashPrize 150000  AddReact -2>
+	result28 <NewChat  Say 36  Reputation 1 1  AddReact d5>
+	result29 <NewChat  Reputation 2 1  ifG PCRep 1 0 else GoR29NoGood  Say 38  AddChat 34  AddChat 35  AddChat 36>
+	GoR29NoGood <Say 39 AddChat 32 AddChat 33>
+	result30 <NewChat  Say 40  AddChat 34  AddChat 35  AddChat 36  Reputation 5 -1>
+	result31 <NewChat  Say 41  AddChat 34  AddChat 35  AddChat 36>
+	result32 <NewChat  Say 42  CashPrize 100000  Reputation 1 -1  Reputation 6 -1>
+	result33 <NewChat  Say 43  Reputation 1 1  Reputation 4 -1>
+	result34 <NewChat  Say 44  AddReact -5  mechaprize .r34mek  AddChat 41>
+	.r34mek <Domino.txt>
+	result35 <NewChat  Say 45  AddReact -5  CashPrize 150000>
+	result36 <NewChat  Say 46  Reputation 1 1  Reputation 6 1>
+	result37 <NewChat  Say 48  Reputation 1 1  AddReact d6  AddChat 39  AddChat 40>
+	result38 <NewChat  Say 49  AddReact -4 mechaprize .r38mek  AddChat 41>
+	.r38mek <Chameleon.txt>
+	result39 <NewChat  Say 50  mechaprize .r39mek  reputation 3 1>
+	.r39mek <Ultari.txt>
+	result40 <NewChat  reputation 1 1  ifG PCRep 1 d100 else GoR40NoDice  ifG SkRoll 19 6 else GoR40NoDice  Say 51>
+	GoR40NoDice <AddReact -5  Say 52>
+	result41 <NewChat  Say 53  AddReact d3  Reputation 3 1>
+	result42 <NewChat  Say 55  AddReact -3  CashPrize 150000>
+	result43 <NewChat  Say 56  Reputation 1 1  AddChat 44 AddChat 45 AddChat 46>
+	result44 <NewChat  Say 57  Reputation 3 -1>
+	result45 <NewChat  Say 58  Reputation 7 -1>
+	result46 <NewChat  Say 59  Reputation 4 1  Reputation 5 1>
+
+	Msg1 <It's an honor to have a true hero like yourself as my friend. Everyone has been talking about your exploits, and how you've made the world a better place.>
+	Msg2 <This isn't just idle thanks. I want to reward you in some small way for all the good you've done. If you could choose one reward, one that's in my power to provide, what would you choose?>
+	Msg3 <Yes, you do. You've accomplished a lot of good things, and I would like to reward you for them. Tell me, what kind of reward would you like?>
+	Msg4 <Humility may be one of your virtues, but everyone around you can see how much you've actually accomplished. I want to reward you for all your good deeds... What would you like to have?>
+	Msg5 <Money? Hm, I was hoping for something a bit more poetic, but I guess that's the most practical reward I could give you. In honor of your heroic deeds, here is a grant with which to continue your adventuring career.>
+	Msg6 <I sort of thought you'd say that, so I prepared this gift ahead of time. This money will help with your adventuring career. You are a true hero.>
+	Msg7 <In honor of your heroic actions, I am pleased to give you this "Jos" mecha from the \SCENE EScene 1 armory. I don't know if it matches your style, but they say it's a pretty good model.>
+	Msg8 <It's very good to have as my friend someone who has done so much to protect our city from criminals and anarchy. I want to thank you for that.>
+	Msg9 <Well, perhaps I'm overstating the case a little, but in any event I think you'll agree that we both have an interest in maintaining the rule of law. I'd like to reward you for your service to the community.>
+	Msg10 <We both have a strong interest in maintaining the law, and in ensuring a harmonious community. I want to reward you for all the good you've done. What is your desire?>
+	Msg11 <Really? Well, that's your decision. In that case my thanks to you will have to suffice.>
+	Msg12 <Certainly. That's a very practical request. Here is a grant for you to continue on in your adventuring career; you can spend this money on whatever seems most useful.>
+	Msg13 <I hereby present you with this "Daum" from the \SCENE EScene 1 armory, in recognition of your service. I don't know much about mecha but they tell me this is one of the most versatile units around, the successor of the old "BuruBuru".>
+	Msg14 <You've made a lot of friends in this town. You've brought people together, and for that I think you need to be thanked.>
+	Msg15 <Sure you did. In any case, I want to help support you in your adventures. What sort of things do you need?>
+	Msg16 <Then I guess that's why you're so good at it. Making friends may not be as flashy as piloting mechs, but when it comes to a secure community it's just as important. What do you need?>
+	Msg17 <Yes, I suppose, if it's money you want. I could also give you a new mecha, or see if I can pull any favors for you...>
+	Msg18 <Make you famous? You already are famous! There's not much else I could do on top of that. Rest assured, thought, that all of my contacts are going to be hearing your name...>
+	Msg19 <I'll see what I can do. I will be sure to tell everyone how great you are!>
+	Msg20 <Hello again. I'd really like to help out in your adventure... As leader of \SCENE EScene 1 I have quite a few resources at my disposal. Is there anything you need?>
+	Msg21 <Well, that's easy enough to help you with. Here's $100000. I hope that will be enough to purchase new supplies.>
+	Msg22 <That's easy to do. Here is a "Corsair" mecha, recently decommisioned from the \SCENE EScene 1 garrison. I hear that it's quite fast, and has good ranged combat ability.>
+	Msg23 <Really? Hm, well if you ever do need anything I hope you remember that you have a friend in me.>
+	Msg24 <I think that you have a bright future ahead of you. On behaf of \SCENE EScene 1 I'd like to help fund your adventure. We have a cheque for $50000 if you want to take it.>
+	Msg25 <Here you go. I certainly hope that this money will be of use to you in your adventures.>
+	Msg26 <If that's what you want, then so be it. I wish you the best of luck.>
+	Msg27 <You have been a shining defender of the law, and for that our community wishes to thank you. I have been authorized to present you with a reward in honor of your heroic deeds.>
+	Msg28 <That's up to you, really. What do you wish for? Give me a suggestion and I'll let you know whether or not it is within my ability to provide.>
+	Msg29 <No, please, we've decided that we want to give you something. Surely there must be something that you want or need.>
+	Msg30 <You posess true nobility. On behaf of \SCENE EScene 1 I offer you our deepest thanks, for helping to keep our town safe.>
+	Msg31 <Here is a small grant from our city treasury. Hopefully it will be useful to you in your adventuring career.>
+	Msg32 <You have shown yourself to be a true defender of the law. On behaf of \SCENE EScene 1 I'd like to give you this cash grant, so that you may continue to develop your adventuring career.>
+	Msg33 <I think you'll find that your accomplishments are already recognized by a large number of people. Here is your reward; I hope that it will help you.>
+	Msg34 <In time I know you will be recognized for all the potential you have. Here is your reward. May it aid you in your adventuring career.>
+	Msg35 <It's in the best interest of \SCENE EScene 1 to promote and encourage noble adventurers such as yourself. Here is your reward. I hope that it will be quite useful to you.>
+	Msg36 <That's very noble of you. In any case, our city owes you its gratitude. You will always have friends here.>
+	Msg37 <\SCENE EScene 1 tries to support adventurers who have made a positive impact upon society. You have been chosen as the recipient of our next award.>
+	Msg38 <You may not recognize your good deeds yourself, but believe me that others have been paying attention. For your reward you may choose either a new mecha or a cash grant. What would be most useful to you?>
+	Msg39 <Come to think of it, you're right... I threw your name into the pot because I like you, but I guess the other council members didn't bother to read your dossier. So, do you want the prize anyhow?>
+	Msg40 <There's no catch. The prize is yours, without any obligations or requirements. You may select either a new mecha or a cash grant. Which one do you prefer?>
+	Msg41 <You may choose either a brand new "Domino" class mecha or a cash grant of $150000 as your reward. Which of these would be most useful to you?>
+	Msg42 <Here you go, a grant for $100000, straight from the \SCENE EScene 1 treasury. Enjoy your winnings.>
+	Msg43 <I understand. It's kind of disappointing finding out the conditions under which you were chosen for the prize... We'll never speak of this ever again.>
+	Msg44 <The "Domino" is a long-range fire support mek. Its energy cannons don't seem all that powerful, but when used by a skilled marksman they can still be do a lot of damage.>
+	Msg45 <May this money help you in your adventuring career.>
+	Msg46 <That's very noble of you. I'll donate the prize money to charity in your name, then.>
+	Msg47 <They say that no good deed should go unrewarded, so I am pleased to tell you that the \SCENE EScene 1 council has decided to honor you with a lavish reward!>
+	Msg48 <Oh no, that won't do! You see, we've already paid for your prize... A brand new "Ultari" class mechatank! I don't know much about mecha but they say this model is absolutely ubiquitous!>
+	Msg49 <Here it is, your very own "Chameleon"-class battroid! The lady at the shop said that this is one of the most popular general-purpose mecha suits in use today. It's well armed, comes with a targeting computer and advanced handling.>
+	Msg50 <I've heard that the "Ultari" is the oldest fighting machine still in general production. I guess it must be pretty well designed for that, like a shark or a cockroach. I certainly hope you enjoy it!>
+	Msg51 <Wow, you really are heroic! It was a wise decision to select you for this award. I will find a worthy cause which is in need of a main battle tank, and donate it in your name.>
+	Msg52 <You don't like our gift? That's disappointing... Still, if it won't be useful to you, I suppose we should try to find someone who can use it instead...>
+	Msg53 <You're very welcome.>
+	Msg54 <The \SCENE EScene 1 council has decided to reward you for your many heroic deeds. I have here a cheque for $150000, payable to you.>
+	Msg55 <I hope that this cash will aid you in your adventuring career.>
+	Msg56 <Why not? Is there some kind of law that a hero can't be rewarded for his deeds?>
+	Msg57 <Self-reliance is a good thing, but it can also be a lonely path to follow... I will donate this money to charity in your name, if that's alright with you.>
+	Msg58 <You are very noble, but it seems to me that you need at least some money to keep doing the good work that you do. I will donate this money to charity in your name.>
+	Msg59 <Ah... Well, in that case, I'll just donate this money to charity in your name.>
+
+	Prompt1 <Thank you very much.>
+	Prompt2 <I always try my best.>
+	Prompt3 <Really, I don't do that much.>
+	Prompt4 <I could use some money.>
+	Prompt5 <I don't want any reward.>
+	Prompt6 <A brand new mecha!>
+	Prompt7 <What? I don't think I did...>
+	Prompt8 <Thank you. I do my best.>
+	Prompt9 <I don't require any reward.>
+	Prompt10 <Can I get money?>
+	Prompt11 <Can you give me a mecha?>
+	Prompt12 <I don't think I did that...>
+	Prompt13 <It was my pleasure.>
+	Prompt14 <Thanked? Like with money?>
+	Prompt15 <Can you make me famous?>
+	Prompt16 <I need money.>
+	Prompt17 <I need a new mecha.>
+	Prompt18 <No, there's nothing I need.>
+	Prompt19 <I'd like to thank you for this!>
+	Prompt20 <No, I don't need your money.>
+	Prompt21 <Woo-hoo!!!>
+	Prompt22 <Great! What do I get?>
+	Prompt23 <Really, no thanks are nessecary.>
+	Prompt24 <Your thanks is reward enough.>
+	Prompt25 <Well, I could use some money...>
+	Prompt26 <Finally, my work is recognized!>
+	Prompt27 <That's very generous of you.>
+	Prompt28 <Sorry, I can't take the money.>
+	Prompt29 <Me? I didn't do anything good...>
+	Prompt30 <What's the catch?>
+	Prompt31 <A reward? Thank you!>
+	Prompt32 <Give it to me.>
+	Prompt33 <No, never mind...>
+	Prompt34 <Give me the mecha.>
+	Prompt35 <Give me the money.>
+	Prompt36 <I don't want any reward.>
+	Prompt37 <Your good will is reward enough.>
+	Prompt38 <A reward? For me? Thanks!>
+	Prompt39 <It's just what I wanted!>
+	Prompt40 <Uh, why not donate it to charity?>
+	Prompt41 <Thank you very much!>
+	Prompt42 <I'm honored by your gift!>
+	Prompt43 <Sorry, I can't accept it.>
+	Prompt44 <I only rely upon myself.>
+	Prompt45 <I care not for material things.>
+	Prompt46 <I have enough money already!>
+
+end
+

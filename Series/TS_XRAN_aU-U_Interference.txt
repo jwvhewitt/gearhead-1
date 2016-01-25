@@ -1,0 +1,171 @@
+plot 0
+	name <Interference>
+
+	% The PC will meet a farmer whose field is being attacked.
+	% If the PC takes the job to defend the field, he will be
+	% attacked by mecha and get a message from <ENEMY>. COngrats!
+	% The PC now has an enemy to fight!
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will give the PC a mission.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the spare enemy.
+	Element1 <Grab 3>
+	Element2 <Prefab>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Prefab>
+
+	% V1 = Initialization
+	% V2 = Combat Counter
+
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 dies, load a new plot.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTalk V= 1 1 ifPersona N1 else GoReplaceN1 DeleteChar E4 E= 4 N1>
+	% AT start of first combat, start a conversation with E4...
+	GoCheckTalk <if= V2 1 if= V1 1 ForceChat E4 V= 1 2>
+	GoReplaceN1 <N= 1 E4>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100>
+
+sub
+	Persona 2
+	rumor <!2 is looking for a mecha pilot to help defend her farm.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	%  V5 = Recharge time if mission fails
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+
+	greeting <NewChat if= P2 3 else GoCheckLoss  Say 1 CashPrize V4 PCAlly E2 Goto GoEndMission>
+	GoCheckLoss <if= P2 2 else GoCheckMission Say 2 S= 101 1 N= 3 S= 105 -1 E3 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoFirstTime Say 4 AddChat 1 AddChat 2 AddChat 3>
+
+	% Unlike most combat missions, the PC is guaranteed to be offered
+	% this one, since it's personal.
+	% Set V1, V3, V4 here.
+	GoFirstTime <V= 1 1 V= 3 Threat S103 100  V= 4 Reward V3 500 Memo 11 Say 6 AddChat 4 AddChat 5>
+
+	% Do everything here that has to be done. If some of the ExtraRandom
+	% parameters need to be changed, do that here as well.
+	GoEndMission <S= 101 1 S+ 102 1  S= 105 -1  N= 3 E3 AdvancePlot 1>
+
+	% Combat being entered
+	result1 <EndChat Say 5 SavePos P= 2 1 History 13 Dynamic 2 V3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	% Combat being delayed
+	result2 <NewChat Say 7>
+	% How many points do the enemy have?
+	result3 <NewChat Say 8 AddChat 1 AddChat 2>
+
+	% Result 4 - may add Reputation command or whatnot
+	result4 <NewChat Reputation 1 1 Say 9 AddChat 1 AddChat 2 AddChat 6>
+
+	% Result 5 - may add Reputation command or whatnot
+	result5 <NewChat Say 10 S= 101 1 N= 3 E3 AdvancePlot 0>
+
+	result6 <NewChat Say 12 AddChat 1 AddChat 2 AddChat 3>
+
+	% 1 : Player has won the mission
+	%    Should mention that next episode will happen in \ELEMENT 3
+	Msg1 <You did it! I'm sure they won't be bothering me again... at least not until they buy some new robots!>
+
+	% 2 : Player lost mission
+	Msg2 <Oh no, they were stronger than you... It's good that you weren't hurt, at least.>
+
+	% 4 : Player has accepted mission, has returned from repair
+	Msg4 <Hi. Are you ready to go fight those thugs who've been wrecking my farm?>
+
+	% 5 : Combat is starting
+	Msg5 <Good luck out there. I hope it works...>
+
+	% 6 : NPC explains what the PC should do in this mission, and why
+	Msg6 <Five times in the past month my farm has been attacked by thugs in mecha. I don't understand why they keep coming... they don't steal anything, just destroy my crops and leave. I really need help but I don't know where to turn.>
+
+	% 7 : PC needs some time to get ready
+	Msg7 <Okay. Take all the time you need... I'm just grateful to be getting help at all!>
+
+	% 8 : How many points? Use "\VAL V3 " for that
+	Msg8 <I'm not really sure. They're really big, and leave huge footprints in my field... Of course that could be said about any mecha, I guess. I really don't know.>
+
+	% 9 : Response to Prompt4
+	Msg9 <Are you volunteering? That'd be great! I'd be eternally thankful if you could stop those people from ever coming back! There may even be a small cash reward for you...>
+
+	% 10 : Response to Prompt5
+	Msg10 <I'll have to find someone else to help, then.>
+
+	% 11 : Memo
+	Msg11 <\ELEMENT 2 in \SCENE EScene 2 wants you to defend her farm from mecha bandits.>
+
+	Msg12 <I'll pay $ \VAL V4 if you can destroy their mecha. I think that's a fair price... I've never actually done this before, so I don't know.>
+	Msg13 <You agreed to defend \ELEMENT 2 's farm against \ELEMENT 4 .>
+
+	% 1 - 3 :  Standard combat entry options:
+	%         Start Mission, Delay Mission, Mission Details
+	Prompt1 <I'm ready to fight them now.>
+	Prompt2 <I'll come back and fight them later.>
+	Prompt3 <What kind of mecha do they have?>
+
+	% 4 - 5 :  PC can have different reactions to Msg6 above
+	Prompt4 <Maybe you need to hire a mecha pilot.>
+	Prompt5 <Sorry, I can't help you.>
+
+	Prompt6 <What kind of cash reward?>
+
+
+	Persona 4
+	% The PC's soon-to-be enemy.
+	greeting <EndChat if= V1 0 else GoBeenBefore V= 1 1 History 5 Say 1 AddChat 1 AddChat 2 AddChat 3 XREnemy NAV_XRECharacter XRBadThing NAV_XRBResolved>
+	GoBeenBefore <SayAnything>
+	result1 <EndChat Say 2 Reputation 6 -1 Reputation 4 d5>
+	result2 <EndChat Say 3 Reputation 4 -d8>
+	result3 <EndChat Say 4 Reputation 3 1>
+	Msg1 <Who are you? What are you doing here? Don't interfere in our business, or you're going to end up dead!>
+	Msg2 <It's too late for that. It's obvious that you were sent here to confront us... My men will make an example of you! Nobody opposes us and survives!>
+	Msg3 <Ah, you have spirit. Perhaps you would be a worthy adversary... I'm afraid I won't be able to find out, as my men here are going to kill you right now. Nobody opposes us and gets away alive.>
+	Msg4 <You are getting involved in things much more serious than you can imagine. You should not have come here... But now that you are involved, you will have to die! Nobody opposes us and lives.>
+	Msg5 <\ELEMENT 4 swore revenge against you.>
+	Prompt1 <Sorry, I was just leaving...>
+	Prompt2 <It is YOU who shouldn't interfere with ME.>
+	Prompt3 <\ELEMENT 2 sent me to defend the farm.>
+
+	Plot 1
+		% NPC will send threatening email to PC.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 EMail d3>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <\ELEMENT 4 @ \ELEMENT 3 :// I won't forget what you did. I will have my revenge!>
+		Msg2 <\ELEMENT 4 @ \ELEMENT 3 :// You will pay dearly for crossing me. I know who you are, and I will destroy you!>
+		Msg3 <\ELEMENT 4 @ \ELEMENT 3 :// I warned you not to interfere. Now I will have to destroy you!>
+
+end
+inv
+	NPC Citizen
+	place <1 PASS ALLY>
+	chardesc Female Heroic Lawful Cheerful
+
+	NPC Soldier
+	mecha <Excel.txt>
+	EquipChar 20000
+
+end

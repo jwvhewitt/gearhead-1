@@ -1,0 +1,28 @@
+Scene 0
+
+inv
+	Door
+	XPos 5
+	YPos 23
+
+	Door
+	XPos 8
+	YPos 26
+
+	Door
+	XPos 12
+	YPos 21
+
+	Door
+	XPos 17
+	YPos 16
+
+	Door
+	XPos 15
+	YPos 29
+
+	Door
+	XPos 22
+	YPos 31
+
+end

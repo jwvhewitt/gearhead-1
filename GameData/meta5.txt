@@ -1,0 +1,18 @@
+% Default Village Scripts %
+name <Village>
+use <if= StatVal STAT_MetaVisibility 0 ifNoObjections EWM StatVal 4 ifFactionEnemy SceneFaction StatVal 4 else GoEnter Goto GoFight>
+GoFight <ifG SkRoll 11 10 else GoNoSee ifYesNo 2 3 4 else GoStartCombat Reputation 3 -d3 ifG SkRoll 25 15 else GoStealthFail Print 5 Exit StatVal 4>
+GoNoSee <Alert 1 Goto GoStartCombat>
+GoStealthFail <Print 6 Goto GoStartCombat>
+GoStartCombat <SavePos Dynamic 0 Threat PCRep 6 2 .nu1 .nu2 PassVar 1 StatVal 4 PassVar 2 SceneID>
+.nu1 <if= T1 0 Return>
+.nu2 <if= T2 0 if# V1 0 Exit V1 SeekGate V2 V= 1 0>
+GoEnter <Exit StatVal 4>
+roguechar <*>
+SDL_Sprite <meta_terrain.png>
+Msg1 <While entering \SCENE StatVal 4 , you are attacked by the village militia!>
+Msg2 <While entering \SCENE StatVal 4 , you are confronted by the village militia.>
+Msg3 <Try to sneak around them.>
+Msg4 <Engage in personal combat.>
+Msg5 <You evade the militia and slip into town.>
+Msg6 <You fail to evade the militia, and will now have to defend yourself...>

@@ -1,0 +1,42 @@
+ 1. Open Ground
+ 2. Light Forest
+ 3. Heavy Forest
+ 4. L1 Water
+ 5. Rubble
+ 6. Pavement
+ 7. Swamp
+ 8. L1 Hill
+ 9. L2 Hill
+10. L3 Hill
+11. Rough Ground
+12. Low Wall
+13. Residential Wall
+14. Stone Floor
+15. Stone Wall
+16. Generic Floor
+17. Dirt
+18. Hospital Wall
+19. Threshold
+20. Blue Carpet
+21. L2 Water
+22. L3 Water
+23. Generic Wall
+24. Gold Wall
+25. Red Carpet
+26. Wooden Floor
+27. Wooden Wall
+28. Tile Floor
+29. (Rusty) Steel Wall
+30. Marble Floor
+31. Earth Wall
+32. Shop Wall
+33. Fortress Wall
+34. (Shiny) Steel Wall
+35. Industrial Wall
+36. (tawdry) Shop Wall
+37. Restaurant Wall
+38. Garage Wall
+39. Sand
+40. Wreckage
+41. Organic Floor
+42. Organic Wall

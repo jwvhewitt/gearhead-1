@@ -1,0 +1,179 @@
+Plot 0
+	name <Iria Ruby Plot>
+
+	% The PC will be asked by Eli Kettel to go to Nara and
+	% recover the Iria Ruby from the Cyclops which inhabit
+	% the area.
+
+	% E1 is Elisha Kettel
+	element1 <Character>
+	stat 1 32
+
+	% E2 is Praetor
+	element2 <Character>
+	stat 2 5001
+
+	% E3 is the ruby itself
+	element3 <Prefab>
+
+	% V1  = Initialization Counter
+	% V2  = Have picked up the ruby
+	% V3  = Have accepted job from Elisha
+	% V4  = Have agreed to help Praetor
+
+	start <ifPersona E1 else GoDelete ifItemOK E3 else GoMaybeDelete if= V1 0 V= 1 1 MoveKeyItem E3 50 Compose GET E3 .getit>
+	.getit <P= 2 1  P= 4 0  G= 3 -1  if= SCENEID 50 Reputation 1 -1 if# L2 1 Print 101 TeamAttack 2>
+	GoDelete <AdvancePlot 0 if= V2 0 DeleteKeyItem E3>
+	GoMaybeDelete <if= V3 0 AdvancePlot 0>
+
+	Msg101 <An alarm sounds! You better get out of this place quickly...>
+
+sub
+	Persona 1
+	% Elisha Kettel
+	% V2 = Message randomizer
+	rumor <!1 is constantly working to make sure that Kettel Industries remains the number one corporation!>
+	greeting <NewChat if= P3 1 else GoNoMission Say 1 AddChat 1 AddChat 2 AddChat 9 ifKeyItem E3 else GoNoKey AddChat 3 if= P4 1 AddChat 4>
+	GoNoKey <ifItemOK E3 else GoNoRuby if= P4 1 AddChat 4>
+	GoNoRuby <AddChat 4>
+	% If the PC has not yet been given the mission, see if it
+	% will be offered here.
+	GoNoMission <if= PCFac 4 else GoNMNoMember Say 10 AddChat 5 AddChat 6>
+	GoNMNoMember <ifG PCRep 6 10 else GoNMNoRenown Say 11 AddChat 5 AddChat 6>
+	GoNMNoRenown <ifG React 30 else GoNMNoChance Say 12 AddChat 5 AddChat 6>
+	% If the PC is not offered the mission, imply it anyhow.
+	GoNMNoChance <V= 2 100 V+ 2 d5 Say V2>
+	result1 <NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <NewChat Say 4 DeleteKeyItem E3 Reputation 6 1 AddReact 20 CashPrize 500000 XPV 100 FacXP+ 4 500 History 13 AdvancePlot 0>
+	result4 <NewChat ifG PCRep 6 50 else GoR4NoRenown Say 5 Goto GoR4End>
+	GoR4NoRenown <ifG PCRep 2 25 else GoR4NoLaw Say 6 Goto GoR4End>
+	GoR4NoLaw <ifG SkRoll 19 12 else GoR4NoCharm Say 7 Goto GoR4End>
+	GoR4NoCharm <Say 8 PCEnemy E1 PCFEnemy 4 Reputation 6 -8 Reputation 2 -5  Goto GoR4End>
+	GoR4End <AdvancePlot 0 if= P4 1 DeleteKeyItem E3 Reputation 1 1 XPV 100 History 14>
+	result5 <NewChat Say 16 AddChat 7 AddChat 8>
+	result6 <NewChat Say 15>
+	result7 <NewChat Say 17 CashPrize 25000 P= 3 1 Memo 9>
+	result8 <NewChat Say 18 DeleteKeyItem E3 AddReact -d8 AdvancePlot 0>
+	result9 <NewChat PCEnemy E1 PCFEnemy 4 AdvancePlot 0 if= PCFac 4 else GoR9NoMember Say 19 AddReact -10 Reputation 6 -30 FacXP+ 4 -9999 Goto GoR9End>
+	GoR9End <if= P4 1 DeleteKeyItem E3 XPV 200 Reputation 1 5 History 14>
+	GoR9NoMember <Say 20 AddReact -30  if= P4 1 DeleteKeyItem E3 History 14 XPV 100 Reputation 1 1>
+	Msg1 <I've been waiting to hear of your progress. Have you found the Ruby yet?>
+	Msg2 <Then you should try harder. When I hired you for this mission I expected results.>
+	Msg3 <It is held by the Cyclops biosoldiers, who doubtlessly will use it to clone more of their kind. Many years ago they destroyed the village of Nara and set up a breeding colony deep underground. You will find the Ruby there.>
+	Msg4 <Ah, this ruby will ensure the continuing dominance of Kettel Industries for the foreseeable future. Here's a reward, as you were promised.>
+	Msg5 <I know that if the Ruby was there, you would have been able to get it. I suppose the ruby must have been destroyed in the many years following the Night of Fire. Thank you for your efforts, but without the ruby there can be no reward.>
+	Msg6 <I know that you wouldn't lie about something like that... I suppose the ruby must have been destroyed in the many years following the Night of Fire. Thank you for your efforts, but without the ruby there can be no reward.>
+	Msg7 <You appear to be telling the truth... I suppose the ruby must have been destroyed in the many years following the Night of Fire. Thank you for your efforts, but without the ruby there can be no reward.>
+	Msg8 <Were you too lazy to search the caves, or did those monsters pay you off to lie to me? No matter; we will continue our search for the Ruby, and we will find it!>
+	Msg9 <Elisha Kettel in The Factory has offered you $500000 to recover the Iria Ruby from the Nara Ruins.>
+	Msg10 <Hello \RANK \PC . Kettel Industries needs a dedicated employee such as yourself for a difficult mission of great importance. If you're interested, I can give you the details right now.>
+	Msg11 <You've been making a good name for yourself, \PC . Kettel Industries needs a highly skilled cavalier for a difficult mission. If you're interested, I can give you the details.>
+	Msg12 <I believe that you have a bright future ahead of you. Kettel Industries needs a highly motivated cavalier for a dangerous mission. If you're interested, I can give you the details.>
+	Msg13 <You retrieved the Iria Ruby for Elisha Kettel.>
+	Msg14 <You protected the Iria Ruby from Elisha Kettel.>
+	Msg15 <That's too bad. Come back later when you have time and the position may still be open.>
+	Msg16 <We have been researching a PreZero artifact known as the "Iria Ruby". This artifact is currently held by the Cyclops, leftover bioweapons from the Age of Superpowers. The reward for bringing me this ruby is $500,000.>
+	Msg17 <The Cyclops live in the ruins of Nara, a village they destroyed many years ago. You can find them if you head north along the coast. Their cave is well hidden and heavily defended. Here's a cash allowance to help you prepare for the trip.>
+	Msg18 <Then I will find someone else to do the job. Thank you for your time.>
+	Msg19 <I thought you had a future in this company. It appears that I was mistaken.>
+	Msg20 <You have disappointed me. Fine, I will locate another to do this task.>
+	Msg101 <We must work hard to keep our company in the number one spot!>
+	Msg102 <Those who serve Kettel Industries will be rewarded greatly.>
+	Msg103 <Kettel Industries sponsors research programs all over the globe.>
+	Msg104 <We may soon require the services of a skilled adventurer. Preparations are underway...>
+	Msg105 <Have you driven a "Jos" today?>
+	Prompt1 <I'm still working on it.>
+	Prompt2 <Where did you say it was, again?>
+	Prompt3 <Here it is. [Give Ruby]>
+	Prompt4 <Sorry, the Ruby no longer exists.>
+	Prompt5 <I'm interested. Tell me more.>
+	Prompt6 <Sorry, I'm not able to help right now.>
+	Prompt7 <I'll do it!>
+	Prompt8 <No, I don't want this mission.>
+	Prompt9 <I've decided to quit this mission.>
+
+	Persona 2
+	% Praetor
+	rumor <!2 needs to speak with you.>
+	greeting <NewChat if# P2 0 else GoCheckAgree Say 1>
+	GoCheckAgree <if# P4 0 else GoCheckSpoken Say 2>
+	GoCheckSpoken <if= V1 1 else GoFirstTime SayAnything>
+	GoFirstTime <Say 3 AddChat 1 if= P3 1 AddChat 2 AddChat 3>
+	result1 <NewChat Say 4 AddChat 4 if= P3 1 AddChat 5>
+	result2 <NewChat Say 5 V= 1 1 AddChat 6 AddChat 7 AddChat 8>
+	result3 <NewChat Say 6 V= 1 1 AddChat 9 AddChat 10 AddChat 11>
+	result4 <NewChat Say 7>
+	result5 <Goto Result3>
+	result6 <NewChat ifG PCRep 1 d50 else GoR6NoHero Say 8 AddChat 11>
+	GoR6NoHero <Say 9>
+	result7 <Goto Result3>
+	result8 <EndChat Say 10  Reputation 1 -5  G= 3 -1  TeamAttack 2>
+	result9 <NewChat Say 11 AddChat 11 AddChat 12 AddChat 17>
+	result10 <NewChat Say 12 AddChat 11 AddChat 13>
+	result11 <NewChat Say 13 AddChat 13 AddChat 14>
+	result12 <NewChat V= 1 1 if= PCFac 12 else GoR12NoMember Say 14 Reputation 1 -1 Reputation 2 -20 FacXP+ 12 -500 GiveKeyItem E3 P= 2 1>
+	GoR12NoMember <ifG Conversation 9 else GoR12NoDice Say 15 Reputation 2 -5 GiveKeyItem E3 P= 2 1>
+	GoR12NoDice <Say 16 AddReact -15 Reputation 2 -10 Reputation 6 -10>
+	result13 <EndChat Say 17  Reputation 4 -d10 G= 3 -1  TeamAttack 2>
+	result14 <NewChat Say 18 AddChat 15 AddChat 16>
+	result15 <NewChat Say 19 P= 4 1>
+	result16 <NewChat Say 21>
+	result17 <NewChat Say 22>
+	Msg1 <You should not do anything to abuse our trust while you stay here; otherwise the reprocussions could be terrible.>
+	Msg2 <Remember what we have spoken about; the Iria Ruby should remain where it is, for the good of all involved.>
+	Msg3 <Humans do not generally come to this place unless they are invited. What purpose do you have to visit?>
+	Msg4 <Truthfully?>
+	Msg5 <They are known to us. They are a human faction which seeks wealth and control. Also, power... For what purpose have they sent you here?>
+	Msg6 <The Iria Ruby? Its existance is known to just a few... That is a very powerful and dark artifact. The secrets it contains could be very dangerous. Why do you seek such an accursed stone?>
+	Msg7 <It may be so.>
+	Msg8 <Investigate? I would assume that you were sent here to locate the Iria Ruby. It would be far better for yourself and all involved if your employer would simply forget that goal.>
+	Msg9 <You are free to investigate all you want, but take nothing from this cave. The consequences would be most severe.>
+	Msg10 <Your shamelessness is admirable, but you have no chance to survive.>
+	Msg11 <Historic research? Then you should visit Hwang-Sa Temple, and view their archives. They can assist you with all but the most dangerous knowledge contained within the ruby.>
+	Msg12 <Hired to recover it? I can guess by who. I am sorry I cannot permit you to do that. The Ruby must remain where it is; it would be far too dangerous for the world were it permitted to leave.>
+	Msg13 <It is a computer from the last age containing knowledge of forbidden technology. It knows the location of nuclear stockpiles among other more sinister things. In the hands of an ambitious human, it could bring great sorrow to this world.>
+	Msg14 <The Ruby is needed at HwangSa? Strange, Kaema would normally have come himself for so dangerous an artifact... Still, you are a monk in good standing, so I must trust you. Here is the Ruby. Return it to us once you are finished with it.>
+	Msg15 <The Ruby is needed at HwangSa? Strange, we have not been informed of this need through the regular channels. Still, I must trust in Kaema's judgement. Here is the Ruby. Return it to us once you are finished with it.>
+	Msg16 <Please do not try so obvious a deception in my presence again. All you have succeeded in doing is to reveal your own ineptitude.>
+	Msg17 <You are clearly serious. We cannot allow you to endanger this world.>
+	Msg18 <The Ruby must remain here, for the sake of all. It is our purpose to keep the mistakes of the past from ever happening again... to that end, it would be best for the Ruby's existance to remain a secret, and for it to remain in our protection.>
+	Msg19 <The sins of the past must never be repeated. If you are truly concerned with the future of this world and both our species, you will do what you can to protect this knowledge.>
+	Msg21 <To disagree is your right, as a free individual. However, if you attempt to take the Ruby, we will be forced to protect it.>
+	Msg22 <It is far to the south of here. You better set off soon... it's quite a long trip.>
+	Prompt1 <No reason.>
+	Prompt2 <I was sent by Kettel Industries.>
+	Prompt3 <I'm looking for the Iria Ruby.>
+	Prompt4 <Really.>
+	Prompt5 <Actually, I'm looking for the Iria Ruby.>
+	Prompt6 <I'm just here to investigate.>
+	Prompt7 <I'm here to get the Iria Ruby.>
+	Prompt8 <I was sent to exterminate your kind!>
+	Prompt9 <Uh, I need it for historic research.>
+	Prompt10 <I was hired to retrieve it.>
+	Prompt11 <Why is the ruby so important?>
+	Prompt12 <Actually, Hwang-Sa Temple sent me here!>
+	Prompt13 <I'll take it whether you like it or not.>
+	Prompt14 <I can see your point.>
+	Prompt15 <I agree with you.>
+	Prompt16 <Sorry, I can't agree with that.>
+	Prompt17 <I'll have to go there, I guess...>
+
+end
+inv
+	Treasure 30000
+	home <Storage Cell>
+	name <IRIA Ruby>
+	clue29 <if= V1 0 else GoDone ifYesNo 1 2 3 Mental ifG SkRoll 29 15 else GoNoDice Mental ifG SkRoll 32 10 else GoNoDice Mental ifG SkRoll 30 12 else GoNoDice Goto GoAccess>
+	GoDone <Print 4>
+	GoNoDice <Print 5>
+	GoAccess <Mental Mental Reputation 7 -d20 Print 6 History 7 V= 1 1 PCStat+ 7 1 SkillXP 29 150 SkillXP 31 150 SkillXP 24 150 SkillXP 22 150 SkillXP 16 150 XPV 100>
+	Msg1 <This appears to be a PreZero AI core of some kind. Do you attempt to access the data inside?>
+	Msg2 <Try to access>
+	Msg3 <Leave it alone>
+	Msg4 <You've already learned all you can from the Ruby.>
+	Msg5 <You examine the Ruby extensively, but can't figure out how to access the data.>
+	Msg6 <You make contact with the Ruby AI. Visions of the past age fill your head... Scientific knowledge is uploaded directly into your brain. You feel as though your central nervous system is about to burst from all the new information.>
+	Msg7 <You accessed data from the Iria Ruby.>
+
+end

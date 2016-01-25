@@ -1,0 +1,71 @@
+*****************************
+***  COMPILING  GEARHEAD  ***
+*****************************
+
+Download the Free Pascal Compiler from www.freepascal.org.
+Type "ppc386 arena". That should be it.
+
+GearHead takes advantage of many FPC mode features, so if you get
+strange errors while compiling check to make sure you're in the
+right mode. The game probably won't compile under Delphi or Borland
+compatability modes.
+
+Note that there may be problems if compiling for DOS using the FPCv1.0.
+It seems that DirectoryPresent crashes when used. I'd advise towards
+compiling for Windows when possible. If you absolutely must compile
+for DOS, edit the file gears.pp and remove the CheckDirectoryPresent
+procedure along with the call to it during initialization.
+
+Many thanks to Michalis Kamburelis for helping to make GearHead
+FPCv2 compatable, and portable across OS's.
+
+****************************************
+***  COMPILING  GEARHEAD  WITH  SDL  ***
+****************************************
+
+Download latest jedi-sdl from CVS from
+http://sourceforge.net/projects/jedi-sdl/ and everything should compile
+fine straight away.
+
+Unless you're using the public release of Jedi-SDL, in which case this
+is going to get way more complicated. To start off you're going
+to need the following things:
+
+- The GearHead sources (should be the file this came in)
+- The GearHead image archive (get it from the web site,
+                        or email me for a copy)
+- FreePascal, available from www.freepascal.org
+- Jedi-SDL, available from www.delphi-jedi.org
+- The SDL, SDL_TTF, SDL_Mixer, and SDL_Image runtimes, available from
+  www.libsdl.org or as part of the Jedi package
+
+First things first. Install the compiler, the Jedi-SDL source
+files, and the SDL runtimes. Make sure that the Jedi-SDL units
+are in FPC's search path. You'll need to compile for either
+Windows or Linux since AFAIK the package doesn't work in DOS.
+Install the GH images in your GearHead directory; they should
+be in a subdirectory called "Image".
+
+Next, you must get down to actually compiling the Jedi
+sources with FreePascal. See the document "Using Jedi-SDL
+with Free Pascal" for an explanation on how to do so. Several
+options need to be set before the units will compile correctly.
+If you don't use the IDE, the following compiler directives
+will do the trick:
+
+{$OUTPUT_FORMAT PECOFF}
+{$MODE DELPHI}
+{$ASMMODE intel}
+{$DEFINE FPC}
+
+In addition, I couldn't get the unit SDL_Image to work properly
+without a bit of modification. I had to comment out lines 150 and
+200, the references to "IMG_string_equals", before any program
+linked to that unit would run. Did I do a good thing, or did I
+open a pandora's box of potential problems? Only time and the email
+I sent to the Jedi-SDL dev team will tell for sure.
+
+Finally you should be ready to compile. To link the program with
+the SDL units, define a "SDLMODE" symbol. This can be done from the
+command line by using -dSDLMODE when compiling arena.
+

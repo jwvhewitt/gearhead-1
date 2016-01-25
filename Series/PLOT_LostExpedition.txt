@@ -1,0 +1,182 @@
+Plot 0
+	name <PLOT: Lost Expedition>
+
+	% Element1 is just the leader of some town.
+	element1 <Character Nurse>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%  V4 = # Victims Rescued
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  V= 4 #VictimsRecovered>
+
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d30 23 if= V3 0 ifG RReact E1 d50 ifG TruePCSkillVal 16 d8 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// We've had a disaster here in \SCENE EScene 1 ! I could use your help with it.>
+	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// We need a combat medic for a rescue mission in \SCENE EScene 1 .>
+	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// Please hurry to \SCENE EScene 1 ; your skills are needed for a rescue mission.>
+	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// There's been an accident in \SCENE EScene 1 . We need someone with your skills for a rescue mission.>
+	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// Feel up for some search and rescue? \SCENE EScene 1 needs your help.>
+
+sub
+	Persona 1
+	rumor <!1 needs a combat medic for a dungeon rescue mission.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+
+	greeting <NewChat ifG P2 0 else GoCheckMission ifG P4 0 else GoLoss Say d5 AddReact P4 CashPrize * P4 V4 XPV * P4 25 Reputation 1 1 AdvancePlot 0>
+	GoLoss <V= 2 5 V+ 2 d5 Say V2 Reputation 6 -10  AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 4 Reward Threat PCRep 6 30 100 V= 3 WMThreat PCRep 6  V+ 3 -d10 ifG 4 V3 else GoCheckOffer V= 3 4 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer V= 2 10 V+ 2 d5 Say V2  Goto GoAddAcceptOps>
+	% If the PC has "the right stuff", an offer will be made immediately.
+	% If not, no offer will be made at all. In the example provided
+	% below, "the right stuff" is a Lawful reputation + being liked.
+	GoMakeOffer  <ifG TruePCSkillVal 16 0 else GoNoOffer V= 2 15 V+ 2 d5 Say V2 Goto GoAddAcceptOps>
+
+	GoAddAcceptOps <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoAddComOps <V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2 V= 2 10 V+ 2 d2 AddChat V2>
+
+	GoNoOffer <Say 102 AdvancePlot 0>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
+
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 V= 2 20 V+ 2 d5 Say V2 Memo 103 Goto GoAddComOps>
+	result2 <Goto Result1>
+	result3 <Goto Result1>
+
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
+	result5 <Goto Result4>
+	result6 <Goto Result4>
+
+	% PC will enter combat now.
+	result7 <EndChat V= 2 25 V+ 2 d5 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 LoadD .Scene PassVar 1 V3>
+	.Scene <SCENE_VictimCave.txt>
+	result8 <Goto result7>
+
+	% PC will ask how many points the enemy has.
+	result9 <NewChat V= 2 30 V+ 2 d5 Say V2 AddChat 7 AddChat 11>
+	result10 <Goto result9>
+
+	% PC needs some time to get ready.
+	result11 <NewChat Say 105>
+	result12 <Goto result11>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <You saved \VAL P4 people today. Here's a reward for your heroic actions.>
+	Msg2 <Thanks to you, \VAL P4 people were rescued from the cave-in. Here's a reward for your help.>
+	Msg3 <You did very well out there. Here's a reward.>
+	Msg4 <You did well in the cave, but it's a shame that more lives couldn't have been saved... Here's your pay for the rescue.>
+	Msg5 <You did well. You might want to think about becoming a paramedic some day. Here's your reward.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <Nobody was rescued... the entire expedition was lost.>
+	Msg7 <You didn't manage to save a single one of the lost explorers...>
+	Msg8 <There were no survivors... I should go now and inform the families.>
+	Msg9 <Not a single memeber of the expedition came back alive... This is a great tragedy.>
+	Msg10 <You failed. You didn't manage to rescue a single person.>
+
+	% 11 - 15 :  PC got email about mission; asked to accept
+	Msg11 <It's an emergency... A team of surveyors got trapped in a cave-in; now they're injured in a monster-infested dungeon. I need you to perform a rescue mission!>
+	Msg12 <You got here in time... There's been a cave-in, and a bunch of miners are trapped down there. They could be injured or dead. The cave is infested with monsters, so our normal paramedics can't get through.>
+	Msg13 <I need your help! A spellunking club has fallen into a restricted cave. They are probably injured from the fall, and to make matters worse the place is full of giant rats! Your job is to go down there and get them out.>
+	Msg14 <\PC , I'm glad to see you... We have a situation which requires your skills. An expedition from the university has been trapped by a cave-in. They're in a monster-infested dungeon; you have to get down there and provide medical aid.>
+	Msg15 <A commercial exploration team was doing some test drilling in a cave when they hit a gas vein. The team members are unconscious but probably not yet dead. The place is infested with mutant creatures; I need you to rescue them.>
+
+	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <An expedition from the university has gone missing in some caves. There was a small earthquake... they may have been trapped. I need someone to head in there and rescue them.>
+	Msg17 <A group of spellunkers has fallen into a monster-infested cave. They could be injured or worse! I need a combat-certified medic to go in there and get them out.>
+	Msg18 <I have a mission available for a combat experienced paramedic, if you think you're up for the challenge. A team of spellunkers has been lost in a cave... they're injured and need to be rescued right away!>
+	Msg19 <There's been a mine collapse. We've got a bunch of injured miners trapped in a rat-infested tunnel, and I need a combat experienced medic to get down there and provide medical aid.>
+	Msg20 <A team of freelance prospecters has been trapped underground by a small earthquake. They're probably badly injured, but the caves are too dangerous for our regular paramedics to go. I need a medically trained cavalier to run a rescue mission.>
+
+	% 21 - 25 :  PC has accepted; describe the mission.
+	Msg21 <Once you get in the cave, you'll have to locate and treat each of the victims. There will be monsters as well... those you'll have to either fight or avoid.>
+	Msg22 <It's a fairly simple matter to reach the cave, but once there you'll have your hands full. Locate and treat the victims. There will be plenty of hostile creatures around, so be careful.>
+	Msg23 <You'll need to locate the victims and stabilize their injuries. Be careful of the monsters... if you get injured, we'll have no-one left to go rescue you.>
+	Msg24 <Find the accident victims and stabilize their wounds. Remove as many of them to the surface as you can. Avoid or fight the monsters.>
+	Msg25 <Locate all the victims and tend to their injuries as best you can. The cave is infested with monsters, though, so look out.>
+
+	% 26 - 30 :  Combat is starting
+	Msg26 <Good luck down there.>
+	Msg27 <Good luck.>
+	Msg28 <May you bring them back safely.>
+	Msg29 <I hope everything goes well.>
+	Msg30 <Do your best.>
+
+	% 31 - 35 :  Describe enemy point value
+	Msg31 <There were ten people in the expedition; how many of those are still alive isn't known.>
+	Msg32 <It's believed that there are ten people trapped down there.>
+	Msg33 <Ten people were originally trapped; it's not known how many of them might be dead by now.>
+	Msg34 <There are ten victims trapped in the cave. You'll have to try and find all of them.>
+	Msg35 <There were originally ten people trapped; in all likelihood, several of those are dead by now.>
+
+
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <Are you ready to start the rescue mission yet?>
+	% 102 :  Player doesn't have "the right stuff" for this mission.
+	Msg102 <There's been an exploration team lost in a cave. I need to find a paramedic with dungeon certification right away!>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 needs you for a rescue mission.>
+	% 104 :  PC didn't want the job.
+	Msg104 <That's horrible... I hope I can find someone else before it's too late.>
+	% 105 :  PC needs time to get ready.
+	Msg105 <Get ready, then we'll begin.>
+
+	% 01 - 03 :  PC will accept the mission.
+	Prompt1 <I'm on the job!>
+	Prompt2 <I'll go rescue them.>
+	Prompt3 <Give me the mission specifics.>
+
+	% 04 - 06 :  PC doesn't want this mission.
+	Prompt4 <Sorry, I can't help you.>
+	Prompt5 <Sorry, I don't think I can.>
+	Prompt6 <Sorry, I'm not qualified.>
+
+	% 07 - 08 :  Combat is starting.
+	prompt7 <I'm ready to go.>
+	prompt8 <All ready to start.>
+
+	% 09 - 10 :  How many points?
+	prompt9 <How many people have been injured?>
+	prompt10 <How many victims are there?>
+
+	% 11 - 12 :  Just a minute...
+	prompt11 <I need some time to prepare.>
+	prompt12 <I have to get ready first.>
+
+end

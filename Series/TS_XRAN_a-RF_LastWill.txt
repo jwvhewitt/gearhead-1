@@ -1,0 +1,227 @@
+Plot 0
+	name <Last Will>
+
+	% Before they died, your parents left a message for you...
+	% Now, a banker will contact you. When you arrive, he will
+	% inform you that his office was robbed. You'll be able to
+	% track the thief to E1, where you can recover the will through
+	% charm, subterfuge, or force. Upon leaving town you'll be
+	% attacked by mecha who demand that you turn over the will.
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene with the bandit
+	element1 <Grab 3>
+	% E2 is the scene where the banker resides
+	element2 <Scene Town City Target !Far 1>
+	% E3 is the scene for the next episode
+	element3 <Scene Town Target !Far 1 !Far 2>
+
+	% E4 is the banker
+	element4 <Prefab>
+
+	% E5 is the bandit
+	element5 <Prefab>
+
+	% E6 is the document
+	element6 <Prefab>
+
+	% E7 is the guardian
+	element7 <Character Guardian !Near 2>
+
+	% E8 is the enemy
+	element8 <Prefab>
+
+	% V1 = Initialization Counter
+
+
+	start <ifPersona E4 else GoDelete if= V1 0 V= 1 1 EMail d5>
+	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
+
+	Msg1 <\ELEMENT 4 @ \ELEMENT 2 :// Your parents left something for you. Come see me at the Bank of \ELEMENT 2 .>
+	Msg2 <\ELEMENT 4 @ \ELEMENT 2 :// You have inherited a safety deposit box from your parents. Meet me in \ELEMENT 2 to settle the estate.>
+	Msg3 <\ELEMENT 4 @ \ELEMENT 2 :// A safety deposit box left by your parents has now become yours. Collect your inheritance at the Bank of \ELEMENT 2 .>
+	Msg4 <\ELEMENT 4 @ \ELEMENT 2 :// Your family's estate needs to be settled. Meet me at the Bank of \ELEMENT 2 to discuss your inheritance.>
+	Msg5 <\ELEMENT 4 @ \ELEMENT 2 :// As the executor of your parents estate I must request that you meet me in \ELEMENT 2 to discuss your inheritance.>
+
+sub
+	Persona 4
+	rumor <!4 has been waiting for you.>
+	greeting <NewChat Say 1 AddCHat 1 AddChat 2>
+	result1 <NewChat Say 2 N= 3 E3 History 3 XRBadThing NAV_XRBResolved FreezeChar E5 FreezeChar E8 AdvancePlot 1 AddChat 3>
+	result2 <Reputation 2 -d10 Reputation 5 d10 Goto result1>
+	result3 <NewChat Say 4>
+	Msg1 <Ah, \PC . It was so sad what happened to your parents. As the executor of their will it is my duty to present you with your inheritance, but I'm afraid there is a small problem...>
+	Msg2 <Earlier today the bank was robbed by \ELEMENT 5 , famed international jewel thief. Your parent's safety deposit box was one of the items which was stolen.>
+	Msg3 <Your inheritance was stolen by famed theif \ELEMENT 5 .>
+	Msg4 <The guardians are working on the case right now. Of course, since \ELEMENT 5 has never been caught, I'm not too hopeful that your goods will be recovered.>
+	Prompt1 <What kind of problem?>
+	Prompt2 <Where's my money!?>
+	Prompt3 <I have to get that box back!>
+
+Plot 1
+	% The PC's stuff has been stolen. Now, the PC needs to locate
+	% the thief and get his inheritance back...
+	% V1 = Initialization Counter
+	% V2 = Have spoken with E5
+
+	start <ifitemOK E6 else GoDelete if= V1 0 V= 1 1 MoveChar E5 E1 ItemVar= E6 1 E3 Compose KEY E6 .usekey Memo 2 ifPersona N1 else GoN1Dead DeleteCHar E8 E= 8 N1>
+	GoN1Dead <N= 1 E8>
+	.usekey <History 1 S= 101 1 N= 3 E3 S= 105 1 XRMystery NAV_XRMItem AdvancePlot 2>
+	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
+
+	Msg1 <You learned that your family duty is to protect a dark secret.>
+	Msg2 <Your parents safety deposit box was stolen by famed theif \ELEMENT 5 .>
+
+sub
+	Persona 4
+	greeting <NewChat Say 1>
+	Msg1 <The guardians are still trying to capture \ELEMENT 5 , but all of the stolen money has probably been spent by now...>
+
+	Persona 5
+	% V1 = Initialization Counter
+	% V3 = Needed cash
+	greeting <NewChat V= 3 Threat S103 15 ifItemOK E6 else GoDestroyed if= V1 2 else GoCheckHas SayAnything>
+	GoCheckHas <ifKeyItem E6 else GoCheckDeal SayAnything>
+	GoCheckDeal <if= V1 1 else GoFirstTime Say 10 AddChat 8 Memo 9 ifG PC$ V3 else GoNoMoney AddChat 10>
+	GoDestroyed <SayAnything>
+	GoFirstTime <P= 2 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <NewChat V= 1 1 AddReact d15 Say 2 AddChat 4 AddChat 5>
+	result2 <NewChat V= 1 1 Say 3 AddChat 6 AddChat 7>
+	result3 <NewChat V= 1 1 Reputation 4 -d10 Reputation 2 1 Say 4 AddChat 4 AddChat 5>
+	result4 <NewChat Say 5 AddChat 6 AddChat 7>
+	result5 <EndChat Print 7 Say 6 Reputation 4 -d8 RunAway E5>
+	result6 <NewChat Say 8 Memo 9 AddChat 8 ifG PC$ V3 else GoNoMoney AddChat 10>
+	GoNoMoney <AddChat 9>
+	result7 <NewChat Say 11>
+	result8 <EndChat Print 7 Say 12 Reputation 4 -d8 RunAway E5>
+	result9 <NewChat Say 13>
+	result10 <NewChat CASH+ -V3 Say 14 History 21 Memo 0 GiveKeyItem E6 V= 1 2 AddChat 11 AddChat 12 AddChat 13>
+	result11 <NewChat Reputation 3 -d8 ifG 0 PCRep 3 else GoR11NoAlly Say 15 PCAlly E5>
+	GoR11NoAlly <Say 16>
+	result12 <NewChat Reputation 5 d8 ifG PCRep 5 0 else GoR12NoAlly Say 17 PCAlly E5>
+	GoR12NoAlly <Say 18>
+	result13 <NewChat Reputation 4 -d8 ifG 0 PCRep 4 else GoR13NoAlly Say 19 PCAlly E5>
+	GoR13NoAlly <Say 20>
+	Msg1 <This is the life, enjoying the splendors of \ELEMENT 1 as only someone with copious amounts of money can... Still, it will soon be time to move on.>
+	Msg2 <As a matter of fact, I am. And you might be, who, exactly? One of my adoring fans? No, I sense that you want something... Well, what is it?>
+	Msg3 <Honestly, just about everything I've ever stolen belonged to someone else at one point in time. I'll explain what I'm going to do... As a businessman, I need to cover my expenses. I'll sell you back whatever it is you want for market value.>
+	Msg4 <Oh no, not this old game again... Is that why you're really here? You look like there's something else you're after. If you were really that concerned about law and order you'd be after a murderer or another violent criminal instead of me.>
+	Msg5 <Well that's a simple matter to fix. I'm a businessman. Whatever it is that you want, I can sell it back to you at its market value. Not many thieves would be that fair, would they?>
+	Msg6 <Not this time. Come back when you're ready to negotiate sensibly.>
+	Msg7 <\ELEMENT 5 drops a smoke bomb, and suddenly is gone!>
+	Msg8 <I haven't looked inside your security deposit box to see what's in there, but a standard fee for this sort of item is $ \VAL V3 . That sounds reasonable, doesn't it?>
+	Msg9 <\ELEMENT 5 in \ELEMENT 1 will sell you your parents security box for $ \VAL V3 .>
+	Msg10 <Are you ready to deal? I've got something you want, and it can be yours for the low low price of $ \VAL V3 .>
+	Msg11 <What choice do you have in the matter? I'm quite serious. Come back when you are too.>
+	Msg12 <You could try... but I don't think you could catch me.>
+	Msg13 <See you later, then.>
+	Msg14 <It's been a pleasure doing business with you. Tell me, since I'm curious... What's in the box? It must be pretty valuable for you to go through all this trouble, mustn't it?>
+	Msg15 <Ah, the mysterious type... Well, I appreciate your business. I might just see you around sometime.>
+	Msg16 <Ah, playing mysterious... Well, I hope you got your money's worth.>
+	Msg17 <You mean, you did all that and you don't even know what's in the box!? Wow, and I thought I was a risk-taker. You seem like a fun sort... I might just see you around sometime.>
+	Msg18 <You mean, you did all that and you don't even know what's in the box!? I hope you got your money's worth...>
+	Msg19 <You did all that just because of its personal significance? You certainly seem to be the spirited sort... I might just see you around sometime.>
+	Msg20 <It better have deep significance, considering what you paid for it. I hope you got your money's worth...>
+	Msg21 <You bought your parents letter from \ELEMENT 5 for $ \VAL V3 .>
+	Prompt1 <Aren't you \ELEMENT 5 the famous thief?>
+	Prompt2 <You have something that belongs to me.>
+	Prompt3 <I'm here to arrest you, you crook!>
+	Prompt4 <I need to get back something you stole.>
+	Prompt5 <I will end your life of crime right now!>
+	Prompt6 <It's a deal.>
+	Prompt7 <You've got to be joking...>
+	Prompt8 <Maybe I'll just take it back!>
+	Prompt9 <Be back when I have the money.>
+	Prompt10 <Here you go. [give cash]>
+	Prompt11 <That's not for you to know.>
+	Prompt12 <I'll find out when I open the box!>
+	Prompt13 <It has deep personal significance.>
+
+
+	Persona 7
+	rumor <!7 is investigating a bank robbery.>
+	greeting <NewChat if= P2 1 else GoCheckIntro Say 5 AddChat 3>
+	GoCheckIntro <if= V1 0 else GoBeenBefore Say 1 AddChat 1 AddChat 2>
+	GoBeenBefore <SayAnything>
+	result1 <NewChat V= 1 1 Memo 2 Say 3 Reputation 2 1>
+	result2 <NewChat V= 1 1 Memo 2 Say 4>
+	result3 <NewChat Say 6>
+	Msg1 <I heard you lost some money in that bank robbery... Well, so did a bunch of other people. I'll try hard to catch \ELEMENT 5 !>
+	Msg2 <\ELEMENT 5 is most likely hiding out in \ELEMENT 1 .>
+	Msg3 <No, not at the moment. The guardian office in \ELEMENT 1 is also working on the case, since we've gotten a lead that \ELEMENT 5 is taking a vacation there with \PPR E5 newfound riches.>
+	Msg4 <It seems most likely that \OPR E5 is in \ELEMENT 1 ; we've gotten a tip saying that \OPR E5 's there enjoying the high life with \PPR E5 newfound riches.>
+	Msg5 <It's a busy life, being a guardian.>
+	Msg6 <You have? Well, it couldn't have happened at a worse time... We've got our hands full dealing with serious health code violations. Someone sold tainted sausages to a school cafeteria. \ELEMENT 5 will have to wait.>
+	Prompt1 <Need any help on the case?>
+	Prompt2 <Any idea where \ELEMENT 5 is?>
+	Prompt3 <I've found \ELEMENT 5 the thief!>
+
+Plot 2
+	% Now that the PC has read his parents last will and testament,
+	% he will be attacked by those forces seeking to discover the
+	% secret the next time he leaves town.
+
+	% V1 = Forced conversation with E8
+	% V2 = Combat Indicator
+
+	start <if= P2 1 else GoCheckWorld if= V1 0 ForceChat E8 V= 1 1>
+	GoCheckWorld <if= SceneID 1 Alert 1 Block Dynamic 2 Threat S103 100 .nu1 .nu2 SavePos P= 2 1 Encounter 0 50 .nodesc History 2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7 S= 101 1 AdvancePlot 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 150 S= 101 1 S+ 102 1 AdvancePlot 0>
+
+	Msg1 <Without warning, you are attacked by mecha!>
+	Msg2 <You were attacked by \ELEMENT 8 , who demanded the letter.>
+
+sub
+	Persona 8
+	% The PC's enemy.
+	greeting <EndChat Say 1 AddChat 1 AddCHat 2 AddChat 3>
+	result1 <EndChat Say 2 Reputation 5 d8>
+	result2 <EndChat Say 3 Reputation 5 -d8>
+	result3 <EndChat Say 4>
+	Msg1 <Hello \PC . You have something that belongs to me, and if you were smart you'd hand it over right now...>
+	Msg2 <You will pay for your insolence with your life! My men will take you to pieces!>
+	Msg3 <That suits me perfectly well... After my men kill you, we can easily take it from your dead body.>
+	Msg4 <You'd do well to show more respect to your betters! Men, kill this fool, then bring his gear to me...>
+	Prompt1 <Good thing I'm not smart, then...>
+	Prompt2 <I'd rather die than give it to you.>
+	Prompt3 <Get out of my way. I have no time for you.>
+
+% End PLOT 2 subs...
+end
+
+% End PLOT 1 subs...
+end
+
+% End PLOT 0 subs...
+end
+inv
+	NPC Shopkeeper
+	job <Banker>
+	place <2 Pass Ally>
+
+	NPC Soldier
+	equipchar 30000
+	job <Thief>
+	mecha <Alba.txt>
+	chardesc Chaotic Sociable Renowned
+	Charm 17
+	Perception 18
+	Reflexes 15
+
+	Treasure 10
+	place <5>
+	name <Letter from Parents>
+	% V1 = Location for next episode; printed in message.
+	use <TRIGGER KEY SelfNID Print 1 MoreText .text>
+	.text <TS_TEXT_XRAN_LastWill.txt>
+	Msg1 <You read the letter.>
+
+	NPC Mecha Pilot
+	EquipChar 10000
+
+end

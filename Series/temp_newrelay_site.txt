@@ -1,0 +1,142 @@
+Plot 0
+	name <>
+
+	% An item will be found. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	Element4 <Character !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have recovered clue from item
+	%  V4 = Combat Indicator
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	.usekey <if= V3 0 V= 3 1>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V4=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V4 1  V= 4 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V4 1  V= 4 3  Reputation 6  1  XPV 50  S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2>
+
+
+sub
+	Persona 4
+	rumor <>
+	%  V1 =  Mission Accepted Counter
+	greeting <NewChat if= P4 3 else GoCheckLoss Say 1 AddReact d5 DeleteKeyItem E3 if= P3 1 else GoJustEnd S= 203 P2 FacXP+ N1 2 AdvancePlot 0>
+	GoJustEnd <AdvancePlot 0>
+	GoCheckLoss <if= P4 2 else GoCheckMission Say 2 DeleteKeyItem E3 AdvancePlot 0>
+
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 3 Goto GoAddComOps>
+	GoDelete <Say 5 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React 10 else GoNoChance Say 7 AddChat 1 AddChat 2>
+	GoNoChance <Say 6>
+
+	GoAddComOps <AddChat 3 AddChat 4>
+
+	result1 <NewChat V= 1 1 Memo 9 Say 4 Goto GoAddComOps>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result2 <NewChat Say 8 AdvancePlot 0>
+
+	% For the purposes of this template, I'll use a combat encounter with
+	% the prop included.
+	result3 <EndChat Say 10 Goto GoStartCombat>
+	GoStartCombat <SavePos MDynamic 0 S2 .mon .nu1 .nu2 P= 4 1 DynaItem E3>
+	.mon <CRIMINAL>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+
+	result4 <NewChat Say 11>
+
+	%  01 :  PC has won the mission.
+	Msg1 <>
+
+	%  02 :  PC has lost the mission.
+	Msg2 <>
+
+	%  03 :  The item somehow got destroyed...
+	Msg3 <The item we've been searching for has been destroyed. Too bad...>
+
+
+	%  04 :  Mission description.
+	Msg4 <>
+
+	%  05 :  PC has come back after getting ready
+	Msg5 <>
+
+	%  06 :  PC will not be offered the mission
+	Msg6 <>
+
+	%  07 :  PC will be offered the mission here.
+	Msg7 <>
+
+	%  08 :  The PC refused the mission.
+	Msg8 <>
+
+	%  09 :  Memo
+	Msg9 <\ELEMENT 4 in \SCENE EScene 4 asked you to retrieve an item.>
+
+	%  10 :  Combat is starting.
+	Msg10 <>
+
+	%  11 :  The PC needs some time to get ready.
+	Msg11 <>
+
+
+
+	%  01 :  PC will accept the mission.
+	Prompt1 <>
+
+	%  02 :  PC doesn't want the mission.
+	Prompt2 <>
+
+	%  03 :  Start the mission now.
+	Prompt3 <>
+
+	%  04 :  PC needs time to prepare.
+	Prompt4 <I need some time to prepare.>
+
+end
+inv
+	Prop 20
+	name <MacGuffin>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <The next location will be \SCENE V1 .>
+	Msg2 <You can't determine anything from this artifact.>
+
+end

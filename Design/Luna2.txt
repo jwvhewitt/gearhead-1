@@ -1,0 +1,86 @@
+Battroid 3
+Name <Luna II>
+Desig <AEF>
+desc <This is Aegis Overlord's elite commando mecha.>
+
+Mod Head
+	Size 2
+	Armor 3
+	sub
+		Sensor 9
+
+		TarComp 2
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+
+		Sensor 5
+
+		HoverJet 4
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 3
+	sub
+		MLauncher 10
+		Name <Longnight Missiles>
+		Range 10
+		Acc 1
+		Magazine 3
+		sub
+			Rockets 10
+		end
+
+		Hand
+		inv
+			BeamGun 7
+			Name <Starburst Rifle>
+			Range 8
+			Acc 3
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 3
+	sub
+		MLauncher 10
+		Name <Longnight Missiles>
+		Range 10
+		Acc 1
+		Magazine 3
+		sub
+			Rockets 10
+		end
+
+		Hand
+		inv
+			EMelee 8
+			Name <Crescent Sabre>
+			Acc 2
+			Speed 5
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 4
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 3
+	sub
+		HoverJet 4
+	end
+end

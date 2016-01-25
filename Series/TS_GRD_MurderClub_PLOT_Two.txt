@@ -1,0 +1,186 @@
+Plot 0
+	name <Member Two>
+
+	% Member One is "Rich Brat", who just joined the club out
+	% of boredom. This member is EXTREMELY well equipped but
+	% not particularly motivated; the PC can probably talk him
+	% into surrendering.
+
+	% E1 is the scene for this episode; E2 the scene for the next
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1 !Member 11>
+
+	% E3 is the guardian who will give the PC a reward
+	element3 <Character Guardian !Near 1>
+
+	% E4 is the murderer, E5 is his designer scarf.
+	element4 <Prefab>
+	element5 <Prefab>
+
+	% V1 = Initialization Counter / NPC Defeated Counter
+	% V2 = Clue Number
+	% V3 = Have been accosted by E4 / Fight has started
+
+	start <if= V1 0 else GoCheckClue V= 1 1 Goto GoInitNPC>
+	GoInitNPC <S= 6 E4 Compose UTD E4 .e4dies NPCLevel E4 S2 NPCSkill+ E4 7 1 NPCSkill+ E4 33 10 Goto GoInitItem>
+	GoInitItem <Compose KEY E5 .usekey ItemVar= E5 1 E2 V= 2 S202 V+ 2 1 ItemVar= E5 2 V2 MoveChar E4 E1>
+	.e4dies <if= V1 1 S= 201 0 S+ 202 1 S= 5 ComTime S+ 5 13800 N= 2 E2 V= 1 2 Email d5>
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 1 AdvancePlot 0>
+	% If the PC has discovered clues so as to make this plot worthless,
+	% erase it now, so long as the NPC has already been defeated.
+	GoCheckClue <if= V1 2 else GoCheckRevenge ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% If the PC is ugly, this NPC will attack.
+	GoCheckRevenge <ifG 10 PCCharm ifNPCInPlay E4 NPCGoPC E4>
+	TM1 <if= SceneID E1 ifNPCinPlay E4 ifG 10 PCCharm if= V3 0 ifG 6 Range PCUID NPCUID E4 V= 3 1 Print 101 ForceChat E4>
+
+	cleanup <DeleteChar E4 AdvancePlot 0>
+
+	Msg1 <\ELEMENT 3 @ \SCENE ESCENE 3 :// You helped stop one of the "Murder Club". Come see me for a reward.>
+	Msg2 <\ELEMENT 3 @ \SCENE ESCENE 3 :// That was a member of the "Murder Club" you just fought with. Come see me for a reward.>
+	Msg3 <\ELEMENT 3 @ \SCENE ESCENE 3 :// You just defeated a member of the "Murder Club". You do know there's a reward for that, don't you?>
+	Msg4 <\ELEMENT 3 @ \SCENE ESCENE 3 :// We've been trying to stop that killer ourselves. Come see me about it.>
+	Msg5 <\ELEMENT 3 @ \SCENE ESCENE 3 :// Good job in \ELEMENT 1 . There was a reward for that killer... come talk to me.>
+
+	Msg101 <\ELEMENT 4 calls to you.>
+
+sub
+	Persona 3
+	% V1 = Have given reward
+	% V2 = Message Randomizer
+	greeting <NewChat if= P1 2 else GoNothing if= V1 0 else GoNothing V= 1 1 CashPrize Reward Threat PCRep 6 100 100 ifPersona S7 else GoNoS7 ifG React d30 else GoNoS7 ifG PCRep 2 -1 else GoNoS7 Say d3 S+ 103 1 Memo 7>
+	GoNoS7 <V= 2 3 V+ 2 d3 Say V2>
+	GoNothing <SayAnything>
+	Msg1 <You've done well in protecting the city. If you're interested in helping more, contact \PERSONA S7 in \SCENE S8 . Here's a reward for you.>
+	Msg2 <Here's your reward. Let me tell you something... if you'd like to help us defeat this murder club once and for all, go see \PERSONA S7 in \SCENE S8 .>
+	Msg3 <You've helped to defend our city. Here's a reward for you... If you'd like to continue working on this murder club case, you should contact \PERSONA S7 in \SCENE S8 .>
+	Msg4 <Here's your reward for helping out.>
+	Msg5 <Here's a reward for your heroic deeds.>
+	Msg6 <You did well in protecting our city. Here's a reward.>
+	Msg7 <\ELEMENT 3 in \SCENE EScene 3 told you to contact \PERSONA S7 in \SCENE S8 about the murder club investigation.>
+
+	Persona 4
+	rumor <!4 has fallen in with a bad crowd of teenagers.>
+	% To start with, the PC will be prevented from starting combat
+	% at a safe distance by using the telephone...
+	greeting <ifG Range PCUID NPCUID E4 6 else GoRealStart EndChat Say 1>
+
+	% Next, if combat has already started, E4 won't say anything new.
+	GoRealStart <if= P3 2 else GoRealFirst Say 2>
+
+	GoRealFirst <if= P3 1 else GoCheckRep V= 2 2 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoCheckRep <ifG S202 0 else GoNoChance V= 2 5 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoNoChance <V= 2 8 V+ 2 d3 Say V2 ifG S103 0 AddChat 9>
+
+	GoStartCombat <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2 P= 3 2 SoloAttack E4>
+	GoSurrender <Print 30 FacXP+ N1 1 XPV 75 if= P1 1 S= 201 0 S+ 202 1 S= 5 ComTime S+ 5 13800 N= 2 E2 P= 1 2 Email 29 DeleteChar E4>
+
+	result1 <EndChat ifG PCCharm 10 else GoR1Fail V= 2 16 V+ 2 d2 Say V2 V= 2 6 V+ 2 d2 AddCHat V2 V= 2 9 V+ 2 d2 AddChat V2>
+	GoR1Fail <Say 21>
+	result2 <Goto result1>
+	result3 <Goto result1>
+
+	result4 <EndChat ifG Intimidation 10 else GoR4Fail V= 2 18 V+ 2 d2 Say V2 goto GoSurrender>
+	GoR4Fail <V= 2 14 V+ 2 d2 Say V2>
+	result5 <Goto result4>
+	result6 <Goto result4>
+
+	result7 <EndChat Reputation 1 1 ifG NPCRep E4 1 -1 else GoR7Fail V= 2 23 V+ 2 d2 Say V2 Goto GoSurrender>
+	GoR7Fail <V= 2 21 V+ 2 d2 Say V2>
+	result8 <goto result7>
+
+	result9 <EndChat V= 2 11 V+ 2 d3 Say V2 goto GoStartCombat>
+
+	result10 <EndChat ifG Intimidation 7 else GoR10Fail V= 2 30 V+ 2 d2 Say V2 goto GoSurrender>
+	GoR10Fail <V= 2 25 V+ 2 d2 Say V2>
+	result11 <goto result10>
+
+	Msg1 <I don't like using the phone. Come over here if you've got something to say to me.>
+	Msg2 <You'll be sorry you made me angry!>
+
+	%  03 - 05 :  PC is ugly.
+	Msg3 <Eww! Ugly people like you shouldn't be allowed in public. Allow me to introduce myself... They call me "Rich Brat" in the murder club. I'll do a public service by removing you from the gene pool.>
+	Msg4 <How ugly! I can't stand unattractive people like you. My name is \ELEMENT 4 , but in the murder club they call me "Gold Killer". You've offended my aesthetics so now you must die!>
+	Msg5 <I'm so glad that I wasn't born as ugly as you... the only cure for true ugliness is death, I'm afraid. I am "Lovely Knife" of the murder club. The world will be a much more beautiful place once I've removed you from it.>
+
+	%  06 - 08 :  PC has defeated other members of the club.
+	Msg6 <I thought you'd be coming for me sooner or later, \PC . I am "Rich Brat" of the murder club. I'm not afraid of you... with the best technology money can buy, I should be able to easily defeat you!>
+	Msg7 <Ah, \PC , you're smarter than you look. They said that you'd be hunting us down one by one. Well now the hunter becomes the hunted... In the murder club I'm known as "Gold Bug", and with my superior equipment I'll make short work of you!>
+	Msg8 <So I've been found by the hunter who's taking out the murder club. Am I scared? Hardly. They call me "Rich Killer", and with my superior firepower I can easily defeat you.>
+
+	%  09 - 11 :  PC isn't renowned; will be ignored by this character.
+	Msg9 <Oh, how common.>
+	Msg10 <I'm so glad that I'm not ugly like those other students.>
+	Msg11 <Die young and leave a beautiful corpse...>
+
+	%  12 - 14 :  PC has asked about the murder club.
+	Msg12 <You're looking for the murder club? People who do that end up dead... My nickname is "Deadly Brat"; I will defeat you for the glory of our club!>
+	Msg13 <Why are you interested in the murder club? We're not accepting ugly old people as members... you may make a lovely target, though. My nickname is "Gold Hunter" and I'll be killing you today!>
+	Msg14 <Are you a cop? This is exciting, I've always wanted to kill a police officer... In the murder club I'm known as "Cash Money". With my superior firepower I'll be serving you your death right now!>
+
+	%  15 - 16 :  PC wants to start the fight immediately.
+	Msg15 <Don't worry, it'll all be over very quickly.>
+	Msg16 <I'll try to leave at least one part intact so your family can have something to bury.>
+
+	%  17 - 18 :  PC doesn't want to fight.
+	Msg17 <Do you have any better suggestions?>
+	Msg18 <You don't want to fight? Then, what else am I supposed to do?>
+
+	%  19 - 20 :  NPC chickens out from fight.
+	Msg19 <You're not afraid? That means you can probably beat me... Look, I don't really want to fight you. I'll just surrender to that guardian over there, okay?>
+	Msg20 <What, you're not going to run away? I don't want to fight anyone who's going to fight back... Look, this murder club was a bad idea. It wasn't my fault... all my friends joined... I'll just surrender to that guardian over there, okay?>
+
+	Msg21 <But if we don't fight, that means an unattractive person like you gets to live. I can't accept that! I must kill you now!>
+	Msg22 <I know you think I must just be some poor misguided little angel... but the truth is, I've come to enjoy killing... now I will enjoy killing you!>
+	Msg23 <What, you think a few nice words and my entire life can turn around? I got news for you- I'm no angel. In fact, I'm a lot closer to a demon, as you're about to discover...>
+	Msg24 <You could be right... I never really wanted to be part of the murder club, you know, but all my friends were joining so I did too... I don't want to ruin the rest of my life... I'll turn myself in.>
+	Msg25 <I want to... this "Murder Club" thing has gone too far, really... I never wanted to be a killer but all my friends joined so I had to... I think the best thing would be for me to surrender to the guardians. I'll do it.>
+	Msg26 <And spend the rest of my life in jail? That's not the kind of accomodation I'm used to. No, it's a much better idea for me to kill you instead...>
+	Msg27 <Are you nuts? I've heard what happens to people like me in jail. There's no way out but to kill you...>
+	Msg29 <\ELEMENT 3 @ \SCENE ESCENE 3 :// You helped capture one of the members of the "Murder Club". Come see me for a reward.>
+	Msg30 <\ELEMENT 4 has surrendered.>
+	Msg31 <Now that you mention it, surrender does sound like a nice option... I quit...>
+	Msg32 <I don't want to get hurt... I only joined the murder club because of peer pressure... I surrender...>
+
+	%  01 - 03 :  PC doesn't want to fight.
+	Prompt1 <We don't have to fight, you know.>
+	Prompt2 <You don't have to fight me.>
+	Prompt3 <There are better things to do than fight.>
+
+	%  04 - 06 :  PC wants to start the fight now.
+	Prompt4 <I can take you.>
+	Prompt5 <Sounds like fun. Let's rumble.>
+	Prompt6 <Let's start this fight.>
+
+	Prompt7 <You can reform your life.>
+	Prompt8 <Repent your crimes and go straight.>
+
+	Prompt9 <I need to ask you about the murder club.>
+
+	Prompt10 <Give up before you get hurt.>
+	Prompt11 <Surrender now or I'll kill you.>
+
+end
+inv
+	NPC Soldier
+	job <Student>
+	chardesc Young Sociable Chaotic
+	EquipChar 250000
+	Charm 17
+
+	Treasure 1500
+	name <Bracelet>
+	place <4>
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <There's still an anti-theft chip attached to this bracelet. It came from a department store in \SCENE V1 .>
+	Msg2 <It's a bracelet.>
+
+end

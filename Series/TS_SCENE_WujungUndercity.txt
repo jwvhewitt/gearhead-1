@@ -1,0 +1,68 @@
+SCene 0
+% Item Dungeon Scene
+
+% This is an infinite dungeon. Once the specified level is reached,
+% the item will be inserted. If V1=0, no item will be inserted, and
+% this will just be a big featureless dungeon.
+
+% V1 = *Item to insert
+% V2 = *Depth at which to insert
+% V3 = *Current Depth
+% V4 = *Current Monster Rating
+% V5 =  Initialization Counter
+
+	special <NoExit>
+	NU1 <if= T1 0 Return>
+	CaveMap
+	BorderType 35
+	FloorType 14
+
+	start <Print 1 if= V5 0 V= 5 1 MonsterUp 2 V4 if# V1 0 Compose Get L1 .getitem>
+	Msg1 <You are approximately \VAL V3 meters below Wujung street level.>
+	.getitem <if# L1 0 L= 1 0 XPV 100>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <City Mutant Vermin Devo Earth>
+
+	Team 3
+	home <Down SPot>
+
+	rect
+	width 3
+	height 3
+	sub
+		StairsUp
+		Destination -1
+		use <Print 1 L+ 3 -5 L+ 4 -4 ifG 1 L3 else GoUpStairs Return>
+		GoUpStairs <LoadD .sitename PassVar 3 L3 PassVar 4 L4 SeekGate 1>
+		.sitename <TS_SCENE_WujungUndercity.txt>
+	end
+
+	rect
+	width 3
+	height 3
+	name <Down SPot>
+	sub
+		StairsDown
+		Destination 1
+		use <if= L3 45 else Godown ifKeyItem 17 else GoNoKey Goto GoDown>
+		GoNoKey <Print 2>
+		GoDown <Print 1 L+ 3 5 L+ 4 4 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 PassVar 4 L4 SeekGate -1 if# L1 0 ifG L3 L2 DynaItemTeam L1 3>
+		.sitename <TS_SCENE_WujungUndercity.txt>
+		update <if# L1 0 ifG L3 L2  SetStat STAT_MetaVisibility -1>
+		Msg2 <The stairs down are blocked by a metal grate. There's no way you can get through.>
+		Clue37 <if= L3 45 Print 3>
+		Clue29 <if= L3 45 Print 4>
+		Clue32 <if= L3 45 Print 5>
+		Msg3 <There's a lock on the grate. If only you had a key...>
+		Msg4 <The bars of the grate are made of Impervium. You'd need a mecha to even dent them.>
+		Msg5 <Unfortunately, your modern technological skills are of no use against this primitive mechanical lock. You have no idea how to open the grate.>
+
+	end
+
+end

@@ -1,0 +1,148 @@
+Plot 0
+	name <PLOT: GuardJob4>
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Combat Indicator
+
+	element1 <Character Guardian Heroic>
+
+
+	% Time limit - this plot will fade after about half a day.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 43450>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	% After combat, V2=2 if the player lost, or V2=3 if the player won.
+	NU1 <if= T1 0 if= V2 1 Reputation 6 -2             V= 2 2>
+	NU2 <if= T2 0 if= V2 1 Reputation 1 2   XPV 50     V= 2 3>
+
+sub
+	Persona 1
+	rumor <a new crime gang built their headquarters near here. !1 is investigating them.>
+	% The NPC who will offer the job.
+	% PCs who don't have mecha will be sent elsewhere...
+	% Only PCs with good reaction score will be offered a job.
+	% V1 = Threat Value
+	% V2 = Message Randomizer
+	% V3 = Phase Indicator, PC gets only one pass through conversation
+	greeting <NewChat if= P2 3 else GoCheckLoss  AdvancePlot 0 AddReact E8 V= 2 120 V+ 2 d6 Say V2>
+	GoCheckLoss <if= P2 2 else GoCheckMission  AdvancePlot 0 AddReact 1 Say 1>
+	GoCheckMission <ifG PCMeks 0 else GoNoMeks if= V3 0 else GoNothing V= 3 1 ifG PCRep 6 d60 else GoHasChance  AdvancePlot 0  Say 22>
+	GoHasChance <ifG React 50 else GoMaybeOK Say 10 AddChat 4 AddChat 5>
+	GoMaybeOK <ifG React d30 else GoMedReact ifG PCRep 2 -5 else GoMedReact V= 2 100 V+ 2 d5 Say V2 AddChat 4 AddChat 5>
+
+	% PCs with a medium reaction score have a chance to get offered a job,
+	% if they make a good impression on the NPC.
+	GoMedReact <ifG React d10 else GoLowReact ifG PCRep 2 -d120 else GoLowReact  V= 2 110 V+ 2 d5 Say V2 AddChat 1 AddChat 2 AddChat 3>
+
+	GoLowReact <Say 3>
+	GoNothing <SayAnything AdvancePlot 0>
+
+	% With no meks, the PC won't get offered a job at all, but may be told
+	% about it.
+	GoNoMeks <Say 4>
+
+	% Result 1 -> The player is offering his services
+	result1 <NewChat Reputation 4 1 Say 5 AddChat 4 AddChat 5>
+
+	% Result 2 -> The player will try to impress the NPC with INTIMIDATION
+	result2 <NewChat Reputation 4 -d6 ifG SkRoll 28 6 else GoNotScary Say 6 AddChat 4 AddChat 5>
+	GoNotScary <Say 7>
+
+	% Result 3 -> The player goes quietly away.
+	result3 <NewChat Say 8>
+
+	% Result 4 -> Go straight to the job description.
+	result4 <Goto GoJobDesc>
+
+	% Result 5 -> Go away.
+	result5 <NewChat Say 9>
+
+	% The NPC will describe the job being offered. This will depend upon the
+	% PC's reputation.
+	% V1 = Threat Value of Encounter
+	GoJobDesc <ifG PCRep 6 45 Else GoLvl9 ifG  5 PCRep 1 Else GoLvl9 V= 1 600000 E= 8 10 Say 11 goto GoChoose>
+	GoLvl9    <ifG PCRep 6 40 Else GoLvl8 ifG 10 PCRep 1 Else GoLvl8 V= 1 450000 E= 8 9 Say 12 goto GoChoose>
+	GoLvl8    <ifG PCRep 6 35 Else GoLvl7 ifG 20 PCRep 1 Else GoLvl7 V= 1 300000 E= 8 8 Say 13 goto GoChoose>
+	GoLvl7    <ifG PCRep 6 30 Else GoLvl6 ifG 30 PCRep 1 Else GoLvl6 V= 1 150000 E= 8 7 Say 14 goto GoChoose>
+	GoLvl6    <ifG PCRep 6 25 Else GoLvl5 ifG 35 PCRep 1 Else GoLvl5 V= 1 100000 E= 8 6 Say 15 goto GoChoose>
+	GoLvl5    <ifG PCRep 6 20 Else GoLvl4 ifG 40 PCRep 1 Else GoLvl4 V= 1  75000 E= 8 5 Say 16 goto GoChoose>
+	GoLvl4    <ifG PCRep 6 15 Else GoLvl3 ifG 45 PCRep 1 Else GoLvl3 V= 1  60000 E= 8 4 Say 17 goto GoChoose>
+	GoLvl3    <ifG PCRep 6 10 Else GoLvl2 ifG 50 PCRep 1 Else GoLvl2 V= 1  50000 E= 8 3 Say 18 goto GoChoose>
+	GoLvl2    <ifG PCRep 6  5 Else GoLvl1                            V= 1  35000 E= 8 2 Say 19 goto GoChoose>
+	GoLvl1    <ifG PCRep 6  0 Else GoLvl0                            V= 1  20000 E= 8 1 Say 20 goto GoChoose>
+	GoLvl0    <V= 1  10000 E= 8 1 Say 20 goto GoChoose>
+
+	% The encounter has been described, and a threat rating been set.
+	% See whether or not the PC will accept the job.
+	GoChoose <NewChat AddChat 6>
+
+	Result6 <EndChat Say 21 Memo 2 P= 2 1 Reputation 1 1 Reputation 2 1 AddReact d8 SavePos Dynamic 2 V1 FrzNU1 FrzNU2  ifG E8 2 Encounter 35 3 .enemydata>
+	FrzNU1 <if= T1 0 Salvage Return>
+	FrzNU2 <if= T2 0 Salvage Return>
+	.enemydata <Villainous Bandit +PCRA +ECRA>
+
+	result7 <Reputation 2 1 NewChat Say 4>
+	result8 <AddReact -4 NewChat Say 4>
+	result9 <Reputation 5 1 NewChat Say 22>
+
+	Msg1 <With the evidence you collected, I should be able to bring charges against the mecha gang. Good work.>
+	Msg2 <\ELEMENT 1 in \SCENE EScene 1 asked you to investigate a mecha gang.>
+	Msg3 <A suspicious mecha gang has moved into this jurisdiction. I've been keeping an eye on them.>
+	Msg4 <A guardian's work is never done. I could use a mecha pilot to assist in this case, but they seem to be in short supply these days.>
+	Msg5 <Are you sure? I'd really appreciate the help, but I have to tell you that there's no reward being offered for this operation.>
+	Msg6 <Much as I appreciate the sentiment, I'm afraid that I can't condone any unlawful actions. Still, if you'd like to investigate their base, I'd appreciate the help. And if they attack you then you're free to take them out. No reward, though.>
+	Msg7 <Thanks for the offer, but I think I'll stick to conventional methodology.>
+	Msg8 <Thank you. Take care out there.>
+	Msg9 <I understand completely.>
+	Msg10 <Hey, I have a personal favor to ask of you. I need a pilot to run a mission, but there's no bounty allocated for this one. Could you do this job for me?>
+
+	Msg11 <The bandit gang "Igor's Marauders" has established a new headquarters in our jurisdiction. I want you to investigate this area, and engage the bandits if they act agressive. Be careful... these criminals are known to be quite deadly.>
+	Msg12 <A mecha death-cult, "Slaves to the Dark God", has set up a base and recruitment center near here. I want you to scout out their encampment and gatehr evidence. If they fire on you, feel free to exterminate them. Be careful.>
+	Msg13 <The dreaded gang "Bjorn's Berserkers" have set up a base in this area. I want you to investigate them, and eliminate them if it appears that they are planning criminal activity.>
+	Msg14 <It's been rumored that "Vadim's Roughnecks", an infamous team of mecha thieves, has set up a small base in this area. I want you to explore these coordinates. If the thieves are discovered, it may be nessecary to fight them.>
+	Msg15 <There's a new bandit gang in town. They call themselves "Saepheroth Circle". I want you to check out their hideout, and make contact with their leader if possible. If they attack your mecha you are cleared to use deadly force against them.>
+	Msg16 <I've discovered that the mecha gang "El Toki Diablo" has a base near here. I need you to investigate them and find out what their intentions are. If it seems that they are up to no good, you are cleared to use force against them.>
+	Msg17 <Reports indicate that a mecha gang called "The Dingo Weasels" has moved into town. I need you to investigate their encampment and report their intentions.>
+	Msg18 <A group of bandit wannabes calling themselves "The Doomed Patrol" have set up camp outside of town. I need you to investigate their whereabouts. You can engage them in combat if they are agressive towards you.>
+	Msg19 <A mecha gang called "Redshirt Legion" has set up a base near here. I'd like for you to scout them out, and report back. If they react violently to your presence, you're cleared to eliminate them.>
+	Msg20 <A gang calling themselves "The Expendables" has moved into town. I'd appreciate it if you would investigate their base, and report back to me. If they act agressive, you are cleared to use deadly force.>
+
+	Msg21 <Here are the coordinates. Thank you very much for doing this!>
+	Msg22 <I have a lot of work to do today. Unfortunately none of it is interesting.>
+
+	Msg101 <There's a new mecha gang operating in the area and I need someone to go check them out. There's no reward for this mission, but I'd appreciate it if you could help me.>
+	Msg102 <I could use some help from a mecha pilot, if you're up for a bit of community service.>
+	Msg103 <I need a mecha pilot to investigate a criminal gang that just moved into town. I can't offer a reward, but if you do this our city will be thankful.>
+	Msg104 <How'd you like to help me out? I need a pilot to go investigate the activities of a mecha gang. There's no cash involved in this job... Think of it as community service.>
+	Msg105 <Upholding the peace is everyone's responsibility. I need a volunteer mecha pilot to go disperse some hoodlums. The only reward to be had is the knowledge that you're protecting our city.>
+
+	Msg111 <Some new mecha-punks have just rolled into town. I think they're the same ones involved in those robberies last year, but I'm going to need more information before I can move.>
+	Msg112 <I'm busy investigating a new criminal gang that seems to be moving into our jurisdiction. The only charge I have against them yet is that their meks don't have proper registration, but I think they're up to something.>
+	Msg113 <One of our crime gangs has just acquired some fancy new hardware. I don't know what they're planning to use it for, but I can't move against them until I do.>
+	Msg114 <A new crime gang just moved into the region. They've set up a hideaway in the wilds outside of town. I'd like to drive them away, but I don't have the manpower to waste right now.>
+	Msg115 <I've been tracking the movements of a mecha gang that just started operating in the last month or so. I believe they're connected to a number of attacks against civilian vehicles, but I'll need more info before I can pin anything on them.>
+
+	Msg121 <Excellent work. You've been a great help, I only wish I had a reward to give you.>
+	Msg122 <Those bandits won't be bothering anyone ever again. Good job.>
+	Msg123 <Thank you so much! You did great out there against those criminals... Hopefully next time I'll have a paying job for you.>
+	Msg124 <Just as I thought, those lowlifes were up to no good. Thanks for your help.>
+	Msg125 <The criminals have fled the area. You've done well protecting our city.>
+	Msg126 <Congradulations on a job well done. Come back sometime and I'll see if I can find a paying job for you.>
+
+	prompt1 <I can scout their base for you.>
+	prompt2 <I can make them leave the area.>
+	prompt3 <I wish you the best of luck.>
+
+	prompt4 <I'd be glad to help.>
+	prompt5 <Sorry, I don't work for free.>
+
+	prompt6 <I'll report back when I'm done.>
+
+
+
+end
+

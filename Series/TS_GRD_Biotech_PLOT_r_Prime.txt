@@ -1,0 +1,224 @@
+Plot 0
+	name <PLOT: BTE Prime>
+
+	% A plot template based on the old "Biotech Enemy" plot, or
+	% at least the first part of it... The PC will be able to
+	% approach the leader in town, who will then tell him to go
+	% see a citizen, who will then allow the PC to perform a combat
+	% mission, at the end of which the leader will give him a reward
+	% and send him to a third NPC who will point the way to the next
+	% part of the story.
+
+	% This plot is meant to be linked into a relay story.
+
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+
+	% E1 is the scene where this will take place.
+	Element1 <Grab 2>
+
+	% E2 is the "Leader", from whom the original mission comes.
+	Element2 <Character Leader !Near 1>
+
+	% E3 is the "Victim", who gives the actual mission.
+	Element3 <Character Melancholy !Near 1>
+
+	% E4 is the "Investigator", who tells the PC where to go next.
+	Element4 <Character Guardian !Near 1>
+
+	% E5 is the next scene in the relay.
+	Element5 <Scene Town !Far 1 !Member 11>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+
+	%  V4 = Phase Indicator
+
+	%  S2 = Encounter Challenge Rating
+
+	%  S101 = Faction Victory Count
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 S= 201 0 AdvancePlot 0>
+
+	start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete ifPersona E4 else GoDelete>
+	GoDelete <S= 201 0 AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3 S= 201 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6 1 XPV 50 S= 201 0 S+ 202 1 S+ 101 d3 N= 2 E5>
+
+sub
+
+	Persona 2
+	% The "LEADER" who will tell the PC to go find E3.
+	rumor <monsters have been sighted near town! !2 is looking for someone to investigate.>
+
+	% V4 = Reward for mission
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 5 CashPrize V4 AdvancePlot 1>
+	GoCheckLoss <if= P2 2 else GoCheckProgress Say 4 P= 2 0>
+	GoCheckProgress <if= P4 1 else GoFirstTime Say 3>
+	GoFirstTime <V= 4 Threat S2 2  ifG React 55 else GoNoFriend Say 1 AddChat 3 AddChat 4 AddCHat 5>
+	GoNoFriend <Say 2 AddChat 1 AddChat 2 AddChat 5>
+
+	result1 <NewChat  Say  7  Goto GoStartJob>
+	result2 <NewChat  Say  8  Reputation 3 -d8  Goto GoStartJob>
+	result3 <NewChat  Say  9  Goto GoStartJob>
+	result4 <NewChat  Say  9  Goto GoStartJob>
+	GoStartJob <P= 4 1 Memo 6>
+
+	result5 <NewChat Say 11 AdvancePlot 0>
+
+	% Friend - you have to help me
+	Msg1 <I'm glad to see you today. Our town has a situation now which I could use your help with, if you are free to help me...>
+
+	% I guess you're here because you've heard of the situation...
+	Msg2 <I guess you've come because you've heard about our situation. Is that correct?>
+
+	% Go see E3 about the situation
+	Msg3 <Have you spoken to \ELEMENT 3 yet? You really should.>
+
+	% You lost the battle...
+	Msg4 <What are you doing talking to me? There are still monsters out there! Are you going to kill them or not?>
+
+	% You won! Here's your reward; go see E4.
+	Msg5 <Here's a reward for protecting our village. I believe you should speak with \ELEMENT 4 ; he's been investigating these creatures for the guardians.>
+
+	% MEMO: E2 sent you to E3
+	Msg6 <\ELEMENT 2 in \SCENE EScene 2 sent you to find \ELEMENT 3 , the last person to have seen the monsters.>
+
+	% 7 - 10: Replies to prompts 1 - 4
+	Msg7 <You may be interested to know that there's a reward of $ \VAL V4 for capturing or killing the monster. \ELEMENT 3 was the last one to see it and live; that may be a good place to start investigating.>
+	Msg8 <You haven't heard? What, are you living in a cave? It's all anyone has been talking about. There's a monster on the loose, nearly killed \ELEMENT 3 , and I'm offering a reward of $ \VAL V4 to stop it!>
+	Msg9 <A strange creature has been spotted near town... it may be connected to the monsters we've all been hearing about. \ELEMENT 3 was the last one to see it and live; I can offer $ \VAL V4 for you to find this beast and stop it.>
+
+
+	% PC has refused the mission
+	Msg11 <I hope that someday our town can be safe again...>
+
+	% 1-2: Replies to Msg2; both lead to job offer.
+	Prompt1 <Right.>
+	Prompt2 <What situation?>
+
+	% 3-4: Replies to Msg1; both lead to job offer.
+	Prompt3 <I'll be glad to help.>
+	Prompt4 <Tell me about the situation.>
+
+	% 5: I can't help you.
+	Prompt5 <Sorry, I can't help you.>
+
+	Persona 3
+	% The "VICTIM" who will tell the PC where to find the monster.
+	rumor <!3 has been very nervous these days.>
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 7>
+	GoCheckLoss <if= P2 2 else GoCheckProgress Say 6 P= 2 0>
+	GoCheckProgress <if= P4 1 else GoNoMission if= V1 1 else GoFirstTime Say 3 Goto GoAddComOps>
+	GoFirstTime <Say 2 AddChat 1 AddChat 2>
+	GoNoMission <Say 1>
+
+	GoAddComOps <AddChat 3 AddChat 4>
+
+	result1 <NewChat  Say 4  V= 1 1  AddChat 5>
+	result2 <NewChat  Say 5  Reputation 3 d8  V= 1 1  AddChat 5>
+
+	result3 <EndChat Say 8 Goto GoStartCombat>
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 MDynamic 0 S2 .mdesc .nu1 .nu2>
+	.mdesc <Mutant Synth>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	result4 <NewChat Say 9>
+
+	result5 <NewChat Say 10 Goto GoAddComOps>
+
+	%  1 : Before PC has spoken to E2
+	Msg1 <I can't feel safe here any more...>
+
+	%  2 : NPC is frightened!
+	Msg2 <Not even our community is safe any more...>
+
+	%  3 : NPC is ready to start the mission
+	Msg3 <Do you want to go where I saw the creature?>
+
+	% 4-5 : Responses to 1-2
+	Msg4 <It was horrible. I never got a good look at it, but the smell... It was like formaldehyde, or some other kind of chemical.>
+	Msg5 <Yeah, I guess I am... That thing I saw. They say it's killed other people. We don't even know what it was...>
+
+	% 6 : PC has lost the mission, go speak with E2
+	Msg6 <It's still out there, I know...>
+
+	% 7 : PC has won the mission, go speak with E2
+	Msg7 <The monsters are gone... finally I can sleep again.>
+
+	% 8 : Combat is starting
+	Msg8 <Good luck.>
+
+	% 9 : PC needs time to get ready.
+	Msg9 <I'll still be here, when you're ready to go...>
+
+	Msg10 <I can show you... are you planning to go there? Be careful. If it's still in the area it might be very dangerous.>
+
+	% 1-2 : Responses to Msg2
+	Prompt1 <Tell me about the monster.>
+	Prompt2 <You look pretty shaken up.>
+
+	% 3 : Ready to enter combat
+	Prompt3 <I'm ready to go now.>
+
+	% 4 : Need time to prepare
+	Prompt4 <There are things I should do first.>
+
+	Prompt5 <Tell me where you saw it.>
+
+	Plot 1
+		% This plot is advanced to if the PC completes the combat
+		% mission.
+		% Delete this plot if the main NPC gets deleted.
+		start <ifPersona E4 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Memo 1>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		GoDelete <AdvancePlot 0>
+
+		cleanup <AdvancePlot 0>
+
+		Msg1 <\ELEMENT 2 asked you to speak with \ELEMENT 4 .>
+
+	sub
+		Persona 2
+		greeting <NewChat Say 1>
+		Msg1 <You should go speak with \ELEMENT 4 .>
+
+		Persona 4
+		greeting <NewChat Say 1  AddChat 1  ifG SkRoll 29 8 else GoDelete AddChat 2  AdvancePlot 0>
+		GoDelete <AdvancePlot 0>
+
+		result1 <NewChat  Reputation 1 1  Say 2>
+		result2 <NewChat  Reputation 6 1 Reputation 7 1 Say 3>
+
+		Msg1 <I obtained some tissue samples from the place where you fought those creatures. The guardian office in \Element 5 had a similar case just a few weeks ago.>
+		Msg2 <That might be a good idea. Unless we can find out where these monsters are coming from, we'll probably never be rid of them.>
+		Msg3 <I suspect you may be right. The lab should be able to tell us whether these are mutants, biostructs, or what else... If you want to continue working on this case, head to \ELEMENT 5 .>
+
+		Prompt1 <Maybe I should go there...>
+		Prompt2 <These aren't natural creatures.>
+
+
+	end
+
+end

@@ -1,0 +1,12 @@
+Plot 0
+	name <PLOT_LazyPlot>
+	% Lazy Plot - Does nothing. Just kind of a test.
+	Element1 <Character Easygoing>
+	rumor <!1 likes to goof off.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <SayAnything NewChat>
+end

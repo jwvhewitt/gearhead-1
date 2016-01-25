@@ -1,0 +1,104 @@
+Battroid 6
+Name <Hariseng>
+Desig <MD7>
+SDL_Sprite <btr_hariseng.png>
+
+Mod Head
+	Size 4
+	Armor 3
+	Mass -2
+	sub
+		Sensor 4
+
+		TarComp 2
+	end
+	inv
+		HeadArmor 3
+		Mass -5
+	end
+
+Mod Body
+	Armor 6
+	Mass -2
+	sub
+		CPit
+		Armor 2
+
+		Gun 8
+		Mass -2
+		Name <Flame Cannon>
+		Type <BURN LINE>
+		Range 4
+		Acc -1
+		Magazine 10
+		sub
+			Ammo 8
+		end
+	end
+	inv
+		BodyArmor 6
+		Mass -10
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 5
+	Mass -2
+	sub
+		Hand
+		inv
+			Melee 16
+			Name <Naginata>
+			Speed 1
+			Type <EXTEND>
+		end
+
+		STC MAC-4
+	end
+	inv
+		ArmArmor 4
+		Mass -7
+		sub
+			STC GHML-3
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 5
+	Mass -2
+	sub
+		Hand
+
+		STC MAC-4
+	end
+	inv
+		EShield 5
+		Name <Fan>
+		DefBonus -1
+
+		ArmArmor 4
+		Mass -7
+		sub
+			STC GHML-3
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 5
+	inv
+		LegArmor 4
+		Mass -6
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 5
+	inv
+		LegArmor 4
+		Mass -6
+	end
+end

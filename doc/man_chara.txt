@@ -1,0 +1,204 @@
+% MANAGING YOUR CHARACTER Doc Jan 30 2004
+***********************************
+***  MANAGING  YOUR  CHARACTER  ***
+***********************************
+  
+ The most important command for taking care of your PC is the View
+ Character interface, accessed by pressing "C". From here you can take
+ care of most of your character's needs.
+  
+BACKPACK
+  
+ This option allows you to view your character's worldly goods.
+ The backpack is divided into two area. The top area is your
+ equipment; these are the items which your PC is currently using.
+ The bottom area is your inventory; these are the items which your
+ PC is carrying but isn't currently using.
+  
+ You can switch back and forth between inventory and equipment
+ by pressing the '/' key.
+  
+ The backpack menu can also be accessed during exploration mode.
+ Press 'i' to view your inventory, or 'e' to view your equipment.
+  
+VIEW INJURIES
+  
+ Your PC's health point total is always shown in the info window,
+ but for a more detailed overview of your character's health you can
+ always use the View Injuries option.
+  
+ If your character is moving slowly, or doesn't seem to be using one
+ of his arms, come here to see if his limbs have been damaged.
+  
+TRAINING
+  
+ Spending experience points is what is good in life. From the training
+ sub-menu it is possible to view all your skills, to improve them, to
+ learn new skills, and once you are sufficiently advanced to even improve
+ your PC's statistics.
+  
+ Your character will pay more for training if too many skills are known.
+ The total number of skills your character can have without penalty is
+ determined by the Knowledge stat.
+  
+FIELD HQ
+  
+ The Field HQ allows you to handle all of your PC's wargear. All items
+ which your PC owns but which are too heavy to be carried personally
+ may be viewed and edited here. See the MANAGING YOUR MECHA doc for
+ more information.
+  
+TALENTS
+ 
+ Talents are special things your character can do that most people
+ can't. You only get a limited number of talents, so choose them
+ wisely.
+ 
+             XP          TALENTS
+                0           1
+           10,000           2
+           30,000           3
+           60,000           4
+          100,000           5
+ 
+ Purchasing a talent costs 1000XP.
+  
+  ANATOMIST
+    Because of your anatomical knowledge, you are able to target
+    an opponent's vital points. (+1 Penetration versus living targets)
+    PreRequisite: Medicine +5
+ 
+  ANIMAL TRAINER
+    You are good at teaching your pets how to do tricks.
+    (new pets gain XP bonus)
+    PreRequisite: Dominate Animal +5
+ 
+  BADASS
+    The angrier you get, the harder you fight.
+    (Bonus to combat skills while bad morale)
+    PreRequisite: Must be melancholy
+ 
+  BISHOUNEN
+    You are androgynously beautiful. (may use Flirtation skill with
+    all NPCs, regardless of gender)
+    PreRequisite: Charm 15
+ 
+  BODY BUILDER
+    You are totally pumped up. (+2 Body)
+    PreRequisite: Weight Lifting +5
+ 
+  BORN TO FLY
+    You are an expert with flying mecha.
+    (+3 Mecha Piloting while flying)
+    PreRequisite: Mecha Piloting +5
+ 
+  BUSINESS SENSE
+    You are very good at negotiating favorable deals.
+    (+25% to most mission cash rewards)
+    PreRequisite: Shopping +5
+ 
+  COMBAT MEDIC
+    You are capable of performing emergency medicine in
+    dangerous places.
+    (First Aid and Medicine take 1/3 normal time)
+    PreRequisite: First Aid +5
+ 
+  CYBERPSYCHO
+    Your body is adjusted to cyberware, it's just your mind
+    that suffers.
+    (May avoid trauma by spending MP)
+    PreRequisite: Body 15
+ 
+  DIPLOMATIC
+    In conversation, you can avoid controversial topics.
+    (may avoid reaction loss due to personality clash)
+    PreRequisite: Ego 15
+ 
+  EXTROPIAN
+    You are philosophically prepared to deal with the loss
+    of your humanity. (may have one implant per 3 points
+    Cybertech with no chance of disfunction)
+    PreRequisite: Cybertech 5
+ 
+  GATE CRASHER
+    You're very good at destroying inanimate objects.
+    (+2 penetration against inanimate objects)
+    PreRequisite: Must be passionate
+ 
+  HAP-KI-DO
+    You are an expert at self defense.
+    (May block attacks using Martial Arts)
+    PreRequisite: Martial Arts +5
+ 
+  HARD AS NAILS
+    You don't feel pain like normal people.
+    (All attacks against PC are at -2 Penetration)
+    PreRequisite: Resistance +5
+ 
+  HULL DOWN
+    As long as you aren't flying, you can position your mecha so as to
+    prevent critical hits.
+    (All attacks against walking or rolling mecha are at -3 Penetration)
+    PreRequisite: Electronic Warfare +5
+  
+  IDEALIST BLOOD
+    Your ancestry includes some genetic engineering.
+    (+1 to three random stats)
+ 
+  JACK OF ALL TRADES
+    You can do a little bit of everything.
+    (May use unknown skills without -2 penalty)
+    PreRequisite: Craft 15
+  
+  KUNG-FU
+    Your hands are lethal weapons.
+    (+3 Penetration for Martial Arts attacks)
+    PreRequisite: Martial Arts +5
+ 
+  NINJITSU
+    Your surprise attacks are deadly.
+    (damage bonus when attacking unseen)
+    PreRequisite: Stealth +5
+ 
+  PRESENCE
+    You have mastered a commanding stage presence. (+2 Charm)
+    PreRequisite: Performance +5
+ 
+  ROAD HOG
+    You are an expert with cars and other wheeled vehicles.
+    (+2 Mecha Piloting while rolling)
+    PreRequisite: Mecha Piloting +5
+ 
+  SAVANT
+    You have more skills than is normal for a person of
+    your intelligence. (can learn 5 more skills without penalty)
+ 
+  SCIENTIFIC METHOD
+    Your scientific training has made you very good at discovering
+    new things. (+2 Knowledge)
+    PreRequisite: Science +5
+ 
+  SNIPER
+    One shot is all you ever need. (bonus to single fire damage rolls)
+    PreRequisite: Spot Weakness +5
+ 
+  STRENGTH OF FAITH
+    You have the power of faith on your side. (+2 Ego)
+    PreRequisite: Mysticism +5
+  
+  STUNT DRIVING
+    As long as you're going fast, you can find a way to avoid
+    most attacks. (may reroll dodge if traveling at full speed)
+    PreRequisite: Speed 15
+ 
+  SURE FOOTED
+    You are an expert with walkers and zoanoids.
+    (+2 Mecha Piloting while walking)
+    PreRequisite: Mecha Piloting +5
+  
+  TECH VULTURE
+    When awarded salvage, you'll grab everything worth taking.
+    (can salvage individual modules from defeated mecha)
+    PreRequisite: Mecha Repair +5
+ 
+

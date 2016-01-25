@@ -1,0 +1,469 @@
+plot 0
+	name <News Story>
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will give the PC a mission.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the computer
+	% E5 is the bounty hunter
+	Element1 <Grab 3>
+	Element2 <Prefab>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Prefab>
+	Element5 <Character Bounty Hunter Heroic !Far 1>
+
+	% V1 = Initialization counter
+	% V2 = Combat Counter
+	% V3 = Victory indicator
+	% V4 = Email indicator
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 dies, load a new plot.
+	start <ifPersona E2 else GoDelete ifItemOK E4 else GoDelete if= V1 0 V= 1 1 Compose KEY E4 .usecomp>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	.usecomp <if= P3 0 P= 3 1 History 101 XPV 100>
+
+	halfhour <if= V4 0 ifG PCRep 6 d50 V= 4 1 email 1>
+
+	Msg1 <\ELEMENT 2 @ \ELEMENT 1 :// I have some information for you regarding \NARRATIVE 2 . Come see me.>
+	Msg1_1 <\ELEMENT 2 @ \ELEMENT 1 :// \PC , you don't know me but I need your help. Come meet me in \ELEMENT 1 .>
+	Msg1_2 <\ELEMENT 2 @ \ELEMENT 1 :// I know you've had dealings with \NARRATIVE 2 in the past. There's something I need to discuss with you.>
+
+	Msg101 <You discovered that \NARRATIVE 2 killed your family.>
+
+sub
+	Persona 2
+	rumor <!2 has been researching a dark conspiracy.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	%  V5 = Recharge time if mission fails
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+
+	greeting <NewChat if= P3 1 else GoCheckLoss  Say 1  CashPrize V4   Goto GoEndMission>
+	GoCheckLoss <if= P2 1 else GoCheckMission ifG ComTime V5 else GoWaitRecharge P= 2 0 Say 2 AddChat 1 AddChat 2>
+	GoWaitRecharge <Say 3>
+	GoCheckMission <if= V1 1 else GoFirstTime Say 4 AddChat 1 AddChat 2 AddChat 3>
+
+	% Unlike most combat missions, the PC is guaranteed to be offered
+	% this one, since it's personal.
+	% Set V1, V3, V4 here.
+	GoFirstTime <P= 4 1 V= 1 1 V= 3 Threat S103 100  V= 4 Reward V3 150 Memo 11 History 12 Say 6 AddChat 4 AddChat 5>
+
+	% Do everything here that has to be done. If some of the ExtraRandom
+	% parameters need to be changed, do that here as well.
+	GoEndMission <S= 101 1 S+ 102 1 S= 105 1 N= 3 E3 XRBadThing NAV_XRBSeekingRevenge AdvancePlot 0>
+
+	% Combat being entered
+	result1 <EndChat Say 5 SavePos P= 2 1 V= 5 ComTime V+ 5 86400 Goto GoStartCombat>
+	GoStartCombat <LoadD .scene V= 2 S103 V+ 2 -d10 PassVar 2 WMThreat S103 TMStockD 3 V2 .mon TMStockD 4 V2 .mon DynaItemTeam E4 5>
+	.scene <SCENE_GuardedMansion.txt>
+	.mon <CRIMINAL ROBOT SYNTH>
+
+	% Combat being delayed
+	result2 <NewChat Say 7>
+
+	% PC doesn't really want this mission...
+	result3 <NewChat ifG PCRep 6 S103 else GoR3WussOut Say 15 AddChat 8>
+	GoR3WussOut <Say 8 AddChat 6 AddChat 7>
+
+	result4 <NewChat Say 9 AddChat 8 AddChat 3>
+	result5 <NewChat Say 10 AddChat 8 AddChat 3>
+
+	result6 <NewChat Say 13 CashPrize Threat S103 35 AdvancePlot 1>
+	result7 <NewChat Say 14 AddChat 1 AddCHat 2>
+	result8 <NewChat Say 14 AddChat 1 AddCHat 2>
+
+	% 1 : Player has won the mission
+	%    Should mention that next episode will happen in \ELEMENT 3
+	Msg1 <So that's what it's all about... People have to know what those monsters are planning! I've had some leads pointing to \ELEMENT 3 ... that's where I'll go investigate next.>
+	Msg1_1 <So that's it... I have to get the word out about what they're planning! My next lead points to \ELEMENT 3 ... That's where I'm planning to investigate next.>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <So that's the story. This is something people ought to know... I'll be heading to \ELEMENT 3 next, to investigate another lead.>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <I thought they'd be planning something like that. Hopefully if we get the word out we can ruin \NARRATIVE 2 's plans. My next lead points to \ELEMENT 3 , so that's where I'm headed.>
+	CMsg1_3 <ifNPCEasygoing Accept>
+	Msg1_4 <An ancient weapon... If they reactivate it, \NARRATIVE 2 could be unstopable! Thanks for your help. I've got a lead that they're planning something in \ELEMENT 3 , so I'll be going there next.>
+	CMsg1_4 <ifNPCPassionate Accept>
+	Msg1_5 <Thanks, the information you recovered will make a great story! I've got some leads indicating that \NARRATIVE 2 has something planned for \ELEMENT 3 . I'll be going there next.>
+	CMsg1_5 <ifNPCCheerful Accept>
+	Msg1_6 <This is definitely bad news. If \NARRATIVE 2 is close to recovering the PreZero weapon, they could already be unstopable. My leads point to \ELEMENT 3 as their next target... I'll be going there as soon as I can.>
+	CMsg1_6 <ifNPCMelancholy Accept>
+
+	% 2 : Player lost mission previously, now time to try again
+	Msg2 <Are you ready to try infiltrating the base again?>
+	Msg2_1 <You didn't find anything the last time you tried infiltrating \NARRATIVE 2 's base. Are you prepared to try it again?>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <Back for another try?>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <Would you like to try infiltrating the base one more time?>
+	CMsg2_3 <ifNPCEasygoing Accept>
+	Msg2_4 <If they put so much effort into security, \NARRATIVE 2 must really have something to hide! Ready to infiltrate the base?>
+	CMsg2_4 <ifNPCPassionate Accept>
+	Msg2_5 <The infiltration didn't go so well last time, but I'm sure you can do it today. Ready to try?>
+	CMsg2_5 <ifNPCCheerful Accept>
+	Msg2_6 <Last time you were driven away from the base; this time they'll probably kill you. Want to try the infiltration anyway?>
+	CMsg2_6 <ifNPCMelancholy Accept>
+
+	% 3 : Player has lost mission, must wait until tomorrow to try again
+	Msg3 <You didn't find anything in there worth writing about. Come back tomorrow and we can try again.>
+	Msg3_1 <You searched the base but didn't find anything? There must be something you missed. Come back tomorrow and let's try again.>
+	CMsg3_1 <ifNPCSociable Accept>
+	Msg3_2 <You found nothing? You can try again later.>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <It's not likely they'd have so many guards in the area and nothing worth protecting. We can try again tomorrow.>
+	CMsg3_3 <ifNPCEasygoing Accept>
+	Msg3_4 <You were crushed out there... Come here tomorrow and we will try again.>
+	CMsg3_4 <ifNPCPassionate Accept>
+	Msg3_5 <It seems the guards are more capable than I suspected. It's too dangerous to go back now, but come here tomorrow and let's try again.>
+	CMsg3_5 <ifNPCCheerful Accept>
+	Msg3_6 <They nearly killed you... It's too dangerous to go back now. We can try again tomorrow.>
+	CMsg3_6 <ifNPCMelancholy Accept>
+
+	% 4 : Player has accepted mission, has returned from repair
+	Msg4 <Is all your equipment in shape? Are you ready to try that infiltration now?>
+	Msg4_1 <I'm certain that \NARRATIVE 2 is guarding some secret in their base. Are you ready to try infiltrating it now?>
+	CMsg4_1 <ifNPCSociable Accept>
+	Msg4_2 <Ready to go?>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_3 <>
+	CMsg4_3 <ifNPCEasygoing Accept>
+	Msg4_4 <>
+	CMsg4_4 <ifNPCPassionate Accept>
+	Msg4_5 <>
+	CMsg4_5 <ifNPCCheerful Accept>
+	Msg4_6 <>
+	CMsg4_6 <ifNPCMelancholy Accept>
+
+	% 5 : Combat is starting
+	Msg5 <Good luck in there. Be careful... If their mission is as sensitive as I think it is, they've probably got the base heavily guarded.>
+	Msg5_1 <>
+	CMsg5_1 <ifNPCSociable Accept>
+	Msg5_2 <>
+	CMsg5_2 <ifNPCShy Accept>
+	Msg5_3 <>
+	CMsg5_3 <ifNPCEasygoing Accept>
+	Msg5_4 <>
+	CMsg5_4 <ifNPCPassionate Accept>
+	Msg5_5 <>
+	CMsg5_5 <ifNPCCheerful Accept>
+	Msg5_6 <>
+	CMsg5_6 <ifNPCMelancholy Accept>
+
+	% 6 : NPC explains what the PC should do in this mission, and why
+	Msg6 <I've discovered that \NARRATIVE 2 has a secret base in this city; exactly what they've been doing I can't say. I know that you've fought with them in the past... What I need is a cavalier to infiltrate their base and look for information.>
+	Msg6_1 <>
+	CMsg6_1 <ifNPCSociable Accept>
+	Msg6_2 <>
+	CMsg6_2 <ifNPCShy Accept>
+	Msg6_3 <>
+	CMsg6_3 <ifNPCEasygoing Accept>
+	Msg6_4 <>
+	CMsg6_4 <ifNPCPassionate Accept>
+	Msg6_5 <>
+	CMsg6_5 <ifNPCCheerful Accept>
+	Msg6_6 <>
+	CMsg6_6 <ifNPCMelancholy Accept>
+
+	% 7 : PC needs some time to get ready
+	Msg7 <Alright. Do whatever it is that you have to do and then come back here. We can start up then.>
+	Msg7_1 <>
+	CMsg7_1 <ifNPCSociable Accept>
+	Msg7_2 <>
+	CMsg7_2 <ifNPCShy Accept>
+	Msg7_3 <>
+	CMsg7_3 <ifNPCEasygoing Accept>
+	Msg7_4 <>
+	CMsg7_4 <ifNPCPassionate Accept>
+	Msg7_5 <>
+	CMsg7_5 <ifNPCCheerful Accept>
+	Msg7_6 <>
+	CMsg7_6 <ifNPCMelancholy Accept>
+
+	% 8 : PC doesn't really want this mission
+	Msg8 <Well, I do know another adventurer who may be able to help... If you could contact \ELEMENT 5 in \SCENE EScene 5 for me, \OPR E5 could do the infiltration instead.>
+	Msg8_1 <>
+	CMsg8_1 <ifNPCSociable Accept>
+	Msg8_2 <>
+	CMsg8_2 <ifNPCShy Accept>
+	Msg8_3 <>
+	CMsg8_3 <ifNPCEasygoing Accept>
+	Msg8_4 <>
+	CMsg8_4 <ifNPCPassionate Accept>
+	Msg8_5 <>
+	CMsg8_5 <ifNPCCheerful Accept>
+	Msg8_6 <>
+	CMsg8_6 <ifNPCMelancholy Accept>
+
+	% 9 : Response to Prompt4
+	Msg9 <It's clear that they're up to no good. As a reporter, it's my job to keep the public informed of things they need to know. The answers will be found in their base. It's vital that someone get in there and find out what they're planning!>
+	Msg9_1 <>
+	CMsg9_1 <ifNPCSociable Accept>
+	Msg9_2 <>
+	CMsg9_2 <ifNPCShy Accept>
+	Msg9_3 <>
+	CMsg9_3 <ifNPCEasygoing Accept>
+	Msg9_4 <>
+	CMsg9_4 <ifNPCPassionate Accept>
+	Msg9_5 <>
+	CMsg9_5 <ifNPCCheerful Accept>
+	Msg9_6 <>
+	CMsg9_6 <ifNPCMelancholy Accept>
+
+	% 10 : Response to Prompt5
+	Msg10 <That's good to hear. I guess that you know first-hand the danger that \NARRATIVE 2 represents... There's only one way to know what they're doing: Someone has to sneak into their base and get out with the information.>
+	Msg10_1 <>
+	CMsg10_1 <ifNPCSociable Accept>
+	Msg10_2 <>
+	CMsg10_2 <ifNPCShy Accept>
+	Msg10_3 <>
+	CMsg10_3 <ifNPCEasygoing Accept>
+	Msg10_4 <>
+	CMsg10_4 <ifNPCPassionate Accept>
+	Msg10_5 <>
+	CMsg10_5 <ifNPCCheerful Accept>
+	Msg10_6 <>
+	CMsg10_6 <ifNPCMelancholy Accept>
+
+	% 11 : Memo
+	Msg11 <\ELEMENT 2 in \SCENE EScene 2 wants you to infiltrate a base belonging to \NARRATIVE 2 .>
+
+	Msg12 <\ELEMENT 2 asked you to help investigate \NARRATIVE 2 .>
+
+	Msg13 <Great! You're going to have to bring \SPR E5 \PPR E5 hiring fee, of course. This cash should cover that... if there's any change you can keep that for yourself.>
+	Msg13_1 <>
+	CMsg13_1 <ifNPCSociable Accept>
+	Msg13_2 <>
+	CMsg13_2 <ifNPCShy Accept>
+	Msg13_3 <>
+	CMsg13_3 <ifNPCEasygoing Accept>
+	Msg13_4 <>
+	CMsg13_4 <ifNPCPassionate Accept>
+	Msg13_5 <>
+	CMsg13_5 <ifNPCCheerful Accept>
+	Msg13_6 <>
+	CMsg13_6 <ifNPCMelancholy Accept>
+
+	Msg14 <You'll have to sneak into the base, past the guards, and search for anything that might tell us what they're up to. If you can find any documents or a computer terminal that'd be great.>
+	Msg14_1 <>
+	CMsg14_1 <ifNPCSociable Accept>
+	Msg14_2 <>
+	CMsg14_2 <ifNPCShy Accept>
+	Msg14_3 <>
+	CMsg14_3 <ifNPCEasygoing Accept>
+	Msg14_4 <>
+	CMsg14_4 <ifNPCPassionate Accept>
+	Msg14_5 <>
+	CMsg14_5 <ifNPCCheerful Accept>
+	Msg14_6 <>
+	CMsg14_6 <ifNPCMelancholy Accept>
+
+	Msg15 <Well, I don't have anyone else who could help me, so... I'd hate to give up this investogation, but I may have no other choice. Are you sure you can't do this?>
+	Msg15_1 <>
+	CMsg15_1 <ifNPCSociable Accept>
+	Msg15_2 <>
+	CMsg15_2 <ifNPCShy Accept>
+	Msg15_3 <>
+	CMsg15_3 <ifNPCEasygoing Accept>
+	Msg15_4 <>
+	CMsg15_4 <ifNPCPassionate Accept>
+	Msg15_5 <>
+	CMsg15_5 <ifNPCCheerful Accept>
+	Msg15_6 <>
+	CMsg15_6 <ifNPCMelancholy Accept>
+
+	% 1 - 3 :  Standard combat entry options:
+	%         Start Mission, Delay Mission, Mission Details
+	Prompt1 <I'm ready to start now.>
+	Prompt2 <I need a while to get ready.>
+
+	Prompt3 <I'm not much of an infiltrator.>
+
+	% 4 - 5 :  PC can have different reactions to Msg6 above
+	Prompt4 <Why the interest in \NARRATIVE 2 ?>
+	Prompt5 <I'd be glad to help you.>
+
+	Prompt6 <I can do that for you.>
+	Prompt7 <Naah, I'll do the mission myself.>
+
+	Prompt8 <Alright, I'll help you.>
+
+	Plot 1
+		% The PC doesn't want to perform the mission himself...
+		% must go and contact E5 about it.
+		% The amount of money needed is Threat S103 35
+		start <ifPersona E2 else GoDelete ifPersona E5 else GoDelete memo 101>
+		GoDelete <S= 101 1 AdvancePlot 0 if# V1 0 MoveChar E5 V1>
+
+		% P1 = Have paid E5; actually original location of E5
+
+		Msg101 <\ELEMENT 2 in \ELEMENT 1 asked you to contact \ELEMENT 5 in \SCENE EScene 5 to help investigate \NARRATIVE 2 .>
+	sub
+		Persona 2
+		greeting <NewChat if# P1 0 else GoFirstTime Say 2 AddChat 1>
+		GoFirstTime <Say 1>
+		result1 <NewChat Say 3 goto GoEndMission>
+		GoEndMission <History 4 MoveChar E5 P1 S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1 XRBadThing NAV_XRBSeekingRevenge AdvancePlot 0>
+		Msg1 <Go find \ELEMENT 5 in \SCENE EScene 5 , and pay \SPR E5 for the mission.>
+
+		Msg2 <\ELEMENT 5 has done the job; \NARRATIVE 2 is planning to reactivate something called the "T-1". Plus, we found something that will be of great personal interest to you...>
+		Msg2_1 <\ELEMENT 5 infiltrated the complex and found the info. That's why people say \OPR E5 's so good. Apparently \NARRATIVE 2 is planning to activate something called "T-1"; also, something was found that would be of personal interest to you.>
+		CMsg2_1 <ifNPCSociable Accept>
+		Msg2_2 <My investigation is complete. I've learned that \NARRATIVE 2 plans to active a PreZero weapon codenamed "T-1". I also found something of personal interest to you.>
+		CMsg2_2 <ifNPCShy Accept>
+		Msg2_3 <>
+		CMsg2_3 <ifNPCEasygoing Accept>
+		Msg2_4 <>
+		CMsg2_4 <ifNPCPassionate Accept>
+		Msg2_5 <\ELEMENT 5 has completed the infiltration... \NARRATIVE 2 has located a PreZero weapon called "T-1". They're gonna use it to take over the world, it'll make a great headline. Oh, and there was something about you in their files too...>
+		CMsg2_5 <ifNPCCheerful Accept>
+		Msg2_6 <>
+		CMsg2_6 <ifNPCMelancholy Accept>
+
+		Msg3 <According to the communications recovered, \NARRATIVE 2 was responsible for the death of your parents. They knew something about this "T-1" thing. What's more, they view you as sort of a loose end... You're marked for death as well.>
+		Msg3_1 <>
+		CMsg3_1 <ifNPCSociable Accept>
+		Msg3_2 <It seems that \NARRATIVE 2 is responsible for the death of your parents. They discovered about the "T-1" plan. You are also marked for termination.>
+		CMsg3_2 <ifNPCShy Accept>
+		Msg3_3 <>
+		CMsg3_3 <ifNPCEasygoing Accept>
+		Msg3_4 <Your parents were murdered by \NARRATIVE 2 because they found out something about "T-1". You're also slated to be killed...>
+		CMsg3_4 <ifNPCPassionate Accept>
+		Msg3_5 <>
+		CMsg3_5 <ifNPCCheerful Accept>
+		Msg3_6 <Your parents were killed by \NARRATIVE 2 ... They knew something about "T-1". You've also been marked for death. Now that I know, my life is probably in danger as well... but the truth must get out.>
+		CMsg3_6 <ifNPCMelancholy Accept>
+
+		Msg4 <\ELEMENT 5 discovered that \NARRATIVE 2 killed your family.>
+		Prompt1 <What is it?>
+		Prompt1_1 <Tell me.>
+
+		Persona 5
+		% V1 = Price to hire E5.
+		greeting <NewChat if# V1 0 else GoFirst Say 4  AddChat 2 ifG PC$ V1 AddChat 3>
+		GoFirst <AddChat 1 V= 1 20 V+ 1 d60 ifG React V1 else GoNoFriend Say 1 V= 1 Threat S103 30>
+		GoNoFriend <Say 2 V= 1 Threat S103 40>
+		GoPaid <AddReact d8 P= 1 EScene 5 FreezeChar E5>
+		result1 <NewChat Say 3 AddChat 2 ifG PC$ V1 AddChat 3>
+		result2 <NewChat Say 5>
+		result3 <EndChat Say 6 Cash+ -V1 Goto GoPaid>
+		Msg1 <Hey \PC , how's it going? It's not so good myself... I've been out of work for a while, hoping that a good mission would turn up.>
+		Msg1_1 <>
+		CMsg1_1 <ifNPCSociable Accept>
+		Msg1_2 <>
+		CMsg1_2 <ifNPCShy Accept>
+		Msg1_3 <>
+		CMsg1_3 <ifNPCEasygoing Accept>
+		Msg1_4 <>
+		CMsg1_4 <ifNPCPassionate Accept>
+		Msg1_5 <>
+		CMsg1_5 <ifNPCCheerful Accept>
+		Msg1_6 <>
+		CMsg1_6 <ifNPCMelancholy Accept>
+
+		Msg2 <Can I help you? I'm very busy today. My services are high in demand.>
+		Msg2_1 <>
+		CMsg2_1 <ifNPCSociable Accept>
+		Msg2_2 <>
+		CMsg2_2 <ifNPCShy Accept>
+		Msg2_3 <>
+		CMsg2_3 <ifNPCEasygoing Accept>
+		Msg2_4 <>
+		CMsg2_4 <ifNPCPassionate Accept>
+		Msg2_5 <>
+		CMsg2_5 <ifNPCCheerful Accept>
+		Msg2_6 <>
+		CMsg2_6 <ifNPCMelancholy Accept>
+
+		Msg3 <A mission in \ELEMENT 1 , huh? Well, my regular price for a job is $ \VAL V1 . If you've got that then I can get started right away.>
+		Msg3_1 <>
+		CMsg3_1 <ifNPCSociable Accept>
+		Msg3_2 <>
+		CMsg3_2 <ifNPCShy Accept>
+		Msg3_3 <>
+		CMsg3_3 <ifNPCEasygoing Accept>
+		Msg3_4 <>
+		CMsg3_4 <ifNPCPassionate Accept>
+		Msg3_5 <>
+		CMsg3_5 <ifNPCCheerful Accept>
+		Msg3_6 <>
+		CMsg3_6 <ifNPCMelancholy Accept>
+
+		Msg4 <I normally charge $ \VAL V1 for a mission. As soon as I'm paid I can move out.>
+		Msg4_1 <>
+		CMsg4_1 <ifNPCSociable Accept>
+		Msg4_2 <>
+		CMsg4_2 <ifNPCShy Accept>
+		Msg4_3 <>
+		CMsg4_3 <ifNPCEasygoing Accept>
+		Msg4_4 <>
+		CMsg4_4 <ifNPCPassionate Accept>
+		Msg4_5 <>
+		CMsg4_5 <ifNPCCheerful Accept>
+		Msg4_6 <>
+		CMsg4_6 <ifNPCMelancholy Accept>
+
+		Msg5 <You do that.>
+		Msg5_1 <>
+		CMsg5_1 <ifNPCSociable Accept>
+		Msg5_2 <>
+		CMsg5_2 <ifNPCShy Accept>
+		Msg5_3 <>
+		CMsg5_3 <ifNPCEasygoing Accept>
+		Msg5_4 <>
+		CMsg5_4 <ifNPCPassionate Accept>
+		Msg5_5 <>
+		CMsg5_5 <ifNPCCheerful Accept>
+		Msg5_6 <>
+		CMsg5_6 <ifNPCMelancholy Accept>
+
+		Msg6 <Very good. I'll head to \ELEMENT 1 straight away.>
+		Msg6_1 <>
+		CMsg6_1 <ifNPCSociable Accept>
+		Msg6_2 <>
+		CMsg6_2 <ifNPCShy Accept>
+		Msg6_3 <>
+		CMsg6_3 <ifNPCEasygoing Accept>
+		Msg6_4 <>
+		CMsg6_4 <ifNPCPassionate Accept>
+		Msg6_5 <>
+		CMsg6_5 <ifNPCCheerful Accept>
+		Msg6_6 <>
+		CMsg6_6 <ifNPCMelancholy Accept>
+
+		Prompt1 <I've got a job for you.>
+		Prompt2 <I'll be back with the money soon...>
+		Prompt3 <Here you go. [Give Money]>
+
+	end
+
+end
+inv
+	NPC Journalist
+	place <1 PASS ALLY>
+	chardesc Heroic Lawful
+
+	STC COMPUTER-1
+	use <ifYesNo 1 2 3 Alert 4 Alert 5 Alert 6 Trigger KEY SELFNID>
+	Msg1 <Someone left the computer on... Do you want to check the files?>
+	Msg2 <Yes please.>
+	Msg3 <No thank you.>
+	Msg4 <It is imperative that no-one outside of the organization learn of our plans to reactivate T-1.>
+	Msg5 <Recent cleanup mission proceeded well; all witnesses liquidated. Still, there is a loose end to tie up.>
+	Msg6 <The child of the witnesses, \PC , may have been told something before they died. Must be eliminated as well. See to this.>
+
+end 

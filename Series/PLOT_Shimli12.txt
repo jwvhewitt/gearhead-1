@@ -1,0 +1,24 @@
+Plot 0
+	name <PLOT: Shimli 12>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Wangtta>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 6 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 6 -1 NewChat Say 4>
+	Msg1 <Sometimes I feel like a complete failure. Tell me, how have you managed to accomplish so much?>
+	Msg2 <I'll try hard to succeed. Really I will.>
+	Msg3 <Maybe it's destiny... Some people are born to be heroes, and some people are born to die in obscurity.>
+	Msg4 <Really? Wow, that actually makes me feel better... You know, it's nice having someone to look down on. At least I'm pretty good at Whack-A-Mole.>
+	prompt1 <Determination is the key to success.>
+	prompt2 <I guess I'm just lucky.>
+	prompt3 <Me? I haven't accomplished anything.>
+
+end

@@ -1,0 +1,666 @@
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X9>
+SDL_Sprite <btr_buruburu.png>
+desc <One of the oldest mecha designs still in common use, the BuruBuru is the dependable workhorse of the mecha world.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 2
+		Name <Missile Pod>
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Gun 9
+			Name <Shaka Cannon>
+			Magazine 15
+			sub
+				Ammo 9
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Melee 5
+			Name <Axe>
+			Acc 1
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+end
+
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X12 Assault>
+SDL_Sprite <btr_buruburu.png>
+desc <A variant on the ubiquitous BuruBuru. This version is optimized for short range fighting.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 5
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 1
+		Name <Missile Pod>
+		Range 3
+		Speed 1
+		Magazine 48
+		sub
+			Rockets 1
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Gun 6
+			Name <Repeater Cannon>
+			BV 1
+			Magazine 30
+			sub
+				Ammo 6
+			end
+		end
+
+		Melee 3
+		Name <Shoulder Spike>
+		Acc 1
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Melee 10
+			Name <War-Hammer>
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 5
+	sub
+		HoverJet 5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 5
+	sub
+		HoverJet 5
+	end
+end
+
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X9b Armored>
+SDL_Sprite <btr_buruburu.png>
+desc <A variant on the BuruBuru design. This version features heavier armor and more weapons than the standard model.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 2
+		Name <Missile Pod>
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+	end
+	inv
+		BodyArmor 2
+		sub
+			Gun 2
+			Name <Autocannon>
+			Range 5
+			BV 3
+			Magazine 80
+			sub
+				Ammo 2
+			end
+
+			Gun 2
+			Name <Autocannon>
+			Range 5
+			BV 3
+			Magazine 80
+			sub
+				Ammo 2
+			end
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Gun 9
+			Name <Shaka Cannon>
+			Magazine 15
+			sub
+				Ammo 9
+			end
+		end
+	end
+	inv
+		ArmArmor 2
+		sub
+			Melee 2
+			Name <Arm Spike>
+			Acc -1
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+	inv
+		ArmArmor 2
+		sub
+			Melee 2
+			Name <Arm Spike>
+			Acc -1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+	inv
+		LegArmor 2
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+	inv
+		LegArmor 2
+	end
+end
+
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X9c Urban>
+SDL_Sprite <btr_buruburu.png>
+desc <A variant on the BuruBuru design. This version features a shield and improved short range weapons.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 2
+		Name <Missile Pod>
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Gun 6
+			Name <Repeater Cannon>
+			BV 1
+			Magazine 30
+			sub
+				Ammo 6
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Melee 5
+			Name <Axe>
+			Acc 1
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+	inv
+		Shield 5
+		DefBonus 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+end
+
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X9d Nova Storm>
+SDL_Sprite <btr_buruburu.png>
+desc <The BuruBuru's powerplant is know as being very dependable. This variant uses that powerplant to fuel an array of energy weapons.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 2
+		Name <Missile Pod>
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+	end
+	inv
+		BodyArmor 2
+		sub
+			BeamGun 15
+			Name <Nova Cannon>
+			Range 12
+			Acc -1
+			Speed 1
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			BeamGun 5
+			Name <Storm Pistol>
+			Range 5
+			Acc 1
+			BV 4
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			BeamGun 5
+			Name <Storm Pistol>
+			Range 5
+			Acc 1
+			BV 4
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+	inv
+		LegArmor 2
+		sub
+			HoverJet 2
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+	inv
+		LegArmor 2
+		sub
+			HoverJet 2
+		end
+	end
+end
+
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X9e Phalanx>
+SDL_Sprite <btr_buruburu.png>
+desc <A variant on the BuruBuru design. This version features a shield.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 2
+		Name <Missile Pod>
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Gun 9
+			Name <Shaka Cannon>
+			Magazine 15
+			sub
+				Ammo 9
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+	inv
+		Shield 5
+		DefBonus 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+end
+
+Battroid 5
+Name <Buru Buru>
+Desig <SAN-X9g HeavyFoot>
+SDL_Sprite <btr_buruburu.png>
+desc <A variant on the BuruBuru design. This version is equipped with a powerful gauss cannon.>
+
+Mod Head
+	Armor 4
+	sub
+		Sensor 4
+
+		BeamGun 3
+		Name <Beam Gun>
+		Scale 1
+		Range 4
+		Acc 2
+		Speed 3
+	end
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		MLauncher 2
+		Name <Missile Pod>
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			Gun 18
+			Name <Heavy Gauss Cannon>
+			Magazine 10
+			Acc 1
+			Speed 1
+			sub
+				Ammo 18
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 5
+		Magazine 50
+		sub
+			Ammo 1
+		end
+	end
+	inv
+		Shield 2
+		DefBonus -1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	sub
+		HoverJet 5
+	end
+end

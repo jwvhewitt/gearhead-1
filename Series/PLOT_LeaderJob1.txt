@@ -1,0 +1,191 @@
+Plot 0
+	name <PLOT: Zonk the Boss>
+
+	% Element1 is just the leader of some town.
+	element1 <Character Leader>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E1 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  if= L3 0 else GoPCWon V= 2 2  Reputation 6 -5>
+	GoPCWon <V= 2 3  Reputation 6  1  XPV 50>
+
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// We've got problems in \SCENE EScene 1 . I could use your help.>
+	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// \SCENE EScene 1 has a troublesome bandit who needs to be stopped. Can you help?>
+	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// There's a bandit here who's been causing big trouble. I need someone to take him down a notch.>
+	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// Got a job for you here, if you're interested in taking down a self-proclaimed bandit king.>
+	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// \SCENE EScene 1 needs a defender. Please come quickly.>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E1.
+	Persona 1
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !1 will add the name of the NPC.
+	rumor <there have been a lot of bandit attacks near town recently. !1 should do something about it.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say d5 AddReact d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 170 V= 4 Reward V3 100 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer V= 2 10 V+ 2 d5 Say V2  Goto GoAddAcceptOps>
+	% If the PC has "the right stuff", an offer will be made immediately.
+	% If not, no offer will be made at all. In the example provided
+	% below, "the right stuff" is a Lawful reputation + being liked.
+	GoMakeOffer  <ifG React d25 else GoNoOffer ifG PCRep 2 d25 else GoNoOffer V= 2 15 V+ 2 d5 Say V2 Goto GoAddAcceptOps>
+
+	GoAddAcceptOps <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoAddComOps <V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2 V= 2 10 V+ 2 d2 AddChat V2>
+
+	GoNoOffer <Say 102 AdvancePlot 0>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
+
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 V= 2 20 V+ 2 d5 Say V2 Memo 103 Goto GoAddComOps>
+	result2 <Goto Result1>
+	result3 <Goto Result1>
+
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
+	result5 <Goto Result4>
+	result6 <Goto Result4>
+
+	% PC will enter combat now.
+	result7 <EndChat V= 2 25 V+ 2 d5 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 Staged .scene V3>
+	.scene <SCENE_DefeatLeader.txt>
+	result8 <Goto result7>
+
+	% PC will ask how many points the enemy has.
+	result9 <NewChat V= 2 30 V+ 2 d5 Say V2 AddChat 7 AddChat 11>
+	result10 <Goto result9>
+
+	% PC needs some time to get ready.
+	result11 <NewChat Say 105>
+	result12 <Goto result11>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <You did it. Good job.>
+	Msg2 <With their leader shamed, the rest of the bandits have split up just as predicted. Here's your pay.>
+	Msg3 <Their leader will never show his face around these parts again. Here's the pay you earned. Good job.>
+	Msg4 <They thought their leader was invincible... well, you showed them they were wrong. Here's a reward for helping to protect \SCENE EScene 1 .>
+	Msg5 <He thought he was undefeatable... I'm glad that you proved him wrong. Here's your pay for ridding \SCENE EScene 1 of the bandits.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <You lost... maybe their leader really is invincible?>
+	Msg7 <He beat you... maybe their leader really is as good as they said?>
+	Msg8 <You should have concentrated on the leader. They overwhelmed you.>
+	Msg9 <You were overwhelmed and defeated. This is a sorry day.>
+	Msg10 <We tried to shame the bandit lord, but it was us who were shamed...>
+
+	% 11 - 15 :  PC got email about mission; asked to accept
+	Msg11 <Ah, you've arrived. We have troubles here in \SCENE EScene 1 ; a local crime gang has started attacking trucks on the highway. I need someone to take the wind out of their sails.>
+	Msg12 <So, did you get my email? There's a new bandit operating in \SCENE EScene 1 and I want to stop him before he gets too powerful.>
+	Msg13 <I've been waiting for you. I sent an email concerning our troubles... there's a new bandit lord in \SCENE EScene 1 , and I need to stop him before he gets too powerful.>
+	Msg14 <I guess you've heard by now. There's a new bandit lord in town, and I need some help to get rid of him.>
+	Msg15 <Are you going to help us? I sent you an email about our problem... There's a new bandit operating in town. He's attracted all kinds of lowlifes to join his gang. I want to stop them before they become a real threat.>
+
+	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <I need a cavalier to help me. There's a new bandit lord in town, and he needs to be stopped before he gets more powerful.>
+	Msg17 <I have a mission available for a mecha pilot, if you're looking for work. There's a new bandit gang near town, and I want them driven out of the area.>
+	Msg18 <I'm looking for a freelance pilot to run a civic defense mission. A crime gang has moved into town and they need to be driven back out again.>
+	Msg19 <\SCENE EScene 1 needs your help. A powerful new bandit has founded a gang in this town. I want them driven out as soon as possible.>
+	Msg20 <I have a job available for a cavalier. There's a new bandit gang in town, and I'd rather that they not stay here...>
+
+	% 21 - 25 :  PC has accepted; describe the mission.
+	Msg21 <If the leader were to be shamed, the rest of the gang would stop following him. You can do that if you defeat him in battle... The job pays $ \VAL V4 .>
+	Msg22 <I'd like to resolve this issue with as little blooshed as possible. I just want their leader taken down. If the gang loses nerve, they'll split up and leave the area. I'll pay you $ \VAL V4 to make that happen.>
+	Msg23 <There's too many bandits to fight them all, but take down the leader and the rest of the gang won't stick around long. It's worth $ \VAL V4 if you can defeat him in combat.>
+	Msg24 <Their leader has piloting skills... which is why they all follow him. If you could beat him in combat, he'd lose the respect of the gang. I can give you $ \VAL V4 to make that happen.>
+	Msg25 <All we need is to demoralize them and they'll move on. If the leader was defeated in combat, the other bandits would lose their respect for him, and the gang would break up. It's worth $ \VAL V4 if you can do that.>
+
+	% 26 - 30 :  Combat is starting
+	Msg26 <Good luck out there. I'll identify which mecha belongs to the leader. Shoot him down; you can ignore the others if you want.>
+	Msg27 <I better warn you, there's a whole lot of them out there. Just aim straight for the leader... humiliating him in battle is the most important thing.>
+	Msg28 <The leader's mecha will be identified when you reach the field; don't let him defeat you.>
+	Msg29 <Good luck. Strike quickly, then make a clean getaway.>
+	Msg30 <Do battle for \SCENE ESCene 1 !>
+
+	% 31 - 35 :  Describe enemy point value
+	Msg31 <The gang has around \VAL V3 points worth of mecha. Your best bet is to ignore most of them, and just concentrate on taking down the boss!>
+	Msg32 <They've got about \VAL V3 tactical points worth of equipment. You probably can't handle all of that in a fair fight...>
+	Msg33 <Their leader is always protected by \VAL V3 tactical points of his best men. He's going to be a hard target.>
+	Msg34 <You're looking at around \VAL V3 threat points. That's a lot to deal with... Think you can do it?>
+	Msg35 <So far the gang has scrounged \VAL V3 points worth of mecha, and they're going to get a lot more if we can't stop them soon!>
+
+
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <Are you ready to start the mission yet?>
+	% 102 :  Player doesn't have "the right stuff" for this mission.
+	Msg102 <I've found a law-abiding mecha pilot to defeat that bandit... I just hope that he's good enough.>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 wants you to take down the local bandit lord.>
+	% 104 :  PC didn't want the job.
+	Msg104 <That's too bad. I'll have to find someone else to do it, then.>
+	% 105 :  PC needs time to get ready.
+	Msg105 <Do whatever you need to do, then come back here and we'll start.>
+
+	% 01 - 03 :  PC will accept the mission.
+	Prompt1 <Alright, I'll help you.>
+	Prompt2 <I'm here to help.>
+	Prompt3 <I'll do what I can to help.>
+
+	% 04 - 06 :  PC doesn't want this mission.
+	Prompt4 <Sorry, I have other things to worry about.>
+	Prompt5 <No, I don't want to get involved.>
+	Prompt6 <This doesn't concern me.>
+
+	% 07 - 08 :  Combat is starting.
+	prompt7 <All ready to go!>
+	prompt8 <I'm ready to take him!>
+
+	% 09 - 10 :  How many points?
+	prompt9 <How big is their gang?>
+	prompt10 <How many threat points am I looking at?>
+
+	% 11 - 12 :  Just a minute...
+	prompt11 <Just a moment while I get ready.>
+	prompt12 <Give me a minute to get fixed up.>
+
+end

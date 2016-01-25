@@ -1,0 +1,59 @@
+% Standard Color List (flags: Personal R Y G  Mecha R Y G)
+-+----:Light Skin <255 212 195>
+++++++:Chocolate <142 62 39>
++-++++:Avocado <136 141 101>
++-++++:Jade <66 121 119>
++-++++:Aero Blue <201 205 229>
++-++++:Azure <49 91 141>
++-+++-:Battleship Grey <130 143 114>
++-+++-:Black Rose <103 3 45>
++-++++:Cinnamon <123 63 0>
++-++++:Fuschia <122 88 193>
+++++++:Leather <150 112 89>
++-++++:Lemon Yellow <244 216 28>
+++++++:Maize <245 213 160>
++-++++:Mustard <116 100 13>
++-++++:Terracotta <166 47 32>
++-++++:Wine <152 61 97>
++-++++:Bright Red <208 34 51>
++-++++:Desert Yellow <234 180 88>
++-++++:Hunter Orange <224 112 20>
++-+++-:Olive <72 92 44>
++-+++-:Pitch Black <0 0 0>
++--+++:Pure White <255 255 255>
++--++-:Dark Blue <0 0 139>
++-++++:Dark Goldenrod 1 <255 185 15>
++-+++-:Dark Gray <169 169 169>
++--++-:Dark Green <0 100 0>
++-++++:Deep Pink <255 20 147>
++-+++-:Dim Gray <105 105 105>
++--++-:Forest Green <34 139 34>
++--+++:Green Yellow <173 255 47>
++--+++:Hot Pink <255 105 180>
++-+++-:Indian Red <205 92 92>
++--++-:Medium Blue <0 0 205>
++--++-:Midnight Blue <25 25 112>
+++--++:Misty Rose <255 228 225>
+-+---+:Navajo White <255 222 173>
++--++-:Navy Blue <0 0 128>
++-+-++:Orange Red <255 69 0>
+-+----:Peach Puff <255 218 185>
++--++-:Rosy Brown <188 143 143>
+-+--+-:Sandy Brown <244 164 96>
++--++-:Sea Green <46 139 87>
++-+++-:Slate Gray <112 128 144>
++--++-:Steel Blue <70 130 180>
++---++:Aquamarine <127 255 212>
++----+:Light Azure <240 255 255>
+-+----:Bisque <255 228 196>
+-+----:Burlywood <222 184 135>
+-+----:Cornsilk <255 248 220>
++---++:Cyan <0 255 255>
++-++++:Gold <255 215 0>
++--++-:Khaki 3 <205 198 115>
++---++:Magenta <255 0 255>
++--++-:Maroon <176 48 96>
++---++:Orange <255 165 0>
++--+++:Pink <255 192 203>
++--+++:Red <255 0 0>
++----+:Yellow <255 255 0>

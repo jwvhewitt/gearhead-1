@@ -1,0 +1,192 @@
+Plot 0
+	name <The Artifact>
+
+	% The PC has apparently been looking for an artifact.
+	% A noted archeologist has been murdered. The PC can meet
+	% his grad student and learn about a ruin. Going into the
+	% ruin, the PC can find an item. The student will tell the
+	% PC that only Kaema in Hwang-Sa temple can identify what
+	% it is. The PC must then head to Hwang-Sa, but will be
+	% attacked by his enemy along the way.
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene for this episode
+	element1 <Grab 3>
+
+	% E2 is the scene for the next episode
+	element2 <Scene Town Target !Far 1>
+
+	% E3 is the grad student who will give the mission
+	Element3 <Prefab>
+
+	% E4 is the dead professor; needed just for a name
+	Element4 <Prefab>
+
+	% E5 is Kaema
+	Element5 <Character>
+	Stat 5 1506
+
+	% E6 is your enemy
+	Element6 <Prefab>
+
+	% E7 is the artifact
+	Element7 <Prefab>
+
+	% V1 = Initialization Counter
+
+	start <ifKeyItem E7 else GoCheckDelete S= 105 -1 N= 3 EScene 5 History 101 XRMystery NAV_XRMResolved AdvancePlot 1>
+	GoCheckDelete <ifPersona E3 else GoDelete ifPersona E5 else GoDelete ifItemOK E7 else GoDelete if= V1 0 V= 1 1 News d3 ifPersona N1 else GoN1Dead DeleteChar E6 E= 6 N1>
+	GoN1Dead <N= 1 E6 FreezeChar E6>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	Msg1 <Renowned archaeologist \ELEMENT 4 in \ELEMENT 1 has been murdered. Guardians search for clues.>
+	Msg2 <History professor \ELEMENT 4 in \ELEMENT 1 has been found murdered. Guardians suspect antiquities smugglers.>
+	Msg3 <Famed archaeologist \ELEMENT 4 has been murdered by antiquities smugglers in \ELEMENT 1 . Guardians search for leads.>
+
+	Msg101 <You discovered a mysterious emerald in the \ELEMENT 1 ruins.>
+
+sub
+	Persona 3
+	% V1 = Initialization
+	% The grad student. Phase one: PC must locate the artifact.
+	rumor <!3 was a student of the murdered professor.>
+	greeting <NewChat if= V1 1 else GoCheckFirst Say 7 AddChat 5 AddChat 6>
+	GoCheckFirst <if= P1 1 else GoNotYet Say 1 AddChat 1 AddChat 2>
+	GoNotYet <SayAnything>
+	result1 <NewChat Say 2 AddChat 3>
+	result2 <NewChat Say 3 AddChat 3>
+	result3 <NewChat Say 4 V= 1 1 AddChat 4 Memo 6>
+	result4 <NewChat Say 5 AddChat 5 AddChat 6>
+	result5 <EndChat Say 9 SavePos LoadD .scene PassVar 1 E7 PassVar 2 S103 PassVar 3 5 PassVar 4 4 SeekGate -1>
+	.scene <SCENE_ItemDungeon.txt>
+	result6 <NewChat Say 8>
+	Msg1 <I can't believe what happened to Professor \ELEMENT 4 ... Who would do such a thing?>
+	Msg2 <It's been all over the news. Some thieves killed the professor and ransacked \PPR E4 office. It doesn't make sense. We haven't discovered anything valuable in the ruins; there's probably nothing valuable there.>
+	Msg3 <\ELEMENT 4 was a great researcher. It makes no sense that \OPR E4 was killed... The ruin we're exploring is a cultural dig site. We haven't discovered anything valuable; there's probably nothing valuable there.>
+	Msg4 <They're just outside of town. We've explored down to about \VAL S103 meters deep; \ELEMENT 4 wouldn't let us dig past that... \OPR E4 said there were too many monsters past that depth.>
+	Msg5 <I don't see why not. Our expedition here is finished... If you could find anything that we missed, that could be very useful. Would you like to go there now, or do you need to prepare?>
+	Msg6 <The ruins in \ELEMENT 1 have been explored to \VAL S103 meters deep, but no farther.>
+	Msg7 <Do you want to explore the ruins?>
+	Msg8 <It's pretty dangerous down there, so you'll want to make sure everything is in top shape before you head down.>
+	Msg9 <Be careful. The place is crawling with monsters and all kinds of other nasty things... If you get past your depth come back up.>
+	Prompt1 <What happened here?>
+	Prompt2 <Tell me about the professor.>
+	Prompt3 <Tell me about the ruins.>
+	Prompt4 <Can I see the ruins?>
+	Prompt5 <I'm ready to go.>
+	Prompt6 <Maybe I should get ready first.>
+
+Plot 1
+	% The PC has recovered the artifact, and now heads back to
+	% the surface.
+
+	% V1 = Combat recharge indicator
+	% V10 = Told NPC don't have item
+
+	start <ifPersona E5 else GoDelete if= V1 -1 else goCheckCombat V= 1 1 ForceChat E6>
+	GoCheckCombat <if= SceneID 1 else GoCheckTown if= V1 0 Block V= 1 -1 Alert 1 SavePos Dynamic 2 Threat S103 90 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	GoCheckTown <ifScene .scene V= 1 0>
+	.scene <TOWN>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	Msg1 <While exiting town, you are attacked by mecha!>
+
+sub
+	Persona 3
+	% The grad student; will tell the PC to go to Hwang-Sa.
+	greeting <NewChat if= V1 0 else GoBeenBefore Say 1 AddChat 1 AddChat 2>
+	GoBeenBefore <SayAnything>
+	result1 <NewChat Reputation 3 d8 Reputation 2 1   V= 1 1  XPV 100  Say 2 Memo 4 AddChat 3>
+	result2 <NewChat Reputation 3 -d8 Reputation 2 -1 V= 1 1  XPV 100  Say 3 Memo 5 AddChat 4>
+	result3 <NewChat Say 6>
+	result4 <goto result3>
+	Msg1 <You had a pretty long expedition down there. Some of the researchers thought you might've been eaten by a cave snail. Did you find anything interesting?>
+	Msg2 <Wow... we haven't found anything else like that on the entire dig! It might be important. Your best bet would be to bring it to the archivist at Hwang-Sa temple to have it identified.>
+	Msg3 <That's really disappointing. Since you left, an archivist from Hwang-Sa temple has been asking about the ruin. If you had found anything, they might have been interested in financing further exploration.>
+	Msg4 <You should bring the emerald to Hwang-Sa temple to have it identified.>
+	Msg5 <An archivist from Hwang-Sa temple has been inquiring about the \ELEMENT 1 ruins.>
+	Msg6 <Hwang-Sa Temple has the largest archive of PreZero cultural artifacts on the planet. They're the chief research institution in this field... And it doesn't hurt that they pay top dollar for interesting finds.>
+	Prompt1 <I found this emerald!>
+	Prompt2 <No, nothing worth reporting...>
+	Prompt3 <Why Hwang-Sa temple?>
+	Prompt4 <Why would they be interested?>
+
+
+	Persona 5
+	% Kaema; will explain to the PC about the gem.
+	rumor <!5 knows a lot about PreZero artifacts.>
+	greeting <NewChat say 1 AddChat 1 ifKeyItem E7 else GoNoKey AddChat 2>
+	GoNoKey <ifItemOK E7 else GoKeyGone AddChat 3>
+	GoKeyGone <AddChat 4>
+	result1 <NewChat Say 2>
+	result2 <NewChat Say 3 AddChat 5  DeleteKeyItem E7  V= 1 Reward Threat S103 300 500 CashPrize V1 History 9 Goto GoEndMission>
+	result3 <NewChat Say 4>
+	result4 <NewChat Say 5 AddChat 5 Reputation 1 -1 Reputation 6 -10 goto GoEndMission>
+	result5 <NewChat History 8 ifG PCRep 1 0 else GoR5NoHero Say 6>
+	GoR5NoHero <Say 7>
+	GoEndMission <S= 101 1 S+ 102 1 N= 3 E2 S= 105 -1  AdvancePlot 0>
+	Msg1 <I've heard a rumor that you went exploring in the \ELEMENT 1 ruins. We are searching for an item from there, an ancient emerald. If you have found this I would be most glad to purchase it from you and tell you of its history.>
+	Msg2 <I get the feeling that you're in denial, either to yourself or just to me. Come back sometime when you are ready for some knowledge.>
+	Msg3 <Ah, so you have it! This is a great relief to me; I had feared the worst. Here, you should be properly rewarded for recovering this gem.>
+	Msg4 <You left the Emerald somewhere unguarded? Hurry, go retrieve it... It is very important that it not fall into the wrong hands!>
+	Msg5 <Not anymore? Then all may be lost... The Emerald was safe when it was hidden deep in the ruin, but now it will be found by those who intend to use it for evil!>
+	Msg6 <The Magnus Emerald is an AI core from the Age of Superpowers. It was in charge of a weapons project seeking to replace the Cyclops biosoldiers. Cetus was the final prototype for this line; the Emerald has knowledge of the others as well.>
+	Msg7 <All you need to know is that it is a source of dark knowledge from PreZero times, and in the wrong hands it could do very great harm to this world.>
+	Msg8 <You learned that the Magnus Emerald is a source of dark knowledge.>
+	Msg9 <You sold the Emerald to Kaema of Hwang-Sa Temple for $ \VAL V1 .>
+	Prompt1 <That's none of your business.>
+	Prompt2 <Here it is, right here. [give Emerald]>
+	Prompt3 <I don't have it now, but I can get it!>
+	Prompt4 <I don't have that anymore.>
+	Prompt5 <Can you tell me why it's so important?>
+
+	Persona 6
+	% The PC's enemy; will attack the PC regularly.
+	greeting <EndCHat Say d5 ifKeyItem E7 else GoNoItem AddChat d3>
+	GoNoItem <if= P10 0 AddChat 4>
+	Result1 <EndChat V= 2 6 V+ 2 d4 Say V2>
+	result2 <Goto Result1>
+	result3 <Goto Result1>
+	result4 <EndChat P= 10 1 Say 6>
+	Msg1 <I know that you've found it... so hand it over and you won't have to die!>
+	Msg2 <I know what you found in \ELEMENT 1 and I want it!>
+	Msg3 <You took something from the ruins in \ELEMENT 1 . Well, it should be mine! I will take it!>
+	Msg4 <You're carrying precious cargo. I want it!>
+	Msg5 <You found something in \ELEMENT 1 that we've been searching for. I intend to take it!>
+	Msg6 <Ha, you're not a very convincing liar... Since you don't have the courtesy to just hand it over, we'll have to take it from your dead body!!!>
+	Msg7 <My henchmen will take the emerald from your corpse!>
+	Msg8 <Good, there's going to be a fight... my henchmen will be able to defeat you easily.>
+	Msg9 <Whether you give it to us or whether we have to kill you to get it makes no matter to me.>
+	Msg10 <You will not live long enough to find out what power the emerald actually holds...>
+	Prompt1 <No way! It's mine!>
+	Prompt2 <Get lost, \ELEMENT 6 .>
+	Prompt3 <Just try and get it.>
+	Prompt4 <I don't have anything! Honest!>
+
+% Plot 1
+end
+
+% Plot 0
+end
+inv
+	NPC Professor
+	CharDesc Young
+	job <Grad Student>
+	place <1 PASS>
+
+	NPC Professor
+
+	NPC Mecha Pilot
+	EquipChar 25000
+
+	Treasure 1000
+	name <Magnus Emerald>
+	Clue37 <Print 1>
+	Msg1 <Peering into this gem, you can see faint geometric patterns embedded into the material. It looks like a computer circuit.>
+	Clue29 <Print 2>
+	Msg2 <This gemstone appears to be an old style AI computer core. Examining it more closely, you make out faint geometric patterns embedded into the material.>
+
+end

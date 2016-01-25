@@ -1,0 +1,202 @@
+Plot 0
+	name <Pump Pusher Evidence>
+
+	% An item will be found. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1 !Member 11>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	Element4 <Character !Near 1 Guardian>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have recovered clue from item
+	%  V4 = Combat Indicator
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	.usekey <if= P3 0 P= 3 1>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+	nu1 <if= P4 1 if= t1 0 if= L101 1 else GoLose Reputation 6 1 S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 P= 4 3>
+	GoLose <P= 4 2>
+
+sub
+	Persona 4
+	rumor <!4 has been searching for evidence against the "Pump Pushers".>
+	%  V1 =  Mission Accepted Counter
+	%  V2 = Randomizer
+	greeting <NewChat if= P4 3 else GoCheckLoss Say 1 CashPrize Reward Threat PCRep 6 100 80 AddReact d5 DeleteKeyItem E3 if= P3 1 else GoJustEnd S= 203 P2 FacXP+ N1 2 AdvancePlot 0>
+	GoJustEnd <AdvancePlot 0>
+	GoCheckLoss <if= P4 2 else GoCheckMission Say 2 DeleteKeyItem E3 AdvancePlot 0>
+
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 3 Goto GoAddComOps>
+	GoDelete <Say 5 S= 201 0 AdvancePlot 0>
+
+	GoCheckFirst <if= PCFac N1 else GoNoChance Say 7 AddChat 1 AddChat 2>
+	GoNoChance <Say 6>
+
+	GoAddComOps <AddChat 3 AddChat 4>
+
+	result1 <NewChat V= 1 1 Memo 9 Say 4 Goto GoAddComOps>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result2 <NewChat Say 8 AdvancePlot 0>
+
+	result3 <EndChat Say 10 Goto GoStartCombat>
+	GoStartCombat <SavePos LoadD .scene PassVar 1 WMThreat S2 Reputation 2 1 P= 4 1 V= 2 3 V+ 2 d2 DynaItemTeam E3 V2>
+	.scene <SCENE_ItemSlum.txt>
+
+	result4 <NewChat Say 11>
+
+	%  01 :  PC has won the mission.
+	Msg1 <Good work, \RANK . The lab boys will search through that filing cabinet you found and see what they can determine.>
+	Msg1_1 <You did a really good job, \RANK \PC . That filing cabinet you discovered is sure to contain information that will lead us to the drug lab.>
+	CMSg1_1 <ifNPCSociable Accept>
+	Msg1_2 <You did well out there. When the forensics team gets something, I'll let you know.>
+	CMSg1_2 <ifNPCShy Accept>
+	Msg1_3 <Piece of cake. The lab team will go through that filing cabinet; I'll let you know what they find.>
+	CMSg1_3 <ifNPCEasygoing Accept>
+	Msg1_4 <You did it! That filing cabinet must contain vital information about the drug ring... Maybe even the location of their lab!>
+	CMSg1_4 <ifNPCPassionate Accept>
+	Msg1_5 <Good job, \PC . With the information recovered from that filing cabinet we'll be able to track down the Pump lab no problem.>
+	CMSg1_5 <ifNPCCheerful Accept>
+	Msg1_6 <The mission was a success, but I fear that our time may be running out. It is very important that we shut down their production lab quickly.>
+	CMSg1_6 <ifNPCMelancholy Accept>
+
+	%  02 :  PC has lost the mission.
+	Msg2 <You didn't find anything? The case is going to be hamstrung until we find a new lead...>
+	Msg2_1 <The mission was a failure. We'll have to keep looking for a new lead... There's no way we can allow these poison merchants to keep operating.>
+	CMSg2_1 <ifNPCSociable Accept>
+	Msg2_2 <You lost.>
+	CMSg2_2 <ifNPCShy Accept>
+	Msg2_3 <You didn't find anything? The intelligence must have been wrong... But that leaves us without any good leads in the case.>
+	CMSg2_3 <ifNPCEasygoing Accept>
+	Msg2_4 <You couldn't find anything!? What happened, were the local gangs too tough for you?>
+	CMSg2_4 <ifNPCPassionate Accept>
+	Msg2_5 <No evidence was recovered from the scene... We'll have to try harder next time.>
+	CMSg2_5 <ifNPCCheerful Accept>
+	Msg2_6 <No evidence was recovered... It may well be that we'll never find their lab now...>
+	CMSg2_6 <ifNPCMelancholy Accept>
+
+	%  03 :  The item somehow got destroyed...
+	Msg3 <The evidence was accidentally destroyed during your investigation. Tough luck.>
+
+	%  04 :  Mission description.
+	Msg4 <We need to find some clues, to figure out where the "Pump Pushers" have their base of operations. A dealer has been operating out of one of the edgezone slums... Go there and see what you can find.>
+	Msg4_1 <The "Pump Pushers" have been selling their deadly drug throughout the Federated Territories. We've got a lead that they have operatives in the edgezone slum. Your job will be to go there and see what evidence you can find.>
+	CMSg4_1 <ifNPCSociable Accept>
+	Msg4_2 <I want you to go to this slum and search for evidence linked to the "Pump Pushers". Be careful, the local street gangs are dangerous.>
+	CMSg4_2 <ifNPCShy Accept>
+	Msg4_3 <Right now we need information. Once we find out where their production lab is, we can raid and destroy it. I want you to search this area for a drug dealer's hideout. If you find any evidence, report back to me.>
+	CMSg4_3 <ifNPCEasygoing Accept>
+	Msg4_4 <Our clues so far have indicated that a pump dealer is working in the edgezone. Your task is to storm his lair and bring back any evidence that you find. If his men try to stop you, kill them.>
+	CMSg4_4 <ifNPCPassionate Accept>
+	Msg4_5 <We had a lucky break in the case... It's been found that one of the local drug dealers has connections to the "Pump Pushers". Your job is to raid his hideout and search for information. If you find anything, come report to me.>
+	CMSg4_5 <ifNPCCheerful Accept>
+	Msg4_6 <It's believed that a local dealer has connections to the "Pump Pushers". I want you to search the edgezone for his hideout, and see if you can find any evidence there. I'm afraid it's going to be like looking for a needle in a haystack.>
+	CMSg4_6 <ifNPCMelancholy Accept>
+
+	%  05 :  PC has come back after getting ready
+	Msg5 <All ready to go search for clues yet?>
+	Msg5_1 <Ready to start the mission?>
+
+	%  06 :  PC will not be offered the mission
+	Msg6 <I'm very busy with guardian business today.>
+	Msg6_1 <I've been investigating the "Pump Pusher" drug cartel. I really hope that we can find their headquarters... Sorry, this investigation is for Guardians only. If any information was leaked it could damage the case.>
+	CMSg6_1 <ifNPCSociable Accept>
+	Msg6_2 <Hm? Oh, please come back later.>
+	CMSg6_2 <ifNPCShy Accept>
+	Msg6_3 <Police work isn't all glamorous you know. Er, actually it isn't glamorous at all.>
+	CMSg6_3 <ifNPCEasygoing Accept>
+	Msg6_4 <I'm gonna be the one who brings the "Pump Pushers" to justice!>
+	CMSg6_4 <ifNPCPassionate Accept>
+	Msg6_5 <It's only a matter of time before the heads of the "Pump Pusher" gang are arrested.>
+	CMSg6_5 <ifNPCCheerful Accept>
+	Msg6_6 <I won't be able to sleep at night until the "Pump Pushers" are brought to justice...>
+	CMSg6_6 <ifNPCMelancholy Accept>
+
+	%  07 :  PC will be offered the mission here.
+	Msg7 <Hello, \PC . I guess you heard that I've been investigating the "Pump Pushers". I could use some help with the field work, if you're up for a mission.>
+	Msg7_1 <Good to see you, \PC . I've been hoping you'd show up. I guess you've heard already about the "Pump Pushers"... I need you to do a bit of investigation work for me; how about it?>
+	CMSg7_1 <ifNPCSociable Accept>
+	Msg7_2 <Hello \RANK . The "Pump Pushers" are operating in town. I need you to investigate.>
+	CMSg7_2 <ifNPCShy Accept>
+	Msg7_3 <Hey there, \RANK \PC . If you're not busy I have some investigation work that needs doing.>
+	CMSg7_3 <ifNPCEasygoing Accept>
+	Msg7_4 <Ah, \RANK \PC , you've made it. Our fair city has been the latest target of the nefarious "Pump Pushers". I have an investigation job that you can help with.>
+	CMSg7_4 <ifNPCPassionate Accept>
+	Msg7_5 <You picked a good time to show up. I've got an investigation mission that I need a field agent for... We're going after the "Pump Pushers".>
+	CMSg7_5 <ifNPCCheerful Accept>
+	Msg7_6 <\PC , I need your help to investigate the "Pump Pushers". We must act quickly before more people die.>
+	CMSg7_6 <ifNPCMelancholy Accept>
+
+	%  08 :  The PC refused the mission.
+	Msg8 <That's too bad. I'll carry on by myself, then.>
+
+	%  09 :  Memo
+	Msg9 <\ELEMENT 4 in \SCENE EScene 4 asked you to search for clues related to the "Pump Pushers".>
+
+	%  10 :  Combat is starting.
+	Msg10 <Come back here when you've found something that looks like it might be important. Then, I can send the lab truck over and they'll comb the area.>
+	Msg10_1 <If you find anything that looks like it might be important, come back here and let me know about it. Even if you can't figure it out yourself our lab boys will scour the area for clues, and they'll find something.>
+	CMSg10_1 <ifNPCSociable Accept>
+	Msg10_2 <Once you've found something, return here at once. Our forensics team will do the rest.>
+	CMSg10_2 <ifNPCShy Accept>
+	Msg10_3 <Be careful of the street gangs in the edgezone... some of them are pretty trigger-happy.>
+	CMSg10_3 <ifNPCEasygoing Accept>
+	Msg10_4 <Search every building until you've found something. There must be evidence...>
+	CMSg10_4 <ifNPCPassionate Accept>
+	Msg10_5 <Good luck. I'm sure you'll have no problem finding some evidence.>
+	CMSg10_5 <ifNPCCheerful Accept>
+	Msg10_6 <Stay alive. We've already lost too many good guardians trying to fight this cartel...>
+	CMSg10_6 <ifNPCMelancholy Accept>
+
+	%  11 :  The PC needs some time to get ready.
+	Msg11 <Alright. You go do that.>
+	Msg11_1 <Do whatever you have to do.>
+
+
+	%  01 :  PC will accept the mission.
+	Prompt1 <I can do that for you.>
+	Prompt1_1 <Give me the specifics.>
+
+	%  02 :  PC doesn't want the mission.
+	Prompt2 <Sorry, I'm busy right now.>
+	Prompt2_1 <I can't help you at the moment.>
+
+	%  03 :  Start the mission now.
+	Prompt3 <I'm all ready to go.>
+	Prompt3_1 <Let's get started.>
+
+	%  04 :  PC needs time to prepare.
+	Prompt4 <I need some time to prepare.>
+	Prompt4_1 <I should get ready first.>
+
+end
+inv
+	STC FILINGCABINET
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <L= 101 1 if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <L= 101 1 ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <It's a filing cabinet full of incriminating evidence. Searching quickly through it, you find that the pump pushers have been getting their wares from \SCENE V1 .>
+	Msg2 <It's a filing cabinet full of incriminating evidence.>
+
+end

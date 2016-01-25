@@ -1,0 +1,72 @@
+AeroFighter 4
+Name <Wraith>
+Desig <WR-106>
+SDL_Sprite <aer_wraith.png>
+desc <The Wraith is a general purpose aerofighter produced by RegEx Corporation.>
+
+Mod Body
+	Armor 4
+	sub
+		CPit
+
+		Sensor 5
+
+		Mount
+		Name <Right Body Mount>
+		inv
+			Gun 6
+			Name <Gyro Cannon>
+			Range 8
+			Magazine 8
+			sub
+				Ammo 6
+			end
+		end
+
+		Mount
+		Name <Left Body Mount>
+		inv
+			STC HRP-12
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Range 4
+		Acc -1
+		BV 4
+		Magazine 300
+		sub
+			Ammo 1
+		end
+
+		Flight 2
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Size 5
+	Armor 4
+	sub
+		Mount
+		Name <Right Wing Mount>
+		inv
+			STC SWML-20
+		end
+
+		Flight 4
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Size 5
+	Armor 4
+	sub
+		Mount
+		Name <Left Wing Mount>
+		inv
+			STC SWML-20
+		end
+
+		Flight 4
+	end
+end

@@ -1,0 +1,94 @@
+Plot 0
+	name <PLOT: Shopahlic>
+
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+
+	element1 <Character Charm Passionate Wangtta>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 4200>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+
+	Persona 1
+	rumor <!1 really knows the best places to shop.>
+	greeting <NewChat AdvancePlot 0  ifG React 35 else GoLowReact  ifG PCRep 6 d100 else GoHRNoRep  Say 101  AddChat 1 AddChat 2>
+	GoHRNoRep <Say 102  AddChat 3 AddChat 4>
+
+	GoLowReact <ifG React d40 else GoSaySomething  Say 103>
+	GoSaySomething <ifG React d8 else GoNothing Say d6>
+	GoNothing <SayAnything>
+
+	result1 <NewChat AddReact d3  Say 107  AddChat 13>
+	result2 <NewChat Reputation 5 -1  ifG SkRoll 27 7 else GoR2NoFlirt  Say 106  AddChat 10 AddChat 11 AddChat 12>
+	GoR2NoFlirt <Say 105  AddReact -5  AddChat 7 AddChat 8 AddChat 9>
+	result3 <EndChat Say 108 School .ShopSkill Say 109>
+	result4 <NewChat Reputation 4 -1  Say 110  AddChat 14 AddChat 15>
+	result5 <EndChat Say 111 School .ShopSkill Say 109>
+	result6 <NewChat Reputation 3 -1  Say 104>
+	result7 <EndChat Say 112 AddReact -15 AddReact d5  Reputation 5 -2 Reputation 1 -1>
+	result8 <NewChat Say 113 AddReact 3 AddReact d3 Reputation 3 1>
+	result9 <NewChat Say 114 AddReact d3 Reputation 4 1>
+	result10 <NewChat Say 115  Reputation 4 1  AddChat 15 AddChat 16>
+	result11 <NewChat Reputation 4 -1  ifG 0 PCRep 5 else GoR11NoSad  Say 116  AddChat 5 AddChat 16>
+	GoR11NoSad <ifG SkRoll 27 10 else GoR11NoHot  Say 117  AddChat 15 AddChat 6>
+	GoR11NoHot <Say 118>
+	result12 <NewChat Say 119  AddChat 13>
+	result13 <EndChat Say 120 School .ShopSkill Say 109>
+	result14 <NewChat Say 121 Reputation 3 -1>
+	result15 <EndChat Say 122 School .ShopSkill Say 109>
+	result16 <NewChat Say 123 Reputation 4 -1>
+
+	.ShopSkill <21>
+
+	Msg1 <I absolutely love shopping. I just wish I had some more money to do it with...>
+	Msg2 <I know this great little clothing store on the other side of town. The storekeeper knows me so I always get a good price on things.>
+	Msg3 <My mother used to drag me around to all the markets when I was a little kid... I guess that's why I love haggling now.>
+	Msg4 <I don't like that store. I think the keeper raises the prices every time I walk in... I don't like him much, either.>
+	Msg5 <It takes a lot of practice to be a good shopper. I'm content to keep on practicing!>
+	Msg6 <Sure, my clothes aren't the expensive brands, but I can still look really good. I think most people would be better off if they didn't chase after every expensive thing, and just had what they really need.>
+	Msg101 <I've been reading about the new styles on internet and everything's so overpriced. I think I manage to look good, even though I don't spend a lot on my wardrobe.>
+	Msg102 <Hey, are you looking for some new clothes? I know this little place which has really good merchandise and isn't too expensive.>
+	Msg103 <Would you describe yourself as a sensible shopper? This entire outfit cost less than $20... I feel like such a shopping master.>
+	Msg104 <Whatever. It's no bother to me if you want to keep throwing your money away...>
+	Msg105 <Screw you, there's plenty of people who think I look great...>
+	Msg106 <Do you think so? What do you think I should wear instead?>
+	Msg107 <Would you believe that this entire ourfit cost less than $30? I may be a shopaholic, but at least I know where to shop.>
+	Msg108 <Okay. You help fund my next shopping expedition, and I'll help you with the basic rules of haggling!>
+	Msg109 <Happy shopping!>
+	Msg110 <Er... Nothing, I guess, if that's the look you're trying to present.>
+	Msg111 <Ha ha, listen carefully my pupil. This is everything you need to know about shopping.>
+	Msg112 <I can always change my clothes, but you'll be stuck with that ugly face for a lifetime.>
+	Msg113 <Forget about it. You're entitled to your opinions like anyone else...>
+	Msg114 <Forget it. You're entitled to your own opinion.>
+	Msg115 <I'm not exactly into "casual", but I think I know what you're getting at. Yeah, that might be a good idea. So, do you want to hear about bargain hunting?>
+	Msg116 <Really? I guess that's your kind of look but I never thought about it for myself... I do know this one shop where they have some great biker goods for dirt cheap.>
+	Msg117 <You think so? I was thinking about that but never had the nerve to go with it... I do know this one shop that has some nice items, and it's not too expensive. Want to hear about it?>
+	Msg118 <That's the dumbest idea I've ever heard.>
+	Msg119 <The trouble is that the latest clothes are all overpriced. I like to buy things when they're a month of two older and the price has come down. Of course, I do know about one place...>
+	Msg120 <I can share with you everything I know about shopping, if you'll help to fund my next shopping trip!>
+	Msg121 <You may be happy with it, but have some consideration for those around you!>
+	Msg122 <You won't regret this! Help me pay for my next shopping expedition, and I'll explain to you everything you need to know about living cheap!>
+	Msg123 <Shopping boring? What kind of a creature are you? You can't be human, that's for sure... just kidding.>
+
+	Prompt1 <Yes you do.>
+	Prompt2 <You could look better.>
+	Prompt3 <Tell me about it!>
+	Prompt4 <Why? What's wrong with my clothes?>
+	Prompt5 <Tell me your secrets!>
+	Prompt6 <I'm not interested.>
+	Prompt7 <Too bad they're all blind.>
+	Prompt8 <I'm sorry I said that.>
+	Prompt9 <Just trying to help...>
+	Prompt10 <Something more casual.>
+	Prompt11 <Black leather, and plenty of it.>
+	Prompt12 <You need to be more modern.>
+	Prompt13 <Please, share your secrets!>
+	Prompt14 <I'm happy with the way I look.>
+	Prompt15 <Okay, tell me about shopping...>
+	Prompt16 <No, that sounds boring.>
+
+end

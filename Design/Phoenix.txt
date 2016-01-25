@@ -1,0 +1,141 @@
+Battroid 4
+Name <Phoenix>
+Desig <PL-911>
+Desc <>
+sdl_sprite <btr_phoenix.png>
+
+Mod Head
+	Armor 4
+	Mass -2
+	sub
+		CPit
+		Armor 2
+		Mass -1
+
+		Sensor 6
+	end
+	inv
+		HeadArmor 2
+		Mass -1
+		sub
+			STC SML-5
+		end
+	end
+
+Mod Body
+	Armor 4
+	Mass -4
+	sub
+		Gyro 1
+		Armor 1
+		Mass -1
+
+		Engine 4
+		Armor 1
+		Mass -1
+
+		Mount
+		Name <Collar Mount>
+		inv
+			STC HRP-6
+		end
+	end
+	inv
+		BodyArmor 4
+		Mass -4
+	end
+
+Mod Storage
+	Armor 4
+	Mass -2
+	Name <Backpack>
+	sub
+		Flight 7
+
+		Mount
+		Name <Side Mount>
+		inv
+			Gun 6
+			Range 8
+			Name <L-Cannon>
+			Magazine 20
+			Mass -3
+			sub
+				Ammo 6
+				Name <L-Cannon Clip (EMP)>
+				Type <HAYWIRE>
+			end
+		end
+	end
+	inv
+		StorageArmor 3
+		Mass -2
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	Mass -2
+	sub
+		Hand
+		Name <Right Hand>
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			STC LAS-5
+		end
+	end
+	inv
+		ArmArmor 3
+		Mass -3
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	Mass -2
+	sub
+		Hand
+		Name <Left Hand>
+
+		Mount
+		Name <Left Arm Mount>
+	end
+	inv
+		ArmArmor 3
+		Mass -3
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 5
+	Armor 4
+	Mass -4
+	sub
+		Flight 5
+	end
+	inv
+		LegArmor 4
+		Mass -5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 5
+	Armor 4
+	Mass -4
+	sub
+		Flight 5
+	end
+	inv
+		LegArmor 4
+		Mass -5
+	end
+end
+inv
+	Ammo 6
+	Name <L-Cannon Clip (HE)>
+	AmmoCount 20
+	Type <BLAST 1 BRUTAL>
+end

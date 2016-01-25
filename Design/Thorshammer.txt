@@ -1,0 +1,87 @@
+Battroid 7
+Name <Thorshammer>
+Desig <THD-35>
+SDL_Sprite <btr_thorshammer.png>
+desc <This is RegEx corporation's most popular mecha design.>
+
+Mod Body
+	Armor 7
+	Mass -3
+	sub
+		CPit
+
+		Sensor 5
+
+		TarComp 2
+
+		Gyro 3
+
+		Mount
+		Name <Top Weapon Mount>
+		inv
+			STC SWML-120
+		end
+
+		STC LAS-10
+		Range 4
+		Speed 1
+
+		STC LAS-10
+		Range 4
+		Speed 1
+
+		STC LAS-10
+		Range 4
+		Speed 1
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 5
+	Armor 7
+	Mass -1
+	sub
+		Hand
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			Gun 16
+			Range 6
+			Name <Flame Cannon>
+			Magazine 25
+			Speed 3
+			sub
+				Ammo 16
+				Type <BLAST 2 BURN>
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 5
+	Armor 7
+	Mass -1
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			STC SML-5
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 6
+	Armor 7
+	Mass -2
+
+Mod Leg
+	Name <Left Leg>
+	Size 6
+	Armor 7
+	Mass -2
+end

@@ -1,0 +1,188 @@
+Story
+	name <STORY: Cetus Attacks>
+
+	Element1 <Prefab>
+	Element2 <Scene Town>
+
+	% V1 = Phase Indicator
+	%  V1=0 Load first story
+	%  V1=2 Load secondary stories, as Cetus terrorizes the world
+
+	% The story ends once Cetus has been destroyed, however that
+	% happens.
+	start <ifPersona N1 else GoEndStory if= S1 0 SToryLine .FirstStory S= 1 1>
+	.FirstStory <TS_STORY_Cetus_PLOT_1.txt>
+	GoEndStory <EndStory>
+
+	Hour <if= V1 2 if= d4 1 StoryLine .SecondStory>
+	.SecondStory <TS_STORY_Cetus_PLOT_2*.txt>
+
+Inv
+	Chara
+	name <Cetus>
+	sdl_sprite <monster_cetus.png>
+	sdl_colors <150 112 89 255 212 195 200 80 120>
+	% Cetus is a bioconstruct the size of a mecha, and should be
+	% very difficult to defeat. Plus, Cetus has no head, body, or
+	% other critical organs... it can only be killed by HP damage.
+
+	% The first time the PC fights Cetus he will almost certainly lose.
+	% After that first battle, Cetus will show up randomly every once
+	% in a while to unexpectedly bomb a town. The PC might be able to
+	% kill it later, or maybe one of the NPC pilots will get it instead.
+
+	job <Animal>
+	Scale 2
+	statline 16 32 15 16 14 17 14 11
+
+	skill 6 5
+	skill 7 5
+	skill 8 6
+	skill 9 9
+	skill 11 8
+	skill 13 30
+	skill 26 10
+	skill 30 10
+	skill 33 20
+	skill 36 8
+
+	mod Turret
+	Armor 5
+	sub
+		BeamGun 1
+		name <Death Wave>
+		Range 4
+		type <HYPER OVERLOAD>
+		Recharge 1
+		BV 7
+	end
+	inv
+		TurretArmor 7
+		mass -14
+	end
+
+	Mod Wing
+	Armor 5
+	sub
+		Flight 3
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 2
+			range 7
+			name <Acid Spore>
+			type <RUST>
+			magazine 1
+			Acc -1
+			sub
+				Rockets 2
+			end
+		end
+	end
+
+	Mod Wing
+	Armor 5
+	sub
+		Flight 3
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 2
+			range 7
+			name <Acid Spore>
+			type <RUST>
+			magazine 1
+			Acc -1
+			sub
+				Rockets 2
+			end
+		end
+	end
+
+	Mod Wing
+	Armor 5
+	sub
+		Flight 3
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 2
+			range 7
+			name <Acid Spore>
+			type <RUST>
+			magazine 1
+			Acc -1
+			sub
+				Rockets 2
+			end
+		end
+	end
+
+	Mod Wing
+	Armor 5
+	sub
+		Flight 3
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 2
+			range 7
+			name <Acid Spore>
+			type <RUST>
+			magazine 1
+			Acc -1
+			sub
+				Rockets 2
+			end
+		end
+	end
+
+	Mod Wing
+	Armor 5
+	sub
+		Flight 3
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 2
+			range 7
+			name <Acid Spore>
+			type <RUST>
+			magazine 1
+			Acc -1
+			sub
+				Rockets 2
+			end
+		end
+	end
+
+	Mod Tail
+	name <Tendril>
+	Armor 5
+	type <EXTEND ARMORPIERCING OVERLOAD>
+
+	Mod Tail
+	name <Tendril>
+	Armor 5
+	type <EXTEND ARMORPIERCING OVERLOAD>
+
+	Mod Tail
+	name <Tendril>
+	Armor 5
+	type <EXTEND ARMORPIERCING OVERLOAD>
+
+	end
+
+
+end
+

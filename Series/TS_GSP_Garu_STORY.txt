@@ -1,0 +1,96 @@
+Story
+	name <Garu Syndrome Story>
+
+	% GARU Serum was an experimental combat drug developed by Aegis scientists,
+	% then abandoned for being too dangerous. In this story the PC will have the
+	% chance to buy some from a street dealer... with disasterous consequences,
+	% of course.
+
+	% N1 is the scene where the story takes place.
+	% N2 is the dealer
+	element2 <PREFAB>
+
+	% N3 is the serum
+	element3 <PREFAB>
+
+	% S1 = Initialization Counter
+	% S2 = PC has taken the drug
+
+	% S11 = PC's initial Reflexes
+	% S12 = PC's initial Body
+	% S13 = PC's initial Speed
+	% S17 = PC's initial Knowledge
+	% S18 = PC's initial Charm
+
+	start <if= S1 0 else GoCheckPlot  S= 1 1 Compose KEY N3 .usegaru  Compose GET N3 .getgaru>
+	GoCheckPlot <if= S1 1 if= S2 1 StoryLine .plot S= 1 2>
+	.plot <TS_GSP_Garu_PLOT_*.txt>
+
+	% When the serum is used, record initial REF,BOD,KNO...
+	.usegaru <S= 2 1  DeleteKeyItem N3  S= 17 PCKNOWLEDGE  S= 11 PCREFLEXES S= 12 PCBODY S= 13 PCSPEED S= 18 PCCHARM>
+	.getgaru <ifPersona N2 Print 2 DeleteChar N2>
+
+	% If the PC has taken the drug, every quarter his stats will be changed.
+	quarter <if= S2 1  ifG PCKnowledge 1 else GoCheckCharm PCStat+ 7 -1 PCStat+ 1 1 PCStat+ 2 1 PCStat+ 3 1 ifG PCCharm 1 else GoCheckMessage PCStat+ 8 -1 Goto GoCheckMessage>
+	GoCheckCharm <ifG PCCharm 1 PCStat+ 8 -1 PCStat+ 2 1 PCStat+ 3 1 Goto GoCheckMessage>
+	GoCheckMessage <ifG SkRoll 11 15 Print 1>
+
+	Msg1 <You feel like you're getting stronger.>
+	Msg1_1 <You feel power surge inside your body.>
+	Msg1_2 <You feel like you just forgot something...>
+	Msg2 <\NARRATIVE 2 quickly slips away...>
+
+sub
+	Persona 2
+	% The PC gets only one chance to do anything here, after which the dealer will
+	% disappear forever.
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat Say 3 AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+	result2 <EndChat Say 2 Reputation 2 5 DeleteChar N2>
+	result3 <EndChat Say 4 Cash+ -10000 GiveKeyItem N3 Reputation 2 -5 DeleteChar N2>
+	result4 <EndChat Say 2 Reputation 2 5 DeleteChar N2>
+	result5 <EndChat Say 5 XPV 250 FacXP+ 3 10 DeleteChar N2>
+	result6 <NewChat Say 6 AddChat 3 AddChat 4 AddChat 5>
+
+	Msg1 <Hey there... you look like the type that could use a little something extra. How'd you like me to fix you up?>
+	Msg2 <Not interested? Well, have a pleasant day then, squire...>
+	Msg3 <I have here what you might call a high-grade performance enhancing drug... "GARU" serum alters you on a molecular level, giving you the speed and power of those Idealists what lived long ago. It can be yours for the low price of $10,000.>
+	Msg4 <Enjoy the superhuman abilities you will shortly be having. Thanks for your business, all sales are final.>
+	Msg5 <You're a narc!? Oh bloody hell... Go ahead, cart me off to the paddywagon.>
+	Msg6 <Erm... well, it's not currently legal in the federation. Or anywhere else on Earth for that matter. Or in the spinners. Or Luna. Or Venus. Or Mars. I think it's probably legal in trans-Jovian space...>
+
+	Prompt1 <What are you selling?>
+	Prompt2 <No thanks, you've got nothing I want.>
+	Prompt3 <I'll take it!>
+	CPrompt3 <ifG PC$ 99999 Accept>
+	Prompt4 <I don't want that.>
+	Prompt5 <I'm a guardian. You're under arrest!>
+	CPrompt5 <if= PCFac 3 Accept>
+	Prompt6 <How legal is this stuff?>
+	CPrompt6 <ifG PCRep 2 -1 Accept>
+
+
+end
+inv
+	NPC Citizen
+	job <Dealer>
+	place <1 PASS>
+	chardesc Easygoing Chaotic Chaotic Chaotic Cheerful Shy
+
+	Treasure 500
+	name <GARU Serum>
+	type <STOLEN>
+	place <2>
+	use <ifYeSNo 1 2 3 Print 4 History 5 Trigger KEY SelfNID>
+	Clue29 <Print 6>
+	Clue22 <Print 6>
+	Msg1 <This vial is labeled "GARU". It contains an oily black liquid.>
+	Msg2 <Drink the serum.>
+	Msg3 <I probably shouldn't...>
+	Msg4 <You drink the liquid. You don't feel any different.>
+	Msg5 <You infected yourself with GARU Serum.>
+	Msg6 <From your knowledge of biotechnology, GARU Serum is a retroviral agent containing the draconic complex. Its use by Aegis special forces was discontinued due to the side effects.>
+
+end
+

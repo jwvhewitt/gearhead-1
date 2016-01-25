@@ -1,0 +1,21 @@
+% DEFAULT DOOR USAGE SCRIPT FILE %
+name <Door>
+USE <ifG -99 MetaPass else GoCloseDoor  if= StatVal STAT_Lock 0 else GoDoorLocked Print 1  SetStat STAT_Pass 0  Transform 1>
+GoDoorLocked <Print 6>
+GoCloseDoor <Print 2 SetStat STAT_Pass -100  Transform 2>
+NPCOpenDoor <SetStat STAT_Pass 0  Transform 1>
+roguechar <+>
+roguechar1 <->
+roguechar2 <+>
+SDL_Sprite <meta_terrain.png>
+CLUE32 <if# StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV 50 SetStat STAT_Lock 0>
+GoNoUnlock <Print 4>
+GoNotLocked <Print 5>
+REVEAL <DrawTerr SelfX SelfY 19 Print 7>
+Msg1 <You open the door.>
+Msg2 <You close the door.>
+Msg3 <You unlock the door.>
+Msg4 <You do not manage to unlock the door.>
+Msg5 <The door does not appear to be locked.>
+Msg6 <The door is locked.>
+Msg7 <You find a secret door!>

@@ -1,0 +1,77 @@
+Story
+	name <TEMPLATE STORY: Relay>
+
+	% This story will run for 3 days, or until completed by the PC.
+	% To complete, the PC must go on a relay from town to town
+	% completing plots at each stop.
+
+	% Element 1 -> Controlling Faction
+	% Element 2 is the scene where the relay will take place.
+	%  The value of N2 will be changed by plots over the course
+	%  of this adventure.
+	Element2 <Scene Town>
+
+	% **********************
+	% ***  SCRIPT BLOCK  ***
+	% **********************
+	%  S1 = Time Limit
+	%  S2 = Challenge Rating
+	%  S3 = Message Randomizer
+
+	%  S101 = Faction Victory Count
+	%      Add one for every mission the PC won,
+	%      even if it wasn't a relay mission. The relays
+	%      should probably be worth more, though.
+	%  S103 = How many times PC fought for faction
+	%  S104 = If nonzero, PC has won the final mission
+	%         Note that the winning plot should call ENDSTORY
+	%         by itself. This var is just to communicate to
+	%         the investigation story that the PC should be
+	%         rewarded.
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+	%  S203 = Number of clues accumulated
+	%  S204 = Load new "investigator" plot when S204 = 0
+	%  S205 = Time limit for investigation; new clue
+	%         acquired when time limit is past.
+
+	% At the START trigger, check for the end of the story
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 PCRep 6>
+	GoCheckTime <ifG ComTime V1 else GoCheckMemo EndStory>
+
+	% If the PC has taken part in the relay, store a memo.
+	GoCheckMemo <if= S203 S202 ifG S103 0  Memo 1>
+
+	% Every half-hour, load a new plot.
+	halfhour <if# S2 0 if= S201 0 else GoLoadInv ifG S202 3 else GoLoadRelay StoryLine .endplot S= 201 1 S+ 2 d4>
+	GoLoadRelay <StoryLine .relayplot FacXP+ N1 1 S= 201 1 S+ 2 d4>
+	GoLoadInv <if= S204 0 StoryLine .invplot S= 204 1>
+	% Fill in the filename patterns for the plot types.
+	.endplot    <>
+	.relayplot  <>
+	.inplot   <>
+
+	% Every quarter, load a news story.
+	% Implementation thereof is left as an exercise to the reader.
+	quarter <News 101>
+
+	% ***********************
+	% ***  MESSAGE BLOCK  ***
+	% ***********************
+	% 1 :  Relay Memo
+	Msg1 <\SCENE N2 is where you'll be going next.>
+
+	% 101 - 105 :  News Messages
+	Msg101 <>
+
+
+	% ***********************
+	% ***  LINKING PLOTS  ***
+	% ***********************
+
+	% If a relay plot ends in victory for N1, do the following:
+	%  S= 201 0 S+ 202 1 S+ 101 d3 N= 2 [element number of next scene]
+	% If it ends in failure, or gets cancelled:
+	%  S= 201 0
+

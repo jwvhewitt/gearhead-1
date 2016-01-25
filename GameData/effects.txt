@@ -1,0 +1,87 @@
+%%% EFFECTS.PP TEXT MESSAGES %%%
+CFE_Destroyed < destroyed!>
+CFE_EasyResist < easily resisted the attack.>
+CFE_Resist < resisted the attack.>
+CFE_HardResist < barely resisted the attack.>
+CFE_EasyEvade < easily evaded the attack.>
+CFE_Evade < evaded the attack.>
+CFE_HardEvade < barely evaded the attack.>
+CFE_EasyParry < easily parried the attack.>
+CFE_Parry < parried the attack.>
+CFE_HardParry < barely parried the attack.>
+CFE_NormHit < is hit >
+CFE_CritHit < is critically hit >
+CFE_MultiHit < times >
+CFE_NoDamage <for no damage.>
+CFE_Damage1 <for >
+CFE_Damage2 < damage>
+STATUS_Announce1 <# is poisoned!>
+STATUS_Announce2 <# has caught fire!>
+STATUS_Announce3 <# starts to regenerate.>
+STATUS_Announce4 <# starts acting funny...>
+STATUS_Announce5 <# goes haywire!>
+STATUS_Announce18 <# suddenly rusts!>
+STATUS_Announce19 <# is stunned!>
+STATUS_Announce20 <# suddenly feels sick...>
+HEALING_Announce <# has been restored # damage.>
+STATUS_Overload <# is overloaded!>
+FMAFT_N1 <Virtue>
+FMAFT_A1 <Righteous>
+FMAFT_N2 <Zen>
+FMAFT_A2 <Tantric>
+FMAFT_N3 <1,000 Blows>
+FMAFT_A3 <Flurry>
+FMAFT_N4 <Ki>
+FMAFT_A4 <Master>
+FMAFT_N5 <Deep Hurting>
+FMAFT_A5 <Iron>
+FMAFT_N6 <Brutality>
+FMAFT_A6 <Shattering>
+FMAFT_N7 <One Cup Too Many>
+FMAFT_A7 <Drunken>
+FMAFT_N8 <Mitsubishi>
+FMAFT_A8 <Electric>
+FMAFT_N9 <Stunning>
+FMAFT_A9 <Senseless>
+FMAFT_N10 <Serpent>
+FMAFT_A10 <Twisted>
+FMA_NAME_PUNCH_1 <%A Fist of %N>
+FMA_NAME_PUNCH_2 <%A Punch>
+FMA_NAME_PUNCH_3 <%N Punch Technique>
+FMA_NAME_PUNCH_4 <Double %A Fist of %N>
+FMA_NAME_PUNCH_5 <%A Chop>
+FMA_NAME_PUNCH_6 <%A Slap>
+FMA_NAME_PUNCH_7 <%A Chop of %N>
+FMA_NAME_PUNCH_8 <the %N Backhand>
+FMA_NAME_PUNCH_9 <Ultimate %A %N Punch>
+FMA_NAME_PUNCH_10 <Five Fingers of %N>
+FMA_NAME_KICK_1 <%A Kick of %N>
+FMA_NAME_KICK_2 <%A Foot of %N>
+FMA_NAME_KICK_3 <%A Kick>
+FMA_NAME_KICK_4 <%N Kick Technique>
+FMA_NAME_KICK_5 <Reverse %A Kick>
+FMA_NAME_KICK_6 <Kick of %A %N>
+FMA_NAME_KICK_7 <Two Shoes for %N>
+FMA_NAME_KICK_8 <the %A %N Kick>
+FMA_NAME_KICK_9 <%A Circle %N Kick>
+FMA_NAME_KICK_10 <Kick of %N>
+FMA_NAME_MISC_1 <%A Technique>
+FMA_NAME_MISC_2 <%A Attack>
+FMA_NAME_MISC_3 <%A Technique of %N>
+FMA_NAME_MISC_4 <the %N Method>
+FMA_NAME_MISC_5 <Ultimate %A Attack>
+FMA_NAME_MISC_6 <%A Whirlwind %N>
+FMA_NAME_MISC_7 <Two Pounds of %N>
+FMA_NAME_MISC_8 <Big %N %A Attack>
+FMA_NAME_MISC_9 <%A Attack of %N>
+FMA_NAME_MISC_10 <%A Technique of %N>
+FMAFT_MISCN1 <Monkey>
+FMAFT_MISCA1 <Secret>
+FMAFT_MISCN2 <Dragon>
+FMAFT_MISCA2 <Flying>
+FMAFT_MISCN3 <Fury>
+FMAFT_MISCA3 <Ancient>
+FMAFT_MISCN4 <Power>
+FMAFT_MISCA4 <Powerful>
+FMAFT_MISCN5 <Death>
+FMAFT_MISCA5 <Deadly>

@@ -1,0 +1,571 @@
+%%% GEARHEAD TEXT MESSAGES %%%
+RUN_ON <You start to run.>
+RUN_OFF <You start to walk.>
+DJ_MECHARECOVERED <# is recovered from the battlefield.>
+DJ_PCRESCUED <Fortunately, you are rescued and taken to a hospital.>
+DJ_OUTOFACTION <# is removed to a safe location.>
+ATA_NOTREADY <# isn't ready to be fired right now.>
+INSTALL_NOTACTIVE <You can't install anything while the engine is running.>
+EXTRACT_NOTACTIVE <You can't remove anything while the engine is running.>
+TRANSFER_NOTHERE <This isn't a safe place to be trading items.>
+LearnSkill_Warning <Learning this skill will result in an XP penalty. Are you sure you want to do that?>
+LearnSkill_AcceptPenalty <Accept XP Penalty>
+LearnSkill_ForgetPrevious <Replace Previous Skill>
+CANCEL <   [CANCEL]>
+SERVICES_ExpressDelivery <Deliver Mecha>
+SERVICES_MovePrompt1 <It will cost $# to bring that here.>
+SERVICES_MovePrompt2 <If you want that transported to here, it's going to cost $#.>
+SERVICES_MovePrompt3 <Transporting that to here is going to cost $#.>
+SERVICES_MoveYes <Move #.>
+SERVICES_MoveNo <Not right now.>
+SERVICES_MoveDone1 <Alright, we'll bring it over for you right away.>
+SERVICES_MoveDone2 <It's on its way as we speak.>
+SERVICES_MoveDone3 <Your package should arrive here shortly.>
+SERVICES_MoveNoCash <You can't afford it! Without the cash, we can't move anything.>
+SelectCampaignFile <Select campaign file.>
+EXIT <   [EXIT]>
+TRAINING_ImproveSkill <Improve Skills>
+TRAINING_NewSkill <Learn New Skill>
+TRAINING_ReviewTalents <Review Talents>
+TRAINING_ReviewCyberware <Review Cyberware>
+TRAINING_NewTalent <Learn New Talent>
+TRAINING_ImproveStat <Improve Stats>
+NOFREETALENTS <You have no free talent slots.>
+CANTAFFORDTALENT <You can't afford to purchase this talent.>
+TALENT1 <Strength of Faith>
+TALENTDESC1 <You have the power of faith on your side. (+2 Ego)>
+TALENT2 <Body Builder>
+TALENTDESC2 <You are totally pumped up. (+2 Body)>
+TALENT3 <Scientific Method>
+TALENTDESC3 <Your scientific training has made you very good at discovering new things. (+2 Knowledge)>
+TALENT4 <Presence>
+TALENTDESC4 <You have mastered a commanding stage presence. (+2 Charm)>
+TALENT5 <Kung Fu>
+TALENTDESC5 <Your hands are lethal weapons. (+3 Penetration for Martial Arts attacks)>
+TALENT6 <Hap Ki Do>
+TALENTDESC6 <You are an expert at self-defense. (May block attacks using Martial Arts)>
+TALENT7 <Anatomist>
+TALENTDESC7 <Because of your anatomical knowledge, you are able to target an opponent's vital points. (+1 Penetration versus living targets)>
+TALENT8 <Hard As Nails>
+TALENTDESC8 <You don't feel pain like other folks. (All attacks against PC are at -2 Penetration)>
+TALENT9 <Stunt Driving>
+TALENTDESC9 <As long as you're going fast, you can find a way to avoid most attacks. (may reroll dodge if traveling at full speed)>
+TALENT10 <Savant>
+TALENTDESC10 <You have more skills than is normal for a person with your intelligence. (can learn 5 more skills without penalty)>
+TALENT11 <Bishounen>
+TALENTDESC11 <You are androgynously beautiful. (may use Flirtation skill with all NPCs, regardless of gender)>
+TALENT12 <Diplomatic>
+TALENTDESC12 <In conversation, you can avoid controversial topics. (may avoid reaction loss due to personality clash)>
+TALENT13 <Born To Fly>
+TALENTDESC13 <You are an expert with flying mecha. (+3 Mecha Piloting while flying or jumping)>
+TALENT14 <Sure Footed>
+TALENTDESC14 <You are an expert with walkers and zoanoids. (+2 Mecha Piloting while walking)>
+TALENT15 <Road Hog>
+TALENTDESC15 <You are an expert with cars and other wheeled vehicles. (+2 Mecha Piloting while rolling)>
+TALENT16 <Tech Vulture>
+TALENTDESC16 <When awarded salvage, you'll grab everything worth taking. (can salvage individual modules from defeated mecha)>
+TALENT17 <Idealist Blood>
+TALENTDESC17 <Your family heritage includes some genetic engineering. (+1 to three random stats)>
+TALENT18 <Business Sense>
+TALENTDESC18 <You are very good at negotiating favorable deals. (+25% to most mission cash rewards)>
+TALENT19 <Animal Trainer>
+TALENTDESC19 <You are good at teaching your pets how to do tricks. (new pets gain XP bonus)>
+TALENT20 <Jack of all Trades>
+TALENTDESC20 <You can do a little bit of everything. (may use unknown skills without -2 penalty)>
+TALENT21 <Combat Medic>
+TALENTDESC21 <You are capable of performing emergency medicine in dangerous places. (First Aid and Medicine attempts take 1/3 normal time)>
+TALENT22 <Badass>
+TALENTDESC22 <The angrier you get, the harder you fight. (Bonus to combat skills while bad morale)>
+TALENT23 <Ninjitsu>
+TALENTDESC23 <Your surprise attacks are deadly. (damage bonus when attacking unseen)>
+TALENT24 <Hull Down>
+TALENTDESC24 <As long as you are walking or rolling, you can position your mecha so as to prevent critical hits. (All attacks against walking or rolling mecha are at -3 Penetration)>
+TALENT25 <Gate Crasher>
+TALENTDESC25 <You're particularly good at smashing things. (+2 penetration against inanimate objects)>
+TALENT26 <Extropian>
+TALENTDESC26 <You are philosophically prepared to deal with the loss of your humanity. (may have one implant per 3 points Cybertech with no chance of disfunction)>
+TALENT27 <Cyber-Psycho>
+TALENTDESC27 <Your body is adjusted to cyberware, it's just your mind that suffers. (May avoid trauma by spending MP)>
+TALENT28 <Sniper>
+TALENTDESC28 <One shot is all you ever need. (bonus to single fire damage rolls)>
+BUYPROMPT1 <I can give you this # for $#. What do you say, do we have a deal?>
+BUYPROMPT2 <This # can be yours for the low price of $#.>
+BUYPROMPT3 <The price for this # is $#. You won't find it cheaper anywhere else.>
+BUYPROMPT4 <I see you're looking at the #. It's a very good deal at only $#.>
+BUYREPLY1 <Enjoy your purchase.>
+BUYREPLY2 <May it serve you well.>
+BUYREPLY3 <Here you go.>
+BUYREPLY4 <It's been a pleasure doing business with you.>
+BUYCANCEL1 <Maybe there's something else that you'd like.>
+BUYCANCEL2 <Have a look around, you may find something that suits you better.>
+BUYCANCEL3 <You don't like it? That's fine, I have more...>
+BUYCANCEL4 <What's the matter with it?>
+BUYNOCASH1 <You don't seem to have enough money to buy this. Maybe something else...>
+BUYNOCASH2 <I think that's a little bit out of your price range. Maybe you'd like to buy something else?>
+BUYNOCASH3 <You can't afford it.>
+BUYNOCASH4 <You don't have enough money to pay for that.>
+SELLPROMPT1 <I'll give you $# for the #. Do we have a deal?>
+SELLPROMPT2 <I can't give you any more than $# for your #.>
+SELLPROMPT3 <I can give you $# for the #.>
+SELLPROMPT4 <If you're interested in parting with it, I can give you $# for that # you have.>
+SELLREPLY1 <It's been a pleasure doing business with you.>
+SELLREPLY2 <I can sell it for twice as much on internet!>
+SELLREPLY3 <Thank you.>
+SELLREPLY4 <Here's your money.>
+SELLCANCEL1 <Oh, well. Maybe next time.>
+SELLCANCEL2 <Do you have anything else for me to look at?>
+SELLCANCEL3 <You won't find a better price anywhere else.>
+SELLCANCEL4 <Let's move on to something else.>
+YouFind$ <You find $#.>
+PHONE_NotFound <No person named # can be found in the local dialing area.>
+PHONE_Prompt <You get out your telephone.>
+PHONE_GetName <Who do you want to call?>
+PHONE_NoPhone <You don't have a telephone!>
+OPR_0 <he>
+OPR_1 <she>
+SPR_0 <him>
+SPR_1 <her>
+PPR_0 <his>
+PPR_1 <her>
+EXTRACT_OK <You remove the #.>
+EXTRACT_FAIL <You fail to remove the #.>
+EXTRACT_WRECK <You remove the #, but completely destroy it in the process.>
+INSTALL_OK <You install the #.>
+INSTALL_FAIL <You fail to install the #.>
+INSTALL_WRECK <You completely destroy the # while attempting to install it.>
+CANT_GET_? <You can't pick up the #!>
+YOU_GET_? <You get the #.>
+GET_WHICH_ITEM? <Get Item - Which item?>
+STARTRPG_NewChar <[Create New Character]>
+REGEN_Hunger <# is hungry.>
+PROCESSMOVEMENT_Crash <# has crashed! # damage.>
+PROCESSMOVEMENT_Fall <# has fallen! # damage.>
+HISTORY_AnnounceVictory <*** VICTORY!!! ***>
+HISTORY_Skills <#     +#  (#)>
+HISTORY_Traits <You are #. (#%)>
+HISTORY_Faction <You were promoted to # in #.>
+STATRANK1 <Hopeless>
+STATRANK2 <Pathetic>
+STATRANK3 <Typical>
+STATRANK4 <Good>
+STATRANK5 <Great>
+STATRANK6 <Amazing>
+STATRANK7 <Legendary>
+Status_FXDesc1 <# is hurt by poison! # damage.>
+Status_FXDesc2 <# is on fire! # damage.>
+PERFORMANCE_DidWell0 <You earn $# in tips.>
+PERFORMANCE_DidWell1 <You find your groove. You earn $# in tips.>
+PERFORMANCE_DidWell2 <The kids dig it. You earn $# in tips.>
+PERFORMANCE_Base <You play the #.>
+PERFORMANCE_Horrible0 <Your audience appears to be in pain.>
+PERFORMANCE_Horrible1 <People cover their ears with their hands.>
+PERFORMANCE_Horrible2 <You strike a sour note.>
+PERFORMANCE_NoInstrument <You need an instrument to use this skill!>
+Cancelled <Cancelled.>
+PCUSOP_Prompt <Which direction to use this skill in?>
+PCAS_Prompt <Which skill do you want to use?>
+PCAS_Cancel <   [CANCEL]>
+PCUS_Prompt <Use scenery. Which direction?>
+PCUS_NotFound <You can't find anything to use right there!>
+MEMO_ReadMemo <Read Memos>
+MEMO_ReadNews <Browse News>
+MEMO_ReadEMail <Check Email>
+MEMO_NoBrowser <You can't check messages since you don't have a functioning PCS at this time.>
+MEMO_None <There are no # messages at this time.>
+MEMO_Next <Next Memo>
+MEMO_Prev <Previous Memo>
+AS_Email <You have received a new email message.>
+AS_XPV <You gain # experience points.>
+AS_CASHPRIZE <You receive $#.>
+HELP_Chara <Character Info>
+HELP_Mecha <Mecha Info>
+HELP_FieldHQ <Managing Your Mecha>
+HELP_KeyMap <View Game Keys>
+HELP_PersonalHistory <Review Personal History>
+HELP_Exit <   [EXIT]>
+MORETEXT_Prompt <  [UP] to go up, [DOWN] to go down, [Q] or [ESC] to exit>
+PCATTACK_OutOfArc <The target is outside of your firing arc.>
+PCATTACK_OutOfRange <The target is out of range.>
+HELP_Prompt <Scroll through the menu to see all available game commands.>
+ARENASCRIPT_CheckMechaEquipped <Select a mecha to use in the upcoming battle.>
+REST_OK <You have a short rest.>
+REST_NotHere <This isn't a safe place to be taking a rest!>
+REST_TooHungry <You're too hungry to be resting right now.>
+FACTORY_GetSAtt <Enter # for mecha.>
+FACTORY_SetName <Set Name>
+FACTORY_SetDesignation <Set Designation>
+FACTORY_AddSubCom <Add SubComponent>
+FACTORY_EditChild <Edit Mecha Component>
+FACTORY_SaveMecha <Save Mecha>
+FACTORY_Cancel <Cancel>
+FACTORY_Size1  <Size  1 - "Pico Class" Mecha>
+FACTORY_Size2  <Size  2 - "Demi Class" Mecha>
+FACTORY_Size3  <Size  3 - "Mini Class" Mecha>
+FACTORY_Size4  <Size  4 - "Light Class" Mecha>
+FACTORY_Size5  <Size  5 - "Standard Class" Mecha>
+FACTORY_Size6  <Size  6 - "Heavy Class" Mecha>
+FACTORY_Size7  <Size  7 - "Super Class" Mecha>
+FACTORY_Size8  <Size  8 - "Mega Class" Mecha>
+FACTORY_Size9  <Size  9 - "Giga Class" Mecha>
+FACTORY_Size10 <Size 10 - "Tera Class" Mecha>
+FACTORY_SelectSize <Select the size class for this mecha. Size class determines the maximum size of body modules, and the maximum amount of armor which may be applied to any part.>
+FACTORY_Form0 <General purpose mecha. Battroids have good maneuverability and good targeting values. They can mount almost all module types and can use all move modes.>
+FACTORY_Form1 <Animal form mecha. Zoanoids have excellent maneuverability, but poor targeting. They cannot mount arms or turrets. Walking and jumping are their available move modes.>
+FACTORY_Form2 <Heavily armored land form. Groundhuggers can mount turret modules, but not most other module types. Rolling and hovering are their available move modes.>
+FACTORY_Form3 <Multi-legged tank. Arachnoids can mount turret modules, but not arms or wings. Walking is their only move mode.>
+FACTORY_Form4 <Flying mecha optimized for speed. Aerofighters can only mount wings and storage modules. Flight is their only move mode.>
+FACTORY_Form5 <Bird form mecha. Ornithoids cannot mount arms or turrets. Walking and flight are their move modes.>
+FACTORY_Form6 <Hybrid form between Battroid and Aerofighter. Gerwalks can mount most module types. Walking, hovering, and flight are their move modes.>
+FACTORY_Form7 <Flying mecha optimized for maneuverability. Hoverfighters can mount turret modules, but not most other types. Hovering and flight are their move modes.>
+FACTORY_Form8 <Land form mecha optimized for speed. Groundcars can mount turret modules, but not most other types. Rolling is their only move mode.>
+FACTORY_SelectForm <Select the form for this mecha. This will determine MV, TR, move modes and available module types.>
+SCHOOL_Learn1 <You feel slightly smarter than before.>
+SCHOOL_Learn2 <You feel that you are a better warrior than before.>
+SCHOOL_Learn3 <You think you leaned something.>
+SCHOOL_Learn4 <You feel like Bruce Lee with a giant robot.>
+SCHOOL_Learn5 <You feel like you aced the test.>
+SCHOOL_TeachingInProgress <Let's get started on your training right away.>
+SCHOOL_HowMuch <How much do you want to spend on your training?>
+SCHOOL_ExitCostSelector <  [No thanks.]>
+SCHOOL_Exit <  [Stop Learning]>
+SHOPPING_SkillAdvance <You feel like a wise consumer.>
+STAT_1 <Reflexes measures grace and accuracy. It determines most combat rolls.>
+STAT_2 <Body measures your character's size and strength. It determines your health and stamina levels.>
+STAT_3 <Speed measures how quickly you can move and react to your environment.>
+STAT_4 <Perception measures your general awareness and spatial perception. It is used to spot hidden models.>
+STAT_5 <Craft measures your aptitude with tools and practical technology. It is used by most of the repair skills.>
+STAT_6 <Ego measures your character's willpower and self-reliance. It helps determine stamina and mental levels.>
+STAT_7 <Knowledge measures your general level of education, and also your aptitude for studying complex matters.>
+STAT_8 <Charm measures how charismatic your character is.>
+SKILL_1 <Used when attacking with conventional and beam guns of Size 10 or less.>
+SKILL_2 <Used when attacking with missiles and projectile weapons of Size 11 or greater.>
+SKILL_3 <Used when attacking with mecha melee or energy weapons.>
+SKILL_4 <Used when attacking with a mecha's arms, legs, and other limbs. Also, it is used when blocking enemy attacks with a shield.>
+SKILL_5 <Determines your ability to evade enemy attacks.>
+SKILL_6 <Used when attacking with personal ranged weapons of Size 10 or less.>
+SKILL_7 <Used when attacking with missiles and projectile weapons of Size 11 or greater.>
+SKILL_8 <Used when attacking with personal melee and energy weapons. Also, it is used when blocking enemy attacks with a shield.>
+SKILL_9 <Used when attacking with your bare hands.>
+SKILL_10 <Determines your ability to evade dangers to your person.>
+SKILL_11 <Ability to spot hidden units.>
+SKILL_12 <Determines how quickly you can perform actions.>
+SKILL_13 <Increases the number of Health Points available to your character.>
+SKILL_14 <Ability to live comfortably without the amenities of civilization.>
+SKILL_15 <Ability to repair mecha. Using this skill costs MP.>
+SKILL_16 <Ability to treat crippled limbs and status conditions. Using this skill costs MP.>
+SKILL_17 <Determines your ability to cause and resist mecha status effects.>
+SKILL_18 <Improves your chance of scoring critical hits.>
+SKILL_19 <Determines how quickly NPCs will come to like you.>
+SKILL_20 <Ability to treat health damage. Using this skill costs MP.>
+SKILL_21 <Determines the offered price of goods and services.>
+SKILL_22 <Ability to repair advanced biological constructs. Using this skill costs MP.>
+SKILL_23 <Ability to repair personal scale equipment. Using this skill costs MP.>
+SKILL_24 <Ability to resist cybernetic side effects.>
+SKILL_25 <Determines chances of remaining unseen when moving within cover.>
+SKILL_26 <Increases the number of Stamina Points available to your character.>
+SKILL_27 <Improves the rate at which members of the opposite sex will befriend your character.>
+SKILL_28 <Ability to make a NPC feel very, very afraid.>
+SKILL_29 <Knowledge of scientific matters.>
+SKILL_30 <Increases the number of Mental Points available to your character.>
+SKILL_31 <Allows you to remove or add parts to a mecha. Using this skill costs MP.>
+SKILL_32 <Ability to circumvent locks, passwords and other security measures.>
+SKILL_33 <Increases the amount of equipment your character may carry.>
+SKILL_34 <Knowledge about religion and spiritual matters.>
+SKILL_35 <Ability to play musical instruments and otherwise entertain people. Using this skill costs both SP and MP.>
+SKILL_36 <Improves your chance to avoid negative status effects such as poisoning, burns, and so on.>
+SKILL_37 <Ability to notice important clues when examining an object.>
+SKILL_38 <Ability to construct multipurpose robots from scratch. Using this skill costs MP and parts.>
+SKILL_39 <Determines how well you can coordinate the actions of your followers.>
+SKILL_40 <The ability to tame certain wild animals. Using this skill costs MP.>
+SKILL_41 <The ability to steal money and small items from NPCs. Using this skill costs MP and is a chaotic act.>
+SERVICES_RAFree <You've been a very good customer. Don't worry about paying me this time around.>
+SERVICES_RACantPay <You don't have enough money to pay me, so this job will have to be on the house.>
+SERVICES_RALousyBum <You don't have enough money to pay for this work.>
+SERVICES_RADoRA1 <I've done what I can for you. Take better care from now on.>
+SERVICES_RADoRA2 <I've patched things together; hopefully they'll stay in one piece.>
+SERVICES_RADoRA3 <There. Things ought to be working properly now.>
+SERVICES_RADoRA4 <Just a minute while I heat up the arc welder... There. All better now.>
+SERVICES_RADoRA5 <What were you doing to get in this kind of a mess!? I'll see what I can do.>
+SERVICES_OSRSP1 <Repair Mecha>
+SERVICES_OSRSP2 <Treat Illnesses>
+SERVICES_OSRSP3 <Treat Injuries>
+SERVICES_OSRSP4 <Repair Biotech Constructs>
+SERVICES_OSRSP5 <Repair Equipment>
+SERVICES_OSRSP6 <Repair Cybernetics>
+SERVICES_AmmoName < Clip>
+SERVICES_Exit <   [EXIT]>
+SERVICES_Sell <Sell >
+SERVICES_BrowseParts <Examine Parts>
+SERVICES_MechaService <View Mecha>
+SERVICES_SellStuff <Sell Items>
+SERVICES_ReloadChars <All your weapons have been reloaded.>
+SERVICES_ReloadMeks <All your mecha have been fully restocked.>
+SERVICES_ReloadMeksPrompt <Restock Mecha>
+SERVICES_ReloadCharsPrompt <Reload Ammunition>
+SERVICES_SellMekInv <Sell Mecha Inventory>
+SERVICES_Inventory <View Inventory>
+SERVICES_StolenDesc <The shopkeeper refuses to buy this item.>
+SERVICES_StolenResponse <Sorry, I don't deal in this kind of merchandise. You better leave before I have to call the guardians.>
+SERVICES_CybInstall <Install Cyberware>
+SERVICES_Cyber_SelectPart <Select a part that you want to implant. Remember, cybernetic parts can be replaced but they cannot be removed.>
+SERVICES_Cyber_NoPart <You don't have any cyberware items to implant! Come back when you have one.>
+SERVICES_Cyber_Cancel <Well, maybe next time...>
+SERVICES_Cyber_SelectSlot <Select the location where you'd like to implant it.>
+SERVICES_Cyber_Done1 <I have performed the implantation. There were some complications during the surgery... nothing to worry about, I'm sure.>
+SERVICES_Cyber_Done2 <I have performed the implantation. You may be tired from the anesthetic for a while. Seek treatment immediately if you experience any side effects.>
+SERVICES_Cyber_Done3 <I have performed the implantation. The operation went more smoothly than expected. You shouldn't have much trouble, but see a doctor if you experience any side effects.>
+SERVICES_Cyber_Wait <You'll need to be anaesthetized for the operation. Just lie back and relax.>
+SERVICES_Cyber_WaitPrompt <[...]>
+SERVICES_Cyber_Pay <The operation will cost $#. Is that alright?>
+SERVICES_Cyber_Pay_Yes <Yes, it is.>
+SERVICES_Cyber_Pay_No <No, it isn't.>
+SERVICES_Cyber_Confirmation <The # has been implanted into your body.>
+RANDCHAR_SGPrompt <Select your Gender>
+RANDCHAR_SGDesc <Gender has no effect upon your statistics, but may affect how different NPCs react to you.>
+RANDCHAR_SAPrompt <Select your Age>
+RANDCHAR_SADesc <Older characters start with more experience, but younger characters start with more cash.>
+RANDCHAR_FHPrompt <Family History>
+RANDCHAR_FHDesc <Your family history has only a minor effect. You may inherit an aptitude for certain skills from your parents.>
+RANDCHAR_FHAccept <Accept Family History>
+RANDCHAR_FHDecline <Reroll Family History>
+RANDCHAR_FHBothParents1 <Both of your parents were >
+RANDCHAR_FHBothParents2 <s.>
+RANDCHAR_FM1 <Your father was a >
+RANDCHAR_FM2 < and your mother was a >
+RANDCHAR_FM3 <.>
+RANDCHAR_MF1 <Your mother was a >
+RANDCHAR_MF2 < and your father was a >
+RANDCHAR_MF3 <.>
+RANDCHAR_F1 <Your father was a >
+RANDCHAR_F2 <.>
+RANDCHAR_M1 <Your mother was a >
+RANDCHAR_M2 <.>
+RANDCHAR_WCF <You come from a middle class family.>
+RANDCHAR_ASPPrompt <Points: >
+RANDCHAR_ASPDesc <Allocate stat points. Move up and down to choose a stat, then right and left to increase or decrease it. Select [DONE] to finish. Any remaining points will be spent randomly.>
+RANDCHAR_SkillDesc <Purchase skill levels. Move up and down to choose a skill, then right and left to increase or decrease it. Select [DONE] when you are finished.>
+RANDCHAR_ASPDone <   [DONE]>
+RANDCHAR_STPrompt <Traits: >
+RANDCHAR_STDesc <Select up to three personality traits to describe your character. These traits will affect the way NPCs interact with you. If you do not wish to select any traits, choose [CANCEL].>
+RANDCHAR_STCancel <   [CANCEL]>
+RANDCHAR_GetName <Enter a name for this character>
+RANDCHAR_JobPrompt <Select your Job>
+RANDCHAR_JobDesc <Your character's job determines your starting cash and may give you a few skill points.>
+RANDCHAR_SMPrompt <Select Mode>
+RANDCHAR_SMDesc <In "Basic Mode" the game picks stats and skill points for you, whereas in "Advanced Mode" you have full manual control over the entire process. "Basic" is strongly recommended for beginning players.>
+RANDCHAR_SMOp0 <Basic Mode>
+RANDCHAR_SMOp1 <Advanced Mode>
+RANDCHAR_NextPicture <Next Portrait>
+RANDCHAR_LastPicture <Previous Portrait>
+RANDCHAR_AcceptPicture <Accept Portrait>
+RANDCHAR_PicturePrompt <Select a portrait for your character.>
+RANDMAPS_DoorSign <Door of >
+BACKPACK_EngageSafety <Engage Safety Switch>
+BACKPACK_DisengageSafety <Disengage Safety Switch>
+BACKPACK_Directions <Press [/] to switch between the Inventory and Equipment menus.>
+BACKPACK_LoadAmmo <Load Ammunition>
+BACKPACK_ExitTIWS <   [EXIT]>
+BACKPACK_DropItem <Drop Item>
+BACKPACK_TradeItem <Transfer Item>
+BACKPACK_Repair <Use >
+BACKPACK_Remove <Remove >
+BACKPACK_Install <Install >
+BACKPACK_InstallInfo <Select a slot to install the part into. If there isn't enough space to install a part of this complexity, the installation will be far more difficult.>
+BACKPACK_ItemTraded <The item has been moved.>
+BACKPACK_NotTraded <The item can't be moved to that destination.>
+BACKPACK_UseItem <Use #>
+BACKPACK_CantUse <You can't use an item that you are not carrying.>
+BACKPACK_EatItem <Consume #>
+BACKPACK_YouAreEating <# consumes the #.>
+BACKPACK_CantBeEaten <The # can't be eaten right now.>
+BACKPACK_Script_USE <You use #.>
+BACKPACK_Script_Clue14 <You attempt to use survival on # .>
+BACKPACK_Script_Clue29 <You attempt to use science on # .>
+BACKPACK_Script_Clue32 <You attempt to use codebreaking on # .>
+BACKPACK_Script_Clue34 <You attempt to use mysticism on # .>
+BACKPACK_Script_Clue37 <You investigate # .>
+BACKPACK_CannotUseScript <You can't use # in that way.>
+BACKPACK_UseItemScript <Use #>
+BACKPACK_UseSkillOnItem <Apply Skill>
+BACKPACK_NotHungry <You aren't hungry enough to eat right now.>
+BACKPACK_ClueSkillPrompt <Use # on #>
+BACKPACK_CancelSkillUse <   [CANCEL]>
+SELECTMECHA_PROMPT <Select your Mecha>
+SELECTMECHA_RESULT1 <You have selected the >
+SELECTMECHA_RESULT2 < as your mecha of choice.>
+SELECTMECHA_NoMeks <You currently have no mecha on your team.>
+PCOPENDOOR_DirPrompt <Open Door - What direction?>
+PCOPENDOOR_Cancel <Cancelled!>
+PCOPENDOOR_OpenDoor <You open the door.>
+PCOPENDOOR_NoDoorFound <No door found!>
+PCREPAIR_DEAD < # is beyond your help.>
+PCREPAIR_FuelUsedUp <You used up your #.>
+PCREPAIR_NoRepairFuel <You don't have any repair supplies!>
+PCREPAIR_NoDamageDone <You can't find any damage to fix!>
+PCREPAIR_UseSkill20 <You use first aid on #. >
+PCREPAIR_Success20 < health points restored.>
+PCREPAIR_Failure20 <No health points restored.>
+PCREPAIR_UseSkill15 <You attempt to repair #. >
+PCREPAIR_Success15 < damage points restored.>
+PCREPAIR_Failure15 <No damage points restored.>
+PCREPAIR_UseSkill16 <You use medicine on #. >
+PCREPAIR_Success16 < health points restored.>
+PCREPAIR_Failure16 <You fail to accomplish any healing.>
+PCREPAIR_UseSkill22 <You use biotech on #. >
+PCREPAIR_Success22 < health points restored.>
+PCREPAIR_Failure22 <No health points restored.>
+PCREPAIR_UseSkill23 <You attempt to repair #. >
+PCREPAIR_Success23 < damage points restored.>
+PCREPAIR_Failure23 <No damage points restored.>
+PCREPAIR_SelectRepairSkill <Select Repair Skill>
+PCREPAIR_PROMPT <Use repair skill in which direction?>
+NPCREPAIR_UseSkill <# tends to #.>
+NPCREPAIR_Success <# damage points restored.>
+NPCREPAIR_Failure <No damage restored.>
+PCREPAIR_Cancel <   [CANCEL]>
+PCVIEW_BackPack <View Inventory>
+PCVIEW_Injuries <View Injuries>
+PCVIEW_Training <Do Training>
+PCVIEW_FieldHQ <Field HQ>
+PCVIEW_Exit <   [EXIT]>
+PCVIEW_SetColor <Set Colors>
+PCVIEW_SetSprite <Set Sprite>
+PCVIEW_SetOptions <Set Play Options>
+SAVEGAME_NoGood <The game cannot be saved at this time. Sorry.>
+SAVEGAME_OK <The game has been saved.>
+INFO_Faction <Current Faction:>
+INFO_XP <Total Exp:>
+INFO_XPLeft <Free Exp:>
+INFO_Credits <Credits:>
+INFO_MekSelect <Current Mecha:>
+INFO_InjuriesTitle <HEALTH STATUS>
+INFO_FullExhausted <You are completely exhausted.>
+INFO_PartExhausted <You are exhausted.>
+INFO_Status1 <You are poisoned.>
+INFO_Status2 <You are on fire!!!>
+INFO_Status3 <You are regenerating.>
+INFO_Status4 <You are inebriated.>
+INFO_Status5 <You are experiencing technical difficulties.>
+INFO_Status6 <Your face has taken a robotic expression.>
+INFO_Status7 <Your hands have started twitching.>
+INFO_Status8 <You feel an unnatural depression.>
+INFO_Status9 <Your body is rejecting your implants.>
+INFO_Status10 <Your body hurts all over.>
+INFO_Status11 <You feel anemic.>
+INFO_Status12 <You feel irrationally angry.>
+INFO_Status13 <You are experiencing a neural lag.>
+INFO_Status14 <Your neural interface has failed.>
+INFO_Status15 <You have seizures.>
+INFO_Status16 <Your implants are leaking toxic chemicals.>
+INFO_Status17 <Your cybernetic implants are shutting down.>
+INFO_Status18 <You are rusted.>
+INFO_Status19 <You are slightly stunned.>
+INFO_Status20 <You are sick.>
+INFO_Status21 <You have been blinded in one eye.>
+INFO_Status22 <Your spine has been perminantly injured.>
+INFO_Status23 <Your muscles are torn.>
+INFO_Status24 <Your bones have been repeatedly broken.>
+INFO_Status25 <You suffer from internal injuries.>
+DISFUNCTION_1 <# suddenly feels no longer entirely human.>
+DISFUNCTION_2 <# starts twitching uncontrollably.>
+DISFUNCTION_3 <# suddenly feels very sad.>
+DISFUNCTION_4 <You feel like you're having an allergic reaction to yourself.>
+DISFUNCTION_5 <# feels a lot of pain.>
+DISFUNCTION_6 <# is suddenly hungry for chopped liver.>
+DISFUNCTION_7 <You feel enraged!>
+DISFUNCTION_8 <The world suddenly skips a beat.>
+DISFUNCTION_9 <The world suddenly seems far away.>
+DISFUNCTION_10 <You feel not entirely in control...>
+DISFUNCTION_11 <You feel something break inside of you.>
+DISFUNCTION_12 <# buckles over in pain. You feel that you are dying.>
+INFO_IsHurt < is wounded.>
+INFO_IsDisabled < is crippled.>
+INFO_MildHunger <You are slightly hungry.>
+INFO_Hunger <You are hungry.>
+INFO_EXTREMEhunger <You are starving!>
+INFO_MildMorale <You are in a bad mood.>
+INFO_Morale <You are in a terrible mood.>
+INFO_ExtremeMorale <You are miserable and depressed.>
+CLOCK_Days <, day >
+EJECT_Prompt <CONFIRM EJECTION>
+EJECT_YES <Eject>
+EJECT_NO <Cancel>
+EJECT_Message < ejects from >
+EJECT_AI <# has ejected!>
+NEWRPGCAMP_NoCamps <No campaign files found. Always remember to save the game before quitting.>
+FHQ_ReturnToMain <   [EXIT]>
+FHQ_GoBackpack <View Inventory>
+FHQ_PartEditor <Examine Components>
+FHQ_SelectMecha <Assign Mecha>
+FHQ_SelectDestination <Select a mecha or character to receive this item.>
+FHQ_ItemMoved <The item has been moved.>
+FHQ_AssociatePM <# has chosen to pilot this mecha.>
+FHQ_Transfer <Give Item to Mecha>
+FHQ_Rename <Change Name>
+FHQ_Rename_Prompt <Enter new name for #>
+FHQ_Rejoin <Rejoin Lance>
+FHQ_EditColor <Set Mecha Colors>
+FHQ_Disassemble <Disassemble Robot>
+FHQ_DIS_Doing <You disassemble #.>
+REJOIN_OK <# rejoins the lance.>
+REJOIN_DONTWANT <# doesn't want to go with you right now.>
+AUTOTRAIN_LEARN <# has improved #.>
+AUTOTRAIN_FAIL <# can't learn anything new yet.>
+AUTOTRAIN_EVOLVE <# has mutated into #!>
+Cancelled <Cancelled.>
+FACRANK_0 <Recruit>
+FACRANK_1 <Private>
+FACRANK_2 <Corporal>
+FACRANK_3 <Sergeant>
+FACRANK_4 <Lieutenant>
+FACRANK_5 <Captain>
+FACRANK_6 <Major>
+FACRANK_7 <Colonel>
+FACRANK_8 <General>
+JOIN_NoPoint <I could go with you, but wouldn't that make things too crowded?>
+JOIN_REFUSE <I have better things to do than join your lance.>
+JOIN_BUSY <I'd like to join your lance, but I'm kind of busy at the moment. Maybe some other time.>
+JOIN_Join <Alright, I'll join your lance. Let's go!>
+QUIT_LANCE <Alright. If you ever happen to need me again, I'll be waiting here.>
+FHQ_LMV_Equip <View Inventory>
+FHQ_LMV_Train <Do Training>
+FHQ_LMV_Dismiss <Dismiss Lancemate>
+FHQ_LMV_Removed <# has been removed from the lance.>
+FHQ_SMFP_NoPets <# can't pilot a mecha!>
+SELECT_ROBOT_PARTS <Select up to 10 items to use as the basis for your robot.>
+BUILD_ROBOT_FAILED <You fail to construct anything useful.>
+BUILD_ROBOT_START <You start to build a robot...>
+BUILD_ROBOT_SUCCESS <You construct the new robot #.>
+BUILD_ROBOT_SENTIENT <You construct the new robot #. It would appear that your creation is self-aware.>
+BUILD_ROBOT_TOO_TIRED <You're too exhausted to work on a robot now.>
+BUILD_ROBOT_SKILL <# knows #.>
+BUILD_ROBOT_NO_PARTS <You don't have anything to work with.>
+BUILD_ROBOT_NOT_SAFE <This isn't a safe area in which to be building a robot.>
+DOMINATE_PROMPT <Use skill in which direction?>
+DOMINATE_DontWant <# doesn't want to go with you right now.>
+DOMINATE_NotFound <No animal found!>
+DOMINATE_Fail <# refuses to be dominated!>
+DOMINATE_Enraged <# is enraged by your attempt!>
+DOMINATE_OK <# decides to follow you.>
+DOMINATE_Announce <# attempts to dominate an animal...>
+DOMINATE_TOO_TIRED <You're too exhausted to dominate anything.>
+NPCFLIRT_Good <# is having a good time with #.>
+NPCFLIRT_Okay <# goes to see #.>
+NPCFLIRT_Bad <# asks # to go away.>
+NPCCHAT_GOOD <[#]: >
+NPCCHAT_OKAY <# chats with #.>
+EDITCOLOR_1 <Clothing Color>
+EDITCOLOR_2 <Skin Color>
+EDITCOLOR_3 <Hair Color>
+EDITCOLOR_4 <Main Color>
+EDITCOLOR_5 <Complement Color>
+EDITCOLOR_6 <Hilight Color>
+PICKPOCKET_TOO_TIRED <You're too exhausted to do any thieving right now.>
+PICKPOCKET_Announce <# attempts to steal something...>
+PICKPOCKET_PROMPT <Use skill in which direction?>
+PICKPOCKET_NotFound <You can't see anyone worth robbing right here.>
+PICKPOCKET_EMPTY <# doesn't seem to have anything worth stealing.>
+PICKPOCKET_FAIL <You don't manage to steal anything.>
+PICKPOCKET_CASH <You steal $#.>
+PICKPOCKET_CASH+ITEM <You steal $# and a #.>
+

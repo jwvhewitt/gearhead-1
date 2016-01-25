@@ -1,0 +1,87 @@
+Plot 0
+	name <PLOT: F2 Hooch Ripoff>
+
+	% No, it's not a ripoff... call it a "homage".
+
+	element1 <Character Bartender>
+	element2 <Scene !Near 1>
+	element3 <Character !Near 1 Sex:M Sociable Cheerful>
+	element4 <Prefab>
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckE3 V= 1 ComTime V+ 1 86400 FreezeChar E3>
+	GoCheckE3 <if= SceneID E2 else GoCheckTime if= EScene 3 E2 else GoCheckTime AdvancePlot 1>
+	GoCheckTime <if# SceneID 0 ifG 50 PCRep 6 else GoDelete ifG ComTime V1 Goto GoDelete>
+	GoDelete <ifPersona E3 else GoE3Died MoveChar E3 E2 AdvancePlot 0>
+	GoE3Died <MoveCHar E4 E2 AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <!1 has a whisky still outside of town.>
+	greeting <NewChat if= P1 0 else GoRealStart Say 8 AdvancePlot 0>
+	GoRealStart <ifG P1 0 else GoFalseStart ifPersona E3 else GoE3Died if= EScene 3 E2 else GoNoRescue Say 2 XPV 150 AdvancePlot 0>
+	GoNoRescue <Say 1 AddChat 1>
+	GoFalseStart <SayAnything>
+	GoE3Died <Say 4 AdvancePlot 0>
+	% The PC will be offered the mission only if he _isn't_ renowned.
+	result1 <NewChat ifG PCRep 6 15 else GoR1NoRep Say 7>
+	GoR1NoRep <Say 3 AddChat 2 AddChat 3>
+	result2 <NewChat Say 6>
+	result3 <EndChat Say 5 SavePos LoadD .dname PassVar 1 E2 PassVar 2 E3 DynaNPC E3 2>
+	.dname <SCENE_F2Hooch.txt>
+	Msg1 <I gave \ELEMENT 3 $50 to go refuel my whisky still in the woods outside town, but he hasn't returned yet. I hope nothing bad has happened to him... or to my whisky.>
+	Msg2 <Thanks for returning \ELEMENT 3 .>
+	Msg3 <Could you? I'd offer a reward for doing so, but I already gave the $50 to him. Eh, I'm sure he'll be alright, he's just being lazy as usual.>
+	Msg4 <So he died while delivering firewood to my whisky still... Well, I'm sure that's the way he would have wanted to go. Let's toast his memory.>
+	Msg5 <Off you go, then.>
+	Msg6 <I'm sure he'll turn up. He probably just sampled a bit of the merchandise, and is sleeping it off on the cabin floor.>
+	Msg7 <Nah, it's not worth concerning yourself over. He's done this before, he'll be back by morning.>
+	Msg8 <My whisky still is running fine... stop by for a drink!>
+	Prompt1 <I'll go check up on him.>
+	Prompt2 <On second thought, I'll just stay here.>
+	Prompt3 <No matter, I better go check.>
+
+	Persona 3
+	% V2 = Get heroism point.
+	greeting <NewChat if= P1 0 else GoRealStart Say 8 AdvancePlot 0>
+	GoRealStart <if= L3 1 else GoFirstTime Say 1>
+	GoFirstTime <Say 3 AddChat 1 AddChat 2>
+	result1 <NewChat Say 4 if= V2 0 else GoRescue V= 2 1 Reputation 1 1 Goto GoRescue>
+	result2 <NewChat AddReact -d10 Say 5 AddChat 3 AddChat 4 Reputation 1 -1 Reputation 2 -2>
+	result3 <NewChat Say 6 CashPrize 25 Goto GoRescue>
+	result4 <NewChat Say 7 Reputation 1 -5>
+	GoRescue <L= 3 1 TORD 2 FOL PCUID>
+	Msg1 <Get me out of here!>
+	Msg3 <Help! I came here to reload the still, but the woods out there are full of monsters! It's not safe for me to go out there alone... Can you get me out of here?>
+	Msg4 <Thanks! You're a lifesaver!>
+	Msg5 <Argh... Look, I was given $50 to come out here and refuel the still. I can afford to give you half. How about $25 for saving me?>
+	Msg6 <Great. Here's the money... Now let's get out of here!>
+	Msg7 <Fine. I'll just wait here until someone else comes along.>
+	Msg8 <Man, I could use a good drink right about now...>
+	Prompt1 <That's what I'm here for.>
+	Prompt2 <Yes, I can, for a price...>
+	Prompt3 <Alright, it's a deal.>
+	Prompt4 <Sorry, it's not enough.>
+
+	Plot 1
+		% Rescue has proceeded successfully.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 XPV 250>
+		GoBeenBefore <SayAnything>
+		Msg1 <Thanks for returning \ELEMENT 3 . You're one of the good ones.>
+
+		Persona 3
+		greeting <NewChat Say 1 AddReact d5 AdvancePlot 0>
+		Msg1 <Thanks for your help getting me out of that swamp.>
+
+	end
+
+end
+inv
+	NPC Citizen
+	chardesc Male
+
+end
+

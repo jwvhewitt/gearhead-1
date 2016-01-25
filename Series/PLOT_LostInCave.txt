@@ -1,0 +1,23 @@
+Plot 0
+	name <PLOT_LostInCave>
+	Element1 <Scene Dungeon Scale0>
+	Element2 <Prefab>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 900>
+	GotoCheckTime <ifG ComTime V1 DeleteChar E2 AdvancePlot 0>
+sub
+	Persona 2
+	greeting <Say 1 EndChat AddChat 1 AddChat 2>
+	Msg1 <Help! I went for a walk and now I'm completely lost! Do you know the way out of here?>
+	prompt1 <Sure. It's just over there.>
+	prompt2 <I can show you, for a price...>
+	result1 <Say 2  AdvancePlot 0 Reputation 1 1 Print 4 EndChat  DeleteChar E2>
+	result2 <Say 3  AdvancePlot 0 Reputation 1 -1 Print 4 CashPrize 50 EndChat  DeleteChar E2>
+	Msg2 <Thank you very much! You're very kind.>
+	Msg3 <Here's some money for your help. Thank you.>
+	Msg4 <\Persona E2 has left the area.>
+end
+inv
+	NPC Citizen
+	place <1 pass>
+end

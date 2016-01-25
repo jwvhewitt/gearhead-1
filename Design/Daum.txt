@@ -1,0 +1,141 @@
+Battroid 5
+Name <Daum>
+Desig <SAN-D1>
+SDL_Sprite <btr_daum.png>
+desc <In NT100, RegEx corporation and the Federation Defense Force began a project to update the BuruBuru design using modern technology. This mecha was the result.>
+
+Mod Head
+	Armor 3
+	sub
+		Sensor 5
+
+		BeamGun 3
+		Name <AP Gatling Beamgun>
+		Scale 1
+		Range 4
+		Acc 1
+		BV 6
+	end
+	inv
+		HeadArmor 2
+		Mass -1
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+		Armor 2
+
+		Gyro 2
+
+		TarComp 1
+
+		Sensor 1
+
+		Mount
+		Name <Right Torso Mount>
+
+		Mount
+		Name <Left Torso Mount>
+		inv
+			MLauncher 4
+			Name <Missile Pod>
+			Type <SWARM>
+			Magazine 20
+			sub
+				Rockets 4
+			end
+		end
+
+		HoverJet 5
+	end
+	inv
+		BodyArmor 3
+		Mass -2
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	sub
+		Hand
+		inv
+			Gun 2
+			Name <Bolt Cannon>
+			Range 6
+			Magazine 250
+			Speed 4
+			BV 4
+			Acc -1
+			sub
+				Ammo 2
+			end
+		end
+
+		Mount
+		Name <Right Arm Mount>
+	end
+	inv
+		ArmArmor 2
+		Mass -1
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	sub
+		Hand
+		inv
+			Melee 7
+			Name <Longsword>
+			Acc 1
+		end
+
+		Mount
+		Name <Left Arm Mount>
+	end
+	inv
+		ArmArmor 2
+		Mass -1
+
+		EShield 5
+		DefBonus -1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 3
+	sub
+		HoverJet 4
+
+		Mount
+		Name <Right Leg Mount>
+	end
+	inv
+		LegArmor 2
+		Mass -1
+		sub
+			HoverJet 2
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 3
+	sub
+		HoverJet 4
+
+		Mount
+		Name <Left Leg Mount>
+	end
+	inv
+		LegArmor 2
+		Mass -1
+		sub
+			HoverJet 2
+		end
+	end
+end
+
+

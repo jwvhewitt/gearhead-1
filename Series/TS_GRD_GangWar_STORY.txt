@@ -1,0 +1,34 @@
+Story
+	name <Gang War>
+	% One of the cities is having a gang war. The Guardian missions
+	% for this story will mostly involve personal-scale combat
+	% in the city named.
+
+	% Element 1 is the calling faction. Always. Forever.
+	% Element2 is some city within the Federated Territories.
+	Element2 <Scene City !Member 11>
+
+	%  V1 = Timer
+	%  V101 = Faction Victory Count
+	%  V102 = Enemy Victory Count (if appropriate)
+	%  V103 = How many times PC fought for faction
+	%  V104 = How many times PC fought against faction
+
+	% This plot will last for 1-2 days.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 V+ 1 d86400>
+	GoCheckTime <ifG ComTime V1 EndStory>
+
+	% Every hour, load a new plot.
+	hour <StoryLine .plotname>
+	.plotname <TS_GRD_GangWar_PLOT_*.txt>
+
+	% Every quarter, change the news.
+	quarter <News d5>
+
+
+	Msg1 <\NARRATIVE 2 under siege from gang warfare; Guardians attempt to contain the violence.>
+	Msg2 <Rival gangs in \NARRATIVE 2 have declared a street war.>
+	Msg3 <Criminal gangs have started a turf war in \NARRATIVE 2 . Guardians attempt to end the conflict.>
+	Msg4 <Lucrative drug trade fuels gang war in \NARRATIVE 2 .>
+	Msg5 <Guardians combat gang violence in \NARRATIVE 2 . Mayor of city calls for extra help.>
+

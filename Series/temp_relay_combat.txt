@@ -1,0 +1,315 @@
+Plot 0
+	name <Relay Story Combat Template>
+	% [[Ver1.0]]
+	% retain version number when writing derivative plots
+	% v1.0 :  Converted from combat template v1.3
+
+	% This is a skeleton for a relay-story combat mission.
+	% You can make it into a complete combat mission just
+	% by filling in the blanks in the MESSAGE BLOCKs below.
+
+	% If this mission is being offered by the enemy of the story's
+	% controlling faction, do a search for <ENEMY> and follow the
+	% instructions each time this label is found.
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	% This plot will likely be called from a faction story.
+	% So, it will grab the identity of the faction as its first
+	% element, and a member of the faction to give the job to
+	% the PC.
+
+	% E1 is the scene this time around
+	Element1 <Grab 2>
+
+	% E2 is the NPC who will give the PC the mission.
+	% Right now it will just be a person in E1.
+	Element2 <Character !Near 1>
+
+	% E3 is the scene that will be used next
+	Element3 <Scene Town !Far 1>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	%  S2 = Encounter Challenge Rating
+
+	%  S101 = Faction Victory Count
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 S= 201 0 AdvancePlot 0>
+
+	% This plot will conclude immediately if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete>
+	GoDelete <S= 201 0 AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3 S= 201 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6 1 XPV 50 S= 201 0 S+ 202 1 S+ 101 d3 N= 2 E3>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <>
+	% eg., rumor <!2 might have a job for you.>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat S2 100 V= 4 Reward V3 100 Goto GoCheckFaction>
+	GoCheckFaction <if= PCFac N1 else GoCheckPrev V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckPrev <ifG S202 0 else GoCheckFriend V= 2 40 V+ 2 d5 Say V2  V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it,
+	GoCheckFriend <ifG React 40 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React -d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+
+	% Alternate Version: PC gains point of Lawfulness for mission
+	% result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Reputation 2 1  Goto GoStartCombat>
+
+	% Alternate Version: PC gains point of Chaoticness for mission
+	% result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Reputation 2 -3  Goto GoStartCombat>
+
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 Dynamic 2 V3 .nu1 .nu2>
+	% <ENEMY> If this is an enemy mission, use the following line.
+	% GoStartCombat <SavePos S+ 104 1 P= 2 1 Dynamic 2 V3 .nu1 .nu2>
+
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat ifG Intimidation 10 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with LAWFUL reputation...
+	% result11 <NewChat ifG PCRep 2 30 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with HEROIC reputation...
+	% result11 <NewChat ifG PCRep 1 30 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1>
+
+
+	% The PC tries to get the job via "PLAN B"- be friendly.
+	% This is done with the Conversation skill.
+	result14 <NewChat ifG Conversation 15 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with RENOWNED reputation...
+	% result14 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with HEROIC reputation...
+	% result14 <NewChat ifG PCRep 1 30 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <>
+	Msg2 <>
+	Msg3 <>
+	Msg4 <>
+	Msg5 <>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <>
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+	Msg10 <>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <>
+	Msg12 <>
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <>
+	Msg17 <>
+	Msg18 <>
+	Msg19 <>
+	Msg20 <>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <>
+	Msg22 <>
+	Msg23 <>
+	Msg24 <>
+	Msg25 <>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points worth of enemy hardware. Do you feel up to the challenge?>
+	Msg27 <>
+	Msg28 <>
+	Msg29 <>
+	Msg30 <>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <>
+	Msg32 <>
+	Msg33 <>
+	Msg34 <>
+	Msg35 <>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <>
+	Msg37 <>
+	Msg38 <>
+	Msg39 <>
+	Msg40 <>
+
+	% 41 - 45 :  PC has done previous mission in set
+	Msg41 <>
+	Msg42 <>
+	Msg43 <>
+	Msg44 <>
+	Msg45 <>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's too bad.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Okay. Hurry back once your equipment is in shape and we can start the mission then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <I don't think so.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Sorry, we are not currently hiring anyone.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <I should get back to work now.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a combat mission.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <Absolutely.>
+	Prompt8 <>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Definitely not.>
+	Prompt10 <>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <I'm the greatest pilot. You need me.>
+	Prompt12 <>
+	Prompt13 <>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <Maybe I could help you with that.>
+	Prompt15 <>
+	Prompt16 <>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <Sounds boring.>
+	Prompt18 <>
+	Prompt19 <>
+
+
+end
+

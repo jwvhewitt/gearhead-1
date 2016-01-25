@@ -1,0 +1,97 @@
+Zoanoid 2
+Name <Aranos>
+Desig <F-2k>
+
+Mod Head
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Sensor 8
+	end
+
+Mod Body
+	Armor 2
+	sub
+		Gun 1
+		Name <Rattler Cannon>
+		Acc -1
+		BV 3
+		Magazine 40
+		sub
+			Ammo 1
+		end
+
+		BeamGun 4
+		Name <Scourge Laser Cannon>
+		Range 6
+		Acc 1
+	end
+
+Mod Leg
+	Name <Right Leg 1>
+	Size 1
+	Armor 2
+	sub
+		Melee 2
+		Name <Claw>
+	end
+
+Mod Leg
+	Name <Left Leg 1>
+	Size 1
+	Armor 2
+	sub
+		Melee 2
+		Name <Claw>
+	end
+
+Mod Leg
+	Name <Right Leg 2>
+	Size 1
+	Armor 2
+	sub
+		MLauncher 1
+		Name <Swarm Missiles>
+		Type <SWARM>
+		Range 7
+		Magazine 10
+		sub
+			Rockets 1
+		end
+	end
+
+Mod Leg
+	Name <Left Leg 2>
+	Size 1
+	Armor 2
+	sub
+		MLauncher 1
+		Name <Swarm Missiles>
+		Type <SWARM>
+		Range 7
+		Magazine 10
+		sub
+			Rockets 1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg 3>
+	Size 1
+	Armor 2
+	sub
+		Melee 2
+		Name <Claw>
+	end
+
+Mod Leg
+	Name <Left Leg 3>
+	Size 1
+	Armor 2
+	sub
+		Melee 2
+		Name <Claw>
+	end
+end

@@ -1,0 +1,44 @@
+%%% GearHead list of jobs for Character Creation v2.1 - Max 5 Skills %%%
+Architect <18 31 30>
+Firefighter <5 12 20 26 36>
+Construction Worker <4 5 13 23 33>
+Journalist <11 19 25 37>
+Banker <21>
+Lawyer <19>
+Politician <19 39>
+Explorer <10 11 14 20>
+Bounty Hunter <6 9 10 12 28>
+Mercenary <2 5 6 7 10>
+Cyberdoc <16 24>
+Guardian <6 8 10 18 37>
+Bandit <5 6 8 28>
+Ravager <2 3 5 6 10>
+Pirate <5 8 25 28>
+Thief <25 32 41>
+Martial Artist <9 10 18 26>
+Monk <9 10 18 26 34>
+Corporate Executive <21 39>
+Corporate Pilot <1 3 5 17 21>
+Celebrity <27 35>
+Mechanic <5 15 23 30>
+Shopkeeper <21 23>
+Combat Pilot <1 2 3 4 5>
+Arena Pilot <1 3 4 5 12>
+Recon Pilot <1 2 5 11 25>
+Paramedic <5 11 20 26>
+Commercial Pilot <4 5 15>
+Athlete <13 26 33>
+Soldier <6 7 8 9 10>
+Ninja <8 10 18 25>
+Doctor <20 16>
+Nurse <20 16 19>
+Test Pilot <3 5 10 13 17>
+Trucker <5 8 15 19 23>
+Scientist <29 30 22>
+Professor <37 30>
+Mecha Designer <15 31 38>
+Engineer <23 31 15>
+Actor <19 27 35>
+Teacher <11 19 29 37>
+Computer Programmer <24 30 32>
+Hacker <25 30 32>

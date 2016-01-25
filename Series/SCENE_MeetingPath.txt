@@ -1,0 +1,58 @@
+SCene 0
+% Meeting Path Scene
+
+% This is an infinite dungeon. Once the specified level is reached,
+% the NPC requested will be inserted on TEAM 3. Unlike the meeting
+% dungeon the NPC here won't walk towards the PC or do anything else
+% civilized like that.
+
+% V1 = *Persona to insert
+% V2 = *Depth at which to insert
+% V3 = *Current Depth
+% V5 =  Initialization Counter
+
+	special <NoExit>
+	NU1 <if= T1 0 Return>
+	MountainMap
+
+	start <if= V5 0 V= 5 1 MonsterUp 2 WMThreat V3>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Mountain Earth Air Animal Exotic>
+
+	Team 3
+	home <Down SPot>
+
+	rect
+	width 3
+	height 3
+	sub
+		Sign
+		Destination -1
+		use <ifYesNo 1 2 3 Return>
+		Msg1 <This sign points the way back to civilization. Do you want to leave?>
+		Msg2 <Go back to town.>
+		Msg3 <Stay here.>
+	end
+
+	rect
+	width 3
+	height 3
+	name <Down SPot>
+	sub
+		Sign
+		use <ifYesNo 1 2 3 Print 4 L+ 3 10 L+ 3 d10 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 SeekGate -1 ifG L3 L2 DynaNPC L1 3>
+		.sitename <SCENE_MeetingPath.txt>
+		update <if# L1 0 ifNPCinPlay L1 GrabSource DeleteGG>
+		Msg1 <This sign indicates the continuation of the trail. Do you want to go on?>
+		Msg2 <Keep going.>
+		Msg3 <Turn back.>
+		Msg4 <You follow the trail.>
+	end
+
+end

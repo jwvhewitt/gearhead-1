@@ -1,0 +1,65 @@
+Battroid 2
+Name <Trailblazer>
+SDL_Sprite <btr_trailblazer.png>
+Desig <TR9-01b Beta>
+desc <The Trailblazer is Maquise Spinner's scout mecha design.>
+
+Mod Head
+	Armor 2
+	sub
+		Sensor 6
+
+		ECM 1
+	end
+
+Mod Body
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Flight 3
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 1
+	Armor 2
+	sub
+		Mount
+		inv
+			STC PAR-2
+		end
+
+		Hand
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 1
+	Armor 2
+	sub
+		STC HWML-2
+
+		Hand
+		inv
+			EMelee 6
+			Name <Plasma Lance>
+			Speed 1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 2
+	sub
+		Flight 2
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 2
+	sub
+		Flight 2
+	end
+end

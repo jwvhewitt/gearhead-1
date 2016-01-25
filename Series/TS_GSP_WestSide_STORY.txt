@@ -1,0 +1,180 @@
+Story
+	name <West Side Panic>
+
+	% Two rival gangs exist in town, and are on the verge of a gang war.
+	% The PC can help them out by either 1) negotiating a peace;
+	% or 2) eliminating one of the gangs.
+
+	% N1 is the town where this will take place
+	% N2 is the leader of Gang A
+	% N3 is the leader of Gang B
+	% N4 is "a"
+	% N5 is "b"
+	Element2 <Prefab>
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+
+	% S1 = Initialization counter
+	% S2 = Phase indicator
+	%      +3/-3: PC has learned that other gang didn't kidnap first gang's member
+	%             Other gang blames first gang for kidnapping their member
+	%      +2/-2: PC learns that the reason for the hostility is a kidnapping
+	%         ^-  PC attempts to negotiate with other side, and fails
+	%      +1/-1: PC makes first contact with ganger
+	% S3 = Combat Indicator
+
+	start <if= S1 0 S= 1 1 Compose UTD N2 .N2dies Compose UTD N3 .N3Dies>
+	.n2dies <ifPersona N3 else GoDelete>
+	.n3dies <ifPersona N2 else GoDelete>
+	GoDelete <EndStory>
+
+	NU1 <if= S3 1 if= T1 0 Reputation 6 -10 S= 3 2>
+	NU2 <if= S3 1 if= T2 0 Reputation 6 1 S= 3 3 XPV 100>
+
+sub
+	Persona 2
+	rumor <!2 is the leader of the Bloods.>
+	% The Bloods are the red team, and the positive gang...
+	% There are seven possible conversation states, depending on what the PC has
+	% done and what he knows.
+	greeting <NewChat ifG S2 0 else GoCheckB2 if= S3 3 else GoCheckLoss Say 8 History 9 CashPrize V4 EndStory>
+	GoCheckLoss <if= S3 2 else GoCheckB1 Say 10 EndStory>
+	GoCheckB1 <if= S2 2 else GoCheckB2 Say 13 AddChat 5 AddChat 9>
+	GoCheckB2 <if= S2 -2 else GoCheckA1 Say 18>
+	GoCheckA1 <if= S2 1 else GoCheckA2 Say 13 AddChat 2 AddChat 5>
+	GoCheckA2 <if= S2 -1 else GoFirstTime Say 14 AddChat 7 AddChat 8>
+	GoFirstTime <ifG React 20 else GoNoChance Say 1 AddChat 1 AddChat 2 AddChat 3>
+	GoNoChance <Say 2>
+	result1 <NewChat S= 2 1 V= 3 Threat PCRep 6 1  V= 4 Reward Threat PCRep 6 100 750 Memo 6 Say 7 AddChat 5 AddChat 6>
+	result2 <NewChat S= 2 1 V= 3 Threat PCRep 6 1  V= 4 Reward Threat PCRep 6 100 750 Memo 6 Say 4 AddChat 1 AddChat 4>
+	result3 <NewChat Say 3 EndStory Reputation 2 d5>
+	result4 <NewChat Say 5>
+	result5 <EndCHat Say 11 Goto GoStartCombat>
+	GoStartCombat <SavePos S= 3 1 Reputation 2 -5 Dynamic 0 S3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	result6 <NewChat Say 12>
+	result7 <NewChat Say 16 Memo 17 S= 2 -2>
+	result8 <NewChat Say 15 AddReact -10>
+	result9 <NewChat ifG PCRep 2 10 else GoR9Fail Say 19 AddChat 10>
+	GoR9Fail <Say 22 AddChat 5 AddChat 6>
+	result10 <NewChat Say 20 History 21 XPV 100 Reputation 1 1 EndStory>
+	Msg1 <\NARRATIVE 1 is ruled by two gangs. We're the Bloods, and the Sharks are just a bunch of lowlife cut-throats. It's about time we finished them off once and for all. You could help us out with that, if you'd like.>
+	Msg2 <The Bloods rule the streets.>
+	Msg3 <We aren't criminals, we're a citizen's neighborhood militia! I guess the line might be a little hard to make out sometimes but believe me it's there...>
+	Msg4 <We'd like to do that, but the Sharks aren't reasonable folks like you or me. They want to take over the entire city. There's no reasoning with them... the only option we have left is to defend what's ours by force!>
+	Msg5 <You do that. If you feel like some action a bit later on, come on back and we can talk about giving the Sharks whatever they have coming.>
+	Msg6 <\NARRATIVE 2 in \NARRATIVE 1 wants you to help \PPR N2 gang take on The Sharks.>
+	Msg7 <Their hideout is on the other side of the barrio. All I need is for you to storm in there and beat down their fighters. With them out of the picture, the Sharks will be no more trouble to us. You'll earn $ \VAL V4 for your part in it all.>
+	Msg8 <That rocked! The Sharks have been absolutely crushed! Now, this town belongs to the Bloods! Here's the cash I promised you for the job.>
+	Msg9 <You helped \NARRATIVE 2 to defeat The Sharks in \NARRATIVE 1 .>
+	Msg10 <Arg, you choked! Now The Sharks are gonna come looking our way for revenge... this ain't going to be pretty.>
+	Msg11 <Good luck out there. Make sure you defeat or chase off the lot of them.>
+	Msg12 <Come back here when you've got everything in order and we can start the rumble then.>
+	Msg13 <I expect that you've had some time to get ready. Are you prepared to fight the Sharks yet?>
+	Msg14 <Why are you talking to me!? I heard that you were getting cozy with the Sharks... They are our enemies, and so by extension, you must be our enemy too...>
+	Msg15 <Get lost, you're annoying me.>
+	Msg16 <That's a good question. Us Bloods are reasonable folk, we haven't done anything worth getting upset over... but the Sharks kidnapped our member \NARRATIVE 4 ! We don't know what happened to him, or if he's still alive...>
+	Msg17 <\NARRATIVE 2 said that the Sharks kidnapped \NARRATIVE 4 .>
+	Msg18 <I've told you everything that you need to know. What you should be doing is helping us defeat the Sharks!>
+	Msg19 <That's not possible! They're the ones who kidnapped our member \NARRATIVE 4 ... Or maybe \NARRATIVE 4 and \NARRATIVE 5 ran off together, to escape this cycle of escalating violence we seem to be perpetuating...>
+	Msg20 <Come to think of it, \NARRATIVE 4 always did seem to be kind of sweet on \NARRATIVE 5 ... and that would explain why instead of a ransom note we got a postcard from Mauna Heights... Alright, I guess there's no point in a gang war now.>
+	Msg21 <You arranged peace between the Bloods and the Sharks in \NARRATIVE 1 .>
+	Msg22 <How gullible do you think I am? Those bunch are all liars, you should know that. The mission is all set up to attack their hideout and protect what's ours. Are you in or not?>
+	Prompt1 <Alright, tell me the details.>
+	Prompt1_1 <Sounds like fun. Tell me more.>
+	Prompt2 <Why can't you both live peacefully?>
+	Prompt3 <I don't want to get involved with criminals.>
+	CPrompt3 <ifG PCRep 2 0 Accept>
+	Prompt4 <I'll think about it.>
+	Prompt5 <I'm ready to go there now.>
+	Prompt6 <I need some time to get ready first.>
+	Prompt7 <Why do you hate each other so much?>
+	Prompt8 <I'm going to kick your ass!>
+	Prompt9 <\NARRATIVE 3 said you kidnapped \NARRATIVE 5 .>
+	Prompt10 <That seems likely.>
+
+	Persona 3
+	rumor <!3 is the leader of the Sharks.>
+	% The Sharks are the blue team, and the negative gang...
+	greeting <NewChat ifG 0 S2 else GoCheckB2 if= S3 3 else GoCheckLoss Say 8 History 9 CashPrize V4 EndStory>
+	GoCheckLoss <if= S3 2 else GoCheckB1 Say 10 EndStory>
+	GoCheckB1 <if= S2 -2 else GoCheckB2 Say 13 AddChat 5 AddChat 9>
+	GoCheckB2 <if= S2 2 else GoCheckA1 Say 18>
+	GoCheckA1 <if= S2 -1 else GoCheckA2 Say 13 AddChat 2 AddChat 5>
+	GoCheckA2 <if= S2 1 else GoFirstTime Say 14 AddChat 7 AddChat 8>
+	GoFirstTime <ifG React 20 else GoNoChance Say 1 AddChat 1 AddChat 2 AddChat 3>
+	GoNoChance <Say 2>
+	result1 <NewChat S= 2 -1 V= 3 Threat PCRep 6 1  V= 4 Reward Threat PCRep 6 100 750 Memo 6 Say 7 AddChat 5 AddChat 6>
+	result2 <NewChat S= 2 -1 V= 3 Threat PCRep 6 1  V= 4 Reward Threat PCRep 6 100 750 Memo 6 Say 4 AddChat 1 AddChat 4>
+	result3 <NewChat Say 3 EndStory Reputation 2 d5>
+	result4 <NewChat Say 5>
+	result5 <EndCHat Say 11 Goto GoStartCombat>
+	GoStartCombat <SavePos S= 3 1 Reputation 2 -5 Dynamic 0 S3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	result6 <NewChat Say 12>
+	result7 <NewChat Say 16 Memo 17 S= 2 2>
+	result8 <NewChat Say 15 AddReact -10>
+	result9 <NewChat ifG PCRep 2 10 else GoR9Fail Say 19 AddChat 10>
+	GoR9Fail <Say 22 AddChat 5 AddChat 6>
+	result10 <NewChat Say 20 History 21 XPV 100 Reputation 1 1 EndStory>
+	Msg1 <The Sharks keep the peace on our streets. The Bloods are a vicious gang of killers and drugheads who ought to be exterminated... I've got a plan to do just that, and you can help if you're game for a rumble.>
+	Msg2 <The Sharks are the true power in \NARRATIVE 1 .>
+	Msg3 <We're just protecting our turf... it's the Blood who are the crime gang.>
+	Msg4 <That sounds like a good idea, but the Bloods aren't willing to negotiate or listen to reason. They're nothing but a gang of psychopaths. The only way we can protect ourselves from them is by force, understand?>
+	Msg5 <Think hard.>
+	Msg6 <\NARRATIVE 3 in \NARRATIVE 1 wants you to help \PPR N3 gang take on The Bloods.>
+	Msg7 <Their hideout is on the other side of town. All I need is for you to move in and bust a few heads. Once their best fighters have been humiliated, the Bloods will disappear. For your help you'll get $ \VAL V4 .>
+	Msg8 <Alright, you rock! They had no chance against you... Here's the money I promised. Now this town is ours!>
+	Msg9 <You helped \NARRATIVE 3 to defeat The Bloods in \NARRATIVE 1 .>
+	Msg10 <You suck! Now The Bloods are gonna escilate the violence... this ain't a good time to be living in \NARRATIVE 1 .>
+	Msg11 <Bring them hell! Make sure you defeat or chase off all of them.>
+	Msg12 <Come back here when you've got everything in order and we can start the mission then.>
+	Msg13 <You've had enough time to get ready. Shall we start the fight now?>
+	Msg14 <I know you... you work for the Bloods! I heard that you were planning an assault on our hideout. If you want to live you'll forget about that right now.>
+	Msg15 <I'm not afraid of you.>
+	Msg16 <Those Bloods are just psychotic... They even kidnapped \NARRATIVE 5 , the daughter of our leader. She hasn't been seen for weeks now. We don't have any choice but to get our revenge.>
+	Msg17 <\NARRATIVE 3 said that the Bloods kidnapped \NARRATIVE 5 .>
+	Msg18 <I've told you everything that you need to know. What you should be doing is helping us defeat the Bloods!>
+	Msg19 <Impossible! They're the ones who kidnapped our leader's daughter \NARRATIVE 5 ... Or maybe \NARRATIVE 5 and \NARRATIVE 4 ran off together, to escape this cycle of escalating violence we seem to be perpetuating...>
+	Msg20 <Come to think of it, \NARRATIVE 5 did have a boyfriend named \NARRATIVE 4 ... and that would explain why instead of a ransom note we got a postcard from Mauna Heights... Alright, I guess there's no point in a gang war now.>
+	Msg21 <You arranged peace between the Sharks and the Bloods in \NARRATIVE 1 .>
+	Msg22 <And you believed anything they said? And on top of that you expect me to just take your word that they were being honest? I don't think so. Do you want to help us fight the Bloods or not?>
+	Prompt1 <Alright, tell me the details.>
+	Prompt1_1 <Sounds like fun. Tell me more.>
+	Prompt2 <Why can't you both live peacefully?>
+	Prompt3 <I don't work for criminals.>
+	CPrompt3 <ifG PCRep 2 0 Accept>
+	Prompt4 <I'll think about it.>
+	Prompt5 <I'm ready to go there now.>
+	Prompt6 <I need some time to get ready first.>
+	Prompt7 <Why do you hate each other so much?>
+	Prompt8 <I'm going to kick your ass!>
+	Prompt9 <\NARRATIVE 2 said you kidnapped \NARRATIVE 4 .>
+	Prompt10 <That seems likely.>
+
+
+end
+inv
+	NPC CItizen
+	job <Ganger>
+	EquipChar 7000
+	chardesc Chaotic
+	place <1 SD>
+	SDL_COLORS <166 47 32 255 212 195 103 3 45>
+
+	NPC CItizen
+	job <Ganger>
+	EquipChar 7000
+	chardesc Chaotic
+	place <1 SD>
+	SDL_COLORS <49 91 161 255 212 195 122 88 193>
+
+	NPC CItizen
+	chardesc Young Male
+
+	NPC CItizen
+	chardesc Young Female
+end

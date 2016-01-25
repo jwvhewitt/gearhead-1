@@ -1,0 +1,225 @@
+Plot 0
+	name <Rat Catcher>
+
+	% A basement has been infested with rats. The PC will be hired to
+	% go get rid of them.
+
+	element1 <Grab 1>
+	element2 <Character Citizen !Near 1>
+
+	% P1 = Time Limit
+	% P2 = Combat Indicator
+	% P3 = Have accepted mission/Received email
+
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200>
+	GoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -10>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 1  1  XPV 100>
+
+
+	5min <if= d50 1 if= P3 0 ifG RReact E2 d80 Email 1 P= 3 1>
+
+	% Email message
+	Msg1 <\ELEMENT 2 @ \ELEMENT 1 :// I've got a serious problem with rats in the basement. Can you help me?>
+	Msg1_1 <\ELEMENT 2 @ \ELEMENT 1 :// Things are going bad as usual... giant killer rats have moved into my basement. Think you can help?>
+	CMsg1_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg1_2 <\ELEMENT 2 @ \ELEMENT 1 :// Rats in the basement. Come help.>
+	CMsg1_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg1_3 <\ELEMENT 2 @ \ELEMENT 1 :// This is serious! I have deadly rats in the basement. Come quickly.>
+	CMsg1_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg1_4 <\ELEMENT 2 @ \ELEMENT 1 :// Is this email working? I need help in \ELEMENT 1 . Please come if you're able.>
+	CMsg1_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg1_5 <\ELEMENT 2 @ \ELEMENT 1 :// This isn't a social call, I'm afraid. I've got dangerous vermin living in my basement. Please come and help me.>
+	CMsg1_5 <ifG NPCRep E2 3 0 Accept>
+
+sub
+	Persona 2
+	rumor <!2 has rats in the basement.>
+
+	% V4 = Reward to be offered
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 CashPrize V4 AddReact d5 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission Say 2 AdvancePlot 0>
+	GoCheckMission <if= P3 2 else GoCheckFirst Say 3 AddChat 1 AddChat 2>
+
+	% At the GoCheckFirst label, see if everything has been initialized.
+	% If so just jump to GoCheckEmail.
+	GoCheckFirst <if= V4 0 else GoCheckEmail V= 4 Reward Threat PCRep 6 100 500 Goto GoCheckEmail>
+
+	GoCheckEmail <if= P3 1 else GoFirstTime Say 4 AddCHat 3 AddChat 4>
+	GoFirstTime <ifG React d20 else GoNoFriend Say 5 AddChat 3 AddCHat 4>
+	GoNoFriend <ifG PCRep 1 d10 else GoNoChance ifG PCRep 6 25 else GoNoChance Say 7 AddCHat 3 AddChat 4>
+	GoNoChance <Say 6 AdvancePlot 0>
+
+	result1 <EndChat Say 11 Goto GoStartCombat>
+	GoStartCombat <SavePos MSTaged .scene PCRep 6 .wmon P= 2 1>
+	.scene <Scene_Basement.txt>
+	.wmon <City Animal Vermin Earth>
+	result2 <NewChat Say 8>
+	result3 <NewChat Say 9 Memo 12 P= 3 2 AddChat 1 AddCHat 2>
+	result4 <NewChat Say 10 Reputation 5 -d8  AddReact -1 AdvancePlot 0>
+
+	% 1 : The PC won the battle.
+	Msg1 <You did it! I'll be able to sleep well tonight, knowing that I won't be gnawed to death in my bed... Here's your reward.>
+	Msg1_1 <I was half expecting to never see you again. Here's your pay for the job.>
+	CMsg1_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg1_2 <You did it! Here's your pay.>
+	CMsg1_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg1_3 <That was thrilling! Here's the pay you earned.>
+	CMsg1_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg1_4 <The "ki" of my house has been purified. Here's your pay for helping out.>
+	CMsg1_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg1_5 <You really did well down there. All the rats have been eliminated, and hopefully they won't be coming back. Here's the cash that I promised you.>
+	CMsg1_5 <ifG NPCRep E2 3 0 Accept>
+
+
+	% 2 : The PC lost the battle.
+	Msg2 <How could you run away!? They were just rats...>
+	Msg2_1 <You didn't complete the job. Don't worry about me, I'll probably just get eaten by one of those rats in the middle of the night...>
+	CMsg2_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg2_2 <You lost.>
+	CMsg2_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg2_3 <Those rats completely kicked your ass! Next time, I think I should hire a professional for the job.>
+	CMsg2_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg2_4 <I guess that maybe you've offended the god of rats... Tough luck back there.>
+	CMsg2_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg2_5 <That didn't go so well. I guess that the rats were stronger than we thought... Well, you didn't complete the job, so I can't give you any money for it.>
+	CMsg2_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 3 : The PC has returned after getting ready.
+	Msg3 <Are you ready to go kick out those rats yet?>
+	Msg3_2 <Ready yet?>
+	CMsg3_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg3_3 <I've been waiting. Are you ready to go yet?>
+	CMsg3_3 <ifG 0 NPCRep E2 4 Accept>
+
+	% 4 : Did you get my email? Will you help?
+	Msg4 <Ah, \PC . Did you get my email? Are you here to help me deal with my rat problem? I can afford to give you $ \VAL V4 if you can get rid of them.>
+	Msg4_1 <You came! I feared that you wouldn't arrive here in time... There are dangerous rats in my basement. I'm afraid for my life. If you can get rid of them, I can give you $ \VAL V4 .>
+	CMsg4_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg4_2 <So you got the email. I can pay $ \VAL V4 if you can get rid of my rats.>
+	CMsg4_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg4_3 <You're here! I sent you an email and have been waiting for you to come... There are some "Death Rats" living in my storm cellar. If you can go down there and kill them, it's worth $ \VAL V4 .>
+	CMsg4_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg4_4 <So the email worked! That's good. I need your help... there are some giant rats living in my basement, and I need to get rid of them before anybody gets hurt. I can give you $ \VAL V4 if you can help me.>
+	CMsg4_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg4_5 <Good to see you. I wish it could be under better circumstances though... As I mentioned in the email, there are dangerous animals living in my basement. If you can clean up it'll be worth $ \VAL V4 .>
+	CMsg4_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 5 : NPC will ask PC to help with rat problem.
+	Msg5 <Hi. I've got a favor to ask. My house has rats in the basement... monsters would be more like it. I need an adventurer to head down there and clear them out. It's worth $ \VAL V4 if you can do that.>
+	Msg5_1 <I don't suppose you'd be interested in this, but there are giant killer rats living in my basement. What I need is an adventurer to go down there and eliminate them. I can afford to pay $ \VAL V4 if you're interested.>
+	CMsg5_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg5_2 <I don't like asking for favors, but I really need someone's help. There are monstrous rats living in my basement. If you can get rid of them, I can pay you $ \VAL V4 for the trouble.>
+	CMsg5_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg5_3 <\ELEMENT 1 has a serious vermin problem. My own house has the biggest death rats you've ever seen... A few nights ago, they ate a neighbor's rottweiler. I need someone to destroy them and I can afford to pay $ \VAL V4 .>
+	CMsg5_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg5_4 <I'm very unlucky. Some rats have moved into my basement... Not tiny little mice, big wolf-sized abominations against nature. If you can eliminate them I can give you $ \VAL V4 .>
+	CMsg5_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg5_5 <I've got a big favor to ask of you. There are death rats living in my basement. Get rid of them and I can pay you $ \VAL V4 ; plus, maybe I'll be able to help you with something sometime later.>
+	CMsg5_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 6 : NPC will mention rat problem dispassionately...
+	Msg6 <Sure, my house has rats in it... But what building in \ELEMENT 1 doesn't?>
+	Msg6_1 <I know the death rats are waiting in my basement... The day I lower my guard is the day they're going to kill me.>
+	CMsg6_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg6_2 <I've got some home improvements to work on.>
+	CMsg6_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg6_3 <If the government won't solve the rat problem, it's up to the rest of us to arm ourselves!>
+	CMsg6_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg6_4 <There are so many rats in \ELEMENT 1 because the "ki" is corrupted.>
+	CMsg6_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg6_5 <In \ELEMENT 1 , you're not a real part of the community until after you've had rats in your basement.>
+	CMsg6_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 7 : NPC will ask famous adventurer PC for help.
+	Msg7 <Wow, you're \PC , right? I'll bet you can help me... My house has giant mutant rats in the basement. If you can get rid of them I can give you $ \VAL V4 .>
+	Msg7_1 <I've got a job for an adventurer. If you're as good as they say, you should be able to handle it easily. There are giant killer rats in my basement. They have to be eliminated before someone gets eaten...>
+	CMsg7_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg7_2 <I've got a job for a hunter. There are rats in my basement, I can pay up to $ \VAL V4 to have them removed.>
+	CMsg7_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg7_3 <Wow, you're \PC ! I heard about you on the news. Well, I've got an adventure that may be just right for you... In my basement there's a colony of death rats. If you can eliminate them, I can give you $ \VAL V4 .>
+	CMsg7_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg7_4 <I've been searching for a hunter... fate must have brought you to me. There are dangerous vermin living in my basement. If you get rid of them, I can pay you $ \VAL V4 .>
+	CMsg7_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg7_5 <You don't know me so well, but I have a favor to ask. There are dangerous animals living in my basement. I could use some professional help to get rid of them... If you're interested, this job will pay $ \VAL V4 . What do you say?>
+	CMsg7_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 8 : PC needs some time to get ready.
+	Msg8 <Alright. Come back here when you're ready and we can start then.>
+	Msg8_2 <Come back when you're ready.>
+	CMsg8_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg8_5 <Alright, you go do that. I'll be waiting right here for you to come back. Make sure you get everything you're going to need.>
+	CMsg8_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 9 : PC has agreed to the mission; describe it it detail.
+	Msg9 <Just head down and get rid of all the rats. They're pretty big, and have a nasty temper... You'll have to be careful.>
+	Msg9_1 <If the rats aren't removed soon, I just know that someone's going to die. Can you go right away or do you need to get ready?>
+	CMsg9_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg9_2 <Just eliminate all the dangerous vermin and I'll give you your pay. If you need supplies you better get them now.>
+	CMsg9_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg9_3 <The rats have completely taken over beneath ground level. It's more dangerous down there than any other place I've ever seen. You ready to go now, or do you need to do something else first?>
+	CMsg9_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg9_4 <If you need to get ready or say your prayers before heading into the basement, you'll want to do that now.>
+	CMsg9_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg9_5 <I'd like to invite guests over to my house, but I can't very well do that when there's a danger that they'll be eaten. Are you ready to start or do you need to prepare?>
+	CMsg9_5 <ifG NPCRep E2 3 0 Accept>
+
+
+	% 10 : PC has refused the mission.
+	Msg10 <I should've expected as much.>
+	Msg10_1 <Thanks for nothing.>
+	CMsg10_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg10_2 <Fine.>
+	CMsg10_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg10_3 <Fine, see if I help you when you need it!!!>
+	CMsg10_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg10_4 <What goes around comes around.>
+	CMsg10_4 <ifG 0 NPCRep E2 7 Accept>
+
+
+	% 11 : Combat is starting.
+	Msg11 <Good luck. Come back in one piece.>
+	Msg11_1 <Good luck. If you don't come back in twelve hours I'll assume that you've been eaten.>
+	CMsg11_1 <ifG 0 NPCRep E2 5 ACCEPT>
+	Msg11_2 <Good luck.>
+	CMsg11_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg11_3 <Fight valiantly! If you leave behind any survivors, we'll have to do this again in a week...>
+	CMsg11_3 <ifG 0 NPCRep E2 4 Accept>
+	Msg11_4 <I'll be praying for your safe return.>
+	CMsg11_4 <ifG 0 NPCRep E2 7 Accept>
+	Msg11_5 <Go to it! I'll be waiting up here for you to return. I'll give you that money I promised then.>
+	CMsg11_5 <ifG NPCRep E2 3 0 Accept>
+
+	% 12 : Memo
+	Msg12 <\ELEMENT 2 in \ELEMENT 1 asked you to clear the rats from \PPR E2 basement.>
+
+	% 1 : PC will enter combat now.
+	Prompt1 <I'm all ready to go stomp some rats!>
+	Prompt1_1 <Let's start this mission.>
+	Prompt1_2 <I can go down there now.>
+
+	% 2 : PC needs more time to prepare.
+	Prompt2 <I need some time to get ready first.>
+	Prompt2_1 <Give me a few moments to prepare.>
+	Prompt2_2 <I'll be back after I get ready.>
+
+	% 3 : PC agrees to help.
+	Prompt3 <Alright, I could do that.>
+	Prompt3_1 <I'll see what I can do to help.>
+	Prompt3_2 <Okay, I can help you.>
+
+	% 4 : PC won't help.
+	Prompt4 <I've got better things to do than that.>
+	Prompt4_1 <I don't care about your problems.>
+	Prompt4_2 <Don't bother me with small stuff.>
+
+end
+

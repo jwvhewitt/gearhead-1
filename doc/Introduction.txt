@@ -1,0 +1,92 @@
+********************************
+***  GEARHEAD  QUICK  START  ***
+********************************
+
+There are two things which really separate GearHead from most
+other ASCII-based RPGs. First, movement is somewhat more complex.
+Second, you get to pilot giant robots.
+
+Movement in GearHead is a bit more complex than it is in most other roguelikes,
+but once you get used to it I hope you'll enjoy it. Your character
+has direction, speed, and altitude. These three values are shown in the
+navigational display, on the left hand side of the character info window.
+The display should look something like this:
+
+                                  +     <- Direction Indicator
+                              G  0      <- Altitude Indicator
+                              S =
+                              ^----------- Speed Indicator
+
+The arrow indicates direction; in this case the character is facing NorthEast.
+The number at the center of the arrow indicates altitude. If the number is
+grey, it means the character is standing at that specified height. If the
+number is blue, it means the character is standing at that depth underwater.
+Finally, speed is indicated by the letters "G" and "S". If "G" is highlighted
+the character is moving, while if "S" is highlighted the character is
+standing still.
+
+There are two ways to move your character. The first method is similar to
+most other roguelikes- use the arrow keys or the numeric keypad to walk in
+any of the eight basic directions. The second method is called "turtle
+movement"- use the "[" and "]" keys to rotate your character, "=" to walk
+and "+" to run.
+
+
+*************************     **************************
+***  BASIC  MOVEMENT  ***     ***  TURTLE  MOVEMENT  ***
+*************************     **************************
+
+       7   8   9                  +  Run      =  Walk
+
+       4       6                     [ ]    Rotate
+
+       1   2   3
+
+
+
+*******************************
+***  INFORMATION  OVERLOAD  ***
+*******************************
+
+Creating a first character in GearHead may be a daunting task. There are loads
+of options to choose from, eight stats to balance, and thirty skills to decide
+between.
+
+There should be a number of characters already located in the SaveGame
+directory. These are the ones that I've used during play testing, so they
+should all be fairly experienced. If you don't want to make up your own
+character right away you can start by playing with these.
+
+If you do want to create a character, my advice is to decide between
+being good at personal scale combat or being good at mecha scale combat.
+Stick a lot of points into the appropriate defense (either Dodge or Mecha
+Piloting) and at least one of the attack skills. This should help you
+survive until you gain enough experience points to start broadening your
+abilities.
+
+*************************   **********************   ********************
+***  PERSONAL COMBAT  ***   ***  MECHA COMBAT  ***   ***  ALL COMBAT  ***
+*************************   **********************   ********************
+  Small Arms                  Mecha Gunnery            Initiative
+  Heavy Weapons               Mecha Artillery          Vitality
+  Armed Combat                Mecha Weapons            Spot Weakness
+  Martial Arts                Mecha Fighting
+  Dodge                       Mecha Piloting
+
+
+If your character is good at personal combat, the first thing you'll
+probably want to do in Hogye is visit KiRin MegaMart. Here you can
+buy all kinds of weapons and armor. Once you are fully equipped, head
+down into the mines to gain some experience. It's been rumored that when
+the mine closed a lot of heavy machinery got left behind. If you can
+make it to the fifth level of the mines, you'll find out just how heavy
+that equipment was...
+
+If your character is good at mecha combat, the first thing you'll probably
+want to do is obtain a mecha. You can't just find one lying around in the
+street, you know. Fortunately there are a number of kind people in Hogye
+(and at least one not so kind person) who will give you a mecha for free.
+Head to Mecha Sporch and talk to the proprietor; say that you want to
+compete in the arena, but that you don't own a mecha. He'll tell you what
+to do.
+

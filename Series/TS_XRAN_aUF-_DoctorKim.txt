@@ -1,0 +1,219 @@
+plot 0
+	name <PLOT: Doctor Kim Missing!>
+	% Edited to v0.901 standard
+	% Note: Since Doctor Kim and Nurse Kim are specific characters, they don't
+	% need random lines based on traits.
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	Element1 <Grab 3>
+	Element2 <Character Doctor !Near 1>
+
+	Element3 <Scene Town Target !Far 1>
+
+	% Nurse Park
+	Element4 <Character>
+	Stat 4 2
+
+	% Doctor Kim
+	Element5 <Character>
+	Stat 5 3
+
+	% Replacement faction, in case current faction is no good.
+	element6 <Faction GoodEnemy>
+
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 or E4 or E5 dies, load a new plot.
+	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete ifPersona E5 else GoDelete>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+
+sub
+	Persona 2
+	rumor <the hospital was broken into.>
+
+	% I don't know any way to do a generic conversation for this, so
+	% I'll just do the simplest thing possible. When you're ready to
+	% move on to the next part of the episode, just AdvancePlot 1.
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat Say 2 AddChat 2 AddChat 3 FreezeChar E5 N= 3 2 ifFaction N2 else GoReplaceN2 AdvancePlot 1>
+	GoReplaceN2 <N= 2 E6 AdvancePlot 1>
+	result2 <EndChat Say 3 Shop .nowares Say 4>
+	result3 <NewChat Say 5>
+
+	Msg1 <I'm sorry, but the place is a bit of a mess. We were burgalarized last night. May I help you?>
+	Msg1_1 <This is terrible! Our hospital has been burgalarized... The thieves broke down the door, and stole the computer containing our patient database. We have backups, but still this is pretty bad...>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <I'm quite busy; our hospital has been broken into. Is there anything I can help you with?>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <Hello. May I help you? Don't mind the mess; it's just that our hospital has been broken into.>
+	CMsg1_3 <ifNPCEasygoing Accept>
+	Msg1_4 <Yes, may I help you? I'm very busy... There's been a break-in, our computers were stolen, and I have to make sure that nothing else has gone missing...>
+	CMsg1_4 <ifNPCPassionate Accept>
+	Msg1_5 <Don't panic; yes, our hospital suffered a minor break-in last night, and there's stuff all over the floor, but I assure you everything will be right as rain by tomorrow.>
+	CMsg1_5 <ifNPCCheerful Accept>
+	Msg1_6 <Yes, what is it? As you can see I'm quite busy... We had a break-in last night, everything's all over the place...>
+	CMsg1_6 <ifNPCMelancholy Accept>
+
+	Msg2 <Not really, but I remember they had a similar incident in Hogye just a short time ago. As far as I know their doctor went missing shortly thereafter.>
+	Msg2_1 <It was likely the same people who broke into the Hogye clinic. That happened just a little while ago. Doctor Kim, who works there, hasn't been seen since... \OPR 3 could have been kidnapped or killed.>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <They had a similar incident in Hogye a short time ago; I believe the doctor there was killed. It was probably the same people.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <If I remember correctly there was also a break-in at the Hogye clinic a few days ago. Their doctor also went missing, which makes me glad I wasn't working the night shift yesterday.>
+	CMsg2_3 <ifNPCEasygoing Accept>
+	Msg2_4 <Complete moral degenerates, that's who. The clinic in Hogye was also attacked recently. Their doctor went missing, no doubt a victim of the robbers...>
+	CMsg2_4 <ifNPCPassionate Accept>
+	Msg2_5 <I can't even understand why they'd break in, especially if they weren't going to steal our drugs... In Hogye they had a similar case recently. The doctor who works there went missing.>
+	CMsg2_5 <ifNPCCheerful Accept>
+	Msg2_6 <Who knows? There are all kinds of criminals operating these days... Even in a small town like Hogye. Their clinic was burgularized a short time ago, and their doctor disappeared. He was probably killed by the robbers.>
+	CMsg2_6 <ifNPCMelancholy Accept>
+
+	Msg3 <I'll see what I can do for you. I hope you don't have any drug allergies, since I can't look up to check...>
+	Msg3_1 <Our facilities are largely undamaged; it was just the computers that got stolen. So I should be able to treat your injuries without any complications.>
+	CMsg3_1 <ifNPCSociable Accept>
+	Msg3_2 <Let me take a look at your injuries. I'll do as much as I can.>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <Alright. Tell me where it hurts.>
+	CMsg3_3 <ifNPCEasygoing Accept>
+	Msg3_4 <Of course! Let me examine your injuries.>
+	CMsg3_4 <ifNPCPassionate Accept>
+	Msg3_5 <Sure, I can still do that. Tell me where it hurts and I'll make it all better.>
+	CMsg3_5 <ifNPCCheerful Accept>
+	Msg3_6 <I'll see what I can do, but given the state of our facilities I can't make any promises.>
+	CMsg3_6 <ifNPCMelancholy Accept>
+
+	Msg4 <Keep eating those vegetables.>
+	Msg4_1 <Let me know if you experience any side effects. I'll see you again, the next time you get hurt.>
+	CMsg4_1 <ifNPCSociable Accept>
+	Msg4_2 <Take care of yourself.>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_3 <If you experience any further problems come back right away.>
+	CMsg4_3 <ifNPCEasygoing Accept>
+	Msg4_4 <Exercise and proper diet are the keys to good health, don't forget that!>
+	CMsg4_4 <ifNPCPassionate Accept>
+	Msg4_5 <That went well.>
+	CMsg4_5 <ifNPCCheerful Accept>
+	Msg4_6 <Try not to get hurt again.>
+	CMsg4_6 <ifNPCMelancholy Accept>
+
+	Msg5 <Well, somebody certainly should.>
+	Msg5_1 <You're from Hogye originally, aren't you? Yes, someone definitely ought to investigate this matter...>
+	CMsg5_1 <ifNPCSociable Accept>
+	Msg5_2 <Well, somebody should.>
+	CMsg5_2 <ifNPCShy Accept>
+	Msg5_3 <I've already told you as much as I know, personally.>
+	CMsg5_3 <ifNPCEasygoing Accept>
+	Msg5_4 <It's terrible that someone could attack a hospital, the center of medical care and charitable work, yet remain at large without punishment... Justice must be done!>
+	CMsg5_4 <ifNPCPassionate Accept>
+	Msg5_5 <If you could get to the bottom of this, I'd certainly applaud your efforts!>
+	CMsg5_5 <ifNPCCheerful Accept>
+	Msg5_6 <I doubt that you'd find out anything... Though if you're determined to try, then go ahead.>
+	CMsg5_6 <ifNPCMelancholy Accept>
+
+	Prompt1 <Any idea who did it?>
+	Prompt1_1 <Who would break into a hospital!?>
+	Prompt2 <I need some healing, quick.>
+	Prompt2_1 <Can I still get some healing?>
+	Prompt3 <Maybe I should go investigate.>
+	Prompt3_1 <Perhaps I could investigate...>
+
+	Plot 1
+		% The PC has been informed of the existence of the mission,
+		% and should now go meet E4.
+
+		% V1 = Initialization counter
+		% V2 = Combat Counter
+
+		% If Persona E4 dies, load a new plot.
+		start <ifPersona E4 else GoDelete ifPersona E5 else GoDelete if= V1 0 V= 1 1 Memo 101>
+		GoDelete <S= 101 1 AdvancePlot 0>
+
+		% 101 :  Memo
+		Msg101 <\ELEMENT 2 in \SCENE EScene 2 told you that the doctor in Hogye has disappeared.>
+	sub
+		Persona 4
+		% Nurse Park
+		% Don't have to worry about victory or anything since the
+		% plot will last until Doctor Kim is rescued or dies.
+		greeting <NewChat if= V1 0 else GoBeenBefore Say 1 AddChat 1 AddChat 2>
+		GoBeenBefore <Say 2 AddChat 1 AddChat 3>
+		result1 <EndChat Say 3 Shop .nowares Say 4>
+		result2 <NewChat Say 5 V= 1 1 AddChat 3 AddChat 1>
+		result3 <EndChat Say 6 LoadD .scenename PassVar 1 E5 PassVar 2 S103 PassVar 3 5 PassVar 4 5 SeekGate -1>
+		.scenename <SCENE_MeetingDungeon.txt>
+		Msg1 <Hello, welcome to Hogye Clinic. Doctor Kim isn't here at the moment but I will do what I can to help you.>
+		Msg2 <Will you go back to look for the doctor, or do you need some medical aid?>
+		Msg3 <I'll do my best.>
+		Msg4 <There... You feel better now, don't you?>
+		Msg5 <Some robbers came through here a while back. They had guns... they wanted to take our medical records. Doctor Kim grabbed the file and ran to an old mine shaft; I think he escaped from them but he hasn't come back yet.>
+		Msg6 <Please be careful! It's very dangerous down there.>
+		Prompt1 <I need medical aid.>
+		Prompt2 <What happened to the doctor?>
+		Prompt3 <I'll go look for him.>
+
+		Persona 5
+		% Doctor Kim - should be encountered in cave
+		greeting <NewChat Say 1 AddCHat 1 AddCHat 2>
+		result1 <EndChat Say 2 XPV 150 Reputation 4 d8 MoveChar E5 2 Return History 4 AdvancePlot 2>
+		result2 <EndChat Say 3 XPV 150 Reputation 4 -d8 MoveChar E5 2 Return History 4 AdvancePlot 2>
+		Msg1 <\PC ! Of all the people, I never expected you to be the one who would rescue me... There were some hooligans with guns, they wanted your medical file... There's so much I have to tell you...>
+		Msg2 <You know, that's a very reasonable suggestion. Let's head back to town and I'll tell you everything there.>
+		Msg3 <I can't be certain, but I think it's because... did you see that? There are too many monsters here. Let's head back to town and I'll tell you everything there.>
+		Msg4 <You rescued Doctor Kim from the mines.>
+		Prompt1 <Maybe we should escape here first.>
+		Prompt2 <My file? Why would they want that?>
+
+	Plot 2
+		% If Persona E5 dies, load a new plot.
+		start <ifPersona E5 else GoDelete if= V1 0 V= 1 1 Memo 101 Time 3600>
+		GoDelete <S= 101 1 S= 105 -1 N= 3 E3 AdvancePlot 0>
+		Msg101 <Doctor Kim in Hogye has to tell you about your medical records.>
+	sub
+		Persona 4
+		greeting <NewChat Say 1>
+		Msg1 <Thank you for rescuing the doctor!>
+
+		Persona 5
+		greeting <NewChat Say 1 AddChat 1>
+
+		result1 <NewChat  if= d6 1 else GoR2CheckEnemy  Say 2 History 52 AddChat 2  XRMystery NAV_XRMNotHuman Goto GoEndPlot>
+		GoR2CheckEnemy <if= d3 1 else GoR2Faction ifPersona N1 else GoR2Faction Say 5 History 55 AddChat 4 XREnemy NAV_XRECharacter Goto GoEndPlot>
+		GoR2Faction <Say 7 History 57 AddChat 5 XREnemy NAV_XREFaction Goto GoEndPlot>
+		result2 <NewChat Say 3 AddChat 3>
+		result3 <NewChat Say 4>
+		result4 <NewChat Say 6>
+		result5 <NewChat Say 8>
+
+		GoEndPlot <S= 101 1 S+ 102 1 N= 3 E3 S= 105 1 AdvancePlot 0>
+
+		Msg1 <Thank you for rescuing me. Now, I can tell you everything I know... Have a seat, please. First off, those were the same thugs who hit the hospital in \ELEMENT 3 , I'm certain of it.>
+		Msg2 <About your records: Your blood chemistry is... slightly unusual. No, no, that's wrong... it's completely unusual. You don't have most of the standard protein markers that everyone else does.>
+		Msg3 <I have no idea. It means that your genes were modified, somehow, before you were born. It's not a therapeutic modification, but more than that I can't say. I guess that's why the thugs wanted your file. Be careful.>
+		Msg4 <No, the guardians are working on it, they haven't turned up anything yet. Whoever was behind it knows a lot about you, though.>
+		Msg5 <The leader of the gang who tried to steal your records was named \NARRATIVE 1 . The first question was, "Is \PC still alive?", and after that they started trashing the office.>
+		Msg6 <No idea, but I don't think they were concerned about your health. \NARRATIVE 1 was particularly interested in your birth certificate for some reason. Does that make any sense to you at all? I can't understand it.>
+		Msg7 <The thugs who broke in here identified themselves as belonging to \NARRATIVE 2 . I don't know if that's true or not... They wanted anything they could get about your past, medical history, family... anything.>
+		Msg8 <Your guess is as good as mine, but it seems to me they had some nefarious purpose behind their search.>
+
+		Msg52 <You discovered that you have abnormal genetics.>
+		Msg55 <\NARRATIVE 1 tried to steal your medical records.>
+		Msg57 <\NARRATIVE 2 tried to steal your medical records.>
+
+		Prompt1 <What else do you know?>
+		Propmt2 <What does that mean!?>
+		Prompt3 <Any idea who those thugs were?>
+		Prompt4 <Why would they want my records?>
+		Prompt5 <Why did they want that?>
+
+	% End Sub-Plot 2
+	end
+
+	% End Sub-Plot 1
+	end
+end

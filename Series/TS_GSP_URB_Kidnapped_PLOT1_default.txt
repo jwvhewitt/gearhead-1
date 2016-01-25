@@ -1,0 +1,72 @@
+Plot 0
+	name <ARC: Kidnapped Investigation 1>
+
+	% This is the basic investigation plot.
+	% E1 is the town where the clues have led.
+	Element1 <Grab 4>
+	% E2 is the character who will help the PC.
+	Element2 <Character !Near 1>
+	% E3 is the town the kidnapped girl is from.
+	Element3 <Grab 1>
+	% E4 is the next town to be investigated.
+	Element4 <Scene Town !Far 1 !Far 3 !Member 11>
+
+	% If the NPC with the clue gets killed, we're gonna need
+	% a different plot.
+	start <ifPersona E2 else GoDelete>
+	5Min <ifPersona E2 else GoDelete>
+	GoDelete <S= 101 1  AdvancePlot 0>
+
+	% A cleanup trigger means that the story has been deleted;
+	% just get rid of this plot, then.
+	CLEANUP <AdvancePlot 0>
+
+sub
+	Persona 2
+	rumor <!2 may have seen the person you're looking for.>
+
+	greeting <NewChat ifG React d80 else GoNoFriend Say d5 Goto GoEndPlot>
+	GoNoFriend <V= 2 5 V+ 2 d5 Say V2 AddChat d3>
+	telephone <goto Greeting>
+
+	GoEndPlot <S= 101 1 S+ 102 1 N= 4 E4 AdvancePlot 0>
+
+	result1 <NewChat ifG SkRoll 19 7 else GoNotSure ifG NPCRep E2 3 -d50 else GoNotSure V= 2 10 V+ 2 d5 Say V2 Goto GoEndPlot>
+	result2 <Goto result1>
+	result3 <Goto result1>
+	GoNotSure <V= 2 15 V+ 2 d5 Say V2 AddChat 4 AddChat 5>
+	result4 <Goto result1>
+	result5 <reputation 4 -d8 Goto result1>
+
+	Msg1 <I've heard about the girl you're looking for. I saw her, with a large man. They were going to \SCENE E4 .>
+	Msg2 <\NARRATIVE 3 is the girl you're looking for, right? I heard about that. I think I saw her... She was with two men, one big one and a smaller guy. They were headed for \SCENE E4 .>
+	Msg3 <I think I can help you! You're looking for \NARRATIVE 3 ? I saw her at the bus depot. She got on the \SCENE E4 bus. I couldn't see if she was with anyone or not.>
+	Msg4 <\NARRATIVE 3 passed through town a while back. She was with a large man, kind of scary looking, I think she was drunk. Anyhow, they were going to \SCENE E4 .>
+	Msg5 <I saw something very strange. \NARRATIVE 3 came through town with some big guy, and a smaller guy in sunglasses. I thought she looked sick so I asked about her but they seemed kind of scary. They caught the bus for \SCENE E4 .>
+
+	Msg6 <May I help you?>
+	Msg7 <Is there something you're looking for?>
+	Msg8 <What do you want?>
+	Msg9 <You look like you want something...>
+	Msg10 <Yes?>
+
+	Msg11 <Yes, I saw her! She was with two guys- one big one, looked like a gangster, and a smaller man in sunglasses. They were waiting for the bus to \SCENE E4 .>
+	Msg12 <I think I've seen her. She was with a large man, kind of rough looking. He was taking care of her. I think she was drunk. They were going to \SCENE E4 .>
+	Msg13 <\NARRATIVE 3 ? Yes, she passed through just a short while ago. I saw her at the bus stop, going to \SCENE E4 . I didn't see if she was with anyone or not.>
+	Msg14 <Is \NARRATIVE 3 in some kind of trouble? She was in town a while back with a man. He looked like a doctor. They were going to \SCENE E4 together.>
+	Msg15 <I saw \NARRATIVE 3 a short time ago. She was going to \SCENE E4 with a large man. She looked really sick, so I didn't get a chance to speak with them.>
+
+	Msg16 <I'm not sure, I'll have to think about that...>
+	Msg17 <Hm? I don't know if I can help you...>
+	Msg18 <I don't remember...>
+	Msg19 <Maybe I saw her, I'm not sure...>
+	Msg20 <I see a lot of people in town. I don't know exactly.>
+
+	Prompt1 <I'm looking for \NARRATIVE 3 .>
+	Prompt2 <Have you seen this girl in town?>
+	Prompt3 <I need information about \NARRATIVE 3 .>
+
+	Prompt4 <Please remember, it's very important.>
+	Prompt5 <You better remember quick, or else!>
+
+end

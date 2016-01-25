@@ -1,0 +1,94 @@
+plot 0
+	name <You Know Too Much>
+	% Edited to v0.901 standard.
+
+	% The PC knows too much about something... An NPC will attack
+	% him in town, then he'll be attacked again when leaving town.
+
+	% V1 = Initialization Counter
+	% P2 = Combat entered
+	% P3 = Combat trigger set
+	% P4 = Have seen the ticket stub
+
+	Element1 <Grab 3>
+	Element2 <Scene Town Target !Far 1>
+	Element3 <Prefab>
+	Element4 <Prefab>
+
+	% This plot used to be in two parts. I changed it so it's all in one part, so that the
+	% next scene memo can be added.
+	start <if= P3 1 else GoOldStart if= SceneID 1 Block Print 3 SavePos Dynamic 2 Threat S103 100 .nu1 .nu2 V= 2 1>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2 S= 101 1 N= 3 E2 if= P4 1 else GoDelete S= 105 1 AdvancePlot 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1   S= 101 1 S+ 102 1 N= 3 E2 if= P4 1 else GoDelete S= 105 1 AdvancePlot 0>
+	GoDelete <S= 105 -1 AdvancePlot 0>
+
+	GoOldStart <ifPersona E3 else GoEndPlot  if= V1 0 else GoSetOrder V= 1 1 NPCLevel E3 S103 Compose UTD E3 .killerdies Compose GET E4 .getkey Goto GoSetOrder>
+	GoEndPlot <S= 101 1 AdvancePlot 0>
+	.killerdies <if# V1 5 V= 1 5 ForceChat E3 XPV 100 History 2>
+	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
+	.getkey <Print 5 P= 4 1>
+
+	TM1 <if= SceneID E1 ifNPCinPlay E3 if= V1 1 ifG 6 Range PCUID NPCUID E3  Print 1 ForceChat E3>
+	Msg1 <\ELEMENT 3 strikes up a conversation with you.>
+
+	Msg2 <You survived an ambush by the bounty hunter \ELEMENT 3 .>
+	Msg3 <As you leave town, you are ambushed by mecha!>
+
+	Msg5 <It's a bus ticket stub, from \ELEMENT 2 station.>
+
+sub
+	Persona 3
+	rumor <!3 will take a contract to kill anybody, as long as the price is right.>
+	% V2 = Message Randomizer
+	greeting <NewChat ifPersona E3 else GoE3Dead P= 1 2 Say 1 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	result1 <Reputation 3 -d8 Goto GoStartFight>
+	result2 <Reputation 4  d8 Goto GoStartFight>
+	result3 <Reputation 5  d8 Goto GoStartFight>
+	result4 <Reputation 3  d8 Goto GoStartFight>
+	result5 <Reputation 4 -d8 Goto GoStartFight>
+	result6 <Reputation 5 -d8 Goto GoStartFight>
+	GoStartFight <EndChat Say 2 SoloAttack E3>
+
+	Msg1 <I have a message for you. You gonna listen?>
+	Msg1_1 <Hey \PC , I have a message for you straight from \NARRATIVE 1 . You want to hear it?>
+	CMsg1_1 <if= XRE NAV_XREFaction Accept>
+	Msg1_2 <You're \PC , right? I have a message for you, from \NARRATIVE 2 .>
+	CMsg1_2 <ifPersona N2 Accept>
+	Msg1_3 <You're \PC . I've been looking for you. There's a message that I have to deliver.>
+	Msg1_4 <What about that. Here I was looking for \PC , and you come find me. I have a message to deliver. Wanna hear it?>
+
+	Msg2 <The message is... you know too much, and you'll never leave \ELEMENT 1 alive!!!>
+	Msg2_1 <The message is, that you know far too much information for us to allow you to live. Goodbye \PC .>
+	Msg2_2 <You know too much to live, so now I'm gonna silence you perminently!>
+	Msg2_3 <You know too much about my employer, so now you gotta die!>
+	Msg2_4 <You're getting too close to my employer, if you catch my meaning. So now I've got to kill you.>
+
+	Prompt1 <I'm not interested in hearing.>
+	Prompt2 <Yeah, I know, you're here to kill me.>
+	Prompt3 <What? No singing telegram?>
+	Prompt4 <Go on. I'm listening.>
+	Prompt5 <Hurry up, get to the point.>
+	Prompt6 <This had better be important.>
+
+	GoE3Dead <EndChat Say 101 P= 3 1>
+	Msg101 <Don't think that you've survived... starting today, I'm the least of your worries...>
+	Msg101_1 <I have failed... but you will still die today...>
+	Msg101_2 <You... you won't get out alive...>
+	Msg101_3 <I die... But we'll meet again when you try to leave town...>
+	Msg101_4 <That was a lucky shot... but there's no way you're leaving town alive...>
+
+
+end
+inv
+	NPC Bounty Hunter
+	CharDesc Chaotic
+	EquipChar 10000
+	place <1 pass>
+
+	Treasure 1
+	name <Ticket Stub>
+	Place <3>
+
+end

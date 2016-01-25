@@ -1,0 +1,136 @@
+Story
+	name <STORY: Ex-Aegis>
+
+	% V1 = Initialization Counter
+	% S101 = Load new episode when S101 = 1
+	% S102 = # PC Wins
+	% S103 = Difficulcy Level, load ending when S103>75
+	% S104 = # Wins when level last increased
+	% S105 = Location Clue
+
+	% The first START, force a conversation with Hyolee.
+	Start <if= V1 0 else GoCheckClue V= 1 1  MoreText .intro  S= 103 7  Print 1 ForceChat 1 History 2 History 3 DeleteChar N1 Goto GoInit>
+	.intro <TS_TEXT_Entry_Luna2.txt>
+	Msg1 <Hyolee strikes up a conversation with you.>
+	Msg2 <You fled Luna after deserting from Aegis Overlord Luna.>
+	Msg3 <You arrived in Hogye as a refugee.>
+	GoInit <Cash+ 5000 Reputation 1 -8>
+
+	GoCheckClue <ifG S105 0 else GoNoClue Memo 5 S= 105 0>
+	GoNoClue <ifG 0 S105 Memo 0 S= 105 0>
+	Msg5 <Your personal quest has so far led to \NARRATIVE 3 .>
+
+
+	Element1 <Prefab>
+	Element2 <Faction>
+	Stat 2 7
+	Element3 <Scene>
+	Stat 3 10
+
+
+	XREnemy 2
+	XRMystery 1
+	XRBadThing 5
+
+	hour <if= S101 1 else GoCheckHint ifG S103 75 else GoLoadEpisode XRanPlot .xend S= 101 0 S+ 103 d10>
+	GoLoadEpisode <XRanPlot .xplot S= 101 0 ifG S102 S104 S+ 103 10 S+ 103 d10 S= 104 S102 NPCLevel N1 S103 ifFaction N2 PCFEnemy N2>
+	GoCheckHint <if= d30 1 ifG 76 S103 StoryLine .xhint>
+	.xplot <TS_XRAN_a###_*.txt>
+	.xend <TS_XRAN_b###_*.txt>
+	.xhint <TS_XRAN_Hint_*.txt>
+
+inv
+	NPC Soldier
+	mecha <Chimentero.txt>
+	equipChar 25000
+
+	Plot 0
+	% Note that I am hotloading this plot- DO NOT
+	% DO THIS YOURSELF!!! I can get away with it because
+	% I'm the programmer. Note that because this plot is
+	% getting sneaked into the adventure riding under a
+	% story gear, it will not be initialized by the
+	% MATCH_PLOT_TO_ADVENTURE procedure. In this case
+	% it shouldn't matter because the story is loaded at
+	% the game's setup, and all the elements are starting
+	% initialized. However, in general, I think this is
+	% very bad form...
+	name <PLOT: Temporary Personas>
+
+	start <ifPersona E2 else GoDelete>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	% Element 1 is Hyolee.
+	Element1 <Character>
+	Stat 1 1
+
+	% Element 2 is Megi.
+	Element2 <Character>
+	Stat 2 17
+	sub
+		Persona 1
+		% Hyolee will greet the PC and tell him to go
+		% speak with Megi.
+		greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+		GoBeenBefore <Say 9 AddChat 7 AddCHat 8>
+
+		result1 <NewChat Say 2  AddReact d8  Reputation 3 d10 AddChat 4 AddChat 5 AddChat 6>
+		result2 <NewChat Say 3  Reputation 3 d10 Reputation 2 d8 AddChat 7>
+		result3 <NewChat Say 4 AddChat 4 AddChat 5 AddChat 6>
+		result4 <NewChat Say 5  Reputation 1 d6 Reputation 2 d5 Reputation 3 d3 Memo 7>
+		result5 <NewChat Say 6  Reputation 3 -d10 Memo 7>
+		result6 <NewChat Say 8 Memo 7 Reputation 2 -d5>
+		result7 <NewChat Say 10 Memo 7>
+		result8 <NewChat Say 11 Reputation 3 -d8 Reputation 4 -d8 Reputation 6 -1 S= 101 1 AdvancePlot 0>
+
+		Msg1 <Hi. I haven't seen you around before. My name is Hyolee; welcome to Hogye.>
+		Msg2 <Nice to meet you too. It's refreshing to see a new face in town. We don't get a lot of visitors here, which is good for my studies but can be awful boring sometimes. So, tell me about yourself.>
+		Msg3 <Er... That's good, I guess... Though maybe you'll want to keep that to yourself. Aegis Overlord Luna isn't too popular around here. Look, if you need some help fitting in, maybe you should go talk to Megi.>
+		Msg4 <Not much to say. It's a small town. Years ago there used to be a mine, but these days the big businesses are farming and tourism. We have a mecha arena. That's about it. What's your business in town?>
+		Msg5 <Luna? You're not one of those Aegis Overlord guys, are you? Better keep it to yourself if you are... you won't be very popular around here. You should go speak with Megi. She's our mayor... she can help you out a lot.>
+		Msg6 <Ooh, mysterious. Well, if there's anything you need in town, you should probably speak with Megi. She's the mayor of Hogye. She lives in that white house over there.>
+		Msg7 <Hyolee in Hogye told you to go speak with Megi.>
+		Msg8 <If there's anything you need in town, you should go talk with Megi. She's the mayor.>
+		Msg9 <Hello again. Have you spoken with Megi yet?>
+		Msg10 <See that white-colored building over there? That's her house. It's the only one like it in town. You can't miss it.>
+		Msg11 <If you don't want to, you don't have to. It was just a suggestion.>
+
+		Prompt1 <My name is \PC . Nice to meet you.>
+		Prompt2 <I am from Luna. I come in peace.>
+		Prompt3 <Hi. Tell me about this place.>
+		Prompt4 <I'm a refugee from Luna.>
+		Prompt5 <That's private.>
+		Prompt6 <I'm just a traveller.>
+		Prompt7 <How can I find her?>
+		Prompt8 <No, I don't want to.>
+
+		Persona 2
+		% Megi will speak with the PC and then allow
+		% conversation branches to load the various job
+		% plots, or the tutorial plot.
+		greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+
+		result1 <NewChat Say 2 S= 101 1 StoryLine .Tutorial AdvancePlot 0>
+		result2 <NewChat Say 3 S= 101 1 StoryLine .JobStory AdvancePlot 0>
+		result3 <NewChat Say 4 S= 101 1 History 6 AdvancePlot 0>
+		result4 <NewChat Say 5 S= 101 1 Reputation 2 -10 AddReact -30 StoryLine .CrimeStory AdvancePlot 0>
+
+		.JobStory <ARC_TS_JobStory.txt>
+		.CrimeStory <ARC_TS_CrimeStory.txt>
+		.Tutorial <TS_PLOT_Tutorial.txt>
+
+		Msg1 <Greetings, stranger. Is there anything I can do for you?>
+		Msg2 <Quentin, our shopkeeper, would be the best one to ask about that. You'll find him in the building with the stone floor.>
+		Msg3 <I think that Doctor Kim needs some help over at the clinic... You can ask about a job there.>
+		Msg4 <As you wish. Enjoy your stay in Hogye.>
+		Msg5 <We have nothing in this town worth stealing. Please leave here before you cause any trouble.>
+		Msg6 <You did not request any help from Megi.>
+
+		Prompt1 <Better give me the tutorial.>
+		Prompt2 <I'm looking for a job.>
+		Prompt3 <Thanks, but I don't need anything.>
+		Prompt4 <Thought I'd rob this town blind.>
+
+	end
+
+end

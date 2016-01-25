@@ -1,0 +1,125 @@
+Plot 0
+	name <Fire of Heaven>
+	% A conclusion for the item search plot. This conclusion will end the story,
+	% either in victory or in defeat for the PC...
+
+	% E1 is the scene where this plot will take place.
+	Element1 <Grab 2>
+
+	% E2 is the character who knows where the fire is.
+	Element2 <Character !Near 1>
+
+	% E3 is the "Fire of Heaven" itself.
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+	Element6 <Prefab>
+	Element7 <Prefab>
+
+	% V1 = Initialization Counter
+	% V2 = Combat Indicator
+	% V3 = The key item index
+
+	start <ifPersona E2 else GoCheckDelete if= V1 0 V= 1 1 V= 3 2 V+ 3 d5 Compose GET EV3 .getkey>
+	.getkey <S= 104 1 EndStory AdvancePlot 0>
+
+	GoCheckDelete <EndStory AdvancePlot 0>
+
+	CleanUp <AdvancePlot 0>
+
+sub
+	Persona 2
+	rumor <!2 discovered a strange ruined tower outside of town.>
+	% V2 = Randomizer
+	greeting <NewChat if# P2 0 else GoCheckMission Say 1 EndStory>
+	GoCheckMission <Say 2 Memo 3 AddChat 1 AddChat 2 AddChat 3>
+
+	result1 <NewChat Say 4 AddChat 4 AddChat 5>
+	result2 <NewChat Say 5>
+	result3 <NewChat Say 6 EndStory>
+	result4 <NewChat Say 7>
+	result5 <EndChat Say 8 SavePos LoadD .scene P= 2 1 PassVAr 1 EP3 PassVar 2 S2 PassVar 3 1 PassVar 4 0 MStockD 10 .mon SeekGate -1>
+	.scene <SCENE_ItemTower.txt>
+	.mon <Ruins Air Mutant City>
+
+	Msg1 <That tower outside of town? It collapsed. There's nothing left but rubble.>
+	Msg2 <While hiking, I found the ruins of an old skyscraper. A brilliant light shone from the top floor. I wanted to go in but the place looked like it was about to collapse.>
+	Msg3 <\ELEMENT 2 in \ELEMENT 1 discovered a ruined tower with a brilliant light at the top.>
+	Msg4 <Sure, I can do that, but as I mentioned it didn't look very safe. Do you want to go now or will you do it later?>
+	Msg5 <I can't say how long it's going to stay there. It looked pretty unstable.>
+	Msg6 <You obviously have no spirit of wonder or adventure...>
+	Msg7 <Alright. It's probably best that you get ready before doing any serious exploring.>
+	Msg8 <This path will take you straight to it. I wonder what the light I saw was... It could be some kind of treasure! Or a monster...>
+
+	Prompt1 <Can you show me where that was?>
+	Prompt2 <Hm, I'd like to see that later.>
+	Prompt3 <That doesn't concern me.>
+	Prompt4 <Maybe I'll go later.>
+	Prompt5 <Let's go right away.>
+
+
+end
+inv
+	Grenade 25
+	name <The Fire of Heaven>
+	mass 8
+	type <Blast 7 Mystery Hyper Armorpiercing Brutal Burn Haywire>
+	Clue29 <Print 1>
+	Msg1 <This appears to be a primitive but extremely powerful microfusion reactor. You better handle it carefully or it could explode.>
+
+	HeadArmor 7
+	name <Zeron Helmet>
+	Biotech
+	mass -12
+	scale 0
+	Clue29 <Print 1>
+	Msg1 <A helmet crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+	sub
+		PCS 5
+	end
+
+	BodyArmor 8
+	scale 0
+	mass -4
+	name <Zeron Armor>
+	Biotech
+	Clue29 <Print 1>
+	Msg1 <A bodysuit crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+	sub
+		gear 4 3 20
+		name <Mega Smasher>
+		type <LINE BURN STRAIN MYSYERY>
+		scale 0
+		mass 2
+		Range 6
+		Acc -2
+		Recharge 1
+	end
+
+	ArmArmor 7
+	name <Zeron Sleeve>
+	scale 0
+	mass -2
+	Biotech
+	Clue29 <Print 1>
+	Msg1 <A gauntlet crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+	sub
+		Melee 12
+		name <High Frequency Blade>
+		type <BRUTAL ARMORPIERCING>
+		recharge 1
+		mass -4
+	end
+
+	LegArmor 7
+	name <Zeron Legging>
+	mass -2
+	scale 0
+	Biotech
+	Clue29 <Print 1>
+	Msg1 <A legging crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
+        sub
+	        Flight 12
+        end
+
+end

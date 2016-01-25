@@ -1,0 +1,159 @@
+Plot 0
+	name <PLOT: Tutorial>
+
+	% Element 1 is Quentin
+	Element1 <Character>
+	Stat 1 4
+
+	% Element 2 is the Mecha Sporch manager
+	Element2 <Character>
+	Stat 2 5
+
+	% V1 = Phase Counter/Combat Indicator
+
+	% After combat, V1 will be 3 in victory or 4 in defeat
+	nu1 <if= V1 2 if= T1 0 V= 1 4>
+	nu2 <if= V1 2 if= T2 0 V= 1 3 Time 3600 XPV 100 Reputation 6 1>
+
+
+	% The only way for this plot to end before the tutorial
+	% has been completed is for Quentin or the manager to die.
+	start <ifPersona E1 else GoDelete ifPersona E2 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	% V1 = Phase Counter
+	% V2 = Miscellaneous Counter
+	% V3 = Anti-Cheating counter
+
+	greeting <NewChat if= V1 0 else GoFirstTrial EndChat Say 1 AddChat 1 AddChat 2>
+	result1 <V+ 2 1 SayAnything ifG V2 2 else GoR1NotThereYet if= V2 3 AddChat 3>
+	GoR1NotThereYet <AddReact d8>
+	result2 <ifG 3 V2 else result3 Say 2>
+	result3 <NewChat Say 3 V= 1 1 History 4 AddChat 4>
+	result4 <NewChat Goto GoFirstTrial>
+	Msg1 <Megi said that you needed some guidance. Well, if there's one thing I pride myself on, it's my helpfulness. Before we get down to business, though, I'd like to chat for a short while. Just to get to know each other better, you know.>
+	Msg2 <Don't go yet! Just chat with me for a bit more. It'll be worth your time, believe me.>
+	Msg3 <Chatting may seem useless but it's actually very important. It will improve your relations with other people, and sometimes will let you hear about important rumors.>
+	Msg4 <You did the tutorial.>
+	Prompt1 <[Chat]>
+	Prompt2 <[Goodbye]>
+	Prompt3 <What are you talking about!?>
+	Prompt4 <Uh-huh. Let's move on to something else.>
+
+	GoFirstTrial <if= V1 1 else GoSecondTrial Say 101 AddChat 101 AddChat 102 AddChat 103>
+	result101 <NewChat Say 102 AddChat 102 AddChat 103>
+	result102 <NewChat Say 103 AddChat 101 AddChat 103>
+	result103 <NewChat Say 104 Shop .wares Say 105 AddChat 104 AddChat 105 AddChat 106>
+	.wares <4 11>
+	result104 <NewChat Say 106 AddChat 107>
+	result105 <NewChat Say 107 AddChat 107>
+	result106 <NewChat Say 108 GrabNPC E1 GSetNAtt 5 3 0 Shop .wares Say 105 AddChat 104 AddChat 105 AddChat 106>
+	result107 <NewChat V= 1 2 Goto GoSecondTrial>
+	Msg101 <The Federated Territories is a pretty safe place to live. Well, safe compared to the dead zone anyways... You'll still need to defend yourself from time to time. Having the right equipment will help.>
+	Msg102 <You'll need at least one weapon. Don't worry too much about what kind just yet... Just pick something you can afford. Armor is also important. Try to get coverage for all six body areas- your head, your torso, both arms and both legs.>
+	Msg103 <Items have to be equipped before they can be used. Just between you and me, that can be done using the "i" key. Oh, here's another piece of advice- press "h" for the help menu.>
+	Msg104 <Great. Right now you should pick some basic adventuring gear- a weapon and some armor. If you can't find what you're looking for I'll see if I have anything else in stock.>
+	Msg105 <There. Remember to equip those items after you're finished here. Did you get everything you need?>
+	Msg106 <Good. Next, I've got a job for you. This will help teach you the basics of combat and let you earn a few dollars at the same time.>
+	Msg107 <That's a common complaint of adventurers. If you'd like to earn some money, I have a job available. This will also teach you the basics of combat.>
+	Msg108 <Take another look through the store. Maybe I can find something that you'll like.>
+	Prompt101 <How will I know what to buy?>
+	Prompt102 <What do I do after I buy things?>
+	Prompt103 <Let's go shopping!>
+	Prompt104 <I think so.>
+	Prompt105 <No, but I'm out of money.>
+	Prompt106 <No, I didn't.>
+	Prompt107 <Tell me about it.>
+
+	GoSecondTrial <Say 201 memo 202 if= V3 0 V= 3 1 P= 1 1>
+
+	Msg201 <\PERSONA E2 of Mecha Sporch has been having a problem with rats. Equip your weapons and armor, then go talk with him. The Mecha Sporch building is that one over there with the wooden floor.>
+	Msg202 <\PERSONA E1 asked you to speak with \PERSONA E2 about some rats.>
+
+
+	Persona 2
+	greeting <NewChat if= P1 0 else GoFirstTrial SayAnything>
+	GoFirstTrial <if= P1 1 else GoSecondTrial Say 101 AddChat 101 AddChat 102>
+	result101 <NewChat Say 102 AddChat 103 AddChat 104>
+	result102 <NewChat Say 103 AddChat 103 AddChat 104>
+	result103 <EndChat Say 105 P= 1 2 SavePos NewD 0 ComposeD NU1 .nu1 ComposeD NU2 .nu2 GNewPart .rat DynaGG 2 SetMapType -16>
+	.rat <RAT>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	result104 <NewChat Say 104 AddChat 103>
+	Msg101 <It's horrible! Our locker room has been infested with giant rats. I told those mechajocks to wash their towels more often... Can you help me get rid of them?>
+	Msg102 <Thank you! You're very heroic. The rat is just down these stairs... Are you ready to go now, or do you need some time to prepare?>
+	Msg103 <I can give you $1000 for the job. I certainly hope that's enough... Are you ready to go now, or do you need some time to prepare?>
+	Msg104 <Kill it, of course. Those things are deadly vicious. If you have a gun you can shoot it by pressing 'a'... Otherwise you're going to have to get close to the rat and engage it in melee.>
+	Msg105 <Good luck down there. Come talk to me when you've finished the job... if you survive.>
+	Prompt101 <Gladly!>
+	Prompt102 <How much are you willing to pay me?>
+	Prompt103 <All ready to go.>
+	Prompt104 <What should I do when I see the rat?>
+
+	GoSecondTrial <if= P1 3 else GoCheckLoss P= 1 5 Say 201 CashPrize 1000 MechaPrize .goodmek AdvancePlot 1>
+	.goodmek <Corsair.txt>
+	GoCheckLoss <if= P1 4 else GoCheckEnd P= 1 5 Say 202 MechaPrize .badmek AdvancePlot 1>
+	.badmek <Badger.txt>
+	Msg201 <Great! The locker room is safe for our arena pilots once again. Still, I don't think I'll be able to convince the cleaning staff to go down there... As a reward here's a spare mecha that we had. Quentin will show you how to use it.>
+	Msg202 <How'd you get out of there without killing the rat!? Something's strange... anyhow, you didn't do what I asked, so I can't give you a reward. But, here's a mecha, since you're gonna need it. Quentin will show you how to use it.>
+
+	Plot 1
+		% The continuation of the tutorial.
+		% The only way for this plot to end before the tutorial
+		% has been completed is for Quentin to die.
+		start <ifPersona E1 else GoDelete>
+		GoDelete <AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat if= V1 0 else GoFirstTrial Say 1 AddChat 1 AddChat 2 AddChat 3>
+
+		result1 <NewChat Say 2 Shop .wares Say 3 AddChat 2 AddChat 3>
+		.wares <4 11>
+		result2 <NewChat V= 1 1 Goto GoFirstTrial>
+		result3 <NewChat Say 4 AddChat 4 AddChat 5>
+		result4 <NewChat Say 5 AdvancePlot 0>
+		result5 <Goto result2>
+		Msg1 <Congradulations on completing your first mission. Keep this up and you'll be an ace in no time. If you check the "C"haracter display you'll see your new mecha listed there. Next you could use some piloting lessons. How about it?>
+		Msg2 <Have a look through the shop, then. When you're finished we'll start with the mecha tutorial.>
+		Msg3 <Hopefully you got everything you need. I'll tell you now the basics of mecha control.>
+		Msg4 <Are you certain? Piloting a mecha is much different from just walking about on foot, you know. Even if you've already nabbed a few amulets and killed a couple of balrogs this information could be useful.>
+		Msg5 <In that case, this is the end of your training. Good luck.>
+		prompt1 <First, I need to buy something.>
+		prompt2 <Let's get started.>
+		prompt3 <Nah, I don't need no lessons.>
+		prompt4 <I'll figure it out on my own.>
+		prompt5 <You could be right... go on.>
+
+		% Explanation of mecha terms.
+		GoFirstTrial <if= V1 1 else GoSecondTrial Say 101 AddChat 101 AddChat 102 AddChat 103 AddChat 104>
+		result101 <NewChat Say 102 AddChat 102 AddChat 103 AddChat 104>
+		result102 <NewChat Say 103 AddChat 101 AddChat 103 AddChat 104>
+		result103 <NewChat Say 104 AddChat 101 AddChat 102 AddChat 104>
+		result104 <NewChat Say 105 AddChat 105>
+		result105 <NewChat V= 1 2 Goto GoSecondTrial>
+		Msg101 <The first thing you'll need to know is how to read your mecha's statistics. Just as every character is described by stats, so is every mecha.>
+		Msg102 <Most folks assume that mass is very important. A big mecha looks far more dangerous than a light one, but often it isn't. The Claymore is big, but its technology is old. The Kojedo is much smaller but also much deadlier.>
+		Msg103 <MV is Maneuverability. TR is Targeting Rating. SE is Sensor class. While performing actions with your mecha, these ratings get added to your skill rank. The higher the better. Your Corsair has MV:-2, TR:-2, and SE:+1.>
+		Msg104 <PV is the cost of your mecha in tactical threat points. It's a better measure of combat worth than mass, MV, or TR alone. Conveniently, PV is also the market price of your mecha in credits.>
+		Msg105 <Good. If you have questions later, consult the help files. Now it's time for some practical experience.>
+		prompt101 <I want to know about mass.>
+		prompt102 <Tell me about MV/TR/SE.>
+		prompt103 <Tell me about PV.>
+		prompt104 <That's probably all I need to know.>
+		prompt105 <All right!>
+
+		GoSecondTrial <if= V1 2 else GoThirdTrial Say 201 AddChat 201>
+		result201 <EndCHat Say 202 V= 1 3 SavePos LoadD .tutormap>
+		.tutormap <TS_SCENE_Tutorial.txt>
+		Msg201 <I've arranged for you to practice driving in the Mecha Sporch arena grounds. Would you like to go there now?>
+		Msg202 <Get into your mecha and head to the arena. I'll stay in contact with you over the radio and provide instructions.>
+		prompt201 <Yes, I would.>
+
+		GoThirdTrial <Say 301 AdvancePlot 0>
+		Msg301 <There. Now you should be ready to face the world! There's an old abandoned mine here in town, if you'd like some more experience fighting monsters. Otherwise you can head to Snake Lake to look for a job.>
+	end
+
+end

@@ -1,0 +1,29 @@
+Plot 0
+	name <PLOT: MekShimli>
+
+	Element1 <Character HasMecha>
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+
+sub
+	Persona 1
+	greeting <ifG React 20 else GoLowReact NewChat Say 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+	GoLowReact <NewChat SayAnything>
+	result1 <NewChat AdvancePlot 0 Reputation 3 -1 Say 2>
+	result2 <NewChat AdvancePlot 0 Reputation 3 1 Say 2>
+	result3 <NewChat AdvancePlot 0 Reputation 5 -1 Say 2>
+	result4 <NewChat AdvancePlot 0 Reputation 4 -1 Say 2>
+	result5 <NewChat AdvancePlot 0 Reputation 5 1 Say 2>
+	result6 <NewChat AdvancePlot 0 Reputation 4 1 Say 2>
+	Msg1 <I've been thinking about buying a new mecha. There are an awful lot of models to choose from... What do you think would be your ideal mecha?>
+	Msg2 <You know, they say that a person's choice of mecha can tell you a lot about their personality. I wonder if it's true?>
+	prompt1 <It must have good stealth and mobility.>
+	prompt2 <Huge, loud, and threatening!>
+	prompt3 <Dark, destructive, and intimidating.>
+	prompt4 <Powerful, unassailable.>
+	prompt5 <Sleek, well designed, shiny.>
+	prompt6 <One that doesn't break down when I need it.>
+
+end

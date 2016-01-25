@@ -1,0 +1,25 @@
+Plot 0
+	name <PLOT: Shimli 14>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Heroic Spiritual>
+	rumor <!1 is deeply religious.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 7 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 7 -1 NewChat Say 4>
+	Msg1 <Lately I have been praying for the state of the world... do you pray?>
+	Msg2 <That is your decision, and I admire your forthrightness. Every person should be free to decide the truth for themselves.>
+	Msg3 <I understand... please forgive me if I was sharing too much about my personal beliefs.>
+	Msg4 <I believe in a greater power, but I also know that prayer alone does not change anything. Acts of faith should lead to acts of virtue.>
+	prompt1 <No, never.>
+	prompt2 <That's personal.>
+	prompt3 <Yes I do.>
+
+end

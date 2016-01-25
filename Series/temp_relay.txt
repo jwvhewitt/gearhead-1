@@ -1,0 +1,369 @@
+Plot 0
+	name <Relay Combat Mission>
+
+	% NPC E2 will tell the PC to go meet NPC E3. NPC E3 will then
+	% give the PC a combat mission. The PC should then go back to
+	% the same town as NPC E2, where he will be paid for the mission.
+
+	% You can make it into a complete combat mission just
+	% by filling in the blanks in the MESSAGE BLOCKs below.
+
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	% This plot will likely be called from a faction story.
+	% So, it will grab the identity of the faction as its first
+	% element, and a member of the faction to give the job to
+	% the PC.
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	Element2 <Character !Comrade 1>
+
+	% E3 is the character who will give the PC the combat mission.
+	% You better fill in some more details- Trucker, Shopkeeper, etc.
+	Element3 <Character !Far 2>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% V1 = Time Limit
+	% V3 = Email sent indicator.
+
+	% On a cleanup request, delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 or NPC E3 are killed.
+	start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 if= PCFac E1 V= 3 1 Email d5>
+	% Alternate Version: send email if PC is well-liked, regardless
+	% of faction affiliation.
+	% 5Min <if= d50 23 if= V3 0 ifG RReact E2 d70 V= 3 1 Email d5>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// >
+
+sub
+	% Note that in this root adventure, NPC E3 doesn't get a persona.
+	% That's because we want him to continue with his regular actions
+	% until the adventure is activated by speaking with NPC E2.
+	% Sub-Plot 1 contains the conversation with NPC E3 and also the
+	% combat code.
+
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <>
+	% eg., rumor <!2 might have a job for you.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% First, check to see if the PC will automatically be given
+	% the job.
+	% When the job is activated, advance to sub-plot 1.
+	% Here are the variables used in this conversation:
+	%  V1 = if mission denied, V1 <> 0
+	%  V2 = message randomizer
+	%  V4 = mission reward
+	greeting <NewChat V= 4 Reward Threat FacVar E1 1000 100 200 if= V1 0 else GoDenied if= PCFac E1 else GoCheckEmail Goto GoStartJob>
+	GoCheckEmail <if= P3 1 else GoCheckFriend Say d2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoCheckFriend <ifG React 40 else GoNoAutomatic V= 2 2 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+
+	% If not automatically offered the mission, the PC may be able to
+	% get the job through the use of skills/reputation, as long as he
+	% is not hated by the NPC...
+	GoNoAutomatic <ifG React d10 else GoDenied V= 2 5 V+ 2 d5 Say V2 V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoStartJob <V= 2 10 V+ 2 d5 Say V2 AdvancePlot 1>
+
+	% PC has accepted the job.
+	result1 <NewChat Goto GoStartJob>
+	result2 <Goto result1>
+
+	% PC has rejected the job.
+	result3 <NewChat Say 16 V= 1 -1>
+	result4 <Goto result3>
+
+	% PC will try to get job by "Plan A"... in this case,
+	% counting on a high RENOWNED reputation.
+	result5 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR5Lose V= 2 20 V+ 2 d5 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoR5Lose <V= 1 -1 Say 18>
+	result6 <Goto result5>
+
+	% PC will try to get job by "Plan B"... in this case,
+	% asking a question using CONVERSATION skill.
+	result7 <NewChat ifG Conversation 20 else GoR7Lose V= 2 20 V+ 2 d5 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoR7Lose <V= 1 -1 Say 19>
+	result8 <Goto result7>
+
+	result9 <NewChat Say 17 V= 1 -1>
+	result10 <Goto result9>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 02 :  Player has received email asking to do mission.
+	%   Pay for the job will be "$ \VAL V4".
+	Msg1 <>
+	Msg2 <>
+
+	% 03 - 05 :  Player is friend of NPC, will be asked to do mission.
+	%   Pay for the job will be "$ \VAL V4".
+	Msg3 <>
+	Msg4 <>
+	Msg5 <>
+
+	% 06 - 10 :  NPC will imply mission, PC has chance to get it.
+	Msg6 <>
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+	Msg10 <>
+
+	% 11 - 15 :  PC has accepted job, now recieves instructions.
+	%   use "\Element 3" for NPC E3's name, and "\SCENE EScene 3" for
+	%   NPC E3's location. You should provide both.
+	%   Also, you may want to mention that there's a 24-hour time limit,
+	%   or you may remove the time limit by editing Sub-Plot 1's
+	%   scripts block below.
+	Msg11 <>
+	Msg12 <>
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	% 16 : PC rejected mission by prompt 03-04.
+	Msg16 <I'll find someone else to complete this task, then.>
+	% 17 : PC rejected mission by prompt 09-10.
+	Msg17 <I'll have to get back to work.>
+	% 18 : Plan "A" (prompts 5-6) failed.
+	Msg18 <I don't think you're quite ready to handle this job, yet.>
+	% 19 : Plan "B" (prompts 7-8) failed.
+	Msg19 <It's a private matter; nothing which concerns you.>
+
+	% 21 - 25 :  Player convinced NPC to maybe give job.
+	%   Pay for the job will be "$ \VAL V4".
+	Msg21 <>
+	Msg22 <>
+	Msg23 <>
+	Msg24 <>
+	Msg25 <>
+
+
+	% 01 - 02 :  PC will accept the mission
+	Prompt1 <I'll go speak with \ELEMENT 3 for you.>
+	Prompt2 <>
+
+	% 03 - 04 :  PC doesn't want to do this mission
+	Prompt3 <I'm too busy to help you right now.>
+	Prompt4 <>
+
+	% 05 - 06 :  PC will try to get mission by RENOWNED reputation
+	Prompt5 <I'm looking for a job if you're looking for an ace.>
+	Prompt6 <>
+
+	% 07 - 08 :  PC will try to get mission by CONVERSATION skill
+	Prompt7 <What are you working on?>
+	Prompt8 <>
+
+	% 09 - 10 :  PC doesn't want the mission
+	Prompt7 <That's interesting.>
+	Prompt8 <>
+
+
+	Plot 1
+		name <Sub-Plot 1>
+
+		% ********************
+		% *** SCRIPT BLOCK ***
+		% ********************
+		% V1 = Time Limit
+		% V2 = Combat Indicator, if V2=1 combat has been entered
+
+		% On a cleanup request, delete this plot unless combat has been
+		% entered.
+		cleanup <if= V2 0 AdvancePlot 0>
+
+		% Time limit. This plot will conclude in one day, or immediately
+		% if NPC E2 or NPC E3 are killed. 86400 is the number of seconds
+		% in a single day. You can alter the time limit by altering the
+		% value added to V1 below.
+		% Also, at the first startup, set the memo.
+		start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Memo 1>
+
+		% If you don't want a time limit, comment out the above line
+		% and uncomment the following:
+		% start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete if= V1 0  V= 1 1 Memo 1>
+
+		GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+		GoDelete <AdvancePlot 0>
+
+		% Combat check. If combat has been entered, V2=1.
+		% Combat ends in victory if the number of active masters on
+		% team two drops to zero, or ends in defeat is the number of
+		% active masters on team one drops to zero. After combat, V2=3
+		% if the player was victorious or V2=2 is the player lost.
+		% Finally, if the player won, the calling story's faction victory
+		% count (by default now story variable 101) will be increased.
+		nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+		nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  S+ 101 1>
+
+
+		% *********************
+		% *** MESSAGE BLOCK ***
+		% *********************
+		% The adventure memo.
+		msg1 <\ELEMENT 2 in \SCENE EScene 2 asked you to meet \ELEMENT 3 in \SCENE Escene 3 for a combat mission.>
+
+	sub
+		Persona 2
+		% The character who hired the PC...
+		% ********************
+		% *** SCRIPT BLOCK ***
+		% ********************
+		%  V2 = message randomizer
+		% First thing to check is whether or not the combat has
+		% already been finished- if so, the NPC will reward PC.
+		% If not, the NPC will just remind the PC where he's
+		% supposed to go.
+		greeting <NewChat V= 4 Reward Threat FacVar E1 1000 100 200 if= P2 3 else GoCheckLoss V= 2 10 V+ 2 d5 Say V2 CashPrize V4 AdvancePlot 0>
+
+		% if the PC lost, print a message then end the story.
+		GoCheckLoss <if= P2 2 else GoNoCombat V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+
+		% if the PC hasn't done the combat yet, browbeat him.
+		GoNoCombat <Say d5>
+
+		% *********************
+		% *** MESSAGE BLOCK ***
+		% *********************
+		% 01 - 05 :  Player will be reminded of the job.
+		%   use "\Element 3" for NPC E3's name, and "\SCENE EScene 3" for
+		%   NPC E3's location. You should provide both.
+		Msg1 <>
+		Msg2 <>
+		Msg3 <>
+		Msg4 <>
+		Msg5 <>
+
+		% 06 - 10 :  The PC lost the mission.
+		Msg6 <>
+		Msg7 <>
+		Msg8 <>
+		Msg9 <>
+		Msg10 <>
+
+		% 11 - 15 :  The PC won the mission.
+		Msg11 <>
+		Msg12 <>
+		Msg13 <>
+		Msg14 <>
+		Msg15 <>
+
+
+		Persona 3
+		% The character who will start the combat mission...
+		% ********************
+		% *** SCRIPT BLOCK ***
+		% ********************
+		% This NPC will really just offer the combat mission and
+		% get on with it, but first we better check to see if the
+		% PC has already completed the mission.
+		%  V2 = Message Randomizer
+		%  V3 = Enemy threat value
+		%  V4 = Eventual cash reward
+		greeting <NewChat V= 3 Threat FacVar E1 1000 100 V= 4 Reward V3 200 ifG P2 0 else GoLetsGo Say 6>
+		GoLetsGo <Say d5 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddCHat V2>
+
+		% Start combat now.
+		result1 <EndChat V= 2 6 V+ 2 d4 Say V2 SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Salvage Return>
+		result2 <Goto Result1>
+
+		% Need more time
+		result3 <NewChat Say 11>
+		result4 <Goto result3>
+
+		% What are we facing?
+		result5 <NewChat V= 2 11 V+ 2 d4 Say V2 AddChat 1 AddChat 3>
+		result6 <Goto result5>
+
+		% *********************
+		% *** MESSAGE BLOCK ***
+		% *********************
+
+		% 01 - 05 :  NPC is ready to start the mission.
+		Msg1 <>
+		Msg2 <>
+		Msg3 <>
+		Msg4 <>
+		Msg5 <>
+
+		% 06 :  PC should report back to NPC E2.
+		Msg6 <I think you should go report to \ELEMENT 2 in \SCENE EScene 2 now.>
+
+		% 07 - 10 :  Starting mission, good luck to PC.
+		Msg7 <>
+		Msg8 <>
+		Msg9 <>
+		Msg10 <>
+
+		% 11 :  PC needs some time to get ready.
+		Msg11 <Hurry back once you've refueled your mek.>
+
+		% 12 - 15 :  Give overview of enemy forces.
+		%  use "\VAL V3" for the enemy threat level.
+		Msg12 <>
+		Msg13 <>
+		Msg14 <>
+		Msg15 <>
+
+
+		% 01 - 02 :  Start the mission
+		prompt1 <Let's start this mission.>
+		prompt2 <>
+
+		% 03 - 04 :  Need time to prepare
+		prompt3 <I need some time to prepare.>
+		prompt4 <>
+
+		% 05 - 06 :  How many enemies?
+		prompt5 <What will I be fighting out there?>
+		prompt6 <>
+
+	end
+
+end
+
+
+

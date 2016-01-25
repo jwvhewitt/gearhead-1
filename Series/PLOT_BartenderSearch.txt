@@ -1,0 +1,137 @@
+Plot 0
+	% The PC will talk to a bartender. The bartender will ask
+	% if the PC has a job, what kind of job he's looking for,
+	% and so on. Behind the scenes, this plot will call the
+	% "STORYLINE" command multiple times with "PLOT_*Job*.txt"
+	% pattern. This should provide some emploment for the PC,
+	% I hope.
+	name <PLOT: Bartender Job Search>
+	element1 <Character Bartender Sociable Knowledge>
+	rumor <adventures always seem to begin in bars. It's a convention which transcends all genres.>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 15000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <!1 knows everything that happens in town.>
+	greeting <NewChat AdvancePlot 0 ifG React d200 else GoNoFirst  Say 2  AddChat 3 AddChat 9 AddChat 10>
+	GoNoFirst <ifG PCRep 6 50 else GoNoHiRep  ifG React d80 else GoNoHiRep  Say 3  AddChat 7 AddChat 8  StoryLine .jobpattern>
+	GoNoHiRep <ifG -25 PCRep 5 else GoNoSad  ifG React d30 else GoNoSad  Say 1  AddChat 1 AddChat 2 AddChat 3>
+	GoNoSad <ifG React d50 else GoNoChance  Say 4  AddChat 4 AddChat 5 AddChat 6>
+	GoNoChance <SayAnything  AddReact d4  StoryLine .jobpattern>
+
+	result1 <NewChat Say 5  Reputation 5 1  AddChat 4  AddChat 11 AddChat 6  StoryLine .jobpattern>
+	result2 <NewChat Say 6  Reputation 5 -1  AddChat 10 AddChat 12 AddChat 13>
+	result3 <NewChat Say 7  AddChat 14 AddChat 15 AddChat 16 AddChat 17 AddChat 18 AddChat 19  StoryLine .jobpattern>
+	result4 <NewChat Say 8  Reputation 3 1  Time d200  AddChat 20 AddChat 21 AddChat 22>
+	result5 <NewChat Say 9  Reputation 4 -1  AddChat 23 AddChat 24>
+	result6 <NewChat Say 10  AddChat 10 AddChat 12 AddChat 25>
+	result7 <NewChat Say 11  AddReact d6  StoryLine .jobpattern>
+	result8 <NewChat Say 12  Reputation 6 -1  AddChat 14 AddChat 19 AddChat 10  StoryLine .jobpattern>
+	result9 <NewChat Say 13  AddReact d6  StoryLine .jobpattern>
+	result10 <NewChat Say 14  AddChat 26 AddChat 27 AddChat 28  StoryLine .jobpattern StoryLine .jobpattern>
+	result11 <NewChat Say 15  AddChat 29 AddChat 30>
+	result12 <NewChat Say 16  AddChat 31  Reputation 4 d3>
+	result13 <NewChat Say 17  Reputation 3 -2>
+	result14 <NewChat  Reputation 3 1  ifG React d100 else GoR14NoReact  Say 18  StoryLine .jobpattern>
+	GoR14NoReact <Say 19>
+	result15 <NewChat  Say 20  AddChat 31  StoryLine .jobpattern StoryLine .jobpattern StoryLine .jobpattern>
+	result16 <NewChat  Say 21  StoryLine .jobpattern>
+	result17 <NewChat  Say 23  AddReact d6>
+	result18 <NewChat  ifG SkRoll 27 10 else GoR18NoFlirt  Say 24  StoryLine .jobpattern>
+	GoR18NoFlirt <Say 25  AddReact d6>
+	result19 <NewChat  Say 22  AddChat 31 AddChat 32 AddChat 33>
+	result20 <NewChat  Say 26  AddChat 26 AddChat 27 AddChat 13  StoryLine .jobpattern>
+	result21 <NewChat  Say 27  AddChat 26 AddChat 27 AddChat 28  StoryLine .jobpattern>
+	result22 <NewChat  Say 28  AddReact d6>
+	result23 <NewChat  Say 29  Reputation 4 -1 Reputation 5 -3>
+	result24 <NewChat  Say 30  Reputation 4 -3 Reputation 5 d3>
+	result25 <NewChat  Say 31  Reputation 3 -1>
+	result26 <NewChat  Say 32  AddChat 31  StoryLine .jobpattern>
+	result27 <NewChat  Say 33  AddChat 31  StoryLine .jobpattern>
+	result28 <NewChat  Say 34  Reputation 4 1  AddChat 31  StoryLine .jobpattern>
+	result29 <NewChat  Say 35  Reputation 5 -1>
+	result30 <NewChat  Say 36  Reputation 4 -3>
+	result31 <NewChat  Say 37  StoryLine .jobpattern  AddReact d5>
+	result32 <NewChat  Say 38  StoryLine .jobpattern  AddReact d6>
+	result33 <NewChat  Say 39>
+
+	.jobpattern <PLOT_*Job*.txt>
+	Msg1 <Hey there, chum. Why are you looking so down?>
+	Msg2 <Good to see you. How've you been?>
+	Msg3 <Hey there, good to see you. It's nice having some famous faces in to brighten up the place. I guess a big shot like you is always in high demand.>
+	Msg4 <Welcome in. What can I do for you today?>
+	Msg5 <Really? Well, I guess it is sort of a subjective judgement... So what can I do for you, then?>
+	Msg6 <Ehhh, could be worse. So what's your business in these parts, then?>
+	Msg7 <Well, don't take it so bad. Things will come around and change for the better, they always do. Is there anything in particular bothering you?>
+	Msg8 <Great! Wow, you must have a good job to be spending money like that.>
+	Msg9 <Our strongest? That'd be the "Jac-N-Zac Double Blaster". So, are you drinking this hard because there's something on your mind, or are you just a party animal?>
+	Msg10 <Fine by me. So what brings you through town, are you here for business or pleasure?>
+	Msg11 <Then let me buy you a drink, on the house. Here's to your continued success!>
+	Msg12 <Really? I find that hard to believe... I've heard about your reputation, and all the things you've done. What's up now?>
+	Msg13 <That's good to know. Here, have a drink on me.>
+	Msg14 <Hm, that's a common story these days. What kind of job were you hoping for?>
+	Msg15 <Hey! I thought you said that you weren't sad!>
+	Msg16 <I hope you have a good time.>
+	Msg17 <You're absolutely right, it isn't. I'll stop asking you personal questions then.>
+	Msg18 <That can't be true! I like you; I'm sure there must be others! Here, have a beer, on the house.>
+	Msg19 <Well, that may be true... Don't let it get you down. I'm sure there are folks out there who would like you just fine. Most of them may be hermits, but it could be worse...>
+	Msg20 <Well, you could always look for a job. Talk around to the people in town. Somebody's bound to know of a job opening somewhere.>
+	Msg21 <That's tough. You might want to think about looking for a bounty hunting job, then. The pay is good but it's awfully dangerous.>
+	Msg22 <What kind of attitude is that!? You'll never be able to do anything right if you're such a pessimist... And quit pouting! Stop it!>
+	Msg23 <Really? That's horrible... I had a dog once too... Here, have a drink on the house. It'll make you feel better.>
+	Msg24 <No way! You look terrific! I think you probably just had a bad day... Here, have a drink, on the house.>
+	Msg25 <Well, look at me! I used to be a size 7, you know. Don't worry about it. It's what's on the inside that counts.>
+	Msg26 <No job and you can afford to buy everyone a beer? In that case I certainly hope that you're talented. What kind of work are you into?>
+	Msg27 <Well then, I guess you must be looking for a new job! What kind of work are you hoping for?>
+	Msg28 <Wonderful! I'll drink to your company!>
+	Msg29 <That's not very healthy. I'll get you a drink, but if you want more than that you'll have to go elsewhere, okay?>
+	Msg30 <Well, the guardians have been coming down pretty hard on us lately... I'll get you a drink, but if you want more than that you'll have to move on, okay?>
+	Msg31 <Say no more, I know when I'm being too nosy.>
+	Msg32 <That's a dangeous line of work, isn't it? The money's good but you might not live long enough to spend it. At least in a mecha you have a chance to eject, but out there on foot if they shoot you it's all over.>
+	Msg33 <That's a good line of work, I suppose. It's a bit expensive to maintain the life style, though, and if you want to go up the ranks you'll need to keep on top of the latest hardware.>
+	Msg34 <You mean like bartending? Heh, that's a 3D job if ever there was one- Dirty, Difficult, and Dangerous. I hear that there are some nice cushy jobs out there if you've got any marketable skills.>
+	Msg35 <Well then, here's your drink. I hope that whatever you're trying to forget never manages to catch up with you.>
+	Msg36 <Calm down! Here's your drink. If you want more than this you'll have to go elsewhere; the guardians have been doing spot checks lately. A drunk mecha pilot on the news is the last thing I need.>
+	Msg37 <Hmmm... I can't think of one off hand, but maybe if we chat for a while it'll jog my memory.>
+	Msg38 <Of course I'm right. As a bartender I've got more years of amateur psychoanalysis under my belt than most licensed physicians. Take it easy, and later on I'm sure things will be looking better.>
+	Msg39 <You're despicable...>
+
+	Prompt1 <Sad? I don't look sad.>
+	Prompt2 <Oh, I always look that way.>
+	Prompt3 <Things have been rough lately.>
+	Prompt4 <I'll buy drinks for the house!>
+	Prompt5 <I'll have your strongest brew.>
+	Prompt6 <Nothing, thanks.>
+	Prompt7 <That's the truth!>
+	Prompt8 <Not that high demand, actually.>
+	Prompt9 <I'm pretty good.>
+	Prompt10 <I'm looking for work.>
+	Prompt11 <I'll have your strongest brew.>
+	Prompt12 <Just hanging out, really.>
+	Prompt13 <None of your business.>
+	Prompt14 <Everyone hates me.>
+	Prompt15 <I have no money.>
+	Prompt16 <I have no mecha.>
+	Prompt17 <My dog died.>
+	Prompt18 <I'm getting fat.>
+	Prompt19 <I can't do anything right.>
+	Prompt20 <Actually, no.>
+	Prompt21 <Not anymore...>
+	Prompt22 <Yes, I do!>
+	Prompt23 <I'm drinking to forget.>
+	Prompt24 <I'm drinking to get drunk.>
+	Prompt25 <I have my reasons.>
+	Prompt26 <Bounty hunting.>
+	Prompt27 <Mecha piloting.>
+	Prompt28 <Something safe.>
+	Prompt29 <I said I don't LOOK sad.>
+	Prompt30 <I'm not sad! Give me a drink!>
+	Prompt31 <Do you know any local job openings?>
+	Prompt32 <You're right, I guess.>
+	Prompt33 <[Pout]>
+
+end

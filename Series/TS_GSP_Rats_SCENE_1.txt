@@ -1,0 +1,113 @@
+Scene 0 0
+% The sewer rat great escape
+
+% The PC's music has incited the city rats to dig a tunnel for him.
+% Now, the PC must escape this place...
+
+% V1 = Location of town
+% V2 = Initialization Counter
+
+MonkeyMap
+BorderType 29
+FloorType 17
+type <SOLO>
+
+nu1 <if= T1 0 Exit V1>
+
+start <if= V2 0 V= 2 1 Alert 1 MonsterUp 2 WMThreat PCRep 6>
+
+Msg1 <You are surrounded by giant rats! They don't seem to be hostile, fortunately... They stare at you admiringly, as though they were a bunch of schoolgirls meeting their favorite rock star.>
+
+
+sub
+	Rect
+	floortype 7
+	special <STARTHERE>
+	name <StartPlace>
+
+	rect
+	floortype 1
+	sub
+		StairsUp
+		use <Print 1 Alert 2 Exit L1 XPV 300>
+		Msg2 <As you walk up the stairs the rats follow behind you. They head out from the sewers and into the wilds, seeking whatever kind of a better life rats can dream of.>
+	end
+
+
+	Team 1
+
+	Team 2
+	SetEnemy 1 3
+	type <City Swamp Mutant Devo>
+
+	Team 3
+	SetAlly 1
+	home <StartPlace>
+	type <Animal Cave Vermin>
+
+
+end
+inv
+
+ARCH King Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <119 123 178 234 195 0 217 103 126>
+type <animal city vermin>
+statline 16 13 25 17 11 9 6 8
+SetTeam -3
+size 14
+skill 8 7
+skill 9 5
+skill 10 6
+skill 11 5
+skill 12 2
+skill 13 1
+skill 26 1
+skill 28 1
+skill 36 3
+mod head
+	armor 2
+	sub
+		gear 4 0 8
+		name <Fangs>
+		type <BRUTAL>
+	end
+mod body
+	armor 2
+mod leg
+	armor 2
+	name <Right Front Leg>
+	sub
+		gear 4 0 6
+		name <Claws>
+		stat 3 1
+		type <ARMORPIERCING>
+	end
+mod leg
+	armor 2
+	name <Left Front Leg>
+	sub
+		gear 4 0 6
+		name <Claws>
+		stat 3 1
+		type <ARMORPIERCING>
+	end
+mod leg
+	armor 2
+	name <Right Rear Leg>
+mod leg
+	armor 2
+	name <Left Rear Leg>
+mod tail
+	armor 2
+end
+
+
+	Monster DEATH RAT
+	SetTeam 3
+
+	Monster DEATH RAT
+	SetTeam 3
+
+end

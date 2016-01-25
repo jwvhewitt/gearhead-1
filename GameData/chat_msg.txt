@@ -1,0 +1,141 @@
+% Standard messages for the INTERACT.PP unit.
+FACTION_IS_INACTIVE < has been disbanded.>
+CHAT_Skill19_1 <You seem to be very charismatic today.>
+CHAT_Skill19_2 <You are such an interesting person to chat with.>
+CHAT_Skill19_3 <I really enjoy chatting with you.>
+CHAT_Skill27_1 <If you don't mind me saying so, you look wonderful.>
+CHAT_Skill27_2 <You must have a lot of admirers.>
+CHAT_Skill27_3 <You are so attractive... I'll bet that you're never lonely.>
+RUMOR_TownFac1 <this town is controlled by >
+RUMOR_TownFac2 <.>
+RUMOR_Membership1 <I am a member of >
+RUMOR_Membership2 <.>
+TRAITCHAT_Like1 <I really like>
+TRAITCHAT_Like2 <I'm a big fan of>
+TRAITCHAT_Like3 <I love>
+TRAITCHAT_Hate1 <I don't like>
+TRAITCHAT_Hate2 <I can't stand>
+TRAITCHAT_Hate3 <I'm not a fan of>
+TRAITCHAT_Ehhh1 <I don't often think about>
+TRAITCHAT_Ehhh2 <I'm ambivalent towards>
+TRAITCHAT_Ehhh3 <I have no opinion about>
+TRAITCHAT_Lead1 <I'd like to tell you that>
+TRAITCHAT_Lead2 <One thing you should know about me is that>
+TRAITCHAT_Lead3 <I want you to know that>
+TRAITCHAT_Lead4 <You should know that>
+TRAITCHAT_Lead5 <You may have noticed that>
+TRAITCHAT_Lead6 <I should tell you that>
+TRAITCHAT_Lead7 <Everyone can tell that>
+AHook_Greeting <NewChat Say 1 AddChat 1>
+AHook_R_1 <NewChat Say 2>
+AHOOK_Msg1_1 <Hey there. I thought I'd come over and see if you needed any help.>
+AHOOK_Msg1_2 <I'm here to back you up. Let's fight these creeps together.>
+AHOOK_Msg1_3 <Right now it's \VAL T2 against 1... Here, I'll even up those odds.>
+AHOOK_Msg2_1 <Good luck!>
+AHOOK_Msg2_2 <Be careful!>
+AHOOK_Msg2_3 <I'll be with you all the way!>
+AHOOK_P_1_1 <It's good to see you.>
+AHOOK_P_1_2 <Thanks for the help.>
+AHOOK_P_1_3 <Let's do it!>
+AHOOK_P_1_4 <Let's do this mission.>
+AHOOK_P_1_5 <Let's roll!>
+EHook_Greeting <EndChat Say 1 AddChat 1>
+EHook_R_1 <EndChat Say 2>
+EHook_R_2 <EndChat Say 3 Retreat 1 Reputation 6 -1 TReputation 2 6 1>
+EHOOK_R_3 <EndChat AddReact -5 ifG SkRoll 28 V999 else Result1 if= V1 0 else Result1 V= 1 1 Retreat 2 Say 4 Print 5 XPV V1000 TReputation 2 6 -1>
+EHOOK_Msg5 <The enemy forces are retreating!>
+EHOOK_Msg2_1 <I will %t!>
+EHOOK_Msg2_2 <I'm going to %t!>
+EHOOK_Msg2_3 <Let's go!>
+EHOOK_Msg2_4 <We will %t!>
+EHOOK_Msg2_5 <Prepare to die!>
+EHOOK_Msg3_1 <You're making a very smart decision.>
+EHOOK_Msg3_2 <Next time we meet, I might not be so merciful.>
+EHOOK_Msg3_3 <Don't let me catch you around here again.>
+EHOOK_Msg3_4 <Until the next time our paths cross...>
+EHOOK_Msg3_5 <Next time we meet on the battlefield, it will be to the death...>
+EHOOK_Msg4_1 <You win today, but next time we meet I'll %t.>
+EHOOK_Msg4_2 <Alright, I concede this battle to you... but next time will be different.>
+EHOOK_Msg4_3 <It isn't worth risking my life for this. You win.>
+EHOOK_Msg4_4 <Okay, you win. I concede the battle to you.>
+EHOOK_Msg4_5 <I'll get you next time... Next time!!!>
+EHOOK_PCRA_1 <This is your last chance to leave here alive.>
+EHOOK_PCRA_2 <If you want to run I won't chase you.>
+EHOOK_PCRA_3 <Get out of here before I %t.>
+EHOOK_PCRA_4 <Are you really sure you want to fight me?>
+EHOOK_PCRA_5 <If you don't leave now I'll have to %t.>
+EHOOK_AreAllies_1 <Why did you have to betray me?>
+EHOOK_AreAllies_2 <I don't care who you are, I'll %t.>
+EHOOK_AreAllies_3 <I guess I now know where your loyalties lie.>
+EHOOK_AreNeutral_1 <I will %t.>
+EHOOK_AreNeutral_2 <Are you here because you want to die?>
+EHOOK_AreNeutral_3 <Why did you have to come here?>
+EHOOK_AreEnemies_1 <So we meet again.>
+EHOOK_AreEnemies_2 <I've been looking forward to this.>
+EHOOK_AreEnemies_3 <You again? This time I'll %t.>
+EHOOK_Like_1 <I don't want to %t but I will if I have to.>
+EHOOK_Like_2 <I like you, but don't expect me to hold back any.>
+EHOOK_Like_3 <Even though you're my friend I won't be gentle.>
+EHOOK_Ehhh_1 <You shouldn't have gotten involved in this.>
+EHOOK_Ehhh_2 <Now I will %t.>
+EHOOK_Ehhh_3 <What is so important that you would die here for it?>
+EHOOK_Hate_1 <I've been wanting to %t for some time now.>
+EHOOK_Hate_2 <I really want to %t.>
+EHOOK_Hate_3 <I can't wait to %t.>
+EHOOK_Trait_1_1_1 <I'll make you pay for your villiany.>
+EHOOK_Trait_1_1_2 <You will crumble before my righteous fury!>
+EHOOK_Trait_1_1_3 <Your campaign of evil stops here.>
+EHOOK_Trait_1_2_1 <I'll teach you what true power is.>
+EHOOK_Trait_1_2_2 <How I long to %t!>
+EHOOK_Trait_1_2_3 <I will delight in your pain.>
+EHOOK_Trait_2_1_1 <I salute you, my noble adversary.>
+EHOOK_Trait_2_1_2 <I'll make you pay for your crimes.>
+EHOOK_Trait_2_1_3 <You have a lot to own up to.>
+EHOOK_Trait_2_2_1 <Fortune favors the strong.>
+EHOOK_Trait_2_2_2 <This will teach you to interfere in my plans!>
+EHOOK_Trait_2_2_3 <Let's see which one of us luck favors today.>
+EHOOK_Trait_3_1_1 <For the glory of my comrades I will defeat you!>
+EHOOK_Trait_3_1_2 <We aren't about to back down.>
+EHOOK_Trait_3_1_3 <We're ready to %t.>
+EHOOK_Trait_3_2_1 <We die as we dream, alone.>
+EHOOK_Trait_3_2_2 <I just want to get this over with.>
+EHOOK_Trait_3_2_3 <Prepare to defend yourself.>
+EHOOK_Trait_4_1_1 <Imagine that, the two of us meeting on a battleground like this.>
+EHOOK_Trait_4_1_2 <Eh, as long as we're here, we may as well fight.>
+EHOOK_Trait_4_1_3 <I'm ready to fight whenever you are.>
+EHOOK_Trait_4_2_1 <I challenge you to mortal combat!>
+EHOOK_Trait_4_2_2 <You will feel my might!>
+EHOOK_Trait_4_2_3 <Unleash the hounds of war!>
+EHOOK_Trait_5_1_1 <I wonder which of us is the better warrior? Let's find out!>
+EHOOK_Trait_5_1_2 <It's a really nice day for a battle, don't you think?>
+EHOOK_Trait_5_1_3 <Let's see who is stronger!>
+EHOOK_Trait_5_2_1 <One of us will not leave this place alive.>
+EHOOK_Trait_5_2_2 <Death is my mistress; either you or I shall be joining her today.>
+EHOOK_Trait_5_2_3 <I have no fear of the end. Do you?>
+EHOOK_Trait_6_1_1 <Do you really think you can defeat me?>
+EHOOK_Trait_6_1_2 <I have beaten many enemies stronger than you.>
+EHOOK_Trait_6_1_3 <You are an excellent adversary for me to practice my skills against.>
+EHOOK_Trait_6_2_1 <I think I can take you.>
+EHOOK_Trait_6_2_2 <I'll do my best to beat you.>
+EHOOK_Trait_6_2_3 <I'm not afraid of you.>
+EHOOK_Trait_7_1_1 <I cannot allow you to go on.>
+EHOOK_Trait_7_1_2 <It's impossible for you to win today.>
+EHOOK_Trait_7_1_3 <Logic dictates that I will be the victor.>
+EHOOK_Trait_7_2_1 <I will send you to the Hell!>
+EHOOK_Trait_7_2_2 <Prepare to meet your maker!>
+EHOOK_Trait_7_2_3 <You better make peace with your gods!>
+EHOOK_P_1_1 <Enough talking, let's begin.>
+EHOOK_P_1_2 <Let's get started.>
+EHOOK_P_1_3 <It's time to fight.>
+EHOOK_P_1_4 <I'm ready to take you.>
+EHOOK_P_1_5 <Shall we begin?>
+EHOOK_P_2_1 <Okay, I'll leave.>
+EHOOK_P_2_2 <I surrender!>
+EHOOK_P_2_3 <I'll go away quietly.>
+EHOOK_P_2_4 <Alright, I'll go.>
+EHOOK_P_2_5 <I won't fight you.>
+EHOOK_P_3_1 <Don't make me %t.>
+EHOOK_P_3_2 <Surrender or else.>
+EHOOK_P_3_3 <Give up or I'll %t.>
+EHOOK_P_3_4 <If you give up, I won't %t.>
+EHOOK_P_3_5 <This is your last chance to surrender.>

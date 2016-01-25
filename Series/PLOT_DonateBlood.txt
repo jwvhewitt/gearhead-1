@@ -1,0 +1,89 @@
+Plot 0
+	name <PLOT: Blood Donation>
+	% A simple plot... the PC will be asked to donate blood.
+	% Doing so will result in a point of heroism and totally
+	% messed up stamina.
+
+	element1 <Character Nurse Heroic>
+
+	%  V1 :  Timer
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+sub
+	Persona 1
+	rumor <!1 needs volunteers to donate blood.>
+	%  V2 :  Message Randomizer
+	greeting <NewChat AdvancePlot 0 ifG React 40 else GoNoFriend Say d3 Goto GoAddBloodOps>
+	GoNoFriend <ifNPCSexy E1 else GoNoSexy ifG React d10 else GoNoSexy V= 2 3 V+ 2 d3 Say V2 Goto GoAddBloodOps>
+	GoNoSexy <V= 2 6 V+ 2 d3 Say V2 Goto GoAddBloodOps>
+
+	GoAddBloodOps <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2 V= 2 6 V+ 2 d3 AddChat V2>
+
+	GoDonate <Print 101 Time 3600 AddReact d5 Reputation 1 1 GrabPCPilot GAddNAtt NAG_Condition NAS_StaminaDown 30 GiveSTC .desc Print 102>
+	.desc <FOOD-1>
+
+	result1 <EndChat V= 2 9 V+ 2 d3 Say V2 Goto GoDonate>
+	result2 <Goto result1>
+	result3 <Goto result1>
+
+	result4 <NewChat V= 2 12 V+ 2 d3 Say V2>
+	result5 <Goto result4>
+	result6 <Goto result4>
+
+	result7 <NewChat V= 2 15 V+ 2 d3 Say V2 Reputation 4 d8 AddChat 10 AddChat 11>
+	result8 <Goto result7>
+	result9 <Goto result7>
+
+	result10 <Goto result1>
+	result11 <Goto result4>
+
+	%  01 - 03 :  PC is a friend of the nurse
+	Msg1 <Hey \PC ! We are now conducting a blood drive at the hospital; just give us some blood and you'll get a free lunch. How about it?>
+	Msg2 <It's good to see you today. There's a blood shortage in \SCENE EScene 1 ; we need volunteers to donate. I expect you'll be willing to sign up, no problem.>
+	Msg3 <Did you know we were having a blood drive today? Well, don't expect me to let you out of here until you've donated your share... Help out the community, and I'll buy you lunch. How's that?>
+
+	%  04 - 06 :  Nurse will act flirty towards PC
+	Msg4 <\SCENE EScene 1 is suffering a blood shortage. I'm sure that a brave young adventurer such as yourself has no problem with needles. How about being a blood donor?>
+	Msg5 <Ah, you've come to the hospital at just the right time. We're collecting blood donations today. I have a deal for you... sign up for a donation, and I'll go to dinner with you. Sound good?>
+	Msg6 <You know, nurses really love people who donate blood... There's a blood drive for the \SCENE EScene 1 hospital right now. If you sign up to be a donor I'll be oh so grateful.>
+
+	%  07 - 09 :  Nurse is neutral towards PC
+	Msg7 <As an adventurer you're probably aware of how much blood our emergency room goes through in the run of a day. Want to sign up to be a blood donor?>
+	Msg8 <\SCENE EScene 1 is currently hosting a blood drive. How would you like to be a donor? You'll get a free lunch in exchange for your time.>
+	Msg9 <We are holding a blood drive for the \SCENE EScene 1 hospital. Would you like to be a donor?>
+
+	%  10 - 12 :  PC will donate blood now
+	Msg10 <Just lie back and watch TV while I put the needle in. Afterwards, we can have lunch.>
+	Msg11 <You're doing a good thing for the community. Here, just lie back and relax. This won't take too long.>
+	Msg12 <Lie back and relax. You can watch TV or listen to music if you like. Thank you very much for giving.>
+
+	Msg13 <That's fine. You should really consider donating when you're able to.>
+	Msg14 <You should consider making a blood donation sometime when you're able, then.>
+	Msg15 <Fine.>
+
+	Msg16 <Don't worry, it doesn't hurt... much. Besides, aren't you an adventurer? You've probably had your leg half chewed off by swamp rats before. Compared to that this'll be nothing.>
+	Msg17 <I promise you that it won't hurt. Think of the good that you'll be doing... your blood could save someone's life!>
+	Msg18 <It's nothing to be scared of. I think the fear is worse than the needle itself... you aren't afraid of a tiny needle, are you?>
+
+	Msg101 <\PC donates blood.>
+	Msg102 <\PC gets a free lunch from \ELEMENT 1 .>
+
+	Prompt1 <Sign me up!>
+	Prompt2 <I'd love to do that!>
+	Prompt3 <Yes, I'll be a blood donor.>
+
+	Prompt4 <I don't want to.>
+	Prompt5 <Sorry, I can't do that today.>
+	Prompt6 <No thanks.>
+
+	Prompt7 <I'm afraid of needles.>
+	Prompt8 <Will it hurt?>
+	Prompt9 <That sounds scary...>
+
+	Prompt10 <Alright, I'll do it.>
+	Prompt11 <Nope, I still don't want to.>
+
+end
+

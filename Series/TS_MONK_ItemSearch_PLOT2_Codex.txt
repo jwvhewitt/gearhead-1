@@ -1,0 +1,91 @@
+Plot 0
+	name <Codex of Knowledge>
+	% A conclusion for the item search plot. This conclusion will end the story,
+	% either in victory or in defeat for the PC...
+
+	% E1 is the scene where this plot will take place.
+	Element1 <Grab 2>
+
+	% E2 is the character who knows where the fire is.
+	Element2 <Character !Near 1>
+
+	% E3 is the "Codex" itself.
+	Element3 <Prefab>
+
+	% V1 = Initialization Counter
+	% V2 = Combat Indicator
+
+	start <ifPersona E2 else GoCheckDelete if= V1 0 V= 1 1 Compose KEY E3 .getkey ItemVar= E3 1 * 5 S2>
+	.getkey <S= 104 1 EndStory AdvancePlot 0>
+
+	GoCheckDelete <EndStory AdvancePlot 0 if= V2 0 DeleteKeyItem E3>
+
+	CleanUp <AdvancePlot 0 if= V2 0 DeleteKeyItem E3>
+
+sub
+	Persona 2
+	rumor <!2 knows where the old public library is.>
+	greeting <NewChat if# P2 0 else GoCheckMission Say 1 EndStory>
+	GoCheckMission <Say 2 Memo 3 AddChat 1 AddChat 2 AddChat 3>
+
+	result1 <NewChat Say 4 AddChat 4 AddChat 5>
+	result2 <NewChat Say 5>
+	result3 <NewChat Say 6 EndStory>
+	result4 <NewChat Say 7>
+	result5 <EndChat Say 8 SavePos LoadD .scene P= 2 1 PassVAr 1 E3 PassVar 2 S2 PassVar 3 1 PassVar 4 0 MStockD 10 .mon SeekGate -1>
+	.scene <SCENE_ItemTower.txt>
+	.mon <Ruins Air Mutant City>
+
+	Msg1 <The ancient library? It's been torn down for a parking lot.>
+	Msg2 <I was searching for treasure in the wilds near town. I spotted an old building that looked good, but then I saw a sign saying that it was the old public library so I didn't bother exploring.>
+	Msg3 <\ELEMENT 2 in \ELEMENT 1 discovered the old public library.>
+	Msg4 <You're that desperate for reading material? Sure, I can show you where it is. Let's go.>
+	Msg5 <Talk with you later.>
+	Msg6 <Join the club.>
+	Msg7 <Alright. It's probably best that you get ready before doing any serious exploring.>
+	Msg8 <It's just over that way. Look for a huge ruined tower with a "Public Library" sign out front. You can't miss it.>
+
+	Prompt1 <Can you show me where that was?>
+	Prompt2 <Hm, I'd like to see that later.>
+	Prompt3 <That doesn't concern me.>
+	Prompt4 <Maybe I'll go later.>
+	Prompt5 <Let's do that.>
+
+
+end
+inv
+	STC BOOKSHELF-1
+	name <The Codex>
+	% V1 = SkXP to award
+	% V2 = Skill to improve
+	use <ifYesNo 102 103 104 Goto GoPickSkill>
+	GoPickSkill <if= d8 1 else GoPick2 V= 2 9 Goto GoUse>
+	GoPick2 <if= d9 1 else GoPick3 V= 2 5 Goto GoUse>
+	GoPick3 <if= d8 1 else GoPick4 V= 2 8 Goto GoUse>
+	GoPick4 <if= d7 1 else GoPick5 V= 2 11 Goto GoUse>
+	GoPick5 <if= d6 1 else GoPick6 V= 2 14 Goto GoUse>
+	GoPick6 <if= d5 1 else GoPick7 V= 2 15 Goto GoUse>
+	GoPick7 <if= d4 1 else GoPick8 V= 2 16 Goto GoUse>
+	GoPick8 <if= d3 1 else GoPick9 V= 2 18 Goto GoUse>
+	GoPick9 <if= d2 1 else GoPick10 V= 2 22 Goto GoUse>
+	GoPick10 <V= 2 25 Goto GoUse>
+
+	GoUse <Print 101 Mental Mental Mental Print V2 SkillXP V2 V1 Trigger KEY SelfNID DeleteKeyItem SelfNID>
+
+	Msg5 <These are old Mecha Piloting manuals. You learn a few new things.>
+	Msg8 <You discover a fencing manual from the middle ages, and learn some things about Armed Combat.>
+	Msg9 <You learn about esoteric Martial Arts philosophy.>
+	Msg11 <It's an encyclopedia of optical illusions. You improve your Awareness.>
+	Msg14 <It's an encyclopedia of wildlife. Many of the animals mentioned are extinct now.>
+	Msg15 <These are old mecha technical readouts. You learn some things about repair.>
+	Msg16 <There are old medical texts here. You learn some things about the human body.>
+	Msg18 <You find some old books on warfare and tactics. You learn some things about exploiting your opponent's weak point.>
+	Msg22 <You discover some PreZero books about Biotechnology.>
+	Msg25 <You learn the secrets of the Ninja.>
+
+	Msg101 <You read through the books...>
+	Msg102 <You discover a collection of antique books.>
+	Msg103 <Read the books.>
+	Msg104 <Maybe later...>
+
+end

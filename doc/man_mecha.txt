@@ -1,0 +1,69 @@
+% MANAGING YOUR MECHA Doc Jan 6 2003 ******************************* ***
+*******************************
+***  MANAGING  YOUR  MECHA  ***
+*******************************
+  
+ When you start the game you will most likely have little more than the
+ clothes you wear and a few credits for some basic equipment. Later on
+ you will acquire new weapons, armor, and eventually the most prized item
+ in this game world- a mecha. 
+ 
+ In GearHead, Wargear is defined as any item which your PC owns but which
+ is too heavy to be carried personally. Mecha fall into this category, as
+ do mecha-scale weapons. To view, assign, and edit your wargear you'll
+ need to use the Field HQ interface. This can be accessed through the
+ View Character menu, or by pressing the 'H' key in exploration mode. 
+ 
+ You will be presented with a list of your character's wargear. Selecting
+ an item will bring you to a sub-menu, from which you can perform various
+ actions depending upon the wargear's type and condition. 
+ 
+INVENTORY MANAGEMENT 
+ 
+ Every mecha has its own inventory and equipment lists, just like your PC
+ has. To access a mecha's carried items you can select the View Inventory
+ command 
+ 
+ It is possible to trade items between mecha. Select the item you wish to
+ trade, then choose the Transfer Item option. You will then be able to
+ move the item to a different mecha. 
+ 
+ALLOCATING ITEMS 
+ 
+ When you buy a mecha-sized weapon at the store it does not go to your
+ PC's inventory. To use the item you'll need to select it in the Field
+ HQ, then transfer it to the mecha you want to equip it on. 
+ 
+REPAIRING ITEMS 
+ 
+ If a part is damaged you may want to try repairing it yourself instead
+ of bringing it to the shop. Repair options will only be shown in the
+ Field HQ if there is some damage that needs to be repaired, and if the
+ PC knows the required skill. 
+ 
+CUSTOMIZING YOUR MECHA 
+ 
+ Selecting the Examine Parts option will bring up a complete list of all
+ the components making up this mecha. To remove a part from your mecha,
+ select it from the list and choose Remove Part. Not all parts can be
+ removed: some parts are so integral to a design that they cannot be
+ replaced. 
+ 
+ If the removed part survived the extraction process, it will be placed
+ in the mecha's inventory. 
+ 
+ It is also possible to install components into a mecha. In order to be
+ installed, the item must be located in the mecha's inventory. Select the
+ item you want, and then choose the Install Part option. You will be
+ presented with a list of legal installation slots, or an error message
+ if the selected item cannot be installed. 
+ 
+ While installing and removing components keep an eye on the stat display
+ located above the parts list. This display will keep track of how your
+ modifications affect the mecha's speed, maneuverability, and other
+ statistics. You may want to try removing parts from one mecha, then
+ transferring them to be installed on another. 
+ 
+ In order to remove and install parts most effectively, your character
+ should know the Mecha Engineering skill. 
+ 

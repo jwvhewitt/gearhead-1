@@ -1,0 +1,51 @@
+Plot 0
+	name <Betrayal>
+
+	Element1 <Character Villainous !Lancemate>
+	Element2 <Scene Town City Target>
+	Element3 <Scene Town Target !Far 2>
+	Element4 <Scene Town Target !Far 2 !Far 3>
+
+
+	% V1 = Initialization counter
+	% V2 = Have started combat
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 432000 Compose EWM E2 .ambush Compose EWM E3 .ambush Compose EWM E4 .ambush>
+	GoDelete <AdvancePlot 0>
+
+	.ambush <Goto GoAmbush>
+	GoAmbush <ifG PCRep 6 d100 else GoDelete BLOCK FreezeNPC E1 V= 2 1 Alert 1 History 2 Dynamic 0 Threat PCRep 6 1 .nu1 .nu2 ComposeD TYPE .type Goto GoPrepEnemy>
+	GoPrepEnemy <DynaNPC E1 2 PCEnemy E1 ComposeD START .start PassVar 1 E1 PassVar 2 E2>
+	.start <if# L1 0 ForceChat L1 L= 1 0>
+	.nu1 <if= T1 0 Return if= V3 0 V= 3 1 Reputation 6 -10>
+	.nu2 <if= T2 0 if= V3 0 V= 3 1 Reputation 6 1 XPV 100 Exit L2>
+	.type <SOLO>
+
+	Msg1 <As you approach town, \ELEMENT 1 draws you aside for a private discussion...>
+	Msg2 <You were betrayed by your lancemate \ELEMENT 1 .>
+
+sub
+	Persona 1
+	greeting <NewChat if= P2 0 else GoStartCombat SayAnything>
+	GoStartCombat <EndChat Say 1 AdvancePlot 0>
+
+	Msg1 <Yeah, I know we're supposed to be allies, but... there's an enormous bounty on your head and I'd be a fool not to take it.>
+	Msg1_1 <You've got quite a bounty on your head. I'd be a fool not to take it...>
+	CMsg1_1 <ifG 0 NPCRep E1 3 Accept>
+	Msg1_2 <We've been together for a while, but you've earned a huge bounty on your head. If I kill you that'll make me rich... Sorry, this is just business. I really will miss you when it's all over.>
+	CMsg1_2 <ifG NPCRep E1 3 0 Accept>
+	Msg1_3 <Wow, I'll bet you never expected to be attacked by one of your own lancemates. I wouldn't be doing this if not for the enormous amount of money I've been offered to kill you...>
+	CMsg1_3 <ifG NPCRep E1 4 0 Accept>
+	Msg1_4 <At last I can finally tell you... I hate you! I've hated working with you all this time! And because I've been offered a sizable reward for ending your life, now I can finally be rid of you! It's time to die...>
+	CMsg1_4 <ifG 0 NPCRep E1 4 Accept>
+	Msg1_5 <I've got something fun for the two of us to do right now. You see, there's an enormous bounty on your head, and I've decided to collect. Of course it wouldn't be any fun if it were a fair fight...>
+	CMsg1_5 <ifG NPCRep E1 5 0 Accept>
+	Msg1_6 <And now, the great hero will meet a tragic end... I have decided to claim the bounty that's been placed on your head. Oh, I know, you must feel betrayed... Don't worry, you won't live long enough to suffer.>
+	CMsg1_6 <ifG 0 NPCRep E1 5 Accept>
+	Msg1_7 <You've made a lot of enemies all over the place, \PC , and they've offered a lot of money for anyone who can kill you. It's only sensible that I take the prize, isn't it? It's the most logical thing to do...>
+	CMsg1_7 <ifG NPCRep E1 7 0 Accept>
+	Msg1_8 <You've made some powerful enemies, \PC . They believe you could be the hero of destiny... I'm willing to bet the prize money on your head that they're wrong. Your great destiny ends here, today...>
+	CMsg1_8 <ifG 0 NPCRep E1 7 Accept>
+
+end
+

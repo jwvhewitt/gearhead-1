@@ -1,0 +1,67 @@
+Plot 0
+	name <Pump Laboratory>
+
+	% E1 is the scene where this plot will take place.
+	Element1 <Grab 2>
+
+	% E2 is the character who knows where the lab is.
+	Element2 <Character Guardian !Near 1>
+
+	% V2 = Combat Indicator
+
+	start <ifPersona E2 else GoDelete>
+
+	GoDelete <EndStory AdvancePlot 0>
+
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 250  S= 104 1 EndStory AdvancePlot 0  Return>
+
+
+sub
+	Persona 2
+	rumor <!2 has been waiting for you to arrive.>
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	result1 <EndChat Say 2 Reputation 2 1 Goto GoStartCombat>
+	result2 <NewChat Say 3>
+
+	GoStartCombat <SavePos P= 2 1 LoadD .scene MStockD S2 .monster>
+	.scene <SCENE_Stronghold.txt>
+	.monster <Criminal Robot Devo>
+
+	Msg1 <We've located the base of the Pump Pushers! Now, it's up to you to go in there and clear it out. Are you ready to start?>
+	Msg1_1 <>
+	CMSg1_1 <ifNPCSociable Accept>
+	Msg1_2 <>
+	CMSg1_2 <ifNPCShy Accept>
+	Msg1_3 <>
+	CMSg1_3 <ifNPCEasygoing Accept>
+	Msg1_4 <>
+	CMSg1_4 <ifNPCPassionate Accept>
+	Msg1_5 <>
+	CMSg1_5 <ifNPCCheerful Accept>
+	Msg1_6 <>
+	CMSg1_6 <ifNPCMelancholy Accept>
+
+	Msg2 <If the criminals resist, you're authorized to use deadly force.>
+	Msg2_1 <>
+	CMSg2_1 <ifNPCSociable Accept>
+	Msg2_2 <>
+	CMSg2_2 <ifNPCShy Accept>
+	Msg2_3 <>
+	CMSg2_3 <ifNPCEasygoing Accept>
+	Msg2_4 <>
+	CMSg2_4 <ifNPCPassionate Accept>
+	Msg2_5 <>
+	CMSg2_5 <ifNPCCheerful Accept>
+	Msg2_6 <>
+	CMSg2_6 <ifNPCMelancholy Accept>
+
+	Msg3 <Do whatever it is that you have to do, then come back here for the mission.>
+
+	Prompt1 <I'm all ready to go!>
+
+	Prompt2 <Be back in a sec...>
+
+end
+

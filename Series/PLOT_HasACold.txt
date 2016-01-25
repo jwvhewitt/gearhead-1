@@ -1,0 +1,21 @@
+plot 1
+	Element1 <Character Citizen>
+	rumor <!1 isn't feeling too well.>
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 7500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+		% If the PC makes a Medical roll, add prompt 2...
+		greeting <AdvancePlot 0 Say 1 NewChat AddChat 1 ifG SkRoll 16 17 AddChat 2>
+		result1 <NewChat Say 2>
+		result2 <NewChat Say 3 AddChat 3>
+		result3 <NewChat XPV 100 Say 4>
+		Msg1 <(*sniffle*) I can't work today... I have such a bad cold...>
+		Msg2 <I hope so too... (*cough*)>
+		Msg3 <I've heard about that... (*sneeze*) Is it supposed to be good? (*HACK!*)>
+		Msg4 <(*cough*) I should try some... Thanks for the medical advice...>
+		Prompt1 <Hope you feel better soon.>
+		Prompt2 <Have you tried Genom Cold & Sinus?>
+		Prompt3 <It's great! And non-drowsy!>
+
+end

@@ -1,0 +1,212 @@
+plot 1
+	% The player will be offered a bounty for an escaped murderer.
+	name <PLOT: GuardFight2>
+
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Combat Indicator
+
+	element1 <Character Guardian Heroic>
+	% Element 2 = Difficulcy Level
+
+	rumor <!1 is conducting a murder investigation.>
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 15500>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -7          V= 2 2>
+	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1    V= 2 2>
+
+sub
+
+	Persona 1
+	greeting <NewChat ifG E2 0 else GoFirstTime Say 19 AddChat 7 AddChat 8 AddChat 9>
+
+	GoFirstTime <ifG React 50 else GoMedReact ifG PCRep 1 25 else GoNotHeroic Say 1 AddChat 1 AddChat 2>
+	GoNotHeroic <ifG PCRep 2 32 else GoNotLawful Say 2 AddChat 1 AddChat 2>
+	GoNotLawful <Say 3 AddChat 1 AddChat 2>
+
+	GoMedReact <ifG React 10 else GoLowReact ifG PCRep 6 25 else GoMed2 ifG PCRep 1 15 else GoMed2 Say 5 AddChat 1 AddChat 3>
+	GoMed2 <ifG PCRep 1 25 else GoMed3 ifG 0 PCRep 6 else GoMed3 Say 8 AddChat 1 AddChat 2>
+	GoMed3 <ifG PCRep 1 0 else GoMed4 Say 9 AddChat 4 AddChat 5>
+	GoMed4 <Say 14 AddChat 5 AddChat 6>
+
+	GoLowReact <ifG PCRep 1 30 else GoLow2 ifG PCRep 2 30 else GoLow2 Say 7 AddChat 1 AddChat 2>
+	GoLow2 <Say 15 EndChat>
+
+	result1 <ifG PCRep 6 95 else GoLvl24 ifG -75 PCRep 5 else GoLvl24 Say 125 V= 1 15000 E= 2 25 Goto GoChoose>
+	GoLvl24 <ifG PCRep 6 90 else GoLvl23 ifG PCRep 7 75  else GoLvl23 Say 124 V= 1 13000 E= 2 24 Goto GoChoose>
+	GoLvl23 <ifG PCRep 6 87 else GoLvl22 ifG PCRep 1 95  else GoLvl22 Say 123 V= 1 12000 E= 2 23 Goto GoChoose>
+	GoLvl22 <ifG PCRep 6 83 else GoLvl21 ifG -65 PCRep 5 else GoLvl21 Say 122 V= 1 10000 E= 2 22 Goto GoChoose>
+	GoLvl21 <ifG PCRep 6 80 else GoLvl20 ifG PCRep 7 80  else GoLvl20 Say 121 V= 1  9500 E= 2 21 Goto GoChoose>
+	GoLvl20 <ifG PCRep 6 77 else GoLvl19 ifG PCRep 2 95  else GoLvl19 Say 120 V= 1  9000 E= 2 20 Goto GoChoose>
+	GoLvl19 <ifG PCRep 6 74 else GoLvl18 ifG -60 PCRep 5 else GoLvl18 Say 119 V= 1  8500 E= 2 19 Goto GoChoose>
+	GoLvl18 <ifG PCRep 6 70 else GoLvl17 ifG -90 PCRep 2 else GoLvl17 Say 118 V= 1  8000 E= 2 18 Goto GoChoose>
+	GoLvl17 <ifG PCRep 6 65 else GoLvl16 ifG -80 PCRep 7 else GoLvl16 Say 117 V= 1  7000 E= 2 17 Goto GoChoose>
+	GoLvl16 <ifG PCRep 6 60 else GoLvl15 ifG -55 PCRep 5 else GoLvl15 Say 116 V= 1  5000 E= 2 16 Goto GoChoose>
+	GoLvl15 <ifG PCRep 6 92 else GoLvl14                              Say 115 V= 1  5000 E= 2 15 Goto GoChoose>
+	GoLvl14 <ifG PCRep 6 55 else GoLvl13 ifG PCRep 1 60  else GoLvl13 Say 114 V= 1  4500 E= 2 14 Goto GoChoose>
+	GoLvl13 <ifG PCRep 6 52 else GoLvl12 ifG PCRep 2 70  else GoLvl12 Say 113 V= 1  4000 E= 2 13 Goto GoChoose>
+	GoLvl12 <ifG PCRep 6 73 else GoLvl11                              Say 112 V= 1  3500 E= 2 12 Goto GoChoose>
+	GoLvl11 <ifG PCRep 6 47 else GoLvl10 ifG -50 PCRep 5 else GoLvl10 Say 111 V= 1  3000 E= 2 11 Goto GoChoose>
+	GoLvl10 <ifG PCRep 6 42 else GoLvl09 ifG -50 PCRep 2 else GoLvl09 Say 110 V= 1  2500 E= 2 10 Goto GoChoose>
+	GoLvl09 <ifG PCRep 6 51 else GoLvl08                              Say 109 V= 1  2000 E= 2  9 Goto GoChoose>
+	GoLvl08 <ifG PCRep 6 36 else GoLvl07 ifG -50 PCRep 4 else GoLvl07 Say 108 V= 1  2000 E= 2  8 Goto GoChoose>
+	GoLvl07 <ifG PCRep 6 30 else GoLvl06 ifG -25 PCRep 5 else GoLvl06 Say 107 V= 1  1750 E= 2  7 Goto GoChoose>
+	GoLvl06 <ifG PCRep 6 35 else GoLvl05                              Say 106 V= 1  1750 E= 2  6 Goto GoChoose>
+	GoLvl05 <ifG PCRep 6 27 else GoLvl04 ifG PCRep 5 70  else GoLvl04 Say 105 V= 1  1500 E= 2  5 Goto GoChoose>
+	GoLvl04 <ifG PCRep 6 23 else GoLvl03                              Say 104 V= 1  1250 E= 2  4 Goto GoChoose>
+	GoLvl03 <ifG PCRep 6 17 else GoLvl02                              Say 103 V= 1  1000 E= 2  3 Goto GoChoose>
+	GoLvl02 <ifG PCRep 6  8 else GoLvl01                              Say 102 V= 1   750 E= 2  2 Goto GoChoose>
+	GoLvl01 <                                                         Say 101 V= 1   500 E= 2  1 Goto GoChoose>
+
+
+
+	result2 <AdvancePlot 0 AddReact -5 NewChat Say 4>
+	result3 <AdvancePlot 0 NewChat Say 6>
+
+	result4 <NewChat ifG PCRep 2 5 else GoR4_2 Say 10 AddChat 1 AddChat 3>
+	GoR4_2 <Say 11 AdvancePlot 0>
+
+	result5 <NewChat ifG PCRep 1 0 else GoR5_2 ifG SkRoll 19 8 else GoR5_2 Say 12 AddChat 1 AddChat 3>
+	GoR5_2 <Say 13 AdvancePlot 0>
+
+	result6 <AdvancePlot 0 Say 4 NewChat>
+
+	% The encounter has been described, and a threat rating been set.
+	% See whether or not the PC will accept the job.
+	GoChoose <NewChat AddChat 7 AddChat 8 AddChat 9>
+
+	Result7 <EndChat P= 2 1 SavePos Dynamic 0 V1 FrzNU1 FrzNU2 Reputation 1 1 Reputation 2 1 Say 18>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Return>
+
+	Result8 <Say 16 P+ 1 45000 NewChat>
+
+	Result9 <AdvancePlot 0 Reputation 1 -1 Reputation 2 -3 AddReact -3 Say 17 NewChat>
+
+	Msg1 <There's something important I need your help with. I've just located a serial killer who's been on the run from the law. I need a hunter to raid his hideout and bring him back, dead or alive.>
+	Msg2 <I could use your help for the murder case I'm working on. The killer's gang has been located, now I need a hunter to raid their hideout and bring them to justice.>
+	Msg3 <How'd you like to help me out? I've been trying to track down a gang of murderers. There's a bounty available if you can bring back the killers, dead or alive.>
+	Msg4 <Safe journeys.>
+	Msg5 <I have a job for you, if you're interested in it. I've been tracing the movements of an escaped killer. His current location has been established. Now I need a hunter to infiltrate his base and take him out.>
+	Msg6 <That's too bad... I think you have what it takes to be a defender of the people.>
+	Msg7 <I don't much like asking you for anything, but I'm working on a murder case that you might be able to help with. I've tracked down the gang responsible, now I need a hunter to go and bring them back, dead or alive. You interested?>
+	Msg8 <I'm looking for a hunter to bring a wanted killer to justice.>
+	Msg9 <There's a lot of evil in this world. Right now I'm investigating a series of murders... It's absolutely sickening.>
+	Msg10 <Thanks... How would you like to help me? I've tracked down the location of the killers, but now I need a hunter to bring them in.>
+
+	Msg11 <I guess so. I just wish there was more I could do...>
+	Msg12 <That depends. I've located the killer's gang, but now I need a hunter to bring them in. Are you up for that kind of job?>
+	Msg13 <There's nothing you can do to help. Thanks for your concern.>
+	Msg14 <I'm too busy to talk. I have a murder case to solve...>
+	Msg15 <I'm not in the mood for idle chatter right now.>
+	Msg16 <Go get your armor patched and your weapons loaded, then come back here.>
+	Msg17 <You've got other responsibilities I guess, but I would've appreciated it if you told me earlier that you weren't interested in the job.>
+	Msg18 <Here's a readout showing where the fugitives should be camped. Be careful, I wouldn't want for you to become their next victim.>
+	Msg19 <The killers are still at large. Are you ready to go after them yet?>
+
+	Msg125 <Your target is a gang of murderous sociopaths calling themselves "Slaves to the Dark God". They're into kidnapping, torture, cannibalism, and lord only knows what else. They're very dangerous. Go eliminate these sick bastards from the earth.>
+	Msg124 <Your target is a cult leader who turned to murder and extortion when milking his followers failed to provide enough money to support his lifestyle. They've got a well protected camp just outside of town. The reward is $25000.>
+	Msg123 <A gang of convicted murderers staged an escape from prison, killing several guards in the process. They need to be brought back to justice. There's a reward of $24000 to bring them in dead or alive.>
+	Msg122 <Your target used to be a sports club... Now, they hunt human beings. It's some kind of a sick thrill for them. They are very well armed and quite dangerous; there's a reward of $20000 to stop their reign of terror.>
+	Msg121 <Your target is a mystic turned psychopath whose apocalyptic visions drove him to mass murder. On the run from the law, he's being sheltered by a small group of true believers. There's a bounty of $19000 to bring them to justice.>
+	Msg120 <A group of paramilitary activists have been striking at civilian targets. Their base of operations has been discovered to be near this town. There's a reward of $18000 to stop them before they kill anyone else.>
+	Msg119 <Over the past few years several children have gone missing from local schools. We've discovered who was responsible, but they fled town when the truth of their deeds came to light. There's a reward of $20000 for these monsters.>
+	Msg118 <A renegade guardian who was thrown out of the force has become the leader of a murderous vigilante campaign. I need you to stop them before any more innocents are killed. There's a reward of $17500 for this job.>
+	Msg117 <Your target is an organ seller and her team of harvesters. They've been abducting people to sell off as spare parts. The reward is $16000 for the gang, dead or alive.>
+	Msg116 <We've discovered the hideout of a notorious murder club. In order to gain entrance, new members have to present the gang with someone's severed head. There's a reward of $10000 for the club's leaders.>
+	Msg115 <I've been analyzing the movements of a team of armed robbers. Several of their recent heists have ended in bloodshed; it's vital that they be stopped as soon as possible. There's a reward of $8000 for them, dead or alive.>
+	Msg114 <Your target is a biker gang, currently on the run from the law after they killed off their rivals. There's a bounty of $6750 for the lot of them.>
+	Msg113 <Your target is a corporate task group. They were charged with tax evasion, but rather than face charges they fled the city... killing a guardian in the process. There's a reward of $6000 for them.>
+	Msg112 <I've located the hideout of a gang of thugs and brigands. They've been responsible for a number of violent crimes over the past year. There's a bounty of $5000 on them, payable dead or alive.>
+	Msg111 <A violent anti-mutant crusade has claimed responsibilty for bombing an elementary school. There's a reward of $4000 to bring these terrorists in, dead or alive.>
+	Msg110 <A group of corporate strikebreakers has finally crossed the line. They did away with a number of vocal anti-corp activists, and now are on the run from the law. There's a reward of $3500 for them.>
+	Msg109 <There's a band of hired killers who just moved into the area. They have a bounty of $2500 on their heads... I want to stop them before they cause any trouble around here.>
+	Msg108 <A group of data transfer technicians were laid off from work, so they returned to the office armed with automatic weapons and slaughtered their former employers. There's a reward of $3000 to bring these lunatics to justice.>
+	Msg107 <A group of rich kids got it into their head that they were going to be a gang. They didn't get into any real trouble until they murdered one of their classmates... Now there's a reward of $2500 to bring them in, dead or alive.>
+	Msg106 <Your target is a smuggling ring. In the past they've resorted to murder to keep certain witnesses silent. There's a reward of $1750 to bring them in.>
+	Msg105 <A group of teachers just snapped during the filming of a children's show and murdered the show's dinosaur-suit wearing host. Now they've gone completely feral... There's a reward of $2000 to put them out of their misery.>
+	Msg104 <A psychotic murderer and his gang are in hiding someplace near this town. There's a reward of $1500 for them, payable dead or alive.>
+	Msg103 <A gang of carjackers has been traced to this region. There's a reward of $1250 to bring them in, dead or alive.>
+	Msg102 <Your target is a violent gang of petty criminals. The bounty for this job is $750.>
+	Msg101 <A wanted murderer is thought to be hiding someplace near this town. There's a price of $750 on his head, dead or alive.>
+
+
+	prompt1 <I'll do it.>
+	prompt2 <I've got other things to do.>
+	prompt3 <Sorry, I'm not a hunter.>
+	prompt4 <You must be very courageous.>
+	prompt5 <You need any help?>
+	prompt6 <I'll leave you alone, then.>
+
+	Prompt7 <Be back once I've finished the job.>
+	Prompt8 <I need some time to get ready.>
+	Prompt9 <On second thought, I don't want to do this.>
+
+	Plot 1
+		% The player lost the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat AdvancePlot 0 Say 1>
+		Msg1 <The murderer escaped.>
+	end
+
+	Plot 2
+		% The player won the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 57500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat AdvancePlot 0 AddReact 5 if= E2 25 Else GoLvl24 CashPrize 40000 Goto GoSaySomething>
+		GoLvl24    <if= E2 24 Else GoLvl23 CashPrize 25000 Goto GoSaySomething>
+		GoLvl23    <if= E2 23 Else GoLvl22 CashPrize 24000 Goto GoSaySomething>
+		GoLvl22    <if= E2 22 Else GoLvl21 CashPrize 20000 Goto GoSaySomething>
+		GoLvl21    <if= E2 21 Else GoLvl20 CashPrize 19000 Goto GoSaySomething>
+		GoLvl20    <if= E2 20 Else GoLvl19 CashPrize 18000 Goto GoSaySomething>
+		GoLvl19    <if= E2 19 Else GoLvl18 CashPrize 20000 Goto GoSaySomething>
+		GoLvl18    <if= E2 18 Else GoLvl17 CashPrize 17500 Goto GoSaySomething>
+		GoLvl17    <if= E2 17 Else GoLvl16 CashPrize 16000 Goto GoSaySomething>
+		GoLvl16    <if= E2 16 Else GoLvl15 CashPrize 10000 Goto GoSaySomething>
+		GoLvl15    <if= E2 15 Else GoLvl14 CashPrize  8000 Goto GoSaySomething>
+		GoLvl14    <if= E2 14 Else GoLvl13 CashPrize  6750 Goto GoSaySomething>
+		GoLvl13    <if= E2 13 Else GoLvl12 CashPrize  6000 Goto GoSaySomething>
+		GoLvl12    <if= E2 12 Else GoLvl11 CashPrize  5000 Goto GoSaySomething>
+		GoLvl11    <if= E2 11 Else GoLvl10 CashPrize  4000 Goto GoSaySomething>
+		GoLvl10    <if= E2 10 Else GoLvl09 CashPrize  3500 Goto GoSaySomething>
+		GoLvl09    <if= E2  9 Else GoLvl08 CashPrize  2500 Goto GoSaySomething>
+		GoLvl08    <if= E2  8 Else GoLvl07 CashPrize  3000 Goto GoSaySomething>
+		GoLvl07    <if= E2  7 Else GoLvl06 CashPrize  2500 Goto GoSaySomething>
+		GoLvl06    <if= E2  6 Else GoLvl05 CashPrize  1750 Goto GoSaySomething>
+		GoLvl05    <if= E2  5 Else GoLvl04 CashPrize  2000 Goto GoSaySomething>
+		GoLvl04    <if= E2  4 Else GoLvl03 CashPrize  1500 Goto GoSaySomething>
+		GoLvl03    <if= E2  3 Else GoLvl02 CashPrize  1250 Goto GoSaySomething>
+		% The lowest two missions both pay $750, so here the line ends at Lvl02
+		GoLvl02    <                       CashPrize   750 Goto GoSaySomething>
+
+
+		GoSaySomething <if= d6 1 else GoSay2 Say 1>
+		GoSay2 <if= d5 1 else GoSay3 Say 2>
+		GoSay3 <if= d4 1 else GoSay4 Say 3>
+		GoSay4 <if= d3 1 else GoSay5 Say 4>
+		GoSay5 <if= d2 1 else GoSay6 Say 5>
+		GoSay6 <Say 6>
+
+		Msg1 <Excellent work. Here's a reward for your heroic actions.>
+		Msg2 <Justice has been served. Here's your reward for a job well done.>
+		Msg3 <The mission was a complete success. The killers have received their final justice... here's the bounty you earned.>
+		Msg4 <You did well out there. Here's your reward.>
+		Msg5 <They'll never hurt anyone ever again. Here's the reward money you earned.>
+		Msg6 <Here's your pay. I'll let you know if I have any more bounties for you.>
+	end
+
+
+end

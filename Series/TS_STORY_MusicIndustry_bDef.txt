@@ -1,0 +1,86 @@
+Plot 0
+	name <Talent Scout>
+
+	% The agent will pick a town for talent scouting, and the PC
+	% might be able to get a record contract if he performs there.
+
+	% E1 is the town where the talent search will take place
+	Element1 <Scene Town>
+	% E2 is the talent agent
+	Element2 <Grab 2>
+
+	% V1 = Timer
+	% V2 = Applause Counter
+
+	% On a CLEANUP request, just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% Every half hour, check the time limit...
+	HALFHOUR <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 EMail d5>
+	GoCheckTime <ifG ComTime V1 ifG P2 S103 else GoNoWin AdvancePlot 1>
+	GoNoWin <S= 101 0 AdvancePlot 2>
+
+	% Every time the PC earns applause, check what town we're in.
+	APPLAUSE <if= SceneID E1 V+ 2 1 ifG V2 S103 AdvancePlot 1>
+
+	Msg1 <\ELEMENT 2 @ \ELEMENT 1 :// Got a show for you in \ELEMENT 1 today. Go there and start performing!>
+	Msg2 <\ELEMENT 2 @ \ELEMENT 1 :// You should be promoting your album in \ELEMENT 1 today.>
+	Msg3 <\ELEMENT 2 @ \ELEMENT 1 :// It's very important for your career to promote your album in \ELEMENT 1 right now.>
+	Msg4 <\ELEMENT 2 @ \ELEMENT 1 :// I have a task for you... Go perform in \ELEMENT 1 and promote your album.>
+	Msg5 <\ELEMENT 2 @ \ELEMENT 1 :// The youth market in \ELEMENT 1 is vital for your album; you should perform there today.>
+
+sub
+	Persona 2
+	greeting <NewChat Say 1>
+	Msg1 <You've got a concert today in \ELEMENT 1 . You should get over there and start performing!>
+
+PLOT 1
+	% The PC did well.
+
+	cleanup <AdvancePlot 0>
+	HALFHOUR <if= V1 0 V= 1 1 S= 101 0 S+ 102 1 EMail d5 Reputation 6 1>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// The concert was a smash! Come here, I've got a bonus for you.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// You did great! Come here for your pay.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// That was great! We're on the radio all over. Come here for your bonus.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// The critics loved it. I've got a cash bonus for your good work.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// It just keeps getting better! Come over here and I'll give you a big bonus.>
+sub
+	Persona 2
+	rumor <!2 is waiting for you.>
+	greeting <NewChat ifG S102 9 else GoNoEnd Say 1 History 2 CashPrize 1000000 XPV 500 Reputation 6 10 EndStory AdvancePlot 0>
+	GoNoEnd <V= 2 2 V+ 2 d5 Say V2 CashPrize 100000 Reputation 6 1 AdvancePlot 0>
+	Msg1 <You did it! The album is now at number one on the charts! Here's your cash bonus... and think of me when the time comes to release your second album!>
+	Msg2 <Your album was a number one hit!>
+	Msg3 <Good job out there. If you can keep it up, we might have a number one hit on our hands!>
+	Msg4 <The crowd loved you. Here's your performance fee for the concert.>
+	Msg5 <Good work in \ELEMENT 1 . We need to keep promoting... we can't stop until we reach number one!>
+	Msg6 <The performance was a huge success. We've sold a lot more records. Here's your bonus pay.>
+	Msg7 <That went extremely well. You're now in heavy rotation on \ELEMENT 1 emusic. Here's a bonus for your hard work.>
+
+end
+
+PLOT 2
+	% The PC did poorly.
+	cleanup <AdvancePlot 0>
+	HALFHOUR <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 42300 S= 101 0 EMail d5 Reputation 6 -5>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// What happened?>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// Come see me about \ELEMENT 1 .>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Was that your idea of a good show!?>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// Next time, try harder... Or there might not be a next.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// The media slammed us. We'll need something good to recover.>
+sub
+	Persona 2
+	rumor <!2 is waiting for you.>
+	greeting <NewChat Say d5 AdvancePlot 0>
+	Msg1 <The concert wasn't that much of a success... In fact, most people didn't even know you were performing there. You did show up, didn't you?>
+	Msg2 <That didn't go so well. You'll never get a hit record if your shows don't improve.>
+	Msg3 <I think you have to work on your presence a bit more... Your show in \ELEMENT 1 was ignored by just about everyone, except the folks who hated it.>
+	Msg4 <Did you even show up in \ELEMENT 1 ? The supposed show was a complete non-event... You have to go to these places and perform, you know, or you'll never be a number one artist.>
+	Msg5 <It's not enough to just show up at \ELEMENT 1 and hope to generate good publicity. You've got to play your music while you're there.>
+
+end
+
+
+
+end

@@ -1,0 +1,10 @@
+% Rubble Scripts
+name <Rubble>
+roguechar <%>
+SDL_Sprite <meta_terrain.png>
+Use <Print 1>
+Clue14 <Print 2>
+Clue29 <Print 2>
+msg1 <Blocked!>
+msg2 <It's a big pile of rocks.>
+

@@ -1,0 +1,88 @@
+Ornithoid 7
+Name <Swan>
+Desig <S3>
+Scale 1
+SDL_Sprite <orn_swan.png>
+
+Mod Head
+	Size 5
+	Armor 5
+	Mass -10
+	sub
+		Sensor 6
+
+		BeamGun 3
+		Name <Brilliant Gaze>
+		Range 4
+		Acc 1
+		Speed 3
+	end
+
+Mod Body
+	Armor 5
+	Mass -12
+	sub
+		CPit
+
+		Sensor 2
+
+		TarComp 2
+
+		Gyro 2
+
+		MLauncher 2
+		Name <Thorn Rockets>
+		Acc -1
+		Range 9
+		Magazine 28
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Size 8
+	Armor 5
+	Mass -13
+	sub
+		EMelee 4
+		Name <Shining Edge>
+		Acc 2
+
+		Flight 4
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Size 8
+	Armor 5
+	Mass -13
+	sub
+		EMelee 4
+		Name <Shining Edge>
+		Acc 2
+
+		Flight 4
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 6
+	Armor 5
+	Mass -11
+	sub
+		Mount
+		Name <Right Hardpoint>
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 6
+	Armor 5
+	Mass -11
+	sub
+		Mount
+		Name <Left Hardpoint>
+	end
+end

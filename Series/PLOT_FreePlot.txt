@@ -1,0 +1,15 @@
+Plot 0
+	% Holiday - Does nothing. Just kind of a test.
+	Element1 <Character Cheerful Easygoing Charm Chaotic>
+	rumor <today is Arcturian Groundhog Day.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <Say 1 NewChat AddChat 1>
+	result1 <Say 2 NewChat>
+	Msg1 <Happy Arcturian Groundhog Day!>
+	Msg2 <It's an annual festival held in honor of that noble animal, the Arcturian Groundhog! It's also a day off work, if that really matters.>
+	prompt1 <What is Arcturian Groundhog Day?>
+end

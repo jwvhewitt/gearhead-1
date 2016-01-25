@@ -1,0 +1,77 @@
+Plot 0
+	name <ARC: "Kidnapped" Conclusion 1>
+	% VARIABLES USED IN PLOT
+	% V2 = Combat Indicator
+
+	% The kidnapped victim has been traced to this town.
+	% They're being held in a hotel in the industrial district,
+	% and are about to become a live organ donor. The PC has to
+	% find the one person in town who knows where N3 is, then
+	% travel to the hotel and do some rescuing action-hero style.
+	%
+	% Element 1 is the town this takes place in
+	% Element 2 is the character who knows about N3
+	% Element 3 is the girl being searched for
+	% Element 4 is the prop used for E3
+	Element1 <Grab 4>
+	Element2 <Character !N 1>
+	Element3 <Grab 3>
+	Element4 <Prefab>
+
+	% If the NPC with the clue gets killed, we're gonna need
+	% a different conclusion.
+	start <ifPersona E2 else GoDelete if= V1 0 Compose KEY E4 .usekey V= 1 1>
+	GoDelete <S= 101 1  AdvancePlot 0>
+
+	.usekey <S= 201 1 V= 2 2 MoveChar E3 E1 AdvancePlot 1 DeleteKeyItem E4 Return>
+
+	% A cleanup trigger means that the story has been deleted;
+	% just get rid of this plot, then.
+	CLEANUP <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	NU1 <if= V2 1 if= t1 0 V= 2 2 S= 201 -1 Reputation 6 -5 Reputation 1 -1 AdvancePlot 2>
+
+sub
+	Persona 2
+	rumor <!2 may have seen this girl you're looking for.>
+
+	greeting <NewChat if= V1 0 else GoBeenBefore V= 1 d3 Say V1 AddChat 1>
+	GoBeenBefore <Say V1 AddChat 1>
+	result1 <EndChat Say 6 SavePos MStaged .hotelscene PCRep 6 .enemydesc  P= 2 1 DynaItemTeam E4 3 PassVar 3 E4>
+	.hotelscene <TS_GSP_URB_Kidnapped_SCENE.txt>
+	.enemydesc <CRIMINAL>
+	Msg1 <I think I saw the girl you're looking for! Some guy brought her to the "Golden Hotel", near the warehouse district. She didn't look too healthy. I hope she's going to be alright.>
+	Msg2 <You've been looking for a girl named \ELEMENT 3 , right? I think I saw her. She was brought to the "Golden Hotel" by a group of men earlier today. She looked like she was drunk or something.>
+	Msg3 <\ELEMENT 3 ? Yes, I think I may have seen this girl... She was with two men, one big muscular guy and a smaller one. I didn't get a good look at him. They were going to the "Golden Hotel".>
+	Msg6 <It's over there. You can't miss it.>
+	Prompt1 <Show me where the hotel is.>
+
+	Plot 1
+		start <if= V1 0 else GoCheckTime Time 10800  V= 1 ComTime V+ 1 86400 Print 1 ForceChat E3>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <A few hours later, you have a chance to see how \ELEMENT 3 is recovering.>
+	sub
+		Persona 3
+		greeting <NewChat AddReact 30 Say d3 AdvancePlot 0 XPV 100 Reputation 1 1>
+		Msg1 <Thank you for rescuing me! I'm still a bit dizzy from the drugs, but the hospital said I'm not missing anything, so I'm going to be fine.>
+		Msg2 <I thought I was going to die for sure... I'm so lucky that you came along when you did! You're a real hero.>
+		Msg3 <That was terrifying... I am so grateful to you for saving my life. I'm sure that my family will be very grateful as well.>
+	end
+
+	Plot 2
+		start <if= V1 0 else GoCheckTime  V= 1 ComTime V+ 1 156400 News 1>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <\PERSONA E3 , a relative of noted politician \NARRATIVE 2 , has been found murdered in \ELEMENT 1 . Evidence suggests that this is the work of organ thieves.>
+
+end
+inv
+	STC VICTIM-1
+	use <ifG T2 0 else GoBanditsDead Print 1>
+	Clue16 <Goto Use>
+	Clue20 <Goto Use>
+	GoBanditsDead <Print 2 Trigger Key SelfNID>
+	Msg1 <On the bed is the body of a young woman, possibly alive, possibly not... You better deal with the rest of the kidnappers before you try to rescue her.>
+	Msg2 <You tend to the victim's wounds and call for help.>
+
+end

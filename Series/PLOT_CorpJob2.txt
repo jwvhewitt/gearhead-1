@@ -1,0 +1,311 @@
+Plot 0
+	name <PLOT: CorpJob2>
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Combat Indicator
+
+	element1 <Character Corporate Sociable>
+	% Element 2 = Difficulcy Level
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 75000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -7 TReputation 2 6 d6          V= 2 2>
+	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1 TReputation 2 6 -5    V= 2 2>
+
+sub
+	Persona 1
+	rumor <!1 has been given a corporate security assignment.>
+	% V1 = Reputation + d50, used to pick mission.
+	% V2 = Enemy Point Total
+	greeting <NewChat ifG PCMeks 0 else GoNoMeks if= V1 0 else GoBeenBefore  ifG React 75 else GoMedReact  ifG PCRep 6 d110 else GoHRNoRep  Say 4 AddChat 4 AddChat 5>
+	GoHRNoRep <ifG PCRep 2 d100 else GoHRNoLaw  Say 5  AddChat 9 AddCHat 5>
+	GoHRNoLaw <if= d2 1 else GoHRNoOffer  Say 6  AddChat 4 AddChat 10>
+	GoHRNoOffer <Say 7  AddChat 6 AddChat 7 AddChat 8>
+
+	GoBeenBefore <Say 50  AddChat 31 AddChat 32 AddChat 33>
+
+	GoMedReact <ifG React d80 else GoLowReact  ifG PCRep 6 d150 else GoMRNoRep  Say 8  AddChat 9 AddChat 10>
+	GoMRNoRep <ifG SkRoll 19 7 else GoMRNoCon  Say 9  AddChat 11 AddChat 12>
+	GoMRNoCon <ifG SkRoll 28 6 else GoMRNoInt  Say 10  AddChat 13 AddChat 14 AddChat 15>
+	GoMRNoInt <Say 11  AddChat 16 AddChat 17>
+
+	GoLowReact <ifG React 0 else GoJustGo  ifG SkRoll 19 5 else GoLRNoCon  Say 12  AddCHat 18 AddChat 17>
+	GoLRNoCon <SayAnything  AdvancePlot 0>
+
+	GoJustGo <Say 3  AdvancePlot 0>
+
+	GoNoMeks <ifG React 80 else GoNMNoDice ifG PCRep 6 d160 else GoNMNoDice  Say 1  AddChat 1 AddChat 2 AddChat 3>
+	GoNMNoDice <AdvancePlot 0  ifG React d100 else GoNMNoLike Say 2>
+	GoNMNoLike <ifG React -5 else GoJustGo SayAnything>
+
+	result1 <NewChat  V= 1 d150 AddChat 19 AddChat 20  Reputation 4 -1  ifG PCRep 6 45 else GoR1NoRep Say 13>
+	GoR1NoRep <Say 14  AddReact -8 AddReact d7  Reputation 6 1>
+	result2 <NewChat  V= 1 d30 AddChat 19 AddChat 20  Reputation 4 1  ifG PCRep 6 50 else GoR2HiRep Say 15>
+	GoR2HiRep <Say 16>
+	result3 <NewChat  Say 17  AdvancePlot 0>
+	result4 <Goto GoPickMission>
+	result5 <NewChat  Say 18  AdvancePlot 0>
+	result6 <NewChat  AddReact d4  Say 19  AddChat 4 AddChat 10>
+	result7 <NewChat  ifG PCRep 3 d100 else GoR7NoSoc  AddReact d6  Say 20  AddChat 21 AddChat 22>
+	GoR7NoSoc <Say 21  AddChat 4 AddChat 5>
+	result8 <NewChat  Say 22  AddCHat 9 AddChat 10>
+	result9 <Goto GoPickMission>
+	result10 <NewChat  Say 23  AdvancePlot 0>
+	result11 <NewChat  Say 24  AddChat 23  AddChat 24>
+	result12 <NewChat  AddChat 7 AddChat 25  ifG PCRep 5 -1 else GoR12Sad  Say 25  AddReact 1>
+	GoR12Sad <Say 26>
+	result13 <NewChat  Say 27  AddChat 4 AddChat 10>
+	result14 <NewChat  Reputation 3 -1  Say 28  AddChat 26 AddChat 27>
+	result15 <NewChat  Reputation 5 -1  ifG PCRep 1 0 else GoR15NoHero  Say 29  AddChat 9 AddChat 27>
+	GoR15NoHero <Say 30  AdvancePlot 0>
+	result16 <NewChat  Say 31  AddChat 24 AddChat 25>
+	result17 <NewChat ifG PCRep 6 d50 else GoR17NoRep  Goto GoPickMission>
+	GoR17NoRep <Say 32  AdvancePlot 0>
+	result18 <NewChat ifG SkRoll 19 8 else GoR18NoCon  Say 33  AddChat 4 AddChat 24>
+	GoR18NoCon <Say 34  AdvancePlot 0>
+	result19 <NewChat Say 35 ifG React 95 else GoR19NotGreat mechaprize .greatmek>
+	GoR19NotGreat <ifG React d100 else GoR19NotGood mechaprize .goodmek>
+	GoR19NotGood <mechaprize .blahmek>
+	.greatmek <Puma.txt>
+	.goodmek <Century.txt>
+	.blahmek <Claymore.txt>
+	result20 <NewChat Say 36  AddChat 19>
+	result21 <NewChat  Say 37  AddChat 9>
+	result22 <NewChat  Reputation 5 -1  ifG SkRoll 19 10 else GoR22NoCon  Say 38  AddChat 4  AddChat 24>
+	GoR22NoCon <AddReact -6 AddReact d5  Say 39  AddChat 28 AddChat 29>
+	result23 <NewChat  ifG SkRoll 28 5 else GoR23NoInt  Goto GoPickMission>
+	GoR23NoInt <ifG React d300 else GoR23NoReact  Say 41  AddChat 9 AddChat 24>
+	GoR23NoReact <Say 40  AdvancePlot 0>
+	result24 <NewChat  Say 42  AdvancePlot 0  Reputation 4 -1>
+	result25 <ifG SkRoll 19 10 else result23  Goto GoPickMission>
+	result26 <NewChat  Say 43  AddChat 4 AddChat 10>
+	result27 <EndChat  Say 44  AddReact -7  Reputation 4 -3>
+	result28 <NewChat  Say 46  AddChat 30>
+	result29 <NewChat  Say 45  AddReact d4  AdvancePlot 0>
+	result30 <Goto GoPickMission>
+
+	GoPickMission <NewChat  V= 1 PCRep 6 V+ 1 d50  AddCHat 31 AddChat 32 AddChat 33  ifG V1 145 else GoLvl29  ifG React 90 else GoLvl29  Say 130  E= 2 30  V= 2 12000000>
+	GoLvl29 <ifG V1 140 else GoLvl28  ifG React 85 else GoLvl28  Say 129  E= 2 29  V= 2 10500000>
+	GoLvl28 <ifG V1 135 else GoLvl27  ifG React 80 else GoLvl27  Say 128  E= 2 28  V= 2  9000000>
+	GoLvl27 <ifG V1 130 else GoLvl26  ifG React 75 else GoLvl26  Say 127  E= 2 27  V= 2  7500000>
+	GoLvl26 <ifG V1 125 else GoLvl25  ifG React 70 else GoLvl25  Say 126  E= 2 26  V= 2  6000000>
+	GoLvl25 <ifG V1 120 else GoLvl24  ifG React 65 else GoLvl24  Say 125  E= 2 25  V= 2  4500000>
+	GoLvl24 <ifG V1 115 else GoLvl23  ifG React 60 else GoLvl23  Say 124  E= 2 24  V= 2  3000000>
+	GoLvl23 <ifG V1 110 else GoLvl22  ifG React 55 else GoLvl22  Say 123  E= 2 23  V= 2  2000000>
+	GoLvl22 <ifG V1 105 else GoLvl21  ifG React 50 else GoLvl21  Say 122  E= 2 22  V= 2  1500000>
+	GoLvl21 <ifG V1 100 else GoLvl20  ifG React 45 else GoLvl20  Say 121  E= 2 21  V= 2  1000000>
+	GoLvl20 <ifG V1  95 else GoLvl19  ifG React 40 else GoLvl19  Say 120  E= 2 20  V= 2   800000>
+	GoLvl19 <ifG V1  90 else GoLvl18  ifG React 35 else GoLvl18  Say 119  E= 2 19  V= 2   600000>
+	GoLvl18 <ifG V1  85 else GoLvl17  ifG React 30 else GoLvl17  Say 118  E= 2 18  V= 2   500000>
+	GoLvl17 <ifG V1  80 else GoLvl16  ifG React 25 else GoLvl16  Say 117  E= 2 17  V= 2   400000>
+	GoLvl16 <ifG V1  75 else GoLvl15  ifG React 20 else GoLvl15  Say 116  E= 2 16  V= 2   350000>
+	GoLvl15 <ifG V1  70 else GoLvl14  ifG React 16 else GoLvl14  Say 115  E= 2 15  V= 2   300000>
+	GoLvl14 <ifG V1  65 else GoLvl13  ifG React 12 else GoLvl13  Say 114  E= 2 14  V= 2   275000>
+	GoLvl13 <ifG V1  60 else GoLvl12  ifG React 10 else GoLvl12  Say 113  E= 2 13  V= 2   250000>
+	GoLvl12 <ifG V1  55 else GoLvl11  ifG React  8 else GoLvl11  Say 112  E= 2 12  V= 2   225000>
+	GoLvl11 <ifG V1  50 else GoLvl10  ifG React  6 else GoLvl10  Say 111  E= 2 11  V= 2   200000>
+	GoLvl10 <ifG V1  45 else GoLvl09  ifG React  5 else GoLvl09  Say 110  E= 2 10  V= 2   175000>
+	GoLvl09 <ifG V1  40 else GoLvl08  ifG React  4 else GoLvl08  Say 109  E= 2  9  V= 2   150000>
+	GoLvl08 <ifG V1  35 else GoLvl07  ifG React  3 else GoLvl07  Say 108  E= 2  8  V= 2   125000>
+	GoLvl07 <ifG V1  30 else GoLvl06  ifG React  2 else GoLvl06  Say 107  E= 2  7  V= 2   100000>
+	GoLvl06 <ifG V1  25 else GoLvl05  ifG React  1 else GoLvl05  Say 106  E= 2  6  V= 2    80000>
+	GoLvl05 <ifG V1  20 else GoLvl04                             Say 105  E= 2  5  V= 2    65000>
+	GoLvl04 <ifG V1  15 else GoLvl03                             Say 104  E= 2  4  V= 2    50000>
+	GoLvl03 <ifG V1  10 else GoLvl02                             Say 103  E= 2  3  V= 2    40000>
+	GoLvl02 <ifG V1   5 else GoLvl01                             Say 102  E= 2  2  V= 2    30000>
+	GoLvl01 <                                                    Say 101  E= 2  1  V= 2    20000>
+
+	Result31 <EndChat Say 47 P= 2 1 SavePos AddReact 2 Dynamic 2 V2 FrzNU1 FrzNU2 Encounter 1 20 .enemydata>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Salvage Return>
+	.enemydata <Chaotic Passionate Spiritual +ECRA>
+	Result32 <NewChat Say 48 AdvancePlot 0 Reputation 6 -1>
+	Result33 <NewChat Say 49 AddChat 31 AddChat 32>
+
+	Msg1 <I've been placed in charge of security for our company's next phase. Let me ask you something... Would you consider yourself to be much of a pilot?>
+	Msg2 <Armored robbery is a major source of lost revenue. Our company currently has entry-level positions available for mecha pilots.>
+	Msg3 <What do you want? This is a place of business, not a coffee shop. Go away.>
+	Msg4 <I could use someone with your talents. I know what a good pilot you are... How would you like to take a commission from me? I've got a number of security jobs that need doing.>
+	Msg5 <I've been placed in charge of corporate security and could use someone dependable like you on my side. How would you like to run a mission for our company? I'd really appreciate it.>
+	Msg6 <How would you like to help me out? I've been given the corporate security portfolio and need to hire a pilot. It's just one mission, pay upon completion of the job. What do you say?>
+	Msg7 <I've been placed in charge of corporate security for this quarter. It's a lot more stress than my previous position, but if I do well I might just get promoted!>
+	Msg8 <I've heard that you're a fairly skilled mecha pilot. Our company is currently looking for a freelance pilot to handle security. How would you like to run a single mission for us?>
+	Msg9 <Working for a corporation is a good job. You get a steady income, health benefits, and an attractive retirement package.>
+	Msg10 <You look like a pretty tough character... What is it that you do for a living?>
+	Msg11 <This is the department of corporate security. How may I be of assistance?>
+	Msg12 <What do you want? I'd talk with you if I could but I am very busy right now.>
+	Msg13 <That's fantastic! I have a special offer for you... if you'd be willing to run some missions for corporate security, I could fix you up with a new mecha.>
+	Msg14 <Really? Then why haven't I ever heard of you before? Oh, never mind, as long as you know how to drive... Corporate security needs a freelance pilot to run a mission. If you'd be willing to do that, I could provide you with a new mecha.>
+	Msg15 <I think you may be selling yourself a bit short... In any case, I have an offer for you. If you would be willing to run a mission for corporate security, I am authorized to present you with a brand new mecha.>
+	Msg16 <I have an offer for you. If you would be willing to perform a routine mission for corporate security, I am authorized to present you with a brand new mecha. What do you say?>
+	Msg17 <Is that true? You look like a pilot... I guess that just goes to show that you can't judge a book by its press release.>
+	Msg18 <That's too bad. I'll have to find another pilot to give this commission to.>
+	Msg19 <One of my duties is to hire a freelance pilot for an upcoming security mission. Hey, you know how to drive a mecha, don't you? How would you like to take this mission?>
+	Msg20 <Oh, it's horrible... I've got to allocate our transportation defense budget, deal with freelance pilots, and every bandit attack is coming out of my hide... I don't know anything about this stuff! I studied accounting!>
+	Msg21 <Don't worry about it. Say, maybe you can help me... I need a mecha pilot for some freelance work. Are you up for it?>
+	Msg22 <No thanks... At least the worst that can happen in my current job is that I'll get fired. Say, how would you like to run a mission for me? I need a freelance pilot for security detail.>
+	Msg23 <No need to apologize. I can find another pilot for this mission.>
+	Msg24 <All kinds of jobs. Accounting, planning, development, manufacturing... the list goes on and on!>
+	Msg25 <Oh, I am. It's been a bit stressful since I've been transferred to corporate security duty, but other than that I love working here.>
+	Msg26 <It's not all fun and games working at a corporation, you know. I have stress in my life too. Especially now that I've been transferred to corporate security...>
+	Msg27 <Well, that's fortunate. I've been looking for a mecha pilot to do a security mission for our company. How would you like to take part?>
+	Msg28 <Does your portfolio include mecha piloting?>
+	Msg29 <I'm looking for a mecha pilot to perform a single mission for our security division. Does this sound like a job you're likely to enjoy?>
+	Msg30 <Uh-huh.>
+	Msg31 <I am in charge of corporate security. I've just been transferred to this position from my previous job in the accounting department. My main duty is the selection and hiring of freelance security agents.>
+	Msg32 <I don't think you have quite enough experience for the mission I am coordinating. Perhaps you could apply again later.>
+	Msg33 <I'm looking for a pilot to perform a security mission for our company. Would you be interested in appling for the job?>
+	Msg34 <I'm examining our figures from last quarter, and trying to decide what areas need the most from our security budget.>
+	Msg35 <Here is the keycard for your new mecha. Go familiarize yourself with it, then return here and I'll give you the details of the security mission.>
+	Msg36 <The only catch is the contractual obligation that you perform the mission which will be assigned afterwards. It's routine security duty.>
+	Msg37 <Maybe you can... I need to hire a freelance pilot for the upcoming security duty. Would you like the job? It'd save me a lot of headaches if you would just take it.>
+	Msg38 <Yeah, I guess it does, right about now... Say, you're a pilot, aren't you? How would you like a contract for some freelance security work? It'd save me a lot of trouble if you could do it.>
+	Msg39 <Please don't remind me! And I still have to find a pilot for this upcoming securit mission... That's a major pain in the arse, let me tell you.>
+	Msg40 <Um, I don't think you're quite the kind of pilot we're looking for. We need someone who is more physically impressive, more intimidating. Check back later and maybe we'll have a low profile piloting job for you.>
+	Msg41 <I like you so I'll let you in on this. We need a freelance mecha pilot for an upcoming security mission. Would you like the job?>
+	Msg42 <If you think that's boring, try working in the accounting department sometime.>
+	Msg43 <Well, we have a mission available for a freelance pilot. Would you like the job?>
+	Msg44 <All I can say is, I'm very relieved!>
+	Msg45 <Thanks, I'm going to need it.>
+	Msg46 <That'd be great! I would really appreciate it if you could do this mission.>
+	Msg47 <Here are the operation coordinates. Report back to me once you're done.>
+	Msg48 <Okay, you can back out of the mission. If you had already signed the waiver then maybe I'd be upset...>
+	Msg49 <Reports indicate that you will be facing around \VAL V2 tactical threat points of enemy mecha.>
+	Msg50 <Are you ready to proceed with the mission?>
+
+	Msg130 <An unknown force has been attacking our factories. They seem intent on the complete destuction of our company. So far, all the mecha we've sent against them have been destroyed. I need you to stop them. Pay is $168000 plus salvage.>
+	Msg129 <A strike force hired by a rival corporation has been attacking our facilities. They are very strong, and have never been defeated. I need you to change that. Your salary will be $147000 plus salvage.>
+	Msg128 <A bandit king has been robbing our trucks for some time now. He's managed to accumulate quite a powerful force of mecha and skilled pilots. Your job is to stop them. Pay is $126000 plus salvage rights.>
+	Msg127 <One of our previous security enforcers has gone rogue, and is now striking against the hand that once fed him. Strike down him and his men for $105000 plus salvage.>
+	Msg126 <We are involved in a territory dispute with another company. A certain mining interest is claimed by both sides, but if you could eliminate their guards it would be ours and ours alone. Pay is $84000 plus salvage.>
+	Msg125 <Environmental terrorists have been preventing our expansion into the forests south of here. They are fanatically dedicated to their cause, and will likely die before they surrender. Pay is $63000 and salvage to remove them from company land.>
+	Msg124 <A well-equipped bandit force has been raiding our storehouses. They're well trained and have an unknown source of advance-type mecha. Pay is $42000 plus salvage to eliminate them.>
+	Msg123 <A rival corporation has attacked one of our outposts, hoping to claim it as their own. Their mecha are powerful but still weakened from the last battle. Pay is $28000 plus salvage to head over there and finish them off.>
+	Msg122 <I can give you $21000 plus after-battle salvage rights to eliminate a bandit clan which has been a thorn in our side for some time now. They're fairly powerful, but not unassailable.>
+	Msg121 <Over the past month an unknown force has attempted repeatedly to gain access to our weapons lab. We've discovered their base of operations, and now need to eliminate them before their next break-in attempt. Pay is $14000 plus salvage.>
+	Msg120 <A fairly powerful bandit gang has been raiding our trucks. Your salary for eliminating them will be $11200 and salvage.>
+	Msg119 <A mercenary unit launched several covert attacks against our factories. It's thought that a rival corporation is involved. Your pay to destroy them will be $8400, plus any leftover mecha.>
+	Msg118 <A band of mecha-equipped environmental activists have been harassing our forestry interests. I expect you to eliminate them. The pay for this job is $6700 and salvage.>
+	Msg117 <The security force of a rival corporation launched a raid against one of our research stations. I want you to launch a retributive strike against their mecha wing. Pay is $5600 plus salvage.>
+	Msg116 <I can offer you $4900 plus salvage to take out a rogue mecha wing which has been attacking our interests.>
+	Msg115 <You'll be facing a small mercenary force which has been attacking our trucks. We don't know who's behind the attacks. Pay is $4200 and salvage rights.>
+	Msg114 <A rival corporation has hired an unscrupulous mercenary team to attack our factories. I'll need for you to take them out. I can give you $3850 plus salvage.>
+	Msg113 <You'll be going up against a well-equipped mecha gang. We just happened to be their most recent targets. I can offer you $3500 and salvage rights for the mission.>
+	Msg112 <I need you to destroy a tough bandit gang. Your salary will be $3150 plus salvage.>
+	Msg111 <Your target is a corporate sabotage team hired by a rival company. Each of the enemy mecha must be disabled. I can give you $2800 and salvage for this job.>
+	Msg110 <Your job is to round up and disable a mecha gang that's been disruting our interests. Pay is $2450 plus salvage.>
+	Msg109 <I need you to eliminate a small bandit gang. Your pay will be $2100 plus salvage for the mission.>
+	Msg108 <Your target is an amateur mecha gang that's been skirmishing with our regular security forces. They didn't do much damage, but they're wasting company resources. Pay is $1750 plus salvage rights.>
+	Msg107 <Your target is a gang of bandits that's been raiding our munitions factory. Your salary will be $1400 plus salvage.>
+	Msg106 <Your target is a bandit gang that's been attacking our storehouses. Pay is $1150 and salvage rights.>
+	Msg105 <A local gang of mecha hooligans smashed up the president's limo and threw it into the lake. They have to be taught a lesson. Your salary will be $1000 plus salvage.>
+	Msg104 <I can offer you $950 and salvage rights to eliminate a local bandit gang that's been giving us trouble.>
+	Msg103 <A small group of unknown mecha attacked our security division, badly damaging one of our mecha. It's not known why the attack happened but I want them stopped now. Pay is $900 plus salvage.>
+	Msg102 <A group of young mecha gangers have been skirmishing with our security forces. I want them stopped... perminantly. Pay is $750 plus salvage for this job.>
+	Msg101 <A small bandit gang launched a raid against our trucks. I want them stopped now. Pay is $650 plus salvage.>
+
+	Prompt1 <I'm a great pilot!>
+	Prompt2 <I'm an average pilot.>
+	Prompt3 <I'm not a pilot at all.>
+	Prompt4 <I'd like to do that.>
+	Prompt5 <Right now I'm too busy.>
+	Prompt6 <Do your best!>
+	Prompt7 <Why is it more stressful?>
+	Prompt8 <Try being a mecha pilot someday...>
+	Prompt9 <I'll do it.>
+	Prompt10 <Sorry, I can't.>
+	Prompt11 <What kind of jobs are there?>
+	Prompt12 <You seem pretty happy with your job.>
+	Prompt13 <I'm a mecha pilot.>
+	Prompt14 <This and that.>
+	Prompt15 <Killing and destruction, mostly.>
+	Prompt16 <Tell me what you do here.>
+	Prompt17 <I'm looking for a job.>
+	Prompt18 <What are you doing?>
+	Prompt19 <I'll do it!>
+	Prompt20 <What's the catch?>
+	Prompt21 <Maybe I can help.>
+	Prompt22 <Wow, it sucks to be you.>
+	Prompt23 <Any piloting jobs?>
+	Prompt24 <That sounds boring.>
+	Prompt25 <Are you looking for a pilot?>
+	Prompt26 <Yes it does.>
+	Prompt27 <I don't want a corp job.>
+	Prompt28 <I'm a pilot. I can do it.>
+	Prompt29 <Well, lots of luck.>
+	Prompt30 <Tell me the details.>
+	Prompt31 <I'm ready to go.>
+	Prompt32 <This sounds too dangerous.>
+	Prompt33 <What will I be facing?>
+
+	Plot 1
+		% The player lost the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 1500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat  AdvancePlot 0  Say d6 AddReact -10 AddReact d8  CashPrize 500>
+		Msg1 <That mission was a complete failure. Take your repair allowance and get out of here.>
+		Msg2 <You failed miserably on that job. However, the company takes care of its own, so here's your repair allowance.>
+		Msg3 <You really dropped the ball on that. Here is your repair allowance. It may be more than you deserve...>
+		Msg4 <I trusted you to complete this job, and just look at what you did... Here's some cash to fix up your mecha. I expect better in the future.>
+		Msg5 <You have failed me. I expect you to try much harder if you are ever accepted by this company again! Here is your repair allowance.>
+		Msg6 <That didn't go so well... Here is your standard repair allowance. If you're ever awarded a contract by this company again I certainly hope that you'll try harder.>
+	end
+
+	Plot 2
+		% The player won the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+
+		Persona 1
+		greeting <NewChat  AdvancePlot 0  AddReact d4 Say d8 if= E2 30 else GoLvl29 CashPrize 168000>
+		GoLvl29 <if= E2 29 else GoLvl28 CashPrize 147000>
+		GoLvl28 <if= E2 28 else GoLvl27 CashPrize 126000>
+		GoLvl27 <if= E2 27 else GoLvl26 CashPrize 105000>
+		GoLvl26 <if= E2 26 else GoLvl25 CashPrize 84000>
+		GoLvl25 <if= E2 25 else GoLvl24 CashPrize 63000>
+		GoLvl24 <if= E2 24 else GoLvl23 CashPrize 42000>
+		GoLvl23 <if= E2 23 else GoLvl22 CashPrize 28000>
+		GoLvl22 <if= E2 22 else GoLvl21 CashPrize 21000>
+		GoLvl21 <if= E2 21 else GoLvl20 CashPrize 14000>
+		GoLvl20 <if= E2 20 else GoLvl19 CashPrize 11200>
+		GoLvl19 <if= E2 19 else GoLvl18 CashPrize 8400>
+		GoLvl18 <if= E2 18 else GoLvl17 CashPrize 6700>
+		GoLvl17 <if= E2 17 else GoLvl16 CashPrize 5600>
+		GoLvl16 <if= E2 16 else GoLvl15 CashPrize 4900>
+		GoLvl15 <if= E2 15 else GoLvl14 CashPrize 4200>
+		GoLvl14 <if= E2 14 else GoLvl13 CashPrize 3850>
+		GoLvl13 <if= E2 13 else GoLvl12 CashPrize 3500>
+		GoLvl12 <if= E2 12 else GoLvl11 CashPrize 3150>
+		GoLvl11 <if= E2 11 else GoLvl10 CashPrize 2800>
+		GoLvl10 <if= E2 10 else GoLvl09 CashPrize 2450>
+		GoLvl09 <if= E2  9 else GoLvl08 CashPrize 2100>
+		GoLvl08 <if= E2  8 else GoLvl07 CashPrize 1750>
+		GoLvl07 <if= E2  7 else GoLvl06 CashPrize 1400>
+		GoLvl06 <if= E2  6 else GoLvl05 CashPrize 1150>
+		GoLvl05 <if= E2  5 else GoLvl04 CashPrize 1000>
+		GoLvl04 <if= E2  4 else GoLvl03 CashPrize 950>
+		GoLvl03 <if= E2  3 else GoLvl02 CashPrize 900>
+		GoLvl02 <if= E2  2 else GoLvl01 CashPrize 750>
+		GoLvl01 <CashPrize 650>
+		Msg1 <You did some good work out there. Congratulations.>
+		Msg2 <I think you could have a good future in corporate enforcement. Here's your pay.>
+		Msg3 <Here's your pay for that last job. I look forward to working with you again.>
+		Msg4 <Your mission was a rousing success. I'll let you know if I ever have another job for you.>
+		Msg5 <Congradulations, you did it. And to think that some of the guys in the actuarial department didn't think you'd be coming back... Here's your pay.>
+		Msg6 <Mission completed. Here's the pay that you earned out there.>
+		Msg7 <You really showed them a thing or two... Here's your pay.>
+		Msg8 <You have crushed our enemies. Here's the pay you earned. Check back later and I may have another job for you.>
+	end
+
+end

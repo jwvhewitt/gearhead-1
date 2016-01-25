@@ -1,0 +1,52 @@
+--- crt.pp.O	2005-10-04 23:52:57.000000000 -0700
++++ crt.pp	2007-01-19 23:20:15.000000000 -0800
+@@ -17,6 +17,9 @@ Interface
+ 
+ {$i crth.inc}
+ 
++Procedure ShiftAltCharset;
++Procedure ShiftNormalCharset;
++
+ Const
+   { Controlling consts }
+   Flushing     = false;               {if true then don't buffer output}
+@@ -1430,15 +1433,25 @@ end;
+ 
+ procedure CursorOn;
+ begin
+-  ttySendStr(#27'[?2c');
++  ttySendStr(#27'[?25h');
+ end;
+ 
+ 
+ procedure CursorOff;
+ begin
+-  ttySendStr(#27'[?1c');
++  ttySendStr(#27'[?25l');
++end;
++
++
++Procedure ShiftAltCharset;
++begin
++  ttySendChar(#14);
+ end;
+ 
++Procedure ShiftNormalCharset;
++begin
++  ttySendChar(#15);
++end;
+ 
+ {******************************************************************************
+                                Initialization
+@@ -1605,8 +1618,9 @@ Initialization
+         CurrY:=1;
+         ttySendStr(#27'[H');
+       end;
+-   {Reset Attribute (TextAttr=7 at startup)}
+-      ttySendStr(#27'[m');
++   {Reset Attribute (TextAttr=7 at startup)
++    and enable ACS character set}
++      ttySendStr(#27'[m'#27')0');
+     end;
+ 
+ Finalization

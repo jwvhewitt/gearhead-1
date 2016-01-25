@@ -1,0 +1,255 @@
+Plot 0
+	name <PLOT: Enemy of the People>
+	% [[Ver1.3]]
+	% Nov 11 2003 : Added FacXP+ command
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+	Element2 <Character Guardian>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	%  S101 = Faction Victory Count
+	%  S102 = Enemy Victory Count (if appropriate)
+	%  S103 = How many times PC fought for faction
+	%  S104 = How many times PC fought against faction
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100  S+ 101 1 FacXP+ E1 1>
+
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d80 23 if= V3 0 ifG PCRep 2 0 ifG RReact E2 d70 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// We've had some monster attacks over here. Report for mission.>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// I could use another investigator on this monster case, if you're free.>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Trouble in \SCENE EScene 2 : Too many monsters.>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// Busy? I could use some help exterminating monsters.>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// Help requested fighting monsters in \SCENE EScene 2 .>
+
+
+sub
+	Persona 2
+	rumor <!2 has been exterminating monsters wherever they're found.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRep 6 V= 4 Reward Threat V3 100 150 Goto GoCheckFaction>
+
+	GoCheckFaction <if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFriend <ifG PCRep 2 d40 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	GoNoAutomatic <ifG React d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 MDynamic 0 V3 .mdesc .nu1 .nu2 Reputation 2 1>
+	.mdesc <Mutant Synth>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1>
+	result10 <Goto result9>
+
+	result11 <NewChat Reputation 2 1 ifG PCRep 2 30 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+	GoR11Lose <NewChat Say 104 V= 1 -1>
+
+	result14 <NewChat ifG Intimidation 15 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+	GoR14Lose <NewChat Say 105 V= 1 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Good job! Here's a reward for your actions. I heard from the head office that these monsters are believed to originate in \NARRATIVE 2 ; maybe you could help out there.>
+	Msg2 <From your report, I can tell these were no normal creatures. The guardian office in \NARRATIVE 2 has been fighting similar creatures. Maybe they could use your help as well.>
+	Msg3 <You did it. The monsters are gone, and our city is safe. Here's your reward.>
+	Msg4 <I was doubtful that there really were monsters, but after seeing those things you fought now I know. I heard a report that more of them were found in \NARRATIVE 2 .>
+	Msg5 <Congratulations on a successful monster hunt. Here's the bounty you earned.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <They got away, but at least now we know that  they exist.>
+	Msg7 <So, the critters put up more resistance than we thought. Guess I'll have to organize another search party.>
+	Msg8 <You saw them? Good. We'll head back and destroy them this time.>
+	Msg9 <From the description you provided, these were most certainly not wild animals. You're lucky to be alive.>
+	Msg10 <You didn't stop the monsters, but the information you provided should help us to deal with them.>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <They were last spotted in a wildzone south of here. I can pay $ \VAL V4 if you can get rid of the critters.>
+	Msg12 <The monsters allegedly damaged a campground on the city limits. That'd be a good place to start looking. The job is worth $ \VAL V4 .>
+	Msg13 <They were last spotted to the north of town. You'll get $ \VAL V4 as soon as you exterminate the monsters.>
+	Msg14 <The most recent reports placed the monsters east of here. If you can find them, exterminate them. Pay for this job is $ \VAL V4 .>
+	Msg15 <They should be in the western wildzone. The bounty for these monsters is $ \VAL V4 .>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Are you busy? There have been reports of a monster near town, and I could use someone to investigate.>
+	Msg17 <If you're looking for a job, I have a patrol mission available. There's been a monster reported near town and I need someone to investigate.>
+	Msg18 <How'd you like to run a guardian mission? Monsters have been reported outside of town, but until these monsters actually do anything I can't spare the manpower to investigate.>
+	Msg19 <Hear about the monsters everyone's been seeing? Well, we have one in \SCENE ESCene 2 now. I've got a mission available to go investigate, if you're interested.>
+	Msg20 <Need a job? \SCENE EScene 2 has monster trouble, and I could use someone to go investigate.>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <There have been a number of strange monsters spotted outside of town recently. All the guardians have been searching for them, but I fear it may not be enough.>
+	Msg22 <We've been searching for a monster that has been spotted outside of town. It may be connected to that hiker who disappeared last week.>
+	Msg23 <Some kind of wild animal has been digging up gardens and killing dogs on the outskirts of town. I think it's just a rabid nazzhog, but I better investigate in case it's one of those monsters we've been hearing about.>
+	Msg24 <There have been some problems lately. There's been a lot of reports about strange creatures, so all the guardians are busy. We haven't turned up much yet, though.>
+	Msg25 <Did you hear about the monsters? Well, we may have one in town. I've been getting complaints about a mysterious creature lurking in the wilds. We have to catch it, before it manages to hurt someone!>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Nobody seems quite certain. The best theory so far seems to be that they're bioweapons.>
+	Msg27 <That's a good question. Could be just a wild animal, as far as I can tell. People are really jumpy lately.>
+	Msg28 <I've heard everything, that they might be ghosts or bioweapons or aliens or anything. My money says it's not anything so exciting.>
+	Msg29 <Could be a giant rat that's moved into the area, could be a Hunter-Slayer bioweapon escaped from a containment site. The only way we're gonna find out is for you to go see.>
+	Msg30 <I can't even be sure that there is a monster out there. If not for the fact that we've been hearing about monsters from all over, I'd be tempted to chalk the reports up to paranoia.>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <I could use some help on this case, that's certainly true. How'd you like to investigate one of the sightings, and eliminate any monsters you come across?>
+	Msg32 <A team-up might be in order. There's too much ground for me to cover alone, but if you could patrol an area and kill any monsters you find there, that'd be great.>
+	Msg33 <Would you be willing to run a few patrols for me? If you encounter any monsters you can take them out; there'll be a reward involved if you're interested.>
+	Msg34 <If you'd like a job, I can offer a patrol mission. Take a look around the wilds on foot; if you find any monsters, destroy them and come collect the reward.>
+	Msg35 <There's a patrol mission available. We don't have enough manpower to cover the entire area outside of town, so I can hire you to search an area and destroy any monsters you encounter.>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Make sure you come back in one piece. If those critters kill anyone I have to fill out another report.>
+	Msg37 <Good luck out there.>
+	Msg38 <Report back here after you're found the creatures, and I'll give you your reward then.>
+	Msg39 <Thanks for your help.>
+	Msg40 <Come back safe.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Ready to go exterminate yet?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <Ah, well. It's likely to be dangerous work... and believe me, it's thankless.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Come back when you're ready and we can start.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <We aren't looking for outside help on this one. It's a guardian matter.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <If you looked half as tough as you think you are, I'd hire you in a minute.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Be careful out there.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 asked you to exterminate some monsters.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <Be back when I'm finished.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <I better prepare, first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <What kind of monsters are these?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <Absolutely.>
+	Prompt8 <I'd love to.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Definitely not.>
+	Prompt10 <That's not my kind of work.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	Prompt11 <I'd like to help your case.>
+	Prompt12 <I've worked with the Guardians before.>
+	Prompt13 <Are you asking for my help?>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	Prompt14 <You need an expert hunter, like me.>
+	Prompt15 <I could take those monsters easy.>
+	Prompt16 <Maybe I'm crazy enough to go fight them.>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <That's grunt work; I'm a pilot.>
+	Prompt18 <Sorry, I can't help you.>
+	Prompt19 <Not interested.>
+
+
+end
+

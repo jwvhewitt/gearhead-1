@@ -1,0 +1,31 @@
+GroundCar 4
+Name <Osprey>
+Desig <PL-780>
+SDL_Sprite <gca_osprey.png>
+
+Mod Body
+	Armor 4
+	sub
+		Wheels 5
+
+		Sensor 6
+
+		CPit
+
+		Mount
+		Name <Body Weapon Mount>
+		inv
+			STC AC-2
+		end
+	end
+
+Mod Turret
+	Size 5
+	Armor 4
+	sub
+		STC SWML-40
+
+		Mount
+		Name <Turret Weapon Mount>
+	end
+end

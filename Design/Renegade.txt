@@ -1,0 +1,55 @@
+GroundHugger 4
+Name <Renegade>
+Desig <DF-A>
+SDL_Sprite <ghu_renegade.png>
+
+Mod Turret
+	Armor 1
+	sub
+		Gun 2
+		Name <Chain Gun>
+		Speed 3
+		BV 4
+		Magazine 50
+		sub
+			Ammo 2
+		end
+	end
+
+Mod Body
+	Armor 1
+	sub
+		CPit
+		Armor 1
+
+		Melee 4
+		Name <Spiked Bumper>
+		Acc 1
+		Speed 1
+
+		Sensor 4
+
+		Wheels 6
+
+		Gyro 3
+		Name <Advanced Suspension>
+	end
+
+Mod Storage
+	Name <Right Pod>
+	Size 2
+	Armor 1
+	sub
+		BeamGun 4
+		Name <Laser Cannon>
+	end
+
+Mod Storage
+	Name <Left Pod>
+	Size 2
+	Armor 1
+	sub
+		BeamGun 4
+		Name <Laser Cannon>
+	end
+end

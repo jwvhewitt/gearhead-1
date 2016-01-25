@@ -1,0 +1,209 @@
+Plot 0
+	name <PLOT: A Terror Reborn>
+
+	% In Last Hope, something has gone horribly wrong at the
+	% BioCorp research station. A supposedly dead bioweapon
+	% named "CETUS" has reactivated.
+
+	% Element 1 is Last Hope, the town where the lab is.
+	element1 <Scene>
+	Stat 1 39
+
+	% Element 2 is the daughter of the scientist.
+	Element2 <Prefab>
+
+	% Element3 is the reporter trapped in the cave.
+	Element3 <Prefab>
+
+	% Element4 is the scientist at the lab.
+	Element4 <Prefab>
+
+	% Element 5 is the reinforcements.
+	Element5 <Prefab>
+
+	% V1 = Initialization Counter
+	% V2 = Combat Indicator
+	% V3 = Get reinforcements for Cetus battle if V3=1
+	% V4 = Daughter sent PC
+
+	% For initialization, move the jounalist to Sandstone Cave L2 and
+	% the scientist to Anubis Research Site.
+	start <if= V2 1 else GoCheckStartCombat if= V3 1 ForceChat E5 V= 3 2>
+	GoCheckStartCombat <if= V1 2 else GoCheckScientist if= SceneID 39 Goto GoStartCombat>
+
+	GoCheckScientist <if= V1 1 else GoCheckInit ifPersona E4 else GoScientistDied>
+	GoScientistDied <if= SceneID 42 Print 1 V= 1 2>
+
+	GoCheckInit <if= V1 0 MoveChar E3 41 MoveChar E4 42 FreezeChar E5 V= 1 1>
+
+	GoStartCombat <Alert 2 Block SavePos NewD 2 ComposeD NU1 .nu1 ComposeD NU2 .nu2 DynaNPC N1 2 P= 2 1 SetMapType 39 if= P3 1 DynaNPC E5 -1>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3  AdvancePlot 1>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  3  XPV 500 AdvancePlot 2>
+
+	Msg1 <The lab appears to have been the scene of a massive battle...>
+	Msg2 <As you approach town, you see a bizarre shape floating in the distance. It soon becomes apparent that this is the bioweapon Cetus, and you will have to defend yourself!>
+
+sub
+	Persona 2
+	rumor <!2 has been very worried about her mother.>
+	% V1 = Has already given the key
+	greeting <NewChat if= V1 1 else GoFirstTime Say 1>
+	GoFirstTime <ifG PCRep 1 15 else GoCheckFriend Say 2 P= 4 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+	GoCheckFriend <ifG React 40 else GoNoLike Say 11 P= 4 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+	GoNoLike <Say 3>
+	result1 <NewChat Say 4 AddChat 5 AddChat 6>
+	result2 <NewChat Say 5 AddChat 5 AddChat 6 Reputation 5 -d10>
+	result3 <NewChat Say 6 AddChat 5 AddChat 6 Reputation 5  d10>
+	result4 <NewChat Say 7 AddReact -40 AddReact -d20 Reputation 3 -d12>
+	result5 <NewChat Say 8 AddReact d10 GiveKeyItem 39 Memo 10 V= 1 1>
+	result6 <NewChat Say 9>
+
+	Msg1 <Please go help my mother! I'm certain that something has gone wrong...>
+	Msg2 <I'm very concerned about my mother... She's a scientist with BioCorp. Well, they're working on something at their mesa lab, but she didn't come home last night... I haven't even received a phone call. I'm certain that something is wrong.>
+	Msg3 <I hope everything is going well at the lab...>
+	Msg4 <I don't know. She was never allowed to talk about her work... not that she would have done that even if she could. Tell me, you're a cavalier... Could you go up there and see what's going on?>
+	Msg5 <Don't say that! I worry it might be true... The mesa project is top secret, they haven't even announced to the shareholders what it's about. Could you go up there, just to make sure my mother is okay?>
+	Msg6 <You're probably right. It wouldn't be entirely unlike her to completely forget her family. Could you go there and make sure she's alright? Even if everything's okay I'd just feel better knowing.>
+	Msg7 <I guess you don't care about anyone but yourself, huh? Or maybe you've just got it in for the corps. There's real people who work there, you know, and they might get hurt...>
+	Msg8 <Thank you! Here's a passcard to let you into the lab. You can get there through the sandstone caves. Come back here and let me know when you find out about my mother.>
+	Msg9 <I understand... This can't seem too urgent to you. I just really hope that nothing has happened to my mother...>
+	Msg10 <\ELEMENT 2 in Last Hope asked you to check on her mother \ELEMENT 4 at the BioCorp research station.>
+	Msg11 <I'm very worried about my mother... She works at the BioCorp labs. She's been busy lately, but last night she didn't come home and she didn't even call. I'm certain that something must have gone wrong... I hope she's okay.>
+	Prompt1 <What are they working on there?>
+	Prompt2 <Maybe she was eaten by an experiment...>
+	Prompt3 <I'm sure she's just working too hard.>
+	Prompt4 <Why should I care about that?>
+	Prompt5 <Alright, I'll do that.>
+	Prompt6 <Sorry, I can't help you.>
+
+	Persona 3
+	% This reporter is trapped in the cave. If the PC has received
+	% the BioCorp Labs passcard, he can give it to E3. Of course,
+	% this will leave the PC at the mercy of the lab's defenses...
+	% V1 = Phase Counter; V1=1 After first meeting; V1=2 has given passcard
+	greeting <NewChat if= V1 2 else GoSecondStage SayAnything>
+	GoSecondStage <if= V1 1 else GoFirstStage Say 1 ifKeyItem 39 AddChat 1>
+	GoFirstStage <Say 2 AddChat 2 AddChat 3 ifKeyItem 39 AddChat 1>
+	result1 <NewChat Say 5 DeleteKeyItem 39 V= 1 2 P= 3 1 Reputation 1 1 MoveChar E3 E1>
+	result2 <NewChat Say 3 V= 1 1 ifKeyItem 39 AddChat 1>
+	result3 <NewChat Say 4 V= 1 1 ifKeyItem 39 AddChat 1>
+	Msg1 <I wish I could get out of this cave... This could be the biggest story of my life, if I wasn't stuck here!!!>
+	Msg2 <Oh man, am I glad to see you... I was trying to sneak into BioCorp labs to get a story on their new mecha project, but the place was attacked! Now I'm trapped here, I can't go back up and I can't get out!>
+	Msg3 <Not really... Right after I arrived, before I could find out anything, I heard gunshots. The BioCorp guards were fighting with someone else... then there was a huge explosion, and after that I ran. I managed to hide here but now I'm stuck.>
+	Msg4 <The rumor is that they're making an anthromorphic mecha using pure biological components. They're doing it in Last Hope because it's a small town, so there won't be as many people nosing around. I tried investigating it but now I'm stuck.>
+	Msg5 <Yes, that'd help a lot! With this I can get past the guard robots downstairs... Thanks! Be careful, without this card you might be pretty vunerable yourself... I'll try to send help if I can.>
+	Prompt1 <This passcard might help. [give passcard]>
+	Prompt2 <Can you tell me exactly what happened?>
+	Prompt3 <Tell me about this mecha project.>
+
+	Persona 4
+	greeting <NewChat Say 1 P= 1 2 AddChat 1 ifG P4 0 AddChat 2>
+	result1 <NewChat Say 2 AddChat 3>
+	result2 <NewChat Say 3 AddChat 3>
+	result3 <NewChat Say 4 AddChat 4>
+	result4 <EndChat Say 5 Exit 39 SeekGate 1>
+	Msg1 <How did you get into the lab? That doesn't matter... We have to get out of here immediately... There was an attack, but that's not our greatest concern any longer. I must report to the head office...>
+	Msg2 <The lab was attacked. They were trying to steal our prototype... There was a gun fight with the security force, then a big explosion, and then the unthinkable happened... Cetus woke up.>
+	Msg3 <My daughter? I suppose she must have noticed how long I've been gone. Our lab was attacked; it isn't safe here any more. What's more, I can't explain how, but the attackers did something horrible... they woke up Cetus.>
+	Msg4 <Cetus is an old bioweapon that we were studying, hoping to copy its technology. It was buried here for years, a mecha-destroyer developed as part of the Hunter-X program... it was never finished, it shouldn't have been able to activate.>
+	Msg5 <I don't know. I hid when it started destroying things... I think I'm the only one left alive. We must get back to town quickly, the company has to be informed of what has happened... It'll be quicker to return if we use the helicopter.>
+	Prompt1 <What exactly happened here?>
+	Prompt2 <\PERSONA E2 sent me to help you.>
+	Prompt3 <Who or what is "Cetus"?>
+	Prompt4 <Where is Cetus now?>
+
+	Persona 5
+	greeting <EndChat Say 1>
+	Msg1 <\PERSONA E3 contacted me and said there would be trouble in Last Hope. Looks like it's a good thing I came!>
+
+
+	Plot 1
+	name <SUBPLOT: PC lost to Cetus>
+	% The PC lost to Cetus.
+	% V1 = Timer
+	start <if= V1 0 else GoCheckTime News 1 V= 1 ComTime V+ 1 86400 S= 1 2 MoveChar E3 39 MoveCHar E4 39 MoveChar E5 39>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <Monster escapes from BioCorp lab, attacks Last Hope village. Corporate heads deny responsibility; claim "Cetus" is PreZero biosoldier.>
+
+	sub
+		Persona 2
+		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
+		GoFirstTime <V= 1 1 Say 1>
+		Msg1 <I'm worried about that monster, Cetus. Where will it go next? Why did it attack us? There are so many people dead here in Last Hope... I can't look my mother in the eye anymore.>
+
+		Persona 3
+		rumor <it'll take a long time to rebuild our town after Cetus attacked.>
+		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
+		GoFirstTime <V= 1 1 Say 1>
+		Msg1 <This monster "Cetus" isn't the story I thought I'd be investigating in Last Hope, but it certainly is interesting. Who knows what other monsters the corporations are keeping secret from us?>
+
+		Persona 4
+		rumor <!4 is responsible for that monster which attacked town...>
+		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
+		GoFirstTime <V= 1 1 Say 1>
+		Msg1 <The loss of Cetus is a tragic setback, but we have already learned much from it.>
+
+	end
+
+	Plot 2
+	name <SUBPLOT: PC defeated Cetus>
+	% The PC defeated Cetus on his first try. Nifty!
+	% The main story should close itself now that Cetus is dead, so
+	% we don't have to worry about that here...
+	% V1 = Timer
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 NEws 1 History 2 MoveChar E3 39 MoveCHar E4 39 MoveChar E5 39>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+
+	Msg1 <PreZero bioweapon accidentally activated at BioCorp lab; adventurer \PC helped to destroy the monster.>
+	Msg2 <You destroyed the biomonster "Cetus" before it could attack Last Hope.>
+
+	sub
+		Persona 2
+		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
+		GoFirstTime <V= 1 1 Say 1>
+		Msg1 <I can't believe my mother was working with a monster like that. The mesa labrotory is going to close, but I think BioCorp may have another project lined up. I heard Mom say something about moving to a town up north called Kist...>
+
+		Persona 3
+		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
+		GoFirstTime <V= 1 1 Say 1>
+		Msg1 <You did really well out there! The story of your heroic clash with that monster is running on all the newswires!>
+
+		Persona 4
+		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
+		GoFirstTime <V= 1 1 Say 1>
+		Msg1 <Thank you for destroying Cetus... It saved the company a considerable amount of embarassment. The loss of Cetus is a tragic setback, but we have other means of acquiring the knowledge we require.>
+
+	end
+
+
+end
+inv
+	NPC Citizen
+	chardesc Young Female Pragmatic Heroic
+	place <1 ally pass>
+	sdl_colors <130 143 114 150 112 90 120 42 190>
+	sdl_sprite <cha_f_explorer.png>
+
+	NPC Journalist
+	chardesc Heroic
+	teamdata <pass>
+	home <Exit Grid>
+	sdl_colors <234 180 88 255 212 195 1 75 67>
+
+	NPC Scientist
+	chardesc Old Female Shy
+	teamdata <pass>
+	home <Lab>
+	SetFaction 5
+	sdl_colors <201 205 224 150 112 90 120 42 190>
+
+	NPC Mecha Pilot
+	Chardesc Heroic Renowned
+	SetFaction 2
+	mecha <Radcliff.txt>
+	EquipChar 15000
+	sdl_colors <100 150 60 255 212 195 200 255 28>
+
+end

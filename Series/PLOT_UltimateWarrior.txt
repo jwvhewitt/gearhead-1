@@ -1,0 +1,58 @@
+Plot 0
+	% An NPC is gonna do some skill training, and the PC is
+	% free to join in...
+	% If the PC/NPC reaction score is good the NPC will offer to
+	% train with the player. Otherwise if the reaction isn't bad
+	% the NPC will give the PC a fortune cookie.
+	name <PLOT: UltimateWarrior>
+
+	element1 <Character HasMecha Sociable Cheerful Body>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <!1 has been working out.>
+	greeting <NewChat  AdvancePlot 0  ifG React 50 else GoMedReact  ifG PCRep 6 d120 else GoHRNoRep  Say 102  AddChat 1>
+	GoHRNoRep <ifG SkRoll 26 7 else GoHRNoAth  Say 103  AddChat 1>
+	GoHRNoAth <Say 105  AddChat 1>
+
+	GoMedReact <ifG React d45 else GoLowReact  ifG SkRoll 26 8 else GoMRNoAth  Say 104  AddChat 1>
+	GoMRNoAth <Say d5>
+
+	GoLowReact <ifG React 0 else GoReallyLow  SayAnything>
+	GoReallyLow <EndChat  Say 101>
+
+	result1 <EndChat  V= 1 150 V+ 1 d5  Say V1  School SkList  AddReact d4  V= 1 200 V+ 1 d5 Say V1>
+	SkList <26 13 12 9 8>
+
+	Msg1 <They say that jogging is great exercise.>
+	Msg2 <The more you work your body the stronger you'll become. They say the same is true of your mind but eh, I don't know about that.>
+	Msg3 <A lot of pilots don't think that they need to be in top physical shape, but if ever they're in combat they'll change their minds in a hurry!>
+	Msg4 <If you find yourself getting tired too often chances are that you need more exercise.>
+	Msg5 <If you want to develop your athletics the fastest, work out until you're absolutely exhausted. No pain, no gain.>
+
+	Msg101 <Hey, don't you see that I'm busy? Go bother someone else.>
+	Msg102 <How's it going? Hey, if you're not too busy, how'd you like to join me for some training? I figure there's stuff I can learn from you, and a few things you can learn from me.>
+	Msg103 <You're looking in pretty good shape. I've been working out too. Hey, how'd you like to do some training together? You can help me and I can help you.>
+	Msg104 <You look pretty healthy, but there's always room for improvement.>
+	Msg105 <You look like you could use some physical training. If you want, I can show you my workout routines.>
+
+	Msg151 <Let's get pumped up!>
+	Msg152 <It's time to start sweating!>
+	Msg153 <Are you ready? Then let's begin!>
+	Msg154 <We'll start with a few stretching exercises, then move on to the deep hurting...>
+	Msg155 <Are you prepared mentally and physically for this? Then let's start!>
+
+	Msg201 <I have the power!>
+	Msg202 <Yeah, feel the burn!>
+	Msg203 <Didn't that feel good? Don't worry... the aches will go away after a week or two.>
+	Msg204 <Now it's time to hit the showers!>
+	Msg205 <I feel bulkier already!>
+
+	Prompt1 <Let's train together!>
+end
+

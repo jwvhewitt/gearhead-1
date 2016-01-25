@@ -1,0 +1,65 @@
+Story
+	name <LM: Mean-Looking Mercenary>
+	% Did I ever mention, Moria was the first RLG I ever completed..?
+
+	% This is the first Potential Lancemate plot, and I'm hoping it will
+	% be pretty simple. The PC can hire the mercenary. That's about it.
+
+	% N1 is the scene in which the MLM will be deployed.
+	% N2 is the MLM itself.
+	Element2 <Prefab>
+
+	% S1 = Initialization Counter (Mercenary Reputation)
+	% S2 = PC has hired mercenary
+
+	% At startup, set the potential lancemate's skill level and reputation.
+	start <ifPersona N2 else GoDelete if= S1 0 S= 1 d50 S+ 1 25 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1>
+	GoDelete <EndStory>
+
+sub
+	% In SubComponents, the persona for the mercenary.
+	Persona 2
+	% V1 = Hiring price
+	rumor <!2 is a mercenary warrior, always looking for the next big job.>
+	greeting <NewChat if= S2 1 else GoNoHire Say 1>
+	GoNoHire <ifG React 20 else GoNoChance V= 1 Threat S1 2 Say 2 AddCHat 1 AddChat 2 AddChat 3>
+	GoNoChance <Say 3>
+
+	result1 <ifG PC$ V1 else GoR1Fail Say 5 Cash+ -V1 S= 2 1 AddReact 30 PCAlly N2 NewChat>
+	GoR1Fail <NewChat Say 4 AddReact -d6>
+	result2 <NewChat Say 6>
+	result3 <Reputation 3 d8 ifG PCCharm NPCCharm N2 else GoR3NoDice Say 7 S= 2 1 AddReact 30 PCAlly N2 NewChat>
+	GoR3NoDice <NewChat Say 8 AddReact -d8>
+
+	Msg1 <So, you have another job lined up yet?>
+	Msg1_1 <I'm getting eager to try out my skills.>
+	Msg1_2 <When's the action supposed to start?>
+
+	Msg2 <You look like the sort of person who knows a thing or two about adventure. What you need is an experienced fighter by your side... For the low price of $ \VAL V1 I'd be willing to join your lance and help you out.>
+
+	Msg3 <I'm looking for a new contract. Hanging out in town is starting to grate on my nerves...>
+	Msg4 <If you want my services, you should come back when you've got the money. Until then don't go wasting my time.>
+	Msg5 <To be honest with you, I've been itching to get out of here for a while now. Anytime you're ready I'm free to move out!>
+	Msg6 <There's nothing worse than trying to take on the world by yourself. When the chips are down, that's when you need someone to watch your back.>
+	Msg7 <Hmmm... To be honest with you, I was feeling a bit tired of \NARRATIVE 1 anyway. I'm ready to head out any time you are!>
+	Msg8 <Don't flatter yourself. You can take my offer or you can leave it.>
+
+	Prompt1 <It's a deal!>
+	Prompt2 <Sorry, I don't need a lancemate.>
+	Prompt3 <All I can offer is the pleasure of my company.>
+	CPrompt3 <ifNPCSexy N2 Accept>
+
+end
+inv
+	% In InvComponents, the body for the mercenary.
+	NPC Mercenary
+	chardesc Melancholy
+	EquipChar 5000
+	place <1 ally>
+	statline 15 16 14 15 9 12 8 10
+	CHAT_ATTACK1 <You'd think they've had their asses kicked enough already.>
+	CHAT_ATTACK2 <I've fought harder than this plenty of times.>
+	CHAT_ATTACK3 <Time to kick ass... pass the gum.>
+	CHAT_EJECT1 <I'm gonna get another scar from this...>
+
+end

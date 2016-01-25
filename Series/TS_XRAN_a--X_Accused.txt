@@ -1,0 +1,166 @@
+Plot 0
+	name <Accused!>
+
+	% - Edited to v0.901 "light" standard
+
+	% The PC used to be a member of [ENEMY]. E2 thinks he still is, and
+	% so is planning to hunt him down. The PC can fight with E2 and
+	% pick up a new enemy, or can evade him and take on the secret
+	% project in E3.
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	Element1 <Grab 3>
+	Element2 <Prefab>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Scene Town Target !Far 1 !Far 3>
+	Element5 <Prefab>
+
+	% V1 = Combat Can Start
+	% V2 = Combat Indicator
+	% V3 = Forced conversation indicator
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If the combat start counter has been set, and the PC enters the world map,
+	% better start combat. At this point in time the NPC who starts the mission
+	% becomes irrelevant.
+	start <if= V1 1 else GoCheckPersona if= SceneID 1 else GoCheckInTheMission Goto GoStartCombat>
+	GoCheckInTheMission <if= V2 1 else GoCheckPersona if= V3 0 V= 3 1 ForceChat E2>
+
+	% If Persona E2 dies, load a new plot.
+	GoCheckPersona <ifPersona E2 else GoDelete>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	GoStartCombat <Block Print 101 History 102 SavePos P= 2 1 Dynamic 2 Threat S103 140 .nu1 .nu2 NPCLevel E2 S103 DynaNPC E2 2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2  S= 105 -1 N= 3 E3 History 103 AdvancePlot 1>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 S= 101 1 S+ 102 1 S= 105 -1 N= 3 E3 PCEnemy E2 History 104 AdvancePlot 0>
+
+	Msg101 <While leaving town, you are attacked by \ELEMENT 2 !>
+	Msg102 <\ELEMENT 2 confronted you because of your past affiliations.>
+	Msg103 <You escaped from \ELEMENT 2 .>
+	Msg104 <You defeated \ELEMENT 2 in combat.>
+
+sub
+	Persona 2
+	rumor <!2 has been looking all over for you.>
+	greeting <ifG P2 0 else GoInTown EndChat Say 101 AddChat 101 AddChat 102>
+	result101 <EndChat Say 102>
+	result102 <EndChat Say 103>
+	Msg101 <I told you I'd be coming for you... Now that we're outside of town, we can settle things!>
+	Msg102 <Then you had better start running, because there's no way I'm letting you escape!>
+	Msg103 <You will pay for all the evil you've done!>
+	Prompt101 <I don't want to fight you.>
+	Prompt102 <If you want to die, fine with me.>
+	GoInTown <NewChat AddChat 1 AddChat 2 ifFaction N2 else GoCheckChara Say 1 AddChat 3>
+	GoCheckChara <ifPersona N1 else GoUnknownEnemy Say 2 AddChat 4>
+	GoUnknownEnemy <Say 3>
+	result1 <NewChat Say 4  AddChat 5 AddChat 6>
+	result2 <NewChat Say 5  AddChat 5 AddChat 6>
+	result3 <NewChat Say 6  AddChat 5 AddChat 6>
+	result4 <NewChat Say 7  AddChat 5 AddChat 6>
+	result5 <EndChat Say 8 Reputation 3 -d8 Goto GoSetAmbush>
+	result6 <EndChat Say 9 Reputation 3 d8  Goto GoSetAmbush>
+	GoSetAmbush <FreezeChar E2 P= 1 1>
+	Msg1 <I've been looking for you, \PC ... I know what you and \NARRATIVE 2 have been planning for \ELEMENT 3 , and I won't let you get away with it!>
+	Msg2 <I've been looking for you, \PC ... I know what you and \NARRATIVE 1 have been planning for \ELEMENT 3 , and I won't let you get away with it!>
+	Msg3 <I've been looking for you, \PC ... I know what you and your gang have been planning for \ELEMENT 3 , and I won't let you get away with it!>
+	Msg4 <So, trying to find out how much I know, eh? It's not going to work. I'm on to you, and so are half the bounty hunters in the FedTer...>
+	Msg5 <Playing innocent isn't going to help. I'm on to you, and so are half the bounty hunters in the FedTer...>
+	Msg6 <The wolf may change his coat but not his spots. Word on the underground is that you're deeply involved in this project. Now every bounty hunter in the FedTer is after you.>
+	Msg7 <That's not what I heard. Word on the underground is that you're very important to \NARRATIVE 1 . Now every bounty hunter in the FedTer is after you, hoping to get to your boss.>
+	Msg8 <I know exactly who you are and what you've done. You'll be getting your justice soon enought, believe me on that.>
+	Msg9 <You're very good at lying; I almost want to believe you. You'll be getting your justice soon enought, though. If not from me then from someone else...>
+	Prompt1 <We've been planning what?>
+	Prompt2 <I don't know what you're talking about.>
+	Prompt3 <I left \NARRATIVE 2 a long time ago.>
+	Prompt4 <\NARRATIVE 1 and I are enemies now.>
+	Prompt5 <Think what you like. I don't care.>
+	Prompt6 <Please understand, you're wrong about me!>
+
+
+	Plot 1
+	% PC refused to fight the hunter, and now has a chance to find the
+	% secret project referred to by the hunter...
+	name <Accused! Act 2>
+
+	% V2 = Combat Indicator
+	start <ifPersona E5 else GoDelete Memo 1>
+	GoDelete <S= 101 1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 said that your old enemies were doing something in \ELEMENT 3 .>
+
+	nu1 <if= T1 0 if= V2 1 if= L2 1 else GoLose  V= 2 3>
+	GoLose <V= 2 2 Reputation 6 -2>
+
+	sub
+		Persona 5
+		rumor <!5 saw some weird mecha outside of town.>
+		% V1 = Combat Recharge
+		greeting <NewChat if= P2 3 else GoCheckLoss AddReact d30 Say 7 XPV 100 Reputation 1 1 S= 101 1 S+ 102 1 S= 105 1 N= 3 E4 XRBadThing NAV_XRBResolved AdvancePlot 2>
+		GoCheckLoss <if= P2 2 else GoMaybeFirst Say 5 V= 1 ComTime V+ 1 19800>
+		GoMaybeFirst <if# V1 0 else GoFirstTime ifG ComTime V1 else GoWaitRecharge Say 6 AddChat 2>
+		GoWaitRecharge <Say 4>
+		GoFirstTime <AddChat 1 ifFaction N2 else GoCheckChara Say 1 Memo 8>
+		GoCheckChara <ifPersona N1 else GoUnknownEnemy Say 2 Memo 9>
+		GoUnknownEnemy <Say 3 Memo 10>
+		result1 <EndChat Say 11 Goto GoStartCombat>
+		result2 <Goto result1>
+		GoStartCombat <P= 2 1 V= 3 Threat S103 225 SavePos Staged .scene V3>
+		.scene <SCENE_DestroyTarget.txt>
+		Msg1 <I saw some mecha with \NARRATIVE 2 markings in the woods outside of town. I hope they aren't planning invade here...>
+		Msg2 <A while back there was a mecha pilot named \NARRATIVE 1 in town. He said they had a big project going on in the woods, but from the look of things I don't think he was up to any good.>
+		Msg3 <There have been mysterious mecha going back and forth in the forest outside town. I don't know what's going on but I don't like it one bit.>
+		Msg4 <Come back in a few hours and I'll show you where I saw the mecha again.>
+		Msg5 <I hear things didn't go so well for you. Go rest up, then come back here in a few hours and maybe you can try again.>
+		Msg6 <You want to go find that mecha base again?>
+		Msg7 <Their base has been destroyed! Our town will be safe, for a while at least... I heard that some of the surviving pilots were headed for \ELEMENT 4 .>
+		Msg8 <\ELEMENT 5 in \ELEMENT 3 saw mecha from \NARRATIVE 2 near town.>
+		Msg9 <\ELEMENT 5 in \ELEMENT 3 saw \NARRATIVE 1 doing something near town.>
+		Msg10 <\ELEMENT 5 in \ELEMENT 3 saw mysterious happenings in the woods.>
+		Msg11 <I don't understand why they came here, but I know it's bad for \ELEMENT 3 . Please stop them.>
+		Prompt1 <Can you show me where they went?>
+		Prompt2 <I'm ready to go.>
+
+	Plot 2
+		name <Accused! Act 3>
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 864000 MoveChar E2 E1 ifFaction N2 else GoCheckPersona History 1>
+		GoCheckPersona <ifPersona N1 else GoMisc History 2>
+		GoMisc <History 3>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <You destroyed a base belonging to \NARRATIVE 2 .>
+		Msg2 <You destroyed a base belonging to \NARRATIVE 1 .>
+		Msg3 <You destroyed a base belonging to your former employers.>
+
+	sub
+		Persona 2
+		rumor <!2 wants to apologize to you.>
+		greeting <NewChat Say 1 PCAlly E2 XPV 100 AdvancePlot 0>
+		Msg1 <I have to apologize. I was wrong about you... You've really shown your true colors. It would be an honor to fight at your side, some day.>
+
+	end
+
+	end
+
+end
+inv
+	NPC Bounty Hunter
+	chardesc Heroic Passionate
+	EquipChar 25000
+	place <1 ally>
+	mecha <Neko.txt>
+
+	NPC Citizen
+	chardesc Young Heroic
+	place <3 ally pass>
+
+end

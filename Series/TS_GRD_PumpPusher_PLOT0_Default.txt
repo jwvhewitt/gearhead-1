@@ -1,0 +1,154 @@
+Plot 0
+	name <Drug Investigator>
+
+	% This plot contains the monk who will be investigating
+	% the artifact. The PC can always come back to this monk
+	% to learn the results of the investigation.
+
+	element1 <Grab 1>
+	element2 <Character Guardian Lawful Passionate>
+
+	% V101 = Email phase thing
+
+	start <ifPersona E2 else GoCleanDelete>
+
+	% If the master of this plot has died, better load a new
+	% investigative plot.
+	GoCleanDelete <S= 204 0 AdvancePlot 0>
+
+	% At cleanup, delete this plot. If the PC has been given the
+	% mission advance to the plot which will tell him it's over.
+	cleanup <if# S103 0 else GoRealDelete if# S104 0 else GoTimeOver AdvancePlot 2>
+	GoTimeOver <AdvancePlot 1>
+	GoRealDelete <AdvancePlot 0>
+
+	% Every 5 minutes, check for email.
+	5Min <if= d30 1 if= S103 0 else GoCheckUpdate if= PCFac E1 Email 1 S= 103 1 P= 101 S202>
+	GoCheckUpdate <if# P101 S203 ifG ComTime S205 Email 2 P= 101 S203 if# S202 S203 S= 203 S202>
+
+	% Msg1 : Initial message
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// Got an important mission for you. Come see me for the details.>
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The "Pump Pushers" are selling their dirty garbage in \NARRATIVE 2 . Gather evidence, then report to me.>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// There's been trouble with "Pump" in \NARRATIVE 2 . You've been assigned the task of investigation.>
+	Msg1_3 <\ELEMENT 2 @ \SCENE EScene 2 :// I have a case for you.>
+	CMsg1_3 <ifG 0 NPCRep E2 3 Accept>
+
+	% Msg2 : Reminder message
+	Msg2_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The lab boys say that the "Pump" came from \NARRATIVE 2 . Follow the trail, see where it leads.>
+	Msg2_2 <\ELEMENT 2 @ \SCENE EScene 2 :// Our clues point to \NARRATIVE 2 ... continue your investigation there.>
+	Msg2_3 <\ELEMENT 2 @ \SCENE EScene 2 :// Just got word in that the "Pump" dealers are operating out of \NARRATIVE 2 . Go sniff them out.>
+	Msg2_4 <\ELEMENT 2 @ \SCENE EScene 2 :// The "Pump" lab could be in \NARRATIVE 2 . See what you can find, then report to me.>
+	Msg2_5 <\ELEMENT 2 @ \SCENE EScene 2 :// Your next stop is gonna be \NARRATIVE 2 . We've got to put these "Pump Pushers" out of business.>
+	Msg2_6 <\ELEMENT 2 @ \SCENE EScene 2 :// Investigate \NARRATIVE 2 next.>
+	CMsg2_6 <ifG 0 NPCRep E2 3 Accept>
+
+
+sub
+	Persona 2
+	rumor <!2 has been investigating the "Pump Pushers".>
+	% To start with, check to see whether or not the PC has already
+	% been given this mission.
+	greeting <NewChat if= V1 0 else GoCheckMission if= PCFac E1 else GoNoChance Say 1 AddChat 1>
+	GoCheckMission <if= S103 0 else GoStartWithCase Goto GoNoChance>
+	GoNoChance <Say 3>
+
+	% If the number of clues equals the number of wins, then E2
+	% can tell the PC where to head next.
+	GoStartWithCase <NewChat if= S202 S203 else GoCheckClue  Say 5>
+
+	% If the clue timer has run its course, tell the PC the next
+	% place to go now.
+	GoCheckClue <ifG ComTime S205 else GoMustWait S= 203 S202 Say 6 AddChat 3>
+
+	% If the PC must wait, then there's not much else to do
+	% but wait. Bummer.
+	GoMustWait <Say 7>
+
+	result1 <NewChat S= 103 1 V= 1 1 Goto GoStartWithCase>
+
+	result2 <NewChat Say 4 Reputation 4 -d8>
+
+	result3 <NewChat Say 5>
+
+	%  01 :  PC is faction member; automatically offered job.
+	Msg1 <I have a case for you, \RANK \PC . There are "Pump Pushers" operating in the FedTer... Pump is a synthetic narcotic, they must have a lab hidden somewhere. We have to track it down but it won't be easy.>
+	Msg1_2 <"Pump Pushers" are selling illegal drugs. They have to be stopped. I have chosen you to lead the investigation.>
+	CMsg1_2 <ifG 0 NPCRep E2 3 Accept>
+
+	%  03 :  PC is denied mission; NPC will just imply it.
+	Msg3 <Remember, winners don't do drugs.>
+	Msg3_1 <I don't understand all the crazy drugs some people take... Why can't they just drink Xozu like someone normal?>
+	Msg3_2 <I'm busy.>
+	CMsg3_2 <ifG 0 NPCRep E2 3 Accept>
+
+	%  4 :  PC doesn't want the job.
+	Msg4 <I won't stand by while drug-running ghouls make money off the desperation of others. I must do something about it!>
+	Msg4_1 <Pump is a dangerous substance... especially the street version. The impurities alone have been known to kill people.>
+	Msg4_2 <Suit yourself.>
+	CMsg4_2 <ifG 0 NPCRep E2 3 Accept>
+
+	%  5 :  General clue reminder.
+	Msg5 <So far our clues have pointed to \NARRATIVE 2 . That's where you should start working.>
+	Msg5_1 <According to our evidence, the pushers are working out of \NARRATIVE 2 . Of course that doesn't mean the lab is there. Go see what you can find.>
+	Msg5_2 <We've learned that the drugs have been coming out of \NARRATIVE 2 . That's probably just a distribution point... but it's the best place to go search for clues right now.>
+	Msg5_3 <The clues lead to \NARRATIVE 2 . That's where you should go.>
+	CMsg5_3 <ifG 0 NPCRep E2 3 Accept>
+
+	%  6 :  The next clue has been discovered! Yay!
+	Msg6 <The lab reports are in. We're one step closer to shutting down the drug ring.>
+	Msg6_1 <I've got the latest forensics report in the "Pump Pusher" case. Want to hear what we've found out?>
+
+	%  07 :  PC must wait for the lab report.
+	Msg7 <We're still waiting on the lab report. I'll let you know when I learn something.>
+	Msg7_1 <Forensics is still working on the evidence.>
+
+	%  01 :  PC is interested in taking the case.
+	Prompt1 <Where should I start investigating?>
+	Prompt1_2 <Any clue where to start looking?>
+
+	%  02 :  PC won't take the case.
+	Prompt2 <Sorry, this isn't my kind of case.>
+	Prompt2_1 <I don't belive in criminalizing drugs.>
+
+	%  03 :  Next clue has been discovered.
+	Prompt3 <What did you find out?>
+	Prompt3_1 <Tell me what was in the report.>
+	Prompt3_2 <Where should I head next?>
+
+
+
+	Plot 1
+	% This plot exists only to tell the PC that the time is up.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email 1>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// The kingpin of the "Pump Pushers" has fled the area. The case has been closed.>
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The "Pump Pusher" gang has gotten out of town. Hopefully they won't be back.>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// Case closed.>
+	CMsg1_2 <ifG 0 NPCRep E2 3 Accept>
+	sub
+		Persona 2
+		greeting <NewChat Say 1 AdvancePlot 0>
+		Msg1 <We caught a lot of the dealers, but the dealers got away. We'll have to try harder next time.>
+		Msg1_1 <I guess we were getting close to their boss, and the "Pump Pushers" fled town. They won't see justice but at least they're gone.>
+	end
+
+	Plot 2
+	% This plot exists to reward the PC for solving the case.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email 1>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// The "Pump Pushers" have been locked away. Come see me.>
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The drug ring has been broken. Come here for your reward.>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// Case closed.>
+	CMsg1_2 <ifG 0 NPCRep E2 3 Accept>
+	sub
+		Persona 2
+		greeting <NewChat Say 1 CashPrize Reward Threat PCRep 6 100 500 XPV 100 FacXP+ E1 5 AdvancePlot 0>
+		Msg1 <We did it! The lab has been shut down, and there'll be no more "Pump" on our streets. Now all we have to worry about are all those other illegal drugs...>
+		Msg1_1 <You really handled this investigation well. I'll be mentioning you to the brass for a promotion. Here's your reward.>
+		CMsg1_1 <if= PCFac E1 Accept>
+		Msg1_2 <The drug pushers have been sent up the river. You did a fine job, \RANK .>
+		CMsg1_2 <if= PCFac E1 Accept>
+		Msg1_3 <Good job on the case. The pushers have been sent to jail, where they belong. Here's your reward.>
+	end
+
+end

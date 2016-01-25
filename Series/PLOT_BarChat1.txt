@@ -1,0 +1,55 @@
+Plot 0
+	name <PLOT: Bar Chat 1>
+	% Just chatting with the bartender...
+
+	element1 <Character Bartender>
+
+	% V1 = Time Limit
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	greeting <NewChat AdvancePlot 0  if= d3 1 else GoCheckSoc Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <NewChat Say 2 Reputation 4 d10>
+	result2 <NewChat Say 3 Reputation 4 -d10>
+	result3 <NewChat Say 4>
+	Msg1 <You look like an adventurer. What goal is it that drives your journeys?>
+	Msg2 <When you're rich, be sure to remember my name for your memoirs.>
+	Msg3 <Then I guess I could say that you're in the right business.>
+	Msg4 <So does everyone else, it seems. I hope you find what you're looking for.>
+	Prompt1 <Wealth and fame, mostly.>
+	Prompt2 <Adventure is my only reward!>
+	Prompt3 <I have my own reasons.>
+
+	GoCheckSoc <if= d2 1 else GoCheckCheer  ifG 1 NPCRep E1 3 else GoSS2 Say 101 AddChat 101 AddChat 102 AddChat 103>
+	GoSS2 <Say 102 AddChat 101 AddChat 102 AddChat 103>
+	result101 <NewChat Say 103 Reputation 3 d10>
+	result102 <NewChat Say 104 Reputation 3 -d10>
+	result103 <NewChat Say 105>
+	Msg101 <The bar has been quiet lately, but many of my regulars like it that way. How about you?>
+	Msg102 <There's nothing more sorry than watching someone drink alone. I can't stand it myself, so I always talk to people if they come in here by themselves. How about you?>
+	Msg103 <Maybe you will. Have a good time.>
+	Msg104 <If you wanted that, you could just as easily stay at home, I would think. Ah well, as long as you're here I shouldn't complain.>
+	Msg105 <Whichever way you like it, that's fine too.>
+	Prompt101 <I'm hoping to meet someone here.>
+	Prompt102 <I'd like to enjoy my drink privately.>
+	Prompt103 <I wouldn't know.>
+
+	GoCheckCheer <ifG 1 NPCRep E1 5 else GoCH2 Say 201  AddChat 201 AddChat 202 AddChat 203>
+	GoCH2 <Say 202 AddChat 201 AddChat 202 AddChat 203>
+	result201 <NewChat Say 203 Reputation 5 d10>
+	result202 <NewChat Say 204 Reputation 5 -d10>
+	result203 <NewChat Say 205>
+	Msg201 <I see all kinds in here, drinking their lives away to forget their sorrows. Tell me, what will you be drinking to tonight?>
+	Msg202 <In my line of work it's a party very nearly every day. Tell me, what will you be drinking to tonight?>
+	Msg203 <It's good to see someone in a chipper mood. Grab a mug and let's have a chat.>
+	Msg204 <That's a shame. If you need someone to talk to, they say bartenders are better than a psychiatrist.>
+	Msg205 <Don't drink!? You shouldn't tell me that, you're going to give me stress.>
+	Prompt201 <I'm just out for a good time.>
+	Prompt202 <I need to forget my sorrows...>
+	Prompt203 <Sorry, I don't drink.>
+
+end

@@ -1,0 +1,134 @@
+Story
+	name <Bad Trade>
+
+	% A nomad tribe has been attacked by criminals, who have taken away
+	% most of the young people. A lone grandfather in town seeks help,
+	% fearing that his people have been sold into slavery in the dead-zone.
+	% The PC will get to investigate this and make some difficult choices.
+
+	% N1 is the town where the elder is.
+	% N2 is the fortress where his people have been taken
+	Element2 <Scene Fortress !Far 1>
+	% N3 is the grandfather...
+	Element3 <Prefab>
+	% N4 is the slave trader...
+	Element4 <Prefab>
+
+	% S1 = Initialization Counter
+	% S2 = PC should be attacked when entering N2 counter
+	% S3 = PC has accepted mission from N3; S3=1 accepted; S3=2 won; S3=3 end
+	% S4 = PC has accepted mission from N4
+
+	quarter <if= S4 1 if= d4 1 StoryLine .slavejob>
+	.slavejob <TS_GSP_Slaves_PLOT1_*.txt>
+
+	start <if= S1 0   S= 1 1 Compose EWM N2 .enterfortress Compose UTD N3 .elderdies Compose UTD N4 .slaverdies>
+
+	.elderdies <EndStory>
+
+	.slaverdies <if= S3 0 else GoSDCheckEnd EndStory>
+	GoSDCheckEnd <ifG S3 1 S= 4 0 ifG S3 2 EndStory>
+
+	.enterfortress <if# S2 0 BLOCK ifYesNo 4 5 6 else GoAttack Reputation 3 -d4 ifG SkRoll 25 12 else GoFailStealth Print 7 XPV 100 exit N2>
+	GoFailStealth <Print 1 Reputation 6 -1 Goto GoStartCombat>
+	GoAttack <Reputation 3 d4 Goto GoStartCombat>
+	GoStartCombat <SavePos Dynamic 2 Threat PCRep 6 120 .nu1 .nu2 PassVar 1 N2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 if= V2 0 V= 2 1 Reputation 6 1 Exit V1 SeekGate 1>
+
+	Msg1 <You are spotted! You'll have to defend yourself.>
+	Msg4 <While entering \NARRATIVE 2 , you are blocked by a group of mecha who appear to be searching for someone.>
+	Msg5 <Sneak around them.>
+	Msg6 <Attack!>
+	Msg7 <You manage to evade their sensors, and sneak into the fortress.>
+
+sub
+	Persona 3
+	rumor <!3 is the last survivor of his dead-zone tribe.>
+	greeting <NewChat if= S3 3 else GoCheckWin SayAnything>
+	GoCheckWin <if= S3 2 else GoCheckSlaver Say 1 AddReact 30 Reputation 1 3 CashPrize 25000 Memo 0 History 11 S= 3 3 if= S4 0 EndStory>
+	GoCheckSlaver <ifPersona N4 else GoNoHope Goto GoCheckFirst>
+	GoNoHope <Say 2 EndStory>
+	GoCheckFirst <if= S3 1 else GoFirstTime Say 3>
+	GoFirstTime <ifG React 10 else GoNothing Say 4 AddChat 1 AddChat 2>
+	GoNothing <Say 6>
+	result1 <NewChat Say 7 AddChat 3 AddChat 4>
+	result2 <NewChat Say 8 Reputation 5 -d10 EndStory>
+	result3 <NewChat Say 10 Memo 5  S= 3 1  S= 2 1>
+	result4 <NewChat Say 9 Reputation 5 -d10 EndStory>
+	Msg1 <You have freed my tribe from captivity! I don't know how, but I owe you my eternal gratitude... Here is a small reward for your great deeds.>
+	Msg2 <With the slaver who took them dead, we have no chance to find what happened to my tribe... all is lost...>
+	Msg3 <Have you located my tribe yet? \NARRATIVE 2 is where they were being taken...>
+	Msg4 <A great tragedy has befallen our people. The youths of our caravan have been taken away, and I fear that our tribe shall be lost to the sands of oblivion.>
+	Msg5 <\NARRATIVE 3 in \NARRATIVE 1 asked you to go to \NARRATIVE 2 and rescue his tribe from those who abducted them.>
+	Msg6 <The youths of our caravan have been taken away... Our tribe's blood shall pass into the endless night...>
+	Msg7 <It was a devil of the wastes. Our caravan had no enemies; we were attacked without provocation. Those who survived were taken away, along with our food supplies and water. The injured were left to perish in the dust. I alone made it to this town.>
+	Msg8 <You know nothing of suffering, but you too shall learn...>
+	Msg9 <That is all too likely... At best, they have been sold into slavery. At worst they've been taken by organ ghouls...>
+	Msg10 <Truly? I... our entire tribe... would be forever in your gratitude. All I can tell you is the raiders headed for \NARRATIVE 2 following the attack. You may be able to find out what happened to them there.>
+	Msg11 <You rescued the tribe of \NARRATIVE 3 from slavers.>
+	Prompt1 <Taken away? By who?>
+	Prompt1_1 <What are you talking about?>
+	Prompt2 <Life is tough, old man.>
+	Prompt3 <I can help you find them again!>
+	Prompt4 <I guess there's nothing we can do.>
+
+
+	Persona 4
+	rumor <!4 deals in the sale of human beings...>
+	greeting <NewChat if= S4 1 else GoNoDeal Say 1>
+	GoNoDeal <ifG S3 1 else GoNoSolve SayAnything>
+	GoNoSolve <if= S3 1 else GoNothing Say 2 AddChat 1 AddCHat 2 AddChat 3>
+	GoNothing <SayAnything>
+	result1 <NewChat Say 3 AddChat 4 AddChat 5>
+	result2 <NewChat Say 4 AddChat 4 AddChat 5>
+	result3 <NewChat Say 5>
+	result4 <NewChat Say 6 AddChat 6 AddChat 7 AddChat 8>
+	result5 <EndChat Say 7>
+	result6 <NewChat Say 8 S= 2 0 S= 3 2 S= 4 1>
+	result7 <Reputation 4 -d10 ifG Intimidation 20 else GoR7Fail NewChat Say 10 S= 3 2>
+	GoR7Fail <EndChat Say 9 Reputation 2 1 SoloAttack N4>
+	result8 <NewChat ifG PCCharm 14 else GoR8Fail Say 11 AddChat 9 AddChat 10>
+	GoR8Fail <Say 12>
+	result9 <NewChat Say 13 Cash+ -300000 S= 3 2 S= 2 0>
+	result10 <NewChat Say 14>
+	Msg1 <I don't have any jobs available for you at the moment. I'll let you know when I do.>
+	Msg2 <What do you want? Can't you see I'm busy?>
+	Msg3 <\NARRATIVE 3 ? Yes, I know... good stock, those. Very healthy. They'll make fine laborers. I guess you were sent here to rescue them... Well, I have a deal for you, if you're ready to listen.>
+	Msg4 <Don't make me laugh. You won't accomplish anything by hurting me... If there's something you're looking for, we're going to have to deal for it.>
+	Msg5 <Don't bother to hurry.>
+	Msg6 <I heard how you got past my guards to enter this fortress. You've got skills... I could use someone like you. Agree to work for me, and I'll release those filthy ravagers you're looking for.>
+	Msg7 <Come back again when you're in a more receptive mood.>
+	Msg8 <Good. I'll release those slaves at once. Keep your handphone nearby, I'll call shortly with details of a mission I need done. Don't fail me or I will make you very very sorry.>
+	Msg9 <Don't overestimate your own importance, whelp. If you won't serve me alive then I can just as easily sell your organs when you're dead!!!>
+	Msg10 <Erg... You drive a hard bargain, I'll give you that much... Alright, I'll release them. Just stay very far away from me for now on...>
+	Msg11 <I like you, so I have another proposition. If you really want them that badly I'll let you buy them for the low price of $300,000. Is it a deal?>
+	Msg12 <Those are the only terms I'm willing to accept. You can think about it for a while, of course... just keep in mind that if someone happens to buy the slaves before you return there's nothing I can do about it.>
+	Msg13 <Ah, there's nothing like the smell of cash in the morning... I'll have the slaves released immediately.>
+	Msg14 <You do that.>
+	Prompt1 <I'm looking for the tribe of \NARRATIVE 3 .>
+	Prompt2 <I'm here to end your evil ways.>
+	Prompt3 <Okay, I'll come back later.>
+	Prompt4 <What kind of deal?>
+	Prompt5 <I don't make deals with scum like you.>
+	Prompt6 <Alright, it's a deal.>
+	Prompt7 <How about, you release them or I kill you?>
+	Prompt8 <I can't accept that.>
+	Prompt9 <It's a deal.>
+	CPrompt9 <ifG PC$ 299999 Accept>
+	Prompt10 <I'll get back to you on that...>
+
+end
+inv
+	NPC Citizen
+	job <Elder>
+	chardesc Melancholy old old male
+	place <1 pass>
+
+	NPC Bandit
+	chardesc Chaotic Villainous
+	job <Slave Trader>
+	place <2>
+	mecha <Gigas.txt>
+
+end

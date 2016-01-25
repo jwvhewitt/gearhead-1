@@ -1,0 +1,172 @@
+plot 0
+	name <TEMPLATE XRAND RELAY>
+
+	% A relay template for Extra-Random plots.
+
+	% The PC will be informed of someone or another who needs help.
+	% The PC must then go seek that person, and enter combat there.
+	% Other than that the plot works exactly as the temp_xcombat one.
+
+	% Normally, these templates feature plenty of messages which are
+	% randomized. This template features just one message for each
+	% thing the NPC might want to say. Why? Because a regular combat
+	% mission might be encountered dozens of times over the course of
+	% a campaign, while this one will likely just be encountered once.
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the character who will give the PC the combat mission.
+	Element1 <Grab 3>
+	Element2 <Character !Near 1>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Character !Far 1 !Far 3>
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 or E4 dies, load a new plot.
+	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+
+sub
+	Persona 2
+	% This NPC's job is just to tell the PC where he can find E4,
+	% and probably to explain why the PC should care. The exact nature
+	% of everything in this plot is gonna depend upon the XR flags
+	% needed to load it, so I'm afraid that I can't help but be vague
+	% with my descriptions. Take a look through the TX_XRAN_* plots
+	% for examples.
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <>
+	% eg., rumor <!2 knows who killed your parents.>
+
+	% I don't know any way to do a generic conversation for this, so
+	% I'll just do the simplest thing possible. When you're ready to
+	% move on to the next part of the episode, just AdvancePlot 1.
+	greeting <NewChat Say 1 AdvancePlot 1>
+	Msg1 <>
+
+	Plot 1
+		% The PC has been informed of the existence of the mission,
+		% and should now go meet E4.
+
+		% V1 = Initialization counter
+		% V2 = Combat Counter
+
+		% If Persona E4 dies, load a new plot.
+		start <ifPersona E4 else GoDelete if= V1 0 V= 1 1 Memo 101>
+		GoDelete <S= 101 1 AdvancePlot 0>
+
+		% Combat check. If combat has been entered, V2=1.
+		% Combat ends in victory if the number of active masters on
+		% team two drops to zero, or ends in defeat is the number of
+		% active masters on team one drops to zero. After combat, V2=3
+		% if the player was victorious or V2=2 is the player lost.
+		nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+		nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100>
+
+		% 101 :  Memo
+		Msg101 <\ELEMENT 2 in \SCENE EScene 2 told you to meet \ELEMENT 4 in \SCENE EScene 4 .>
+
+	sub
+		Persona 4
+		% Fill in something for the rumor string, so the PC will know who
+		% has a job to offer. !2 will add the name of the NPC, while !1
+		% will add the name of the faction.
+		rumor <>
+		% eg., rumor <!2 might have a job for you.>
+
+		% ********************
+		% *** SCRIPT BLOCK ***
+		% ********************
+		% If you're feeling faint of heart, just skip this
+		% and jump straight to the messages block below.
+		% Here are the variables used in this conversation:
+		%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+		%  V2 = Message Randomizer
+		%  V3 = Threat value of enemy mecha
+		%  V4 = Reward offered to PC for the mission
+		%  V5 = Recharge time if mission fails
+		% At startup, first check to see whether the PC has already
+		% completed the mission or not.
+
+		greeting <NewChat if= P2 3 else GoCheckLoss  Say 1 CashPrize V4 Goto GoEndMission>
+		GoCheckLoss <if= P2 2 else GoCheckMission ifG ComTime V5 else GoWaitRecharge P= 2 0 Say 2 AddChat 1 AddChat 2 AddChat 3>
+		GoWaitRecharge <Say 3>
+		GoCheckMission <if= V1 1 else GoFirstTime Say 4 AddChat 1 AddChat 2 AddChat 3>
+
+		% Unlike most combat missions, the PC is guaranteed to be offered
+		% this one, since it's personal.
+		% Set V1, V3, V4 here.
+		GoFirstTime <V= 1 1 V= 3 Threat S103 200  V= 4 Reward V3 150 Memo 11 Say 6 AddChat 4 AddChat 5>
+
+		% Do everything here that has to be done. If some of the ExtraRandom
+		% parameters need to be changed, do that here as well.
+		GoEndMission <S= 101 1 S+ 102 1 N= 3 E3 AdvancePlot 0>
+
+		% Combat being entered
+		result1 <EndChat Say 5 SavePos P= 2 1 V= 5 ComTime V+ 5 86400 Dynamic 2 V3 .nu1 .nu2>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Salvage Return>
+		% Combat being delayed
+		result2 <NewChat Say 7>
+		% How many points do the enemy have?
+		result3 <NewChat Say 8 AddChat 1 AddChat 2>
+
+		% Result 4 - may add Reputation command or whatnot
+		result4 <NewChat Say 9 AddChat 1 AddChat 2 AddChat 3>
+
+		% Result 5 - may add Reputation command or whatnot
+		result5 <NewChat Say 10 AddChat 1 AddChat 2 AddChat 3>
+
+		% 1 : Player has won the mission
+		%    Should mention that next episode will happen in \ELEMENT 3
+		Msg1 <>
+
+		% 2 : Player lost mission previously, now time to try again
+		Msg2 <>
+
+		% 3 : Player has lost mission, must wait until tomorrow to try again
+		Msg3 <>
+
+		% 4 : Player has accepted mission, has returned from repair
+		Msg4 <>
+
+		% 5 : Combat is starting
+		Msg5 <>
+
+		% 6 : NPC explains what the PC should do in this mission, and why
+		Msg6 <>
+
+		% 7 : PC needs some time to get ready
+		Msg7 <>
+
+		% 8 : How many points? Use "\VAL V3 " for that
+		Msg8 <>
+
+		% 9 : Response to Prompt4
+		Msg9 <>
+
+		% 10 : Response to Prompt5
+		Msg10 <>
+
+		% 11 : Memo
+		Msg11 <\ELEMENT 4 in \SCENE EScene 4 wants you to do something.>
+
+
+		% 1 - 3 :  Standard combat entry options:
+		%         Start Mission, Delay Mission, Mission Details
+		Prompt1 <Let's start this mission.>
+		Prompt2 <Give me some time to get ready.>
+		Prompt3 <What will I be facing?>
+
+		% 4 - 5 :  PC can have different reactions to Msg6 above
+		Prompt4 <>
+		Prompt5 <>
+	end
+end

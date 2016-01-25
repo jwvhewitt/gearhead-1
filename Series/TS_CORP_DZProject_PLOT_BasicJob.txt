@@ -1,0 +1,273 @@
+Plot 0
+	name <ARC: Expansion Job>
+	% E1 is expanding into the dead zone, and needs the PC to
+	% clear out some of the "undesirables" who live there currently.
+	% Nov 11 2003 : Added FacXP+ command
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	% Right now it will just be a member of E1.
+	Element2 <Character !Comrade 1 Corporate>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% V1 = Time Limit
+	% V2 = Combat Indicator, if V2=1 combat has been entered
+	% V3 = Email sent indicator.
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 if= d2 1 else GoDelete S+ 101 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0 if# V3 0 Reputation 6 -1>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  S+ 101 1 FacXP+ E1 1>
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d70 23 if= V3 0 if= PCFac E1 ifG RReact E2 d29 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// Report here for ravager extermination mission immediately.>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// I have need of your services. Report to \SCENE EScene 2 at once.>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Your presence is needed to assist \NARRATIVE 1 Dead Zone Expansion Program.>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// Report back here immediately. There's a job for you to do.>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// You are needed in \SCENE EScene 2 at once. This is urgent \NARRATIVE 1 business.>
+
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+	rumor <!2 is working on the !1 dead zone industrial project.>
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 FacVar E1 1000 V+ 3 d6 V= 3 Threat V3 75 V= 4 Reward V3 99 if= PCFac E1 else GoCE V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCE <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it,
+	GoCheckFriend <ifG PCRep 6 FacVar E1 1000 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 Say V2>
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2 SetMapType RoughMap Encounter 0 15 .nil>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat Reputation 4 -d8 ifG Intimidation 10 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with LAWFUL reputation...
+	% result11 <NewChat ifG PCRep 2 30 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with HEROIC reputation...
+	% result11 <NewChat ifG PCRep 1 30 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1>
+
+
+	% The PC tries to get the job via "PLAN A"- be friendly.
+	% This is done with the Conversation skill.
+	result14 <NewChat ifG Conversation 20 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with RENOWNED reputation...
+	% result14 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	% The PC will impress the NPC with HEROIC reputation...
+	% result14 <NewChat ifG PCRep 1 30 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <\NARRATIVE 1 rewards efficient service like that. Here's your pay.>
+	Msg2 <Keep that up, and you just may have a future in this company. Here's your pay.>
+	Msg3 <Here's your pay.>
+	Msg4 <Good job. Here's your pay.>
+	Msg5 <Our expansion program should proceed smoothly. Here's your pay.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <You failed us.>
+	Msg7 <You have failed \NARRATIVE 1 . This will cause problems...>
+	Msg8 <The mission was a failure. This is going to put us behind schedule.>
+	Msg9 <Thanks to your failure, our expansion program is now behind schedule.>
+	Msg10 <Hm. Those ravagers are putting up more of a fight than we had expected.>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <There are various bandits and raiders inhabiting the land we have marked for development. Your job is to eliminate one such group. The pay for the mission is $ \VAL V4 plus salvage rights.>
+	Msg12 <Our dead zone construction project is being threatened by ravagers. I need you to eliminate them. You will earn $ \VAL V4 and salvage for this job.>
+	Msg13 <There are many ravagers and bandits hiding in the dead zone. Some of them have attacked our expansion project... they must be stopped. Your salary for the mission will be $ \VAL V4 plus salvage.>
+	Msg14 <A group of ravagers has launched several attacks against our construction project. They need to be removed. You will earn $ \VAL V4 plus salvage if you complete the mission successfully.>
+	Msg15 <The dead zone is a dangerous, lawless place. Our construction project there has been attacked by ravagers... Your job is to eliminate the perpetrators. This mission is worth $ \VAL V4 plus salvage.>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Are you looking for work? \NARRATIVE 1 is currently building an industrial complex on the edge of the dead zone, and we have need of mecha pilots to protect these holdings.>
+	Msg17 <If you're looking for work, \NARRATIVE 1 now has a contract available for a freelance mecha pilot. Our dead zone expansion project needs protection.>
+	Msg18 <\NARRATIVE 1 is looking for a freelance mecha pilot to patrol our dead zone holdings.>
+	Msg19 <I need a freelance mecha pilot to run a combat mission in the dead zone. Our business venture there is being threatened by ravagers.>
+	Msg20 <I have a single mission contract available for a skilled mecha pilot. If you're interested, the job could be yours.>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <\NARRATIVE 1 needs mecha pilots to help defend our dead zone expansion project.>
+	Msg22 <\NARRATIVE 1 is constructing a new industrial complex in the dead zone. The ravagers who live there are a bit of a problem, though.>
+	Msg23 <The \NARRATIVE 1 Dead Zone Industrial Expansion should create a lot of new jobs.>
+	Msg24 <Our company will be hiring some new mecha pilots to defend our dead zone industrial complex.>
+	Msg25 <The industrial complex which \NARRATIVE 1 is building will need skilled mecha pilots to help defend it against ravagers.>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points worth of enemy hardware. Do you feel up to the challenge?>
+	Msg27 <They've got about \VAL V3 threat points worth of gear, but since this is the dead zone we're talking about most of it is in pretty rough shape.>
+	Msg28 <The ravagers have \VAL V3 tactical points worth of mecha. There has been some evidence that a rival corporation has been outfitting them, just to make our expansion project fail.>
+	Msg29 <You can expect to meet at least \VAL V3 points worth of mecha.>
+	Msg30 <I would expect them to have around \VAL V3 points of mecha. A certain rival company has been selling battlesuits to the ravagers, just to sabotage our business in the region.>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <Yes, I may have a job for you. We need a pilot to exterminate one of the ravager gangs which has been attacking our construction site.>
+	Msg32 <There are missions available, if you'd like to take part in one.>
+	Msg33 <I do have several contracts available, if you're interested in working for \NARRATIVE 1 .>
+	Msg34 <I think I could find a mission for you, if you are interested.>
+	Msg35 <I have a mission available that you could take the contract for. Are you interested?>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Here are the coordinates for the operation. Good luck out there.>
+	Msg37 <Proceed to these coordinates, then engage the hostiles. They must all be destroyed. Return here afterwards and I'll give you your pay.>
+	Msg38 <This datachip holds all the information you should need. Proceed to the staging ground and engage the ravagers there. Good luck.>
+	Msg39 <I'll upload the information to your navcomp. Come back here after you're finished and I'll give you your pay.>
+	Msg40 <Defeat the ravagers, then come back here and I'll give you your pay.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <Fine.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Hurry back once your equipment is in shape and we can start the mission then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <No, what we need is a pilot better than you...>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Sorry, we are not currently hiring anyone.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <I should get back to work now.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a mission fighting dead zone ravagers.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <Just let me at them!>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <Maybe I should fuel up, first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <What kind of meks do they have?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I'm interested.>
+	Prompt8 <Alright, tell me more.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <I don't want to work for a corp.>
+	Prompt10 <I'm not interested.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <You need a good pilot like me.>
+	Prompt12 <I could beat those ravagers easily.>
+	Prompt13 <What you need is someone like me.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <Maybe I could help you with that.>
+	Prompt15 <Got any jobs available?>
+	Prompt16 <Can I submit my resume here?>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <That doesn't concern me.>
+	Prompt18 <I have no interest in a corporate job.>
+	Prompt19 <Whatever.>
+
+
+end
+

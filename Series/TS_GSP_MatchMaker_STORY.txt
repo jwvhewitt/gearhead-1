@@ -1,0 +1,88 @@
+Story
+	name <STORY: Match Maker>
+
+	% Two citizens in town can be brought together by the PC. Yay!
+	% This is a very simple story with a very small reward.
+
+	% N1 is the scene where the story will take place
+	% N2 and N3 are the two characters the PC can hook up.
+	Element2 <Prefab>
+	Element3 <Prefab>
+
+	% S1 = Phase counter
+	%    1: Have spoken to N2 about the crush
+	%    2: Have spoken to N3 about the crush
+
+
+	start <ifPersona N2 else GoDelete ifPersona N3 else GoDelete>
+	GoDelete <EndStory>
+
+sub
+	Persona 2
+	rumor <!2 has a secret crush on someone.>
+	% V1 = Have revealed secret
+	greeting <NewChat if= S1 2 else GoFirstTime Say 11 AddChat 5>
+	GoFirstTime <if= V1 1 else GoMightReveal Say 1 if= S1 0 EndStory>
+	GoMightReveal <ifG React 15 else GoNothing V= 1 1 Say 3 AddChat 1 AddChat 2>
+	GoNothing <Say 2>
+
+	result1 <NewChat Say 4 AddChat 3 AddChat 4>
+	result2 <NewChat Reputation 5 -d6 ifNPCMelancholy else GoR2Fail AddReact 10 Say 6 AddChat 3 AddChat 4>
+	GoR2Fail <Say 5 EndStory>
+	result3 <NewChat S= 1 1 ifG SkRoll 37 15 else GoR3Fail Say 7 Memo 9>
+	GoR3Fail <Say 8>
+	result4 <NewChat Reputation 4 -d8 Say 10 EndStory>
+	result5 <NewChat Say 12 XPV 100 AddReact 50 Reputation 1 1 EndStory>
+
+	Msg1 <Oh, I hope that someday I can find a boyfriend...>
+	Msg2 <Good day to you.>
+	Msg3 <Oh, isn't it a lovely day? The birds are singing, the grass is green...>
+	Msg4 <It's wonderful! Oh, I have such a marvelous secret...>
+	Msg5 <Don't try to rain on my parade. I'm far too happy to be miserable like you!>
+	Msg6 <Normally I'd agree with you, but not today... Oh, I have such a wonderful secret...>
+	Msg7 <I've decided that I'm in love with \NARRATIVE 3 ! Isn't that the most wonderful thing? He's so dreamy... Maybe someday I'll work up the nerve to actually talk to him...>
+	Msg8 <I can't tell you that... then it wouldn't be my secret any more, would it? All I can say is... I'm in love!>
+	Msg9 <\NARRATIVE 2 in \NARRATIVE 1 has a crush on \NARRATIVE 3 .>
+	Msg10 <You're just jealous because I know the secret and you don't!>
+	Msg11 <It's so exciting! \NARRATIVE 3 just called me to go to the school dance!>
+	Msg12 <I get the feeling that I had some help from a certain cupid... I'll remember what you did for me.>
+
+	Prompt1 <Why are you in such a good mood today?>
+	Prompt2 <Stop being so cheerful. You're nauseating.>
+	Prompt3 <Come on, tell me what's going on!>
+	Prompt4 <I could care less.>
+	Prompt5 <Congratulations, have a good time.>
+
+
+	Persona 3
+	rumor <someone has a secret crush on !3.>
+	greeting <NewChat if= S1 2 else GoCheckN2 SayAnything>
+	GoCheckN2 <if= S1 1 else GoNothing SayAnything AddChat 1 AddChat 2>
+	GoNothing <SayAnything>
+
+	result1 <NewChat Say 2 S= 1 2>
+	result2 <NewChat Say 1 Reputation 1 -1 Reputation 2 -1 Reputation 5 -10 EndStory>
+
+	Msg1 <Really!? I thought she liked me...>
+	Msg2 <Really? I'll have to give her a call sometime...>
+
+	Prompt1 <Did you know \NARRATIVE 2 has a crush on you?>
+	Prompt2 <\NARRATIVE 2 said you're a big loser.>
+
+end
+inv
+	NPC Citizen
+	chardesc Young Shy Female
+	place <1 pass>
+	sdl_sprite <cha_f_student.png>
+	sdl_colors <49 91 170 150 90 80 255 109 83>
+
+	NPC Citizen
+	chardesc Young Sociable Male
+	place <1 pass>
+	sdl_sprite <cha_m_student.png>
+	sdl_colors <6 42 120 255 212 195 244 216 28>
+
+end
+
+

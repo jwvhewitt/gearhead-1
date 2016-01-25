@@ -1,0 +1,41 @@
+Scene 0 2
+	% This is the end fight scene
+	name <Enemy Fortress>
+
+	nu1 <if= T1 0 Return SeekGate 47>
+	nu2 <if= T2 0 if= T3 0 Return SeekGate 47>
+	nu3 <if= T2 0 if= T3 0 Return SeekGate 47>
+	map <TS_MAP_Fortress.txt>
+
+
+sub
+	Team 1
+	SetEnemy 2 3
+	SetAlly -1
+	home <Entry Point>
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3
+	home <Fortress>
+
+	Team 3
+	home <Fortress>
+	SetEnemy 1
+	SetAlly 2
+
+	rect
+	MFX 19
+	MFY 4
+	Width 14
+	Height 8
+	name <Fortress>
+
+	rect
+	MFX 20
+	MFY 45
+	Width 10
+	Height 4
+	name <Entry Point>
+
+end

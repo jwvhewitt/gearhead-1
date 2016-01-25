@@ -1,0 +1,347 @@
+Plot 0
+	name <Default Mission>
+	% [[Ver1.6]]
+
+	% This is a skeleton for a generic combat mission.
+	% You can make it into a complete combat mission just
+	% by filling in the blanks in the MESSAGE BLOCKs below.
+
+	% If this mission is being offered by the enemy of the story's
+	% controlling faction, do a search for <ENEMY> and follow the
+	% instructions each time this label is found.
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	% Right now it will just be a member of E1.
+	Element2 <Character HasMecha !Comrade 1>
+	Element3 <Grab 2>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%       If P3=-1, PC has been denied the job
+	%  V4 = Original home of E2
+
+	%  S101 = Faction Victory Count
+	%  S102 = Enemy Victory Count (if appropriate)
+	%  S103 = How many times PC fought for faction
+	%  S104 = How many times PC fought against faction
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 V= 4 EScene 2 MoveChar E2 N3>
+	GoCheckTime <if= V2 0 ifG ComTime V1 MoveChar E2 V4 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  S+ 101 1 FacXP+ E1 1>
+
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 ifG V1 0 if= PCFac E1 V= 3 1 Email 1>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// Hey \RANK , got a combat mission for you here in \NARRATIVE 3 .>
+	Msg1_1 <\PERSONA E2 @ \SCENE EScene 2 :// Important message for \RANK \PC . \NARRATIVE 3 under attack by \NARRATIVE 2 ; come quick; bring guns.>
+	Msg1_2 <\PERSONA E2 @ \SCENE EScene 2 :// Report to \NARRATIVE 3 for combat mission against \NARRATIVE 2 as soon as possible.>
+	CMsg1_2 <ifG 0 NPCRep E2 3 ACCEPT>
+	Msg1_3 <\PERSONA E2 @ \SCENE EScene 2 :// There's trouble in \NARRATIVE 3 ; \NARRATIVE 2 has some troops in the area.>
+	Msg1_4 <\PERSONA E2 @ \SCENE EScene 2 :// Get yer skinny butt to \NARRATIVE 3 and help us kick out those \NARRATIVE 2 losers!>
+	CMsg1_4 <ifG 0 NPCRep E2 4 ACCEPT>
+	MSG1_5 <\PERSONA E2 @ \SCENE EScene 2 :// There's a party brewing in \SCENE EScene 2 with \NARRATIVE 2 asking for trouble!>
+	CMsg1_5 <ifG NPCRep E2 5 0 ACCEPT>
+	MSG1_6 <\PERSONA E2 @ \SCENE EScene 2 :// \NARRATIVE 3 is under siege from \NARRATIVE 2 ; if we do not act quickly, all will be lost.>
+	CMsg1_6 <ifG 0 NPCRep E2 5 ACCEPT>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <!2 is a member of the city defense team.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P1 0 else GoRealStart SayAnything>
+
+	GoRealStart <if= P2 3 else GoCheckLoss Say 1 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob Say 6 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 100 Goto GoCheckFaction>
+	% <ENEMY> If this is an enemy mission, use the following line.
+	% GoCheckFirst <if= S103 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 Threat FacVar N1 1000 100 V= 4 Reward V3 100 Goto GoCheckFaction>
+
+	GoCheckFaction <if= PCFac E1 else GoCheckEmail Say 11 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend Say 11 Goto GoAddComOps>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it,
+	GoCheckFriend <ifG React 40 else GoNoAutomatic Say 16 AddChat 7 AddChat 9>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React -d10 else GoDenied Say 21 AddChat 11 AddChat 14 AddChat 17>
+	GoDenied <V= 1 -1 P= 3 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 P= 3 1 AddChat 1 AddChat 3 AddChat 5 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat Say 36 Goto GoStartCombat>
+
+
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 Dynamic 2 V3 .nu1 .nu2 Encounter 25 25 .edesc PCFEnemy N2>
+	.edesc <!Member \VAL N2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat Say 26 AddChat 1 AddChat 3>
+
+	% The PC accepts the job offer.
+	result7 <NewChat Say 11 Goto GoAddComOps>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 P= 3 -1>
+
+	% The PC tries to get the job via "PLAN A"- volunteer.
+	% Honestly, when a town is being invaded it's just that
+	% simple. As long as the PC hasn't fought for the enemy,
+	% and isn't villainous, he'll get the job.
+	%  The catch? Volunteering lowers the pay offered.
+	result11 <NewChat ifG PCRep 1 d5 else GoR11Lose V= 4 Reward V3 70  Say 31 AddChat 7 AddChat 9>
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 P= 3 -1>
+
+
+	% The PC tries to get the job via "PLAN B"- be badass.
+	result14 <NewChat ifG Intimidation 12 else GoR14Lose Say 31 AddChat 7 AddChat 9>
+	GoR14Lose <NewChat Say 105 V= 1 -1 P= 3 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1 P= 3 -1>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Player has won the battle and is being paid.
+	Msg1_0 <Good job out there! A few more victories like that, and \ELEMENT 3 will have to leave the area! Here's your pay.>
+	CMsg1_0 <ifG NPCRep E2 5 0 Accept>
+	Msg1_1 <The mission was a complete success. Here's the cash you earned.>
+	CMsg1_1 <ifG 0 NPCRep E2 3 Accept>
+	Msg1_2 <You did it! Go get fixed up... there might be another battle at any time.>
+	Msg1_3 <That showed them a thing or two! Here's the money I promised you.>
+	CMsg1_3 <ifG NPCRep E2 3 0 Accept>
+	Msg1_4 <Great going, \PC ! Here's your reward.>
+	CMSg1_4 <ifG React 25 Accept>
+	Msg1_5 <Woo-hoo! Those \ELEMENT 3 losers have been driven back where they came from! Here's the pay that you earned.>
+	CMsg1_5 <ifG 0 NPCRep E2 4 Accept>
+	Msg1_6 <You've lived to see another day. Here's the money you earned for that mission.>
+	CMsg1_6 <ifG 0 NPCRep E2 5 Accept>
+
+
+	% 06 :  Player has lost the battle.
+	Msg6_1 <You failed... I'll bet \ELEMENT 3 is laughing at us now...>
+	CMsg6_1 <ifG 0 NPCRep E2 5 Accept>
+	Msg6_2 <The mission was a failure.>
+	Msg6_3 <You lost.>
+	Msg6_4 <I knew that you couldn't manage it...>
+	CMsg6_4 <ifG 15 React Accept> 
+	Msg6_5 <The mission was a failure. Well, don't worry, we'll get them next time!>
+	CMsg6_5 <ifG NPCRep E2 5 0 Accept>
+	Msg6_6 <Look on the failure of this mission as a learning opportunity.>
+	CMsg6_6 <ifG NPCRep E2 7 0 Accept>
+	Msg6_7 <You failed! How could things have turned out this badly...>
+	CMsg6_7 <ifG 0 NPCRep E2 4 Accept>
+
+	% 11 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11_2 <A raiding party from \NARRATIVE 2 has been striking targets in this area. They need to be eliminated. The job is worth $ \VAL V4 plus salvage rights.>
+	Msg11_3 <We're under attack from \NARRATIVE 2 . I need you to engage one of their strike patrols and disable all enemy mecha. Your pay will be $ \VAL V4 plus salvage.>
+	Msg11_4 <As you know, relations with \NARRATIVE 2 have never been good... one of their mecha teams has been sighted in FedCon territory. I need you to eliminate them. You'll get $ \VAL V4 and salvage for the job.>
+	CMsg11_4 <ifG NPCRep E2 3 0 Accept>
+	Msg11_5 <We've encountered mecha from \NARRATIVE 2 close to town. We don't know what they're doing, but plan to stop them before they can complete whatever it is. Pay will be $ \VAL V4 plus salvage.>
+	Msg11_6 <Mecha from \NARRATIVE 2 have have been sighted in our territory. Eliminate them for $ \VAL V4 plus salvage.>
+	CMsg11_6 <ifG 0 NPCRep E2 3 Accept>
+	Msg11_7 <Mecha from \NARRATIVE 2 have been stationed near town. They're planning an operation, and if we don't stop them quickly lots of people are going to die. Eliminate their mecha for $ \VAL V4 plus salvage.>
+	CMsg11_7 <ifG 0 NPCRep E2 5 Accept>
+
+	% 16 :  Player is asked if he is looking for a job.
+	Msg16_1 <Hey, are you looking for a job? We need another mecha pilot to help defend the city against \NARRATIVE 2 .>
+	CMsg16_1 <ifG NPCRep E2 3 0 Accept>
+	Msg16_2 <I have a mission ready for a mecha pilot, if you're looking for work.>
+	CMsg16_2 <ifG NPCRep E2 4 0 Accept>
+	Msg16_3 <Our city is under attack! I need a mecha pilot to run a combat mission against \NARRATIVE 2 . How'd you like to help?>
+	Msg16_4 <There are mecha from \NARRATIVE 2 stationed just outside this city. I need a mecha pilot to run a combat mission against them. Interested?>
+	Msg16_5 <How would you like to perform a combat mission for \NARRATIVE 1 ?>
+	Msg16_6 <I should tell you that \NARRATIVE 2 needs a pilot for an upcoming mission. Interested?>
+	CMsg16_6 <ifG 0 NPCRep E2 3 Accept>
+	Msg16_7 <I've got a very important mission for you... \NARRATIVE 2 is at the gates of \NARRATIVE 3 , and we need a pilot to go take them out. Are you interested?>
+	CMsg16_7 <ifG 0 NPCRep E2 4 Accept>
+	Msg16_8 <Maybe you can help us. We're having a pilot shortage at the moment... If you're able, I have a mission for you.>
+	CMsg16_8 <ifG 0 NPCRep E2 5 Accept>
+
+	% 21 :  NPC implies job, PC might have chance to get it.
+	Msg21_1 <If you don't have any business in town, I suggest you go elsewhere. Mecha from \NARRATIVE 2 have been sighted and fighting could begin at any moment.>
+	Msg21_2 <This isn't a safe time to be in \NARRATIVE 3 . A strike team from \NARRATIVE 2 has landed just outside of town, and we're now preparing to go take them out.>
+	Msg21_3 <If you don't mind me saying so, this isn't the best time for you to visit \NARRATIVE 3 . Word is that we could be attacked by \NARRATIVE 2 at any minute.>
+	CMsg21_3 <ifG 0 NPCRep E2 5 Accept>
+	Msg21_4 <There are mecha from \NARRATIVE 2 near town, but don't be alarmed; \NARRATIVE 1 will protect \NARRATIVE 3 and everyone in it.>
+	CMsg21_4 <ifG NPCRep E2 5 0 Accept>
+	Msg21_5 <I can't wait to get in my mecha and take on \NARRATIVE 2 . We have to stop them before they get close enough to attack the city!>
+	CMsg21_5 <ifG 0 NPCRep E2 4 Accept>
+	Msg21_6 <There are mecha from \NARRATIVE 2 near town. You should leave here.>
+	CMsg21_6 <ifG 0 NPCREp E2 3 Accept>
+
+	% 26 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26_0 <Assuming the reports are correct, they've got \VAL V3 points worth of gear. In reality things might not be that easy.>
+	CMsg26_0 <ifG 0 NPCRep E2 5 Accept>
+	Msg26_1 <They have \VAL V3 tactical threat points of gear. You'll be responsible for handling all of that yourself. Think you can manage?>
+	Msg26_2 <It's been reported that they have \VAL V3 points worth of equipment, but in my heart I suspect it could be even more that that...>
+	CMsg26_2 <ifG 0 NPCRep E2 7 Accept>
+	Msg26_3 <Your mission will be to eliminate \VAL V3 points from their main battle force.>
+	Msg26_4 <It's just going to be you against \VAL V3 points worth of enemy hardware.>
+	Msg26_5 <They have \VAL V3 points worth of mecha.>
+	CMsg26_5 <ifG 0 NPCRep E2 3 Accept>
+
+	% 31 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31_1 <I could use you on our side. I have a mission available, if you'd like to hear the details.>
+	Msg31_2 <Sure, I could always use another good pilot. Want to hear the mission details?>
+	CMSg31_2 <ifG NPCRep E2 4 0 Accept>
+	Msg31_3 <We could use you on the team. Want to fly a mission for \NARRATIVE 1 ?>
+	CMsg31_3 <ifG NPCRep E2 3 0 Accept>
+	Msg31_4 <Maybe you have what it takes. How'd you like to run a mission for \NARRATIVE 1 ?>
+	Msg31_5 <That'd be great. Are you ready to accept a mission for \NARRATIVE 1 right now?>
+	CMsg31_5 <ifG NPCRep E2 5 0 Accept>
+	Msg31_6 <Alright, we may have a mission for you. Interested?>
+	CMsg31_6 <ifG 0 NPCRep E2 3 Accept>
+	Msg31_7 <Alright, you sound like you might have some spirit. Are you interested in flying a mission for \NARRATIVE 1 ?>
+	CMsg31_7 <ifG 0 NPCRep E2 4 Accept>
+	Msg31_8 <Maybe you can help us. We're having a pilot shortage at the moment... If you're able, I have a mission for you.>
+	CMsg31_8 <ifG 0 NPCRep E2 5 Accept>
+
+	% 36 :  Combat is starting.
+	Msg36_1 <These navpoints will take you to the engagement zone. Make sure that no enemy mecha are left standing. Report back here afterwards and I'll give you your pay.>
+	CMsg36_1 <ifG NPCRep E2 7 0 Accept>
+	Msg36_2 <I'll upload the encounter data to your navcomp. Head to the specified coordinates and engage any mecha from \NARRATIVE 2 that you find.>
+	Msg36_3 <Good luck out there. May the gods smile upon you.>
+	CMsg36_3 <ifG 0 NPCRep E2 7 Accept>
+	Msg36_4 <Be strong! \NARRATIVE 3 is counting on you.>
+	Msg36_5 <Whatever you do, just don't lose. Come back afterwards and I'll give you the money.>
+	CMsg36_5 <ifG 0 NPCRep E2 4 Accept>
+	Msg36_6 <Try not to get yourself killed... \NARRATIVE 2 has already taken too many of our best pilots...>
+	CMsg36_6 <ifG 0 NPCRep E2 5 Accept>
+	Msg36_7 <Be careful out there; don't get in any deeper than you can handle. It's better to live and fight another day and all that stuff...>
+	CMsg36_7 <ifG NPCRep E2 4 0 Accept>
+	Msg36_8 <Come see me when you're finished.>
+	CMsg36_8 <ifG 0 NPCRep E2 3 Accept>
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start now?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <Too bad.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Okay. Hurry back once you're ready.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <You, help us? No, I think we're better off without that help...>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Sorry, I don't have a job for you. We already have as many pilots as we're going to need.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Take care while leaving the city, citizen.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a combat mission against \NARRATIVE 2 .>
+
+	% 01 :  Ready to start the mission
+	Prompt1 <All ready to go!>
+	Prompt1_1 <Let's start this mission.>
+
+	% 03 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt3_1 <I better get something to eat first.>
+
+	% 05 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt5_1 <How many big guns do they have?>
+
+	% 07 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <Absolutely.>
+	Prompt7_1 <I'd like to. Tell me more.>
+
+	% 09 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Sorry, I can't help.>
+	Prompt9_1 <Not interested.>
+
+	% 11 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <I'd like to volunteer for service.>
+	Prompt11_1 <Is there any way I could help?>
+	Prompt11_2 <If \NARRATIVE 3 needs me, I'm here.>
+
+	% 14 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <What you need is an ace pilot like me.>
+	Prompt14_1 <I could take \NARRATIVE 2 no sweat.>
+	Prompt14_2 <How can I get a piece of that action?>
+
+	% 17 : Player doesn't much care for the job.
+	Prompt17 <I better leave, then.>
+	Prompt17_1 <I don't want to get messed up in a war.>
+	Prompt17_2 <Maybe I'll come back later.>
+
+
+end
+

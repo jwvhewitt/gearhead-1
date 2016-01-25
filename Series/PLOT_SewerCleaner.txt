@@ -1,0 +1,240 @@
+Plot 0
+	name <PLOT: Sewer Cleaner>
+	% [[Ver1.3]]
+
+	% E1 is the character who will give the mission.
+	Element1 <Character Leader>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%  V100 = Maximum depth cleared
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. Because we are using the Sewer Divers encounter,
+	% this is different from the regular combat template.
+	nu1 <if= P2 1 if= t1 0  P= 2 2>
+	nu2 <if= P2 1 if= t2 0 ifG L1 P100 P= 100 L1>
+
+	% Email check. Send email if PC is well-liked.
+	5Min <if= d50 23 if= V3 0 ifG RReact E1 d70 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// We have a vermin problem in \SCENE EScene 1 . I could use your help with it.>
+	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// I have an inglamorous but well-paying job, if you are willing to do a bit of dirty work. Literally dirty work.>
+	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// Our city needs the help of a hero such as yourself to clean our sewers. Come here and I'll discuss payment.>
+	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// \SCENE EScene 1 has a problem of a very delicate nature. I could use your assistance, if you aren't busy.>
+	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// \SCENE EScene 1 needs you. Please hurry.>
+
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E1.
+	Persona 1
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <!1 needs to hire a cavalier for some kind of city sanitation adventure.>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 2 else GoCheckJob if= P100 0 else GoWinGood Say 1 AdvancePlot 0>
+	GoWinGood <ifG P100 PCRep 6 else GoWinAverage Say 2 Reputation 6 1 CashPrize Reward Threat P100 100 250 XPV 100 AdvancePlot 0>
+	GoWinAverage <V= 2 2 V+ 2 d3 Say V2 CashPrize Reward Threat P100 100 175 XPV 50 AdvancePlot 0>
+
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 Goto GoCheckEmail>
+
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFriend <ifG PCRep 1 d50 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	GoNoAutomatic <ifG React d20 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything AdvancePlot 0>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107 P= 3 1>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+
+	GoStartCombat <P= 2 1 SavePos MStaged .scene 5 .mdesc SeekGate -1 PassVar 1 5>
+	.scene <SCENE_SewerDivers.txt>
+	.mdesc <CITY WATER SWAMP>
+
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat ifG PCRep 6 5 else GoR5NoDeep V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+	GoR5NoDeep <Say 108 AddChat 1 AddChat 3>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 AdvancePlot 0>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat ifG Intimidation 10 else GoR11Lose V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 AdvancePlot 0>
+
+
+	% The PC tries to get the job via "PLAN B"- be friendly.
+	% This is done with the Conversation skill.
+	result14 <NewChat ifG Conversation 15 else GoR14Lose V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1 AdvancePlot 0>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	Msg1 <You didn't manage to clear a single level of the sewers. As such, you have earned no reward... now go take a shower.>
+	Msg2 <You exceeded our deepest expectations! Our city sewers will be safe again, thanks to your heroic efforts. Here's a reward for your bravery. Now go take a shower, you're stinking up the place...>
+	Msg3 <Very good. The sewers have been made somewhat more safe. Here's a reward for your help.>
+	Msg4 <You've done well in protecting our city. Here's a reward.>
+	Msg5 <Thanks for your help. Here's the money that you earned.>
+
+	% 11 - 15 :  Description of mission.
+	Msg11 <The city sewers have become a breeding ground for all kinds of monsters. I need someone to go down there and exterminate them. Pay for this mission will be based on how deep you manage to clear.>
+	Msg12 <Our sewers are infested with all manner of nasty creatures, and recently they ate a plumber. I need you to go down there and kill as many critters as you can; pay will be determined by how many levels you manage to clear.>
+	Msg13 <\SCENE EScene 1 has a waste management problem... specifically, waste management is becoming dangerous! I need someone to clear out the sewer monsters. Pay will be determined by how many levels you can exterminate.>
+	Msg14 <The city sewers are crawling with monsters. I need someone to go down there and exterminate them. Pay will be decided based upon how many levels you manage to clear out.>
+	Msg15 <We've got too many monsters living in the sewers. They need to be exterminated... Pay for this mission will be determined by how many levels you manage to clear.>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Are you looking for a job? I have a hunting job available, if you're not afraid of a little dirty work... and a lot of stink.>
+	Msg17 <I have a job available for an adventurer, as long as you don't mind getting your hands dirty... and probably the rest of you as well.>
+	Msg18 <Do you need a job? I've got something available,  but I better warn you, this mission stinks...>
+	Msg19 <You might be able to help me. I have a hunting job available. It's not glamorous, but it pays well.>
+	Msg20 <I have a mission for a seasoned dungeon-diver; the pay is good but the conditions stink.>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <It's tough work running this town, and now we have a waste disposal crisis to deal with...>
+	Msg22 <Our town has some new trouble, and I fear that the only way to solve it will be the application of gratuitous violence...>
+	Msg23 <There's a crisis in \SCENE EScene 1 , and not one of those interesting crisises like you see on internet either.>
+	Msg24 <The toilets in city hall aren't working, and if I can't stop this crisis that'll be the least of our worries...>
+	Msg25 <There's a big problem brewing in the underground, and I have to solve it before the whole thing blows up in our faces...>
+
+	% 26 - 30 :  PC will be told how far to dive.
+	Msg26 <In order to make things safe for our sanitation workers, you should clear the sewers down to about \VAL PCREP 6 meters deep.>
+	Msg27 <Things should be safe again after the monsters have been exterminated to about \VAL PCREP 6 meters. Think you can go that far?>
+	Msg28 <The sewers run very deep, but only the first \VAL PCREP 6 meters are useful, so that's all that we need cleared.>
+	Msg29 <If you can clear the first \VAL PCREP 6 meters of monsters, that'd make things safe for the city workers to go down there again.>
+	Msg30 <We need the monsters cleared down to \VAL PCREP 6 meters, in order to make things safe for our maintenance workers.>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Good luck down there, and try to hold your breath...>
+	Msg37 <Good luck. Don't go too deep, or you'll never get back.>
+	Msg38 <Come back when you're finished and I'll give you however much money you earned.>
+	Msg39 <Be careful down there; don't go any deeper than you can manage.>
+	Msg40 <Have a good sewer dive!>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to enter the sewer?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's too bad.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Okay. Hurry back once you're ready and we can start then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <Maybe not; I'll have to get approval from the council before I can try that.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <It's kind of a delicate matter... I'd rather not make it public.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <I should get back to work now.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 1 in \SCENE EScene 1 offered you a mission to exterminate sewer monsters.>
+
+	msg108 <Oh, you won't have to go too deep... Just manage the first level and that should be it.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <All ready to exterminate some monsters.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <I better buy some supplies first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <How deep do I have to go?>
+	Prompt6 <How many levels do you need cleared?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I can manage that.>
+	Prompt8 <I'm willing to do that.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Maybe I don't want this job...>
+	Prompt10 <Thanks, but I'll pass.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <Can this problem be solved through violence?>
+	Prompt12 <Do you need someone to go fight something?>
+	Prompt13 <Maybe it would help if I blew something up.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <What kind of crisis are you having?>
+	Prompt15 <What's the nature of this crisis?>
+	Prompt16 <What's the matter?>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <I'll let you get back to work.>
+	Prompt18 <Sounds like everything's under control.>
+	Prompt19 <Good luck with your crisis.>
+
+
+end
+

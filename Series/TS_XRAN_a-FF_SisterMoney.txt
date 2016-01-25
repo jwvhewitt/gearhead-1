@@ -1,0 +1,252 @@
+Plot 0
+	% The PC's sister needs money. Once the PC provides that money, the next
+	% phase of the adventure can start.
+	name <PLOT: Money for Sibling>
+	% Has been edited to v0.901 standard
+
+	element1 <Grab 3>
+	element2 <Prefab>
+	element3 <Scene Target Town !Far 1>
+
+	start <ifPersona E2 else GoDelete if= V1 0 PCFamily E2 if= d3 1 Email d5 V= 1 1>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// Hey! It's your sister calling. I need some money, come see me...>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// It's me, your sister. I've got a favor to ask but I need to do it in person. TTYL>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Hey there sib! It's your little sister calling. I need some cash. Can you help?>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// Sorry I haven't written more. Things have been tough since Mom and Dad died... I need your help.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// This is your sister, I need help right away. Stop driving robots and come see me!>
+
+	cleanup <AdvancePlot 0>
+
+sub
+	Persona 2
+	% V1 = Initialization counter
+	% V3 = Needed money
+	greeting <NewChat if# V1 2 else GoEndingSpeech V= 3 Threat S103 30 Memo 9 if= V1 0 else GoBeenBefore V= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+	rumor <!2 has been waiting to talk with you.>
+
+	GoBeenBefore <Say 2 AddChat 4 AddChat 5 ifG PC$ V3 AddChat 6>
+
+	result1 <NewChat Say 3 Reputation 1 1 AddChat 7 AddChat 8 ifG PC$ V3 AddChat 6>
+	result2 <NewChat Reputation 1 -1 Reputation 3 -d10 Say 4 AddChat 9 AddChat 10>
+	result3 <NewChat Say 5 AddReact d10 AddChat 7 AddChat 8 ifG PC$ V3 AddChat 6>
+	result4 <NewChat Say 6>
+	result5 <NewChat Say 7>
+	result6 <NewChat Cash+ -V3 Reputation 1 1 Reputation 6 1 Goto GoEndingSpeech>
+	result7 <NewChat Say 8>
+	result8 <NewChat Say 10 Reputation 7 d10>
+	result9 <NewChat Say 11 Reputation 5 d10  AddChat 7 AddChat 8 ifG PC$ V3 AddChat 6>
+	result10 <NewChat Say 12 Reputation 5 -d10 Reputation 1 -1 Reputation 2 -1>
+
+	Msg1 <You've got to help me! Mom and Dad left some money for us when they went away, but it wasn't much. There's not much left. I'll have to spend the last of it on either food or school. Please, I haven't called for help before...>
+	Msg1_1 <I've got a big problem that I wanted to talk with you about. I'm running out of money... I need to pay for tuition and rent, and I already have two part-time jobs. If Mom and Dad were still here I'd go to them, but...>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <You know I don't call for help often, but I don't know what else to do... I'm running out of money. I need to pay for tuition at school, plus food and everything else...>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <I need some money. I've got to pay tuition and rent for next semester but I'm flat broke. I figured you'll have no trouble giving me a tiny loan... I can pay you back in a few years after I get a job!>
+	CMsg1_3 <ifNPCCheerful Accept>
+	Msg1_4 <\PC , I have a serious problem... Ever since our parents died I've had trouble adjusting. Now, it's time for me to pay tuition at school. I don't have the money... I don't like calling to you for help but I don't know what else I can do.>
+	CMsg1_4 <ifNPCMelancholy Accept>
+
+	Msg2 <I still need $ \VAL V3 to pay for my school and living expenses.>
+	Msg2_1 <The bank called today. They said if I don't get my rent to them in a week I'll be living on the street. Do you have the money I asked you for yet?>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <Do you have the money I need yet?>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <Hey \PC , it's good to see you. You wouldn't happen to have a present for me, would you?>
+	CMsg2_3 <ifNPCCheerful Accept>
+	Msg2_4 <I wish our parents were still here... I miss them so much. And now I'm worried about this tuition problem...>
+	CMsg2_4 <ifNPCMelancholy Accept>
+
+	Msg3 <I need $ \VAl V3 to cover everything, and even with that I'll be living on ramen for a while.>
+	Msg3_1 <I've done a bit of thinking about this, and I think $ \VAl V3 is about as much as I'm going to need for one semester. That includes tuition, books, food... it doesn't include fun or emergencies. I can write everything down if you'd like.>
+	CMsg3_1 <ifNPCSociable Accept>
+	Msg3_2 <I need $ \VAl V3 . I think that's the least amount of money that'll still allow me to live.>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <It's not a lot, just around $ \VAl V3 . I'm sure you'll have no problem getting that kind of money. Don't worry, I'm not going to waste any money on partying or anything like that.>
+	CMsg3_3 <ifNPCCheerful Accept>
+	Msg3_4 <I need a lot... $ \VAl V3 . I don't know how you're going to raise that kind of money. I feel sorry for being such a burden.>
+	CMsg3_4 <ifNPCMelancholy Accept>
+	Msg3_5 <I think $ \VAl V3 should cover all my expenses. Here, I've prepared a budget plan. As you see, most of the cash goes towards tuition and rent. I've cut the food budget as low as possible, and there's no entertainment budget at all.>
+	CMsg3_5 <ifNPCPragmatic Accept>
+
+	Msg4 <You're mean! You're the only person I have in the world to turn to...>
+	Msg4_1 <I'd help you out if you needed it! Someday you might need my help! Come on, you've got to help me...>
+	CMsg4_1 <ifNPCSociable Accept>
+	Msg4_2 <So that's how it is...>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_3 <Aww, why do you have to be so mean? If you don't help me then I'll keep bugging you and bugging you until you do!>
+	CMsg4_3 <ifNPCCheerful Accept>
+	Msg4_4 <I see. So, I have no-one in the world I can depend on... I truly am alone...>
+	CMsg4_4 <ifNPCMelancholy Accept>
+
+	Msg5 <You're the greatest! It'll take $ \VAL V3 to cover rent, food, and tuition until the end of the semester.>
+	Msg5_1 <I knew I could count on you. I'm going to need around $ \VAL V3 to cover food, rent, and tuition. That doesn't include any extras, either...>
+	CMsg5_1 <ifNPCSociable Accept>
+	Msg5_2 <Thanks. It'll take $ \VAL V3 to cover all my expenses until the end of term.>
+	CMsg5_2 <ifNPCShy Accept>
+	Msg5_3 <Great! It's going to cost $ \VAL V3 for all my basic expenses... That doesn't include things like movies or parties or even eating meat.>
+	CMsg5_3 <ifNPCCheerful Accept>
+	Msg5_4 <I only wish I wasn't such a burden on you... I'll need $ \VAL V3 for tuition, rent, and food until the end of the semester.>
+	CMsg5_4 <ifNPCMelancholy Accept>
+
+	Msg6 <Please remember while you're driving your robot that your poor little sister is cold and hungry.>
+	Msg6_1 <When you're out there adventuring and having a good time and eating real food, don't forget your poor little sister who's stuck here wondering when her ramen supply is going to run out.>
+	CMsg6_1 <ifNPCSociable Accept>
+	Msg6_2 <Let me know when you've got the money.>
+	CMsg6_2 <ifNPCShy Accept>
+	Msg6_3 <I'm sure this will be no trouble for you.>
+	CMsg6_3 <ifNPCCheerful Accept>
+	Msg6_4 <I'll try to hold things together are well as I can, until you get the money.>
+	CMsg6_4 <ifNPCMelancholy Accept>
+	Msg6_5 <What's the matter, \FACTION PCFac doesn't pay you enough?>
+	CMsg6_5 <if# PCFac 0 Accept>
+
+	Msg7 <You're still mean.>
+	Msg7_1 <That which you give always returns to you tenfold...>
+	CMsg7_1 <ifNPCSpiritual Accept>
+	Msg7_2 <Whatever.>
+	CMsg7_2 <ifNPCShy Accept>
+	Msg7_3 <I'll assume that you're just being a jerk, as usual.>
+	CMsg7_3 <ifNPCCheerful Accept>
+	Msg7_4 <I should have known better than to ask you for help...>
+	CMsg7_4 <ifNPCMelancholy Accept>
+
+	Msg8 <Please do that.>
+	Msg8_1 <That'd be great. Keep me informed of how it's going.>
+	CMsg8_1 <ifNPCSociable Accept>
+	Msg8_2 <Please do.>
+	CMsg8_2 <ifNPCShy Accept>
+	Msg8_3 <It would be greatly appreciated if you could!>
+	CMsg8_3 <ifNPCCheerful Accept>
+	Msg8_4 <Please hurry. I don't want to live on the street.>
+	CMsg8_4 <ifNPCMelancholy Accept>
+
+	Msg9 <Your sister \ELEMENT 2 in \SCENE EScene 2 needs $ \VAL V3 to pay for living expenses.>
+	Msg10 <I can't get a job because I haven't graduated school! I can't graduate school unless I can pay for tuition! Please help me out here...>
+	Msg10_1 <I'm in school so I can get a decent job! If I can't graduate, I'll be relegated to fast food service for the rest of my life! Even worse, I may have to get a job at RegEx corporation...>
+	CMsg10_1 <ifNPCSociable Accept>
+	Msg10_2 <I already have a part time job, but it can't pay bills like this.>
+	CMsg10_2 <ifNPCShy Accept>
+	Msg10_3 <Um, excuse me? I already have a part time job... I can't work any more and continue to study. We don't live on Mars, you know. There are child labor laws in place here.>
+	CMsg10_3 <ifNPCCheerful Accept>
+	Msg10_4 <I can't work any more than I'm doing already... I'm at the end of my rope. I have two part time jobs, and that's not enough to keep up with all the bills...>
+	CMsg10_4 <ifNPCMelancholy Accept>
+	Msg10_5 <I suppose I could open an pornographic netsite to pay my bills, but I don't think our parents would have approved... Coming to you for the money is the only thing I can do that doesn't involve breaking the law or public humiliation.>
+	CMsg10_5 <ifNPCChaotic ifNPCSociable Accept>
+
+	Msg11 <Aieee... being out in the world sure hasn't helped you to grow up any. I need $ \VAL V3 to pay for my school and living expenses.>
+	Msg11_1 <Don't joke at a time like this! My nerves can't handle it... Look, I'm going to need $ \VAL V3 sometime within the next couple of weeks. I know that's a lot but I don't have anyone else to turn to.>
+	CMsg11_1 <ifNPCSociable Accept>
+	Msg11_2 <Oh. I figure I'm going to need $ \VAL V3 for the upcoming semester. That covers food, rent, and tuition, but not much else.>
+	CMsg11_2 <ifNPCShy Accept>
+	Msg11_3 <Ah, I see, it was one of those newfangled jokes that aren't funny. You're cutting edge, \PC . Anyhow, I'm going to need $ \VAL V3 for rent and tuition. Think you can get that much?>
+	CMsg11_3 <ifNPCCheerful Accept>
+	Msg11_4 <That wasn't funny. In any case, I'm going to need $ \VAL V3 for tuition and lodging.>
+	CMsg11_4 <ifNPCMelancholy Accept>
+
+	Msg12 <You wouldn't dare say that if our parents were still alive...>
+	Msg12_1 <If you act like this to me now, just wait and see if I'll help you when you need something. It might not be anytime soon but you will need my help with something someday.>
+	CMsg12_1 <ifNPCSociable Accept>
+	Msg12_2 <Fine, whatever.>
+	CMsg12_2 <ifNPCShy Accept>
+	Msg12_3 <You're not being funny, \PC ... this is serious.>
+	CMsg12_3 <ifNPCCheerful Accept>
+	Msg12_4 <Then I guess I have no hope left...>
+	CMsg12_4 <ifNPCMelancholy Accept>
+
+	Prompt1 <How much do you need?>
+	Prompt1_1 <How much money are you talking about?>
+	Prompt2 <I don't care. Get the money yourself.>
+	Prompt2_1 <I don't care about your problems.>
+	Prompt3 <You're my sister; of course I'll help.>
+	Prompt3_1 <Of course I'll help! We're family.>
+	Prompt4 <I'm still working on it.>
+	Prompt4_1 <I don't have all the money you need yet.>
+	Prompt5 <Like I told you before, buzz off.>
+	Prompt5_1 <Didn't I already tell you to buzz off?>
+	Prompt6 <Here's the money. [Give Cash]>
+	Prompt6_1 <I've got the money for you. [Give Cash]>
+	Prompt7 <I'll get the money for you.>
+	Prompt7_1 <Don't worry, I'll get it for you.>
+	Prompt8 <Maybe you should find a job.>
+	Prompt8_1 <Why don't you get a job?>
+	Prompt9 <Calm down, I was just joking!>
+	Prompt9_1 <Relax, that was just a joke!>
+	Prompt10 <Life's tough. Deal with it.>
+	Prompt10_1 <It's time for you to grow up.>
+
+	GoEndingSpeech <V= 1 2 Say 101 AddChat 101 AddChat 102 AddChat 103>
+
+	result101 <NewChat Reputation 3 d10 Say 102 Goto GoEndPlot>
+	result102 <NewChat Reputation 7 -d10 Say 103 Goto GoEndPlot>
+	result103 <NewChat Reputation 5 -d10 Say 104 Goto GoEndPlot>
+
+	Msg101 <Thank you! Oh, this should cover just about everything... You really stick by, y'know? If Mom and Dad were here they'd be proud. I miss them so much sometimes...>
+	Msg101_1 <I know what a sacrifice it was to give me this much money, and I promise if you ever need help I'll do my best. That's what Mom and Dad would have wanted. It seems so empty without them... I still miss them so much.>
+	CMsg101_1 <ifNPCSociable Accept>
+	Msg101_2 <Thanks for sticking by me, \PC . It means a lot. I only wish our parents were still around, so they could see me graduate...>
+	CMsg101_2 <ifNPCShy Accept>
+	Msg101_3 <It's such a relief to not have to worry about this anymore! If Mom and Dad were here they'd be proud of you. I really miss them...>
+	CMsg101_3 <ifNPCCheerful Accept>
+	Msg101_4 <Thank you! Life has been really hard since losing our parents... I'm glad that I still have you, but sometimes the pain from missing Mom and Dad is unbearable.>
+	CMsg101_4 <ifNPCMelancholy Accept>
+
+	Msg102 <I'm glad I still have you. I found a book while cleaning up the house a while back. It says we might have family in \ELEMENT 3 . Maybe while you're traveling you can check it out.>
+	Msg102_1 <It was so nice back when we were all together... Oh, I discovered something recently. Our parents had financed some kind of thing in \ELEMENT 3 . I don't know what... I'm surprised they never told us. Maybe you can find out what that was?>
+	CMsg102_1 <ifNPCSociable Accept>
+	Msg102_2 <While cleaning out the house I found an old dataslate. Apparently Mom and Dad had some kind of investment in \ELEMENT 3 . Maybe you can go there and see what it is sometime?>
+	CMsg102_2 <ifNPCShy Accept>
+	Msg102_3 <I've been cleaning the study at home, and it brings back all kinds of memories. Did you know that our parents were members of a club in \ELEMENT 3 ? Strange they never mentioned that...>
+	CMsg102_3 <ifNPCCheerful Accept>
+	Msg102_4 <They're gone, never to return... I've been cleaning the study at home, and remembering how it was to be with them. Did you know that our parents had investments in \ELEMENT 3 ? Strange they never mentioned that to us...>
+	CMsg102_4 <ifNPCMelancholy Accept>
+	Msg102_5 <At least they've gone to a better place. I was cleaning out Dad's study a few days ago and came across an old dataslate. It seems like he had some kind of investment in \ELEMENT 3 . Maybe you can find out more?>
+	CMsg102_5 <ifNPCSpiritual Accept>
+
+	Msg103 <I wish I could believe that as strongly as you... Hm, a few days ago I found something interesting. I wanted to tell you but forgot. We might have family in \ELEMENT 3 . Maybe you could go check it out someday.>
+	Msg103_1 <It's good that you have such faith to see you through troubles. Oh, I recently discovered something... Before they died Mom and Dad were planning some kind of investment in \ELEMENT 3 ; I really don't know what. Maybe you could find out?>
+	CMsg103_1 <ifNPCSociable Accept>
+	Msg103_2 <I spent a lot of time cleaning out Mom's study. There was an old dataslate there... I think she had some kind of business in \ELEMENT 3 . Maybe someday you can go find out more.>
+	CMsg103_2 <ifNPCShy Accept>
+	Msg103_3 <It must be nice to have such strong faith. I'm just glad that I still have you. A while ago I was cleaning the attic at home and I found an old family album... I think we might have family in \ELEMENT 3 . Maybe you can go there and see.>
+	CMsg103_3 <ifNPCCheerful Accept>
+	Msg103_4 <...and we'll be joining them there someday, if there really is an afterlife. I had something to tell you... While cleaning Mom's study I found an old book. Apparently we have relatives in \ELEMENT 3 . Maybe you can check that out?>
+	CMsg103_4 <ifNPCMelancholy Accept>
+	Msg103_5 <That's the only thing that gives me comfort in these times. While cleaning out the house I found something interesting... Apparently we have relatives in \ELEMENT 3 . Maybe you could investigate the next time you're over that way?>
+	CMsg103_5 <ifNPCSpiritual Accept>
+	Msg103_6 <You know I don't believe in that stuff. I've been researching our family, to see if we have any other relatives... I believe we may have some in \ELEMENT 3 . Maybe while you're traveling you can go see.>
+	CMsg103_6 <ifNPCPragmatic Accept>
+
+	Msg104 <I know, but I still miss them now. I did find something interesting while cleaning the house a few days ago... we might have family in \ELEMENT 3 . Maybe if you're there sometime you can check it out.>
+	Msg104_1 <A few days ago someone called asking questions about our folks. I didn't tell them anything, of course... The phone number was from the \ELEMENT 3 area code. Maybe you can find out what that was about...>
+	CMsg104_1 <ifNPCSociable Accept>
+	Msg104_2 <Perhaps. Um, I have something to tell you... While cleaning out Dad's study I found something. I think we may have family in \ELEMENT 3 . Maybe you can find out for sure?>
+	CMsg104_2 <ifNPCShy Accept>
+	Msg104_3 <Not anytime soon, I hope! Oh, I had something to tell you about our parents... While I was cleaning the attic I found a portfolio... something about an investment in \ELEMENT 3 . Maybe you can find out what that's about?>
+	CMsg104_3 <ifNPCCheerful Accept>
+	Msg104_4 <Everything that is born will some day die... we are all just visitors to this place. While cleaning the attic I found an old dataslate. Did you know our parents had property in \ELEMENT 3 ? I don't know what but maybe you can find out.>
+	CMsg104_4 <ifNPCMelancholy Accept>
+
+	Prompt101 <I miss them too.>
+	Prompt101_1 <I also miss them.>
+	Prompt102 <They've gone to a better place.>
+	Prompt102_1 <Don't worry, they've gone to a better place.>
+	Prompt103 <Someday we'll join them.>
+	Prompt103_1 <We'll be joining them someday.>
+
+	GoEndPlot <XRMystery NAV_XRMUnknown S= 101 1 S+ 102 1 S= 105 1 N= 3 E3 History 201 AdvancePlot 0>
+
+	Msg201 <You gave your sister \ELEMENT 2 $ \VAL V3 for tuition and living expenses.>
+
+end
+inv
+	NPC Citizen
+	job <Sister>
+	chardesc Young Easygoing Female Heroic
+	place <1 Pass Ally>
+	sdl_sprite <cha_f_student.png>
+	SDL_COLORS <49 91 161 252 212 195 200 125 90>
+
+end

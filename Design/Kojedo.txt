@@ -1,0 +1,79 @@
+Arachnoid 3
+Name <Kojedo>
+Desig <YD-7>
+SDL_Sprite <ara_kojedo.png>
+desc <The Federation Defense Force's main line gun carrier.>
+
+Mod Head
+	Armor 2
+	Mass -2
+	sub
+		CPit
+		Armor 2
+		Mass -2
+
+		Sensor 6
+	end
+
+Mod Body
+	Armor 2
+	Mass -2
+	sub
+		Gyro 2
+
+		STC AC-2
+
+		STC SWML-20
+
+		ECM 2
+	end
+
+Mod Turret
+	Size 2
+	Armor 2
+	Mass -2
+	sub
+		Sensor 1
+
+		Mount
+		inv
+			STC GR-12
+		end
+	end
+
+Mod Leg
+	Name <Right Leg 1>
+	Size 3
+	Armor 2
+	Mass -4
+	sub
+		Mount
+	end
+
+Mod Leg
+	Name <Left Leg 1>
+	Size 3
+	Armor 2
+	Mass -4
+	sub
+		Mount
+	end
+
+Mod Leg
+	Name <Right Leg 2>
+	Size 3
+	Armor 2
+	Mass -4
+	sub
+		Mount
+	end
+
+Mod Leg
+	Name <Left Leg 2>
+	Size 3
+	Armor 2
+	Mass -4
+	sub
+		Mount
+	end
+end

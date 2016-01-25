@@ -1,0 +1,804 @@
+=================================
+***   ARENASCRIPT REFERENCE   ***
+=================================
+
+0.NOTES
+
+	This is your guide to the Adventure gear, and how things
+	work internally in the GearHead RPG campaign. There are three
+	datatypes which get used for everything in GearHead- gears,
+	Numerical Attributes (abreviated NAtts) and String Attributes
+	(abreviated SAtts). You may want to browse through gears.pp
+	just to familiarize yourself with these data types before
+	going on.
+
+	Commands which are marked as INTERACTION COMMANDs are meant to be
+	used in Persona gears only; they will probably cause strange
+	results if invoked from a Scene or a Plot.
+
+	Commands which are marked as RPG MODE COMMANDs generally assume
+	the existance of a single PC on team one. They may work in
+	tactical mode, but may be unpredictable if there's more than one
+	player-controlled character.
+
+	This document was written primarily for my own reference. If it
+	is of use to anyone else, that's just super.
+
+
+1.HOW THINGS WORK
+
+	Certain game events place triggers in a list. At the end of
+	each game second, if there are any triggers pending, these are
+	checked against the scene gear, the plots, and the factions to
+	see if there are any events waiting for the triggers placed. If
+	an event is found it is then invoked.
+
+	This might make more sense if you take a look at how the adventure
+	is put together. This is an overview of the adventure's structure:
+
+*	Adventure Gear
+*		Sub
+*			Scene Gears
+*				Sub
+*					Map Features
+*						Sub
+*							MetaTerrain
+*						End
+*					Teams
+*					Personas
+*				Inv
+*					NPCs
+*					Items
+*					Props
+*				End
+*		Inv
+*			Plot Gears (Active)
+*				Sub
+*					Meta-Personas
+*					Plot Gears (Inactive)
+*				Inv
+*					NPCs to be placed during plot
+*					Items to be placed during plot
+*				end
+*			Dynamic Scene Gears
+*				{ Note that dynamic scenes may be defined }
+*				{ exactly as regular scene gears, but they get }
+*				{ deleted after the player exits them. }
+*			Global NPCs
+*				{ These NPCs can potentially appear in }
+*				{ multiple scenes, as defined by their }
+*				{ Locations SAtt. Also, if they are either }
+*				{ allies or enemies of the PC, they can }
+*				{ possibly appear in Dynamic encounters. }
+*			Faction Gears
+*				inv
+*					Plot Gears (Active)
+*					Story Gears (Active)
+*						inv
+*							Plot Gears (Active)
+*						end
+*				end
+*			Story Gears
+*				inv
+*					Plot Gears (Active)
+*				end
+*		end
+
+	When a trigger is set, at the end of the game second, that
+	trigger is passed to the scene gear, to all active plots,
+	to all active stories, and to all active factions. It is
+	therefore quite possible that the same trigger could invoke
+	several different events from several different sources.
+	Most triggers, though, will probably pass without triggering
+	anything.
+
+	The trigger is passed to the scene gear last. So, if there are
+	any triggered events in the plots/factions/stories, these will
+	be executed first.
+
+	Script events are stored as string attributes in the gears they
+	are attached to. The trigger for a given event is the string
+	attribute's label.
+
+
+1.TRIGGERS
+
+	{ Automatically activate interaction with NPC. }
+	!TALK [CID]
+	This isn't really a trigger- it's one of the new commands for
+	the HandleTriggers procedure.
+	When this trigger is encountered an interaction with the
+	requested NPC is automatically started, if possible.
+
+	{ FROZEN EVENT }
+	FRZ[label]
+	Similar to the GOTO trigger, this trigger may be used to
+	indicate an event which is stored for later use by the COMPOSE
+	command.
+
+	{ GET ITEM }
+	GET[ID Number]
+	This trigger is set when an item which has a narrative ID is
+	picked up by the player.
+
+	{ INTERNAL JUMP }
+	.[label]
+	GO[label]
+	This trigger is used to create a line of script which may not
+	be directly triggered by game events, but which may be called
+	by an ELSE or a GOTO command.
+
+	{ INTERACTION - GREETINGS }
+	GREETING
+	This line is executed when the conversation starts.
+
+	{ NUMBER OF UNITS CHANGED }
+	NU[team]
+	This trigger is placed whenever something happens to decrease
+	the number of master gears in play on a team.
+
+	{ INTERACTION - MENU EVENTS }
+	RESULT[number]
+	This event is called when a specific item is chosen from the
+	interaction menu.
+
+	{ START OF GAME }
+	START
+	This trigger is automatically generated at the start of each
+	call to PlayScene.
+
+	{ TAKE DOWN }
+	TD[uid]
+	This trigger is placed when a gear posessing a Unique ID has
+	been destroyed. For mecha it is placed when the unit becomes
+	nonoperational, so for example it will be placed if the pilot
+	is killed or ejects even if the mecha itself is still working.
+
+	{ TEAM MOVEMENT }
+	TM[team]
+	This trigger is placed whenever a gear belonging to a particular
+	team changes map squares. Note that if there's more than one mek
+	in this unit, this trigger could be placed several times in rapid
+	succession.
+
+	{ NPC ELIMINATED a.k.a. unique takedown }
+	UTD[cid]
+	This trigger is placed when a gear posessing a Character ID has
+	been destroyed.
+
+
+
+2.EVENT COMMANDS
+
+	ADDCHAT [number]
+	%%% INTERACTION COMMAND %%%
+	This procedure will add a new entry to the Interact menu.
+	The text for the new entry must be stored as Prompt[number],
+	and the event that will be performed when this entry is
+	selected is stored as Result[number].
+
+	ADDREACT [value]
+	%%% INTERACTION COMMAND %%%
+	This procedure will add a positive or negative value to the NPC's
+	reaction score.
+
+	ADVANCEPLOT [subplot number]
+	This procedure will advance the currently active plot to the listed
+	subplot. If the subplot cannot be found, the plot will be removed.
+	SubPlots are located in the subcomponents of the current plot; see
+	therules.txt for an overview of how an adventure is constructed.
+	Each SubPlot is given an ID number when created by the Plot command.
+	All sibling subplots should have different ID numbers, but otherwise
+	they need not be unique.
+
+	ATTACK [Team1] [Team2]
+	This command will cause Team1 to immediately attack Team2.
+
+	CASHPRIZE [value]
+	%%% RPG MODE COMMAND %%%
+	This procedure will give the PC some money.
+
+	COMPOSE [trigger label] [parameter] [cmd line identifier]
+	This procedure may be used to add a new event to the list.
+	The trigger for the new event is TRIGGER plus the numeric
+	parameter PARAMETER. IDENTIFIER is the trigger of the line
+	which is to be used as the event; typically, this will start
+	with the "FRZ" tag.
+
+	DELETECHAR [Character ID]
+	This procedure will remove a character from the campaign. The ID
+	number provided is the CID set by SetPersona. See MDLref.txt.
+
+	DELETEFACTION [Faction ID]
+	This procedure will set a faction to inactive status. All
+	characters belonging to this faction have their FacID cleared
+	and their Renowned reputation reduced by 30. All other gears
+	belonging to this faction have their FacID cleared.
+
+	DELETEKEYITEM [Narrative ID]
+	This procedure will remove a key item from the campaign. The ID number
+	provided is the Narrative ID set by SetKeyItem. See MDLref.txt.
+
+	DYNAMIC [Scale] [Point Value] [NU1 label] [NU2 label]
+	This command creates a dynamic encounter. It's like a way to access
+	the arena "Enter Combat" control from RPG mode. SCALE is the map
+	scale for the encounter; if you're planning a giant robot combat,
+	choose 2. (NOTE: At the moment Scale 0 encounters can't be generated)
+	Point Value is the number of challenge points that will be used to
+	select the enemy mecha. It will be stored as a Numeric Attribute,
+	Script Value 0 in the dynamic scene.
+	NU1 and NU2 point to frozen script lines (see FRZ, COMPOSE) to be
+	inserted in the dynamic scene with triggers NU1 and NU2 (see NU).
+	These script lines generally control the exit conditions for the
+	dynamic scene.
+	The scene ID number for the encounter created will be the same
+	as the ID number of the scene from which DYNAMIC was called. Use
+	the RETURN command to return to the previous scene.
+
+	E=
+	This command sets a value for one of the ELEMENT stats of the
+	currently being used plot. Note that this can be a very
+	dangerous thing to do!!! You should only modify the value of
+	stats that don't have associated game items.
+
+	ENCOUNTER [enemy%] [ally%] [description label]
+	This command seeks Global NPCs to add to the current dynamic
+	or staged encounter. Enemies are added to Team 2, allies are
+	added to Team -1.
+	Note that the actual occurence of enemies/allies will probably
+	be less than the requested percentage, since the PC might not
+	have enough appropriate contacts.
+	The description string (indicated by the provided label) should
+	contain character description terms (see CHARACTER SEARCH 
+	below) and may also contain instructions for the hook to be
+	generated. Hook instructions are preceded by a '+'.
+	HOOK ITEMS: +ECRA (enemy can run away), +PCRA (player can run away)
+
+	ENDCHAT
+	%%% INTERACTION COMMAND %%%
+	Ends a conversation by clearing the interaction menu.
+
+	EXIT [code]
+	This command will exit the current gameboard or scenario,
+	returning [code] to the calling procedure.
+
+	FORCECHAT [CID]
+	This command will start a conversation between the PC and
+	the specified NPC.
+
+	G= [idnum] [value]
+	This command may be used to assign the value of global
+	variable IDNUM.
+
+	G+ [idnum] [value]
+	This command may be used to add a quantity to the current value
+	of global variable IDNUM.
+
+	GOTO [label]
+	This command will search for script line LABEL, then invoke
+	it.
+
+	IF= [value1] [value2] <ELSE [label]>
+	If value1 = value2, continue on with this line. If not,
+	jump to LABEL. The LABEL must be formatted as the trigger of
+	the line to use next.
+
+	IFFACTION [FID] <else [label]>
+	If the requested faction is active, continue on with this line.
+	Otherwise branch to the label.
+
+	IFKEYITEM [NID] <ELSE [label]>
+	If any of the PC gears currently on the map are in posession of an
+	item with the specified Narrative ID, continue on with this line.
+	Otherwise branch to the label.
+
+	IFM [mekid] <ELSE [label]>
+	If the specified mecha is functional and on the map, continue
+	with this line. Otherwise, goto label.
+
+	IFPERSONA [CID] <ELSE [label]>
+	If the specified persona can be found and is alive, continue with
+	this line. Otherwise, goto label.
+
+	IFYESNO [desc msg] ["yes" msg] ["no" msg] <ELSE [label]>
+	This procedure displays a menu, and asks the user to make a choice.
+	If the "yes" choice is chosen that's a success, otherwise it's a
+	failure. The three parameters refer to MSG strings- see PRINT and
+	SAY for more info.
+	Note that calling this procedure during a conversation will mess
+	up the interaction display. Create conversation menus using the
+	NewChat, AddChat, and EndChat commands.
+
+	L= [idnum] [value]
+	This command may be used to assign the value of local
+	variable IDNUM.
+
+	L+ [idnum] [value]
+	This command may be used to add a quantity to the current value
+	of local variable IDNUM.
+
+	MDYNAMIC [Scale] [Point Value] [MDesc Label] [NU1 label] [NU2 label]
+	Works exactly like the DYNAMIC command, but fills the resultant
+	encounter with monsters instead of regular enemies. PV is the
+	sum of the monster size ratings. MDesc points to a script line
+	which holds the monster descriptions- see the TYPE SAtt below
+	for a description of possible monster descriptors.
+
+	MECHAPRIZE [script line label]
+	%%% RPG MODE COMMAND %%%
+	Team one will be given a shiny new mecha. Yay! The label provided
+	should indicate a line which holds the filename of the mecha to load.
+	If the specified file has more than one mecha variant in it, one of
+	the variants will be chosen at random.
+	See the test scene, Hogye Mines L5 for an example of this command.
+
+	MORETEXT [script line label]
+	This command will attempt to load the requested file (the filename
+	is located in the script line pointed to by the parameter) from
+	the Series/ directory, then display the file in the text browser.
+
+	NEWCHAT
+	%%% INTERACTION COMMAND %%%
+	This command resets the conversation menu with the standard
+	options.
+
+	P= [idnum] [value]
+	This command may be used to assign the value of plot
+	variable IDNUM. Plot variables are those that are located
+	inside of PLOT gears.
+
+	P+ [idnum] [value]
+	This command may be used to add a quantity to the current value
+	of plot variable IDNUM. See notes above.
+
+	PCENEMY [cid]
+	The requested NPC will become an enemy of the player character.
+
+	PRINT [idnum]
+	This command will print a message in the dialog area.
+
+	REPUTATION [rep num] [value]
+	This command affects the reputation of the PC.
+	The reputation type index numbers are:
+		1:	Heroic (+) / Villainous (-)
+		2:	Lawful (+) / Chaotic (-)
+		3:	Sociable (+) / Shy (-)
+		4:	Easygoing (+) / Passionate (-)
+		5:	Cheerful (+) / Melancholy (-)
+		6:	Renowned (+) / Wangtta (-)
+		7:	Pragmatic (+) / Spiritual (-)
+	Use a positive value to improve the (+) reputation, or a negative
+	value to improve the (-) reputation.
+
+	RETREAT [team ID]
+	When this command is invoked, all the functioning masters
+	belonging to the listed team are removed from the map. A
+	Number Of Units trigger is then set.
+
+	RETURN
+	This functions like EXIT, but the return code is equal to the
+	ID number of the current scene.
+
+	RUNAWAY [CID]
+	When this command is invoked, the character with the requested
+	CID is sought on the game board, then removed from the map.
+	A NU trigger is then set.
+
+	SAVEPOS
+	%%% RPG MODE COMMAND %%%
+	This command will record the current location of the PC in the
+	scene gear. If there's more than one master on team one at the
+	moment, it'll save the position of one of them. The next time this
+	scene is entered, the first team one master deployed on the map
+	will appear at the saved coordinates.
+
+	SAY [idnum]
+	%%% INTERACTION COMMAND %%%
+	This command will print a message in the interaction message
+	area.
+
+	SAYANYTHING
+	%%% INTERACTION COMMAND %%%
+	This command will print a random, though potentially useful,
+	message in the interaction message area.
+
+	SCHOOL [skill list identifier]
+	%%% INTERACTION COMMAND %%%
+	This command lets the NPC teach the PC some things about skills.
+	It passes the provided line on to the OpenSchool procedure, or
+	an empty line if the requested one can't be found. The line should
+	contain a list of the skill indicies that the NPC can teach
+	(separated by spaces, as usual). See doc/character.txt for a list
+	of the indicies for each skill.
+
+	SEEKTERR [terrain type]
+	%%% RPG MODE COMMAND %%%
+	This command will assign a value to SCRIPT_Terrain_To_Seek.
+	When the player moves to a new level, his or her starting position
+	will try to match the terrain specified.
+
+	SETPLAYERFACTION [faction ID]
+	%%% RPG MODE COMMAND %%%
+	This command will set the player's FACTION value, both in the
+	PC character record and also in the root ADVENTURE record.
+
+	SETSCENEFACTION [scene ID] [faction ID]
+	This command will change the Faction ID of a given scene to the
+	provided value. It will perform the following additional operations
+	upon the affected scene: 1) Move all members of other factions
+	to different scenes; 2) Insert in scene three random pilots
+	belonging to the new faction.
+
+	SHOP [wares identifier]
+	%%% INTERACTION COMMAND %%%
+	This command passes the provided line on to the OpenShop
+	procedure. If the line cannot be found, this command passes
+	a blank string instead.
+	The Wares line should contain a list of gear "G"eneral
+	descriptors which will be used to construct the list of
+	items for sale.
+	The MECHA command may be added to the wares string. This will
+	add some meks to the shopping list, and allow the player to sell
+	mecha to this shopkeeper.
+	The MEXTRA command may be added to the wares string. This will
+	add some mecha-scale equipment to the wares list.
+
+	STAGED [Label] [Point Value]
+	This procedure works like DYNAMIC. It creates a dynaic encounter
+	and stocks it with mecha. Unlike DYNAMIC, this procedure loads
+	the scene from disk. The filename should be in a line pointed to
+	by LABEL; it may contain wildcards.
+
+	STORYLINE [script line label] <ELSE [label]>
+	This command forcibly inserts a plot script into an adventure.
+	If for some reason the plot cannot be inserted- either because
+	the requested file is not found or because not all of the
+	plot elements can be initialized- the ELSE clause is executed.
+
+	TIME [delay]
+	This causes the game clock to advance by the specified amount.
+
+	TORD [team] [order <parameters>]
+	This command allows you to issue orders to an entire team at
+	once. The parameter ORDER is a label which describes the order
+	to be issued; some orders require additional parameters.
+		ASS:	Assassinate [target ID]
+		GO:	Goto Spot [X] [Y]
+		SD:	SeekAndDestroy
+		PASS:	Passive
+	The default actions of this procedure are as follows: If the
+	order has one parameter, it's assumed to be a mek UID and stored
+	in ATarget unless otherwise controlled. If it has two parameters,
+	they are assumed to be map coordinates and are stored in GX,GY
+	unless otherwise controlled. If the parameters are to be treated
+	otherwise a special case must be added to 'arenascript.pp'.
+
+	TREPUTATION [team number] [rep num] [value]
+	This functions exactly like the REPUTATION command, but it
+	affects a team other than the player team.
+
+	V= [idnum] [value]
+	This command may be used to assign the value of variable IDNUM.
+
+	V+ [idnum] [value]
+	This command may be used to add a quantity to the current value
+	of variable IDNUM.
+
+	XPV [experience award]
+	%%% RPG MODE COMMAND %%%
+	Gives a number of free experience points to the PC.
+
+3.MISCELLANEOUS
+
+	?M[team number]
+	?P[team number]
+	This function will return the Unique ID of a random (M)echa
+	or (P)ilot from the specified team. If no active members of
+	the team are found, this function returns 0.
+
+	@[gear ID]
+	This function will return the ID number of the root gear for
+	the gear pointed to by the ID.
+
+	COMTIME
+	This variable returns the current combat time, as stored in the
+	game board.
+
+	D[Die Size]
+	This returns a random number between 1 and the value provided. The
+	die size must be a positive integer.
+
+	E[idnum]
+	This returns the ID value from the specified plot element.
+
+	EScene [idnum]
+	This returns the scene ID number where a given plot element is
+	located.
+
+	FacAct [idnum]
+	Returns the action code for the given faction.
+	0=AtPeace, 1=AtWar
+
+	FacMem [idnum]
+	This returns the number of NPCs belonging to this faction.
+
+	FacScene [idnum]
+	This returns the number of scenes controlled by the listed
+	faction.
+
+	G[idnum]
+	This allows a "global" variable to be used instead of a constant
+	value. Global variables are those which are stored in the root
+	adventure gear.
+
+	HOSTILEFACTIONS
+	This function returns the number of hostile factions currently
+	active in the adventure world. A faction is listed as hostile if
+	it has the MILITARY type, and also if it has any active, MILITARY
+	enemies.
+
+	L[idnum]
+	This allows a "local" variable to be used instead of a constant
+	value. "Local" variables are stored in the GameBoard/Scenario
+	gear; if the event source is the scenario itself, using L[idnum]
+	is equivalent to using V[idnum].
+
+	LOOKER[X]%[Y]
+	This SAtt can be included in a scene to give a map tile a
+	special description when viewed.
+
+	MSG[idnum] <[Text Message Here.]>
+	Game messages are stored as string attributes in the same place
+	as the events.
+
+	NPCREP [CID] [idnum]
+	This expression returns the value of one of the requested
+	NPC's reputations.
+
+	P[idnum]
+	This expression allows the value of variable [idnum] to be
+	used in a procedure, rather than a constant. Variables accessed
+	in this way are stored in the currently active PLOT gear.
+
+	PCFAC
+	This function returns the ID number of the PC's faction. If the
+	PC does not belong to any faction, it will return 0.
+
+	PCMEKS
+	This expression returns the number of mecha on team 1,
+	whether they are currently on the map or off of it. Useful for
+	deciding whether or not the PC can take part in mecha missions,
+	or for deciding whether or not a generous NPC will give the PC
+	a new mecha...
+
+	PCREP [idnum]
+	%%% INTERACTION COMMAND %%%
+	This expression returns the value of one of the PC's reputations.
+
+	PCSCALE
+	%%% RPG MODE COMMAND %%%
+	This function returns the scale of the PC's root gear. Generally
+	it will be 0 if the PC is on foot, or greater if the PC is in a
+	mecha.
+
+	PROMPT[idnum] <[Text Message Here.]>
+	%%% INTERACTION COMMAND %%%
+	The text for interaction menu items is stored here.
+
+	REACT
+	%%% INTERACTION COMMAND %%%
+	This variable returns the value of I_Reaction.
+
+	REWARD [threat value] [percent]
+	This command returns the standard reward value for a combat
+	mission of the listed threat value. Percent may be used to
+	alter the reward gained based upon such factors as whether or
+	not the player got salvage, etc.
+
+	SCENEFACTION [scene ID]
+	This function returns the faction for the requested scene.
+	If the scene cannot be found, or has no faction assigned,
+	this function returns zero.
+
+	SCENEID
+	This variable returns GB^.Scene^.S, which should be the
+	unique ID for this particular location.
+
+	SKROLL [Skill Number]
+	%%% RPG MODE COMMAND %%%
+	This function returns the result of a player character skill roll.
+
+	T[team number]
+	This variable returns the number of operational masters on the
+	provided team.
+
+	THREAT [Reputation] [Percent]
+	This function returns a threat value appropriate for a character
+	with the given reputation. Normally scenarios will choose a threat
+	value of Rep + d30 or so, allowing for some variety. The percent
+	scales the value before it is returned, so that an easy or difficult
+	encounter can be generated for the threat value provided.
+
+	V[idnum]
+	This expression allows the value of variable [idnum] to be
+	used in a procedure, rather than a constant. Variables accessed
+	in this way are stored in whatever the current Source gear is.
+
+4.MESSAGE FORMATTING COMMANDS
+
+	\ELEMENT [idnum]
+	This formatting command inserts the name of the plot element referred
+	to. If called from outside of a plot, this could print garbage.
+
+	\MEK [idnum]
+	This formatting command will be replaced by the name of the
+	specified mecha or character.
+
+	\PC
+	Name of the PC.
+
+	\PERSONA [idnum]
+	This formatting command will be replaced by the name of the
+	specified persona.
+
+	\PILOT [idnum]
+	This formatting command will be replaced by the name of the
+	specified mecha's pilot.
+
+	\SCENE [idnum]
+	This formatting command will be replaced by the name of the
+	specified location.
+
+	\VAL [value]
+	This formatting command will be replaced by the value
+	indicated.
+
+5.OTHER STRING ATTRIBUTES OF NOTE
+
+	ELEMENT1 ... ELEMENT8
+	When defining a PLOT gear, up to 8 elements may be associated with it.
+	The first word in the element description should refer to what
+	kind of element this is- see below for the choices available.
+	The other words in the element description are traits that must
+	belong to the gear which is selected when the plot is invoked.
+(
+	CHARACTER: See Character Search below for information.
+
+	SCENE: Dungeon, Town, Scale[n]
+
+	ITEM: Currently items cannot be sought, but may be Prefab.
+
+	FACTION: Military, Corporate, ATWar, AtPeace
+
+	GRAB: [n]  - Grabs element from parent story
+
+	PREFAB: Prefabricated Element. The element is not sought from the
+	adventure, but is instead taken from the INV components of the plot.
+	The first PREFAB element will draw the first item from INV, the next
+	the second item, and so on.
+)
+
+	EVENT
+	Placed in a GATE gear. This SATT overrides the default script
+	set by the RMG when this gate is entered. See "Hogye Mines L5"
+	for an example of this SATT in use.
+
+	FITS
+	Placed in an EXARMOR gear. This SAtt describes what sort of
+	masters can wear the armor. Characters get the same descriptors
+	as listed above under ELEMENT. Mecha get only their form name.
+
+	HOME
+	This SAtt contains the name of one of the map features. If a character
+	has this string attribute, they will try to be deployed somewhere within
+	the requested map feature, if it can be found.
+
+	LOCATIONS
+	When placed in a NPC, this SATT indicates that the NPC is global.
+	It contains a list of all the scenes which the NPC can move to.
+
+	PLACE
+	This string determines where a PREFAB element will be placed.
+	The first word in a PLACE string must be the number of the
+	previous element with which to associate this one.
+	The remaining words may contain instructions for the placement
+	procedure; in the case of a character, this will be the TEAMDATA
+	information. See that SATT description below.
+	This string attribute is placed in the root gear of the
+	prefab element.
+
+	RUMOR <Rumor Text>
+	This SAtt can be placed in a number of different gears. It
+	provides a rumor which may come up while the player is chatting
+	with an NPC.
+	PLOT RUMORS: ![n] is replaced with the name of the listed
+	element.
+
+	TEAMDATA <Team Description>
+	This string attribute should belong to a NPC. It provides 
+	information about what sort of team the NPC ought to be a
+	member of.
+	COMMANDS: enemy, ally, wmon, Command names (see TORD cmd)
+
+	TYPE <Monster descriptions>
+	When this string element is assigned to a Team that has its
+	random encounter value set, it determines what kind of monsters
+	will be placed when random monsters are generated.
+	When this string element is assigned to a monster, it determines
+	if that critter will be selected by any particular random
+	encounter generator, and also may determine the monster's
+	weaknesses against slaying-weapons and the like.
+	When this string is associated with a weapon, it stores the
+	attack attributes.
+	When this string attribute is associated with a faction, scene,
+	or just about anything else, it is used to pick a random thing
+	by plots and stories.
+
+6.CHARACTER SEARCH
+
+	This was initially filed under ELEMENT above, but it has
+	become a more general utility so I've moved it here.
+
+	CHARACTER: Sex:M, Sex:F, Young, Old, Heroic, Villainous, Lawful,
+	Chaotic, Sociable, Shy, Easygoing, Passionate, Cheerful, Melancholy,
+	Reflexes, Body, Speed, Perception, Craft, Ego, Knowledge, Charm,
+	Job Description (see ANPCdefault.txt),
+	ArchEnemy, ArchAlly, Family, Lover, HasMecha, YesPlot, NoPlot
+
+	Descriptions starting with ! are relative elements.
+	These don't describe intrinsic properties of the NPC itself,
+	but instead relations between the NPC and other things.
+
+	!C [plot element index]
+	Comrade command. This element must belong to the same faction
+	as the requested element.
+
+	!E [plot element index]
+	This element must belong to a faction which is the enemy of
+	the faction to which the requested element belongs. Clear
+	as mud.
+
+	!F [plot element index]
+	Far, must be in different scene from listed element. This
+	is only meaningful if the character search is happening from
+	a plot.
+
+	!G
+	Global, allows possibility to select global NPCs.
+
+	!LanceMate (exclusive tag; lancemates won't be selected without it)
+	Allows possibility to select lancemates. If a lancemate is requested,
+	then only lancemates may be chosen.
+
+	!M [Faction ID]
+	The element must belong to the requested faction. Useful for
+	making sure that a selected element has no faction affiliation.
+
+	!N [plot element index]
+	Near, must be in same scene as listed element. This
+	is only meaningful if the character search is happening from
+	a plot.
+
+	!X [plot element index]
+	eXcluding, must not be an ally of the faction of the listed
+	element. This is only meaningful if the character search is
+	happening from a plot.
+
+
+7.HOOK STRUCTURE
+
+	greeting <normal greeting, Say 1>
+
+	V999  = Intimidation roll target
+	V1000 = Experience Award for successful intimidation
+
+	prompt1 <Start the fight, Say 2>
+	prompt2 <PCRA, Say 3, Retreat 1>
+	prompt3 <ECRA, Say 4/Print 5 if retreat, Say 2 if fight>
+
+	Msg1 <greeting message>
+	Msg2 <start fighting message>
+	Msg3 <player will flee battle message>
+	Msg4 <enemy will flee battle message>
+	Msg5 <enemy will flee battle description>
+

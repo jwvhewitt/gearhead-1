@@ -1,0 +1,149 @@
+Gerwalk 6
+Name <Harpy>
+Desig <HEL-16>
+SDL_Sprite <ger_harpy.png>
+Desc <This is the Solar Navy's space operations mecha.>
+
+Mod Head
+	Size 5
+	Armor 6
+	Mass -5
+	sub
+		Sensor 8
+
+		BeamGun 3
+		Name <Pulse Laser>
+		Range 6
+		Type <INTERCEPT>
+		Acc 1
+		Speed 4
+		Mass -2
+	end
+	inv
+		HeadArmor 5
+		Name <Helmet>
+		Mass -8
+	end
+
+Mod Body
+	Armor 6
+	Mass -5
+	sub
+		CPit
+		Armor 2
+		Mass -1
+
+		Gyro 3
+		Armor 2
+		Mass -1
+
+		Engine 6
+		Armor 2
+		Mass -1
+
+		Sensor 1
+
+		TarComp 1
+
+		ECM 7
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 5
+		Mass -8
+		sub
+			ArcJet 5
+		end
+	end
+
+Mod Storage
+	Name <Right Pod>
+	Armor 6
+	Size 5
+	Mass -5
+	sub
+		ArcJet 9
+
+		Mount
+		Name <Right Weapon Mount>
+		inv
+			MLauncher 15
+			Name <Heavy Missiles>
+			Acc 1
+			Range 10
+			Magazine 6
+			sub
+				Rockets 15
+				Type <BLAST 3 BRUTAL>
+			end
+		end
+	end
+
+Mod Storage
+	Name <Left Pod>
+	Armor 6
+	Size 5
+	Mass -5
+	sub
+		ArcJet 9
+
+		Mount
+		Name <Left Weapon Mount>
+		inv
+			MLauncher 15
+			Name <Heavy Missiles>
+			Acc 1
+			Range 10
+			Magazine 6
+			sub
+				Rockets 15
+				Type <BLAST 3 BRUTAL>
+			end
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Right Hand>
+		inv
+			EMelee 7
+			Name <Scimitar>
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			STC LAS-10
+			Range 8
+			Mass -7
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Left Hand>
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			STC LAS-10
+			Range 8
+			Mass -7
+		end
+	end
+	inv
+		Shield 5
+		DefBonus -1
+	end
+end

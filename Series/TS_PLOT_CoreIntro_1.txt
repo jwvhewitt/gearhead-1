@@ -1,0 +1,312 @@
+Plot 0
+	name <PLOT: SL Core Intro>
+
+	% This plot is meant to provide a standard introduction to
+	% the core storyline- namely, that some faction or another is
+	% planning a takeover of the Federated Territories.
+
+	% The first anyone will hear of this is when a weapons
+	% cache is discovered outside of Snake Lake. The PC may
+	% get to take part in the discovery, if he's quick enough.
+	% Otherwise the story will progress by itself (in about 48
+	% hours) and the existance/implications of the weapon cache
+	% will be featured on the news.
+
+	% There will be two ways for the PC to get involved in this
+	% story: By method one, the PC will speak with a special
+	% investigator at the Guardian's HQ building, and get the
+	% mission there. By method two, the PC will speak with a
+	% bandit in Snake Lake who has heard of the weapons cache
+	% and hopes to capture it himself.
+
+	% Once the mission begins, the PC will have to penetrate an
+	% armored fortress by mecha, then explore a dangerous complex
+	% on foot. When the weapons are discovered, it is realized that
+	% they are Hunter-X biocombatants. It will also be realized that
+	% there are enough present for a major invasion.
+
+	% Who is behind this plot, and why? Well, that will have to
+	% wait until I've done some more work on the endgame et cetera.
+
+	element1 <Scene>
+	stat 1 10
+
+	% E2 will greet the character upon entering Snake Lake for the
+	%  first time, and will give an introduction to the story.
+	element2 <Prefab>
+
+	% E3 is the expert who has been called in to plan the extraction
+	% of the suspected weapons. He may give the mission to the PC.
+	element3 <Prefab>
+
+	% E4 is the bandit who is planning to steal the weapons for himself.
+	% At the beginning, everyone thinks that it's just normal weapon
+	% smugglers that we're dealing with. He may give the mission to
+	% the PC.
+	element4 <Prefab>
+
+	% E5 is Snake Lake Sewer
+	element5 <Scene>
+	Stat 5 32
+
+	% E6 is the data cartridge
+	element6 <Prefab>
+
+	% V1 = Time Limit
+	% V2 = Entered combat;
+	%   if V2=1 then mecha mission; if V2=2 then search mission
+	% V3 = Told about E4's connection to smuggler
+	% V10 = Forced conversation counter
+
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 NPCLevel E3 20 NPCLevel E4 20 Goto GoCheckEncounter>
+	GoCheckTime <if= V2 0 ifG ComTime V1 else GoCheckEncounter AdvancePlot 1>
+	GoCheckEncounter <if= V10 0 if= SceneID 10 ifPersona E2 V= 10 1 Print 1 ForceChat E2>
+	Msg1 <\ELEMENT 2 strikes up a conversation with you.>
+
+	nu1 <ifG V2 0 if= t1 0 if= L10 E3 else GoChaosMission AdvancePlot 2>
+	GoChaosMission <AdvancePlot 3>
+
+
+sub
+	Persona 2
+	greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 AddChat 1 AddChat 2>
+	GoBeenBefore <Say 2>
+	result1 <NewChat Say 3 AddChat 3 AddChat 4 AddChat 5 Memo 8>
+	result2 <NewChat Reputation 3 -d6 Say 4 AddChat 3 AddChat 4 AddChat 5 Memo 8>
+	result3 <NewChat Reputation 6 1 Say 5>
+	result4 <NewChat Reputation 1 1 Say 6>
+	result5 <NewChat Reputation 3 -d10 Reputation 6 1 Say 7>
+	Msg1 <Hey there. You just got into town, right? Did you happen to see anything strange on the way in?>
+	Msg2 <I'm still looking for clues about that weapon smuggling ring. I haven't found anything yet, but neither has \ELEMENT 3 .>
+	Msg3 <Drat. I've been hoping to track down a weapon smuggler that the guardians are looking for. He's very mysterious... no-one even knows his name, or even if he exists! The reward is real enough, though. That's all I care about.>
+	Msg4 <Hm? That's awful suspicious... or just my wishful thinking. I'm on the lookout for a weapon smuggler who's working in the area. We don't even know his name, but there's a big reward for his capture!>
+	Msg5 <Maybe. Are you a hunter? Go talk to \ELEMENT 3 in the Guardian's HQ about that reward.>
+	Msg6 <You can talk with \ELEMENT 3 in the Guardian's HQ if you're interested.>
+	Msg7 <Eh, whatever.>
+	Msg8 <There's a weapon smuggling ring operating in Snake Lake.>
+	Prompt1 <No, not really...>
+	Prompt2 <That's none of your business.>
+	Prompt3 <Any chance of me benefiting from this?>
+	Prompt4 <I'd like to help, if I could.>
+	Prompt5 <That doesn't concern me.>
+
+	Persona 3
+	rumor <!3 has been investigating weapon smugglers.>
+	greeting <NewChat if= P2 2 else GoCheckMekMission ifG L3 0 else GoNoDiscover Say 302 AdvancePlot 4 Return>
+	GoNoDiscover <Say 301>
+	Msg301 <Take a look around, and see what you can find. I'll take a look around myself. Come get me if you see anything incriminating.>
+	Msg302 <I've found out what the smugglers were transporting, and it isn't good. Bioweapons. Banned armaments, and enough of them to build an army. Let's head back to town.>
+
+	GoCheckMekMission <if= P2 1 else GoCheckKey if= T2 0 else GoStillEnemies Say 202 Goto GoStartSecond>
+	GoStillEnemies <Say 201>
+	GoStartSecond <EndChat LoadD .mission2 DynaNPC E3 3 PassVAr 10 E3 P= 2 2>
+	.mission2 <TS_SCENE_CoreIntro_1b.txt>
+	Msg201 <We'll have to get rid of a few guards before we can investigate the base.>
+	Msg202 <That wasn't so hard. The base is that way... Let's get out of our mecha and investigate on foot.>
+
+	GoCheckKey <ifItemOK E6 else GoNothing ifKeyItem E6 else GoNoKey Say 101 AddChat 101 AddChat 102>
+	GoNothing <SayAnything>
+	result101 <NewChat Say 102>
+	result102 <NewChat Say 103 P= 1 1 DeleteKeyItem E6 CashPrize 5000 AddChat 103 AddCHat 104 Reputation 2 1 Reputation 6 1>
+	result103 <NewChat ifG PCMeks 0 else GoR103NoMek Say 107 Goto GoStartMission>
+	GoR103NoMek <ifG PCRep 2 0 else GoR103NoChance MechaPrize .lawmek Say 106 Goto GoStartMission>
+	.lawmek <BuruBuru.txt>
+	GoR103NoChance <Say 104>
+	result104 <NewChat Say 105>
+	GoStartMission <EndChat SavePos Staged .mission1 150000 DynaNPC E3 3 PassVAr 10 E3 P= 2 1>
+	.mission1 <TS_SCENE_CoreIntro_1a.txt>
+	Msg101 <May I help you?>
+	Msg102 <Remember, if you find any information about the smugglers, there's a reward available.>
+	Msg103 <This? Hm... It's a map to the smuggler's drop point. Here's a reward for the information! I could use a pilot to back me up during the investigation; how'd you like to come along? We must leave immediately.>
+	Msg104 <Unfortunately, if you don't have a mecha, you won't be very useful on the assignment. I'll have to go alone.>
+	Msg105 <Understood. Good luck on your journeys.>
+	Msg106 <You'll need a mecha if you want to come along. Here, you've proven yourself resourceful, you can have this one. Let's head out to the coordinates right away, before the smugglers get a chance to move.>
+	Msg107 <Great. We should head out right away, before the smugglers have a chance to move.>
+	Prompt101 <Not really.>
+	Prompt102 <I found this data cartridge...>
+	Prompt103 <That'd be great!>
+	Prompt104 <Sorry, this is all the help I can give.>
+
+	GoNoKey <Say 1 AddChat 1>
+	result1 <NewChat Say 2 AddChat 2 AddChat 3>
+	result2 <NewChat Say 3 AddChat 4>
+	result3 <NewChat Say 4>
+	result4 <NewChat Say 5 P= 3 1 Memo 6>
+	Msg1 <Yes, may I help you?>
+	Msg2 <Uh-huh. You and every other hunter in town... Unfortunately there's no work for you at the moment, since we don't have a suspect to arrest.>
+	Msg3 <The smuggling ring is very secretive. We have one member in custody, but he's just a mule... knows nothing. Used to be a thug for old \ELEMENT 4 a long time ago, but left that gang for greener pastures.>
+	Msg4 <We do have a reward for information. If you discover anything pertaining to the smuggling ring, come back here and I'll reward you for it.>
+	Msg5 <An old ravager from the Dead Zone. Used to be a pretty fierce bandit, but has since reformed.>
+	Msg6 <\ELEMENT 3 wants info about smugglers. \ELEMENT 4 used to be a bandit, but has reformed.>
+	Prompt1 <I'm here to help catch the smugglers.>
+	Prompt2 <Why don't you have a suspect?>
+	Prompt3 <Oh, okay. Goodbye.>
+	Prompt4 <\ELEMENT 4 ?>
+
+
+	Persona 4
+	greeting <NewChat  if= P2 2 else GoCheckMekMission ifG L3 0 else GoNoDiscover Say 302 AdvancePlot 5 Return>
+	GoNoDiscover <Say 301>
+	Msg301 <Take a look around, and see what you can find to steal. I'll take a look around myself. Come get me if you see anything valuable.>
+	Msg302 <There's nothing in the place to steal. I found what they're storing here- bioweapons. That's just bad news. Frigg, I don't know what they're planning, but it must be pretty big to need this kind of equipment... Let's get out of here.>
+
+	GoCheckMekMission <if= P2 1 else GoCheckKey if= T2 0 else GoStillEnemies Say 202 Goto GoStartSecond>
+	GoStillEnemies <Say 201>
+	GoStartSecond <EndChat LoadD .mission2 DynaNPC E4 3 PassVAr 10 E4 P= 2 2>
+	.mission2 <TS_SCENE_CoreIntro_1b.txt>
+	Msg201 <There's a few guards around... had to expect that. We'll need to get rid of them before we can move on.>
+	Msg202 <Great! The guards have been eliminated. The base is right over there... Let's get out and see how much stuff they have that's worth stealing.>
+
+	GoCheckKey <ifItemOK E6 else GoNothing ifKeyItem E6 else GoNoKey Say 101 AddChat 101 AddChat 102>
+	GoNothing <SayAnything>
+	result101 <NewChat Say 102>
+	result102 <NewChat Say 103 P= 1 1 DeleteKeyItem E6 CashPrize 5000 AddChat 103 AddCHat 104 Reputation 2 -d6 Reputation 6 1>
+	result103 <NewChat ifG PCMeks 0 else GoR103NoMek Say 107 Goto GoStartMission>
+	GoR103NoMek <ifG -PCRep 2 0 else GoR103NoChance MechaPrize .badmek Say 106 Goto GoStartMission>
+	.badmek <BuruBuru.txt>
+	GoR103NoChance <Say 104>
+	result104 <NewChat Say 105>
+	GoStartMission <EndChat SavePos Staged .mission1 150000 DynaNPC E4 3 PassVAr 10 E4 P= 2 1>
+	.mission1 <TS_SCENE_CoreIntro_1a.txt>
+	Msg101 <Yes, what do you want?>
+	Msg102 <Chat, eh? I could tell you all about the good old days... But to be perfectly frank, they weren't all that good.>
+	Msg103 <This? Ha ha! It's a map to the smuggler's drop point. Thanks for bringing this to me. Here's a "finder's fee" for your trouble. Say, if you'd like to come along with me for the ride, I could use a wingman. We'll have to move right away.>
+	Msg104 <Well, you'd need a mecha to do that, and I see you haven't got one, so I guess this is gonna be a solo mission for me.>
+	Msg105 <I see. Well, this kind of business might be better enjoyed alone.>
+	Msg106 <Huh, you're high on enthusiasm but low on equipment. Here, you'll need a mecha, and this one should do for a novice like yourself.>
+	Msg107 <We better get moving right away, before the smugglers decide to move... Or, even worse, the guardians beat us to the stash.>
+	Prompt101 <I just stopped by to chat.>
+	Prompt102 <I found this data cartridge...>
+	Prompt103 <I'd like that.>
+	Prompt104 <Sorry, this is all the help I can give.>
+
+	GoNoKey <if= P3 1 else GoNothing Say 1 AddChat 1>
+	GoNothing <SayANything>
+	result1 <NewChat Say 2 AddChat 2>
+	result2 <NewChat Say 3 AddChat 3>
+	result3 <NewChat Say 4 Memo 5>
+	Msg1 <You look like there's something you're after. What can I do for you?>
+	Msg2 <Smuggling ring? I don't know much. I heard Pedro got arrested... I told him not to get involved in that business, nothing but pain and death. At least he's in jail. It could have turned out much worse.>
+	Msg3 <They're holding Pedro, hoping he'll talk, but that idiot don't know nothing. When the cops came he flushed the datapack with his job orders down the toilet. They'll never find it now. I wish I could, though.>
+	Msg4 <To pull one last caper. If I knew where they were holding things, I could rip off those smugglers good and ruin their business. I'd also make myself a bit richer in the process. That's good too.>
+	Msg5 <\ELEMENT 4 wants to rip off the weapon smugglers.>
+	Prompt1 <Tell me about the smuggling ring.>
+	Prompt2 <Know anything else?>
+	Prompt3 <Why?>
+
+	Plot 1
+		% The time has run out; the weapons are discovered by
+		% the authorities.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 259200 News d5>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <Huge weapons cache discovered outside of Snake Lake. An unknown organization may be planning full-scale invasion of FedTer.>
+		Msg2 <Guardians discover large military facility outside of Snake Lake; is someone planning military coup within FedTer?>
+		Msg3 <Stockpile of banned weapons discovered outside of Snake Lake. Federation council begins investigation to find who is behind it.>
+		Msg4 <Arms dump discovered near Snake Lake. Hostile factions may be planning takeover of Federated Territories.>
+		Msg5 <Large cache of illegal weapons discovered near Snake Lake. Unknown faction may be planning takeover of Federated Territories.>
+
+	Plot 2
+		% The PC failed in the lawful mission.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 259200 News d5>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <Huge weapons cache discovered outside of Snake Lake. An unknown organization may be planning full-scale invasion of FedTer.>
+		Msg2 <Guardians discover large military facility outside of Snake Lake; is someone planning military coup within FedTer?>
+		Msg3 <Stockpile of banned weapons discovered outside of Snake Lake. Federation council begins investigation to find who is behind it.>
+		Msg4 <Arms dump discovered near Snake Lake. Hostile factions may be planning takeover of Federated Territories.>
+		Msg5 <Large cache of illegal weapons discovered near Snake Lake. Unknown faction may be planning takeover of Federated Territories.>
+	sub
+		Persona 3
+		greeting <NewChat if= V1 0 else GoBeenBefore Say 1 V= 1 1>
+		GoBeenBefore <SayAnything>
+		Msg1 <Our mission failed, but at least the forensics team managed to recover something. The news isn't good, though, to say the least...>
+	end
+
+	Plot 3
+		% The PC failed in the chaotic mission.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 259200 News d5>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <Huge weapons cache discovered outside of Snake Lake. An unknown organization may be planning full-scale invasion of FedTer.>
+		Msg2 <Guardians discover large military facility outside of Snake Lake; is someone planning military coup within FedTer?>
+		Msg3 <Stockpile of banned weapons discovered outside of Snake Lake. Federation council begins investigation to find who is behind it.>
+		Msg4 <Arms dump discovered near Snake Lake. Hostile factions may be planning takeover of Federated Territories.>
+		Msg5 <Large cache of illegal weapons discovered near Snake Lake. Unknown faction may be planning takeover of Federated Territories.>
+	sub
+		Persona 4
+		greeting <NewChat if= V1 0 else GoBeenBefore Say 1 V= 1 1>
+		GoBeenBefore <SayAnything>
+		Msg1 <We didn't manage to get anything in the raid, but it's just as well. I heard on the news that the Guardians raided that site, and what they found wasn't good...>
+	end
+
+	Plot 4
+		% The PC won the lawful mission.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 259200 News d5 History 101>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <Huge weapons cache discovered outside of Snake Lake. An unknown organization may be planning full-scale invasion of FedTer.>
+		Msg2 <Guardians discover large military facility outside of Snake Lake; is someone planning military coup within FedTer?>
+		Msg3 <Stockpile of banned weapons discovered outside of Snake Lake. Federation council begins investigation to find who is behind it.>
+		Msg4 <Arms dump discovered near Snake Lake. Hostile factions may be planning takeover of Federated Territories.>
+		Msg5 <Large cache of illegal weapons discovered near Snake Lake. Unknown faction may be planning takeover of Federated Territories.>
+		Msg101 <You helped discover an arms cache outside of Snake Lake.>
+	sub
+		Persona 3
+		greeting <NewChat if= V1 0 else GoBeenBefore Say 1 V= 1 1 Reputation 6 1 Reputation 1 1 Reputation 2 1 News 2 PCAlly E3 XPV 200>
+		GoBeenBefore <SayAnything>
+		Msg1 <This is very bad. Someone is clearly planning a military takeover, but who? We don't have enough evidence to go on. Thanks for your help out there. Maybe someday you'll think about joining the guardians yourself.>
+		Msg2 <Heroic pilot \PC aids guardians in discovery of Snake Lake weapons cache.>
+	end
+
+	Plot 5
+		% The PC won the chaotic mission.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 259200 News d5 History 101>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		Msg1 <Huge weapons cache discovered outside of Snake Lake. An unknown organization may be planning full-scale invasion of FedTer.>
+		Msg2 <Guardians discover large military facility outside of Snake Lake; is someone planning military coup within FedTer?>
+		Msg3 <Stockpile of banned weapons discovered outside of Snake Lake. Federation council begins investigation to find who is behind it.>
+		Msg4 <Arms dump discovered near Snake Lake. Hostile factions may be planning takeover of Federated Territories.>
+		Msg5 <Large cache of illegal weapons discovered near Snake Lake. Unknown faction may be planning takeover of Federated Territories.>
+		Msg101 <You helped discover an arms cache outside of Snake Lake.>
+	sub
+		Persona 4
+		greeting <NewChat if= V1 0 else GoBeenBefore Say 1 V= 1 1 Reputation 6 1 Reputation 1 1 Reputation 2 -2 XPV 100 CashPrize 10000 PCAlly E4>
+		GoBeenBefore <SayAnything>
+		Msg1 <Something bad is going down. Those smugglers weren't regular criminals... they had bigger plans. Well, we didn't get any loot, but here's a small reward for your help. Maybe we'll work together again someday.>
+
+	end
+
+
+end
+inv
+	NPC Bounty Hunter
+	home <Entry Grid>
+	chardesc Easygoing Sociable Lawful
+	mecha <Aranos.txt>
+	place <1 pass>
+	EquipChar 5000
+	sdl_colors <150 112 84 255 212 195 199 188 162>
+
+	NPC Mecha Pilot
+	job <Guardian>
+	home <Guardians HQ>
+	chardesc Lawful Heroic Passionate
+	mecha <IceWind.txt>
+	place <1 sd ally>
+	EquipChar 20000
+	skill 37 10
+
+	NPC Mecha Pilot
+	job <bandit>
+	home <Soju Haus>
+	chardesc Chaotic Sociable Heroic Old
+	mecha <Puma.txt>
+	place <1 pass>
+	EquipChar 20000
+	skill 32 10
+
+	Treasure 500
+	name <Data Cartridge>
+	place <5>
+	Clue37 <Print 1>
+	Msg1 <This data cartridge holds a map which appears to lead somewhere outside of Snake Lake.>
+
+end
+

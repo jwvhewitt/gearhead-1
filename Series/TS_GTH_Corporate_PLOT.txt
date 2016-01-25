@@ -1,0 +1,230 @@
+Plot 0
+	name <Corporate Espionage>
+
+	element1 <Character Corporate Chaotic>
+	element2 <Faction !Enemy 1>
+	element3 <Prefab>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%  V4 = Total reward for recovering thing
+	%  V5 = Have recovered item
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Compose GET E3 .get V= 4 Reward Threat PCRep 6 100 3500 SetItemFudge E3 V4>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	.get <if= V5 0 V= 5 1 Reputation 6 1 FacXP+ 13 5>
+
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d80 23 if= V3 0 if= PCFac 13 ifG -1 PCRep 3  V= 3 1 Email 1>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// I have a job which requires the services of one such as yourself.>
+
+sub
+	Persona 1
+
+	rumor <!1 is thoroughly without scruples.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+
+	greeting <NewChat if= P2 1 else GoCheckMission Say 1 AddChat 13 AddChat 14 AddChat 15>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRep 6 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer Say 11  Goto GoAddAcceptOps>
+	GoMakeOffer  <ifG 0 PCRep 2 else GoNoOffer ifG React d25 else GoNoOffer Say 16 Goto GoAddAcceptOps>
+
+	GoAddAcceptOps <AddChat 1 AddChat 2>
+	GoAddComOps <AddChat 3 AddChat 4>
+
+	GoNoOffer <Say 102 AdvancePlot 0>
+	GoDenied <SayAnything AdvancePlot 0>
+
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 Say 21 Memo 103 Goto GoAddComOps>
+
+	% PC refuses the job.
+	result2 <NewChat Say 104 Reputation 4 -d10 AdvancePlot 0>
+
+	% PC will enter combat now.
+	result3 <EndChat Say 26 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 LoadD .scene SeekGate -1 PassVar 1 E3 PassVar 2 V3 PassVar 3 1 PassVar 4 20>
+	.scene <SCENE_CorpTower.txt>
+
+	% PC needs some time to get ready.
+	result4 <NewChat Say 105>
+
+	result13 <NewChat Say 2 CashPrize P4 DeleteKeyItem E3 AdvancePlot 0>
+
+	result14 <NewChat Say 3 AdvancePlot 0 if= P5 1 else GoR14Delete ifG 15 SkRoll 25 PCEnemy E1>
+	GoR14Delete <DeleteKeyItem E3>
+
+	result15 <NewChat Say 4 AddReact -5 FacXP+ 13 2 AdvancePlot 0>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+	Msg1 <So, did you recover the files we need?>
+	Msg1_1 <You've been gone for a while. I know the complex is well guarded, but I had no idea how much so... Did you find the information that we require, or has the mission been a failure?>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <Find anything?>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <It would be great if one of our own teams could get a look inside the \ELEMENT 2 complex. Did you find anything worth mentioning?>
+	CMsg1_3 <ifNPCCheerful Accept>
+	Msg1_4 <Such an extravagant complex that \ELEMENT 2 has built... It must mean something bad. What have you found?>
+	CMsg1_4 <ifNPCMelancholy Accept>
+	Msg1_5 <Back already? I was just taking a nap. So, did you find something?>
+	CMsg1_5 <ifNPCEasygoing Accept>
+	Msg1_6 <We have only one chance to destroy \ELEMENT 2 , and this is it... Did you get something worthwhile?>
+	CMsg1_6 <ifNPCPassionate Accept>
+
+	Msg2 <Excellent. Here is your money.>
+	Msg2_1 <Very good. With this knowledge we'll know exactly what \ELEMENT 2 is doing... and we'll be ready with our own products!>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <You've done well. Now keep this a secret, just between us.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <I knew you'd come through for me. Here's the money you've earned.>
+	CMsg2_3 <ifNPCCheerful Accept>
+	Msg2_4 <Hm, I was afraid at first that you wouldn't recover anything. Here's your pay.>
+	CMsg2_4 <ifNPCMelancholy Accept>
+	Msg2_5 <Good work. Here's the money I offered you for it... I'll let you know the next time I need any covert ops done.>
+	CMsg2_5 <ifNPCEasygoing Accept>
+	Msg2_6 <You did it! This will spell the downfall of \ELEMENT 2 ... here's your pay.>
+	CMsg2_6 <ifNPCPassionate Accept>
+
+	Msg3 <That's a pity... Well, I'm certain that our company can defeat \ELEMENT 2 , none the less...>
+	Msg3_1 <>
+	CMsg3_1 <ifNPCSociable Accept>
+	Msg3_2 <>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <>
+	CMsg3_3 <ifNPCCheerful Accept>
+	Msg3_4 <>
+	CMsg3_4 <ifNPCMelancholy Accept>
+	Msg3_5 <>
+	CMsg3_5 <ifNPCEasygoing Accept>
+	Msg3_6 <>
+	CMsg3_6 <ifNPCPassionate Accept>
+
+	Msg4 <You are a true thief... Well, so long as the information has been denied to \ELEMENT 2 , this has not been a total loss for us.>
+	Msg4_1 <>
+	CMsg4_1 <ifNPCSociable Accept>
+	Msg4_2 <>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_3 <>
+	CMsg4_3 <ifNPCCheerful Accept>
+	Msg4_4 <>
+	CMsg4_4 <ifNPCMelancholy Accept>
+	Msg4_5 <>
+	CMsg4_5 <ifNPCEasygoing Accept>
+	Msg4_6 <>
+	CMsg4_6 <ifNPCPassionate Accept>
+
+	Msg11 <So, you must have received my message... I have a bit of underhanded business that needs looking to, and it would be best if it were done by someone who would not sully the company name.>
+	Msg11_1 <>
+	CMsg11_1 <ifNPCSociable Accept>
+	Msg11_2 <>
+	CMsg11_2 <ifNPCShy Accept>
+	Msg11_3 <>
+	CMsg11_3 <ifNPCCheerful Accept>
+	Msg11_4 <>
+	CMsg11_4 <ifNPCMelancholy Accept>
+	Msg11_5 <>
+	CMsg11_5 <ifNPCEasygoing Accept>
+	Msg11_6 <>
+	CMsg11_6 <ifNPCPassionate Accept>
+
+	Msg16 <I have a business offer for you. As you may know, \ELEMENT 2 is developing a new product. Of course we would like this project to fail. That's where you come in.>
+	Msg16_1 <>
+	CMsg16_1 <ifNPCSociable Accept>
+	Msg16_2 <>
+	CMsg16_2 <ifNPCShy Accept>
+	Msg16_3 <>
+	CMsg16_3 <ifNPCCheerful Accept>
+	Msg16_4 <>
+	CMsg16_4 <ifNPCMelancholy Accept>
+	Msg16_5 <>
+	CMsg16_5 <ifNPCEasygoing Accept>
+	Msg16_6 <>
+	CMsg16_6 <ifNPCPassionate Accept>
+
+	Msg21 <We know the facility where the new product is being developed. Your job will be to sneak in and steal whatever information you can find. I can give you $ \VAL P4 if you return with anything useful.>
+	Msg21_1 <>
+	CMsg21_1 <ifNPCSociable Accept>
+	Msg21_2 <>
+	CMsg21_2 <ifNPCShy Accept>
+	Msg21_3 <>
+	CMsg21_3 <ifNPCCheerful Accept>
+	Msg21_4 <>
+	CMsg21_4 <ifNPCMelancholy Accept>
+	Msg21_5 <>
+	CMsg21_5 <ifNPCEasygoing Accept>
+	Msg21_6 <>
+	CMsg21_6 <ifNPCPassionate Accept>
+
+	Msg26 <Good luck. Return here with the data and I'll pay you for it.>
+	Msg26_1 <>
+	CMsg26_1 <ifNPCSociable Accept>
+	Msg26_2 <>
+	CMsg26_2 <ifNPCShy Accept>
+	Msg26_3 <>
+	CMsg26_3 <ifNPCCheerful Accept>
+	Msg26_4 <>
+	CMsg26_4 <ifNPCMelancholy Accept>
+	Msg26_5 <>
+	CMsg26_5 <ifNPCEasygoing Accept>
+	Msg26_6 <>
+	CMsg26_6 <ifNPCPassionate Accept>
+
+	Msg101 <Are you ready to start the mission yet?>
+	Msg102 <I'm working on some company business... secret company business.>
+
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 asked you to perform industrial espionage against \ELEMENT 2 .>
+	Msg104 <Make sure you don't mention this to anyone else, or I'll know it was you who did it...>
+
+	Msg105 <Do whatever you need to do, then come back here and we'll start.>
+
+	Prompt1 <Tell me what you want me to do.>
+	Prompt1_1 <What kind of a deal do you have in mind?>
+	Prompt1_2 <Give me the specifics.>
+	Prompt2 <Sorry, I don't work for corps.>
+	Prompt2_1 <No way, I don't do company work.>
+	Prompt2_2 <Find another wage slave.>
+	Prompt3 <All ready to go.>
+	Prompt3_1 <I'm ready to start.>
+	Prompt3_2 <Let's get this show moving.>
+	Prompt4 <Give me a minute to prepare.>
+	Prompt4_1 <I need some time to get ready.>
+	Prompt4_2 <Just a sec while I prepare.>
+
+	prompt13 <Yes, here it is. [give cartridge]>
+	CPrompt13 <ifKeyItem E3 Accept>
+	prompt14 <No, I didn't find it.>
+	prompt15 <Yes, and I've decided to keep it.>
+	CPrompt15 <ifKeyItem E3 Accept>
+
+end
+inv
+	Treasure 1
+	name <Data Cartridge>
+
+end

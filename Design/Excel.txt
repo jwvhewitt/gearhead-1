@@ -1,0 +1,72 @@
+Battroid 8
+Name <Excel>
+Desig <EXC-02a>
+SDL_Sprite <btr_excel.png>
+
+Mod Body
+	Armor 8
+	sub
+		CPit
+		Armor 2
+
+		STC LAS-10
+		Range 6
+
+		STC LAS-10
+		Range 6
+
+		Sensor 6
+
+		Sensor 1
+
+		TarComp 5
+
+		Gyro 4
+
+		ECM 1
+	end
+	inv
+		BodyArmor 5
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 7
+	sub
+		STC LAS-10
+		Range 6
+	end
+	inv
+		Shield 3
+		Name <Armor Baffle>
+		DefBonus -2
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 7
+	sub
+		Hand
+
+		BeamGun 1
+		Name <Pulse Laser>
+		Type <INTERCEPT>
+		Range 4
+		Acc 1
+		Speed 6
+		BV 2
+	end
+	inv
+		Shield 3
+		Name <Armor Baffle>
+		DefBonus -2
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 8
+
+Mod Leg
+	Name <Left Leg>
+	Armor 8
+end

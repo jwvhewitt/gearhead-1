@@ -1,0 +1,228 @@
+plot 0
+	name <The Kidnapped Professor>
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the character who will give the PC the combat mission.
+	Element1 <Grab 3>
+	Element2 <Character Guardian !Near 1>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Character Guardian !Far 1 !Far 3>
+
+	% E5 is the professor who's been kidnapped
+	% E6 is the enemy pilot who might or might not talk to the PC.
+	Element5 <Prefab>
+	Element6 <Prefab>
+
+	Element7 <Grab 2>
+
+	% V1 = Initialization Counter
+	% V2 = Combat Counter
+	% V3 = Time limit for search
+	% V4 = Got confession from captured pilot
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 or E4 dies, load a new plot.
+	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete if= V1 0 V= 1 1 Compose EWM E1 .entry>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	.entry <if= P1 1 ifG PCScale 0 Block Alert 1 SavePos dynamic 2 Threat S103 50 .nu1 .nu2 PassVar 1 E1 P= 1 2 History 2>
+	.nu1 <if= T1 0 return>
+	.nu2 <if= T2 0 if= V2 0 V= 2 1 Exit V1 SeekGate 1>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100>
+
+	Msg1 <As you approach \ELEMENT 1 , you encounter a group of mecha bearing \ELEMENT 7 markings!>
+	Msg2 <You were attacked by \ELEMENT 7 on the way to \ELEMENT 1 .>
+
+sub
+	Persona 2
+	rumor <!2 captured one of the !7 pilots who just attacked town.>
+	% V1 = Time limit for confession
+	greeting <NewChat if= P4 1 else GoCheckTime Say 9 Memo 10>
+	GoCheckTime <ifG V1 ComTime else GoCheckCOnfess Say 1>
+	GoCheckCOnfess <if# V1 0 else GoFirstTime Say 2 Memo 10>
+	GoFirstTime <V= 1 ComTime V+ 1 18000 P= 3 ComTime P+ 3 45000 Say 3 AddChat 1 AddChat 2 AddChat 3>
+	result1 <NewChat AddChat 4 AddChat 5 Say 4>
+	result2 <NewChat AddChat 4 AddChat 5 Say 5 Reputation 5 d6>
+	result3 <NewChat AddChat 4 AddChat 5 Reputation 4 -d6 ifG React 25 else GoR3NoKnow Say 6>
+	GoR3NoKnow <Say 7>
+	result4 <EndChat Say 8 ForceChat E6>
+	result5 <NewChat Say 11 AddChat 4 ifG SkRoll 37 10 AddChat 6>
+	result6 <NewChat Say 12 Memo 10>
+	Msg1 <We're still interrogating the pilot from \ELEMENT 7 . Hopefully \OPR E6 will give us some information. It'll probably take a few hours. My only fear is, by that time it might be too late...>
+	Msg2 <The pilot we captured finally spilled! They are taking the kidnapped professor to \SCENE EScene 4 ; \ELEMENT 4 there is leading the investigation.>
+	Msg3 <Our town was just attacked by mecha. They appeared to belong to \ELEMENT 7 , but we can't be sure yet... The worst thing is, while they were here they kidnapped Professor \ELEMENT 5 from the university!>
+	Msg4 <We don't know. They're using some kind of ECM gear... we haven't been able to track them. We did manage to capture one of their pilots who was forced to eject, though, and might be able to get some answers from \SPR E6 .>
+	Msg5 <\ELEMENT 5 is an expert on archeology. Maybe they think \OPR E5 can lead them to a buried treasure. We did manage to capture one of their pilots who was forced to eject, though, so maybe we can get some answers from \SPR E6 .>
+	Msg6 <I know that you and \ELEMENT 7 have been enemies... maybe you could help us on this case. We captured one of their pilots and hope to find out soon where they've taken the professor, and for what purpose.>
+	Msg7 <We don't know what they're plotting yet. We did capture one of their pilots who was forced to eject during the raid, though... maybe \OPR E6 can tell us something.>
+	Msg8 <Alright, you can do that, but we've already tried getting \SPR E6 to talk... I don't know what good it'll do.>
+	Msg9 <Good job with that pilot. \ELEMENT 4 in \SCENE EScene 4 is working on the case now. We better hurry; once they get the information they want out of the professor, they aren't likely to leave any witnesses.>
+	Msg10 <\ELEMENT 4 in \SCENE EScene 4 is investigating the kidnapped professor.>
+	Msg11 <We're still analyzing the data from the encounter site. Here, take a look through these pictures... It'll take hours of analysis to learn anything useful.>
+	Msg12 <Ah, I see what you're getting at... If they followed the \ELEMENT 1 Trench to \SCENE EScene 4 , they'd escape most of the surveillance radar. I'll call \ELEMENT 4 and get \SPR E4 on the case right away!>
+	Prompt1 <Where did they take \SPR E5 ?>
+	Prompt2 <Who is this professor they took?>
+	Prompt3 <They must be plotting something evil...>
+	Prompt4 <I want to speak with this pilot.>
+	Prompt5 <Do you have any other leads?>
+	Prompt6 <Wait, isn't this near the \ELEMENT 1 trench?>
+
+	Persona 6
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+	result1 <NewChat ifG Intimidation 5 else GoNoDice Say 2 AddChat 3 AddChat 4 AddChat 5>
+	GoNoDice <EndChat Say 3 ForceChat E2>
+	result2 <NewChat ifG Conversation 5 else GoNoDice Say 4 AddChat 4 AddChat 6 AddChat 7>
+	result3 <NewChat ifG Conversation 15 else GoR3NoDice Say 5 P= 4 1 ForceChat E2>
+	GoR3NoDice <Say 6 AddChat 6 AddChat 7>
+	result4 <NewChat Say 7 AddChat 8 AddChat 9>
+	result5 <NewChat ifG Intimidation 10 else GoR5NoDice Say 8 P= 4 1 ForceChat E2>
+	GoR5NoDice <EndChat Say 9 ForceChat E2>
+	result6 <NewChat Say 10 AddChat 9>
+	result7 <NewChat ifG Conversation 10 else GoR7Fail Say 13 P= 4 1 ForceChat E2>
+	GoR7Fail <EndChat Say 14 ForceChat E2>
+	result8 <ifG PCRep 2 -d100 else GoR8Success EndChat Say 11 ForceChat E2>
+	GoR8Success <Say 12 P= 4 1 ForceChat E2>
+	result9 <NewChat Say 15 P= 4 1 ForceChat E2>
+	Msg1 <What do you want? I've already told the cops- I don't know anything about no professor, and I'm not talking.>
+	Msg2 <Alright, I'm listening. What do you want?>
+	Msg3 <Then you better think something else. I'm not opening my mouth again until my lawyer gets here.>
+	Msg4 <You, help me? That's a laugh. How in hell are you gonna help me? And what do I need from a loser like you?>
+	Msg5 <They're going to \SCENE EScene 4 if you absolutely must know, but that's all you're getting from me.>
+	Msg6 <I already said that I'm not talking! What are you, stupid or something?>
+	Msg7 <Oh, yeah? What kind of deal?>
+	Msg8 <Alright, I've heard about you, I don't want to make any enemies I can't handle... They're headed for \SCENE EScene 4 . What they're going to do with the geezer I don't know.>
+	Msg9 <You can't threaten me... the guardians would bust your ass if you tried anything. That's it; I'm finished talking.>
+	Msg10 <Er... Well, they can't get to me as long as I'm in jail... and they wouldn't hurt me if I don't talk, right? So I'm not gonna talk.>
+	Msg11 <Yeah, like I believe that! I don't think you've offered anyone a bribe before any time in your life... I'm finished talking. You're just wasting my time.>
+	Msg12 <Yeah, like I believe that! You've got a lot of nerve to try, though... Look, the gang is headed to \SCENE EScene 4 . I don't know what they have planned but it's gonna get ugly real fast.>
+	Msg13 <I didn't really want to get involved with them... and kidnapping that geezer, I didn't like that. Look, they're headed for \SCENE EScene 4 . I'm not such a bad person, y'know?>
+	Msg14 <Easier? How're you supposed to make it easier in jail? Look, just leave me alone...>
+	Msg15 <I guess my best chance of survival is to hope that you can beat them... they've gone to \SCENE EScene 4 . After they get the information they need the orders are to kill the professor. You better hurry... there's only a few hours left.>
+	Prompt1 <Oh, I think you'll talk to me.>
+	Prompt2 <I'm here to help you.>
+	Prompt3 <Where is your gang headed?>
+	Prompt4 <I've got a deal for you.>
+	Prompt5 <Tell me what I want to know, or else.>
+	Prompt6 <\ELEMENT 7 doesn't like failure.>
+	Prompt7 <Tell us everything, and it'll be easier.>
+	Prompt8 <I'll pay you to tell me where they went.>
+	Prompt9 <I can protect you from \ELEMENT 7 .>
+
+	Persona 4
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	%  V5 = Recharge time if mission fails
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	greeting <NewChat if= P3 0 else GoCheckWin SayAnything>
+	GoCheckWin <if= P2 3 else GoCheckLoss  ifG P3 ComTime else GoProfDead Say 102 History 104 History 106 Goto GoBigWin>
+	GoBigWin <Reputation 1 1 MoveChar E5 EScene 4 XRMystery NAV_XRMItem S= 101 1 S+ 102 1 S= 105 -1 N= 3 E3 AdvancePlot 1>
+	GoProfDead <Say 103 S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1 History 105 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission Say 101 S= 101 1 N= 3 E3 AdvancePlot 0>
+	Msg101 <The professor was killed. Now we may never learn what they were up to.>
+	Msg102 <You did it! The gang has been stopped and \ELEMENT 5 rescued. We discovered that they were hoping the professor would lead them to an ancient weapon system... \OPR E5 will get out of the hospital in a while, you should visit later.>
+	Msg103 <The mecha gang was stopped, but they had already killed \ELEMENT 5 . Now we might never learn what they were planning... but at least they'll never get a chance to complete it.>
+	Msg104 <You rescued Professor \ELEMENT 5 from \ELEMENT 7 .>
+	Msg105 <Professor \ELEMENT 5 died before you could rescue \SPR E5 .>
+	Msg106 <You learned \ELEMENT 7 is searching for an ancient weapon.>
+
+	GoCheckMission <if= V1 1 else GoFirstTime Say 4 AddChat 1 AddChat 2 AddChat 3>
+
+	% Unlike most combat missions, the PC is guaranteed to be offered
+	% this one, since it's personal.
+	% Set V1, V3, V4 here.
+	GoFirstTime <V= 1 1 V= 3 Threat S103 100  Say 6 AddChat 4 AddChat 5>
+
+	% Do everything here that has to be done. If some of the ExtraRandom
+	% parameters need to be changed, do that here as well.
+	GoEndMission <S= 101 1 S+ 102 1 N= 3 E3 AdvancePlot 0>
+
+	% Combat being entered
+	result1 <EndChat Say 5 SavePos P= 2 1 V= 5 ComTime V+ 5 86400 Dynamic 2 V3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	% Combat being delayed
+	result2 <NewChat Say 7>
+	% How many points do the enemy have?
+	result3 <NewChat Say 8 AddChat 1 AddChat 2>
+
+	% Result 4 - may add Reputation command or whatnot
+	result4 <NewChat Reputation 4 d8 Say 9 AddChat 1 AddChat 2 AddChat 3>
+
+	% Result 5 - may add Reputation command or whatnot
+	result5 <NewChat Reputation 4 -d8 Say 10 AddChat 1 AddChat 2 AddChat 3>
+
+	% 4 : Player has accepted mission, has returned from repair
+	Msg4 <Are you ready to head out now? We can't waste time... there's no telling what they're doing to the professor even as we speak.>
+
+	% 5 : Combat is starting
+	Msg5 <Good luck. Defeat the raiders, and hopefully we can bring \ELEMENT 5 back safely.>
+
+	% 6 : NPC explains what the PC should do in this mission, and why
+	Msg6 <Some mecha marked like \ELEMENT 7 just rolled in from \ELEMENT 1 . They've holed up out of town, and it appears that they have a hostage... a kidnapped professor by the name of \ELEMENT 5 .>
+
+	% 7 : PC needs some time to get ready
+	Msg7 <You better hurry up. The best guess is they kidnapped the professor because \OPR E5 has some information they need... Once they get it, \OPR E5 will almost certainly be killed.>
+
+	% 8 : How many points? Use "\VAL V3 " for that
+	Msg8 <They have around \VAL V3 tactical threat points worth of mecha.>
+
+	% 9 : Response to Prompt4
+	Msg9 <It's good to have you on our side. We really need a mecha pilot to disable their machines so the SWAT team can head in and rescue the professor.>
+
+	% 10 : Response to Prompt5
+	Msg10 <Woah, cool down... We do need a mecha pilot to disable their defenses so that our regular police can head in and rescue the professor. If you'd like to assist in the operation the job is all yours.>
+
+
+	% 1 - 3 :  Standard combat entry options:
+	%         Start Mission, Delay Mission, Mission Details
+	Prompt1 <I'm ready to do that now.>
+	Prompt2 <Give me a minute to prepare.>
+	Prompt3 <What will I be facing?>
+
+	% 4 - 5 :  PC can have different reactions to Msg6 above
+	Prompt4 <I know... I'm here to help.>
+	Prompt5 <Tell me where the dogs are hiding!>
+
+	Plot 1
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 5
+		greeting <NewChat Say 1 AddCHat 1 PCAlly E5>
+		result1 <NewChat Say 2 S= 105 1 AdvancePlot 0>
+		Msg1 <Hello \PC ; they told me that you were the one who rescued me. Thank you very much... I don't have anything to give you as a reward, other than my gratitude.>
+		Msg2 <They were looking for an ancient weapon from the previous age... They thought I might know where to find it. I didn't tell them anything, of course, but I will tell you this: \ELEMENT 3 is the most likely place.>
+		Prompt1 <Why did they kidnap you?>
+	end
+
+end
+inv
+	NPC Professor
+	chardesc old heroic lawful
+
+	NPC Mecha Pilot
+	CharDesc Chaotic Villainous Wangtta
+
+end

@@ -1,0 +1,67 @@
+Plot 0
+	name <Bandit Action>
+
+	% E1 is the guardian who will offer the mission.
+	Element1 <Grab 1>
+	Element2 <Character Guardian !Near 1>
+
+	% On a cleanup request, just get rid of the plot.
+	% If E1 dies we'll get a cleanup request anyways.
+	start <ifPersona E2 else GoDelete>
+	cleanup <AdvancePlot 0>
+
+	nu1 <if= T1 0 if= V2 1  if= L2 0 else GoPCWon V= 2 2  Reputation 6 -10>
+	GoPCWon <V= 2 3  Reputation 6  1  FacXP+ 3 1>
+
+
+sub
+	Persona 2
+	rumor <!2 is ready to conduct a mission against the Bandit's Den.>
+	greeting <NewChat if= P2 3 else GoCheckLoss CashPrize V4  S+ 2 1 ifG S2 4 else GoSmallWin Say 8 History 9 XPV 200 EndStory>
+	GoSmallWin <S+ 1 d10 S+ 1 d10 Say 7 AddReact d5 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckOffer Say 1 AdvancePlot 0>
+	GoCheckOffer <if= V1 1 else GoFirstTime Say 2 AddChat 1 AddChat 2 AddChat 3>
+	GoFirstTime <V= 1 1 V= 3 Threat S1 150 V= 4 Reward V3 100 ifG PCMeks 0 else GoDenied if= PCFac 3 else GoCheckFriend Say 3 AddChat 4 AddChat 5>
+	GoCheckLaw <ifG PCRep 1 d35 else GoCheckFriend Say 3 AddChat 4 AddChat 5>
+	GoCheckFriend <ifG React 40 else GoNoFriend Say 5 AddChat 4 AddChat 5>
+	GoNoFriend <ifG PCRep 6 50 else GoDenied Say 6 AddChat 4 AddChat 5>
+	GoDenied <Say 4 AdvancePlot 0>
+
+	result1 <EndChat Say 15 goto GoStartCombat>
+	GoStartCombat <SavePos Reputation 2 1 P= 2 1 Staged .scene V3>
+	.scene <SCENE_DestroyTarget.txt>
+
+	result2 <NewChat Say 10 AddChat 1 AddCHat 3>
+	result3 <NewChat Say 11>
+	result4 <NewChat Say 12 Memo 13 AddChat 1 AddChat 2 AddChat 3>
+	result5 <NewChat Say 14 AdvancePlot 0>
+
+	Msg1 <The mission was a failure. We'll have to try again later.>
+	Msg2 <Are you ready to start the mission yet?>
+	Msg3 <I've got a mission available for any pilot who wants to help maintain the law. Could you help me?>
+	Msg4 <I need a good mecha pilot to help fight against the local bandits. It's a shame there are no good pilots in town...>
+	Msg5 <I know you haven't exactly been one to work with the guardians, but I have an important mission that needs doing. Think you can help me?>
+	Msg6 <You've made a big name for yourself as a good pilot. I have a mission available right now, if you're free to take it.>
+	Msg7 <You did it! That camp was completely destroyed. I'm certain that we're getting closer to their main base...>
+	Msg8 <That was their main encampment. With their base of operations completely wrecked, the gang will have no choice but to move out of \NARRATIVE 1 . Congratulations on making our city safe once more.>
+	Msg9 <You helped the Guardians destroy the Bandit Den of \NARRATIVE 1 .>
+	Msg10 <This particular base is home to \VAL V3 points worth of equipment. Be careful, it's all likely to be concentrated near the center of their base.>
+	Msg11 <Alright. Just come back when you're done and we can start the operation then.>
+	Msg12 <A bandit gang has established a stronghold near town. They've been very elusive, but we've located one of their staging points. If we can destroy their facilities they'll all have to leave. The mission pays $ \VAl V4 .>
+	Msg13 <\ELEMENT 2 in \ELEMENT 1 hired you to destroy a bandit encampment.>
+	Msg14 <That's disappointing. I'll keep looking for someone else to help.>
+	Msg15 <Here are the coordinates. Destroy their power generator and the entire base will fold. Come back here when you're done.>
+
+	Prompt1 <I'm all ready to go!>
+	Prompt1_1 <Let's get this mission started.>
+	Prompt2 <How many threat points am I facing?>
+	Prompt3 <Give me a sec to fuel up.>
+	Prompt4 <I'll do it.>
+	Prompt4_1 <Okay, I'll help you.>
+	Prompt4_2 <Give me the specifics.>
+	Prompt5 <Sorry, I can't do that.>
+	Prompt5_1 <I'm too busy to help you now.>
+	Prompt5_2 <Really, I can't.>
+
+
+end

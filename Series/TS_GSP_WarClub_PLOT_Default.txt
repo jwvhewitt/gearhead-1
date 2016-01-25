@@ -1,0 +1,178 @@
+Plot 0
+	name <PLOT: Atomic War Club>
+	% A Pre-Zero weapon prototype has been traced to a dungeon...
+	% Now all that an interested researcher needs is for someone
+	% to go retrieve it. Will the player agree to search for the
+	% item? And will the player get a chance to see first-hand
+	% why the Atomic War Club never made it to a production model?
+
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Reward offered for the weapon
+
+	Element1 <Grab 1>
+	Element2 <Scene Dungeon Scale0>
+	Element3 <Prefab>
+	Element4 <Character Scientist !Near 1>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E4 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 70000>
+	GotoCheckTime <ifG ComTime V1  if= V2 0  AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+
+sub
+	Persona 4
+	% The scientist who wants the Atomic War Club.
+	% V1 = Been Before
+	% V2 = Randomizer
+	% MoveKeyItem E3 E2 to place the war club... don't forget!
+	rumor <!1 is very interested in old artefacts.>
+	greeting <NewChat  ifG V1 0 else GoCheckFriend  ifG P2 0 else GoNoLike  ifKeyItem E3 else GoKeepLooking  Say 38  AddChat 14  AddChat 15>
+	GoKeepLooking <V= 2 38 V+ 2 d2 Say V2  AddChat 6  AddChat 8  AddChat 9  AddChat 16>
+
+	% If the PC is a friend of the NPC, he'll ask for help.
+	GoCheckFriend <V= 1 1  ifG React 20 else GoNoFriend  ifG PCRep 2 -d100 else GoChaos  V= 2 43 V+ 2 d2  Say V2  AddChat 10  AddChat 17  AddChat 3>
+
+	% Else if the PC is famous, the mission may be offered.
+	GoNoFriend <ifG PCRep 6 d50 else GoNoRenown  ifG PCRep 2 -d50 else GoChaos  V= 2 5 V+ 2 d5 Say V2  AddChat 1  AddChat 2  AddChat 3>
+	GoChaos <ifG React d100 else GoNoRenown  V= 2 10 V+ 2 d3  Say V2  AddChat 4  AddChat 5>
+
+	% Otherwise the player will have to fight for a chance at it.
+	GoNoRenown <ifG React d25 else GoNoLike  V= 2 45 V+ 2 d5  Say V2  AddChat 5  AddChat 18>
+	GoNoLike <Say d5  AdvancePlot 0>
+
+	result1 <NewChat  P= 2 PCRep 6 1250  MoveKeyItem E3 E2  Memo 54  V= 2 16 V+ 2 d4  Say V2  AddChat 6  AddChat 7  AddChat 8  AddChat 9>
+	result2 <NewChat  ifG React d30 else GoR2LowReact  Say 15  AdvancePlot 0>
+	GoR2LowReact  <Say 16  AddReact -1  AdvancePlot 0>
+	result3 <NewChat  Say 14  AddChat 1  AddChat 2>
+	result4 <NewChat  ifG SkRoll 29 6 else GoR4NoScience  ifG PCRep 7 d50 else GoR4NoScience  Say 23  Reputation 6 1  Reputation 7 1  AddChat 10>
+	GoR4NoScience <ifG SkRoll 19 10 else GoR4NoChance  Say 25  AddChat 11 AddChat 12>
+	GoR4NoChance <Say 24  AdvancePlot 0>
+	result5 <NewChat  Reputation 7 -d5  ifG NPCRep E4 7 d100 else GoR5NoPrag  Say 22  AdvancePlot 0>
+	GoR5NoPrag <Say 21  AddReact d6  AdvancePlot 0>
+
+	result6 <NewChat  AddChat 7  AddChat 8  AddChat 9  ifG NPCRep E4 1 d50 else GoR6NoHero  Say 29>
+	GoR6NoHero <ifG 0 NPCRep E4 1 else GoR6NoVillain  Say 31  AddChat 13>
+	GoR6NoVillain <Say 30>
+	result7 <NewChat  V= 2 31 V+ 2 d4  Say V2>
+	result8 <Goto result7>
+	result9 <Goto result7>
+	result10 <Goto result1>
+
+	result11 <NewChat  ifG skroll 19 13 else GoR11NoCon  Reputation 2 d5  AddReact -d3  Say 26  AddChat 10>
+	GoR11NoCon <Say 24  Reputation 6 -1  AdvancePlot 0>
+	result12 <NewChat  ifG SkRoll 28 10 else GoR12NoInt  Say 28  AddChat 1>
+	GoR12NoInt <Say 27  AdvancePlot 0>
+	result13 <NewChat  AddReact -d6  Reputation 1 1  ifG skroll 19 21 else GoR13NoCon  Say 36  AdvancePlot 0>
+	GoR13NoCon <Say 37  DeleteKeyItem E3  AdvancePlot 0>
+	result14 <NewChat  Say 41  DeleteKeyItem E3  CashPrize P2  XPV 100  ifG 0 NPCRep E4 1  else GoDelete  Reputation 1 -1  AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+	result15 <NewChat  Reputation 2 -3  ifG -d75 NPCRep E4 1 else GoR15NoVillain  Say 42  PCEnemy E4  AdvancePlot 0>
+	GoR15NoVillain <Say 43  AdvancePlot 0>
+
+	result16 <NewChat  Say 44  DeleteKeyItem E3  AdvancePlot 0>
+	result17 <NewChat  Say 15  AdvancePlot 0>
+	result18 <NewChat  ifG SkRoll 19 10 else GoR18NoCon  Say 51  AddChat 1  AddChat 19>
+	GoR18NoCon <Say 53  AdvancePlot 0>
+	result19 <NewChat  Say 52  Reputation 4 -d6  AdvancePlot 0>
+
+	Msg1 <Archaeology can be an interesting field.>
+	Msg2 <I'm too busy right now to discuss the truly important, world-shaking implications of my latest research.>
+	Msg3 <This latest research will be very important, if I can manage to get all the supplies I need.>
+	Msg4 <If you want to hear about my fascinating research, you can read all about it in the university journal.>
+	Msg5 <I can't stop... I have figures to work out!>
+
+	Msg6 <I have a job available for a seasoned adventurer, if you're interested.>
+	Msg7 <I need the services of an experienced adventurer. I thought you might be interested.>
+	Msg8 <I have an expedition planned to recover an artefact of moderate technological interest. How would you like the position of chief field agent?>
+	Msg9 <Are you an adventurer? I have a reward available, if you can recover an item that has been lost.>
+	Msg10 <My job here prevents me from doing much field work, but I have a job available for anyone willing to do some sample recovery work.>
+
+	Msg11 <I'm very busy right now. I have to arrange for an explorer to run a field recovery mission for me...>
+	Msg12 <My research has located an old PreZero artifact. I need to recover it for study.>
+	Msg13 <I don't have much time to chat... My research has located a possibly important artifact, and I need to make the arrangements for a recovery expedition.>
+	Msg14 <Shouldn't you find out what, exactly, this job involves before you start asking about money? Honestly...>
+	Msg15 <That's too bad.>
+
+	Msg16 <I'll bet you do...>
+	Msg17 <I've been researching a weapon program from before the great war. Their only working prototype went missing on its first test run somewhere near here. I want to get it.>
+	Msg18 <Does the name \ELEMENT 3 mean anything to you? Probably not... there was supposedly only one ever built. It went missing many years ago on its first field test, and I think I know where.>
+	Msg19 <An ultrapowerful weapon called the \ELEMENT 3 was lost many years ago in this area. I want to recover it so that I can study its inner workings.>
+	Msg20 <I've been researching a PreZero weapons program. Their prototype went missing on its first field test, and I think I know where to find it. This weapon would be a great help to my studies.>
+
+	Msg21 <Thanks! I think I'm going to need it...>
+	Msg22 <Luck is for the superstitous.>
+	Msg23 <Yes, I think you could... There is an object lost in a dangerous place near here. I need an adventurer to recover it for me.>
+	Msg24 <No, I don't think you'd be very well suited to this mission. I really need someone with a better scientific background.>
+	Msg25 <I know you could do the mission, but I don't know that I can trust you... Once you find this artefact, what are the chances that you'll keep it for yourself or sell it to someone else?>
+
+	Msg26 <Maybe I can believe you, and maybe I can't... In any case, you're the only volunteer I have. The mission is yours if you want it.>
+	Msg27 <That's not a risk I'm willing to take, in this case. I'll find someone else for the mission.>
+	Msg28 <Hmmm... It might be a gamble, but at least I know you're skilled enough to get the artifact. The mission is yours if you want it.>
+	Msg29 <The \ELEMENT 3 used an advanced power source of unknown type. If I could replicate it, the technology could have many peaceful applications.>
+	Msg30 <The \ELEMENT 3 was a marvel of technology. By examining how it was built I may be able to advance our understanding of superconductive physics.>
+
+	Msg31 <The prototype was lost before it could be made into a production model... If I could replicate this weapons technology, I could sell it for millions!>
+	Msg32 <Records indicate that the \ELEMENT 3 was lost in \ELEMENT 2 along with its field agent. Presumably they met some grisly end... I can provide $ \VAL P2 to recover it.>
+	Msg33 <The \ELEMENT 3 should currently be located in \ELEMENT 2 if my research is correct. I can pay you $ \VAL P2 to go there and recover it.>
+	Msg34 <\ELEMENT 2 is most likely its current location. I'll pay $ \VAL P2 if you can retrieve the \ELEMENT 3 and bring it to me safely.>
+	Msg35 <Your search should center around \ELEMENT 2 since that's the last known place the \ELEMENT 3 was being tested. Bring it back to me and I'll give you $ \VAL P2 for your troubles.>
+
+	Msg36 <Fine, I'll just hire someone else to go to \ELEMENT 2 and bring it back for me... Er, disregard that last bit.>
+	Msg37 <Fine, I'll just hire someone else to go retrieve it for me.>
+	Msg38 <Have you found the \ELEMENT 3 yet?>
+	Msg39 <I'm very busy with my other research. Come back here immediately after you've completed your job.>
+	Msg40 <Is there any problem? Shouldn't you be out looking for \ELEMENT 3 right about now?>
+
+	Msg41 <Thank you for a job well done. Here's the pay that you were promised.>
+	Msg42 <Is that so? Well, I'll just have to wait for you to suffer the same unfortunate fate as the original tester, then the \ELEMENT 3 will be mine...>
+	Msg43 <That's very unfortunate. Be careful... My research indicates certain instabilities in the design.>
+	Msg44 <I need your help. There's some field work that I need done... It's very important to my research.>
+	Msg45 <Hi. I've got a job for you, if you're not too busy. I need someone to do a bit of dungeon field work.>
+
+	Msg46 <My studies have indicated that a prezero prototype weapon was lost somewhere near here.>
+	Msg47 <I need to make preparations... I have to go on a field mission soon.>
+	Msg48 <I'm on the verge of a breakthrough. All I need is to find a lost and potentially dangerous prototype weapon which may or may not be located near here, then disassemble it and find out how it works.>
+	Msg49 <I've been tracing the whereabouts of an abandoned weapon prototype. I think I'm close to a breakthrough.>
+	Msg50 <I'm getting ready to make an expedition into the dungeons. It will likely be very dangerous.>
+
+	Msg51 <Maybe you could... I better warn you, though, that this isn't very interesting. Are you sure you want to know?>
+	Msg52 <Well, I'll do okay on my own. That's what I was planning to do anyways.>
+	Msg53 <Not really. I can handle this perfectly well on my own, and if not I can always hire a member of the Hunter's Guild.>
+	Msg54 <\ELEMENT 4 in \SCENE EScene 4 wants you to recover the \ELEMENT 3 from \ELEMENT 2 for scientific research.>
+
+	Prompt1 <Alright, tell me about it.>
+	Prompt2 <I've got more important things to do.>
+	Prompt3 <How much are you willing to pay?>
+	Prompt4 <I could help you with that.>
+	Prompt5 <Well, good luck...>
+
+	Prompt6 <Why do you need this weapon?>
+	Prompt7 <I'll recover it for you.>
+	Prompt8 <What's the reward going to be?>
+	Prompt9 <Where can I find it?>
+	Prompt10 <Give me the details.>
+
+	Prompt11 <I promise I won't do that.>
+	Prompt12 <That's the chance you'll have to take.>
+	Prompt13 <On second thought, I won't help you.>
+	Prompt14 <Here it is. [Give Item]>
+	Prompt15 <I found it, and decided to keep it.>
+
+	Prompt16 <I can't complete this mission.>
+	Prompt17 <Sorry, I can't.>
+	Prompt18 <Maybe I can be of help to you.>
+	Prompt19 <Sorry, if it's boring I'm not interested.>
+
+end
+inv
+	Melee 16
+	Scale 0
+	name <Atomic War Club>
+	type <Blast 7 Brutal ArmorPiercing Burn Mystery>
+	Acc -1
+	mass -7
+
+end
+

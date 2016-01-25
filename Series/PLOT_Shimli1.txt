@@ -1,0 +1,25 @@
+Plot 0
+	name <PLOT: Shimli 1>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Heroic>
+	element2 <Scene DUNGEON>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 1000>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 1 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 1 -1 NewChat Say 4>
+	Msg1 <I have a rhetorical question for you. If a child was lost in \ELEMENT 2 would you travel there to save him?>
+	Msg2 <I'd like to think that any person would do the same, but I fear that there are many who wouldn't. I try hard to lead a virtuous life.>
+	Msg3 <Well, I certainly hope that you never have a reason to find out what you'd do in that situation!>
+	Msg4 <It's a good thing that this was merely a rhetorical question...>
+	prompt1 <Of course I would!>
+	prompt2 <I don't know...>
+	prompt3 <Probably not. Means nothing to me.>
+
+end

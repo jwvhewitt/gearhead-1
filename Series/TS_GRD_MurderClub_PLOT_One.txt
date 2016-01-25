@@ -1,0 +1,201 @@
+Plot 0
+	name <Member One>
+
+	% Member One is "The Dragon", a combat expert who fights to
+	% the death in order to prove who's stronger. If the PC defeats
+	% him, he leaves behind a wallet which the PC can investigate
+	% to discover bus ticked stubs from E2, which will lead the PC
+	% into the next part of the adventure.
+
+	% E1 is the scene for this episode; E2 the scene for the next
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1 !Member 11>
+
+	% E3 is the guardian who will give the PC a reward
+	element3 <Character Guardian !Near 1>
+
+	% E4 is the murderer, E5 is his wallet.
+	element4 <Prefab>
+	element5 <Prefab>
+
+	% V1 = Initialization Counter / NPC Defeated Counter
+	% V2 = Clue Number
+	% V3 = Have been accosted by E4 / Fight has started
+
+	start <if= V1 0 else GoCheckClue V= 1 1 Goto GoInitNPC>
+	GoInitNPC <S= 6 E4 Compose UTD E4 .e4dies NPCLevel E4 S2 NPCSkill+ E4 9 3 NPCSkill+ E4 10 2 Goto GoInitItem>
+	GoInitItem <Compose KEY E5 .usekey ItemVar= E5 1 E2 V= 2 S202 V+ 2 1 ItemVar= E5 2 V2 MoveChar E4 E1>
+	.e4dies <if= V1 1 S= 201 0 S+ 202 1 S= 5 ComTime S+ 5 13800 N= 2 E2 V= 1 2 Email d5>
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 1 AdvancePlot 0>
+	% If the PC has discovered clues so as to make this plot worthless,
+	% erase it now, so long as the NPC has already been defeated.
+	GoCheckClue <if= V1 2 else GoCheckRevenge ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% If the PC has defeated any other members of the club, this
+	% member will challenge the PC to combat.
+	GoCheckRevenge <ifG S202 0 ifNPCInPlay E4 NPCGoPC E4>
+	TM1 <if= SceneID E1 ifNPCinPlay E4 ifG S202 0 if= V3 0 ifG 6 Range PCUID NPCUID E4 V= 3 1 Print 101 ForceChat E4>
+
+	cleanup <DeleteChar E4 AdvancePlot 0>
+
+	Msg1 <\ELEMENT 3 @ \SCENE ESCENE 3 :// You helped stop one of the "Murder Club". Come see me for a reward.>
+	Msg2 <\ELEMENT 3 @ \SCENE ESCENE 3 :// That was a member of the "Murder Club" you just fought with. Come see me for a reward.>
+	Msg3 <\ELEMENT 3 @ \SCENE ESCENE 3 :// You just defeated a member of the "Murder Club". You do know there's a reward for that, don't you?>
+	Msg4 <\ELEMENT 3 @ \SCENE ESCENE 3 :// We've been trying to stop that killer ourselves. Come see me about it.>
+	Msg5 <\ELEMENT 3 @ \SCENE ESCENE 3 :// Good job in \ELEMENT 1 . There was a reward for that killer... come talk to me.>
+
+	Msg101 <\ELEMENT 4 shouts at you!>
+
+sub
+	Persona 3
+	% V1 = Have given reward
+	% V2 = Message Randomizer
+	greeting <NewChat if= P1 2 else GoNothing if= V1 0 else GoNothing V= 1 1 CashPrize Reward Threat PCRep 6 100 100 ifPersona S7 else GoNoS7 ifG React d30 else GoNoS7 Say d3 S+ 103 1 Memo 7>
+	GoNoS7 <V= 2 3 V+ 2 d3 Say V2>
+	GoNothing <SayAnything>
+	Msg1 <You've done well in protecting the city. If you're interested in helping more, contact \PERSONA S7 in \SCENE S8 . Here's a reward for you.>
+	Msg2 <Here's your reward. Let me tell you something... if you'd like to help us defeat this murder club once and for all, go see \PERSONA S7 in \SCENE S8 .>
+	Msg3 <You've helped to defend our city. Here's a reward for you... If you'd like to continue working on this murder club case, you should contact \PERSONA S7 in \SCENE S8 .>
+	Msg4 <Here's your reward for helping out.>
+	Msg5 <Here's a reward for your heroic deeds.>
+	Msg6 <You did well in protecting our city. Here's a reward.>
+	Msg7 <\ELEMENT 3 in \SCENE EScene 3 told you to contact \PERSONA S7 in \SCENE S8 about the murder club investigation.>
+
+	Persona 4
+	rumor <!4 is always looking for someone new to fight.>
+	% To start with, the PC will be prevented from starting combat
+	% at a safe distance by using the telephone...
+	greeting <ifG Range PCUID NPCUID E4 6 else GoRealStart EndChat Say 1>
+
+	% Next, if combat has already started, E4 won't say anything new.
+	GoRealStart <if= P3 2 else GoRealFirst Say 2>
+
+	GoRealFirst <if= P3 1 else GoCheckRep V= 2 2 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoCheckRep <ifG PCRep 6 S2 else GoNoChance V= 2 5 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoNoChance <V= 2 8 V+ 2 d3 Say V2 ifG S103 0 AddChat 9>
+
+	GoStartCombat <P= 3 2 SoloAttack E4 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoSurrender <Print 30 FacXP+ N1 1 XPV 100 if= P1 1 S= 201 0 S+ 202 1 S= 5 ComTime S+ 5 13800 N= 2 E2 P= 1 2 Email 29 DeleteChar E4>
+
+	result1 <EndChat V= 2 16 V+ 2 d2 Say V2 V= 2 9 V+ 2 d2 AddChat V2 V= 2 11 V+ 2 d2 AddChat V2 ifG PCSkillVal 28 0 V= 2 6 V+ 2 d2 AddCHat V2>
+	result2 <Goto result1>
+	result3 <Goto result1>
+
+	result4 <EndChat V= 2 14 V+ 2 d2 Say V2>
+	result5 <Goto result4>
+	result6 <Goto result4>
+
+	result7 <EndChat Mental ifG Intimidation 15 else GoR7Fail V= 2 24 V+ 2 d2 Say V2 Goto GoSurrender>
+	GoR7Fail <V= 2 26 V+ 2 d2 Say V2>
+	result8 <goto result7>
+
+	result9 <EndChat V= 2 11 V+ 2 d3 Say V2 goto GoStartCombat>
+
+	result10 <ENdChat Reputation 1 1 ifG PCRep 1 d65 else GoR10Fail ifG PCRep 6 dS2 else GoR10Fail V= 2 22 V+ 2 d2 Say V2 Goto GoSurrender>
+	GoR10Fail <V= 2 20 V+ 2 d2 Say V2>
+	result11 <Goto result10>
+
+	result12 <EndChat V= 2 18 V+ 2 d2 Say V2 Reputation 5 -d6>
+	result13 <Goto result12>
+
+	Msg1 <I don't like using the phone. Come over here if you've got something to say to me.>
+	Msg2 <Let's see who is stronger!!!>
+
+	%  03 - 05 :  PC has defeated other member of murder club.
+	Msg3 <Ah, you're \PC , aren't you? I heard you defeated another member of our club... They call me "The Dragon", and I will prove to the world how strong I am by killing you now!>
+	Msg4 <Allow me to introduce myself. I'm known as "Kong Rex" of the murder club. You've had some luck against our weaker members, but you have no chance at all against me. I will show you which of us is the stronger!>
+	Msg5 <It's you! It will be a great honor for me to kill you with my own hands. I am \PERSONA E4 of the murder club, but everyone calls me "Walking Weapon"! You've defeated one of our weaker members. Now it's time to meet your end!>
+
+	%  06 - 08 :  PC is renowned; will be challenged by this character.
+	Msg6 <Wow, it's \PC ! I've heard of you... you're famous as a warrior. I hope to be famous too, someday, as the world's greatest killer... In the murder club I'm known as "The Dragon". Now it's time for you to be my next victim!>
+	Msg7 <I've been hoping to meet you. My name is \PERSONA E4 of the murder club, but my nickname is "Ultimate Dragon". I'm out to prove that I'm the best fighter in the world and I'll start by killing the famous adventurer \PC !>
+	Msg8 <Now the predator meets the prey... I've been looking for you. In the murder club I'm known as "Psycho Monk". It's my goal to prove myself as the deadliest fighter in the world. I'll start by defeating the adventurer \PC in mortal combat!>
+
+	%  09 - 11 :  PC isn't renowned; will be ignored by this character.
+	Msg9 <You look weak.>
+	Msg10 <I think you probably aren't very strong.>
+	Msg11 <You don't look very interesting.>
+
+	%  12 - 14 :  PC has asked about the murder club.
+	Msg12 <If you're looking for the murder club, you must have heard of me. My nickname is "Black Dragon"; I want to be the deadliest fighter in the whole world. It will be a simple thing for me to kill you now...>
+	Msg13 <You're asking dangerous questions... my club-mates wouldn't be happy if I allowed you to live. They call me "Jet Gi Reum"; it may be boring to kill someone as weak as you, but it's a nessecary chore.>
+	Msg14 <So, you've heard of us? Good. My name is \PERSONA E4 but I'm known as "Red Tiger". I want the entire world to know how dangerous I am... You'll learn that soon, but won't live long enough to tell anyone else.>
+
+	%  15 - 16 :  PC wants to start the fight immediately.
+	Msg15 <If you think you can defeat me, I'll soon show you that you're wrong!>
+	Msg16 <I hope you're not too weak. I'd hate for this to be a boring fight.>
+
+	%  17 - 18 :  PC doesn't want to fight.
+	Msg17 <So, you're afraid to die, is that why you don't want to fight?>
+	Msg18 <Why do you not want to fight? Are you afraid to die? You know that I can defeat you...>
+
+	%  19 - 20 :  PC has given the wimpy answer.
+	Msg19 <Your cowardace disgusts me. Show some courage in the face of your death!!!>
+	Msg20 <Don't be afraid, your death will come very quickly!>
+
+	%  21 - 22 :  Plan "A" has failed.
+	Msg21 <I think your kind words just disguise a lack of courage. At least you should try to face death like a warrior!>
+	Msg22 <I can't believe in your words... You're just afraid to die, yourself.>
+
+	%  23 - 24 :  Plan "A" has worked.
+	Msg23 <I have never seen such purity of spirit before... Your soul is stronger than my warrior nature. Perhaps there is something more important than being most powerful? Alright, let's not do battle. I will surrender to the police.>
+	Msg24 <You are truly unafraid of me, yet you do not attack... your peaceful nature is more powerful than my warrior spirit. I have been shown the error of my ways. I will turn myself in to the guardians, and attempt to reform my life by your example.>
+
+	%  25 - 26 :  Plan "B" has worked.
+	Msg25 <Ulp... well, I'm too young to die yet... I changed my mind... I don't want to be a warrior after all. I'm going to go turn myself in to the guardians... they'll protect me from you...>
+	Msg26 <Thinking about it more carefully, I think you could be right... I'm just going to go turn myself in to the guardians now. I'm too young to die senselessly.>
+
+	%  27 - 28 :  Plan "B" has failed.
+	Msg27 <Ha, you have spirit! This should be a good fight!>
+	Msg28 <You think you can intimidate me so easily? I have no fear of death! Let's do battle!>
+
+	Msg29 <\ELEMENT 3 @ \SCENE ESCENE 3 :// You helped capture one of the members of the "Murder Club". Come see me for a reward.>
+	Msg30 <\ELEMENT 4 has surrendered.>
+
+	%  01 - 03 :  PC doesn't want to fight.
+	Prompt1 <I don't want to fight you.>
+	Prompt2 <Why do we have to fight?>
+	Prompt3 <I'm not going to fight you.>
+
+	%  04 - 06 :  PC wants to start the fight now.
+	Prompt4 <Alright, let's get this over with.>
+	Prompt5 <Let's start this.>
+	Prompt6 <If you want to die, I'll fight you.>
+
+	%  07 - 08 :  PC will use intimidation to avoid fight.
+	Prompt7 <Your skill is beneath me.>
+	Prompt8 <You'd be no challenge to me.>
+
+	Prompt9 <I'd like to ask you about the murder club.>
+
+	%  10 - 11 :  PC doesn't want to kill E4.
+	Prompt10 <Look, I don't want to kill you.>
+	Prompt11 <I just don't want to kill you.>
+
+	%  12 - 13 :  PC doesn't want to die.
+	Prompt12 <I don't want to die.>
+	Prompt13 <Fighting is too dangerous...>
+
+end
+inv
+	NPC Soldier
+	job <Student>
+	chardesc Young Villainous Spiritual
+	EquipChar 10000
+
+	Treasure 500
+	name <Wallet>
+	place <4>
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <Searching the wallet, you discover a bus ticket for \SCENE V1 .>
+	Msg2 <It's a wallet. It's full of all kinds of personal things.>
+
+end

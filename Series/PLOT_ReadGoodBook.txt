@@ -1,0 +1,17 @@
+Plot 1
+	rumor <!1 is reading a really good book.>
+	ELEMENT1 <Character Knowledge>
+
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 30>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 1>
+sub
+	Persona 1
+	greeting <Say 1 EndChat AddChat 1 AddChat 2>
+	result1 <Say 2 EndChat>
+	result2 <Say 3 EndChat>
+	msg1 <I can't talk right now... I've almost finished the new Harry Potter novel.>
+	msg2 <Sure, I'll give it to you then.>
+	msg3 <Bye bye.>
+	prompt1 <Can I read it after you've finished?>
+	prompt2 <Oh, okay. Goodbye.>
+end

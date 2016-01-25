@@ -1,0 +1,271 @@
+Battroid 3
+Name <Chameleon>
+Desig <CHA-01>
+desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
+
+Mod Head
+	Size 2
+	Armor 2
+	sub
+		Sensor 6
+
+		TarComp 2
+	end
+
+Mod Body
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Gyro 3
+		Armor 1
+
+		BeamGun 2
+		Name <Small Laser>
+		Range 3
+		Acc 5
+
+		BeamGun 2
+		Name <Small Laser>
+		Range 3
+		Acc 5
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 2
+	sub
+		STC GHML-2
+
+		Hand
+		inv
+			BeamGun 1
+			Name <Pulse Rifle>
+			Range 4
+			Acc 1
+			Speed 6
+			BV 2
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 2
+	sub
+		MLauncher 1
+		Name <Sparrow Light Missiles>
+		Range 5
+		Acc 2
+		Magazine 30
+		sub
+			Rockets 1
+		end
+
+		Hand
+	end
+	inv
+		Shield 3
+		DefBonus 2
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 2
+	sub
+		Wheels 3
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 2
+	sub
+		Wheels 3
+	end
+end
+
+Battroid 3
+Name <Chameleon>
+Desig <CHA-02b Sniper>
+desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
+
+Mod Head
+	Size 2
+	Armor 2
+	sub
+		Sensor 6
+
+		TarComp 2
+	end
+
+Mod Body
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Gyro 3
+		Armor 1
+
+		BeamGun 2
+		Name <Small Laser>
+		Range 3
+		Acc 5
+
+		BeamGun 2
+		Name <Small Laser>
+		Range 3
+		Acc 5
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 2
+	sub
+		STC GHML-2
+
+		Hand
+		inv
+			STC GR-12
+			Acc 2
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 2
+	sub
+		MLauncher 1
+		Name <Sparrow Light Missiles>
+		Range 5
+		Acc 2
+		Magazine 30
+		sub
+			Rockets 1
+		end
+
+		Hand
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 2
+	sub
+		Wheels 3
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 2
+	sub
+		Wheels 3
+	end
+end
+
+Battroid 3
+Name <Chameleon>
+Desig <CHA-03 Command>
+desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
+
+Mod Head
+	Size 2
+	Armor 2
+	sub
+		Sensor 6
+
+		TarComp 3
+	end
+
+Mod Body
+	Armor 2
+	sub
+		CPit
+		Armor 2
+
+		Gyro 4
+		Armor 1
+
+		BeamGun 2
+		Name <Small Laser>
+		Range 3
+		Acc 5
+
+		BeamGun 2
+		Name <Small Laser>
+		Range 3
+		Acc 5
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 2
+	sub
+		MLauncher 8
+		Name <Drone Launcher>
+		Range 6
+		Magazine 5
+		sub
+			Rockets 8
+			Type <DRONE>
+		end
+
+		Hand
+		inv
+			BeamGun 3
+			Name <Plasma Pistol>
+			Acc 1
+			BV 3
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 2
+	sub
+		MLauncher 1
+		Name <Sparrow Light Missiles>
+		Range 5
+		Acc 2
+		Magazine 30
+		sub
+			Rockets 1
+		end
+
+		Hand
+		inv
+			Melee 4
+			Name <Rapier>
+			Acc 2
+		end
+	end
+	inv
+		Shield 4
+		DefBonus 3
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 2
+	sub
+		Wheels 3
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 2
+	sub
+		Wheels 3
+	end
+end

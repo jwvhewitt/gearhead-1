@@ -1,0 +1,57 @@
+SCene 0
+% Ziggurat Basement
+
+% This is an infinite dungeon. Once the specified level is reached,
+% the item will be inserted. 
+
+% In this case, the item is the Fuel Rod for the Argoseyer.
+
+% V3 = *Current Depth
+% V5 =  Initialization Counter
+
+	special <NoRescue NoExit>
+	NU1 <if= T1 0 Return>
+	MonkeyMap
+	BorderType 33
+	FloorType 28
+	SecretDoorChance 60
+	LockedDoorChance 40
+
+	start <Print 1 if= V5 0 V= 5 1 MonsterUp 2 * V3 8>
+	Msg1 <You enter the Ziggurat Downspiral, level \VAL V3 .>
+	GET55 <G= 5 1>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Ruins Wasteland Robot Dark>
+	stat 2 42
+
+	Team 3
+	home <Down Spot>
+
+	rect
+	FloorType 28
+	sub
+		StairsUp
+		Destination -1
+		use <Print 1 L+ 3 -1 ifG 1 L3 else GoUpStairs Return SeekGate 1>
+		GoUpStairs <LoadD .sitename PassVar 3 L3 SeekGate 1>
+		.sitename <TS_SCENE_Ziggurat.txt>
+	end
+
+	rect
+	FloorType 28
+	name <Down Spot>
+	sub
+		StairsDown
+		Destination 1
+		use <Print 1 L+ 3 1 LoadD .sitename PassVar 3 L3 SeekGate -1 if= G5 0 ifG L3 3 DynaItemTeam 55 3>
+		.sitename <TS_SCENE_Ziggurat.txt>
+		update <ifG L3 3   SetStat STAT_MetaVisibility -1>
+	end
+
+end

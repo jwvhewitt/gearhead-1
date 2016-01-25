@@ -1,0 +1,129 @@
+Battroid 3
+Name <Alba>
+Desig <GWR-17>
+Desc <Commando mecha used by Terran Defense Force. Easily recognized by its "bunny-ears" sensor wings.>
+
+Mod Head
+	Size 2
+	Armor 2
+	sub
+		Sensor 10
+
+		TarComp 2
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+
+		Mount
+		inv
+			Gun 2
+			Name <Autocannon>
+			Range 5
+			Acc 1
+			Speed 1
+			BV 2
+			Magazine 90
+			sub
+				Ammo 2
+			end
+		end
+
+		Mount
+		inv
+			Gun 2
+			Name <Autocannon>
+			Range 5
+			Acc 1
+			Speed 1
+			BV 2
+			Magazine 90
+			sub
+				Ammo 2
+			end
+		end
+
+		Sensor 2
+
+		HoverJet 2
+
+		Gyro 3
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 2
+	sub
+		Hand
+		inv
+			Gun 3
+			Name <Hand Cannon>
+			Mass -1
+			Range 3
+			Speed 3
+			Magazine 12
+			sub
+				Ammo 3
+			end
+		end
+
+		Mount
+		inv
+			MLauncher 13
+			Name <Rocket Launcher>
+			Range 8
+			Magazine 4
+			sub
+				Rockets 13
+			end
+		end
+
+		HoverJet 1
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 2
+	sub
+		Hand
+		inv
+			EMelee 8
+			Name <Beam Lash>
+			Type <FLAIL>
+			Acc 2
+			Speed 5
+		end
+
+		Mount
+		inv
+			MLauncher 13
+			Name <Rocket Launcher>
+			Range 8
+			Magazine 4
+			sub
+				Rockets 13
+			end
+		end
+
+		HoverJet 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 4
+	Armor 2
+	sub
+		HoverJet 4
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 4
+	Armor 2
+	sub
+		HoverJet 4
+	end
+end
+

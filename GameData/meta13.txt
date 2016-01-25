@@ -1,0 +1,11 @@
+% Default Sign - Also used for bus stops %
+name <Sign>
+use <if= StatVal STAT_MetaVisibility 0 if# StatVal 4 0 else GoNoDest ifYesNo 3 4 5 Time d1800 Print 2 Exit StatVal 4>
+GoNoDest <Print 1>
+roguechar <?>
+SDL_Sprite <meta_terrain.png>
+Msg1 <The text of this sign is obscured by graffiti reading "pyrrho12@yahoo.ca releases buggy programs!".>
+Msg2 <The bus arrives, and you head to \SCENE StatVal 4 .>
+Msg3 <This is the bus stop for the \SCENE StatVal 4 line. Would you like to wait for the bus?>
+Msg4 <Yes please.>
+Msg5 <No thank you.>

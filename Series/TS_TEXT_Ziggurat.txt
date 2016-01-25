@@ -1,0 +1,46 @@
+% Ziggurat data file
+ 
+-==D2351.12.14:98212==- KALLISKHAN PERIMETER BASE
+  
+  DEFENSE OF PERIMETER BASE SUCCESSFUL. IMPERATOR CITY-SMASHER "Mk-Z"
+  HALTED BY ARGOS FORCE ALPHA.
+  
+  LOCATION OF OMEGA PROJECT VERIFIED AS NIPPON SOUTH-2.
+  ARGOS "I" THROUGH "III" TO DESTROY "TYPHON" BASE.
+  ARGOS "IV" THROUGH "V" TO DESTROY "CETUS" BASE.
+  OMEGA CONSTRUCTS NOT BELIEVED TO BE OPERATIONAL YET.
+  
+-@data.link.=IMPERATOR=OMEGA=PROJECT=.begin@-
+as a replacement for the "C-Zeta" class cyclops, even more obsolete as a
+result of battroid technology. "Omega-Class" will be scaled up by one
+scale of magnitude, capable of engaging giga-class land vehicles in
+combat, similar in capability to the Pax Europa argoseyer. Three
+prototypes currently being developed. Control will be semi-autonomous;
+volunteer pilot biomemory absorbed directly into Omega neural pod.
+Process is not reversable. Prototype Z-1 Cetus shows early self-aware
+-@end.link@-
+  
+  OMEGA PROJECT MUST BE DESTROYED BEFORE COMPLETION.
+  !AEGIS PAX EUROPA
+  
+-==D2351.12.21:98212==- KALLISKHAN PERIMETER BASE
+  
+  CENTRAL COMMAND HAS DEPLOYED ARGOS "I" THROUGH "IV" TO
+  NORTH AFRICA. TEMPORARY CEASEFIRE WITH IMPERATOR ZETA.
+  ARGOS "V" TO REMAIN HERE IN EVENT OF IMPERATOR HOSTILITY.
+  
+  !AEGIS PAX EUROPA
+  
+-==D2351.12.23:98212==- KALLISKHAN PERIMETER BASE
+  
+  OMEGA "LADON" ACTIVATED, DESTROYED BY ARGOS "V". CEASEFIRE
+  WITH IMPERATOR ZETA HAS BEEN CANCELLED. STATIONED AT SOUTH
+  BASE; REPAIR CORE TO BE DELIVERED ON D2351.12.26.
+  
+  !AEGIS PAX EUROPA
+  
+-==D2351.12.25:98212==- ERROR: NETWORK NOT RESPONDING
+-==D2351.12.26:98212==- ERROR: NETWORK NOT RESPONDING
+-==D2351.12.27:98212==- ERROR: NETWORK NOT RESPONDING
+-==D2351.12.28:98212==- EMERGENCY POWER EXHAUSTED
+                        INITIATING MAINFRAME SHUTDOWN

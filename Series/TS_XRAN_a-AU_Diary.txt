@@ -1,0 +1,142 @@
+Plot 0
+	name <High School Diary>
+	% Edited to v0.901 standard
+
+	% The PC will spot a ruined building which looks very familiar. Exploring it, the PC will
+	% find an old diary which mentions him.
+
+	% E1 is the scene for this episode; E2 is the scene for the next.
+	element1 <Grab 3>
+	element2 <Scene Town Target !Far 1>
+
+	% E3 is the character who might recover the diary if the PC can't.
+	element3 <Character !Near 1 Knowledge>
+
+	% E4 is the diary, E5 is the bookshelf.
+	element4 <Prefab>
+	element5 <Prefab>
+
+	% V1 = Initialization counter
+
+	start <ifItemOK E4 else GoDelete if= V1 0 else GoCheckMessage V= 1 1 Compose EWM E1 .entry Compose GET E4 .getit ItemVar= E4 1 E2 ItemVar= E5 1 E4>
+	.entry <ifYesNo 1 2 3 BLOCK goto GoStartCombat>
+	.getit <S= 101 1 S+ 102 1 N= 3 E2 XRBadThing NAV_XRBLostLove XPV 100 S= 105 -1 History 4 AdvancePlot 0>
+	GoDelete <S= 101 1 N= 3 E2 AdvancePlot 0>
+	GoCheckMessage <if= V1 2 Print 5 V= 1 3>
+
+	GoStartCombat <SavePos LoadD .scene PassVar 1 E5 PassVar 2 S103 PassVar 3 1 PassVar 4 5 Seekgate -1>
+	.scene <SCENE_ItemTower.txt>
+
+	Msg1 <As you draw near to \ELEMENT 1 , you notice an abandoned building which seems very familiar. Do you want to get out of your mecha and explore this place?>
+	Msg2 <Explore the building.>
+	Msg3 <Don't bother.>
+	Msg4 <You recovered the diary of someone who once knew you.>
+	Msg5 <This apartment building has been very badly damaged. Something awful must have happened here years ago.>
+
+sub
+	Persona 3
+	rumor <!3 often finds valuable things when searching through old buildings.>
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat V= 1 Threat S103 30 Say 4 Memo 5 AddChat 3 AddChat 4>
+	result2 <NewChat Say 2 Memo 3>
+	result3 <NewChat Say 6 Cash+ -V1 GiveKeyItem E4 Trigger GET E4>
+	result4 <NewChat Say 7>
+
+	Msg1 <I enjoy searching through abandoned places... Sometimes I find things which are very interesting.>
+	Msg1_1 <I love searching through abandoned buildings. Time causes all things to rust and decay... It's interesting to see how a once-new home can fall to bits over the years. Sometimes I even find valuable things.>
+	CMsg1_1 <ifG 0 NPCRep E3 5 Accept>
+	Msg1_11 <I hope someday to discover something valuable while exploring the ruins... Usually, though, all I turn up is junk. Lately I've been searching through some abandoned buildings near town. It's a bit dangerous, but will prepare me for later.>
+	CMsg1_11 <ifNPCSociable Accept>
+	Msg1_12 <Yes, I've been exploring abandoned buildings. No, I haven't found anything valuable... yet.>
+	CMsg1_12 <ifNPCShy Accept>
+	Msg1_13 <I'd like to mount an expedition to the PreZero ruins of the Trans-Siberian Megafortress... but as that's far away and dangerous, I content myself with exploring abandoned buildings around town.>
+	CMsg1_13 <ifNPCEasygoing Accept>
+	Msg1_14 <I'm never content to just read about things in books... I want to be the first to make exciting discoveries! That's why I've been exploring abandoned buildings near town. It's preparation for an expedition to the ruins.>
+	CMsg1_14 <ifNPCPassionate Accept>
+	Msg1_15 <You can find all kinds of interesting things if you search hard enough. I enjoy going into abandoned places to see what's been left behind.>
+	CMsg1_15 <ifNPCCheerful Accept>
+	Msg1_16 <Archaeology is a fascinating subject. I hope someday to research an actual prezero habitation... For right now, I'll have to be content with whatever ruins I can find near town.>
+	CMsg1_16 <ifNPCPragmatic Accept>
+	Msg1_17 <There are ancient mystical secrets to be found in the forgotten places... lost technology, crystal skulls, and other miraculous things. I often enjoy meditating in the ruins near town.>
+	CMsg1_17 <ifNPCSpiritual Accept>
+
+	Msg2 <Then you should know that outside of town is an old apartment complex. You can find it as you enter the city. I found a couple of good things there but I'm certain there's even more left to be discovered.>
+	Msg2_1 <You too? We should swap stories later. Well, the place I've been exploring lately is an old apartment complex. It's easy to find on the way into town. I'm sure there are interesting things on the upper floors.>
+	CMsg2_1 <ifG NPCRep E3 3 0 Accept>
+	Msg2_12 <Is that so? Well, if you look around, I'm certain you'll find something interesting.>
+	CMsg2_12 <ifNPCShy Accept>
+	Msg2_13 <There's an abandoned apartment complex on the way into town. I started searching it, but I doubt there's anything of intellectual value there. If you're just interested in loot you might be able to find something on the upper floor, though.>
+	CMsg2_13 <ifNPCEasygoing Accept>
+	Msg2_14 <There's an old apartment complex on the road to town. Something bad happened there many years ago... I'm hoping my studies can shed light on the tragedy.>
+	CMsg2_14 <ifNPCPassionate Accept>
+	Msg2_15 <There's a great abandoned building near here. As you're coming into town from the highway you go right past it. It's not very old so there won't be anything valuable there, but it is a fun place to look around.>
+	CMsg2_15 <ifNPCCheerful Accept>
+	Msg2_16 <Here, let me show you the data I've acquired. There's an old apartment building on the outskirts of town. It looks like something bad happened there, but so far I haven't been able to determine what.>
+	CMsg2_16 <ifNPCPragmatic Accept>
+	Msg2_17 <There is a derelect building on the way into town. It contains nothing that I desire, but maybe it is here you can find the answers you seek?>
+	CMsg2_17 <ifNPCSpiritual Accept>
+
+
+	Msg3 <\ELEMENT 3 said there's an abandoned building outside of \ELEMENT 1 .>
+	Msg4 <As a matter of fact I have. Just recently I came across an old book... I can let you have it for the low price of $ \VAL V1 , if you're into that sort of thing.>
+	Msg4_11 <Well, I found this old diary in the abandoned building I'm exploring. It's interesting reading but nothing of intellectual note. If you want, I can let you have it for $ \VAL V1 .>
+	CMsg4_11 <ifNPCSociable Accept>
+	Msg4_12 <I found some old books. If you want one, I can sell it for $ \VAL V1 .>
+	CMsg4_12 <ifNPCShy Accept>
+	Msg4_13 <I've found plenty of stuff... most of it worthless, unfortunately. I have a book that was acquired from my latest expedition. If you're interested, I can give it to you for $ \VAL V1 .>
+	CMsg4_13 <ifNPCEasygoing Accept>
+	Msg4_14 <Have I ever! Yes, I have so many artifacts I don't know what to do with them. My latest find is an old handwritten manuscript. If you were interested in owning it, I could give it to you for a mere $ \VAL V1 .>
+	CMsg4_14 <ifNPCPassionate Accept>
+	Msg4_15 <Why, are you interested in artifacts? That's great! I have an old handwritten manuscript that can be yours for the low price of $ \VAL V1 . How about it?>
+	CMsg4_15 <ifNPCCheerful Accept>
+	Msg4_16 <Just an old book... I've OCR'd the data already. If you want to look at the original, I can let you have it for $ \VAL V1 .>
+	CMsg4_16 <ifNPCPragmatic Accept>
+	Msg4_17 <I've discovered an old book. I haven't read it yet... I feel it was private. If you'd like to fund my expeditions, I can sell it to you for $ \VAL V1 .>
+	CMsg4_17 <ifNPCSpiritual Accept>
+
+	Msg5 <\ELEMENT 3 in \ELEMENT 1 offered to sell you a book for $ \VAL V1 .>
+	Msg6 <Here you go. It seems to be a diary or something. If you're interested in the past, I'm certain that this can help your studies.>
+	Msg6_11 <The juicy parts come near the end. I'm certain that if you investigate this book thoroughly you'll find something of interest.>
+	CMsg6_11 <ifNPCSociable Accept>
+	Msg6_12 <Here's the book.>
+	CMsg6_12 <ifNPCShy Accept>
+	Msg6_13 <Thanks. I hope that book is worth the price.>
+	CMsg6_13 <ifNPCEasygoing Accept>
+	Msg6_14 <Thanks. I'm certain you'll find that the book was well worth the price.>
+	CMsg6_14 <ifNPCPassionate Accept>
+	Msg6_15 <It's been a pleasure doing business with you.>
+	CMsg6_15 <ifNPCCheerful Accept>
+	Msg6_16 <Here it is. If you thoroughly investigate the text I'm sure you can learn something that I've missed.>
+	CMsg6_16 <ifNPCPragmatic Accept>
+	Msg6_17 <May this book bring you the enlightenment you seek.>
+	CMsg6_17 <ifNPCSpiritual Accept>
+
+	Msg7 <Any money I receive will go into funding my next expedition.>
+
+	Prompt1 <Find anything lately?>
+	Prompt2 <I often do that too.>
+	Prompt3 <I'll take it.>
+	CPrompt3 <ifG PC$ V1 Accept>
+	Prompt4 <That's more than I can afford.>
+
+end
+inv
+	Treasure 5
+	name <Diary>
+	place <3>
+	% V1 = The location for the next episode.
+	% V2 = Got XP for reading the diary
+	use <ifG 15 SkRoll 37 else Clue37 Print 1 if= V2 0 XPV 150 V= 2 1>
+	Clue37 <Print 1 Print 2 if= V2 0 XPV 150 V= 2 1>
+	Msg1 <The handwriting in this diary isn't yours, but it seems very familiar. Leafing through you notice that your name is mentioned several times. Could it be that this person was once in love with you..?>
+	Msg2 <The last entry in the diary indicates that the writer was moving to \SCENE V1 .>
+
+	STC Bookshelf-1
+	% V1 = The item number for the diary.
+	use <if# V1 0 else GoEmpty Print 2 GiveKeyItem V1 Trigger GET V1 V= 1 0>
+	GoEmpty <Print 1>
+	Msg1 <There's nothing else of interest in this bookcase.>
+	Msg2 <Searching through this bookshelf, you find an old diary.>
+
+end

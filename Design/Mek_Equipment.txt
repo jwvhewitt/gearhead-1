@@ -1,0 +1,345 @@
+%  ************************
+%  ***  MELEE  WEAPONS  ***
+%  ************************
+
+Melee 2
+Name <Mecha Knife>
+Scale 2
+Acc 1
+Speed 3
+
+Melee 5
+Name <Mecha Sword>
+Scale 2
+
+Melee 8
+Name <Mecha Axe>
+Scale 2
+Acc -1
+
+%  ********************************
+%  ***  ENERGY  MELEE  WEAPONS  ***
+%  ********************************
+
+EMelee 6
+Name <Plasma Lance>
+Scale 2
+Acc 1
+
+EMelee 15
+Name <Thermal Axe>
+Scale 2
+Speed 1
+Mass 7
+
+%  ****************************
+%  ***  BALLISTIC  WEAPONS  ***
+%  ****************************
+
+STC PC-8
+
+STC VC-5
+
+STC PC-8
+
+STC VC-5
+
+STC LAC-3
+
+STC AC-2
+
+STC AC-6
+
+STC AC-10
+
+STC MAC-4
+
+STC AC-2
+
+STC AC-6
+
+STC AC-10
+
+STC MAC-4
+
+STC AC-2
+
+STC AC-6
+
+STC AC-10
+
+STC MAC-4
+
+STC RG-8
+
+STC RG-16
+
+STC GR-12
+
+STC GR-24
+
+STC LAS-5
+
+STC LAS-10
+
+STC LAS-5
+
+STC LAS-10
+
+STC LAS-5
+
+STC PHS-8
+
+STC PHS-25
+
+STC PAR-2
+
+STC PAR-6
+
+STC PAR-13
+
+STC ICML-12
+
+STC HWML-2
+
+STC HWML-4
+
+STC HWML-8
+
+STC LRL-16
+
+STC LRL-32
+
+STC LRL-48
+
+STC LRL-16
+
+STC LRL-32
+
+STC LRL-48
+
+STC NUKE-1
+
+STC HRP-6
+
+STC HRP-12
+
+STC SWML-20
+
+STC SWML-40
+
+STC SWML-60
+
+STC SML-5
+
+STC SWML-20
+
+STC SWML-40
+
+STC SWML-60
+
+STC SWML-120
+
+STC SML-5
+
+STC SML-5
+
+STC SML-5
+
+MLauncher 10
+Name <Drone Launcher>
+Desig <DRL-3>
+Scale 2
+Range 6
+Magazine 3
+sub
+	Rockets 10
+	Type <DRONE>
+end
+
+MLauncher 10
+Name <Drone Launcher>
+Desig <DRL-12>
+Scale 2
+Range 6
+Magazine 12
+sub
+	Rockets 10
+	Type <DRONE>
+end
+
+%  *****************
+%  ***  SHIELDS  ***
+%  *****************
+
+Shield 2
+Name <Small Shield>
+DefBonus -2
+Scale 2
+
+Shield 4
+Name <Medium Shield>
+DefBonus -1
+Scale 2
+
+Shield 4
+Name <Medium Shield>
+DefBonus -1
+Scale 2
+
+Shield 4
+Name <Medium Shield>
+DefBonus -1
+Scale 2
+
+Shield 6
+Name <Large Shield>
+Scale 2
+
+Shield 6
+Name <Large Shield>
+Scale 2
+
+Shield 8
+Name <Body Shield>
+DefBonus 1
+Scale 2
+
+EShield 3
+Name <Small Beam Shield>
+DefBonus 1
+Scale 2
+
+EShield 5
+Name <Medium Beam Shield>
+Scale 2
+
+EShield 5
+Name <Medium Beam Shield>
+Scale 2
+
+EShield 9
+Name <Large Beam Shield>
+DefBonus -1
+Scale 2
+
+%  *****************
+%  ***  SENSORS  ***
+%  *****************
+
+Sensor 1
+
+Sensor 2
+
+Sensor 3
+
+Sensor 4
+
+Sensor 5
+
+Sensor 6
+
+Sensor 7
+
+Sensor 8
+
+Sensor 9
+
+Sensor 10
+
+TarComp 1
+
+TarComp 2
+
+TarComp 3
+
+TarComp 5
+
+TarComp 7
+
+TarComp 9
+
+ECM 1
+
+ECM 2
+
+ECM 3
+
+ECM 4
+
+ECM 5
+
+ECM 6
+
+%  **************************
+%  ***  MOVEMENT SYSTEMS  ***
+%  **************************
+
+Wheels 3
+Scale 2
+
+Wheels 5
+Scale 2
+
+Wheels 7
+Scale 2
+
+Tracks 3
+Scale 2
+
+Tracks 5
+Scale 2
+
+Tracks 7
+Scale 2
+
+HoverJet 3
+Scale 2
+
+HoverJet 5
+Scale 2
+
+HoverJet 7
+Scale 2
+
+Flight 2
+Scale 2
+
+Flight 3
+Scale 2
+
+Flight 4
+Scale 2
+
+Flight 5
+Scale 2
+
+Flight 7
+Scale 2
+
+ArcJet 1
+Scale 2
+
+ArcJet 2
+Scale 2
+
+ArcJet 3
+Scale 2
+
+ArcJet 5
+Scale 2
+
+ArcJet 7
+Scale 2
+
+Overcharger 1
+Scale 2
+
+Overcharger 3
+Scale 2
+
+Overcharger 5
+Scale 2
+
+Overcharger 7
+Scale 2

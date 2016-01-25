@@ -1,0 +1,64 @@
+Battroid 2
+Name <Strongarm>
+Desig <DOA-13>
+SDL_Sprite <btr_strongarm.png>
+Scale 1
+
+Mod Head
+	Size 1
+	Armor 2
+	Mass 3
+	sub
+		Sensor 2
+	end
+
+Mod Body
+	Armor 2
+	Mass 3
+	sub
+		CPit
+		Armor 1
+
+		Mount
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 2
+	Mass 3
+	sub
+		Hand
+
+		Gun 8
+		Name <Thugg Cannon>
+		Acc 1
+		Speed 3
+		Magazine 36
+		sub
+			Ammo 8
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 2
+	Mass 3
+	sub
+		Hand
+		inv
+			Melee 7
+			Name <Mace>
+			Speed 1
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 2
+	Mass 3
+
+Mod Leg
+	Name <Left Leg>
+	Armor 2
+	Mass 3
+end

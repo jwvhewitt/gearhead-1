@@ -1,0 +1,172 @@
+Plot 0
+	name <PLOT: BanditJob3>
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Combat Indicator
+
+	element1 <Character Bandit Cheerful HasMecha>
+	% Element 8 = Difficulcy Level
+
+	rumor <!1 is plotting something.>
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 12500>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -1         V= 2 2>
+	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50                  V= 2 2>
+
+sub
+	Persona 1
+	% The NPC who will offer the job.
+	% PCs who don't have mecha will be sent elsewhere...
+	% Only PCs with good reaction score will be offered a job.
+	greeting <NewChat ifG PCMeks 0 else GoNoMeks ifG React 75 else GoMedReact Goto GoJobDesc>
+
+	% PCs with a medium reaction score have a chance to get offered a job,
+	% if they make a good impression on the NPC.
+	GoMedReact <ifG React 25 else GoMed2 Say 22 AddChat 4 AddChat 5>
+
+	GoMed2 <ifG 0 PCRep 2 else GoLowReact Say 3 AddChat 1 AddChat 2>
+
+	% PCs with a low reaction score will most likely be told to buzz off.
+	GoLowReact <EndChat Say 3>
+
+	% With no meks, the PC won't get offered a job at all, but may be told
+	% about it.
+	GoNoMeks <ifG React 35 else GoNMMedReact Say 1>
+	GoNMMedReact <Say 3>
+
+	% Result 1 -> The player will go away
+	result1 <NewChat AddReact -1 Say 2>
+
+	% Result 2 -> The player will try to impress the NPC with CONVERSATION
+	result2 <NewChat ifG SkRoll 19 10 else GoNoCon Say 9 AddChat 4 AddChat 5>
+	GoNoCon <ifG -15 PCRep 1 else GoNoVillain Say 4 AddChat 4 AddChat 5>
+	GoNoVillain <ifG -15 PCRep 2 else GoNoChaos Say 5 AddChat 4 AddChat 5>
+	GoNoChaos <Say 6>
+
+
+	% Result 4 -> Go straight to the job description.
+	result4 <Goto GoJobDesc>
+
+	% Result 5 -> Go away.
+	result5 <NewChat Say 10>
+
+	% The NPC will describe the job being offered. This will depend upon the
+	% PC's reputation.
+	% V1 = Threat Value of Encounter
+	GoJobDesc <ifG PCRep 6 50 Else GoLvl9 V= 1 12000000 Say 11 E= 8 10 goto GoChoose>
+	GoLvl9    <ifG PCRep 6 40 Else GoLvl8 V= 1  6500000 Say 12 E= 8 9 goto GoChoose>
+	GoLvl8    <ifG PCRep 6 35 Else GoLvl7 V= 1  3300000 Say 13 E= 8 8 goto GoChoose>
+	GoLvl7    <ifG PCRep 6 30 Else GoLvl6 V= 1  1700000 Say 14 E= 8 7 goto GoChoose>
+	GoLvl6    <ifG PCRep 6 25 Else GoLvl5 V= 1   900000 Say 15 E= 8 6 goto GoChoose>
+	GoLvl5    <ifG PCRep 6 20 Else GoLvl4 V= 1   500000 Say 16 E= 8 5 goto GoChoose>
+	GoLvl4    <ifG PCRep 6 15 Else GoLvl3 V= 1   300000 Say 17 E= 8 4 goto GoChoose>
+	GoLvl3    <ifG PCRep 6 10 Else GoLvl2 V= 1   200000 Say 18 E= 8 3 goto GoChoose>
+	GoLvl2    <ifG PCRep 6  5 Else GoLvl1 V= 1   100000 Say 19 E= 8 2 goto GoChoose>
+	GoLvl1    <ifG PCRep 6  0 Else GoLvl0 V= 1    50000 Say 20 E= 8 1 goto GoChoose>
+	GoLvl0                               <V= 1    25000 Say 20 E= 8 1 goto GoChoose>
+
+	% The encounter has been described, and a threat rating been set.
+	% See whether or not the PC will accept the job.
+	GoChoose <NewChat AddChat 6>
+
+	Result6 <EndChat Say 21 Reputation 2 -1 AddReact 3 P= 2 1 SavePos Dynamic 2 V1 FrzNU1 FrzNU2 ifG -20 PCRep 2 Encounter 25 0 .enemydata>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Salvage Return>
+	.enemydata <Lawful +PCRA +ECRA>
+
+	Msg1 <You know what you need? If you could steal a mecha, you'd be all set for the high life.>
+	Msg2 <Then why are you wasting my time!? You know, some of us have jobs, we can't just stand around playing games all day.>
+	Msg3 <I'm working. Unless you have some very important news for me I don't want to hear it.>
+	Msg4 <Er... I guess it could be dangerous for me to not tell you, right? I'm planning a raid. You could take part in the action, for a sizable cut, if you wanted...>
+	Msg5 <You've done this kind of work before. Maybe not this exactly, but something like it... I'm planning a raid. You could help us out, if you'd like a share of the loot.>
+
+	Msg6 <Believe me, what I'm planning is something that you're better off not knowing anything about.>
+
+
+	Msg9 <You really want to know? Okay, I'll tell you. I'm planning a raid. You want to be a bandit? How'd you like to sign up for this mission?>
+	Msg10 <That's too bad, but you gotta do what you gotta do.>
+
+	Msg11 <I've learned about a shipment of computer chips ripe for the picking. You disable the guards, I'll ransack the trucks. The pay is $150000 plus whatever salvage you can manage.>
+	Msg12 <My next plan is to rob a shipment of audio equipment coming from the factory. Pay is $80000 and salvage.>
+	Msg13 <A crate of fine imported coffee is our next target. The job is worth $40000 plus salvage.>
+	Msg14 <An armored car transporting several bars of plutonium is our target. Normally I don't deal in that kind of stuff but there's a buyer already lined up. I can offer $25000 and salvage.>
+	Msg15 <We're going to raid a shipment of bootleg video game CDs. I can offer $12000 and salvage rights for the job.>
+	Msg16 <There's a shipment of pornographic videodiscs heading through town, and I want them... uh, for business purposes only, of course. Pay is $6000 plus mecha salvage.>
+	Msg17 <A truck full of brand-name sneakers is my next target. Eliminate the guards for $3600 plus salvage.>
+	Msg18 <Word on the street is that a shipment of toothpaste will be coming through any day now. I plan to raid the convoy. I can offer $2400 and salvage for you to take part.>
+	Msg19 <I found out about a truck full of disposable chopsticks that's ours for the taking. Pay is $1250 plus salvage for you to take out the convoy guards. I don't expect much resistance.>
+	Msg20 <There's a shipment of bubblewrap passing through the area. I know it's not much but beggars can't be choosers. Anyhow, we steal the shipment and you earn $600. Sound good?>
+
+	Msg21 <Here's the details. Take out the guard meks, then meet back here to divvy up the loot.>
+
+	Msg22 <I like you, so I'm gonna let you in on a secret. I've got a raid set up and ready to go. If you were interested in a cut of the take, I'd let you in on the action.>
+
+	prompt1 <Nope, no important news.>
+	prompt2 <Tell me what you're planning.>
+
+	prompt4 <I could do that.>
+	prompt5 <I don't need that kind of job.>
+	prompt6 <I'm ready.>
+
+
+	Plot 1
+		% The player lost the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		% The exact message given by the NPC will vary depending on
+		% whether or not the PC is well-liked...
+		greeting <NewChat AdvancePlot 0 ifG React 30 else GoMedReact Say 1>
+		GoMedReact <ifG PCRep 6 25 else GoMedRenown Say 2>
+		GoMedRenown <ifG React 10 else GoLowReact Say 3>
+		GoLowReact <ifG PCRep 6 5 else GoLowRenown Say 4>
+		GoLowRenown <Say 5>
+
+		Msg1 <That was bad. Honestly, I didn't think they'd have so many guards...>
+		Msg2 <Wow, they really got lucky that time... We should've annihilated the lot of them. I don't understand why we lost.>
+		Msg3 <I thought that mission was going to be easy... They just got lucky, that's all.>
+		Msg4 <You lost!? How could you have possibly lost!? That mission was so easy...>
+		Msg5 <I can't believe that you lost that mission. You are such a wangtta.>
+	end
+
+	Plot 2
+		% The player won the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat AdvancePlot 0 AddReact 3 if= E8 10 Else GoLvl9 CashPrize 150000 Say 1>
+		GoLvl9 <if= E8 9 Else GoLvl8 CashPrize 80000 Say 2>
+		GoLvl8 <if= E8 8 Else GoLvl7 CashPrize 40000 Say 3>
+		GoLvl7 <if= E8 7 Else GoLvl6 CashPrize 25000 Say 4>
+		GoLvl6 <if= E8 6 Else GoLvl5 CashPrize 12000 Say 5>
+		GoLvl5 <if= E8 5 Else GoLvl4 CashPrize  6000 Say 6>
+		GoLvl4 <if= E8 4 Else GoLvl3 CashPrize  3600 Say 7>
+		GoLvl3 <if= E8 3 Else GoLvl2 CashPrize  2400 Say 8>
+		GoLvl2 <if= E8 2 Else GoLvl1 CashPrize  1250 Say 9>
+		GoLvl1 <CashPrize 600 Say 10>
+
+		Msg1 <We have the chips. A few of them were damaged in the fight, but the rest should make us a tidy profit. Here's your share of the take.>
+		Msg2 <We'll have no problem unloading these stolen audio sets... Everybody loves a bargain. Here's your share of the profits.>
+		Msg3 <The coffee is ours. I know a shady cafe that'll be more than happy to take this off our hands. Here's your share, like I promised.>
+		Msg4 <The plutonium has been sent to its buyer... now if you'll excuse me I'm gonna head over to the hospital and get checked for radiation syndrome. That armored box didn't look too safe. Anyhow, here's your wages.>
+		Msg5 <We did it! Here's your pay.>
+		Msg6 <The wages of sin are... exactly $800, in this case. Here's your pay.>
+		Msg7 <We have captured the sneaker shipment. These things have a higher street value than plutonium... Here's your pay. Keep in touch.>
+		Msg8 <I've made contact with a quack dentist who will help us unload the stolen goods. Here's your share of the loot. I look forward to working with you again.>
+		Msg9 <With the shipment of chopsticks in our posession, we can extort all the chinese take-outs in the city! I am so brilliant. Here's your pay; let's work together again.>
+		Msg10 <Bwa ha ha ha!!! Once we sell all the bubble-wrap that we stole, we'll be able to finance bigger and better heists! Maybe next time we can steal instant ramen! Anyhow, here's your share of the loot.>
+	end
+
+
+end
+

@@ -1,0 +1,323 @@
+Story
+% The player has won the right to compete at Robot Warriors. Yay!
+name <ARC: RobotWarriors>
+
+% V2 = Combat Entered Status ( 0: Off / 1: On )
+% V3 = if player won last match = 1, if player lost = -1
+% V4 = Special Encounter Status
+
+% Craig
+Stat 1 26
+Element1 <Chara>
+
+% Philippa
+stat 2 27
+Element2 <Chara>
+
+% Johnathan
+stat 3 28
+Element3 <Chara>
+
+% E4 is the Gladius, the prize to be won, a custom-built
+% mecha from Maquise Ironworks.
+element4 <Prefab>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	% A win increases G24, bringing the player closer to a tournament win.
+	% A loss decreases G24, moving the player further away.
+	NU1 <if= T1 0 if= V2 1  Reputation 6 -5         V= 2 0   V= 3 -1   ifG G24 0 ifG 10 G24 G+ 24 -1>
+	NU2 <if= T2 0 if= V2 1  XPV 100 Reputation 6 1   V= 2 0   V= 3  1   G+ 24 1>
+
+sub
+
+	Persona 1
+	% Craig, the host of Robot Warriors.
+	% V1 -> Enemy PV
+	% V2 -> Arena Recharge Time
+	% V3 -> Arena Rank
+	rumor <The new season of Robot Warriors has just begun!>
+	greeting <NewChat if= S4 2 else GoNoSpecial  ifPersona E3 else GoJohnDied Say 14>
+	GoJohnDied <Say 15  S= 4 1>
+	GoNoSpecial <if= G24 10 else GoCheckWin G+ 24 1 Say 12 XPV 1000 CashPrize Reward Threat V1 150 250 GiveKeyItem N4 Reputation 6 10 History 17>
+	GoCheckWin <ifG G24 V3 else GoCheckTime V= 3 G24 V+ 1 d6 V+ 1 d6  CashPrize Reward Threat V1 125 200  Say 16>
+	GoCheckTime <ifG V2 ComTime else GoCheckMeks Say 1>
+	GoCheckMeks <if= PCMeks 0 else GoStartContest Say 2 AddChat 1>
+	GoStartContest <ifG G24 10 else GoFinal Say 6 AddChat 2>
+	GoFinal <ifG G24 8 else GoInFinals Say 11 AddChat 2>
+	GoInFinals <ifG G24 6 else GoSemiFinals Say 7 AddChat 2>
+	GoSemiFinals <ifG G24 4 else GoHeats Say 8 AddChat 2>
+	GoHeats <ifG G24 1 else GoFirst Say 9 AddChat 2>
+	GoFirst <Say 10 AddChat 2>
+
+	result1 <NewChat ifG PCRep 6 40 else GoLowRep Say 3>
+	GoLowRep <ifG React 50 else GoLowReact Say 4>
+	GoLowReact <Say 5>
+
+	Result2 <EndChat if= V1 0 else GoStartCombat V= 1 45 goto GoStartCombat>
+	GoStartCombat <Say 13 SavePos Dynamic 2 Threat V1 125 FrzNU1 FrzNU2 V= 2 ComTime V+ 2 35000 S= 2 1 Encounter 50 0 .EnemyData SetMapType ArenaMap SetMapString .map>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Return>
+	.map <SOLO>
+	.EnemyData <ArchEnemy Renowned>
+
+	Msg1 <Right now the arena is being prepared for the next battle.>
+	Msg2 <The next battle is about to start. Are your mecha ready?>
+	Msg3 <Really? Well, I'm sure a famous pilot like you will have no trouble getting a new one.>
+	Msg4 <Come on now. I know that you'll be able to find another one. You're champion material, after all.>
+	Msg5 <If you don't have a mecha, you can't take part in the contest. Better find one quick or you'll be disqualified.>
+
+	Msg6 <Ah, one of our Robot Warriors legends is back for another go at it. We've got some new compeditors, they think they can take you, if you'd like to have a go at it.>
+	Msg7 <You're in the finals now. Just a few more matches and you'll be fighting for the championship. The competition is getting really harsh... Best of luck, and may the best pilot win!>
+	Msg8 <You've made it to the semi-finals. You've shown yourself to be better than most... but could you be the best? Just a few more battles and you'll be in our series finals. It's time for mayhem!>
+	Msg9 <You've won a few fights. Maybe you're good enough to go all the way. There's only one way to find out, and it's a hard unforgiving road. Are you tough enough for Robot Warriors?>
+	Msg10 <Welcome to Robot Warriors, where armored titans come to bash each other senseless. Think you have what it takes? Well, let's find out. Let the trials begin!>
+
+	Msg11 <This is it, your final bout... Make it through this one and you'll be crowned Robot Warriors champion! Are you nervous? You should be!>
+	Msg12 <LADIES AND GENTLEMEN, WE HAVE A WINNER!!! Congradulations upon your tenth Robot Warriors victory! Enjoy your prizes and newfound fame!>
+	Msg13 <Let the games begin!!!>
+	Msg14 <Go talk to Johnathan about that special rematch you just took part in.>
+	Msg15 <Shame about what happened to Johnathan, wasn't it? He was one fine sportscaster.>
+
+	Msg16 <Good job out there. Here's your prize money, now go get your robot cleaned up before the next match.>
+	Msg17 <You were crowned Robot Warriors grand champion.>
+
+	Prompt1 <I don't have any meks...>
+	Prompt2 <I'm ready to fight!>
+
+
+	Persona 2
+	% Philippa, the mistress of the pit.
+	% Will offer repair service.
+	% V1 => First Visit / Won Series
+	greeting <NewChat AddChat 1 if= V1 0 else GoWS1 V= 1 1 Say 7>
+	GoWS1 <if= V1 1 else GoR1 ifG G24 9 else GoR1 V= 1 2 AddReact 10 ifG React 50 else GoWS2 Say 8>
+	GoWS2 <ifG React 10 else GoWS3 Say 9>
+	GoWS3 <Say 10>
+	GoR1 <ifG React 50 else GoR2 Say 1>
+	goR2 <ifG React 35 else GoR3 Say 2>
+	goR3 <ifG React 20 else GoR4 Say 3>
+	goR4 <ifG React 5 else GoR5 Say 4>
+	goR5 <ifG React -10 else GoR6 Say 5>
+	GoR6 <Say 6>
+
+	result1 <Say 11 Shop Wares EndChat Say 12>
+	Wares <Mecha MExtra>
+
+	Msg1 <It's a privilege to see you in the Robot Warriors pit again. You know I'm not supposed to have any favorites, but I think we both know who I'm rooting for. Do you need any help?>
+	Msg2 <Need oil? Armor patches? An entirely new battle-bot? All the amenities of the pit are here at your disposal. Get ready for your next battle.>
+	Msg3 <I have a feeling that you and your machine could go a long way in this competition. Keep your gear in top shape; I don't want to be disappointed.>
+	Msg4 <It's important to keep your mecha in shape between battles. Always stop by to have your damage repaired and your ammunition reloaded.>
+	Msg5 <You're still here? Well, you might want to keep your mecha in shape, since there's a lot of folks here in the pit who are eager to wreck it up again.>
+	Msg6 <Back for more punishment, eh? It's always a pleasure watching your robot get trashed. The arena battles are more interesting if both machines start out fully functional, so you might as well get repaired.>
+	Msg7 <Welcome to the pit. This is where our Robot Warriors competitors keep their machines in top shape. If you need anything, you can come see me.>
+	Msg8 <Congradulations!!! I knew that you were going to win the tournament! You've come a long way, overcome a lot of problems, and defeated a lot of excellent pilots to win the championship. Enjoy your victory, you certainly deserve it!>
+	Msg9 <Good job! You've come a long way, overcome a lot of obstacles, and defeated a lot of very good pilots to win the championship.>
+	Msg10 <Congradulations! This has been a great suprise for me. You know, a lot of people said that you didn't have what it takes to be a Robot Warriors champion, but I guess you've showed them. That was a smashing victory. Good job.>
+
+	msg11 <Here's what we have to offer.>
+	Msg12 <May the best robot be victorious!>
+
+	Prompt1 <I need repairs.>
+
+
+	Persona 3
+	% Johnathan, the colorful commentator.
+	% Will rate the player's performance... Tell how many wins,
+	% et cetera.
+	% V1 = Victory count at which the revenge battle becomes available.
+	greeting <NewChat if= V1 0 else GoStart V= 1 12 V+ 1 d20 Goto GoStart>
+	GoStart <if= S4 2 else GoNoRevengeYet  S= 4 1  if= S3 1 else GoLostRevengeMatch  Say 7  CashPrize 1000000  XPV 1500 History 9>
+	GoLostRevengeMatch <Say 8>
+	GoNoRevengeYet <if= S4 0 else GoCheckWin  ifG G24 V1 else GoCheckWin  Say 3 S= 4 1  AddChat 1  AddChat 2>
+	GoCheckWin <ifG G24 10 else GoNoWin Say 1>
+	GoNoWin <Say 2>
+
+	result1 <goto GoSetCombat>
+	result2 <NewChat  Say 4  AddChat 3  AddChat 4>
+	result3 <goto GoSetCombat>
+	result4 <NewChat Say 5>
+
+	GoSetCombat <Say 6  EndChat  S= 4 2  SavePos  Dynamic 2 30000000 FrzNU1 FrzNU2 S= 2 1 Encounter 90 0 .EnemyData SetMapType ArenaMap SetMapString .map>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Return>
+	.EnemyData <ArchEnemy Ego Renowned>
+	.map <SOLO>
+
+	msg1 <You have cleared all ten stages of competition and are our tournament champion. Congradulations!>
+	msg2 <You are currently at challenge level \VAL G24 out of 10.>
+	msg3 <You're one of the perrenial favorites here at Robot Warriors. A few of our past compeditors- who you've beaten- want a rematch with our greatest champion of all time.>
+	Msg4 <This is a special event, and it's the only chance you'll get. If you can't take part in the combat I'm afraid that I'll have to declare one of the other pilots the winner.>
+	Msg5 <That's too bad. It would have really improved our ratings if you had taken part...>
+	Msg6 <Head on over to the arena and take your starting position. The match will start in just a few minutes.>
+	Msg7 <I don't believe it! They threw everything they had into the melee, and you still came out on top! What an amazing battle that was! Here, I'm pleased to give you this prize money. Congradulations!>
+	Msg8 <Wow, you really got bushwhacked out there. They said they weren't going to hold back anything and I guess you got to see that first hand.>
+	Msg9 <You won the Robot Warriors revenge match.>
+
+	Prompt1 <I'll take on all comers!>
+	Prompt2 <Maybe some other time...>
+	Prompt3 <Alright, I'll fight them.>
+	Prompt4 <Sorry, I can't fight now.>
+end
+inv
+
+Battroid 7
+name <Gladius>
+desig <RIG-03a>
+mod head
+	Armor 5
+	Size 5
+	mass -5
+	sub
+		Sensor 6
+
+		STC VC-5
+		type <INTERCEPT>
+		name <Vulcan Interceptor>
+	end
+	inv
+		HeadArmor 4
+		Mass -5
+	end
+mod body
+	Armor 7
+	mass -7
+	sub
+		CPit
+		Armor 2
+		Mass -1
+
+		TarComp 4
+
+		Gyro 5
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		STC LAS-5
+		STC LAS-5
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 5
+		Mass -6
+		sub
+			ArcJet 4
+		end
+	end
+
+
+mod arm
+	name <Right Arm>
+	Size 6
+	Armor 5
+	mass -6
+	sub
+		Hand
+		name <Right Hand>
+		inv
+			EMelee 20
+			name <Golden Axe>
+			Acc 2
+			type <Extend Thrown Return Haywire>
+			Mass 5
+		end
+
+		Mount
+		NAME <Right Arm Mount>
+		inv
+			STC LAS-10
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC ICML-12
+		end
+	end
+
+mod arm
+	name <Left Arm>
+	Size 6
+	Armor 5
+	mass -6
+	sub
+		Hand
+		name <Left Hand>
+
+		Mount
+		NAME <Left Arm Mount>
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC ICML-12
+		end
+
+		EShield 7
+		DefBonus 2
+		name <Fire Shield>
+	end
+
+
+mod leg
+	name <Right Leg>
+	Armor 7
+	mass -7
+	sub
+		Mount
+		name <Right Leg Mount>
+		inv
+			STC SWML-20
+			name <Glitter Missiles>
+			type <Overload>
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			ArcJet 6
+		end
+	end
+
+mod leg
+	name <Left Leg>
+	Armor 7
+	mass -7
+	sub
+		Mount
+		name <Left Leg Mount>
+		inv
+			STC SWML-20
+			name <Glitter Missiles>
+			type <Overload>
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			ArcJet 6
+		end
+	end
+
+end
+
+
+end

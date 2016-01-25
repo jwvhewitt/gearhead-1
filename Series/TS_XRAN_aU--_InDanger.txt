@@ -1,0 +1,217 @@
+Plot 0
+	name <PLOT: You are in Danger!>
+	% Edited to v0.901 standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the scene to be used in the second part of this episode.
+	Element1 <Grab 3>
+	Element2 <Prefab>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Scene Town Target !Far 1 !Far 3>
+	Element5 <Faction GoodEnemy>
+
+	% V1 = Time limit for move
+	% V2 = Email sent indicator
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 dies, load a new plot.
+	start <ifPersona E2 else GoDelete if# V1 0 ifG ComTime V1 MoveCHar E2 E4 N= 3 E4 AdvancePlot 1>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	5Min <if= V2 0 if= d200 1 ifG PCCharm d40 Email 1 P= 2 1>
+
+	Msg1 <\ELEMENT 2 @ \ELEMENT 1 :// Meet me in \ELEMENT 1 . It's a matter of life or death.>
+	Msg1_1 <\ELEMENT 2 @ \ELEMENT 1 :// I have some information for you.>
+	Msg1_2 <\ELEMENT 2 @ \ELEMENT 1 :// Looking for answers? I've got just what you need.>
+	Msg1_3 <\ELEMENT 2 @ \ELEMENT 1 :// I need to speak with you right away.>
+	Msg1_4 <\ELEMENT 2 @ \ELEMENT 1 :// I've got a message for you. Come see me in \ELEMENT 1 .>
+
+
+sub
+	Persona 2
+	rumor <!2 seems to know something about you...>
+
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	% Freze the NPC and start the countdown until the meeting.
+	GoStartCountdown <P= 1 ComTime P+ 1 86400 Memo 101 FreezeChar E2>
+
+	result1 <NewChat Say 2 Goto GoStartCountdown>
+	result2 <NewChat Say 3 Goto GoStartCountdown>
+
+	Msg1 <I know who you are, and I must warn you... You are in grave danger here.>
+	Msg1_1 <I've been trying to contact you for some time now. I have to tell you that you're in a great deal of danger right now.>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <Hello \PC . You are in great danger here...>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <Hello \PC ... I've been waiting to meet you. I don't want you to panic, but you've got to know that we're both in a lot of danger right now. Want a stick of gum?>
+	CMsg1_3 <ifNPCEasygoing Accept>
+	Msg1_4 <At last I found you! \PC , your life is in extreme danger!>
+	CMsg1_4 <ifNPCPassionate Accept>
+	Msg1_6 <I know who you are, \PC , and I've come to warn you... There are people who will not rest until you are dead. Your life is in grave danger.>
+	CMsg1_6 <ifNPCMelancholy Accept>
+	Msg1_7 <Hello \PC . I came here to warn you... the people who killed your family are after you as well. You're in serious danger.>
+	CMsg1_7 <if= XRB NAV_XRBFamilyDied Accept>
+	Msg1_8 <I know who you are, or at least who you used to be before the accident. You're in a lot of danger right now.>
+	CMsg1_8 <if= XRM NAV_XRMAmnesia Accept>
+
+	Msg2 <You could say that we have a common enemy. I can tell you more, but not here... Meet me in \ELEMENT 4 tomorrow.>
+	Msg2_1 <We have a common enemy. Their eyes are everywhere... they're monitoring us right now. I could say more, but not here. Meet me in \ELEMENT 4 tomorrow and we can talk again.>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <That's not important. Meet me in \ELEMENT 4 tomorrow and I can tell you more.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <No time to chat, I'm afraid, if I don't get out of here soon we could have a scene on our hands. I'll tell you what: meet me tomorrow in \ELEMENT 4 and I'll tell you what I can.>
+	CMsg2_3 <ifNPCEasygoing Accept>
+	Msg2_4 <I know all kinds of things. Look, this isn't a safe place to talk. Meet me tomorrow in \ELEMENT 4 ... come prepared for a fight.>
+	CMsg2_4 <ifNPCPassionate Accept>
+	Msg2_5 <Everybody knows the great \PC ! Your skills are famous, and they're probably the only reason you're still alive. This isn't a safe place to talk... meet me tomorrow in \ELEMENT 4 and I can tell you more.>
+	CMsg2_5 <ifNPCCheerful ifG PCRep 6 50 Accept>
+	Msg2_6 <An even more important question is, why do "they" know who you are? It's too dangerous to keep talking here... meet me tomorrow in \ELEMENT 4 .>
+	CMsg2_6 <ifNPCMelancholy Accept>
+	Msg2_7 <We have a common enemy, one that took something as precious from me as your family was to you... This isn't a safe place to be talking. Let's meet again tomorrow in \ELEMENT 4 .>
+	CMsg2_7 <if= XRB NAV_XRBFamilyDied Accept>
+	Msg2_8 <We met some time before your accident. I know who it is that tried to kill you... but we can't speak here, it's too risky. Meet me tomorrow in \ELEMENT 4 .>
+	CMsg2_8 <if= XRM NAV_XRMAmnesia Accept>
+	Msg2_9 <Your family has so many secrets already, you can just accept me as another one of those. This isn't a safe place to talk... meet me tomorrow in \ELEMENT 4 and I'll tell you more.>
+	CMsg2_9 <if= XRM NAV_XRMFamilySecret Accept>
+
+	Msg3 <There's someone trying to kill you. I can tell you more, but not here... Meet me in \ELEMENT 4 in tomorrow.>
+	Msg3_1 <I'd love to go into the details about the plot on your life right now, but this isn't a good place. We're being observed. Meet me tomorrow in \ELEMENT 4 and I'll tell you more.>
+	CMsg3_1 <ifNPCSociable Accept>
+	Msg3_2 <Someone's trying to kill you. Meet me in \ELEMENT 4 tomorrow and I can tell you more.>
+	CMsg3_2 <ifNPCShy Accept>
+	Msg3_3 <I wouldn't worry about it, just some folks trying to kill you. This isn't a good place to talk... meet me tomorrow in \ELEMENT 4 and we can have a better discussion.>
+	CMsg3_3 <ifNPCEasygoing Accept>
+	Msg3_5 <The kind of danger where someone's trying to kill you, you know. Look, it's not safe here. Let's meet again tomorrow in \ELEMENT 4 .>
+	CMsg3_5 <ifNPCCheerful Accept>
+	Msg3_6 <You've been marked for death. Personally, I don't like your odds... meet me tomorrow in \ELEMENT 4 and I can give you some more information.>
+	CMsg3_6 <ifNPCMelancholy Accept>
+	Msg3_7 <Your family was murdered to protect a secret. You're a loose end, one they cannot afford to keep alive. This isn't a good place to talk... meet me tomorrow in \ELEMENT 4 and I can tell you more.>
+	CMsg3_7 <if= XRB NAV_XRBFamilyDied Accept>
+	Msg3_8 <Mortal danger, of course. Some of your associates from before the accident are quite disappointed that you didn't die. They intend to finish the job. Meet me tomorrow in \ELEMENT 4 and we can speak further about this.>
+	CMsg3_8 <if= XRM NAV_XRMAmnesia Accept>
+
+	% 101 - Memo message
+	Msg101 <\ELEMENT 2 asked you to meet in \ELEMENT 4 at \DATE P1 .>
+
+	Prompt1 <How do you know who I am?>
+	Prompt1_1 <How do you know me?>
+	Prompt2 <What kind of danger?>
+	Prompt2_1 <Danger? What's that about danger?>
+
+	Plot 1
+		% The NPC has moved to the new location, and is now
+		% waiting for the PC to arrive.
+
+		% V1 = Initialization Counter
+		% V2 = Has entered combat
+
+		% On a cleanup request just delete this plot.
+		cleanup <AdvancePlot 0>
+
+		% If Persona E2 dies, load a new plot.
+		% Perform initialization here as well.
+		start <ifPersona E2 else GoDelete if= V1 0 V= 1 1 Memo 1 Compose EWM E4 .startcombat>
+		GoDelete <S= 101 1 S= 105 -1 N= 3 E3 AdvancePlot 0>
+		.startcombat <Block ifYesNo 101 102 103 SavePos P= 2 1 Dynamic 2 Threat S103 150 .nu1 .nu2 Encounter 0 25 .nodesc PassVar 1 E4>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Salvage Exit L1 SeekGate 1>
+
+		Msg1 <\ELEMENT 2 asked you to come to \ELEMENT 4 . It's time to go.>
+
+		Msg101 <While appraoching \ELEMENT 4 , you are approached by a force of hostile mecha. They seem to have been waiting for you.>
+		Msg102 <Attack them!>
+		Msg103 <Run away.>
+
+	sub
+		Persona 2
+		greeting <NewChat  Say 1 AddChat 1 AddChat 2>
+
+		result1 <Reputation 4 -d8 Goto result2>
+		result2 <NewChat if= d3 1 else GoR1Faction ifPersona N1 else GoR1Faction  XREnemy NAV_XRECharacter Say 2 History 4 AddChat 3 Goto GoEndMission>
+		GoR1Faction <ifFaction N2 else GoSetNewFaction Goto GoFinishFaction>
+		GoSetNewFaction <N= 2 E5 Goto GoFinishFaction>
+		GoFinishFaction <XREnemy NAV_XREFaction Say 3 History 5 AddChat 3 Goto GoEndMission>
+
+		result3 <NewChat Say 6>
+
+		% Do everything here that has to be done. If some of the ExtraRandom
+		% parameters need to be changed, do that here as well.
+		GoEndMission <FreezeChar E2 PCAlly E2 S= 101 1 S+ 102 1 N= 3 E3 S= 105 1 AdvancePlot 0>
+
+		Msg1 <I tried to evade them, but this town isn't safe either. They followed me, or possibly you... they know that I've had contact with you.>
+		Msg1_1 <I'm glad that you accepted my invitation. There are so many things I have to tell you... and such little time. They've followed us here, you know. They know I've contacted you and are afraid of what it means for their plan.>
+		CMsg1_1 <ifNPCSociable Accept>
+		Msg1_2 <So glad you could make it. Shall we get down to business?>
+		CMsg1_2 <ifNPCShy Accept>
+		Msg1_3 <I trust you had no trouble getting here? >
+		CMsg1_3 <ifNPCEasygoing Accept>
+		Msg1_4 <Sorry about the ambush outside of town... They know I've contacted you, and have been following me for days. I knew you'd be easily capable of defeating them of course.>
+		CMsg1_4 <ifNPCPassionate Accept>
+		Msg1_5 <I trust that the goons they had following me were no match for your piloting skills, eh? It's very difficult evading them but I knew you'd be able to get through.>
+		CMsg1_5 <ifNPCCheerful Accept>
+		Msg1_6 <I'm glad to see you're alive! They followed me, or possibly you... we only have a short time here.>
+		CMsg1_6 <ifNPCMelancholy Accept>
+
+		Msg2 <It's very complicated, I don't have enough time to tell you everything, but you should know this: \NARRATIVE 1 is trying to kill you, and will stop at nothing until you're dead. I have to go now but I will help you again.>
+		Msg2_1 <I don't know the reason, but \NARRATIVE 1 wants you dead. It could be that an order came from higher up, it could be a personal grudge, I just don't know. I have to leave soon but when you need me I'll be back to help.>
+		CMsg2_1 <if= XRM NAV_XRMUnknown Accept>
+		Msg2_7 <\NARRATIVE 1 killed your parents. I don't know all the details myself but they knew something about \PPR N1 secret plan, or about the masters \OPR N1 works for. You're something of a loose end, one that they'll try very hard to snip.>
+		CMsg2_7 <if= XRB NAV_XRBFamilyDied Accept>
+		Msg2_8 <\NARRATIVE 1 tried to kill you before, but failed... that's when you lost your memory. I don't know what it is that you used to know but it must be pretty important. I have to go, but I'll help you when it's time to fight.>
+		CMsg2_8 <if= XRM NAV_XRMAmnesia Accept>
+		Msg2_9 <Your family has connections to a person named \NARRATIVE 1 ... both were employed by a shadowy organization, for some sinister purpose. Now \NARRATIVE 1 is eliminating all the others associated with the project. Your name is on the list.>
+		CMsg2_9 <if= XRM NAV_XRMFamilySecret Accept>
+
+		Msg3 <It's too complicated to explain right now... You'll find out the details soon enough. This is the most important thing you should know: \NARRATIVE 2 wants you dead. I have to go now but I will help you again.>
+		Msg3_1 <I don't understand the reasons behind it, but \NARRATIVE 2 wants you dead. They're very powerful and used to getting their way. I have to go, but when you need help I'll try to be there.>
+		CMsg3_1 <if= XRM NAV_XRMUnknown Accept>
+		Msg3_7 <Your family was killed by \NARRATIVE 2 , in order to protect their secret project. I don't know exactly what that was but I do know that you're marked for death as well. I have to leave here now but I'll try to help you again.>
+		CMsg3_7 <if= XRB NAV_XRBFamilyDied Accept>
+		Msg3_8 <It was \NARRATIVE 2 that caused your accident, and they're quite disappointed to learn that you're still alive. There's a contract on your head. I have to go now, but when the time comes to fight them I'll help you however I can.>
+		CMsg3_8 <if= XRM NAV_XRMAmnesia Accept>
+		Msg3_9 <Your family was somehow connected to a secret project organized by \NARRATIVE 2 . Now, they want you and anyone who might be connected to that project dead... I don't know all the details, but when the time comes to fight I'll help you.>
+		CMsg3_9 <if= XRM NAV_XRMFamilySecret Accept>
+
+		Msg4 <\ELEMENT 2 told you that \NARRATIVE 1 wants you dead.>
+		Msg5 <\ELEMENT 2 told you that \NARRATIVE 2 wants you dead.>
+
+		Msg6 <They have a base in \ELEMENT 3 . I used to work for them, until I found out what they're doing... You'd be wise to stay away from there.>
+		Msg6_1 <If you must know, I used to work for them... until I found out what they were really after. One more word of advice- stay away from \ELEMENT 3 ; they've got some kind of operation planned there, and if you go they'll kill you.>
+		CMsg6_1 <ifNPCSociable Accept>
+		Msg6_2 <I'd rather not say. There is one further thing... There's a secret base in \ELEMENT 3 . Some of your questions may be answered there.>
+		CMsg6_2 <ifNPCShy Accept>
+		Msg6_3 <I used to work for the same people, until I wised up. My job was guarding the base in \ELEMENT 3 ... but once I saw what they were planning, I had to get away.>
+		CMsg6_3 <ifNPCEasygoing Accept>
+		Msg6_4 <I was one of their "experiments" at the \ELEMENT 3 lab... At first I just worked there, but I saw too much, and they decided to finish me off. Luckily I'm not that easy to kill.>
+		CMsg6_4 <ifNPCPassionate Accept>
+		Msg6_5 <What, do you want me to give up all my mystery? There's one more thing before I go- they've got a lab in \ELEMENT 3 . I never got a look inside but I'll bet they're up to something nasty.>
+		CMsg6_5 <ifNPCCheerful Accept>
+		Msg6_6 <You're better off not knowing. There is one further thing that may help keep you alive... They have a base in \ELEMENT 3 . That place should be off limits from now on.>
+		CMsg6_6 <ifNPCMelancholy Accept>
+
+
+		Prompt1 <I'm tired of games. Tell me everything.>
+		Prompt1_1 <Enough games. What's really going on?>
+		Prompt2 <Who are they? Tell me now.>
+		Prompt2_1 <Tell me everything you know.>
+		Prompt3 <How do you know all this?>
+		Prompt3_1 <Why do you know all this?>
+
+	end
+end
+inv
+	NPC Soldier
+	job <Mercenary>
+	place <1 pass>
+	mecha <Esher.txt>
+	EquipChar 10000
+	Talent 14
+	Talent 24
+	sdl_colors <123 83 50 255 212 195 0 205 230>
+
+end

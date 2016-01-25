@@ -1,0 +1,45 @@
+Plot 0
+	name <Promotion Reward>
+	% The PC has gone up a rank in the military, and will
+	% now get a reward for it.
+
+	% Element 1 is the calling faction
+	% Element 2 is the character who'll give the PC the reward
+	Element2 <Character !Comrade 1>
+
+	% V1 = Email Indicator
+
+	% This plot will remain active until the PC collects his
+	% reward, until the NPC dies, or until the PC is no longer
+	% a member of the calling faction.
+	start <ifPersona E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d5 V= 1 1>
+	GoReschedule <FacVar+ E1 1 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You are ready for some training.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// \RANK , you have earned your next belt.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Report back to the temple as soon as is convenient.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// You have transcended your current rank. Come here for some training.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// I have something to show you. Come see me at once.>
+
+sub
+	Persona 2
+	% V1 = Faction level the PC is being rewarded for.
+	greeting <NewChat XPV 100 V= 1 FacVar E1 2 V+ 1 1 FacVar= E1 2 V1 AdvancePlot 0 Goto GoL0>
+	GoL0 <ifG 9 V1 else GoBigLevel ifG FXPNeeded V1 -PCRep 7 else GoL1 CashPrize Reward Threat FXPNeeded V1 100 250 Say 10>
+	GoL1 <Say V1 PCSkill+ 9 1>
+	GoBigLevel <Say 9 PCSkill+ 9 1>
+
+	Msg1 <You have earned the rank of \FacRank E1 V1 . Now, we will start training you in the path of martial righteousness.>
+	Msg2 <You have earned the rank of \FacRank E1 V1 . You've earned the right to learn the "Monkey Elbow" technique.>
+	Msg3 <You have earned the rank of \FacRank E1 V1 . Now I will teach you the "Diamond Knuckle" technique.>
+	Msg4 <You have earned the rank of \FacRank E1 V1 . You will now learn the "Kaiser Kneecap" technique.>
+	Msg5 <You have become \FacRank E1 V1 . As such, you will master the "Ultimate Backslap" technique.>
+	Msg6 <You have advanced to \FacRank E1 V1 . I will now teach you the "Jungle Dropkick" technique.>
+	Msg7 <You have become \FacRank E1 V1 . So, I will teach you how to perform the "Flurry of Agony" technique.>
+	Msg8 <You have advanced to \FacRank E1 V1 . You are now ready to learn the "Tai Kwan Leep" technique.>
+	Msg9 <You have earned the next rank of mastery. Let us begin training.>
+	Msg10 <You have advanced to \FacRank E1 V1 . Here is a small cash reward.>
+
+end
+

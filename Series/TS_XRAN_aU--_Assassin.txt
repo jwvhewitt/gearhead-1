@@ -1,0 +1,183 @@
+Plot 0
+	name <PLOT: Assassins!>
+	% - Edited to v0.901 "light" standard
+
+	% The PC has an unknown enemy... In this town he will meet an
+	% assassin, and this will result in a new adventure.
+
+	Element1 <Grab 3>
+	Element2 <Scene Town Target !Far 1>
+	Element3 <Prefab>
+	Element4 <Character Guardian !Near 1>
+	Element5 <Faction GoodEnemy>
+	Element6 <Prefab>
+
+	% On a cleanup request, just delete this plot.
+	CleanUp <AdvancePlot 0>
+
+	% V1 = Phase Counter
+
+	start <ifPersona E3 else GoEndPlot ifPersona E4 else GoEndPlot if= V1 0 else GoSetOrder V= 1 1 Compose UTD E3 .killerdies FreezeItem E6 NPCLevel E3 S103 Goto GoSetOrder>
+	GoEndPlot <S= 101 1 AdvancePlot 0>
+	.killerdies <Reputation 6 1 History 2 AdvancePlot 1>
+	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
+
+	TM1 <if= SceneID E1 ifNPCinPlay E3 if= V1 1 ifG 6 Range PCUID NPCUID E3 V= 1 2 Print 1 ForceChat E3>
+	Msg1 <\ELEMENT 3 strikes up a conversation with you.>
+
+	Msg2 <You survived an assassination attempt in \ELEMENT 1 .>
+
+sub
+	Persona 3
+	rumor <!3 has been asking a lot of questions about you.>
+	greeting <NewChat Say d3 AddChat 1 AddChat 2 AddChat 3>
+	result1 <EndChat Say 4 Reputation 2  1 SoloAttack E3>
+	result2 <EndChat Say 5 Reputation 2 -1 SoloAttack E3>
+	result3 <EndChat Say 6 SoloAttack E3>
+	Msg1 <Are you \PC ?>
+	Msg2 <Aren't you \PC ? I have something that I need to discuss with you.>
+	Msg3 <Hey, just a minute... You're \PC , aren't you?>
+	Msg4 <I am... your death!!!>
+	Msg5 <Nice try, \PC , but you aren't getting away this time... Now you die!>
+	Msg6 <No, but I know you. You're the one I was sent here to kill. Now, it's time to finish the job!>
+	Prompt1 <Yes I am. Who are you?>
+	Prompt2 <Sorry, you must be mistaken...>
+	Prompt3 <Do I know you?>
+
+	Plot 1
+		% The PC has stopped the killer, and may now take a mission
+		% from the local guardian.
+		start <ifPersona E4 else GoEndPlot if= V1 0 Compose KEY E6 .usecomp>
+		GoEndPlot <AdvancePlot 0 S= 101 1>
+		.usecomp <if= P3 0 XPV 100 P= 3 1>
+
+		% V2 = Combat Indicator; if V2=10 mecha, V=20 personal,
+		%                              +1 = Win, +2 = Fail
+		% V3 = Recovered computer file
+
+		NU1 <if= V2 10 else GoP_NU1 if= T1 0 Reputation 6 -d8 V= 2 11>
+		GoP_NU1 <if= V2 20 if= T1 0 Return if= P3 1 else GoP_Fail V= 2 21  Reputation 6 1>
+		GoP_Fail <V= 2 22>
+
+		NU2 <if= V2 10 if= T2 0 Reputation 6 1 V= 2 12>
+
+	sub
+		Persona 4
+		rumor <!4 the guardian wants to talk with you.>
+		% V1 = Phase Counter
+		% V2 = Message Picker
+		% V3 = Recharge Time
+		% V4 = XP award
+		greeting <NewChat if= P2 12 else GoCheckPWin Say 20 AddChat 17 if= V4 0 XPV 200 V= 4 1 AddReact d8>
+		GoCheckPWin <if= P3 1 else GoCheckLoss Say 19 AddChat 17 if= V4 0 XPV 1000 V= 4 1 AddReact d12>
+		GoCheckLoss <ifG P2 0 else GoCheckRecharge P= 2 0 Say 17 V= 3 ComTime V+ 3 86400>
+		GoCheckRecharge <ifG V3 ComTime else GoCheckContact Say 18>
+		GoCheckContact <if= V1 1 else GoFirstTime Say 15 AddChat 7 AddChat 8>
+		GoFirstTime <V= 1 1 Memo 13 Say 1 AddChat 1 AddChat 2 AddChat 3>
+
+		result1 <NewChat Reputation 2 -1  Say 2  AddChat 4 AddChat 5>
+		result2 <NewChat Reputation 1  1  Say 3  AddChat 4 AddChat 5>
+		result3 <NewChat Reputation 3 -d6 Say 4  AddChat 4 AddChat 5>
+		result4 <NewChat Reputation 2  1  Goto GoExposition>
+		result5 <NewChat Reputation 2 -5  Say 6 AddChat 9 AddChat 10>
+
+		result6 <NewChat Say 7 AddChat 11 AddChat 7 AddChat 8>
+		result7 <NewChat Say 14 AddChat 14 AddChat 15>
+		result8 <NewChat Say 8 AddChat 12 AddChat 13>
+		result9 <NewChat Goto GoExposition>
+		result10 <NewChat Say 9>
+		result11 <NewChat Say 9>
+		result12 <NewChat Say 10 AddChat 14 AddChat 15>
+		result13 <NewChat Say 11 AddChat 16 AddChat 15>
+
+		% Start mecha combat
+		result14 <EndChat Say 21 SavePos P= 2 10 Dynamic 2 Threat S103 125 .nu1 .nu2>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Salvage Return>
+
+		result15 <NewChat Say 12>
+
+		% Start personal combat
+		result16 <EndChat Say 16 SavePos P= 2 20 LoadD .scene PassVar 3 S102 DynaItem E6>
+		.scene <TS_XRAN_SCENE_Assassin.txt>
+
+		GoExposition <Say 5 AddChat 6 AddChat 7 AddChat 8>
+
+		result17 <NewChat ifPersona N1 else GoR17NoEnemy Say 101 History 151 XREnemy NAV_XRECharacter Goto GoEndStory>
+		Msg101 <The assassin was hired by \NARRATIVE 1 . Does that name ring any bells? The deal was made in \ELEMENT 2 .>
+		Msg151 <You discovered the assassin was hired by \NARRATIVE 1 .>
+
+		GoR17NoEnemy <ifFaction N2 else GoSetFaction Goto GoFinishFaction>
+		GoSetFaction <N= 2 E5 Goto GoFinishFaction>
+		GoFinishFaction <Say 201 History 251 XREnemy NAV_XREFaction Goto GoEndStory>
+		Msg201 <The assassin was hired by \NARRATIVE 2 . You apparently have some very powerful enemies... any idea why? The deal was made in \ELEMENT 2 .>
+		Msg251 <You discovered the assassin was hired by \NARRATIVE 2 .>
+
+		GoEndStory <S= 101 1 S+ 102 1 S= 105 1 N= 3 E2 AdvancePlot 0>
+
+		Msg1 <I saw what happened just then... I think the person who attacked you was a hired killer belonging to a gang that I'm investigating.>
+		Msg2 <Don't be stupid. I saw it myself. This gang has done a number of contract killings in the past. I want to end their business, and hopefully find out who their boss is. I'd like for you to help me, if you can.>
+		Msg3 <Yes, as a matter of fact I am. This gang has been offing people for money... I wouldn't call them "assassins", they aren't exactly subtle. I've got a plan to end their operation and hopefully find out who they're working for.>
+		Msg4 <Well, for starters, because someone hired them to kill you. Secondly because there's a reward available for stopping the gang. I'd like your help with stopping them, if you're able.>
+		Msg5 <Their base of operations is a ruin outside of town. In that base they've probably got records about who hired them and for what. The hideout is defended by mecha, though, so capturing it won't be easy.>
+		Msg6 <It'd be to our mutual advantage to work together this time. I want to catch the killers, and you need to find out who wants you dead. Don't worry... I won't tell anyone you worked with me, if you don't tell that I worked with you.>
+		Msg7 <We expect that there's about \VAL Threat N103 125 threat points worth of equipment guarding them.>
+		Msg8 <I'm not sure that's such a good idea. First you'd need to sneak past the meks, then you'd have to avoid the guards and locate the records. Our informant said that they have a secret defense against intruders, but he didn't elaborate.>
+		Msg9 <Suit yourself. I will continue working on the case by myself.>
+		Msg10 <That's a good idea. We can get the mission started right away, or you can go check your supplies before we begin.>
+		Msg11 <If you want to, you're welcome to try. I'd advise you to take the story of their security system very seriously though. Are you ready to head out?>
+		Msg12 <Make sure your gear is in top condition, then head back here and we'll begin the mission.>
+		Msg13 <\ELEMENT 4 in \SCENE EScene 4 is investigating the crime gang that was hired to kill you.>
+		Msg14 <Very good. Would you like to get started right away, or do you need to go check your gear first?>
+		Msg15 <I'm still investigating that gang who tried to kill you... and I could still use some help.>
+		Msg16 <Here are the coordinates of the hideout. You'll probably find the data we're after on a computer of some type.>
+		Msg17 <Wow, that didn't go as well as it could have. Good to see that you made it back in one piece, though... Go get some rest and we'll try again tomorrow.>
+		Msg18 <You can try your skill against the crime gang again tomorrow. Right now I've got paperwork to complete.>
+		Msg19 <Good work. Thanks to you, we didn't have to risk destroying evidence in a mecha battle. I've analyzed the file that you recovered... Want to hear what I've found?>
+		Msg20 <Good work. With their mecha force disabled, our patrolmen managed to seize the compound and retrieve vital data files. Want to hear what we've learned?>
+		Msg21 <Here are the deployment coordinates. Smash their resistance, and our patrol troops can easily take the hideout. Good luck.>
+
+		Prompt1 <I don't know what you're talking about...>
+		Prompt2 <Are you looking for some help with the case?>
+		Prompt3 <Why should I care?>
+		Prompt4 <Give me the details.>
+		Prompt5 <Sorry, I don't work with cops.>
+		Prompt6 <How many mecha do they have?>
+		Prompt7 <I can take out the meks for you.>
+		Prompt8 <I could just sneak in and nab the records.>
+		Prompt9 <Alright, tell me about your plan.>
+		Prompt10 <Naah, I still don't feel like helping.>
+
+		Prompt11 <Sounds too dangerous. Let me know if it works.>
+		Prompt12 <Maybe I'll just stick to the mecha action.>
+		Prompt13 <That's a challenge! I'll do it!>
+		Prompt14 <I'm ready to go right now.>
+		Prompt15 <Wait, I need some time to get ready.>
+		Prompt16 <No time like the present.>
+		Prompt17 <Give me the info.>
+
+	end
+
+
+end
+inv
+	NPC Citizen
+	place <1 Ally SD>
+	EquipChar 10000
+	skill 1 1
+	skill 2 1
+	skill 3 1
+	skill 4 1
+	skill 5 1
+	skill 6 1
+	skill 7 1
+	skill 8 1
+	skill 9 1
+	skill 10 1
+
+	STC COMPUTER-2
+	home <Data Center>
+	use <Print 1 Trigger Key SELFNID>
+	Msg1 <You download the information from this computer.>
+
+end

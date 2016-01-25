@@ -1,0 +1,23 @@
+Once using ; to switch targets switched to target not on map, then crashed
+Mouse movement doesn't work on edge of map; can't leave map
+Can't get item if in same tile as an obstacle
+XMoveTowardsSpot sometimes gets stuck on obstacles
+No way to stop cursor from blinking in ASCII mode on certain OSs
+If a repair skill is used on a tile, and there's nothing on the tile that
+  needs repairs, and there's also a metaterrain gear on the tile, the
+  normal "You can't find any damage to repair!" message won't be printed.
+Sometimes in SDL mode character portrait gets forgotten
+Screen doesn't refresh when trapdoor discovered in ASCII mode
+Sometimes monsters vanish beneath corpses in ASCII mode
+NPCs won't run from or avoid fire
+Amnesia entry story stopped advancing once; no cause found; not replicated
+ForceChat command can't be called in same line as scene change command
+If lost battle because of ejection, mecha not lost
+NPC can't/don't open doors
+At low play level, enemies difficult to find in random encounters
+Sometimes model deployed inside closed door, other metaterrain obstacle
+Can't change mecha while inside of mecha
+RPG save files from before v0.830 shouldn't be used in new version
+RPG save files from before v0.700 won't work in new version
+Using the history command before there are 5 msgs will cause strange display
+

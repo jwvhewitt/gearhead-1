@@ -1,0 +1,264 @@
+Plot 0
+	name <PLOT: New Corp Job 1>
+	% [[Ver1.4]]
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	Element1 <Faction Corporate>
+	Element2 <Character !Comrade 1>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  FacXP+ E1 1>
+
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 if= PCFac E1 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// There's business for you to attend to here. Report at once.>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// The company has a combat mission for you in \SCENE EScene 2 .>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Your services are required in \SCENE EScene 2 . Report to work promptly.>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// Your skills are needed by \ELEMENT 1 . Report to the \SCENE EScene 2 office at once.>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// I have a combat mission for you in \SCENE EScene 2 .>
+
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+	rumor <!2 needs to hire a mecha pilot for a corporate mission.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AddReact d4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 200 Goto GoCheckFaction>
+
+	GoCheckFaction <if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it...
+	GoCheckFriend <ifG React d60 else GoCheckRenown V= 2 15 V+ 2 d3 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	GoCheckRenown <ifG PCRep 6 d100 else GoNoAutomatic V= 2 18 V+ 2 d2 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 Say 108 AdvancePlot 0 AdvancePlot 0>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+
+	GoStartCombat <SavePos  P= 2 1 Dynamic 2 V3 .nu1 .nu2 Encounter 15 5 .edesc>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	.edesc <Bandit Villainous +ECRA +PCRA>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 AdvancePlot 0>
+	result10 <Reputation 4 -d6 Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat ifG Intimidation 10 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 AdvancePlot 0>
+
+
+	% The PC tries to get the job via "PLAN B"- be friendly.
+	% This is done (easily) with the Conversation skill.
+	result14 <NewChat ifG Conversation 7 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1 AdvancePlot 0>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1 AdvancePlot 0>
+	result18 <Reputation 5 -d6 Goto result17>
+	result19 <Reputation 4 -d8 Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Good job out there. Here's your salary.>
+	Msg2 <The company values loyal service like that. Here's your pay.>
+	Msg3 <Keep that up and you may just have a future in this company. Here's the cash you earned.>
+	Msg4 <You did well out there. Here's the pay you earned.>
+	Msg5 <You should know that \ELEMENT 1 rewards good service. Here's your pay. I look forward to working together again in the future.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <That didn't go so well. Let's never speak of this ever again.>
+	Msg7 <You lost the mission. If anyone asks, hiring you was someone else's idea...>
+	Msg8 <You have failed.>
+	Msg9 <You should know that \ELEMENT 1 has a very dim view of failure. Don't let that happen again.>
+	Msg10 <The mission was a failure. The bandits got away.>
+
+	% 11 - 15 :  Description of mission.
+	Msg11 <A group of bandits has been attacking our corporate interests. They have to be eliminated. Pay is $ \VAL V4 for destroying them all.>
+	Msg12 <A certain bandit lord has been targeting our convoys. The entire gang needs to be destroyed. I can offer you $ \VAL V4 if you complete the mission.>
+	Msg13 <There's been a group of bandits attacking our trucks. If you can eliminate them, it's worth $ \VAL V4 .>
+	Msg14 <We've had trouble with a certain bandit gang recently. They've launched several cowardly raids against our warehouses... they must be stopped. It's worth $ \VAL V4 if you can eliminate them for us.>
+	Msg15 <A local bandit tribe has been targeting our warehouses. I can offer you $ \VAL V4 to get rid of them.>
+
+	% 16 - 20 :  PC offered job because of React.
+	Msg16 <Hey, \PC . It's good to see you... I need a mecha pilot to run a mission for \ELEMENT 1 . You interested?>
+	Msg17 <I'm very glad to see you today. As you may have heard, \ELEMENT 1 is looking for a mecha pilot to run a corporate defense mission. If you're available, I'd like to hire you for the job.>
+	Msg18 <\PC , you've come by at just the right time. I need a mecha pilot to run a mission for \ELEMENT 1 . Are you free?>
+	% 19 - 20 :  PC offered job because of Renown.
+	Msg19 <As you may know \ELEMENT 1 has a number of enemies. I need a freelance pilot to deal with a criminal gang that's been interfering with our business. Are you interested?>
+	Msg20 <You may have heard that \ELEMENT 1 is looking for a mecha pilot. Are you interested in applying for the position?>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <Bandits are the greatest threat to the transportation of goods. It is the greatest priority of \ELEMENT 1 Security to protect our investments against hostile forces.>
+	Msg22 <You should know that \ELEMENT 1 is a good employer. We offer higher salaries for mecha pilots than most competing corporations.>
+	Msg23 <In order to defend \ELEMENT 1 against bandits and ravagers, we maintain a number of contracts for freelance cavaliers.>
+	Msg24 <Criminal mecha gangs are the greatest threat to modern prosperity. The security forces of \ELEMENT 1 protect the wealth of our cities from the lawlessness beyond.>
+	Msg25 <In the modern age, bandits and other mecha-equipped criminals cause untold amounts of property damage. To counter them \ELEMENT 1 maintains a force of freelance pilots.>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points worth of enemy hardware. Do you feel up to the challenge?>
+	Msg27 <They've got \VAL V3 tactical threat points worth of equipment, some of which was stolen from us. I want you to destroy them all.>
+	Msg28 <The bandits have around \VAL V3 points worth of mecha. You'll be responsible for defeating all of that.>
+	Msg29 <They've got around $ \VAL V3 worth of military grade hardware. Destroy it all, so that they'll never be able to threaten us again.>
+	Msg30 <The gang has $ \VAL V3 of mecha. They won't be easy to defeat.>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <I have a mission available, if you're interested in working for \ELEMENT 1 .>
+	Msg32 <We do need a freelancer for an upcoming combat mission... Are you interested in the job?>
+	Msg33 <I do need someone for a mission we have planned. Are you available, or should I find someone else?>
+	Msg34 <Do you want to run a mission for \ELEMENT 1 ? I have a contract available, if you're free to take it.>
+	Msg35 <Yes, we need a pilot for an upcoming mission. How'd you like to take the contract?>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Defeat the gang, then return here for your pay.>
+	Msg37 <Disable all of their mecha, then return here and I'll give you your reward.>
+	Msg38 <Defeat the bandits, and make sure that they will never trouble us again. Return here when you're finished and I'll give you your pay.>
+	Msg39 <These navpoints will lead you to the expected engagement zone. Defeat the bandits, then return here for your pay.>
+	Msg40 <I'll upload the nav data to your mecha. Defeat the bandits then come back here for the reward.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <I've been waiting. Are you ready to start the mission yet?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's too bad.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Perform maintenance on all your equipment and we can start the mission then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <We could use a great pilot on our side... I'll let you know when we find one.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Sorry, we are not currently hiring anyone.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <If you have no business with \ELEMENT 1 , I will have to ask you to leave.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a combat mission for \ELEMENT 1 .>
+	msg108 <If you have no important business for \ELEMENT 1 , I don't have time to waste speaking with you today.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <All ready to start the mission.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <My mecha needs repairs first.>
+	Prompt4 <I better get ready first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <How many mecha do the bandits have?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I'm available.>
+	Prompt8 <I'm interested. Give me the info.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Not interested.>
+	Prompt10 <Sorry, I don't do corporate work.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <You need a great pilot like me.>
+	Prompt12 <What you need is a mecha ace on your team.>
+	Prompt13 <I could help you, for a price.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <Are you planning to hire anyone?>
+	Prompt15 <I'd like to apply, if there's a mission.>
+	Prompt16 <Have any jobs available?>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <I don't see how that affects me.>
+	Prompt18 <You're full of it.>
+	Prompt19 <Sounds boring. I'm not interested.>
+
+
+end
+

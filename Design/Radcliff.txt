@@ -1,0 +1,125 @@
+Battroid 6
+Name <Radcliff>
+Desig <GHA-05b>
+SDL_Sprite <btr_radcliff.png>
+desc <An artillery battroid.>
+
+Mod Head
+	Size 5
+	Armor 4
+	Mass -1
+	sub
+		CPit
+		Armor 2
+
+		Sensor 6
+
+		ECM 5
+	end
+
+Mod Body
+	Armor 6
+	sub
+		TarComp 4
+
+		Gyro 3
+
+		STC LAS-5
+
+		STC LAS-5
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 5
+	Armor 6
+	sub
+		STC PHS-8
+
+		MLauncher 10
+		Name <Superheavy Missile>
+		Type <BLAST 5 BRUTAL>
+		Range 10
+		Acc 2
+		Magazine 1
+		sub
+			Rockets 10
+		end
+	end
+	inv
+		ArmArmor 3
+		Mass -2
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 5
+	Armor 6
+	sub
+		STC PHS-8
+
+		MLauncher 10
+		Name <Superheavy Missile>
+		Type <BLAST 5 BRUTAL>
+		Range 10
+		Acc 2
+		Magazine 1
+		sub
+			Rockets 10
+		end
+	end
+	inv
+		ArmArmor 3
+		Mass -2
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 6
+	sub
+		Mount
+		Name <Right Leg Mount>
+		inv
+			STC LRL-32
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 6
+	sub
+		Mount
+		Name <Left Leg Mount>
+		inv
+			STC LRL-32
+		end
+	end
+
+Mod Storage
+	Name <Right Pod>
+	Armor 5
+	sub
+		MLauncher 5
+		Name <Heavy Missiles>
+		Type <SWARM>
+		Range 6
+		Magazine 24
+		sub
+			Rockets 5
+		end
+	end
+
+Mod Storage
+	Name <Left Pod>
+	Armor 5
+	sub
+		MLauncher 5
+		Name <Heavy Missiles>
+		Type <SWARM>
+		Range 6
+		Magazine 24
+		sub
+			Rockets 5
+		end
+	end
+end

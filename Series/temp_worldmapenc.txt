@@ -1,0 +1,238 @@
+Plot 0
+	name <World Map Encounter Template>
+
+	% NPC E2 will inform PC of a potential encounter on the
+	% world map. If PC meets and defeats the encounter, he
+	% may return to NPC E2 for a reward of some kind.
+
+	% You can make it into a complete combat mission just
+	% by filling in the blanks in the MESSAGE BLOCKs below.
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	% This plot will likely be called from a faction story.
+	% So, it will grab the identity of the faction as its first
+	% element, and a member of the faction to give the job to
+	% the PC.
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	Element2 <Character !Comrade 1>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% V1 = Time Limit
+	% V2 = Combat Indicator, if V2=1 combat has been entered
+	% V3 = Email sent indicator.
+	% V4 = Combat Threat Level
+	%   if V4=0, PC has not yet been given the mission.
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 ifG V4 0 else GoDelete AdvancePlot 1>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100  S+ 101 1>
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 if= PCFac E1 V= 3 1 Email d5>
+	% Alternate Version: send email if PC is well-liked, regardless
+	% of faction affiliation.
+	% 5Min <if= d50 23 if= V3 0 ifG RReact E2 d70 V= 3 1 Email d5>
+
+	% World map encounter checks.
+	%  Note that the encounter can only happen after the PC has spoken
+	%  to the NPC. Also note that it cannot happen twice.
+	%  For encounter levels 1 and 2, the PC must make an AWARENESS roll
+	%  to activate the encounter.
+	ENC1 <ifG V4 0 if= V2 0 ifG AWARENESS 25  Goto GoStartCombat>
+	ENC2 <ifG V4 0 if= V2 0 ifG AWARENESS 10  Goto GoStartCombat>
+	ENC3 <ifG V4 0 if= V2 0  Goto GoStartCombat>
+
+	% Combat starts here.
+	GoStartCombat <Block ifYesNo 51 52 53   SavePos P= 2 1 Dynamic 2 V4 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// >
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// >
+
+	% 51 :  Description of encounter
+	Msg51 <You see some mecha which match the description \ELEMENT 2 gave you.>
+	% 52 :  Start the encounter
+	Msg52 <Approach them.>
+	% 53 :  Try to evade them
+	Msg53 <Get away.>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <>
+	% eg., rumor <!2 might have a job for you.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V2 = Message randomizer
+	%  V4 = Pay for the job
+	%  V5 = Specific job description
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+
+	% If the PC has already accepted but not yet completed the job,
+	% the NPC will merely remind him of what he's supposed to do.
+	GoCheckJob <ifG P4 0 else GoFirstTime Say V5>
+
+	% The first time here, the PC will be offered the job automatically
+	% if he belongs to the right faction, or if he was sent the email.
+	GoFirstTime <if= PCFac E1 else GoCheckEmail Goto GoStartMission>
+	GoCheckEmail <if# P3 0 else GoCheckFriend V= 2 20 V+ 2 d2 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+
+	% A good friend of the NPC may also be offered a chance at the job.
+	GoCheckFriend <ifG React 40 else GoAway V= 2 22 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	% ALternatively, a non-hated PC with heroic rep might get it...
+	% GoCheckFriend <ifG React -d10 else GoAway ifG PCRep 1 d50 else GoAway V= 2 22 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+
+	% Otherwise, no chance of getting this mission.
+	% Why is there no partial PC-can-say-something-to-get-job chance?
+	% Two reasons- because this job involves searching the world map,
+	% it's not a premium mission. Best not to make the PC jump through
+	% hoops for this kind of job. Secondly- I'm tired and it's late
+	% at night. If you want extra complexity, cut and paste from one
+	% of the other templates and see if you can get it to work.
+	GoAway <V= 2 15 V+ 2 d5 Say V2>
+
+	GoStartMission <V= 2 FacVar E1 1000 V+ 2 d10 P= 4 Threat V2 75 V= 4 Reward P4 175 V= 5 10 V+ 5 d5 Say V5 Memo 27>
+
+	result1 <NewChat Goto GoStartMission>
+	result2 <Goto result1>
+
+	result3 <NewChat Say 26 AdvancePlot 0>
+	result4 <Goto result3>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <>
+	Msg2 <>
+	Msg3 <>
+	Msg4 <>
+	Msg5 <>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <>
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+	Msg10 <>
+
+	% 11 - 15 :  Mission description.
+	%  List pay using "$ \VAL V4".
+	Msg11 <>
+	Msg12 <>
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	% 16 - 20 :  NPC brushes off the PC.
+	Msg16 <>
+	Msg17 <>
+	Msg18 <>
+	Msg19 <>
+	Msg20 <>
+
+	% 21 - 22 :  Player got email, NPC needs help.
+	Msg21 <>
+	Msg22 <>
+
+	% 23 - 25 :  NPC will offer job to PC because they're friends.
+	Msg23 <>
+	Msg24 <>
+	Msg25 <>
+
+	% 26 :  PC has rejected the mission.
+	Msg26 <Argh, you have rejected me...>
+	% 27 :  Memo.
+	Msg27 <\ELEMENT 2 in \SCENE EScene 2 asked you to be on the lookout for something.>
+
+	% 01 - 02 :  PC accepts mission
+	Prompt1 <I'll look for them.>
+	Prompt2 <>
+
+	% 03 - 04 :  PC rejects mission
+	Prompt3 <I don't think I can help you.>
+	Prompt4 <>
+
+
+	Plot 1
+		% This plot is advanced to if the PC ran out of time
+		% before finding the world map encounter.
+
+		% Time limit. This plot will conclude in one day, or immediately
+		% if NPC E2 is killed.
+		start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+		GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+		GoDelete <AdvancePlot 0>
+
+	sub
+		Persona 2
+		% This conversation just involves telling the PC that
+		% the job is over.
+		greeting <NewChat Say d5 AdvancePlot 0>
+
+		% *********************
+		% *** MESSAGE BLOCK ***
+		% *********************
+
+		% 01 - 05 :  Time is over, the mission failed.
+		Msg1 <>
+		Msg2 <>
+		Msg3 <>
+		Msg4 <>
+		Msg5 <>
+
+	end
+
+end

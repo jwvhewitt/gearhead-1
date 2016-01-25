@@ -1,0 +1,26 @@
+Scene 0 0
+	% A generic basement that the PC can have fights in.
+	% It's just a normal cave with a single stairway up.
+
+	% This stat tells the random map generator to make a cave
+	CaveMap
+	FloorType 17
+	special <NoExit>
+
+	% This scene only does two things. If there are no more enemies,
+	% return to the calling scene. If there are no more PCs, do likewise.
+	NU1 <if= T1 0 Return>
+	NU2 <if= T2 0 Return>
+
+sub
+	% Attempting to go upstairs will retreat the PC from the map.
+	rect
+	width 5
+	height 5
+	FloorType 17
+	special <StartHere>
+	sub
+		StairsUp
+		USe <Print 1 Retreat 1>
+	end
+end

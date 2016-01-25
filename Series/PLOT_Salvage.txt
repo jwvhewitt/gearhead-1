@@ -1,0 +1,64 @@
+Plot 0
+	name <PLOT: Salvage Recovery>
+
+	element1 <Character Mechanic>
+
+	% V1 = Time Limit
+	% V2 = Combat Indicator
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Print 1  Reputation 6  1  XPV 100>
+
+	Msg1 <All the monsters have been eliminated, and you head back to town.>
+
+sub
+	Persona 1
+	rumor <!1 has been bringing in all kinds of old junk.>
+	% V1 = PC has been offered the mission.
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 12 mechaprize .mek AdvancePlot 0>
+	.mek <BuruBuru.txt>
+	GoCheckLoss <ifG P2 0 else GoCheckMission Say 11 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoNoMission Say 8 AddChat 4 AddChat 5 AddChat 6>
+
+	GoNoMission <if= PCMeks 0 else GoCheckLike Goto GoOfferMission>
+	GoCheckLike <ifG d3 PCMeks else GoOpenStore ifG React d60 else GoOpenStore Goto GoOfferMission>
+	GoOpenStore <Say 1 AddChat 1>
+	GoOfferMission <Say 4 AddChat 2 AddChat 3>
+
+	result1 <EndChat Say 2 Shop .wares Say 3>
+	.wares <MECHA MEXTRA 6 8 17>
+	result2 <EndChat Say 5 shop .wares say 3>
+	result3 <NewChat V= 1 1 Say 6 Memo 7 AddChat 4 AddChat 5>
+	result4 <EndChat Say 13 P= 2 1 SavePos MDynamic 0 PCRep 6 .monster .nu1 .nu2>
+	.monster <WASTELAND VERMIN MUTANT DEVO>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	result5 <NewChat Say 9>
+	result6 <NewChat Say 10 AdvancePlot 0>
+
+	Msg1 <Welcome to my garage. I've been getting a lot of good salvage recently, so I've got a lot of bits for sale.>
+	Msg2 <Take a look around, and if you see anything that might be useful you can make me an offer.>
+	Msg3 <If anything gets broken, bring it back here for service.>
+	Msg4 <Hey, you're an adventurer, aren't you? I've got some work that someone like you could help me with. See, there's a number of junked mecha just outside of town, and I'd like to get my hands on them for spare parts...>
+	Msg5 <Oh, alright then. Here's what we have available today.>
+	Msg6 <The wreckage is swarming with monsters. Seems the pilot who crashed was transporting recalled snack cakes when his machine went down... If you could get rid of the monsters, I could reward you with a bit of the salvage.>
+	Msg7 <\ELEMENT 1 in \SCENE EScene 1 wants you to get rid of some monsters infesting a broken mecha.>
+	Msg8 <I've been waiting for you to get back. Ready to go clear out that crash zone yet?>
+	Msg9 <Okay. You do whatever it is that you have to do, then come back here and we'll get started.>
+	Msg10 <I understand. Fighting monsters just so you can get to the shiny junk they've collected isn't everyone's cup of tea...>
+	Msg11 <Well, you didn't quite manage to drive off the creatures. By the time I can get there now the salvage will probably be worthless...>
+	Msg12 <You did it! Since I'm in a generous mood, I'll give you one of the recovered mecha that was in nearly-pilotable condition. Thanks for your help.>
+	Msg13 <Drive off or kill all the monsters, then come back here and we can discuss what kind of a reward you've got coming.>
+
+	Prompt1 <Let me see what you have.>
+	Prompt2 <I'm just here to get repairs.>
+	Prompt3 <What do you want me to do?>
+	Prompt4 <Sounds good. I'm ready to go.>
+	Prompt5 <I need some time to get ready first.>
+	Prompt6 <On second thought, I don't want this job.>
+
+end

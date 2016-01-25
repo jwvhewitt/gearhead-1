@@ -1,0 +1,71 @@
+scene 0 0
+% The PC is here to steal a mecha, or at least some mecha equipment.
+
+% The following interface details must remain constant
+% throughout all Thief_* scenes:
+
+%   Team 2 = Default enemies
+%   Team 3 = WMon enemies
+
+%   V1 = If nonzero, have some wandering monsters
+%   V2 = If nonzero, PC has succeeded in his quest.
+
+% The following interface details may be changed:
+
+
+WildMap
+GapFill <-4 -4 -7 -7 -10 -10 -10>
+
+start <if# L1 0 MonsterUp 3 L1 L= 1 0 ifG SkRoll 11 14 Print 1>
+5Min <ifG 10 SkRoll 25 MonsterUp 3 d6>
+
+% If the PC leaves or is killed, return to the calling scene.
+Nu1 <if= T1 0 Return>
+
+Msg1 <Everything here seems a bit too normal.>
+
+sub
+	forest
+	width 5
+	height 5
+	special <StartHere>
+
+	Complex
+	width 12
+	height 12
+	LockedDoorChance 50
+	SecretDoorChance 30
+	sub
+		rect
+		FloorType 16
+		special <Cell>
+		sub
+			Trapdoor
+			Hide 10
+			Lock 20
+			Use <Print 1 Alert 101 L= 2 1 Retreat 1>
+			Msg101 <You grab what you came here for and make a hasty retreat.>
+		end
+	end
+
+	Complex
+	width 12
+	height 12
+	LockedDoorChance 50
+	SecretDoorChance 30
+
+	Team 1
+	SetEnemy 2 3
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3
+	type <Robot Guard>
+
+	Team 3
+	SetEnemy 1
+	SetAlly 2
+	type <Robot Guard>
+
+end
+

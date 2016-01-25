@@ -1,0 +1,26 @@
+Plot 0
+	name <PLOT: Shimli 13>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Citizen>
+	element2 <Scene Town>
+	rumor <!1 has a sore back.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 7 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 7 -1 NewChat Say 4>
+	Msg1 <I've been hearing about these "Holistic Power Crystals" from \ELEMENT 2 that they've been selling on the home shopping channel. Do you think they could make my back feel better?>
+	Msg2 <I guess I knew that they sounded too good to be true... Thanks for your advice.>
+	Msg3 <Well, I'll ask some more people about them then.>
+	Msg4 <Maybe those crystals really do have supernatural powers. If they work for me, you should try them too!>
+	prompt1 <They're a scam. Don't waste your money.>
+	prompt2 <I don't know. I haven't heard of them myself.>
+	prompt3 <It couldn't hurt to try, it might work.>
+
+end

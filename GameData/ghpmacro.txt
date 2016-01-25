@@ -1,0 +1,217 @@
+% GHParser quickparts list - use spaces not tabs please
+Gear          <G ? ? ?>
+Stat          <S ? ?>
+Battroid      <G 0 0 ?5>
+Zoanoid       <G 0 1 ?5>
+GroundHugger  <G 0 2 ?5>
+Arachnoid     <G 0 3 ?5>
+AeroFighter   <G 0 4 ?5>
+Ornithoid     <G 0 5 ?5>
+Gerwalk       <G 0 6 ?5>
+HoverFighter  <G 0 7 ?5>
+GroundCar     <G 0 8 ?5>
+Mecha         <G 0 ?0 ?5>
+Chara         <G 2 0 0>
+Sensor        <G 8 1 ?5>
+TarComp       <G 8 2 ?1>
+ECM           <G 8 3 ?1>
+PCS           <G 14 1 ?3>
+CPit          <Gear 3 0 0>
+Melee         <Gear 4 0 ?3>
+EMelee        <Gear 4 1 ?3>
+Gun           <Gear 4 2 ?3>
+BeamGun       <Gear 4 3 ?3>
+MLauncher     <Gear 4 4 ?3>
+Ammo          <Gear 5 2 ?3>
+Rockets       <Gear 5 4 ?3>
+Grenade       <Gear 5 5 ?10>
+Range         <Stat 1 ?>
+Acc           <Stat 2 ?>
+Recharge      <Stat 3 ?>
+BV            <Stat 4 ?>
+Magazine      <Stat 8 ?>
+AmmoCount     <Stat 7 ?>
+Hand          <Gear 7 0 0>
+Mount         <Gear 7 1 0>
+Wheels        <Gear 6 1 ?3>
+Tracks        <Gear 6 2 ?3>
+HoverJet      <Gear 6 3 ?3>
+Flight        <Gear 6 4 ?3>
+ArcJet        <Gear 6 5 ?3>
+Overcharger   <Gear 6 6 ?3>
+Armor         <Stat 1 ?0>
+Shield        <Gear 10 0 ?2>
+EShield       <Gear 10 1 ?2>
+StatModifier  <Gear 19 1 ?40>
+SkillModifier <Gear 19 2 ?40>
+DefBonus      <Stat 1 ?-1>
+BodyArmor     <Gear 11 1 ?1>  These cmds create external armor gears
+HeadArmor     <Gear 11 2 ?1>
+ArmArmor      <Gear 11 3 ?1>
+LegArmor      <Gear 11 4 ?1>
+WingArmor     <Gear 11 5 ?1>
+TailArmor     <Gear 11 6 ?1>
+TurretArmor   <Gear 11 7 ?1>
+StorageArmor  <Gear 11 8 ?1>
+Gyro          <Gear 9 1 ?1>   Gyro automatically added by LoadGear
+Engine        <Gear 9 2 ?5>   Engine automatically added by LoadGear
+HighOutput    <STAT 2 1>       - High-output engine
+Treasure      <Gear 12 2 ?25>
+BigTreasure   <Gear 12 5 ?25>
+PuzzleItem    <Gear 12 0 ?25>
+FirstAidFuel  <Gear 17 20 ?100>
+MechaRepairFuel <Gear 17 15 ?1000>
+MediceneFuel  <Gear 17 16 ?100>
+BiotechFuel   <Gear 17 22 ?1000>
+GenRepairFuel <Gear 17 23 ?100>
+Mass          <NAtt 2 1 ?>
+DomTarget     <NATT 2 2 ?10>
+EvolveAt      <NATT 2 3 ?5000>
+Skill         <NAtt 1 ? ?>
+Talent        <NAtt 16 ? 1>
+SetTeam       <NAtt -1 4 ?0>
+SetPersona    <NAtt 5 0 ?>
+SetFaction    <NAtt 5 2 ?>
+SetKeyItem    <NAtt 7 0 ?>
+Metal         <NAtt 2 0 0>
+Meat          <NAtt 2 0 1>
+Biotech       <NAtt 2 0 2>
+Cash          <NAtt 4 2 ?500>
+Scene         <G -3 ? ?>
+Story         <G -10 0 0>
+Plot          <G -9 ? 0>
+Persona       <G -5 ? 0>
+Faction       <G -6 ? 0>
+Adventure     <G -7 0 0>
+Team          <G -4 ? 0>
+MidX          <NAtt -1 0 ?25>
+MidY          <NAtt -1 1 ?25>
+XPos          <NAtt -1 0 ?30>
+YPos          <NAtt -1 1 ?15>
+PARAX         <NAtt -6 0 ?25>
+PARAY         <NAtt -6 1 ?25>
+CaveMap       <Stat 1 -2>
+WildMap       <Stat 1 1>
+CityMap       <Stat 1 -6>
+ComplexMap    <Stat 1 -11>
+ForestMap     <Stat 1 2>
+HvForestMap   <Stat 1 3>
+ArenaMap      <Stat 1 -15>
+MonkeyMap     <Stat 1 -24>
+MountainMap   <Stat 1 9>
+MapFeature    <G -8 ? 0>
+Rect          <G -8 -3 0>
+Forest        <G -8 -4 0>
+Hills         <G -8 -5 0>
+Lake          <G -8 -9 0>
+Swamp         <G -8 -17 0>
+Complex       <G -8 -10 0>
+CFiller       <G -8 -12 0>
+Clearing      <G -8 -13 0>
+Fortress      <G -8 -18 0>
+Mansion       <G -8 -23 0>
+BigHill       <G -8 -25 0>
+Dirt          <G -8 -19 0>
+GroundZero    <G -8 -22 0>
+MFX           <Stat 1 ?1>
+MFY           <Stat 2 ?1>
+Width         <Stat 3 ?3>
+Height        <Stat 4 ?3>
+FloorType     <Stat 5 ?1>
+MarbleType    <Stat 6 ?1>
+BorderType    <Stat 7 ?1>
+FeatureType   <Stat 8 ?1>
+LockedDoorChance <NAtt 7 101 ?25>
+SecretDoorChance <NAtt 7 102 ?25>
+Prop          <G 13 0 ?>
+Door          <G 15 1 ?5>
+MetaTerrain   <G 15 ?0 ?5>
+Frame         <NAtt 13 0 ?>
+AltFrame      <NAtt 13 ? ?>
+City          <G 15 3 0>
+Town          <G 15 4 0>
+Village       <G 15 5 0>
+StairsUp      <G 15 6 0>
+StairsDown    <G 15 7 0>
+Cave          <G 15 8 0>
+Temple        <G 15 9 0>
+Elevator      <G 15 10 0>
+TrapDoor      <G 15 11 0>
+Rubble        <G 15 12 ?5>
+Sign          <G 15 13 ?0>
+Cloud         <G 15 2 0>
+Flame         <G 15 14 0>
+Instrument    <G 16 1 ?5>
+UseBonus      <Stat 1 ?0>
+UseRange      <Stat 2 ?5>
+Destination   <Stat 4 ?>
+Hidden        <Stat 5 1>
+Hide          <Stat 5 ?-1>
+Lock          <Stat 6 ?15>
+Damage        <NAtt 12 0 ?10>
+XREnemy       <NAtt 7 11 ?0>
+XRMystery     <NAtt 7 10 ?0>
+XRBadThing    <NAtt 7 12 ?0>
+Food          <G 18 0 ?50>
+FoodMorale    <Stat 1 ?>
+FoodXValue    <Stat 2 ?100>
+FoodQuantity  <Stat 3 ?1>
+Reflexes      <Stat 1 ?0>
+Body          <Stat 2 ?0>
+Speed         <Stat 3 ?0>
+Perception    <Stat 4 ?0>
+Craft         <Stat 5 ?0>
+Ego           <Stat 6 ?0>
+Knowledge     <Stat 7 ?0>
+Charm         <Stat 8 ?0>
+Regen         <NAtt 14 3 -1>
+Age           <NAtt 3 1 ?0>
+Fudge         <NAtt 2 4 ?0>
+GAddOn        <Gear 20 0 ?0>
+GunAddOn      <Gear 20 1 ?0>
+HeavyAddOn    <Gear 20 2 ?0>
+MeleeAddOn    <Gear 20 3 ?0>
+GrenadeSkill  <Stat 5 ?>
+SkillModSkill             <Stat 1 ?>
+SkillModAmount            <Stat 2 ?>
+SkillModMechaGunnery      <Stat 1 1>
+SkillModMechaArtillery    <Stat 1 2>
+SkillModMechaWeapons      <Stat 1 3>
+SkillModMechaFighting     <Stat 1 4>
+SkillModMechaPiloting     <Stat 1 5>
+SkillModSmallArms         <Stat 1 6>
+SkillModHeavyWeapons      <Stat 1 7>
+SkillModArmedCombat       <Stat 1 8>
+SkillModMartialArts       <Stat 1 9>
+SkillModDodge             <Stat 1 10>
+SkillModAwareness         <Stat 1 11>
+SkillModInitiative        <Stat 1 12>
+SkillModVitality          <Stat 1 13>
+SkillModSurvival          <Stat 1 14>
+SkillModMechaRepair       <Stat 1 15>
+SkillModMedicine          <Stat 1 16>
+SkillModElectronicWarfare <Stat 1 17>
+SkillModSpotWeakness      <Stat 1 18>
+SkillModConversation      <Stat 1 19>
+SkillModFirstAid          <Stat 1 20>
+SkillModShopping          <Stat 1 21>
+SkillModBioTechnology     <Stat 1 22>
+SkillModGeneralRepair     <Stat 1 23>
+SkillModCybertech         <Stat 1 24>
+SkillModStealth           <Stat 1 25>
+SkillModAthletics         <Stat 1 26>
+SkillModFlirtation        <Stat 1 27>
+SkillModIntimidation      <Stat 1 28>
+SkillModScience           <Stat 1 29>
+SkillModConcentration     <Stat 1 30>
+SkillModMechaEngineering  <Stat 1 31>
+SkillModCodeBreaking      <Stat 1 32>
+SkillModWeightLifting     <Stat 1 33>
+SkillModMysticism         <Stat 1 34>
+SkillModPerformance       <Stat 1 35>
+SkillModResistance        <Stat 1 36>
+SkillModInvestigation     <Stat 1 37>
+SkillModRobotics          <Stat 1 38>
+SkillModLeadership        <Stat 1 39>
+SkillModDominateAnimal    <Stat 1 40>
+SkillModPickPockets       <Stat 1 41>

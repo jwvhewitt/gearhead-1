@@ -1,0 +1,36 @@
+PLOT 0
+	% PSA - Public Service Announcement. Back in Canada we
+	% have loads of them. Here in Korea we don't have nearly
+	% enough. For GearHead, it's kind of a way to explain
+	% things to the player, while knowing that they won't
+	% bother to read all the docs.
+	name <PLOT: Reputation PSA>
+	element1 <Character HasMecha Renowned>
+	element2 <Character HasMecha Wangtta>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete ifPersona E2 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+sub
+
+	Persona 1
+	rumor <!1 is a very good mecha pilot!>
+	greeting <NewChat AdvancePlot 0 Say d5>
+	Msg1 <I never run away from a battle I've entered. That's why everyone knows I'm the best pilot.>
+	Msg2 <Having a good reputation is pretty important. You'll never be hired for the high-paying jobs if people don't think you can handle it.>
+	Msg3 <It is my goal to prove myself as the greatest pilot in the world!>
+	Msg4 <Everyone loves a winner... Even losers do!>
+	Msg5 <If you don't have the best equipment you're never going to survive on an advanced mission.>
+
+	Persona 2
+	rumor <!2 is a very bad mecha pilot!>
+	greeting <NewChat AdvancePlot 0 Say d5>
+	Msg1 <Running away from a hopeless battle might not be honorable, but at least you'll live to fight another day!>
+	Msg2 <Reputation isn't all that it's cracked up to be. If your reputation is too good, people will start expecting you to be able to do impossible things.>
+	Msg3 <Having all the latest expensive combat gear is nice, but you'll learn quicker if you stick to the basics.>
+	Msg4 <He who fights and runs away lives to enjoy retirement.>
+	Msg5 <A coward dies a thousand deaths, but a brave man just dies young.>
+
+end
+

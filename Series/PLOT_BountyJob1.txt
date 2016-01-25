@@ -1,0 +1,257 @@
+Plot 0
+	name <PLOT: Nab A Pilot>
+	% [[Ver1.5]]
+	% E1 is the faction behind the story
+	Element1 <Faction Police>
+	Element2 <Character Lawful Bounty Hunter>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%       If P3=-1, PC has been denied the job
+
+	%  S101 = Faction Victory Count
+	%  S102 = Enemy Victory Count (if appropriate)
+	%  S103 = How many times PC fought for faction
+	%  S104 = How many times PC fought against faction
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  if= L2 1 else GoLose Goto GoVictory>
+	nu2 <if= T2 0 if= V2 1  if= L2 1 else GoLose Goto GoVictory>
+	GoLose <V= 2 2  Reputation 6 -5>
+	GoVictory <V= 2 3  Reputation 6  1  XPV 50  FacXP+ E1 1>
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 ifG RReact E2 d90 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// Got a bounty mission from \ELEMENT 1 for you.>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// Hey, I've got a bounty hunting job that requires some mecha skills. Contact me if interested.>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Hey \PC , if you're around there's a mek hunt here in \SCENE EScene 2 .>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// I have a bounty hunting mission for a mecha pilot. If you're in the area stop by.>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// If you're looking for a job head to \SCENE EScene 2 . I've got a piloting contract from \ELEMENT 1 .>
+
+
+sub
+	Persona 2
+	rumor <!2 has a bounty hunting mission available for a mecha pilot.>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AddReact d4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied ifG PCRep 6 30 else GoDenied Goto GoInitialize>
+	GoInitialize <V= 1 -1 V= 2 PCRep 6 V+ 2 d8 V+ 2 -d8 V= 3 Threat V2 120 V= 4 Reward V3 150 Goto GoCheckFaction>
+	GoCheckFaction <if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFriend <ifG React 30 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	GoNoAutomatic <ifG React -d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 P= 3 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 P= 3 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+
+	GoStartCombat <SavePos P= 2 1  Staged .scene V3>
+	.scene <SCENE_CaptureMecha.txt>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 AdvancePlot 0>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- lawful reputation.
+	result11 <NewChat ifG PCRep 2 d50 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 AdvancePlot 0>
+
+
+	% The PC tries to get the job via "PLAN B"- renowned reputation.
+	result14 <NewChat ifG PCRep 6 d50 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1 AdvancePlot 0>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1 Reputation 2 -1 Reputation 3 -d6 AdvancePlot 0>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Good job. The captured pilot has been turned over to the guardians, and we've been given our pay. Here's your cut.>
+	Msg2 <You did well out there. Here's your pay.>
+	Msg3 <You did it. The captured pilot has been turned over to the police. Here's your pay.>
+	Msg4 <Here's the cash you've earned. I'll let you know if I have any more bounties.>
+	Msg5 <Very good. You've really shown your skills as a pilot.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <That was a miserable failure...>
+	Msg7 <So, do you fail like that often?>
+	Msg8 <You blew it...>
+	Msg9 <That couldn't possibly have gone any worse... oh, well. At least it wasn't me risking my ass out there.>
+	Msg10 <Maybe you should take a piloting course...>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <Here's the deal. A bandit has agreed to inform against his boss, but can't leave his gang or they'll kill him. So, we have to capture him by disabling the rest of the bandits. Pay is $ \VAL V4 if you can manage that.>
+	Msg12 <This is a bit complicated. The guardians need a bandit to inform against his bosses, but the bandit won't agree to lose face by cooperating. So, we're going to capture him. Pay for the job is $ \VAL V4 .>
+	Msg13 <A certain bandit is needed for questioning by the guardians. In order to make him surrender, you'll have to take out his gang. Pay is $ \VAL V4 if the bandit can be captured with his mecha intact.>
+	Msg14 <The guardians are looking for a certain bandit. There's a good indication that he'll surrender if he can be confronted alone, so your job is to disable the rest of his gang. This job pays $ \VAL V4 .>
+	Msg15 <There's a bandit who's wanted for questioning in relation to a robbery. The guardians want him taken alive, so your job is to force him to surrender. It should be easy enough if you disable the rest of his gang. Pay for this job is $ \VAL V4 .>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Hey, are you looking for a job? I've just got a contract for a wanted criminal but it's a mecha mission.>
+	Msg17 <Hey, I need a mecha pilot for a bounty hunt. I'm not that good at piloting myself so I'm contracting out. You interested?>
+	Msg18 <I've got a job here if you're looking for one. I should warn you, though, that you're going to need a mecha.>
+	Msg19 <Are you free? I just got a contract from \ELEMENT 1 . There's a mecha bandit who needs to be brought in. Sound like a good time?>
+	Msg20 <Got a bounty hunting mission for a mecha pilot, if that sounds like the kind of thing you're into.>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <As a bounty hunter, I'm often asked to fill contracts by \ELEMENT 1 .>
+	Msg22 <You should know that \ELEMENT 1 often hire bounty hunters to do their grunt work.>
+	Msg23 <I often get requests from \ELEMENT 1 to help them on cases.>
+	Msg24 <We bounty hunters frequently work in close cooperation with \ELEMENT 1 .>
+	Msg25 <Aspiring bounty hunters should know that most of our contracts are provided by \ELEMENT 1 .>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points worth of enemy hardware. Do you feel up to the challenge?>
+	Msg27 <The gang has roughly \VAL V3 points worth of mecha. I'm not all that familiar with the terms myself; is that a lot?>
+	Msg28 <According to the dossier I was given by \ELEMENT 1 , they've got around \VAL V3 threat points worth of mecha.>
+	Msg29 <I've been told that the gang has no more than \VAL V3 points worth of equipment.>
+	Msg30 <The report I was given says that they've got around \VAL V3 tactical points worth of mecha, which sounds like a lot to me.>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <I've got a contract available right now, if you're interested. I should mention that the job does require piloting skills and access to a mecha.>
+	Msg32 <Actually, I'm looking for a mecha pilot right now. You wouldn't happen to be one would you?>
+	Msg33 <I do have a contract available, but it's for a mecha pilot rather than a hunter. Are you interested in that kind of work?>
+	Msg34 <They've sent me a contract, but it's for a mecha pilot instead of a regular hunter. If you're interested I can give you the details.>
+	Msg35 <Looking for work? I've got something available. If you've got some mecha piloting skills, you're more than welcome to the job.>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Disable all the mecha except the one we have to capture. Come back here when you've succeeded and I'll give you the cash then.>
+	Msg37 <You'll have to disable all the mecha except the one belonging to the informant. I'll radio with more information when you get to the field.>
+	Msg38 <Remember, you have to force the pilot to surrender. I'll contact you with more information once you reach the navpoint.>
+	Msg39 <Good luck. I'll confirm the identity of our target when you reach the engagement zone.>
+	Msg40 <I'll contact you with further instructions once you reach the encounter point. Good luck. Come back when you're finished and I'll give you your money then.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <Erg... I hope I won't have to do it by myself, then.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Make sure that your machine is in top shape, then we can start.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <I don't think I have anything that you'd be interested in.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Sorry, what I need for this mission is a professional. Your skills just aren't up to par.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Like them or not, they're a steady employer.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a bounty hunting mission.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <All ready to start.>
+	Prompt2 <I'm ready to fight!>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <Be back after I freshen up.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <How many mecha does the gang have?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I'm interested. Tell me more.>
+	Prompt8 <Alright, I'll take the mission.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Sorry, I'm no pilot.>
+	Prompt10 <This isn't my kind of job.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	Prompt11 <I've worked with the guardians before.>
+	Prompt12 <That's the kind of mission I like.>
+	Prompt13 <If you get a contract, let me know.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	Prompt14 <Do you have any contracts available?>
+	Prompt15 <Do you have a mission available now?>
+	Prompt16 <Got any contracts available?>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <I'm no fan of \ELEMENT 1 .>
+	Prompt18 <I don't much care for cops.>
+	Prompt19 <I wouldn't do a mission for the police.>
+
+
+end
+

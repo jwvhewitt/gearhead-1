@@ -1,0 +1,92 @@
+Battroid 3
+Name <Badger>
+Desig <TDM-8>
+Scale 1
+SDL_Sprite <btr_badger.png>
+
+Mod Head
+	Size 2
+	Armor 3
+	Mass -2
+	sub
+		Sensor 8
+
+		TarComp 1
+	end
+
+Mod Body
+	Armor 3
+	Mass -2
+	sub
+		CPit
+		Armor 2
+		Mass -2
+
+		Sensor 1
+
+		Mount
+		Name <Right Collar Mount>
+
+		Mount
+		Name <Left Collar Mount>
+		inv
+			MLauncher 3
+			Name <Rocket Launcher>
+			Range 5
+			Acc -2
+			Magazine 24
+			sub
+				Rockets 3
+			end
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	Mass -2
+	sub
+		Hand
+		inv
+			Gun 2
+			Name <Light Autocannon>
+			Range 5
+			Acc 1
+			BV 2
+			Magazine 90
+			sub
+				Ammo 2
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	Mass -2
+	sub
+		Hand
+		inv
+			Melee 2
+			Name <Knife>
+			Acc 1
+			Speed 5
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 3
+	Mass -2
+	sub
+		Wheels 4
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 3
+	Mass -2
+	sub
+		Wheels 4
+	end
+end

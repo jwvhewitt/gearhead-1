@@ -1,0 +1,161 @@
+Arachnoid 2
+Name <Razer>
+Desig <TR-92>
+SDL_Sprite <ara_razer.png>
+
+Mod Head
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Sensor 7
+	end
+
+Mod Body
+	Armor 2
+	sub
+		Gun 1
+		Name <Machine Gun>
+		Acc -1
+		BV 2
+		Magazine 30
+		sub
+			Ammo 1
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -1
+		BV 2
+		Magazine 30
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Turret
+	Armor 2
+	sub
+		BeamGun 3
+		Name <Combat Laser>
+		Acc 1
+		Speed 5
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 3
+	Armor 2
+
+Mod Leg
+	Name <Left Leg>
+	Size 3
+	Armor 2
+end
+
+Arachnoid 2
+Name <Razer>
+Desig <TR-93 XS>
+SDL_Sprite <ara_razer.png>
+
+Mod Head
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Sensor 7
+	end
+
+Mod Body
+	Armor 2
+	sub
+		BeamGun 1
+		Name <Pulse Laser>
+		Range 2
+		Acc 1
+		BV 2
+
+		BeamGun 1
+		Name <Pulse Laser>
+		Range 2
+		Acc 1
+		BV 2
+
+		Sensor 7
+	end
+
+Mod Turret
+	Armor 2
+	sub
+		BeamGun 3
+		Name <Combat Laser>
+		Acc 1
+		Speed 5
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 3
+	Armor 2
+
+Mod Leg
+	Name <Left Leg>
+	Size 3
+	Armor 2
+end
+
+Arachnoid 2
+Name <Razer>
+Desig <TR-92-C Hitman>
+SDL_Sprite <ara_razer.png>
+
+Mod Head
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Sensor 7
+	end
+
+Mod Body
+	Armor 2
+	sub
+		MLauncher 9
+		Name <Rocket Launcher>
+		Speed 1
+		Magazine 3
+		sub
+			Rockets 9
+		end
+
+		MLauncher 9
+		Name <Rocket Launcher>
+		Speed 1
+		Magazine 3
+		sub
+			Rockets 9
+		end
+	end
+
+Mod Turret
+	Armor 2
+	sub
+		BeamGun 3
+		Name <Combat Laser>
+		Acc 1
+		Speed 5
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 3
+	Armor 2
+
+Mod Leg
+	Name <Left Leg>
+	Size 3
+	Armor 2
+end

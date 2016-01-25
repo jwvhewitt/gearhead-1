@@ -1,0 +1,107 @@
+Persona 0
+	name <Lancemate Tactics Setter>
+	% This persona exists so that the PC can set tactics for the lancemates.
+	% There should be messages for a wide variety of personality types and configurations,
+	% since the same persona is being used for every last lancemate and we don't want
+	% to lose all traces of individuality.
+
+greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+
+result1 <NewChat Say 2 SetLMTactics 32 20>
+
+result2 <NewChat Say 2 SetLMTactics 1 0>
+
+result3 <NewChat Say 2 SetLMTactics 0 0>
+
+Msg1 <Hey, \PC . What can I help you with?>
+Msg1_1 <>
+CMsg1_1 <ifNPCHeroic Accept>
+Msg1_2 <Yes, what is it that you want?>
+CMsg1_2 <ifNPCVillainous Accept>
+Msg1_3 <What do you want me to do?>
+CMsg1_3 <ifNPCLawful Accept>
+Msg1_4 <>
+CMsg1_4 <ifNPCChaotic Accept>
+Msg1_5 <Hey \PC . It's been great sharing these adventures with you.>
+CMsg1_5 <ifNPCSociable ifG React 40 Accept>
+Msg1_6 <Yes?>
+CMsg1_6 <ifNPCShy Accept>
+Msg1_7 <>
+CMsg1_7 <ifNPCEasygoing Accept>
+Msg1_8 <>
+CMsg1_8 <ifNPCPassionate Accept>
+Msg1_9 <>
+CMsg1_9 <ifNPCCheerful Accept>
+Msg1_10 <I suppose you're going to tell me that you want me to leave the group...>
+CMsg1_10 <ifNPCMelancholy Accept>
+Msg1_11 <It might be a good idea if, at some point, the two of us discussed strategy.>
+CMsg1_11 <ifNPCPragmatic Accept>
+Msg1_12 <>
+CMsg1_12 <ifNPCSpiritual Accept>
+
+Msg2 <I'll do that.>
+Msg2_1 <If that's for the best, then so be it.>
+CMsg2_1 <ifNPCHeroic Accept>
+Msg2_2 <Just as you say, oh fearless leader.>
+CMsg2_2 <ifNPCVillainous Accept>
+Msg2_3 <I promise that I'll do my best.>
+CMsg2_3 <ifNPCLawful Accept>
+Msg2_4 <Eh, I don't much like that order...>
+CMsg2_4 <ifNPCChaotic Accept>
+Msg2_104 <I'll do as you say... for now.>
+CMsg2_104 <ifNPCChaotic Accept>
+Msg2_5 <Alright, I'll do my best as part of the team.>
+CMsg2_5 <ifNPCSociable Accept>
+Msg2_6 <Alright.>
+CMsg2_6 <ifNPCShy Accept>
+Msg2_7 <Sure, whatever.>
+CMsg2_7 <ifNPCEasygoing Accept>
+Msg2_8 <I hear and do obey!>
+CMsg2_8 <ifNPCPassionate Accept>
+Msg2_108 <That seems to me like a very bad idea... but I will do as you say.>
+CMsg2_108 <ifNPCPassionate Accept>
+Msg2_208 <Isn't that what I've been doing already!?>
+CMsg2_208 <ifNPCPassionate Accept>
+Msg2_9 <Sounds good. I'll do that.>
+CMsg2_9 <ifNPCCheerful Accept>
+Msg2_10 <I'll try not to let you down.>
+CMsg2_10 <ifNPCMelancholy Accept>
+Msg2_110 <Might not that get us all killed? Okay, I'll do it...>
+CMsg2_110 <ifNPCMelancholy Accept>
+Msg2_11 <Good thinking. I'll do that.>
+CMsg2_11 <ifNPCPragmatic Accept>
+Msg2_12 <By the heaven's will.>
+CMsg2_12 <ifNPCSpiritual Accept>
+
+
+Msg3 <Hey, \PC . What can I help you with?>
+Msg3_1 <>
+CMsg3_1 <ifNPCHeroic Accept>
+Msg3_2 <>
+CMsg3_2 <ifNPCVillainous Accept>
+Msg3_3 <>
+CMsg3_3 <ifNPCLawful Accept>
+Msg3_4 <>
+CMsg3_4 <ifNPCChaotic Accept>
+Msg3_5 <>
+CMsg3_5 <ifNPCSociable Accept>
+Msg3_6 <>
+CMsg3_6 <ifNPCShy Accept>
+Msg3_7 <>
+CMsg3_7 <ifNPCEasygoing Accept>
+Msg3_8 <>
+CMsg3_8 <ifNPCPassionate Accept>
+Msg3_9 <>
+CMsg3_9 <ifNPCCheerful Accept>
+Msg3_10 <>
+CMsg3_10 <ifNPCMelancholy Accept>
+Msg3_11 <>
+CMsg3_11 <ifNPCPragmatic Accept>
+Msg3_12 <>
+CMsg3_12 <ifNPCSpiritual Accept>
+
+Prompt1 <Stay in the back in combat.>
+
+Prompt2 <Get up close and personal in combat.>
+
+Prompt3 <Do whatever you think is best.>

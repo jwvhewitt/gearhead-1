@@ -1,0 +1,25 @@
+Plot 0
+	name <PLOT: Something Nice>
+	% Someone in town has just bought something nice.
+
+	element1 <Faction Criminal>
+	element2 <Character Citizen Renowned !X 1>
+	element3 <PREFAB>
+
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 17000 Compose GET E3 .get SetItemFudge E3 Reward Threat PCRep 6 100 2000>
+	GoCheckTime <ifG ComTime V1 DeleteKeyItem E3 AdvancePlot 0>
+	GoDelete <DeleteKeyItem E3 AdvancePlot 0>
+	.get <FacXP+ E1 1 AdvancePlot 0>
+
+sub
+	Persona 2
+	rumor <!2 just bought something nice.>
+	greeting <NewChat ifG React 59 else GoNormal ifG PCRep 1 d100 else GoNormal ifG PCRep 2 d200 else GoNormal Say 1 GiveKeyItem E3 AddReact -5>
+	GoNormal <SayAnything DeleteKeyItem E3 AdvancePlot 0>
+	Msg1 <Hi, \PC . I bought you this watch as a present... I hope you like it.>
+end
+inv
+	Treasure 10
+	name <Gold Watch>
+	place <2>
+end

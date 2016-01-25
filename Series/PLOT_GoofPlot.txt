@@ -1,0 +1,13 @@
+Plot 0
+	name <PLOT_GoofPlot>
+	% Goof Plot - Does nothing. Just kind of a test.
+	Element1 <Character Chaotic Easygoing>
+	rumor <!1 isn't particularly dependable.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 1500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <Say 1 NewChat>
+	Msg1 <This is a nice day to do nothing at all, isn't it?>
+end

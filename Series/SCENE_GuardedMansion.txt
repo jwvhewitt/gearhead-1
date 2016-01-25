@@ -1,0 +1,89 @@
+scene 0 0
+% "Raid the Mansion" scene
+%
+% Here's a mansion with plenty of nasty guards to give the PC headaches.
+% The PC can sneak in, or try to engage all the guards, or just run away.
+% There are rooms that can be used by the calling function to put things
+% in, and several teams to be stocked with bad guys.
+
+%  Team 2 = Default enemies, in the driveway
+%  Team 3 = More enemies, in Guard Room 1
+%  Team 4 = Even more enemies, in Guard Room 2
+%  Team 5 = Whatever is supposed to be in the goal room
+
+%   V1 = Initialization Counter
+% * V2 = WMon value for Team 2
+% * V100 - V199 = Reserved for use by the calling plot, etc.
+
+ForestMap
+
+% Do initialization here...
+start <if= V1 0 V= 1 1 MonsterUp 2 L2>
+
+% If the PC leaves or is killed, return to the calling scene.
+nu1 <if= T1 0 Return>
+
+
+
+sub
+	Mansion
+	LockedDoorChance 50
+	SecretDoorChance 10
+	MFX 5
+	MFY 5
+	Width 25
+	Height 25
+	name <Mansion>
+	sub
+		rect
+		name <Goal Room>
+		FloorType 20
+
+		rect
+		name <Guard Room 1>
+		FloorType 25
+
+		rect
+		name <Guard Room 2>
+		FloorType 25
+	end
+
+	rect
+	MFX 35
+	MFY 5
+	Width 15
+	Height 10
+	FloorType 6
+	name <Driveway>
+
+	rect
+	Width 5
+	Height 5
+	name <PC Start Point>
+	MFX 25
+	MFY 44
+
+	Team 1
+	home <PC Start Point>
+	SetEnemy 2 3 4
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3 4
+	home <Driveway>
+	type <GUARD ROBOT>
+
+	Team 3
+	SetEnemy 1
+	SetAlly 2 4
+	home <Guard Room 1>
+
+	Team 4
+	SetEnemy 1
+	SetAlly 2 3
+	home <Guard Room 2>
+
+	Team 5
+	home <Goal Room>
+
+end

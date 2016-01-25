@@ -1,0 +1,80 @@
+Scene 0 0
+	% This scene is named after my favorite stage direction
+	% from Shakespeare... "enter a sewer, divers"
+
+	% Anyhow, it's a sewer. The PC can go up and return to
+	% the calling scene, or kill all the monsters present and
+	% descend to the next scene. Supposedly the calling plot must
+	% record how deep the PC has gone.
+
+	% INTERFACE
+	% Use the following to enter this dungeon:
+	%
+	%   GoStartCombat <P= 2 1 SavePos MStaged .scene 5 .mdesc SeekGate -1 PassVar 1 5>
+	%   .scene <SCENE_SewerDivers.txt>
+	%   .mdesc <CITY WATER SWAMP>
+	%
+	% This code assumes the usual convention of setting P2=1 when
+	% combat is entered. To measure the deepest level that the PC
+	% has cleared, insert the following code in the plot:
+	%
+	%   nu1 <if= P2 1 if= t1 0  P= 2 2>
+	%   nu2 <if= P2 1 if= t2 0 ifG L1 P100 P= 100 L1>
+	%
+	% This will save the deepest dungeon depth as P100,
+	% and will set P2=2 when the PC leaves the dungeon.
+
+	% V1 = Depth
+	% V3 = Monsters dead message
+
+	special <NOEXIT UNSAFE>
+	NU1 <if= t1 0 Return>
+	NU2 <if= t2 0 if= V3 0 V= 3 1 Print 2>
+
+	% Every level you descend does a bit more morale damage, as the smell
+	% starts to get to you...
+	start <Print 1 if= V4 0 V= 4 1 PCMoraleDMG d8 PCMoraleDMG d8>
+	Msg1 <You are approximately \VAL L1 meters below the surface.>
+	Msg1_1 <You are approximately \VAL L1 meters below the surface. The stench is unbearable.>
+	Msg2 <That seems to be the last of the monsters for this level.>
+
+	CaveMap
+	BorderType 29
+	FloorType 17
+	MarbleType 7
+
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	home <Exit Stairs>
+
+	rect
+	width 3
+	height 3
+	FloorType 17
+	sub
+		StairsUp
+		Destination -1
+		use <Print 1 Retreat 1>
+	end
+
+	rect
+	name <Exit Stairs>
+	width 8
+	height 8
+	FloorType 17
+	sub
+		StairsDown
+		Destination 1
+		use <if= T2 0 else GoMoreMonsters Print 1 L+ 1 d10 L+ 1 d10 MStaged .scene L1 .mdesc SeekGate -1 PassVar 1 L1>
+		.scene <SCENE_SewerDivers.txt>
+		.mdesc <CITY WATER SWAMP>
+		GoMoreMonsters <Print 101>
+		Msg101 <You can't go down yet, since there are still more monsters to fight on this level.>
+	end
+
+end

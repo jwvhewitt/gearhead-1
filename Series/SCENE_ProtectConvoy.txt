@@ -1,0 +1,99 @@
+scene 0 2
+% "Protect the Convoy" scene
+%
+%  A truck will appear alongside the player team on the left side of the
+%  map. Bandits will be deployed in the center of the map. A road will be
+%  drawn through the map.
+%
+%  The truck will follow the PC. It must exit from the right side of the
+%  map. The bandits, of course, will try to destroy it.
+
+% V1 = Truck UID
+% V2 = Victory Indicator; if V2=1 then the PC has won
+% V3 = Truck Destroyed
+
+ForestMap
+
+start <if= V1 0 V= 1 ?M3 UIDSeekEdge V1 0 Alert 1 Compose TD V1 .truckdestroyed>
+
+% Every time the truck moves, check to see if it moves off the map.
+TM3 <ifG LocalX V1 49 Retreat 3 V= 2 1 Print 2>
+
+Nu1 <if= T1 0 Return>
+
+.truckdestroyed <if= V3 0 Print 3 V= 3 1>
+
+Msg1 <Protect the truck from raiders, and lead it to the eastern edge of the map. Once the truck is safely away you can leave the area.>
+Msg2 <The truck has left this area. Your mission is a success!>
+Msg3 <The truck has been destroyed! Your mission has failed.>
+
+sub
+	rect
+	MFX 1
+	MFY 20
+	Width 50
+	Height 10
+	FloorType 6
+	sub
+		rect
+		MFX 2
+		MFY 21
+		Width 8
+		Height 8
+		FloorType 6
+		name <PC Start Point>
+	end
+
+	rect
+	MFX 15
+	MFY 40
+	Width 20
+	Height 3
+	FloorType 1
+	name <Bandit Start Point>
+
+
+	Team 1
+	home <PC Start Point>
+	SetAlly 3
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1 3
+	home <Bandit Start Point>
+
+	Team 3
+	home <PC Start Point>
+	SetAlly 1
+
+end
+inv
+	GroundCar 5
+	name <Truck>
+	SetTeam 3
+	update <V= 1 PCRenown V+ 1 d20 GrabSource GSkillLevel V1>
+	sub
+		mod Body
+		armor 8
+		mass 81
+		sub
+			Sensor 1
+			CPIT
+			sub
+				NPC Trucker
+			end
+			wheels 6
+
+			Gun 2
+			name <Machine Gun>
+			range 4
+			BV 5
+			magazine 30
+			sub
+				Ammo 2
+			end
+		end
+	end
+
+end
+

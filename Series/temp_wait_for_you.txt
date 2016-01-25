@@ -1,0 +1,119 @@
+Plot 0
+	name <You will join me on the dark side>
+
+	% The PC will discover (*SHOCK!*) that his father used to
+	% work for [insert evil faction], as does [enemy], and
+	% now he must either join them or die! Or fight them off
+	% and move on with his life...
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+
+	% E1 is the scene where the combat will take place.
+	element1 <Grab 2>
+
+	% E2 is a character who will give the ultimate mission.
+	element2 <Character !Near 1>
+
+	% E3 is the NPC who the PC will fight/arrest.
+	element3 <Prefab>
+
+	% E4 is the next scene, if this mission is failed.
+	element4 <Scene !Far 1>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%      This counts only for the combat given by E2.
+	%  V3 = Email sent indicator.
+
+	%  S2 = Encounter Challenge Rating
+
+	%  S101 = Faction Victory Count
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Compose EWM E1 .entrycombat>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+	.entrycombat <Block Print 101 SavePos MDynamic 0 S2 .edesc .nu1 .nu2 PassVar 1 E1>
+	.edesc <Synth Criminal>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Exit V1 SeekGate 1>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3  N= 2 E4  S= 201 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6 1 XPV 100 S+ 202 1 S+ 101 d8 N= 2 E3 S= 1 1>
+
+
+	Msg101 <As you enter \ELEMENT 1 , you are without warning attacked by monsters!>
+
+sub
+	Persona 2
+	rumor <>
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 5 CashPrize Threat S2 3 AdvancePlot 1>
+	GoCheckLoss <if= P2 2 else GoFirst Say 4 AdvancePlot 0>
+	GoFirst <Say 1 AddCHat 1 AddCHat 2>
+
+	result1 <EndChat Say 2 Goto GoStartCombat>
+
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 MDynamic 0 S2 .mdesc .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	.mdesc <Synth Hunter-X>
+
+	result2 <NewChat Say 3>
+
+	% Describe crisis situation - PC can help or not.
+	Msg1 <>
+
+	% Combat is starting
+	Msg2 <>
+
+	% PC needs time to get ready
+	Msg3 <>
+
+	% The mission was a failure
+	Msg4 <>
+
+	% The mission was a success
+	Msg5 <>
+
+	Prompt1 <I better get over there!>
+	Prompt2 <Maybe I'll go later...>
+
+
+	Plot 1
+		% PC has won the mission
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 News d5>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+
+		% News articles
+		Msg1 <>
+		Msg2 <>
+		Msg3 <>
+		Msg4 <>
+		Msg5 <>
+
+end
+inv
+	NPC Citizen
+
+end

@@ -1,0 +1,150 @@
+Plot 0
+	name <PLOT: Employment Trap>
+	% The character has made an enemy in the corporate world.
+	% This enemy will offer a job to the player- would you take
+	% a job from your enemy? The job offer is valid, it's just
+	% that the player will be facing many more enemies than he/she
+	% can probably handle.
+
+	element1 <Character Corporate ArchEnemy>
+	% Element 2 -> Difficulcy Level
+
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 22500>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -17          V= 2 2>
+	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 250 Reputation 6 1    V= 2 2>
+
+
+sub
+
+	Persona 1
+	% V1 = Encounter PV.
+	greeting <NewChat ifG PCMeks 0 else GoNoMeks if= E2 0 else GoAlreadyMet ifG React 24 else GoDoTrap Say 2 AdvancePlot 0>
+	rumor <!1 has a job available for a mecha pilot.>
+	GoAlreadyMet <Say 14  AddChat 7 AddChat 8 AddChat 9>
+	GoNoMeks <EndChat Say 1 AdvancePlot 0>
+	GoDoTrap <ifG React 0 else GoNoLike Say 3  AddChat 1 AddChat 2 AddChat 4>
+	GoNoLike <ifG PCRep 6 d80 else GoNoRep Say 4  AddCHat 3 AddCHat 5>
+	GoNoRep <ifG -5 PCRep 6 else GoNoWangtta Say 5  AddChat 2 AddCHat 1>
+	GoNoWangtta <ifG PCRep 1 d50 else GoNoHero Say 6  AddChat 2 AddCHat 3>
+	GoNoHero <ifG 0 PCRep 1 else GoNoVillain Say 7  AddChat 1 AddChat 5>
+	GoNoVillain <ifG 0 PCRep 2 else GoNoChaos Say 8  AddChat 2 AddChat 3 AddChat 4>
+	GoNoChaos <Say 9  AddCHat 1 AddCHat 2 AddChat 4>
+
+
+	result1 <NewChat Say 12  AddCHat 6>
+	result2 <NewChat AddReact -5 Say 10>
+	result3 <Goto GoDescription>
+	result4 <NewChat Say 13  AddChat 6>
+	result5 <NewChat Say 11>
+	result6 <Goto GoDescription>
+
+	GoDescription <ifG PCRep 6 90 Else GoLvl9 V= 1 18000000 E= 2 10 Say 101 goto GoChoose>
+	GoLvl9 <ifG PCRep 6 80 Else GoLvl8 V= 1 13000000 E= 2 9 Say 102 goto GoChoose>
+	GoLvl8 <ifG PCRep 6 70 Else GoLvl7 V= 1  6600000 E= 2 8 Say 103 goto GoChoose>
+	GoLvl7 <ifG PCRep 6 60 Else GoLvl6 V= 1  5100000 E= 2 7 Say 104 goto GoChoose>
+	GoLvl6 <ifG PCRep 6 50 Else GoLvl5 V= 1  3200000 E= 2 6 Say 105 goto GoChoose>
+	GoLvl5 <ifG PCRep 6 40 Else GoLvl4 V= 1  2500000 E= 2 5 Say 106 goto GoChoose>
+	GoLvl4 <ifG PCRep 6 30 Else GoLvl3 V= 1  1800000 E= 2 4 Say 107 goto GoChoose>
+	GoLvl3 <ifG PCRep 6 20 Else GoLvl2 V= 1  1400000 E= 2 3 Say 108 goto GoChoose>
+	GoLvl2 <ifG PCRep 6 10 Else GoLvl1 V= 1   800000 E= 2 2 Say 109 goto GoChoose>
+	GoLvl1 <                           V= 1   675000 E= 2 1 Say 110 goto GoChoose>
+	GoChoose <NewChat  AddChat 7 AddChat 8 AddChat 9>
+
+	result7 <EndChat Say 15 P= 2 1 SavePos Dynamic 2 V1 FrzNU1 FrzNU2 Encounter 1 75 .enemydata>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Salvage Return>
+	.EnemyData <Villainous ArchEnemy>
+
+	result8 <NewChat Say 16>
+	result9 <EndChat Say 17  AdvancePlot 0 Reputation 6 -5 Reputation 6 d4 AddReact -10>
+
+	Msg1 <Do not disturb me while I am thinking. Go away.>
+	Msg2 <Be careful about the types of work you get involved in. Not everyone is willing to concern themselves with whether you live or you die.>
+	Msg3 <Our company always has job openings available for skilled pilots.>
+	Msg4 <You know that I don't particularly like you... But our company has a situation, and I need the best pilot available. That's you.>
+	Msg5 <I need to hire a mecha pilot. Our company currently has openings for pilots of all skill levels.>
+	Msg6 <A group of evil terrorists have been attacking our factories. Many workers have lost their lives... I don't particularly like you, but we need a pilot to stop these raiders before anyone else gets hurt.>
+	Msg7 <Often corporations have to deal with unpleasant work. There's always a need for mecha pilots who are not moved by weaknesses like hesitation or mercy.>
+	Msg8 <Our company has a few quasilegal issues which need to be resolved. I could use a good pilot with a talent for subterfuge. Are you interested in earning some money?>
+	Msg9 <Our corporation is currently hiring mecha pilots for various duties. No skilled applicants will be turned away.>
+	Msg10 <One way or the other, you will be...>
+	Msg11 <That's just as well. You aren't my kind of employee.>
+	Msg12 <As a matter of fact, I do. You will be paid handsomely to protect this company's interests against hostile forces. Are you interested?>
+	Msg13 <I believe you might have the qualities that we're looking for. You will be paid handsomely to protect this company's interests against hostile forces. Are you interested?>
+	Msg14 <Are you ready for the mission we discussed yet? I've been waiting for you to get back.>
+	Msg15 <Here are all the details which you need to know. Report back here once the mission has been completed.>
+	Msg16 <Certainly. Make sure that your equipment is in top shape before proceeding; I'd hate to see anything bad happen to you out there.>
+	Msg17 <I should've known that you couldn't handle this kind of mission. I guess you aren't much of a pilot after all.>
+
+	Msg101 <Your target is a large force of mecha raiders. Should be no problem for a pilot of your caliber. Pay is $120000.>
+	Msg102 <I need you to eliminate this gang of mecha bandits. They have a few heavy mecha, but nothing too serious. Your reward will be $65000.>
+	Msg103 <You'll be going up against a large force of enemy mecha. I wouldn't expect them to put up much of a fight, though. The fee for this job is $33000.>
+	Msg104 <I need you to destroy a small gang of heavy mecha pilots. You'll be paid $17000 for this mission.>
+	Msg105 <You must eliminate a gang of moderately experienced mecha pilots. Should be a piece of cake for someone of your abilities. Pay is $9000.>
+	Msg106 <Your target is a medium sized gang of light mecha armors. Pay will be $5000 upon elimination of the enemy.>
+	Msg107 <I need you to get rid of a small gang of enemy mecha. There shouldn't be more than 3 enemies to deal with. Your salary will be $3000.>
+	Msg108 <Your mission is to eliminate a small mecha team which has been causing us trouble. I can give you $2000 for the mission.>
+	Msg109 <I need for you to destroy a small group of bandits. They shouldn't have anything bigger than a few light mechs. This job is worth $1000.>
+	Msg110 <I need for you to eliminate a small gang of powered armor raiders. Your pay will be $750.>
+
+	Prompt1 <Do you have a job for me?>
+	Prompt2 <I'm not a corporate slave.>
+	Prompt3 <Okay, I'll help you.>
+	Prompt4 <If you need a good pilot, you need me.>
+	Prompt5 <This isn't my kind of work.>
+	Prompt6 <Tell me more.>
+	Prompt7 <I'm ready to fight.>
+	Prompt8 <Just give me some time to get ready.>
+	Prompt9 <Maybe I don't want this job...>
+
+
+	Plot 1
+		% The player lost the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat Say d6 AddReact -5 AdvancePlot 0>
+		Msg1 <I should have known that you were going to fail. You are a disgrace.>
+		Msg2 <That mission was a complete failure, thanks to you.>
+		Msg3 <I'm suprised you have the gall to show your face here after how badly you did on that mission.>
+		Msg4 <That was one of the worst failures that I've ever witnessed. You are a shame as a pilot.>
+		Msg5 <What was that? Did you even try to put up a fight, or did you fall asleep at the wheel out there?>
+		Msg6 <It would have been better if you had died on the field than have to live with the shame of such a horrible defeat. You are a disgrace as a pilot.>
+	end
+
+	Plot 2
+		% The player won the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat Say d6 AdvancePlot 0 if= E2 10 Else GoLvl9 CashPrize 120000>
+		GoLvl9 <if= E2 9 Else GoLvl8 CashPrize 65000>
+		GoLvl8 <if= E2 8 Else GoLvl7 CashPrize 33000>
+		GoLvl7 <if= E2 7 Else GoLvl6 CashPrize 17000>
+		GoLvl6 <if= E2 6 Else GoLvl5 CashPrize  9000>
+		GoLvl5 <if= E2 5 Else GoLvl4 CashPrize  5000>
+		GoLvl4 <if= E2 4 Else GoLvl3 CashPrize  3000>
+		GoLvl3 <if= E2 3 Else GoLvl2 CashPrize  2000>
+		GoLvl2 <if= E2 2 Else GoLvl1 CashPrize  1000>
+		GoLvl1 <CashPrize 750>
+
+		Msg1 <You made it back here alive? I'm suprised. You're better than I thought. Here's your cash.>
+		Msg2 <How on earth did you manage that? Well, you completed the mission... Here's your pay.>
+		Msg3 <I hope you realize how lucky you are. Here's the pay that you just earned.>
+		Msg4 <You were very lucky out there today, but that luck must run out sometime. Here's your money.>
+		Msg5 <You're a luckier pilot than I had thought. Here's the cash you earned.>
+		Msg6 <Why are you still alive? Er, I mean, congradulations on a job well done... Here's your pay.>
+	end
+
+end

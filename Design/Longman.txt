@@ -1,0 +1,97 @@
+Battroid 5
+Name <Longman>
+Desig <LGN-05>
+SDL_Sprite <btr_longman.png>
+
+Mod Head
+	Size 2
+	Armor 3
+	Mass -2
+	sub
+		Sensor 8
+	end
+
+Mod Body
+	Armor 4
+	Mass -4
+	sub
+		Sensor 2
+
+		CPit
+
+		Engine 5
+		HighOutput
+
+		Mount
+		Name <Right Body Mount>
+
+		Mount
+		Name <Left Body Mount>
+
+		ArcJet 6
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 3
+	Armor 3
+	Mass -3
+	sub
+		Hand
+		inv
+			BeamGun 20
+			Name <Heavy Laser Cannon>
+			Range 10
+			Acc 1
+			Speed 3
+			Mass -5
+		end
+
+		MLauncher 2
+		Name <Rocket Pod>
+		Range 4
+		Magazine 10
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 3
+	Armor 3
+	Mass -3
+	sub
+		Hand
+
+		MLauncher 2
+		Name <Rocket Pod>
+		Range 4
+		Magazine 10
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 3
+	Mass -3
+	sub
+		Mount
+		Name <Right Leg Mount>
+
+		ArcJet 4
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 3
+	Mass -3
+	sub
+		Mount
+		Name <Left Leg Mount>
+
+		ArcJet 4
+	end
+end

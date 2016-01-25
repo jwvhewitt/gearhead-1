@@ -1,0 +1,56 @@
+plot 0
+	% STORY ARC - VIKKI'S MECHA QUIZ
+	element1 <Character>
+	Stat 1 6
+
+sub
+
+	Persona 1
+	% V1 = Quiz Timer; can only try quiz once per hour.
+	greeting <NewChat ifG ComTime V1 else GoTryAgain Say 2 AddChat 1 ifG PCSkillVal 27 0 if= V101 0 AddChat 9>
+	GoTryAgain <Say 3>
+	% At the beginning of the test, set the timer.
+	result1 <V= 1 ComTime V+ 1 3600 V+ 2 1 Say 4 EndChat AddChat 2 AddChat 3 ifG SkRoll 5 7 else GoCheckBefore AddChat 4>
+	GoCheckBefore <ifG V104 0 AddChat 4>
+	result2 <Say 5 NewChat ifG 5 V11 V+ 11 1 SkillXP 5 d50>
+	result3 <Say 6>
+	result4 <Say 7 V= 104 1 EndChat AddChat 5 ifG SkRoll 4 7 else GoCheckR4again AddChat 6>
+	GoCheckR4again <ifg V106 0 AddChat 6>
+	result5 <Say 8 NewChat ifG 5 V11 V+ 11 1 SkillXP 4 d50>
+	result6 <Say 9 EndChat V= 106 1 AddChat 7 ifG SkRoll 2 7 AddChat 8>
+	result7 <Say 10 NewChat ifG 5 V11 V+ 11 1 SkillXP 3 d50>
+	% Yay! All questions have been answered! Give the player a mek!
+	result8 <AdvancePlot 0 ifG V2 d3 else GoEarly MechaPrize ArenaMek NewChat Say 11>
+	ArenaMek <Joust.txt>
+	GoEarly <MechaPrize .GoodMek NewChat Say 12>
+	.GoodMek <Puma.txt>
+
+	Result9 <NewChat V= 101 1 ifG React d20 else GoNoLike Say 14 mechaprize .FlirtMek SkillXP 27 d100 AdvancePlot 0>
+	GoNoLike <AddReact -10 Say 13 AddChat 1>
+	.FlirtMek <Aranos.txt>
+
+	Msg2 <So \PERSONA 5 told you to ask me for a mecha? I'm going to have to test your skills first, just to make sure that you're good enough to compete in the arena.>
+	Msg3 <Come back in an hour or so and I'll let you try the quiz again.>
+	Msg4 <Question One: The navigational display on the left hand side of your mecha info window indicates three values. What are they?>
+	Msg5 <I'm sorry but that isn't the right answer. Try practicing your Mecha Piloting skill a bit more, then come back.>
+	Msg6 <Well, if your Mecha Piloting skill was at a high enough level, I'm quite sure the right answer would be obvious.>
+	Msg7 <Very good. Question Two: Mecha Fighting is used when attacking with a mecha's body parts. Arms may be used to punch. Legs may be used to kick. What other body part can be used?>
+	Msg8 <That's the wrong answer, interesting though it may be. Try practicing your Mecha Fighting skill before attempting this test again.>
+	Msg9 <Absolutely right. Question Three: Missiles are fired using the Mecha Artillery skill. What other weapons use this skill?>
+	Msg10 <Nope, sorry. Practice your Mecha Artillery skill a bit more, then come back here, okay?>
+	Msg11 <Congratulations! You've answered all the questions correctly. Since you've demonstrated your skill as a mecha pilot, here is one of the show's trainer meks for you to use.>
+	Msg12 <Congratulations! You've answered all the questions correctly. Since you've demonstrated your skill as a mecha pilot, here is one of the show's meks for you to use.>
+	Msg13 <Just give you one? What do I look like, some kind of charity? Forget it... you've got to pass the test, or you're not getting anything.>
+	Msg14 <Well, I guess I could probably do that, seeing as how you are who you are... I'm sure you'll do fine in the arena. You'll be coming back here to play all the time, won't you?>
+
+	Prompt1 <I'm ready for your test.>
+	Prompt2 <Um... Latitude, Longitude, and Torque?>
+	Prompt3 <How am I supposed to know that!?>
+	Prompt4 <Direction, Altitude, and Motion.>
+	Prompt5 <Er... that'd be the butt, Vikki.>
+	Prompt6 <Tails may be used to whip.>
+	Prompt7 <Potato launchers?>
+	Prompt8 <All guns with Damage Class over 10.>
+	Prompt9 <Come on, couldn't you just give me a mecha?>
+
+end

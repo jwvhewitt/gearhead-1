@@ -1,0 +1,54 @@
+Story
+	name <Story: Kidnapped!>
+	% The niece of the town leader has been kidnapped!
+
+	% Element 4 is a scene, but its value will change over the
+	% course of the story. As the player tracks the kidnappers
+	% across the FT, N1 will hold the value of the most recent
+	% lead.
+	% N1 will be the scene which generated this story
+
+	% E2 will eventually be the town leader, after that plot
+	%  gets loaded.
+	element2 <Character Leader !Near 1>
+	element3 <Prefab>
+	element4 <Scene Town !Near 1>
+
+	% V1 = General Phase Counter; if V1#0, PC has been informed of mission
+	% V2 = Reward Offered
+	% V3 = Have loaded leader plot bit
+
+	% V101 = Refresh Investigation
+	%     if nonzero, need to reload a new investigation plot
+	% V102 = Clues Accumulated by the PC
+        %     Once the total is high enough, a conclusion will be loaded
+
+	% V201 = Story Outcome
+	%     if > 0, PC was successful and rescued the niece
+	%     if < 0, PC failed and the niece died
+
+
+	% This story will end if...
+	%  - V201 is nonzero, and PC speaks with N2
+	%  - N2 dies or is otherwise removed from the game
+
+	start <ifPersona N2 else GoEndStory if= V3 0 StoryLine .leaderbit V= 3 1>
+	GoEndStory <EndStory>
+	.leaderbit <TS_GSP_URB_Kidnapped_PLOT0_*.txt>
+
+	% Every 5 minutes, check to see whether or not to load a
+	% new investigation.
+	5Min <if# V101 0 memo 101 if= V201 0 ifG 5 V102 else GoEndStory  storyline .investigation V= 101 0>
+	.investigation <TS_GSP_URB_Kidnapped_PLOT1_*.txt>
+	GoEndStory <storyline .conclusion V= 101 0>
+	.conclusion <TS_GSP_URB_Kidnapped_PLOT2_*.txt>
+
+
+	% Investigation memo
+	Msg101 <\NARRATIVE 2 in \NARRATIVE 1 wants you to investigate the disapearance of \NARRATIVE 3 . \NARRATIVE 4 was her last known location.>
+
+inv
+	NPC Citizen
+	chardesc Young Female
+
+end

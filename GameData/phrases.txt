@@ -1,0 +1,270 @@
+%%% phrases for random conversation generator - %N = Noun, %A = Adjective %%%  Is this color the vice of the bland fashion?
+Is this %n the %n of the %a %n?
+Anyone %a can be %a.
+Anything %a must be %a.
+Goodbye %n, you were %a.
+You are so %a, I'll bet that you're never %a.
+The %n has been %a lately, don't you think?
+There's been a lot of talk about %n but I don't think it's as %a as they say.
+What do you think about %n?
+I'd like to try something %a tonight.
+Do you prefer your %n %a or %a?
+Have you ever seen a %a %n? All the ones I've seen are %a.
+Sometimes I feel very %a.
+What kind of %n do you like?
+I want to learn all I can about %n, it'll be very %a in the future.
+Are you as %a as you look?
+I think this %n is %a.
+I think every %n is %a.
+Do you think I'm %a?
+Have you heard about %a %n?
+I sometimes wish every %n could be %a.
+Most of the time, %n is %a.
+Hear any %a news lately?
+Don't be %a. Let's be %a!
+There was an article about %n in the paper this morning.
+Did you see the %a %n on TV this morning?
+All your %n are %a to us.
+Not every %n is %a; some are %a.
+That's the difference between %n and %n... one is %a while the other is %a.
+That's the similarity between %n and %n... they're both %a.
+You know, %n is like %n.
+I'm a real %a fan of %n.
+I'm a big fan of %a %n.
+A %a %n is like %n... you know, it's %a.
+All the %a %n are %a.
+Any %a person can see that %n is %a.
+I was much more %a when I was %a.
+A %a %n is no substitute for a %a %n.
+A %a %n is as %a as a %a %n, as long as it's %a.
+The %a %n is %a if you're %a.
+Looking for %n? Try the %a %n.
+My %n is %a.
+No %n has ever been more %a than %n.
+You don't have to be %a to get %a.
+Try to be %a when you're %a.
+We'll be %a when the %n is %a.
+You wouldn't know a %a %n if it slapped you in the face.
+All things can be %a.
+Every %n can be %a.
+Your %n has %a, %a, and it had %n with that %n.
+I'm a %a %n with nothing but %n!
+I'm very %a! I won't forget the %n.
+You are %a of course, but their %n is worse than that.
+There's %n in my %n for every %n.
+Is that a %n in your %n or are you just %a today?
+There's no %n for the %a %n.
+Do you think we can find %a %n in the %n?
+I think %n's looking out for %n.
+The %n is a %n.
+It's like a %n out there.
+But if %n can be built according to your %n, that would be %a.
+Just leave this %n to me!
+It's good to know your %n is a %n.
+What did you say? You can't be %a!
+But what about the %a %n? Oh, never mind.
+It must be %a to have your own %n.
+The %n used to be more %a than it is now.
+Everyone says that the %n is famous for being %a.
+If ever you are %a, put a %n in your %n.
+Tell me about the %a %n.
+Do you know much about the %n? I thought it was %a.
+There are two kinds of %n in this world- the %a ones and the %a ones.
+What's your %a %n like?
+Sometimes you aren't %a enough.
+At times you're too %a, in my opinion.
+I wish I could be more %a.
+I think I'm too %a.
+When I was %a I used to think about %a %n all the time.
+For every %a %n there must be a %a %n.
+Before the %n can be %a, first the %n must be %a.
+Whatever.
+Is there any %n in the %n?
+Is the %a %n part of the %n?
+In my opinion, %a %n isn't %a.
+I believe in the %n.
+Do you have a %n?
+What %n is the %n in your %n?
+I believe the %n is very %a.
+The %a %n is going to be %n.
+That %a %a %n is far too %a to be %a. Seriously.
+If your %n was meant to be %a, it would've been a %n instead.
+There's a %n in my %n.
+Behind every %a %n is a %a %n.
+Is it getting %a in here?
+Your %n is %a.
+That's a %a %n that you have there.
+I know what you think about %n, but in my opinion it's %a.
+Really? I have a %a %n too!
+It's easy to tell that my %n is %a.
+It's obvious that your %n is %a.
+What did you expect? You already knew that the %n was %a.
+Could you possibly be any more %a?
+I should let you know that the %n is %a.
+There's no such thing as a %a %n.
+That's a %a %n if ever I saw one.
+In my opinion, this %n is slightly %a.
+In my %a opinion, the %n is %a.
+In my %a %n there would be no %n.
+What good is a %a %n to a %a %a %n?
+If the %n is both %a and %a, why have a %n?
+I heard that when the %n was %a a lot of the %n became %a.
+Someone said that you were a real %a %n.
+There's a rumor going around that his %n is %a.
+Wait a minute! How did I become the %a %n?
+Hold your %n there, what are you talking about?
+Do you love %n too? At least, in a %a way.
+A %n by any other %n would still smell as %a.
+Take your %n off my %n.
+Please move your %a %n to my %n.
+Is your %n more %a than my %n?
+Every %a %n needs a %n to make it %a.
+The %n is my %n.
+What was that again? About your %a %n?
+Could you repeat what you just said about my %n?
+Alright, what I meant to say was that your %n is %a.
+Do you need to know my %a %a %n?
+You can't be serious! That %n is very %a.
+Put that %n in your %n... It's far too %a for my %n.
+Where's a %a %n when you need one?
+You know what they say. All the %a ones are either %a or %a.
+I should let you know that this %n is extremely %a.
+If it's %a, it could very well be the %n.
+Touch the %a %n.
+Don't be afraid of the %a %n.
+Seize the %n.
+Be as %a as you want. It's no %n to me.
+Everyone says to grab the %n, but I think that's %a.
+What %n have you seen lately?
+What %n has been %a lately?
+It's getting %a %a around here. Must be the %n.
+My %n is getting %a.
+The %n is becoming %a.
+You need a %n for your %n.
+The %a %n really should have a %n.
+Why be %a? That's just %a.
+Want to be %a? It looks %a!
+This %a %n is %a, my %n is %a with the %n.
+If it looks like a %n, it's probably a %n.
+If the %n is %a, wear it.
+If the %n is %a, shake it until it's %a.
+Touch my %n.
+This town is famous for its %a %n.
+Are you looking for some %a %n?
+I want a bit of %a %n.
+I'm going to put your %n in a %a %n.
+It's kind of %a, but mostly just %a.
+Every %n in the %n is %a.
+In summary, it's %a, %a, and %a.
+Is my %n too %a?
+Do you think your %n is too %a?
+Is your %a %n too %a?
+It's a %a state of %n when the %n gets %a from the %n.
+That's the way it is. The %a get %a and the %a get %a.
+In the %n of this %n, any %n can be %a.
+Does your %n look %a?
+It's a %n of some kind.
+Make the %n %a or there'll be a %n in the %n.
+It's a %a sort of %n, I think.
+I said, put that %a %n in the %n.
+You're %a if you think that the %n is a %n.
+It's as %a as a %n.
+That's my %n, just as %a as a %a %n.
+Is that %a enough? Try the %n instead.
+It's a %a %n that doesn't have a %n.
+Are you %a with the %a %n?
+Do I look %a with this %a %n?
+Does it seem %a when the %n is %a?
+I always feel %a on %a days.
+The %a %n is %a every %a day.
+This %n goes by in a %a %n.
+Oh, %n. It looks too %a to be %a.
+How much %n would it take to become %a?
+My %n is full of %a %n.
+I told him, "if you touch my %n one more time, I'm going to %t!"
+It's a %a %n with some %n out there.
+That %n has extra %a on the %n.
+If you say my %n is %a I might have to %t.
+She's a %a %n with extra %a.
+When the %n gets %a, it really goes %a.
+Do you want your %a %n to be extra %a?
+Play it %a on the %n.
+I'll %t if your %n is %a.
+Get your %a %n out of my %n or I'll %t.
+How %a is your %n?
+Her %n is %a, but mine is more %a.
+His %n is more %a than my %n.
+My doctor said I need more %a %n in my %n.
+According to the %n, it's %a to be %a.
+I need a seven letter word for a %a %n.
+It's a thin line between %a and %a.
+There's a %a %n between %a and %a.
+That %a %n is really %a.
+Forget the %n; that's %a. Now is the time for %a %n!
+This %a %a %n makes me %a.
+It's no %n being %a when all the %n are %a %a.
+Use your %n on the %n and %n should be %a.
+I know the %n is %a, but is it %a?
+I could %t or %t if I were a %a %n.
+Over the %n is the %n for being %a.
+The %a %a %n jumped over the %a %n.
+Is your %n at one hundred percent?
+It's %a that you think so, considering the %a %n.
+It's %a in the %n but %a in the %a %n.
+Run through the %n with a %a %n.
+On a %a %n I want to see the %n.
+Give the %a %n a try.
+Give the %a %n some %n.
+When in %n act %a.
+Remember, it's not %a unless it's a %a %n.
+You may have heard that the %n is the most %a %n around here.
+If it's %a it might as well be a %a %n too.
+I heard there's a %a %n in the %n.
+It sounds %a! I want to see the %n.
+I should tell you that the %n is %a.
+Her %n of %n was really %a.
+If you're %a and you know it bang your %n.
+I'm reading a book about %n. It's a little %a but mostly %a.
+You can buy anything on internet these days. I want to get a %a %n.
+How much %n would a %a %n chuck?
+He'll never get a %n if he stays %a like that.
+She's trying to act %a, but we all know that she's actually %a.
+He got a %a %n last year and now he thinks he's %a.
+I'm %a! That %n is %a!
+Her boyfriend left the %a %n for the %n. Now they're both %a.
+It's a %a %a %n out there.
+It's not very %a. It could be more %a if the %n were here.
+His uncle died and left them a %a %n. Does that make any sense?
+He said that you were %a, but you aren't.
+She said you were %a, but I told her you weren't.
+No, I'm not really a %a %n. I just like being %a.
+To be %a is to be one with the %n.
+There was a contest once to find the most %a %n.
+The %n will be %a if they try that again.
+Someone has set us up the %n!
+Yes, it's a real %n. Why, does it look %a?
+His %a %n is %a.
+Her %a %a %n is a %a %n.
+Our %n should be %a and %a.
+Their %n will be %a and %a.
+Open the %n and make %n for the %a %n.
+This %n could use a bit of %a %n.
+It's not %a enough. Give me a %n instead.
+I used to study %n, but now I play %a %n.
+I think the %n is very %a.
+My %a friend told me that the %n is %a.
+Be %a if you must.
+Word around here is that the %n is %a.
+I often hear that his %n is %a.
+I sometimes hear that her %a %n used to be %a.
+I usually hear that it's %a.
+It's already %a. I tried the %n to be %a.
+That depends on whether you're a %a %n or a %a %a %n.
+That depends on the %n.
+It's a %a question as to which %n to choose.
+People say he has a %a %n.
+People say she's a %a %n.
+How much %n can they fit in the %a %n?
+It's %a when you're %a.
+I don't believe in %a %n.
+Everyone on TV has a %a %n but I just want a %n.

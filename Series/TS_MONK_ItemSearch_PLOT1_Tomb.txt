@@ -1,0 +1,164 @@
+Plot 0
+	name <Tomb Raider>
+
+	% An item will be found. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	Element4 <Character !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have recovered clue from item
+	%  V4 = Combat Indicator
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	.usekey <if= V3 0 V= 3 1>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V4=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V4 1  V= 4 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V4 1  V= 4 3  Reputation 6  1  XPV 50  S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2>
+
+
+sub
+	Persona 4
+	rumor <!4 has discovered a tomb from the previous age.>
+	%  V1 =  Mission Accepted Counter
+	%  V2 =  Message Randomizer
+	greeting <NewChat if= P4 3 else GoCheckLoss Say d3 FacXP+ N1 1 CashPrize Reward Threat PCRep 6 100 90 Memo 0 AddReact d5 DeleteKeyItem E3 if= P3 1 else GoJustEnd S= 203 P2 AdvancePlot 0>
+	GoJustEnd <AdvancePlot 0>
+	GoCheckLoss <if= P4 2 else GoCheckMission V= 2 15 V+ 2 d3 Say V2 DeleteKeyItem E3 AdvancePlot 0>
+
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 105 Goto GoAddComOps>
+	GoDelete <Say 101 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React 10 else GoNoChance V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoNoChance <V= 2 9 V+ 2 d3 Say V2 S= 201 0 AdvancePlot 0>
+
+	GoAddComOps <V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat V= 1 1 Memo 104 V= 2 3 V+ 2 d3 Say V2 Goto GoAddComOps>
+	result2 <Goto result1>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result3 <NewChat Say 102 Reputation 4 -d10 AdvancePlot 0>
+	result4 <Goto result3>
+
+	% For the purposes of this template, I'll use a combat encounter with
+	% the prop included.
+	result5 <EndChat V= 2 12 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos MDynamic 0 S2 .mon .nu1 .nu2 ComposeD MSG1 .msg SetMapType 3 P= 4 1 DynaItem E3>
+	.mon <FOREST ANIMAL RUINS ROBOT>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 if= L1 0 Print 1 L= 1 1>
+	.msg <All the monsters have been dealt with.>
+	result6 <Goto result5>
+
+	result7 <NewChat Say 103>
+	result8 <Goto result7>
+
+	%  01 - 03 :  PC has won the mission.
+	Msg1 <You did it! Our team can start exploration immediately. Here's a reward for your help.>
+	Msg2 <The site has been secured. I can now begin my research in earnest. Here's your reward for helping out.>
+	Msg3 <All the monsters have been removed; it's now safe for my dig team to start work. Thank you very much. Here's a reward.>
+
+	%  04 - 06 :  Mission description.
+	Msg4 <Before our excavation team can move in, the area needs to be checked by someone to make sure it's safe. There are some dangerous animals, plus it's believed that the tomb has a robot guardian.>
+	Msg5 <It's believed that the tomb had a robot guardian, but that may have been destroyed by all the dangerous mutants which live in the area now. In any case, I need you to check the site and prepare it for my survey team.>
+	Msg6 <Like many tombs from the Age of Superpowers, this one was protected by robot guardians. Plus you'll have all the regular wildzone monsters to deal with. Make the area safe and then my dig team can start our work.>
+
+	%  07 - 09 :  PC will be offered the mission here.
+	Msg7 <I've discovered a tomb from the previous age in the woods near town. I'll need the services of a hunter to prepare the site before I can start exploring it.>
+	Msg8 <There's been a Pax Europa burial site discovered near town. Before I can study the ruins, I need a hunter to go prepare the site.>
+	Msg9 <Just outside of town we've located an Imperator Zeta cemetary. I'm eager to go explore the tombs but first I need a hunter to secure the area.>
+
+	%  10 - 12 :  Mission will be implied.
+	Msg10 <If only I were as handy with a rocket launcher as I am with a pocket calculator...>
+	Msg11 <Why is it that all of my grad students are weasely little guys? What I need right now is a real man...>
+	Msg12 <I'll be starting work shortly.>
+
+	%  13 - 15 :  Combat is starting.
+	Msg13 <Do your best. Come see me when you've finished.>
+	Msg14 <Try not to harm any of the artifacts. Come back here when you're done and I'll give you a reward.>
+	Msg15 <When you've finished the job, come here and I'll pay you then.>
+
+	%  16 - 18 :  PC has lost the mission.
+	Msg16 <Well... I'm certainly glad I didn't send my grad student there first! The ethics committee would have my head...>
+	Msg17 <So, there were a lot of monsters? I'm glad you didn't get killed.>
+	Msg18 <You worked hard out there... but since we can't get to the tomb my funding has been cut, so I can't give you any reward.>
+
+	%  101 :  The item somehow got destroyed...
+	Msg101 <Next time, try to use a bit less firepower...>
+
+	%  102 :  The PC refused the mission.
+	Msg102 <Really? That could explain why I don't get many second dates...>
+
+	%  103 :  The PC needs some time to get ready.
+	Msg103 <Go do whatever it is that adventurers do, then come back here and we can start.>
+
+	%  104 :  Memo
+	Msg104 <\ELEMENT 4 in \SCENE EScene 4 asked you to secure the area for an archeological expedition.>
+
+	%  105 :  PC has come back after getting ready
+	Msg105 <Are you ready to start yet? I'm excited to get out to the dig site myself...>
+
+	%  01 - 02 :  PC will accept the mission.
+	Prompt1 <I could help you with that.>
+	Prompt2 <I could do that for you.>
+
+	%  03 - 04 :  PC doesn't want the mission.
+	Prompt3 <Tomb raiding is boring work.>
+	Prompt4 <Sounds like a boring job.>
+
+	%  05 - 06 :  Start the mission now.
+	Prompt5 <I'll head to the site now.>
+	Prompt6 <Show me to the research site.>
+
+	%  07 - 08 :  PC needs time to prepare.
+	Prompt7 <I need some time to prepare.>
+	Prompt8 <I better get some supplies first.>
+
+end
+inv
+	STC Monolith
+	name <Tomb>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <Print 3>
+	Clue37 <Print 4>
+	Clue34 <ifG PCSkillVal 34 V4 else GoDid Mental V= 4 PCSkillVal 34 ifG SkRoll 34 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Msg1 <If your knowledge of PreZero writing is correct, the person in this tomb once lived near \SCENE V1 .>
+	Msg2 <There's some writing on the tomb but your knowledge of PreZero scripts isn't good enough to decipher it..>
+	Msg3 <It's a tomb.>
+	Msg4 <There's some writing on this tomb. If you had any knowledge about PreZero language or ancient burial rites that might be helpful.>
+
+end

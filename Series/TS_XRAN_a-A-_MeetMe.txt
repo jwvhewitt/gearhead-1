@@ -1,0 +1,203 @@
+Plot 0
+	% The PC will encounter an NPC who seems to know about
+	% his history. The NPC will request to be met in another
+	% town in three days, at which point in time a revelation
+	% will be made.
+	name <PLOT: "Meet me tommorow">
+
+	% Edited to v0.901 standard
+
+	% Element 1 is the scene the last plot took place in.
+	% Element 2 will be the town moved to.
+	Element1 <Grab 3>
+	Element2 <Scene Town !Far 1>
+	Element3 <Prefab>
+	Element4 <Scene Town Target !Far 1 !Far 2>
+
+	% On a cleanup request, just delete this plot.
+	CleanUp <AdvancePlot 0>
+
+	% V1 = Phase indicator
+	% V2 = Time limit
+
+	start <ifPersona E3 else GoEndPlot if= V1 0 else GoCheckMove N= 3 E2  if= SceneID E1 Print 1 V= 1 1>
+	GoEndPlot <S= 101 1 S= 105 -1 AdvancePlot 0>
+	Msg1 <Something about this town is strangely familiar... You feel like there is a lost memory hiding just beneath the surface of your mind.>
+
+	GoCheckMove <ifG V2 0 ifG ComTime V2 MoveChar E3 E2 ifG NPCRep E3 1 -1 else GoVillain AdvancePlot 1>
+	GoVillain <AdvancePlot 2>
+
+sub
+	Persona 3
+	rumor <!3 wants to speak with you.>
+
+	Greeting <NewChat if= V1 0 else GoSecondTime V= 1 1 Say 1 AddChat 1 AddChat 2>
+	GoSecondTime <Say 2 AddChat 3 AddChat 4>
+
+	result1 <NewChat Say 2 AddChat 3 AddChat 5>
+	result2 <NewChat Reputation 3 -d10 Say 3 AddChat 3 AddChat 5>
+	result3 <NewChat Say 4 FreezeChar E3 P= 2 ComTime P+ 2 86400 Memo 5>
+	result4 <NewChat Say 6 DeleteChar E3 S= 101 1 AdvancePlot 0>
+	result5 <NewChat Say 7 AddChat 3 AddChat 4 AddChat 6>
+	result6 <NewChat Say 8>
+
+	Msg1 <You're \PC , right? I've heard about you. I think I might know something that you'd find very interesting.>
+	Msg2 <My name is \ELEMENT 3 ; I'm a reporter. I've been researching a story about an underground weapons cartel, and your name keeps turning up.>
+	Msg3 <It's not important that you trust me right now. I've got some information about your past. I've been investigating an underground weapons cartel...>
+	Msg4 <I can't tell you right now. This town is far too dangerous... Meet me in \ELEMENT 2 tommorow.>
+	Msg5 <\ELEMENT 3 asked to meet in \ELEMENT 2 at \DATE P2 to tell you more about your past.>
+	Msg6 <Fine. I've wasted enough time on you already. I have other things to do.>
+	Msg7 <What have you got to lose? If you don't believe me, you can ask around about me, see if I'm trustworthy.>
+	Msg8 <Good. Come back here once you've decided.>
+
+	Prompt1 <That's right. Who are you?>
+	Prompt2 <I don't know what you're talking about.>
+	Prompt3 <Tell me what you know.>
+	Prompt4 <I'm still not interested.>
+	Prompt5 <Why should I believe you?>
+	Prompt6 <I'll do that.>
+
+	Plot 1
+		% NPC will tell PC a story, if PC is ready to hear.
+
+		% V1 = Phase indicator
+
+		start <ifPersona E3 else GoEndPlot if= V1 0 V= 1 1 Memo 1 N= 3 E2>
+		GoEndPlot <N= 3 E2 S= 101 1 S= 105 -1 AdvancePlot 0>
+		Msg1 <\ELEMENT 3 asked to meet in \ELEMENT 2 to tell you more about your past. It's time to go.>
+
+		% On a cleanup request, just delete this plot.
+		CleanUp <AdvancePlot 0>
+	sub
+		Persona 3
+		% V101 = Intimidation Check
+		greeting <NewChat ifG PCRep 6 S103 else GoNotReady Say 1 AddChat 1>
+		GoNotReady <Say 2 AddChat 2 AddChat 3 AddChat 4>
+
+		result1 <Goto GoGetClue>
+		result2 <NewChat Say 3 AddChat 3 AddChat 4 AddChat 5>
+		result3 <NewChat if= V101 0 else GoR3NoInt V= 101 1 Reputation 4 -d10 ifG SkRoll 28 35 else GoR3Fail ifG d10 PCRep 1 else GoR3Fail Say 4 AddChat 6>
+		GoR3NoInt <Say 5>
+		GoR3Fail <Say 6>
+		result4 <NewChat if= V102 0 else GoR4NoCon V= 102 1 Reputation 4 d10 ifG SkRoll 19 45 else GoR4Fail Say 7 AddChat 6>
+		GoR4NoCon <Say 8>
+		GoR4Fail <Say 9>
+		result5 <NewChat Say 10>
+		result6 <Goto GoGetClue>
+
+		Msg1 <Good to see you. We should be able to talk freely now.>
+		Msg2 <Good to see you... I had some trouble getting here, I'm not sure that now is a good time to be telling you what I found out.>
+		Msg3 <I need to corroborate my sources. I have to be sure about things... I have to make sure that we're both fully prepared before this story gets out.>
+		Msg4 <Alright, I'll tell you, but don't say I didn't warn you when you get in over your head...>
+		Msg5 <Threats didn't work last time and they're not going to work now. Look, it's better for both of our sakes if I keep this information a secret until you've shown that you're ready to handle it.>
+		Msg6 <There would be no sense in that, since if you kill me you'll never find out what I know. Look, I know you want to know right away, but what I have to tell you should wait until you're capable of dealing with it, okay?>
+		Msg7 <I guess I shouldn't keep this information from you... Look, I still don't think you're ready to hear it, but I'll tell you anyways. Just don't go making any rash decisions afterwards, okay?>
+		Msg8 <You can wait a while longer. Like I said, this information could be dangerous... As could where it leads you next. I need to know that you're ready to deal with everything before I can tell you.>
+		Msg9 <I can't tell you now. Please trust me for just a while longer...>
+		Msg10 <Good. Please have patience.>
+
+		Prompt1 <Tell me what you know.>
+		Prompt2 <What do you mean, not a good time!?>
+		Prompt3 <It'd be better for your health if you did.>
+		Prompt4 <I've already waited too long, I need to know.>
+		Prompt5 <Okay, I'll wait for it.>
+		Prompt6 <I'm glad you could listen to reason.>
+
+		GoGetClue <NewChat Say 101 AddChat 101>
+		Msg101 <The first thing you've got to know is this: The people who put you in the hospital are working out of \ELEMENT 4 . They're still after you, so it might be a good idea to avoid that place for now.>
+		Prompt101 <What else can you tell me?>
+
+		Result101 <NewChat if= d4 1 else GoR101Family Say 201 History 202 XRMystery NAV_XRMNotHuman Goto GoEndMission>
+		Msg201 <I've been trying to find out where you came from. It sounded like a good story. Well, here's the thing... You have no birth record, no gene records, no citizen ID, nothing... It's like you came from nowhere.>
+		Msg202 <You discovered that you have no birth records.>
+
+		GoR101Family <if= d2 1 else GoR101Item Say 301 History 302 XRMystery NAV_XRMFamilySecret Goto GoEndMission>
+		Msg301 <When I heard of your case, I decided to search for your family. The trouble is, most of them have died recently... I've got a feeling someone's been knocking them off, and you may well be the only survivor.>
+		Msg302 <You learned that someone has been killing off your relatives.>
+
+		GoR101Item <Say 401 History 402 XRMystery NAV_XRMItem Goto GoEndMission>
+		Msg401 <Before you ended up in the hospital, you were some kind of treasure hunter. As far as I can tell you were searching for some kind of PreZero artifact. No idea what it was, but chances are the people who tried to kill you are after it as well.>
+		Msg402 <Before getting amnesia, you were searching for an artifact.>
+
+		GoEndMission <S+ 102 1 S= 101 1 N= 3 E4 S= 105 1 AdvancePlot 0>
+
+	end
+
+	Plot 2
+		% NPC has led the PC into a trap...
+
+		% V1 = Phase Counter
+		% V2 = Combat Indicator
+
+		start <if= V1 0 else GoCheckTime  V= 1 1 Memo 1 Compose EWM E2 .ambush N= 3 E2>
+		Msg1 <\ELEMENT 3 asked to meet in \ELEMENT 2 to tell you more about your past. It's time to go.>
+
+		GoCheckTime <if= V2 3 ifPersona E3 else GoEndPlot>
+		GoEndPlot <N= 3 E2 S= 101 1 S= 105 -1 AdvancePlot 0>
+
+		% V2=1 during combat, V2=3 if won the combat or 2 if lost.
+		nu1 <if= V2 1 if= T1 0 V= 2 2>
+		nu2 <if= V2 1 if= T2 0 V= 2 3 Exit E2 SeekGate 1 Reputation 6 1>
+		.ambush <ifG 3 V2 ifYesNo 101 102 103 else GoStartFight Reputation 3 -d8 ifG SkRoll 25 30 else GoStartFight Print 106 XPV 500 V= 2 3>
+		GoStartFight <Block Print 104 SavePos Dynamic 2 Threat S103 120 .nu1 .nu2 V= 2 1>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Print 105>
+
+		Msg101 <As you approach \ELEMENT 2 , you are confronted by a group of mecha. What do you do?>
+		Msg102 <Try to get away.>
+		Msg103 <Defend myself.>
+		Msg104 <You are attacked!>
+		Msg105 <You defeat your attackers and head on to \ELEMENT 2 .>
+		Msg106 <You manage to sneak away from the hostile mecha and head on to \ELEMENT 2 .>
+
+		% On a cleanup request, just delete this plot.
+		CleanUp <AdvancePlot 0>
+	sub
+		Persona 3
+		% V2 = Message Randomizer
+		% Upon seeing the PC, will be very suprised...
+		greeting <NewChat Say 1 AddChat 2 ifG P2 0 AddChat 1 AddChat 3>
+
+		result1 <NewChat Say 2 AddChat 4 AddChat 5>
+		result2 <Goto GoGetClue>
+		result3 <NewChat Say 3 AddChat 1 AddChat 5>
+		result4 <NewChat Say 4 AddChat 5>
+		result5 <Goto GoGetClue>
+
+		Msg1 <You're alive! Er... I mean, of course you're alive... Good to see that you made it. I guess that I'm ready to share my information with you.>
+		Msg2 <I... I know. One of my insiders on the story knew that I'd found you. I couldn't keep it a secret. I was told to bring you here, and then... Let's just say that there are folks who want you out of the picture.>
+		Msg3 <Nervous? I'm not nervous... Really! I don't know what you're talking about...>
+		Msg4 <You could do that, but then you'd never find out what I know.>
+
+		Prompt1 <I was attacked by mecha on the way here.>
+		Prompt2 <I've arrived. Now tell me what you know.>
+		Prompt3 <Why do you look so nervous?>
+		Prompt4 <I should kill you for that.>
+		Prompt5 <Enough. Just tell me what I came to hear.>
+
+		GoGetClue <NewChat Say 101 AddChat 101>
+		Msg101 <The first thing you've got to know is this: The people who put you in the hospital are working out of \ELEMENT 4 . They're still after you, so it might be a good idea to avoid that place for now.>
+		Prompt101 <What else can you tell me?>
+
+		Result101 <NewChat if= d4 1 else GoR101Family Say 201 History 202 XRMystery NAV_XRMNotHuman Goto GoEndMission>
+		Msg201 <I've been trying to find out where you came from. It sounded like a good story. Well, here's the thing... You have no birth record, no gene records, no citizen ID, nothing... It's like you came from nowhere.>
+		Msg202 <You discovered that you have no birth records.>
+
+		GoR101Family <if= d2 1 else GoR101Item Say 301 History 302 XRMystery NAV_XRMFamilySecret Goto GoEndMission>
+		Msg301 <When I heard of your case, I decided to search for your family. The trouble is, most of them have died recently... I've got a feeling someone's been knocking them off, and you may well be the only survivor.>
+		Msg302 <You learned that someone has been killing off your relatives.>
+
+		GoR101Item <Say 401 History 402 XRMystery NAV_XRMItem Goto GoEndMission>
+		Msg401 <Before you ended up in the hospital, you were some kind of treasure hunter. As far as I can tell you were searching for some kind of PreZero artifact. No idea what it was, but chances are the people who tried to kill you are after it as well.>
+		Msg402 <Before getting amnesia, you were searching for an artifact.>
+
+		GoEndMission <S+ 102 1 S= 101 1 N= 3 E4 S= 105 1 AdvancePlot 0>
+
+	end
+
+end
+inv
+	NPC Journalist
+	place <1 PASS>
+
+end

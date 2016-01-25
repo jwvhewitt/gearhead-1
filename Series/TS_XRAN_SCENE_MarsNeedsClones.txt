@@ -1,0 +1,63 @@
+Scene 0 0
+	% The complex where the PC will meet the mad scientist,
+	% find out about the faction hunting him, and maybe even
+	% free the "original" from which the clones of his enemy
+	% were made.
+
+	% L1 = Player enemy
+	% L2 = Scientist
+	% L3 = Chat counter
+
+	start <Print 10 NPCGoPC L2>
+
+	map <MAP_Complex.txt>
+	nu1 <if= T1 0 Return>
+
+	TM1 <ifNPCInPlay L2 if= V3 0 ifG 6 Range PCUID NPCUID L2 V= 3 1 Print 1 ForceChat L2>
+
+	Msg1 <\PERSONA L2 strikes up a conversation with you.>
+	Msg10 <You enter a well-built complex in the middle of some abandoned buildings.>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	Set Ally 3
+
+	Team 3
+	home <Lab>
+
+	rect
+	MFX 39
+	MFY 20
+	Width 8
+	Height 8
+	name <Lab>
+end
+inv
+	StairsUp
+	XPos 5
+	YPos 26
+	USe <Print 1 Return>
+	Destination -1
+
+	STC BIOTANK
+	name <Holding Chamber>
+	home <Lab>
+	use <if= V1 0 else GoUsed ifYesNo 1 2 3 V= 1 1 ifG NPCRep L1 1 0 else GoNoHero ForceChat L1>
+	GoNoHero <Alert 5 DeployChar L1 3 PCEnemy L1 SoloAttack L1>
+	GoUsed <Print 4>
+	Msg1 <Floating in this chamber is the body of \PERSONA L1 . Do you want to open it?>
+	Msg2 <Yes I do.>
+	Msg3 <No, I don't.>
+	Msg4 <The holding chamber is now empty.>
+	Msg5 <Upon being freed from the chamber, \PERSONA L1 attacks!>
+
+
+	STC COMPUTER-1
+	use <moretext .text if= V1 0 XPV 100 V= 1 1>
+	.text <TS_XRAN_TEXT_MarsNeedsClones.txt>
+
+end

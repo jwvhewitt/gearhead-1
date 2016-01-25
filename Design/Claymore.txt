@@ -1,0 +1,100 @@
+Battroid 6
+Name <Claymore>
+Desig <ITM-01>
+SDL_Sprite <btr_claymore.png>
+Desc <The Claymore is one of the oldest battroid mecha designs, dating from the Age of Superpowers. Though completely obsolete new Claymores are still being produced in DeadZone workshops.>
+
+Mod Body
+	Armor 6
+	sub
+		CPit
+		Armor 2
+
+		Sensor 4
+
+		Gun 2
+		Name <Autocannon>
+		Range 4
+		Acc -2
+		Speed 1
+		BV 7
+		Magazine 80
+		sub
+			Ammo 2
+		end
+
+		Gun 2
+		Name <Autocannon>
+		Range 4
+		Acc -2
+		Speed 1
+		BV 7
+		Magazine 80
+		sub
+			Ammo 2
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 5
+	sub
+		Hand
+		inv
+			Gun 6
+			Name <Heavy Autocannon>
+			Range 7
+			Acc -1
+			Speed 1
+			BV 3
+			Magazine 40
+			sub
+				Ammo 6
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 5
+	sub
+		Hand
+	end
+	inv
+		Shield 4
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 7
+	Armor 5
+	sub
+		MLauncher 4
+		Name <Rocket Launcher>
+		Range 7
+		Speed 1
+		Magazine 5
+		sub
+			Rockets 4
+			Type <BLAST 2>
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 7
+	Armor 5
+	sub
+		MLauncher 4
+		Name <Rocket Launcher>
+		Range 7
+		Speed 1
+		Magazine 5
+		sub
+			Rockets 4
+			Type <BLAST 2>
+		end
+	end
+end

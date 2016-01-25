@@ -1,0 +1,88 @@
+% RANDOM MAPS STANDARD PARAMETER FILE % See randmaps.pp for details
+Name39 <Desert>
+Param39 <Fill 39 0>
+GapFill39 <-19 -5 -13 -5>
+Name17 <Dead Zone>
+Param17 <Fill 17 0>
+GapFill17 <-5 -5 -5 -9 -13 -22 -22>
+Name11 <Rough Area>
+Param11 <Fill 17 11>
+GapFill11 <-5 -5 -5 -9 -13 -9>
+Name9 <Medium Hills>
+Param9 <Fill 1 8>
+GapFill9 <-4 -5 -4 -5 -5 -25>
+Name8 <Light Hills>
+Param8 <Fill 1 0>
+GapFill8 <-4 -5 -4 -5 -5 -5>
+Name7 <Swamp>
+Param7 <Fill 1 7>
+GapFill7 <-4 -4 -9 -9 -9 -13 -17>
+Name3 <Deep Forest>
+Param3 <Fill 2 1>
+GapFill3 <-4 -4 -4 -5 -13>
+Name2 <Forest>
+Param2 <Fill 1 2>
+GapFill2 <-4 -4 -5 -9 -4 -4 -5 -13>
+Name1 <Default Wilderness>
+PARAM1 <Fill 1 0>
+GAPFILL1 <-4 -5 -9 -4 -5>
+PARAMDEFAULT <Fill 1 0>
+Name-1 <Building>
+PARAM-1 <Fill 16 0 DWall 23>
+Name-2 <Cavern>
+PARAM-2 <Carve 14 0 15 Wall 15>
+SELECTOR-2 <1 5 14>
+Name-3 <Rectangle>
+PARAM-3 <Fill 1 0>
+Name-4 <Forest>
+PARAM-4 <Scatter 2 3 0>
+Name-5 <Hills>
+PARAM-5 <Scatter 8 9 10>
+Name-6 <City>
+PARAM-6 <Lattice 1 6>
+SELECTOR-6 <-1 8 6>
+GAPFILL-6 <-1 -1 -7 -8 -8 -8>
+Name-7 <Parking Lot>
+PARAM-7 <Fill 6 0 Wall 1>
+Name-8 <House>
+PARAM-8 <Fill 20 0 DWall 13>
+Name-9 <Lake>
+PARAM-9 <ELLIPSE 4 21 22>
+Name-10 <Complex Building>
+PARAM-10 <DWALL 23 MITOSE 16 23>
+Name-11 <Complex Level>
+PARAM-11 <Carve 16 0 23 Wall 23>
+GapFill-11 <-12>
+SELECTOR-11 <1 5 14>
+Name-12 <Complex Filler>
+PARAM-12 <MITOSE 16 35>
+Name-13 <Grass>
+PARAM-13 <Scatter 1 0 0>
+Name-14 <Warehouse>
+PARAM-14 <Fill 14 0 DWall 35>
+Name-15 <Arena>
+PARAM-15 <Fill 1 0 Wall 12>
+GAPFILL-15 <-4 -5 -5>
+Name-16 <BigBox>
+PARAM-16 <Fill 16 0 Wall 23>
+NAME-17 <Swamp>
+PARAM-17 <Scatter 7 2 4>
+NAME-18 <Fortress>
+PARAM-18 <Fill 14 0 OWall 12>
+Name-19 <Dirt>
+PARAM-19 <Scatter 17 0 0>
+Name-20 <Adobe House>
+PARAM-20 <Fill 14 0 DWall 31>
+Name-21 <Pool>
+PARAM-21 <ELLIPSE 39 4 21>
+Name-22 <Ground Zero>
+PARAM-22 <Scatter 5 11 40>
+NAME-23 <Mansion>
+PARAM-23 <MonkeyHouse 16 13>
+NAME-24 <Monkey Maze>
+PARAM-24 <MonkeyMaze 14 15>
+Name-25 <Big Hill>
+PARAM-25 <ELLIPSE 8 9 10>
+Name-26 <Village House>
+PARAM-26 <Fill 26 0 DWall 27>
+

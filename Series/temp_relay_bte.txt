@@ -1,0 +1,207 @@
+Plot 0
+	name <BTE Plot Template>
+
+	% A plot template based on the old "Biotech Enemy" plot, or
+	% at least the first part of it... The PC will be able to
+	% approach the leader in town, who will then tell him to go
+	% see a citizen, who will then allow the PC to perform a combat
+	% mission, at the end of which the leader will give him a reward
+	% and send him to a third NPC who will point the way to the next
+	% part of the story.
+
+	% This plot is meant to be linked into a relay story.
+
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+
+	% E1 is the scene where this will take place.
+	Element1 <Grab 2>
+
+	% E2 is the "Leader", from whom the original mission comes.
+	Element2 <Character !Near 1>
+
+	% E3 is the "Victim", who gives the actual mission.
+	Element3 <Character !Near 1>
+
+	% E4 is the "Investigator", who tells the PC where to go next.
+	Element4 <Character !Near 1>
+
+	% E5 is the next scene in the relay.
+	Element5 <Scene Town !Far 1>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+
+	%  V4 = Phase Indicator
+
+	%  S2 = Encounter Challenge Rating
+
+	%  S101 = Faction Victory Count
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 S= 201 0 AdvancePlot 0>
+
+	start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete ifPersona E4 else GoDelete>
+	GoDelete <S= 201 0 AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3 S= 201 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6 1 XPV 50 S= 201 0 S+ 202 1 S+ 101 d3 N= 2 E5>
+
+sub
+
+	Persona 2
+	% The "LEADER" who will tell the PC to go find E3.
+	rumor <>
+
+	% V4 = Reward for mission
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 5 CashPrize V4 AdvancePlot 1>
+	GoCheckLoss <if= P2 2 else GoCheckProgress Say 4 AdvancePlot 0>
+	GoCheckProgress <if= P4 1 else GoFirstTime Say 3>
+	GoFirstTime <V= 4 Threat S2 2  ifG React 55 else GoNoFriend Say 1 AddChat 3 AddChat 4 AddCHat 5>
+	GoNoFriend <Say 2 AddChat 1 AddChat 2 AddChat 5>
+
+	result1 <NewChat  Say  7  Goto GoStartJob>
+	result2 <NewChat  Say  8  Goto GoStartJob>
+	result3 <NewChat  Say  9  Goto GoStartJob>
+	result4 <NewChat  Say 10  Goto GoStartJob>
+
+	result5 <NewChat Say 11 AdvancePlot 0>
+
+	GoStartJob <P= 4 1 Memo 6>
+
+	% Friend - you have to help me
+	Msg1 <>
+
+	% I guess you're here because you've heard of the situation...
+	Msg2 <>
+
+	% Go see E3 about the situation
+	Msg3 <>
+
+	% You lost the battle...
+	Msg4 <>
+
+	% You won! Here's your reward; go see E4.
+	Msg5 <>
+
+	% MEMO: E2 sent you to E3
+	Msg6 <>
+
+	% 7 - 10: Replies to prompts 1 - 4
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+	Msg10 <>
+
+	% PC has refused the mission
+	Msg11 <>
+
+	% 1-2: Replies to Msg2; both lead to job offer.
+	Prompt1 <>
+	Prompt2 <>
+
+	% 3-4: Replies to Msg1; both lead to job offer.
+	Prompt3 <>
+	Prompt4 <>
+
+	% 5: I can't help you.
+	Prompt5 <>
+
+
+	Persona 3
+	% The "VICTIM" who will tell the PC where to find the monster.
+	rumor <>
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 7>
+	GoCheckLoss <if= P2 2 else GoCheckProgress Say 6>
+	GoCheckProgress <if= P4 1 else GoNoMission if= V1 1 else GoFirstTime Say 3 Goto GoAddComOps>
+	GoFirstTime <Say 2 AddChat 1 AddChat 2>
+	GoNoMission <Say 1>
+
+	GoAddComOps <AddChat 3 AddChat 4>
+
+	result1 <NewChat  Say 4  V= 1 1  Goto GoAddComOps>
+	result2 <NewChat  Say 5  V= 1 1  Goto GoAddComOps>
+
+	result3 <EndChat Say 8 Goto GoStartCombat>
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 Dynamic 2 Threat S2 100 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	result4 <NewChat Say 9>
+
+	%  1 : Before PC has spoken to E2
+	Msg1 <>
+
+	%  2 : NPC is frightened!
+	Msg2 <>
+
+	%  3 : NPC is ready to start the mission
+	Msg3 <>
+
+	% 4-5 : Responses to 1-2
+	Msg4 <>
+	Msg5 <>
+
+	% 6 : PC has lost the mission, go speak with E2
+	Msg6 <>
+
+	% 7 : PC has won the mission, go speak with E2
+	Msg7 <>
+
+	% 8 : Combat is starting
+	Msg8 <>
+
+	% 9 : PC needs time to get ready.
+	Msg9 <>
+
+	% 1-2 : Responses to Msg2
+	Prompt1 <>
+	Prompt2 <>
+
+	% 3 : Ready to enter combat
+	Prompt3 <>
+
+	% 4 : Need time to prepare
+	Prompt4 <>
+
+
+	Plot 1
+		% This plot is advanced to if the PC completes the combat
+		% mission.
+		% Delete this plot if the main NPC gets deleted.
+		start <ifPersona E4 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Memo 1>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		GoDelete <AdvancePlot 0>
+
+		Msg1 <\ELEMENT 2 asked you to speak with \ELEMENT 4 .>
+
+	sub
+		Persona 2
+		greeting <NewChat Say 1>
+		Msg1 <You should go speak with \ELEMENT 4 .>
+
+		Persona 4
+		greeting <NewChat Say 1 AdvancePlot 0>
+		Msg1 <The next phase will take part in \ELEMENT 5 .>
+
+	end
+
+end

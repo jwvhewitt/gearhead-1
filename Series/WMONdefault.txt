@@ -1,0 +1,3890 @@
+%  ********************************
+%  ***  DEFAULT  MONSTER  LIST  ***
+%  ********************************
+
+%  STATS  REF BOD SPD PER CFT EGO KNO CHA
+
+ARCH Smog Monster
+roguechar <f>
+sdl_sprite <monster_fireworm.png>
+sdl_colors <122 88 193 70 121 119 208 30 50>
+type <mutant wasteland air dark>
+statline 13 13 13 8 7 5 2 2
+size 11
+skill 6 4
+skill 8 6
+skill 9 5
+skill 10 6
+skill 11 8
+skill 25 5
+mod body
+	armor 2
+	sub
+		gear 4 0 7
+		name <Fangs>
+
+		BeamGun 9
+		name <Acidic Spittle>
+		type <BURN POISON SCATTER>
+		Range 4
+	end
+mod wing
+	armor 1
+	sub
+		MLauncher 2
+		range 8
+		name <Smog Bomb>
+		type <GAS BLAST 1>
+		magazine 1
+		sub
+			rockets 2
+		end
+		Flight 5
+	end
+mod wing
+	armor 1
+	sub
+		MLauncher 2
+		range 8
+		name <Smog Bomb>
+		type <GAS BLAST 1>
+		magazine 1
+		sub
+			rockets 2
+		end
+		Flight 5
+	end
+mod tail
+	armor 1
+	sub
+		BeamGun 3
+		name <Smoke Bomb>
+		type <SMOKE BLAST 1>
+		range 7
+		speed 1
+	end
+end
+
+Arch Security Guard
+statline 9 9 9 9 8 8 8 8
+size 7
+roguechar <G>
+sdl_sprite <cha_m_guardian.png>
+sdl_colors <90 90 100 255 212 195 244 216 28>
+type <Guard>
+CHAT_ATTACK1 <What's all this about!?>
+CHAT_ATTACK2 <Halt!>
+skill 6 1
+skill 7 1
+skill 8 1
+skill 9 1
+skill 10 2
+mod head
+mod body
+mod arm
+sub
+	hand
+	inv
+		gear 4 2 12
+		name <Shotgun>
+		mass -4
+		stat 1 5
+		stat 2 1
+		recharge 3
+		stat 8 16
+		sub
+			gear 5 2 12
+			name <Shotgun Clip>
+			type <SCATTER>
+		end
+	end
+end
+mod arm
+sub
+	hand
+end
+inv
+	Shield 4
+	DefBonus 2
+	name <Riot Shield>
+end
+mod leg
+mod leg
+end
+
+Arch Watchman
+statline 9 9 9 9 8 8 8 8
+size 1
+roguechar <G>
+sdl_sprite <cha_m_soldier.png>
+sdl_colors <90 90 100 255 212 195 150 120 90>
+type <Guard>
+CHAT_ATTACK1 <What's all this about!?>
+CHAT_ATTACK2 <Halt!>
+CHAT_ATTACK3 <Just wait while I call my supervisor!>
+skill 6 1
+skill 7 1
+skill 8 1
+skill 9 1
+skill 10 2
+mod head
+mod body
+mod arm
+sub
+	hand
+end
+mod arm
+sub
+	hand
+end
+mod leg
+mod leg
+end
+
+ARCH Guard Dog
+roguechar <d>
+type <guard>
+sdl_sprite <monster_dogfox.png>
+sdl_colors <80 80 85 150 112 89 170 200 50>
+statline 13 8 10 15 8 6 2 5
+size 8
+DomTarget 14
+skill 8 7
+skill 9 5
+skill 10 5
+skill 11 6
+mod head
+	sub
+		gear 4 0 6
+		name <Fangs>
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+end
+
+
+ARCH Dog
+roguechar <d>
+sdl_sprite <monster_dogfox.png>
+sdl_colors <123 63 0 135 90 45 150 200 50>
+type <city guard>
+statline 12 7 9 16 8 6 2 5
+size 3
+DomTarget 14
+skill 8 5
+skill 9 2
+skill 10 2
+skill 11 3
+mod head
+	sub
+		gear 4 0 6
+		name <Fangs>
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+end
+
+
+ARCH StormFeather
+roguechar <E>
+sdl_sprite <monster_eagle.png>
+sdl_colors <60 30 81 1 75 70 210 35 50>
+size 15
+statline 15 10 19 17 5 6 2 7
+type <AIR MOUNTAIN ANIMAL>
+DomTarget 18
+skill 6 5
+skill 8 5
+skill 9 3
+skill 10 6
+skill 13 3
+mod head
+armor 2
+mass -4
+	sub
+		melee 8
+		name <Peck>
+		recharge 5
+		type <ArmorPiercing>
+	end
+mod body
+armor 2
+mass -4
+	sub
+		BeamGun 6
+		mass -6
+		name <Lightning Storm>
+		Range 8
+		Recharge 1
+		BV 5
+		type <SWARM HAYWIRE>
+
+		Flight 16
+		name <Feathers>
+	end
+mod wing
+armor 2
+mass -3
+	sub
+		BeamGun 5
+		mass -5
+		name <Lightning Bolt>
+		range 10
+		type <HAYWIRE>
+	end
+mod wing
+armor 2
+mass -3
+	sub
+		BeamGun 5
+		mass -5
+		name <Lightning Bolt>
+		range 10
+		type <HAYWIRE>
+	end
+end
+
+ARCH Eagle
+roguechar <E>
+sdl_sprite <monster_eagle.png>
+sdl_colors <123 63 0 120 100 13 122 88 193>
+size 5
+statline 15 6 17 16 5 6 2 7
+type <AIR MOUNTAIN ANIMAL>
+DomTarget 15
+skill 8 5
+skill 9 3
+skill 10 5
+mod head
+armor 1
+sub
+	melee 5
+	name <Peck>
+	recharge 5
+end
+mod body
+armor 1
+sub
+	Flight 12
+	name <Feathers>
+end
+mod wing
+mod wing
+end
+
+
+ARCH Assassin Lord
+roguechar <N>
+size 21
+type <CRIMINAL CITY>
+statline 18 16 17 17 13 16 10 11
+SDL_SPRITE <cha_m_assassin.png>
+SDL_COLORS <36 46 30 200 159 180 70 30 81>
+skill 6 6
+skill 8 9
+skill 9 8
+skill 10 8
+skill 13 2
+skill 18 7
+Talent 23
+mod head
+armor 3
+mod body
+armor 3
+mod arm
+armor 3
+	sub
+		hand
+		inv
+			gun 5
+			name <Headhunter Pistol>
+			type <ARMORPIERCING>
+			range 4
+			mass -3
+			recharge 6
+			sub
+				ammo 5
+			end
+		end
+	end
+mod arm
+armor 3
+	sub
+		hand
+		inv
+			melee 22
+			name <Night Scythe>
+			type <Extend ArmorPiercing POISON>
+			scale 0
+			mass -15
+		end
+	end
+mod leg
+armor 3
+mod leg
+armor 3
+end
+
+ARCH Assassin
+roguechar <N>
+size 15
+type <CRIMINAL CITY>
+SDL_SPRITE <cha_m_assassin.png>
+SDL_COLORS <34 37 30 200 159 180 80 28 28>
+statline 17 16 15 16 13 15 10 11
+skill 6 6
+skill 8 9
+skill 9 8
+skill 10 7
+skill 18 4
+Talent 23
+mod head
+armor 3
+mod body
+armor 3
+mod arm
+armor 3
+	sub
+		hand
+		inv
+			gun 5
+			name <Long Rifle>
+			mass -1
+			range 10
+			acc 1
+			recharge 3
+			magazine 30
+			sub
+				ammo 5
+				name <Killer Ammo>
+				type <ARMORPIERCING>
+			end
+		end
+	end
+mod arm
+armor 3
+	sub
+		hand
+		inv
+			Melee 6
+			name <Deathwing>
+			type <Thrown Return Poison>
+			scale 0
+			mass -5
+			recharge 1
+		end
+	end
+mod leg
+armor 3
+mod leg
+armor 3
+end
+
+ARCH Stone Dragon
+roguechar <D>
+genepool <DRAGON>
+size 22
+DomTarget 37
+type <Exotic Reptile Earth Cave Mountain>
+statline 15 20 12 19 12 13 6 9
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 18 else GoMeat Print 5 GiveSTC .heartdesc>
+GoMeat <ifG V1 9 else GoFail Print 4 GiveSTC .fooddesc>
+.heartdesc <DRAGONHEART>
+.fooddesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg2 <You don't manage to do much of anything with this dragon.>
+Msg3 <You've already done all you can with this dragon.>
+Msg4 <You cut some meat from the dragon to have later.>
+Msg5 <You remove the heart from this dragon to eat later.>
+% End SURVIVAL block.
+skill 6 5
+skill 8 5
+skill 9 4
+skill 10 4
+skill 11 3
+skill 12 3
+skill 13 7
+mod head
+armor 6
+sub
+	Melee 5
+	name <Jaws>
+	type <BRUTAL>
+
+	Gun 12
+	name <Poison Gas>
+	range 7
+	type <POISON BLAST 2>
+	recharge 1
+	% I'm limiting the shots of this breath attack...
+	magazine 3
+	sub
+		ammo 12
+	end
+end
+mod body
+armor 6
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod tail
+armor 5
+end
+
+ARCH Core Worm
+statline 13 19 16 2 11 5 2 2
+roguechar <W>
+type <BUG EARTH MUTANT>
+sdl_sprite <monster_worm.png>
+sdl_colors <110 80 85 250 80 0 244 216 0>
+size 15
+DomTarget 30
+skill 6 4
+skill 8 5
+skill 9 3
+skill 10 5
+skill 12 3
+skill 13 7
+mod head
+	armor 5
+	sub
+		Melee 4
+		name <Jaws>
+		type <BRUTAL>
+
+		BeamGun 6
+		name <Magma Spew>
+		type <SCATTER>
+		range 4
+		recharge 1
+	end
+mod body
+	armor 5
+mod tail
+	armor 4
+end
+
+ARCH World Maggot
+statline 16 22 21 10 19 20 17 2
+roguechar <W>
+type <BUG RUINS WASTELAND>
+sdl_sprite <monster_worm.png>
+sdl_colors <180 155 88 245 213 150 208 0 51>
+size 35
+skill 6 6
+skill 8 2
+skill 9 3
+skill 10 5
+skill 12 3
+skill 13 8
+mod head
+	armor 1
+	sub
+		Melee 9
+		name <Jaws>
+		type <BRUTAL>
+
+		BeamGun 4
+		name <Toxic Spit>
+		type <SCATTER BRUTAL>
+		range 3
+	end
+mod body
+	armor 4
+	sub
+		BeamGun 3
+		name <Poison Spines>
+		range 7
+		BV 4
+		type <SWARM POISON>
+		recharge 3
+
+		Melee 5
+		name <Spikes>
+		recharge 3
+		type <Poison>
+	end
+mod tail
+	armor 4
+end
+
+ARCH Sun Scarab
+statline 16 13 11 8 1 1 1 1
+roguechar <i>
+sdl_sprite <monster_roach.png>
+sdl_colors <234 180 88 123 63 0 170 150 230>
+type <BUG DESERT RUINS FIRE>
+size 12
+DomTarget 32
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 10 ifG SkRoll 14 16 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FLAMEGLAND>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the flame gland from the beetle.>
+Msg2 <You don't manage to do much of anything with this beetle.>
+Msg3 <You've already done all you can with this beetle.>
+% End SURVIVAL block.
+skill 6 3
+skill 8 5
+skill 9 4
+skill 10 6
+mod body
+	armor 5
+	sub
+		gear 4 0 6
+		name <Bite>
+
+		BeamGun 3
+		name <Sun Flame>
+		recharge 1
+		range 5
+		type <Line Burn ArmorPiercing>
+		BV 3
+	end
+mod wing
+	size 6
+	armor 5
+mod wing
+	size 6
+	armor 5
+mod leg
+	size 3
+	armor 4
+mod leg
+	size 3
+	armor 4
+mod leg
+	size 3
+	armor 4
+mod leg
+	size 3
+	armor 4
+mod leg
+	size 3
+	armor 4
+mod leg
+	size 3
+	armor 4
+end
+
+
+ARCH Black Scarab
+statline 10 8 9 7 1 1 1 1
+roguechar <i>
+sdl_sprite <monster_roach.png>
+sdl_colors <70 70 85 56 26 81 244 216 81>
+type <BUG DESERT RUINS>
+size 4
+DomTarget 24
+skill 8 4
+skill 9 4
+skill 10 4
+mod body
+	armor 2
+	sub
+		gear 4 0 6
+		name <Bite>
+	end
+mod leg
+	size 2
+	armor 2
+mod leg
+	size 2
+	armor 2
+mod leg
+	size 2
+	armor 2
+mod leg
+	size 2
+	armor 2
+mod leg
+	size 2
+	armor 2
+mod leg
+	size 2
+	armor 2
+end
+
+
+ARCH Toxic Urchin
+roguechar <u>
+SDL_SPRITE <monster_urchin.png>
+SDL_COLORS <152 61 97 122 88 193 122 88 193>
+statline 14 5 7 5 1 1 1 1
+Size 6
+type <Water Sea>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 17 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-4>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut open the urchin and collect some meat from inside.>
+Msg2 <You cut open the urchin, and nearly get sick...>
+Msg3 <You've already gutted this urchin.>
+% End SURVIVAL block.
+skill 6 5
+skill 8 3
+skill 10 1
+skill 13 7
+mod body
+	armor 6
+	sub
+		BeamGun 1
+		Range 5
+		name <Toxic Spines>
+		type <Poison>
+		BV 3
+
+		Melee 3
+		name <Toxic Spines>
+		type <Poison>
+		Recharge 4
+	end
+end
+
+ARCH Moon Bear
+roguechar <B>
+SDL_SPRITE <monster_bear.png>
+SDL_COLORS <180 185 200 220 190 150 208 0 230>
+genepool <BEAR>
+size 18
+DomTarget 19
+type <Animal Mountain Air>
+statline 17 19 13 14 8 10 2 4
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 17 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 12 else GoFail Print 4 GiveSTC .fooddesc>
+.stcdesc <REDBEARLIVER>
+.fooddesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the liver from this bear. It's supposed to have healing properties.>
+Msg2 <You don't manage to do much of anything with this bear carcass.>
+Msg3 <You've already done all you can with this bear carcass.>
+Msg4 <You cut some meat from the bear to have later.>
+% End SURVIVAL block.
+skill 8 8
+skill 9 5
+skill 10 4
+% Bears have the talent HARD AS NAILS
+NAtt 16 8 1
+mod head
+armor 3
+sub
+	melee 7
+	name <Bite>
+	type <BRUTAL>
+end
+mod body
+armor 4
+mod arm
+armor 3
+sub
+	melee 5
+	name <Claw>
+	recharge 1
+	type <ArmorPiercing>
+end
+mod arm
+armor 3
+sub
+	melee 5
+	name <Claw>
+	recharge 1
+	type <ArmorPiercing>
+end
+mod leg
+armor 3
+mod leg
+armor 3
+end
+
+ARCH Dragon Bear
+roguechar <B>
+SDL_SPRITE <monster_bear.png>
+SDL_COLORS <234 190 90 245 220 160 0 200 0>
+genepool <BEAR>
+size 20
+DomTarget 25
+type <Animal Exotic Forest Cave Ice>
+statline 16 19 11 15 10 16 7 6
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 20 else GoGland Print 5 GiveSTC .heartdesc>
+GoGland <ifG V1 18 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 13 else GoFail Print 4 GiveSTC .fooddesc>
+.heartdesc <DRAGONHEART>
+.stcdesc <REDBEARLIVER>
+.fooddesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the liver from this bear. It's good for stamina.>
+Msg2 <You don't manage to do anything with this bear carcass other than make a mess.>
+Msg3 <You've already done all you can with this bear.>
+Msg4 <You cut some meat from the bear to have later.>
+Msg5 <You remove the heart from this bear to have later.>
+% End SURVIVAL block.
+skill 6 4
+skill 8 10
+skill 9 4
+skill 10 4
+skill 12 11
+skill 13 7
+% Bears have the talent HARD AS NAILS
+NAtt 16 8 1
+mod head
+armor 4
+sub
+	melee 5
+	name <Bite>
+	type <Burn>
+
+	BeamGun 4
+	name <Fireball Breath>
+	type <Blast 1>
+	range 6
+	recharge 1
+end
+mod body
+armor 4
+mod arm
+armor 4
+sub
+	melee 6
+	name <Claw>
+	type <ArmorPiercing>
+	recharge 3
+end
+mod arm
+armor 4
+sub
+	melee 6
+	name <Claw>
+	type <ArmorPiercing>
+	recharge 3
+end
+mod leg
+armor 4
+mod leg
+armor 4
+end
+
+ARCH Harrow Bear
+roguechar <B>
+SDL_SPRITE <monster_bear.png>
+SDL_COLORS <80 90 90 90 100 100 200 50 0>
+genepool <BEAR>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 15 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut some meat from this bear.>
+Msg2 <This bear is too mutated and toxic to even think about eating.>
+Msg3 <You've already gutted this bear.>
+% End SURVIVAL block.
+size 15
+DomTarget 26
+type <Animal Mutant Earth Wasteland>
+statline 14 18 10 11 8 10 2 1
+skill 8 10
+skill 9 4
+skill 10 2
+% Bears have the talent HARD AS NAILS
+NAtt 16 8 1
+skill 13 5
+mod head
+armor 2
+sub
+	melee 9
+	name <Bite>
+	recharge 1
+end
+mod body
+armor 3
+mod arm
+armor 2
+sub
+	melee 5
+	name <Claw>
+	recharge 1
+	type <ArmorPiercing Poison>
+end
+mod arm
+armor 2
+sub
+	melee 5
+	name <Claw>
+	recharge 1
+	type <ArmorPiercing Poison>
+end
+mod leg
+armor 2
+mod leg
+armor 2
+end
+
+ARCH Red Bear
+roguechar <B>
+SDL_SPRITE <monster_bear.png>
+SDL_COLORS <125 60 0 150 120 89 244 210 28>
+genepool <BEAR>
+size 9
+DomTarget 17
+type <Animal Forest Tundra Ice>
+statline 14 17 9 13 8 10 2 4
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 20 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 12 else GoFail Print 4 GiveSTC .fooddesc>
+.stcdesc <REDBEARLIVER>
+.fooddesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the liver from this bear. It's supposed to have healing properties.>
+Msg2 <You don't manage to do much of anything with this bear carcass.>
+Msg3 <You've already done all you can with this bear carcass.>
+Msg4 <You cut some meat from the bear to have later.>
+% End SURVIVAL block.
+skill 8 8
+skill 9 2
+skill 10 2
+% Bears have the talent HARD AS NAILS
+NAtt 16 8 1
+mod head
+armor 2
+sub
+	melee 7
+	name <Bite>
+	recharge 1
+end
+mod body
+armor 3
+mod arm
+armor 2
+sub
+	melee 5
+	name <Claw>
+	recharge 1
+	type <ArmorPiercing>
+end
+mod arm
+armor 2
+sub
+	melee 5
+	name <Claw>
+	recharge 1
+	type <ArmorPiercing>
+end
+mod leg
+armor 2
+mod leg
+armor 2
+end
+
+ARCH Sea Dragon
+roguechar <D>
+genepool <DRAGON>
+SDL_SPRITE <monster_seadragon.png>
+SDL_COLORS <1 75 67 238 180 88 66 121 119>
+size 20
+DomTarget 25
+type <Exotic Reptile Water Sea>
+statline 17 19 16 15 8 16 7 9
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Gut Mental V= 1 SkRoll 14 ifG V1 21 else GoGland Print 5 GiveSTC .heartdesc>
+GoGland <ifG V1 19 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 14 else GoFail Print 4 GiveSTC .fooddesc>
+.heartdesc <DRAGONHEART>
+.stcdesc <FLAMEGLAND>
+.fooddesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the flame gland from the dragon.>
+Msg2 <You don't manage to do much of anything with this dragon.>
+Msg3 <You've already done all you can with this dragon.>
+Msg4 <You cut some meat from the dragon to have later.>
+Msg5 <You remove the heart from this dragon to eat later.>
+% End SURVIVAL block.
+skill 6 4
+skill 8 12
+skill 9 4
+skill 10 5
+skill 12 1
+skill 13 3
+mod head
+armor 5
+sub
+	Melee 12
+	name <Jaws>
+	recharge 1
+
+	BeamGun 7
+	name <Flame Breath>
+	range 4
+	recharge 1
+	type <BURN SCATTER>
+end
+mod body
+armor 5
+mod tail
+name <Tentacle>
+armor 5
+sub
+	Melee 4
+	name <Hook>
+	type <ArmorPiercing Poison>
+end
+mod tail
+name <Tentacle>
+armor 5
+sub
+	Melee 4
+	name <Hook>
+	type <ArmorPiercing Poison>
+end
+mod tail
+name <Tentacle>
+armor 5
+sub
+	Melee 4
+	name <Hook>
+	type <ArmorPiercing Poison>
+end
+end
+
+ARCH Dune Dragon
+roguechar <D>
+sdl_sprite <monster_triceratops.png>
+sdl_colors <160 130 90 240 190 100 51 90 161>
+size 16
+DomTarget 21
+genepool <DRAGON>
+type <Exotic Reptile Bright Fire Desert Lab>
+statline 16 15 14 17 9 14 5 10
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 23 else GoGland Print 5 GiveSTC .heartdesc>
+GoGland <ifG V1 19 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 12 else GoFail Print 4 GiveSTC .fooddesc>
+.heartdesc <DRAGONHEART>
+.stcdesc <FLAMEGLAND>
+.fooddesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the flame gland from the dragon.>
+Msg2 <You don't manage to do much of anything with this dragon.>
+Msg3 <You've already done all you can with this dragon.>
+Msg4 <You cut some meat from the dragon to have later.>
+Msg5 <You remove the heart from this dragon to eat later.>
+% End SURVIVAL block.
+skill 6 4
+skill 8 6
+skill 9 4
+skill 10 4
+skill 12 1
+skill 13 3
+mod head
+armor 5
+sub
+	Melee 5
+	name <Jaws>
+	recharge 1
+	type <POISON>
+
+	Melee 5
+	name <Horns>
+	recharge 1
+	type <ARMORPIERCING>
+
+	BeamGun 4
+	name <Flame Breath>
+	range 4
+	type <BURN SCATTER>
+end
+mod body
+armor 5
+mod leg
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+mod tail
+armor 3
+end
+
+
+ARCH Fire Worm
+roguechar <f>
+sdl_sprite <monster_fireworm.png>
+sdl_colors <127 45 35 250 50 100 244 244 30>
+type <mutant fire desert wasteland air>
+statline 10 4 8 9 2 2 2 2
+size 5
+skill 6 3
+skill 8 2
+skill 9 4
+skill 10 3
+mod body
+	sub
+		gear 4 0 3
+		name <Fangs>
+		Recharge 1
+
+		BeamGun 1
+		name <Flaming Spittle>
+		type <BURN>
+		Range 2
+	end
+mod wing
+	sub
+		Melee 1
+		name <Claw>
+	end
+mod wing
+	sub
+		Melee 1
+		name <Claw>
+	end
+mod tail
+end
+
+Arch Androbot
+statline 12 19 12 13 12 12 12 1
+size 13
+roguechar <R>
+sdl_sprite <monster_androbot.png>
+sdl_colors <157 172 183 162 153 235 230 0 0>
+sdl_portrait <por_x_androbot.png>
+type <Robot Guard>
+CHAT_ATTACK <Leave the premesis or face retaliation.>
+% Begin Science block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 SkRoll 29 ifG V1 27 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 12 else GoFail Print 4 GiveSTC .fooddesc>
+.stcdesc <SELFDEFENSEMATRIX>
+.fooddesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You manage to extract the Self Defense NNet from this robot.>
+Msg2 <You take apart the robot, but don't find anything useful.>
+Msg3 <You've already disassembled this robot.>
+Msg4 <You salvage some spare parts from this robot.>
+% End Science block.
+Metal
+skill 6 4
+skill 7 4
+skill 8 5
+skill 9 4
+skill 10 3
+skill 11 5
+skill 33 30
+mod head
+armor 5
+inv
+	HeadArmor 7
+	name <Androbot Helmet>
+end
+mod body
+armor 6
+inv
+	BodyArmor 9
+	name <Androbot Armor>
+end
+mod arm
+armor 7
+sub
+	Hand
+	inv
+		gun 6
+		name <Hand Cannon>
+		Range 4
+		Acc 1
+		Recharge 1
+		BV 2
+		Magazine 40
+		sub
+			gear 5 2 6
+		end
+	end
+end
+mod arm
+armor 7
+sub
+	Hand
+end
+inv
+	Shield 8
+	DefBonus 3
+	name <Androbot Shield>
+end
+mod leg
+armor 7
+mod leg
+armor 7
+end
+
+Arch Iron Monkey
+statline 7 9 6 7 6 5 5 8
+Size 2
+DomTarget 14
+type <Animal Jungle Desert Wasteland Earth Mountain>
+roguechar <m>
+sdl_sprite <monster_monkey.png>
+sdl_colors <103 3 45 245 213 160 244 216 28>
+skill 9 5
+skill 10 1
+skill 30 5
+mod head
+armor 1
+mod body
+armor 2
+mod arm
+armor 2
+mod arm
+armor 2
+mod leg
+armor 2
+mod leg
+armor 2
+mod tail
+armor 2
+end
+
+Arch Toxic Chameleon
+statline 13 10 6 9 5 3 1 2
+sdl_sprite <monster_chameleon.png>
+sdl_colors <220 100 170 60 70 60 230 30 50>
+Size 7
+DomTarget 17
+type <Reptile Jungle Exotic Mutant>
+RogueChar <c>
+skill 8 3
+skill 9 4
+skill 10 3
+skill 11 5
+skill 25 15
+mod head
+armor 2
+sub
+	Melee 2
+	name <Tongue>
+	type <thrown return stone>
+end
+mod body
+armor 2
+mod leg
+armor 2
+mod leg
+armor 2
+mod leg
+armor 2
+mod leg
+armor 2
+mod tail
+armor 2
+end
+
+Arch Chameleon
+statline 12 8 6 9 5 3 1 3
+Size 1
+DomTarget 16
+type <Reptile Jungle Exotic>
+RogueChar <c>
+sdl_sprite <monster_chameleon.png>
+sdl_colors <125 100 15 70 125 120 230 170 90>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Flay V= 1 10 V+ 1 d100 ifG SkRoll 14 15 else GoFail Print 1 Cash+ V1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You skin the chameleon, recieving a pelt worth $ \VAL V1 .>
+Msg2 <You attempt to skin the chameleon, but end up just making a mess.>
+Msg3 <You've already skinned this chameleon.>
+% End SURVIVAL block.
+skill 8 3
+skill 9 1
+skill 10 1
+skill 11 5
+skill 25 15
+mod head
+armor 1
+sub
+	Melee 1
+	name <Tongue>
+	type <thrown return>
+end
+mod body
+armor 1
+mod leg
+armor 1
+mod leg
+armor 1
+mod leg
+armor 1
+mod leg
+armor 1
+mod tail
+armor 1
+end
+
+Arch Cyclops Progenitor
+statline 15 21 13 12 11 13 9 8
+Biotech
+scale 1
+Size 30
+type <Cyclops>
+roguechar <Y>
+sdl_sprite <monster_cyclops.png>
+sdl_colors <150 112 89 199 188 162 100 200 0>
+sdl_portrait <por_x_cyclops.png>
+skill 6 7
+skill 7 7
+Skill 8 7
+skill 9 4
+skill 10 6
+skill 36 10
+skill 12 10
+mod head
+armor 4
+mod body
+armor 4
+sub
+	Mount
+	name <Right Shoulder Mount>
+	inv
+		BeamGun 6
+		name <Bio-Laser>
+		recharge 4
+	end
+	Mount
+	name <Left Shoulder Mount>
+	inv
+		BeamGun 6
+		name <Bio-Laser>
+		recharge 4
+	end
+end
+mod arm
+armor 4
+sub
+	hand
+end
+mod arm
+armor 4
+sub
+	hand
+end
+mod leg
+armor 4
+mod leg
+armor 4
+end
+
+Arch Cyclops Guard
+statline 15 21 13 12 11 13 9 8
+Size 19
+Biotech
+type <Cyclops>
+roguechar <Y>
+sdl_sprite <monster_cyclops.png>
+sdl_colors <200 160 120 240 220 200 100 200 0>
+sdl_portrait <por_x_cyclops.png>
+CHAT_ATTACK1 <You have no chance to survive. Make your time.>
+CHAT_ATTACK2 <You will be exterminated.>
+skill 6 7
+skill 7 7
+Skill 8 7
+skill 9 4
+skill 10 6
+skill 36 10
+skill 12 10
+mod head
+armor 4
+mod body
+armor 4
+sub
+	Mount
+	name <Right Shoulder Mount>
+	inv
+		Gun 4
+		name <Pin Cannon>
+		BV 4
+		range 7
+		magazine 120
+		mass -7
+		sub
+			ammo 4
+		end
+	end
+	Mount
+	name <Left Shoulder Mount>
+	inv
+		Gun 4
+		name <Pin Cannon>
+		BV 4
+		range 7
+		magazine 120
+		mass -7
+		sub
+			ammo 4
+		end
+	end
+end
+mod arm
+armor 4
+sub
+	hand
+	inv
+		Melee 16
+		name <BioSword>
+		Mass -10
+		type <ARMORPIERCING>
+	end
+end
+mod arm
+armor 4
+sub
+	hand
+	inv
+		Melee 16
+		name <BioSword>
+		Mass -10
+		type <ARMORPIERCING>
+	end
+end
+mod leg
+armor 4
+mod leg
+armor 4
+end
+
+Arch Cyclops
+statline 14 19 13 10 13 7 9 8
+Size 10
+Biotech
+type <Cyclops>
+roguechar <Y>
+sdl_sprite <monster_cyclops.png>
+sdl_colors <200 160 120 240 220 200 100 200 0>
+sdl_portrait <por_x_cyclops.png>
+skill 6 4
+skill 7 4
+Skill 8 4
+skill 9 4
+skill 10 4
+mod head
+armor 4
+mod body
+armor 4
+mod arm
+armor 4
+sub
+	hand
+end
+mod arm
+armor 4
+sub
+	hand
+end
+mod leg
+armor 4
+mod leg
+armor 4
+end
+
+Arch Rock Lizard
+statline 12 15 16 10 2 9 2 2
+size 10
+DomTarget 18
+roguechar <A>
+SDL_SPRITE <monster_alligator.png>
+SDL_COLORS <150 112 89 170 130 100 210 40 50>
+type <Earth Mountain Reptile>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 10 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the lizard and save some nice steaks for later.>
+Msg2 <You attempt to cut some meat from the lizard, but can't find anything worth eating.>
+Msg3 <You've already gutted this lizard.>
+% End SURVIVAL block.
+skill 8 5
+skill 9 4
+skill 10 4
+skill 13 6
+skill 25 7
+skill 26 7
+mod head
+armor 4
+sub
+	Melee 10
+	name <Jaws>
+	recharge 3
+	type <SICKNESS>
+end
+mod body
+armor 7
+mod leg
+armor 7
+mod leg
+armor 7
+mod leg
+armor 7
+mod leg
+armor 7
+mod tail
+armor 7
+end
+
+Arch Albino Alligator
+statline 13 20 10 7 2 9 2 2
+size 12
+DomTarget 22
+roguechar <A>
+SDL_SPRITE <monster_alligator.png>
+SDL_COLORS <199 188 162 152 61 97 208 35 51>
+type <City Water Swamp Cave Reptile Animal>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 500 V+ 1 d1500 V+ 1 d1500 ifG SkRoll 14 20 else GoFail Print 1 Cash+ V1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You recover metal objects worth $ \VAL V1 from the alligator's gizzard.>
+Msg2 <You cut open the alligator's gizzard to see if it swallowed anything valuable, but find nothing.>
+Msg3 <This albino alligator has nothing else that might be useful to you.>
+% End SURVIVAL block.
+skill 8 5
+skill 9 4
+skill 10 4
+skill 13 6
+skill 18 5
+skill 25 7
+skill 26 7
+skill 30 10
+skill 36 2
+mod head
+armor 7
+sub
+	Melee 15
+	name <Crushing Jaws>
+	recharge 3
+end
+mod body
+armor 3
+mod leg
+armor 7
+mod leg
+armor 7
+mod leg
+armor 7
+mod leg
+armor 7
+mod tail
+armor 7
+end
+
+ARCH Ravager
+statline 12 14 12 13 7 9 6 8
+size 5
+roguechar <R>
+type <Criminal Devo Wasteland>
+CHAT_ATTACK <Any shiny bits I can take from your corpse?>
+skill 6 4
+skill 7 4
+skill 9 6
+skill 10 4
+skill 13 2
+mod head
+armor 2
+inv
+	HeadArmor 3
+	name <Steel Mask>
+end
+mod body
+armor 1
+mod arm
+armor 1
+sub
+	Hand
+	inv
+		gear 4 2 12
+		name <Shotgun>
+		scale 0
+		mass -4
+		stat 1 5
+		stat 2 1
+		stat 8 16
+		sub
+			% Ammunition
+			gear 5 2 12
+			name <Shotgun Clip>
+			type <SCATTER>
+		end
+
+	end
+end
+mod arm
+armor 1
+sub
+	Hand
+end
+mod leg
+armor 1
+mod leg
+armor 1
+end
+
+ARCH Hunter-Destroyer
+roguechar <H>
+sdl_sprite <monster_hx3.png>
+sdl_colors <152 70 97 122 88 193 208 228 21>
+Size 27
+Biotech
+type <Synth Dark Hunter-X>
+genepool <HUNTER-X>
+statline 23 25 12 17 8 12 10 4
+skill 6 7
+skill 7 7
+skill 9 4
+skill 10 7
+skill 12 3
+skill 13 5
+mod arm
+armor 6
+sub
+	BeamGun 6
+	name <Bio-Plasma>
+	range 10
+	BV 3
+	type <SCATTER>
+end
+mod arm
+armor 6
+sub
+	BeamGun 6
+	name <Bio-Plasma>
+	range 10
+	BV 3
+	type <SCATTER>
+end
+mod body
+armor 5
+sub
+	BeamGun 4
+	name <Multi-Blaster>
+	range 5
+	BV 5
+
+	Melee 9
+	name <Extendable Jaws>
+	type <EXTEND>
+end
+mod leg
+armor 6
+mod leg
+armor 6
+mod leg
+armor 6
+mod leg
+armor 6
+end
+
+ARCH Hunter-Berserker
+Size 21
+Biotech
+roguechar <H>
+sdl_sprite <monster_hx4.png>
+sdl_colors <152 70 97 122 88 193 8 239 51>
+genepool <HUNTER-X>
+type <Synth Dark Hunter-X>
+statline 19 17 16 15 6 7 5 4
+Regen
+skill 8 7
+skill 9 4
+skill 6 7
+skill 10 8
+skill 12 5
+skill 13 8
+mod head
+armor 5
+sub
+	Melee 10
+	name <Extendable Jaws>
+	type <EXTEND POISON>
+end
+mod body
+armor 5
+sub
+	BeamGun 7
+	name <Multi-Blaster>
+	range 5
+	BV 5
+end
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+end
+
+ARCH Hunter-Slayer
+roguechar <H>
+sdl_sprite <monster_hx2.png>
+sdl_colors <152 70 97 122 88 193 208 39 51>
+Size 19
+Biotech
+genepool <HUNTER-X>
+type <Synth Dark Hunter-X>
+statline 22 17 16 15 5 8 8 4
+skill 8 7
+skill 9 4
+skill 6 7
+skill 10 7
+skill 12 2
+skill 13 4
+skill 18 7
+mod body
+armor 4
+sub
+	Melee 9
+	name <Extendable Jaws>
+	type <EXTEND>
+
+	BeamGun 7
+	name <Bio-Plasma>
+	range 10
+	BV 3
+	type <SCATTER>
+end
+mod leg
+armor 5
+mod leg
+armor 5
+mod tail
+armor 4
+sub
+	Melee 7
+	recharge 6
+	name <Tail Scythe>
+	Type <ArmorPiercing>
+end
+end
+
+ARCH Hunter-Killer
+Size 15
+Biotech
+genepool <HUNTER-X>
+roguechar <H>
+sdl_sprite <monster_hx1.png>
+sdl_colors <152 70 97 122 88 193 208 39 51>
+EvolveAt 25000
+type <Synth Dark Hunter-X>
+statline 18 15 15 14 7 5 13 4
+skill 8 5
+skill 6 7
+skill 10 6
+skill 12 1
+skill 13 2
+mod head
+armor 4
+sub
+	Melee 6
+	name <Jaws>
+end
+mod body
+armor 4
+sub
+	BeamGun 5
+	name <Bio-Laser>
+	range 5
+end
+mod leg
+armor 4
+mod leg
+armor 4
+mod leg
+armor 4
+mod leg
+armor 4
+end
+
+ARCH Hunter-Drone
+Size 13
+Biotech
+roguechar <H>
+sdl_sprite <monster_hx1.png>
+sdl_colors <105 90 110 150 112 89 166 47 32>
+genepool <HUNTER-X>
+EvolveAt 15000
+type <Synth Dark Hunter-X>
+statline 16 15 16 10 6 5 7 4
+skill 8 7
+skill 9 4
+skill 10 8
+mod head
+armor 3
+sub
+	Melee 5
+	name <Jaws>
+end
+mod body
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+end
+
+ARCH Hunter-Scout
+Size 9
+Biotech
+roguechar <H>
+genepool <HUNTER-X>
+sdl_sprite <monster_hx1.png>
+sdl_colors <60 110 118 150 112 89 166 47 32>
+EvolveAt 10000
+type <Synth Dark Hunter-X>
+statline 16 14 18 17 7 5 8 4
+skill 8 6
+skill 9 4
+skill 10 7
+skill 11 5
+skill 25 7
+mod head
+armor 3
+sub
+	Melee 4
+	name <Jaws>
+end
+mod body
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+mod leg
+armor 3
+end
+
+ARCH Hunter-Larva
+Size 3
+Biotech
+roguechar <H>
+type <Hunter-X>
+genepool <HUNTER-X>
+sdl_Sprite <monster_larva.png>
+sdl_colors <155 70 100 170 160 230 241 210 30>
+EvolveAt 5000
+DomTarget 22
+statline 7 13 13 6 1 2 1 2
+skill 8 4
+skill 9 4
+skill 10 5
+mod head
+armor 2
+sub
+	Melee 4
+	name <Jaws>
+	type <STONE>
+	recharge 4
+end
+mod body
+armor 2
+mod tail
+armor 2
+end
+
+
+ARCH Sentinel
+Size 40
+metal
+type <Robot Ruins>
+sdl_sprite <monster_sentinel.png>
+sdl_colors <234 180 88 199 188 162 255 107 83>
+statline 16 35 10 15 10 10 10 1
+% Begin Science block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 SkRoll 29 ifG V1 27 else GoMeat Print 1 GiveSTC .stcdesc>
+GoMeat <ifG V1 12 else GoFail Print 4 GiveSTC .fooddesc>
+.stcdesc <SENTINELFCS>
+.fooddesc <SPAREPARTS-2>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You manage to extract the Fire Control System from this robot.>
+Msg2 <You take apart the Sentinel, but don't find anything useful.>
+Msg3 <You've already disassembled this robot.>
+Msg4 <You salvage some spare parts from this robot.>
+% End Science block.
+skill 6 5
+skill 7 5
+skill 10 5
+skill 13 10
+skill 26 10
+skill 30 10
+mod turret
+armor 5
+sub
+	mount
+	inv
+		gear 4 3 25
+		name <Laser Cannon>
+		stat 2 1
+	end
+end
+mod turret
+armor 5
+sub
+	mount
+	inv
+		gear 4 3 15
+		name <Plasma Cannon>
+		scale 0
+		mass 5
+		stat 1 10
+		stat 2 1
+		stat 3 1
+		stat 4 8
+	end
+end
+mod turret
+armor 5
+sub
+	mount
+	inv
+		gear 4 3 15
+		name <Plasma Cannon>
+		scale 0
+		mass 5
+		stat 1 10
+		stat 2 1
+		stat 3 1
+		stat 4 8
+	end
+end
+mod body
+armor 5
+sub
+	HoverJet 10
+end
+end
+
+
+Arch Dark Dragon
+statline 22 27 21 23 17 28 12 14
+type <Exotic Cave Dark Ruins Reptile>
+roguechar <D>
+sdl_sprite <monster_triceratops.png>
+sdl_colors <80 90 80 200 180 100 255 0 0>
+size 64
+skill 6 12
+skill 7 12
+skill 8 12
+skill 9 12
+skill 10 12
+skill 12 10
+skill 13 15
+skill 26 15
+skill 30 15
+skill 36 15
+mod head
+armor 5
+sub
+	Melee 17
+	name <Jaws>
+	BeamGun 5
+	name <Plasma Breath>
+	BV 7
+	type <ArmorPiercing>
+end
+mod body
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod leg
+armor 5
+mod tail
+armor 5
+end
+
+Arch Emperor Fire Penguin
+statline 14 10 16 15 6 7 2 10
+type <Fire Exotic Light>
+roguechar <p>
+genepool <PENGUIN>
+SDL_SPRITE <monster_penguin.png>
+SDL_COLORS <208 34 51 234 180 88 244 216 28>
+CHAT_ATTACK <SQUAAAK!!!>
+size 25
+DomTarget 25
+skill 6 8
+skill 7 8
+skill 8 8
+skill 9 8
+skill 10 10
+skill 12 8
+mod head
+sub
+	emelee 12
+	name <Flaming Peck>
+	type <ArmorPiercing BURN>
+end
+mod body
+sub
+	BeamGun 8
+	name <Searing Flame>
+	type <Hyper BURN>
+	range 4
+end
+mod arm
+name <Wing>
+sub
+	MLauncher 1
+	name <Burning Feathers>
+	type <Swarm>
+	range 9
+	magazine 20
+	sub
+		rockets 1
+	end
+end
+mod arm
+name <Wing>
+sub
+	MLauncher 1
+	name <Burning Feathers>
+	type <Swarm>
+	range 9
+	magazine 20
+	sub
+		rockets 1
+	end
+end
+mod leg
+mod leg
+end
+
+Arch Fire Penguin
+statline 13 8 14 14 5 7 2 12
+type <Fire Exotic Mutant>
+SDL_SPRITE <monster_penguin.png>
+SDL_COLORS <166 47 32 230 230 230 244 215 28>
+roguechar <p>
+genepool <PENGUIN>
+EvolveAt 12500
+size 5
+DomTarget 15
+skill 6 5
+skill 7 5
+skill 8 5
+skill 9 3
+skill 10 3
+mod head
+sub
+	emelee 3
+	name <Flaming Peck>
+	type <ArmorPiercing>
+end
+mod body
+mod arm
+name <Wing>
+mod arm
+name <Wing>
+mod leg
+mod leg
+end
+
+Arch Street Punk
+statline 9 9 9 9 8 8 8 8
+size 6
+roguechar <P>
+type <Criminal Devo>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <56 26 81 170 112 90 168 133 230>
+CHAT_ATTACK1 <Gabba gabba hey!>
+CHAT_ATTACK2 <Hey ho, let's go!>
+CHAT_ATTACK3 <I wanna be... anarchy!>
+skill 6 1
+skill 7 1
+skill 8 1
+skill 9 1
+skill 10 1
+mod head
+mod body
+mod arm
+sub
+	hand
+	inv
+		gear 4 2 12
+		name <Shotgun>
+		mass -4
+		stat 1 5
+		stat 2 1
+		recharge 3
+		stat 8 16
+		sub
+			gear 5 2 12
+			name <Shotgun Clip>
+			type <SCATTER>
+		end
+	end
+end
+mod arm
+sub
+	hand
+end
+mod leg
+mod leg
+end
+
+Arch Street Punk
+statline 9 9 9 9 8 8 8 8
+size 3
+roguechar <P>
+type <Criminal Devo>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <56 26 81 170 112 90 230 107 83>
+CHAT_ATTACK1 <Gabba gabba hey!>
+CHAT_ATTACK2 <Hey ho, let's go!>
+CHAT_ATTACK3 <I wanna be... anarchy!>
+skill 6 1
+skill 7 1
+skill 8 1
+skill 9 1
+skill 10 1
+mod head
+mod body
+mod arm
+sub
+	hand
+	inv
+		gear 4 2 2
+		name <Fallback Pistol>
+		mass -1
+		stat 1 2
+		stat 3 3
+		stat 8 8
+		sub
+			gear 5 2 2
+		end
+	end
+end
+mod arm
+sub
+	hand
+end
+mod leg
+mod leg
+end
+
+Arch Street Punk
+statline 9 9 9 9 8 8 8 8
+size 2
+roguechar <P>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <56 26 81 170 112 90 66 121 80>
+type <Criminal Devo>
+CHAT_ATTACK1 <Gabba gabba hey!>
+CHAT_ATTACK2 <Hey ho, let's go!>
+CHAT_ATTACK3 <I wanna be... anarchy!>
+skill 6 1
+skill 7 1
+skill 8 1
+skill 9 1
+skill 10 1
+mod head
+mod body
+mod arm
+sub
+	hand
+	inv
+		gear 4 0 3
+		name <Steel Pipe>
+		mass 2
+		stat 2 -2
+		stat 3 3
+	end
+end
+mod arm
+sub
+	hand
+end
+mod leg
+mod leg
+end
+
+Arch Street Punk
+statline 9 9 9 9 8 8 8 8
+size 1
+roguechar <P>
+type <Criminal Devo>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <56 26 81 170 112 90 123 63 0>
+CHAT_ATTACK1 <Gabba gabba hey!>
+CHAT_ATTACK2 <Hey ho, let's go!>
+CHAT_ATTACK3 <I wanna be... anarchy!>
+skill 6 1
+skill 7 1
+skill 8 1
+skill 9 1
+skill 10 1
+mod head
+mod body
+mod arm
+sub
+	hand
+end
+mod arm
+sub
+	hand
+end
+mod leg
+mod leg
+end
+
+Arch Bandit
+statline 13 13 14 12 8 8 8 8
+size 12
+roguechar <B>
+type <Criminal>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <112 28 28 150 112 89 136 151 50>
+CHAT_ATTACK1 <Lookie here, some fresh meat!>
+CHAT_ATTACK2 <I'll cut you up real good.>
+CHAT_ATTACK3 <You're gonna die!>
+skill 6 5
+skill 7 5
+skill 8 6
+skill 9 5
+skill 10 4
+mod head
+	armor 1
+mod body
+	armor 1
+mod arm
+	armor 1
+	sub
+		Hand
+		inv
+			gear 4 2 6
+			name <Assault Rifle>
+			mass -2
+			stat 1 7
+			stat 2 -1
+			Recharge 3
+			stat 4 3
+			stat 8 40
+			sub
+				% Ammunition
+				gear 5 2 6
+			end
+
+		end
+	end
+mod arm
+	armor 1
+	sub
+		Hand
+	end
+mod leg
+	armor 1
+mod leg
+	armor 1
+end
+
+
+Arch Bandit
+statline 13 13 14 12 8 8 8 8
+size 8
+roguechar <B>
+type <Criminal>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <112 28 28 150 112 89 116 100 13>
+CHAT_ATTACK1 <Lookie here, some fresh meat!>
+CHAT_ATTACK2 <I'll cut you up real good.>
+CHAT_ATTACK3 <You're gonna die!>
+skill 6 7
+skill 7 5
+skill 8 6
+skill 9 5
+skill 10 5
+mod head
+	armor 1
+mod body
+	armor 1
+mod arm
+	armor 1
+	sub
+		% Hand
+		gear 7 0 0
+		inv
+			gear 4 2 2
+			name <Autogun>
+			scale 0
+			stat 1 5
+			stat 4 2
+			stat 8 90
+			sub
+				% Ammunition
+				gear 5 2 2
+			end
+		end
+	end
+mod arm
+	armor 1
+	sub
+		% Hand
+		gear 7 0 0
+		inv
+			gear 4 0 6
+			name <Hand Axe>
+			scale 0
+		end
+	end
+mod leg
+	armor 1
+mod leg
+	armor 1
+end
+
+Arch Bandit
+statline 13 13 14 12 8 8 8 8
+size 4
+roguechar <B>
+type <Criminal>
+SDL_SPRITE <cha_m_bandit.png>
+SDL_COLORS <112 28 28 150 112 89 56 26 81>
+CHAT_ATTACK1 <Lookie here, some fresh meat!>
+CHAT_ATTACK2 <I'll cut you up real good.>
+CHAT_ATTACK3 <You're gonna die!>
+skill 6 4
+skill 7 5
+skill 8 5
+skill 9 5
+skill 10 5
+mod head
+	armor 1
+mod body
+	armor 1
+mod arm
+	armor 1
+	sub
+		% Hand
+		Hand
+	end
+mod arm
+	armor 1
+	sub
+		Hand
+		inv
+			gear 4 0 6
+			name <Hand Axe>
+			scale 0
+		end
+	end
+mod leg
+	armor 1
+mod leg
+	armor 1
+end
+
+ARCH Morlock
+roguechar <M>
+type <mutant ruins devo>
+statline 13 15 12 13 10 11 7 10
+sdl_sprite <monster_morlock.png>
+sdl_colors <115 95 85 170 160 130 112 50 50>
+size 8
+skill 6 2
+skill 7 1
+skill 8 5
+skill 9 4
+skill 10 5
+skill 11 7
+mod head
+mod body
+mod arm
+	name <Right Arm>
+	sub
+		hand
+		inv
+			melee 11
+			mass 3
+			name <Stone Axe>
+			type <EXTEND BRUTAL>
+		end
+	end
+mod arm
+	name <Left Arm>
+	sub
+		hand
+	end
+	inv
+		Shield 2
+		name <Leather Shield>
+		mass 2
+	end
+mod leg
+	name <Right Leg>
+mod leg
+	name <Left Leg>
+end
+
+ARCH Morlock
+roguechar <M>
+type <mutant ruins devo>
+statline 13 15 12 13 10 11 7 10
+sdl_sprite <monster_morlock.png>
+sdl_colors <115 95 85 170 160 130 112 50 50>
+size 6
+skill 6 2
+skill 7 1
+skill 8 5
+skill 9 4
+skill 10 5
+skill 11 7
+mod head
+mod body
+mod arm
+	name <Right Arm>
+	sub
+		hand
+		inv
+			melee 8
+			mass 2
+			name <Stone Spear>
+			type <THROWN>
+		end
+	end
+mod arm
+	name <Left Arm>
+	sub
+		hand
+	end
+	inv
+		Shield 2
+		name <Leather Shield>
+		mass 2
+	end
+mod leg
+	name <Right Leg>
+mod leg
+	name <Left Leg>
+end
+
+ARCH Morlock
+roguechar <M>
+type <mutant ruins devo>
+sdl_sprite <monster_morlock.png>
+sdl_colors <115 95 85 170 160 130 112 50 50>
+statline 13 15 12 13 10 11 7 10
+size 5
+skill 6 2
+skill 7 1
+skill 8 5
+skill 9 4
+skill 10 5
+skill 11 7
+mod head
+mod body
+mod arm
+	name <Right Arm>
+	sub
+		hand
+	end
+mod arm
+	name <Left Arm>
+	sub
+		hand
+	end
+mod leg
+	name <Right Leg>
+mod leg
+	name <Left Leg>
+end
+
+ARCH Corpse Eater
+SDL_SPRITE <monster_leech.png>
+SDL_COLORS <84 97 85  191 205 229  244 206 48>
+roguechar <C>
+type <mutant bug dark cave city swamp ruins>
+statline 12 15 10 15 4 7 1 1
+size 7
+skill 8 5
+skill 10 2
+skill 13 6
+skill 11 4
+skill 18 3
+mod head
+	armor 3
+	sub
+		EMelee 2
+		name <Tendrils>
+		Melee 4
+		name <Beak>
+	end
+mod body
+end
+
+ARCH Fire Toad
+SDL_SPRITE <monster_frog.png>
+SDL_COLORS <172 61 97 228 34 51 50 200 0>
+roguechar <F>
+type <animal earth swamp mutant cave fire>
+statline 10 17 9 10 2 2 2 2
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 10 ifG SkRoll 14 19 else GoCheckMeat Print 1 GiveSTC .stcdesc>
+GoCheckMeat <ifG SkRoll 14 15 else GoFail Print 4 GiveSTC .food>
+.stcdesc <FLAMEGLAND>
+.food <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You remove the flame gland from the toad.>
+Msg2 <You don't manage to do much of anything with this toad.>
+Msg3 <You've already done all you can with this toad.>
+Msg4 <You cut some meat from this toad. It's very spicy!>
+% End SURVIVAL block.
+size 9
+DomTarget 19
+skill 6 3
+skill 8 5
+skill 9 3
+skill 10 1
+skill 18 6
+skill 13 5
+mod head
+	armor 1
+	sub
+		gear 4 0 7
+		name <Bite>
+		beamgun 6
+		name <Fire Breath>
+		type <BURN>
+		range 6
+		Recharge 1
+	end
+mod body
+	armor 2
+mod leg
+	armor 1
+	name <Right Front Leg>
+mod leg
+	armor 1
+	name <Left Front Leg>
+mod leg
+	armor 1
+	name <Right Rear Leg>
+mod leg
+	armor 1
+	name <Left Rear Leg>
+end
+
+ARCH Spike Toad
+SDL_SPRITE <monster_frog.png>
+SDL_COLORS <101 72 42  245 200 170  34 216 244>
+roguechar <F>
+type <animal earth swamp mutant cave reptile>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 13 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the toad and save some meat for later.>
+Msg2 <You attempt to get some meat from the toad, but it's nothing but bone and gristle.>
+Msg3 <You've already gutted this toad.>
+% End SURVIVAL block.
+statline 10 16 10 7 2 2 2 2
+size 13
+DomTarget 23
+skill 8 6
+skill 9 4
+skill 10 2
+skill 18 5
+skill 13 5
+mod head
+	armor 1
+	sub
+		gear 4 0 6
+		name <Bite>
+	end
+mod body
+	armor 4
+mod leg
+	armor 3
+	name <Right Front Leg>
+mod leg
+	armor 3
+	name <Left Front Leg>
+mod leg
+	armor 4
+	name <Right Rear Leg>
+mod leg
+	armor 4
+	name <Left Rear Leg>
+end
+
+ARCH Giant Frog
+SDL_SPRITE <monster_frog.png>
+SDL_COLORS <45 85 80  112 127 98  244 216 35>
+roguechar <F>
+type <animal water Green Forest Swamp>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 12 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the frog and save some drumsticks for later.>
+Msg2 <You attempt to get some meat from the frog, but it's too disgusting to even think about eating it.>
+Msg3 <You've already gutted this frog.>
+% End SURVIVAL block.
+statline 8 11 10 9 2 2 2 2
+size 4
+DomTarget 14
+skill 8 4
+skill 10 2
+skill 18 1
+skill 13 5
+mod head
+	sub
+		gear 4 0 6
+		name <Bite>
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+end
+
+ARCH Giant Leech
+SDL_SPRITE <monster_leech.png>
+SDL_COLORS <140 105 81 136 141 101 130 143 114>
+roguechar <l>
+type <Dark Swamp Water>
+statline 7 8 3 4 1 1 1 1
+size 1
+skill 8 2
+skill 12 15
+mod body
+sub
+	melee 1
+	name <Bite>
+	ACC 2
+	recharge 7
+end
+end
+
+ARCH Marsh Lobster
+roguechar <L>
+SDL_SPRITE <monster_lobster.png>
+SDL_COLORS <134 141 101  144 161 111  168 153 230>
+type <Bug Water Swamp Green>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 15 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-4>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the lobster and make a lovely sushi plate.>
+Msg2 <You attempt to get some meat from the lobster, but it's tougher than it looks...>
+Msg3 <You've already gutted this lobster.>
+% End SURVIVAL block.
+statline 12 14 8 11 5 7 4 6
+size 4
+DomTarget 15
+skill 9 4
+skill 10 2
+skill 13 3
+mod body
+	armor 2
+mod arm
+	armor 1
+	name <Right Claw>
+mod arm
+	armor 1
+	name <Left Claw>
+end
+
+ARCH Rock Lobster
+roguechar <L>
+SDL_SPRITE <monster_lobster.png>
+SDL_COLORS <150 112 89  80 80 85  234 180 88>
+type <Bug Earth Cave Ruins>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 25 else GoCheckSushi Print 4 GiveSTC .shielddesc>
+.shielddesc <LOBSTERSHIELD>
+GoCheckSushi <ifG V1 12 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-4>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the lobster and make a lovely sushi plate.>
+Msg2 <You attempt to get some meat from the lobster, but it's tougher than it looks...>
+Msg3 <You've already gutted this lobster.>
+Msg4 <You remove the tough, spiky plate from the top of this lobster. It might make a decent shield.>
+% End SURVIVAL block.
+statline 13 20 9 11 5 7 4 5
+size 8
+DomTarget 18
+skill 9 4
+skill 10 1
+skill 13 8
+mod body
+	armor 4
+mod arm
+	armor 4
+	name <Right Claw>
+mod arm
+	armor 4
+	name <Left Claw>
+end
+
+ARCH Deep Lobster
+roguechar <L>
+SDL_SPRITE <monster_lobster.png>
+SDL_COLORS <45 26 91 6 42 120 77 121 119>
+type <Bug Water Sea Cave>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 25 else GoCheckSushi Print 4 GiveSTC .shielddesc>
+.shielddesc <LOBSTERSHIELD>
+GoCheckSushi <ifG V1 9 else GoFail else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-4>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the lobster and make a lovely sushi plate.>
+Msg2 <You attempt to get some meat from the lobster, but it's tougher than it looks...>
+Msg3 <You've already gutted this lobster.>
+Msg4 <You remove the tough, spiky plate from the top of this lobster. It might make a decent shield.>
+% End SURVIVAL block.
+statline 17 29 6 13 5 8 8 3
+size 17
+DomTarget 21
+skill 6 4
+skill 9 4
+skill 10 3
+skill 13 12
+mod body
+	armor 5
+	sub
+		BeamGun 3
+		name <Electric Jolt>
+		Range 5
+		type <INTERCEPT STUN>
+	end
+mod arm
+	armor 5
+	name <Right Claw>
+	type <SCATTER BRUTAL>
+mod arm
+	armor 5
+	name <Left Claw>
+	type <SCATTER BRUTAL>
+end
+
+ARCH BioSentry
+SDL_SPRITE <monster_drone.png>
+SDL_COLORS <225 136 170 242 110 25 220 0 240>
+roguechar <b>
+type <synth factory guard>
+statline 10 10 10 10 10 10 10 10
+size 3
+Biotech
+skill 6 3
+skill 10 3
+skill 11 3
+mod head
+	armor 2
+	sub
+		BeamGun 5
+		name <Bio-Laser>
+		acc 1
+	end
+mod body
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+end
+
+ARCH Guardbot
+roguechar <R>
+sdl_sprite <monster_guardbot.png>
+sdl_colors <199 188 162 157 173 182 200 150 50>
+type <robot factory lab guard>
+statline 10 15 10 16 10 1 1 1
+% Begin SCIENCE block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 1 ifG SkRoll 29 15 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You extract some spare parts from the wreckage of this robot.>
+Msg2 <You try to get some spare parts from this robot, but don't find anything worth keeping.>
+Msg3 <You've already dismantled this robot.>
+% End SCIENCE block.
+metal
+size 9
+skill 6 2
+skill 8 2
+skill 10 2
+mod body
+	armor 3
+	sub
+	Melee 8
+	name <Shock Baton>
+	special <EXTEND HAYWIRE>
+	recharge 1
+	mount
+		inv
+			gear 4 2 6
+			name <Assault Rifle>
+			mass -2
+			stat 1 7
+			stat 2 -1
+			stat 4 3
+			stat 8 40
+			sub
+				% Ammunition
+				gear 5 2 6
+			end
+		end
+	end
+end
+
+ARCH Murder Machine
+roguechar <R>
+SDL_SPRITE <monster_workbot.png>
+SDL_COLORS <166 47 32 201 205 225 210 0 100>
+type <robot factory ruins>
+statline 13 16 11 13 16 1 1 1
+% Begin SCIENCE block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 1 ifG SkRoll 29 10 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You extract some spare parts from the wreckage of this robot.>
+Msg2 <You try to get some spare parts from this robot, but don't find anything worth keeping.>
+Msg3 <You've already dismantled this robot.>
+% End SCIENCE block.
+metal
+size 19
+skill 8 10
+skill 10 5
+skill 13 10
+skill 33 10
+Talent 8
+Talent 7
+mod body
+	armor 5
+	sub
+	mount
+		inv
+		melee 16
+		acc 1
+		speed 3
+		name <Buzzsaw>
+		mass 4
+		type <BRUTAL>
+		end
+	end
+end
+
+ARCH Workbot
+roguechar <R>
+SDL_SPRITE <monster_workbot.png>
+SDL_COLORS <157 172 183 130 143 114 230 60 0>
+type <robot factory>
+CHAT_ATTACK <MalFuNCtIoN! mAlFunCTuiOn!>
+CHAT_ATTACK2 <ExTerMiNaTE!>
+statline 10 15 7 8 15 1 1 1
+% Begin SCIENCE block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 1 ifG SkRoll 29 10 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You extract some spare parts from the wreckage of this robot.>
+Msg2 <You try to get some spare parts from this robot, but don't find anything worth keeping.>
+Msg3 <You've already dismantled this robot.>
+% End SCIENCE block.
+metal
+size 2
+skill 8 1
+mod body
+	armor 2
+	sub
+	mount
+		inv
+		melee 14
+		acc 1
+		name <Buzzsaw>
+		mass 4
+		end
+	end
+end
+
+ARCH Arachnoid Drone
+SDL_SPRITE <monster_drone.png>
+SDL_COLORS <72 104 136 150 150 150 220 0 0>
+roguechar <s>
+type <robot factory dark>
+% Begin SCIENCE block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 1 ifG SkRoll 29 14 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You extract some spare parts from the wreckage of this robot.>
+Msg2 <You try to get some spare parts from this robot, but don't find anything worth keeping.>
+Msg3 <You've already dismantled this robot.>
+% End SCIENCE block.
+statline 11 13 13 11 11 1 1 1
+metal
+size 7
+skill 6 1
+skill 8 1
+skill 10 1
+mod body
+	armor 2
+	sub
+		mount
+		inv
+			gear 4 4 1
+			name <Calliope Rocket Launcher>
+			stat 1 8
+			stat 3 5
+			stat 8 64
+			sub
+				gear 5 4 1
+			end
+		end
+	end
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+end
+
+ARCH Arachnoid Drone
+SDL_SPRITE <monster_drone.png>
+SDL_COLORS <72 104 136 150 150 150 220 0 0>
+roguechar <s>
+type <robot factory dark>
+% Begin SCIENCE block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 1 ifG SkRoll 29 14 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You extract some spare parts from the wreckage of this robot.>
+Msg2 <You try to get some spare parts from this robot, but don't find anything worth keeping.>
+Msg3 <You've already dismantled this robot.>
+% End SCIENCE block.
+statline 11 13 13 11 11 1 1 1
+metal
+size 6
+skill 6 1
+skill 8 1
+skill 10 1
+mod body
+	armor 2
+	sub
+		mount
+		inv
+			gear 4 2 6
+			name <Assault Rifle>
+			mass -2
+			stat 1 7
+			stat 2 -1
+			stat 4 3
+			stat 8 40
+			sub
+				% Ammunition
+				gear 5 2 6
+			end
+
+		end
+	end
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+end
+
+
+ARCH Arachnoid Drone
+roguechar <s>
+SDL_SPRITE <monster_drone.png>
+SDL_COLORS <72 104 136 150 150 150 220 0 0>
+type <robot factory dark>
+% Begin SCIENCE block.
+clue29 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 1 ifG SkRoll 29 14 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <SPAREPARTS-1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You extract some spare parts from the wreckage of this robot.>
+Msg2 <You try to get some spare parts from this robot, but don't find anything worth keeping.>
+Msg3 <You've already dismantled this robot.>
+% End SCIENCE block.
+statline 11 13 13 11 11 1 1 1
+metal
+size 3
+skill 6 1
+skill 8 1
+skill 10 1
+mod body
+	armor 2
+	sub
+		mount
+		inv
+			gear 4 2 2
+			name <Autogun>
+			stat 1 5
+			stat 2 1
+			stat 4 2
+			stat 8 90
+			sub
+				% Ammunition
+				gear 5 2 2
+			end
+		end
+	end
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+end
+
+ARCH Gremlin
+roguechar <g>
+sdl_sprite <monster_monkey.png>
+sdl_colors <70 121 119 49 91 159 244 215 28>
+type <synth factory ruins dark vermin>
+statline 11 5 13 9 16 8 7 6
+size 1
+Biotech
+skill 8 1
+skill 9 2
+skill 15 1
+skill 23 1
+DomTarget 17
+mod head
+mod body
+mod arm
+sub
+	hand
+end
+mod arm
+sub
+	hand
+end
+mod leg
+mod leg
+end
+
+ARCH Archaeopteryx
+roguechar <v>
+type <exotic forest plains air>
+sdl_sprite <monster_eagle.png>
+sdl_colors <170 50 32 70 121 120 0 200 150>
+statline 10 2 11 7 2 3 2 2
+size 1
+skill 8 1
+skill 9 2
+skill 10 1
+DomTarget 16
+mod head
+	sub
+		gear 4 0 1
+		name <Bite>
+	end
+mod body
+mod wing
+mod wing
+mod leg
+mod leg
+mod tail
+end
+
+ARCH Velociraptor
+roguechar <D>
+type <exotic cave desert reptile>
+SDL_SPRITE <monster_raptor.png>
+SDL_COLORS <170 120 89 0 0 0 0 200 100>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 10 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the raptor and save some meat for later.>
+Msg2 <You attempt to get some meat from the raptor, but it's too tough even for jerkey.>
+Msg3 <You've already gutted this raptor.>
+% End SURVIVAL block.
+statline 14 13 16 11 8 7 2 5
+DomTarget 23
+size 8
+skill 8 4
+skill 9 4
+skill 10 2
+skill 13 2
+mod head
+	armor 1
+mod body
+	armor 1
+mod arm
+	armor 1
+mod arm
+	armor 1
+mod leg
+	armor 1
+	sub
+		gear 4 0 5
+		name <Claw>
+	end
+mod leg
+	armor 1
+	sub
+		gear 4 0 5
+		name <Claw>
+	end
+end
+
+ARCH Oviraptor
+roguechar <D>
+type <exotic cave desert reptile>
+SDL_SPRITE <monster_raptor.png>
+SDL_COLORS <146 161 101 0 0 0 214 216 28>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 10 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the raptor and save some meat for later.>
+Msg2 <You attempt to get some meat from the raptor, but it's all skin and bones.>
+Msg3 <You've already gutted this raptor.>
+% End SURVIVAL block.
+statline 10 6 11 13 8 7 2 5
+DomTarget 17
+size 2
+skill 8 2
+skill 9 2
+skill 12 2
+mod head
+	armor 1
+mod body
+	armor 1
+mod arm
+	armor 1
+mod arm
+	armor 1
+mod leg
+	armor 1
+	sub
+		gear 4 0 3
+		name <Claw>
+	end
+mod leg
+	armor 1
+	sub
+		gear 4 0 3
+		name <Claw>
+	end
+end
+
+ARCH Iron Crab
+SDL_SPRITE <monster_crab.png>
+SDL_COLORS <136 191 225  170 178 187  179 0 210>
+roguechar <w>
+type <animal cave water bug sea>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 13 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-4>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the crab and make a lovely sushi plate.>
+Msg2 <You attempt to get some meat from the crab, but it's tougher than it looks...>
+Msg3 <You've already gutted this crab.>
+% End SURVIVAL block.
+statline 10 15 5 9 1 1 1 1
+DomTarget 21
+size 6
+skill 8 6
+skill 10 1
+skill 12 7
+skill 13 6
+skill 18 5
+mod body
+	armor 5
+mod arm
+	armor 5
+	sub
+		gear 4 0 5
+		name <Claw>
+	end
+mod arm
+	armor 5
+	sub
+		gear 4 0 5
+		name <Claw>
+	end
+mod leg
+	armor 5
+mod leg
+	armor 5
+mod leg
+	armor 5
+mod leg
+	armor 5
+end
+
+ARCH Crab
+SDL_SPRITE <monster_crab.png>
+SDL_COLORS <204 51 85  200 144 64  208 93 8>
+roguechar <w>
+type <animal cave water bug sea>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 14 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-4>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the crab and make a lovely sushi plate.>
+Msg2 <You attempt to get some meat from the crab, but it's tougher than it looks...>
+Msg3 <You've already gutted this crab.>
+% End SURVIVAL block.
+statline 9 9 6 8 1 1 1 1
+DomTarget 13
+size 3
+skill 8 3
+skill 12 4
+skill 13 1
+skill 18 2
+mod body
+	armor 3
+mod arm
+	armor 2
+	sub
+		gear 4 0 3
+		name <Claw>
+	end
+mod arm
+	armor 2
+	sub
+		gear 4 0 3
+		name <Claw>
+	end
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+mod leg
+	armor 2
+end
+
+ARCH Dragon Viper
+SDL_SPRITE <monster_serpent.png>
+roguechar <S>
+type <swamp water dark exotic reptile>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 23 else GoFood Print 4 GiveSTC .heartdesc>
+GoFood <ifG V1 13 else GoFail Print 1 GiveSTC .stcdesc>
+.heartdesc <DRAGONHEART>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the serpent and save some nice steaks for later.>
+Msg2 <You attempt to cut some meat from the serpent, but end up just making yourself sick.>
+Msg3 <You've already gutted this serpent.>
+Msg4 <You remove the heart from this dragon. It's supposed to have healing properties.>
+% End SURVIVAL block.
+statline 15 16 16 11 4 19 2 2
+size 17
+DomTarget 22
+skill 6 6
+skill 8 7
+skill 9 4
+skill 10 7
+skill 12 3
+skill 36 7
+mod head
+	armor 4
+	sub
+		gear 4 0 7
+		name <Fangs>
+		type <POISON>
+		Recharge 5
+		Acc 2
+
+		BeamGun 8
+		name <Venom Spray>
+		type <Line POISON>
+		BV 1
+		recharge 3
+		range 6
+	end
+mod body
+	armor 4
+mod tail
+	armor 4
+end
+
+ARCH Swamp Viper
+SDL_SPRITE <monster_serpent.png>
+SDL_COLORS <84 97 85  191 205 229  244 206 48>
+roguechar <S>
+type <animal swamp dark reptile>
+statline 13 5 12 7 2 3 2 2
+size 6
+DomTarget 21
+skill 8 3
+skill 9 4
+skill 10 2
+mod head
+	armor 2
+	sub
+		gear 4 0 6
+		name <Fangs>
+		type <POISON>
+		Acc 1
+	end
+mod body
+	armor 2
+mod tail
+	armor 2
+end
+
+
+ARCH Dragon Serpent
+SDL_SPRITE <monster_serpent.png>
+SDL_COLORS <36 46 22  200 50 0  56 28 81>
+genepool <DRAGON>
+EvolveAt 20000
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 25 else GoFood Print 4 GiveSTC .heartdesc>
+GoFood <ifG V1 12 else GoFail Print 1 GiveSTC .stcdesc>
+.heartdesc <DRAGONHEART>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the serpent and save some nice steaks for later.>
+Msg2 <You attempt to cut some meat from the serpent, but end up just making yourself sick.>
+Msg3 <You've already gutted this serpent.>
+Msg4 <You remove the heart from this dragon. It's supposed to have healing properties.>
+% End SURVIVAL block.
+roguechar <S>
+type <exotic cave fire forest reptile>
+statline 12 13 12 5 2 16 2 2
+size 4
+DomTarget 18
+skill 6 1
+skill 8 3
+skill 9 4
+skill 10 1
+skill 13 2
+skill 36 3
+mod head
+	armor 1
+	sub
+		gear 4 3 4
+		name <Flame Breath>
+		stat 1 4
+		stat 3 1
+		stat 4 2
+
+		gear 4 0 5
+		name <Fangs>
+		stat 3 5
+	end
+mod body
+	armor 1
+mod tail
+	armor 1
+end
+
+ARCH Flying Polyp
+roguechar <j>
+SDL_SPRITE <monster_jelly.png>
+SDL_COLORS <235 150 0 208 30 90 0 0 0>
+statline 13 15 9 10 2 2 1 1
+size 15
+skill 6 5
+skill 8 7
+skill 10 5
+skill 12 5
+skill 13 3
+skill 36 4
+type <Air Mutant>
+mod body
+	sub
+		BeamGun 1
+		name <Brain Beam>
+		range 6
+		type <STONE STUN LINE ARMORIGNORE MYSTERY>
+
+		EMelee 7
+		name <Tendril>
+		Type <FLAIL RUST EXTEND>
+
+		EMelee 7
+		name <Tendril>
+		Type <FLAIL RUST EXTEND>
+	end
+end
+
+ARCH Stinger
+roguechar <j>
+SDL_SPRITE <monster_jelly.png>
+SDL_COLORS <170 150 235 122 88 199 0 0 0>
+statline 11 7 10 1 1 1 1 1
+size 11
+skill 8 6
+skill 10 3
+skill 13 8
+skill 36 4
+type <Water Sea Mutant>
+mod body
+	sub
+		EMelee 7
+		name <Tendril>
+		Type <POISON EXTEND>
+
+		EMelee 7
+		name <Tendril>
+		Type <POISON EXTEND>
+
+		EMelee 7
+		name <Tendril>
+		Type <POISON EXTEND>
+	end
+end
+
+ARCH Green Jelly
+SDL_SPRITE <monster_blob.png>
+SDL_COLORS <136 141 80  244 216 28  244 216 28>
+roguechar <j>
+type <mutant cave earth>
+statline 8 14 4 7 1 1 1 1
+size 8
+skill 8 5
+skill 10 1
+skill 12 3
+skill 13 10
+skill 36 29
+mod body
+	sub
+		% The tentacles act like EMWs since they go through armor
+		gear 4 1 5
+		stat 1 2
+		name <Tendril>
+		type <POISON>
+		gear 4 1 5
+		stat 1 2
+		name <Tendril>
+		type <POISON>
+		gear 4 1 5
+		stat 1 2
+		name <Tendril>
+		type <POISON>
+	end
+end
+
+ARCH Icky Slime
+SDL_SPRITE <monster_blob.png>
+SDL_COLORS <168 153 230  166 47 32  166 47 32>
+roguechar <j>
+type <mutant cave>
+statline 5 6 7 5 1 1 1 1
+size 2
+skill 8 1
+skill 36 15
+mod body
+	sub
+		% The tentacles act like EMWs since they go through armor
+		gear 4 1 1
+		name <Tendril>
+		gear 4 1 1
+		name <Tendril>
+		gear 4 1 1
+		name <Tendril>
+	end
+end
+
+ARCH Dragon Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <55 153 93 174 68 42 221 0 132>
+type <animal cave exotic earth fire vermin>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 25 else GoFood Print 4 GiveSTC .heartdesc>
+GoFood <ifG V1 10 else GoFail Print 1 GiveSTC .stcdesc>
+.heartdesc <DRAGONHEART>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the dragon rat and save some nice steaks for later.>
+Msg2 <You try to butcher the rat, but can't get through its tough scales.>
+Msg3 <You've already done all you can with this rat.>
+Msg4 <You remove the heart from this dragon rat. It's supposed to be good for your health.>
+% End SURVIVAL block.
+statline 13 12 15 9 9 7 5 5
+size 14
+DomTarget 20
+skill 8 7
+skill 9 3
+skill 10 8
+skill 12 4
+skill 13 10
+skill 36 7
+mod head
+	armor 3
+	sub
+		gear 4 0 5
+		name <Fangs>
+		stat 3 1
+
+		gear 4 3 2
+		name <Flame Breath>
+		type <SCATTER BURN>
+		stat 1 2
+		stat 3 1
+		stat 4 4
+	end
+mod body
+	armor 3
+mod leg
+	armor 3
+	name <Right Front Leg>
+	sub
+		gear 4 0 4
+		name <Claws>
+	end
+mod leg
+	armor 3
+	name <Left Front Leg>
+	sub
+		gear 4 0 4
+		name <Claws>
+	end
+mod leg
+	armor 3
+	name <Right Rear Leg>
+mod leg
+	armor 3
+	name <Left Rear Leg>
+mod tail
+	armor 3
+	sub
+		gear 4 0 5
+		name <Tail Spike>
+	end
+end
+
+ARCH Death Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <119 123 178 234 195 0 217 103 126>
+type <animal cave mutant desert earth city vermin>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 15 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the rat and save some nice steaks for later.>
+Msg2 <You attempt to cut some meat from the rat, but it's too tough to cut.>
+Msg3 <You've already gutted this rat.>
+% End SURVIVAL block.
+statline 11 7 14 8 8 6 2 2
+size 9
+DomTarget 18
+skill 8 7
+skill 9 4
+skill 10 6
+skill 12 2
+mod head
+	armor 1
+	sub
+		gear 4 0 6
+		name <Fangs>
+	end
+mod body
+	armor 1
+mod leg
+	armor 1
+	name <Right Front Leg>
+	sub
+		gear 4 0 3
+		name <Claws>
+		stat 3 1
+	end
+mod leg
+	armor 1
+	name <Left Front Leg>
+	sub
+		gear 4 0 3
+		name <Claws>
+		stat 3 1
+	end
+mod leg
+	armor 1
+	name <Right Rear Leg>
+mod leg
+	armor 1
+	name <Left Rear Leg>
+mod tail
+	armor 1
+end
+
+ARCH Two Headed Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <174 68 42 234 195 0 217 123 166>
+type <animal mutant vermin>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 10 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the rat and save some nice steaks for later.>
+Msg2 <You attempt to cut some meat from the rat, but end up just making yourself nauseous.>
+Msg3 <You've already gutted this rat.>
+% End SURVIVAL block.
+statline 10 4 10 8 8 6 2 2
+size 5
+DomTarget 15
+skill 8 4
+skill 9 2
+skill 10 2
+skill 12 6
+skill 13 5
+mod head
+	sub
+		gear 4 0 6
+		name <Fangs>
+	end
+mod head
+	sub
+		gear 4 0 6
+		name <Fangs>
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+mod tail
+end
+
+
+ARCH Plague Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <167 144 59 110 133 62 217 132 217>
+type <animal cave mutant swamp earth vermin>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 20 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You find some parts of this rat that don't appear too rotten.>
+Msg2 <You cut some meat from this rat, but would probably die if you tried to eat it.>
+Msg3 <You've already gutted this rat.>
+% End SURVIVAL block.
+statline 10 3 10 8 8 6 2 2
+size 7
+skill 8 6
+skill 9 2
+skill 10 2
+skill 12 1
+skill 13 5
+mod head
+	sub
+		gear 4 0 6
+		name <Fangs>
+		type <Sickness>
+		recharge 1
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+	type <Sickness>
+mod leg
+	name <Left Front Leg>
+	type <Sickness>
+mod leg
+	name <Right Rear Leg>
+	type <Sickness>
+mod leg
+	name <Left Rear Leg>
+	type <Sickness>
+mod tail
+end
+
+ARCH Radioactive Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <65 174 42 65 174 42 220 250 26>
+type <mutant>
+statline 8 1 9 8 6 5 2 2
+size 2
+skill 8 3
+mod head
+	sub
+		gear 4 0 9
+		name <Self-Destruct>
+		Acc 1
+		recharge 5
+		mass -15
+		type <ArmorPiercing Blast 3>
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+mod tail
+end
+
+ARCH Thunder Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <234 195 0 125 120 110 217 123 166>
+CHAT_SAFE <Chu?>
+CHAT_SAFE2 <Chu.>
+genepool <E-RAT>
+statline 14 10 16 10 10 9 7 13
+size 12
+DomTarget 30
+skill 6 4
+skill 8 3
+skill 9 3
+skill 10 6
+skill 12 5
+skill 13 3
+mod head
+armor 1
+	sub
+		gear 4 0 5
+		name <Fangs>
+	end
+mod body
+armor 1
+	sub
+		gear 4 3 9
+		name <Lightning Storm>
+		Range 8
+		Recharge 1
+		BV 5
+		type <SWARM HAYWIRE>
+	end
+mod leg
+armor 1
+	name <Right Front Leg>
+mod leg
+armor 1
+	name <Left Front Leg>
+mod leg
+armor 1
+	name <Right Rear Leg>
+mod leg
+armor 1
+	name <Left Rear Leg>
+mod tail
+armor 1
+	sub
+		gear 4 3 7
+		name <Lightning Bolt>
+		Range 6
+		Recharge 3
+		type <HAYWIRE>
+	end
+end
+
+ARCH Electric Rat
+roguechar <r>
+genepool <E-RAT>
+EvolveAt 3000
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <234 195 0 125 120 110 217 123 166>
+CHAT_SAFE <Chu?>
+CHAT_SAFE2 <Chu.>
+type <animal exotic cave forest vermin>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Flay V= 1 10 V+ 1 d20 ifG SkRoll 14 15 else GoFail Print 1 Cash+ V1>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You skin the electric rat, recieving a pelt worth $ \VAL V1 .>
+Msg2 <You attempt to skin the rat, but end up just mutilating it instead.>
+Msg3 <You've already skinned this rat.>
+% End SURVIVAL block.
+statline 8 4 14 8 8 6 3 9
+size 4
+DomTarget 10
+skill 6 1
+skill 8 3
+skill 9 1
+skill 10 2
+skill 13 1
+skill 27 3
+mod head
+	sub
+		gear 4 0 1
+		name <Fangs>
+		stat 3 1
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+mod tail
+	sub
+		gear 4 3 2
+		name <Lightning Bolt>
+		Range 2
+		Recharge 3
+		type <HAYWIRE>
+	end
+end
+
+
+ARCH Rat
+roguechar <r>
+SDL_SPRITE <monster_rat.png>
+SDL_COLORS <174 68 42 174 68 42 217 123 166>
+% Begin SURVIVAL block.
+clue14 <ifSelfOK else GoPelt>
+GoPelt <if= V1 0 else GoDone Mental Gut V= 1 1 ifG SkRoll 14 15 else GoFail Print 1 GiveSTC .stcdesc>
+.stcdesc <FOOD-3>
+GoFail <Print 2>
+GoDone <Print 3>
+Msg1 <You cut up the rat and save some nice steaks for later.>
+Msg2 <You attempt to cut some meat from the rat, but end up just making yourself nauseous.>
+Msg3 <You've already gutted this rat.>
+% End SURVIVAL block.
+type <animal cave earth swamp city vermin>
+statline 8 1 10 8 8 6 2 2
+size 1
+DomTarget 12
+skill 8 3
+skill 9 2
+skill 10 1
+skill 12 1
+mod head
+	sub
+		gear 4 0 2
+		name <Fangs>
+		stat 3 1
+	end
+mod body
+mod leg
+	name <Right Front Leg>
+mod leg
+	name <Left Front Leg>
+mod leg
+	name <Right Rear Leg>
+mod leg
+	name <Left Rear Leg>
+mod tail
+end
+

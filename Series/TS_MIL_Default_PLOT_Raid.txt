@@ -1,0 +1,30 @@
+Plot 0
+	name <Enemy Raid>
+
+	% E1 is the enemy faction; E2 is a member thereof
+	element1 <Grab 2>
+	element2 <Character HasMecha !Comrade 1>
+
+	% This plot works on the half-hour, since it has a fairly
+	% short duration.
+	HalfHour <ifPersona E2 else CleanUp if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10000 Compose EWM N3 .entry>
+	GoCheckTime <ifG ComTime V1 else GoCheckBomb AdvancePlot 0>
+	CleanUp <AdvancePlot 0>
+
+	GoCheckBomb <ifG -NPCRep E2 1 d70 if= SceneID N3 Alert 2 Bomb Bomb Bomb AdvancePlot 0>
+
+	.entry <if= d2 1 BLOCK ifYesNo 4 5 6 else GoAttack Reputation 3 -d4 ifG SkRoll 25 8 else GoFailStealth Print 7 XPV 50 exit N3>
+	GoFailStealth <Print 1 Reputation 6 -1 Goto GoStartCombat>
+	GoAttack <Reputation 3 d4 Goto GoStartCombat>
+	GoStartCombat <SavePos Dynamic 2 Threat PCRep 6 120 .nu1 .nu2 PassVar 1 N3 Encounter 50 20 .edesc>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 if= V2 0 Reputation 6 1 V= 2 1 Exit V1 SeekGate 1>
+	.edesc <!Member \VAL E1>
+
+	Msg1 <You are spotted! You'll have to defend yourself.>
+	Msg2 <Without warning, the city is attacked by \ELEMENT 1 ! Explosions go off all around you.>
+	Msg4 <While entering \NARRATIVE 3 , you are confronted by mecha bearing \ELEMENT 1 insignia.>
+	Msg5 <Sneak around them.>
+	Msg6 <Attack!>
+	Msg7 <You manage to evade their sensors, and sneak into the city.>
+

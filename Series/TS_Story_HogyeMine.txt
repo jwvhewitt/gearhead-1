@@ -1,0 +1,58 @@
+Story
+	name <STORY: Hogye Mine>
+	% At the moment this story won't do much... Just reward the PC
+	% for discovering the ore. Later on I hope to expand this story
+	% with more options for the PC and plots for what happens when
+	% Hogye becomes a gold rush town.
+
+	Element2 <Character>
+	Stat 2 17
+
+	start <ifPersona N2 else GoDelete>
+	GoDelete <EndStory>
+
+	memo <You discovered impervium ore in the Hogye Mines.>
+
+sub
+	Persona 2
+	% Megi may learn about the ore in the mines...
+	greeting <NewChat ifG React 50 else GoNoFriend Say 1 AddChat 1 AddChat 2 AddChat 3>
+	GoNoFriend <ifG React 25 else GoNoLike Say 2 AddChat 1 AddChat 2 AddChat 3>
+	GoNoLike <ifG React -1 else GoDislike Say 3 AddChat 1 AddChat 2 AddChat 3>
+	GoDislike <Say 4 AddChat 2 AddChat 4 AddChat 5>
+
+	result1 <NewChat Reputation 1 d3 Reputation 6 -1 AddReact d20 ifG NPCRep N2 1 d100 else GoR1NotHeroicEnough Say 5 CashPrize 25000 EndStory>
+	GoR1NotHeroicEnough <Say 6 EndStory>
+	result2 <NewChat Say 7 AddChat 6 AddChat 7>
+	result3 <NewChat Say 8>
+	result4 <NewChat Say 9 Reputation 3 -d3 AddCHat 7>
+	result5 <EndChat AddReact -d39 Reputation 5 -d3 Say 10>
+
+	result6 <NewChat Say 11 Reputation 2 -1 AddChat 7>
+	result7 <NewChat Say 12 CashPrize 25000 EndStory AddReact d10>
+
+	Msg1 <My dear friend, it's good to have you drop by once more. Do you have any business in town or are you just visiting?>
+	Msg2 <Hello. Please come in and make yourself at home. Is there anything I can help you with, or are you just here for a chat?>
+	Msg3 <Hello. Is there anything I can help you with?>
+	Msg4 <I had hoped to never see your face again. Well, what is it that you want?>
+	Msg5 <That's wonderful! Now the mines can re-open, and our town will have money again! Here's a reward for your discovery.>
+
+	Msg6 <That's wonderful! Now the mines can re-open, and our town will have money again!>
+	Msg7 <Our town has suffered from hard times as of late, it's true. If you've found something that could boost our economy it would be great. Please tell me what you've discovered.>
+	Msg8 <That's nice. Let's have a chat.>
+	Msg9 <What secret? So, you've come here to bargain... Fine, if you have information which is of importance to our village, I will make sure that you are rewarded for it.>
+	Msg10 <If you have no business here then don't waste my time.>
+
+	Msg11 <Yes, yes, of course... Now, what is this great secret?>
+	Msg12 <Really? That's wonderful news! Now the mines can re-open, and Hogye will be prosperous again. Here's a reward for your discovery.>
+
+	Prompt1 <I discovered impervium in the mines!>
+	Prompt2 <I found something to make Hogye rich...>
+	Prompt3 <No, nothing. I'm just visiting.>
+	Prompt4 <Talk like that and I won't tell you my secret.>
+	Prompt5 <Nothing from you, you old crone.>
+
+	Prompt6 <First, I'm gonna need a cut of the profits.>
+	Prompt7 <There's impervium ore in the mines.>
+
+end

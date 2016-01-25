@@ -1,0 +1,83 @@
+*******************************
+***   HOW  MESSAGES  WORK   ***
+*******************************
+
+Messages just got a bit more complex. So much so, in fact, that they
+now require their very own document. The ArenaScript message system
+will now support random message lists and conditional messages. The
+best part is, these changes are entirely backwards-compatable. I'm
+hoping that these new capabilities will make the writing of dialogues
+much easier.
+
+There are two kinds of messages covered by these changes: "msg" types
+and "prompt" types.
+
+
+ADDING MULTIPLE MESSAGES
+
+Sometimes it's helpful to have multiple messages which are randomly
+selected, just to keep the NPC from saying the same thing every time.
+To do this, add a new message to the list with the same label base as
+the original message plus "_" plus a unique identifier. For instance...
+
+  msg1 <This is a regular message.>
+  msg1_1 <This message will be printed 50% of the time>
+
+  msg2 <I could say this...>
+  msg2_1 <or I could say that...>
+  msg2_2 <I may even say this...>
+
+  prompt1 <This is the primary message.>
+  prompt1_1 <This is a secondary message.>
+
+One of the messages will be chosen at random. Theoretically there's
+an equal probability of each, unless conditions are used as well.
+
+
+ADDING MESSAGE CONDITIONS
+
+A condition may be added to any primary or secondary message by
+attaching a separate condition line to the list. A condition line
+has the same label as the message, but starts with "C". for example...
+
+  msg1 <This is the prompt>
+  Cmsg1 <if= V1 0 Accept>
+
+The Accept command is used in the condition to indicate that it has
+been accepted. Duh.
+
+If a condition is attached to the primary message, then it must be
+true or no message at all can be returned. Conditions applied to
+secondary messages apply only to that message. For example:
+
+  msg1 <Primary here>
+  CMsg1 <ifG V1 0 Accept>
+  msg1_1 <Secondary here>
+  Cmsg1_1 <if= V1 1 Accept>
+
+If V1 > 0, the primary condition is met, so msg1 can be printed. If
+V1=1, the condition for msg1_1 is also met, so it may be printed as
+well. If V1=2 then the primary condition is met so msg1 may be printed,
+but the condition for msg1_1 is failed so it won't be.
+
+All the messages whose conditions are met may be printed. One message
+from the accepted group will be chosen at random. Obviously, you should
+try to make sure that there's at least one message that will guaranteeably
+be printed, otherwise the NPC could end up saying nothing. With prompts,
+that may not be a bad thing, since an empty prompt won't be added to the
+menu.
+
+
+PRACTICAL EXAMPLE
+
+My first example, taken from the Mecha Sporch arena manager...
+
+  Msg1_1 <Welcome to Mecha Sporch, where armored titans compete for prizes and glory! Are you interested in watching the games, or did you think you might take part?>
+  CMsg1_1 <ifG React 20 ACCEPT>
+  Msg1_2 <This is Mecha Sporch. Are you thinking of taking part or are you just taking up space?>
+  CMsg1_2 <ifG 21 React ACCEPT>
+
+Note that there is no primary message. If the PC's reaction score
+is over 20, he gets one message. If it's 20 or lower he gets a different
+one. Alternate messages may be added based on personality traits or
+anything else.

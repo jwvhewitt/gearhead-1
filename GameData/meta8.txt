@@ -1,0 +1,5 @@
+% Default Cave %
+name <Cave>
+use <if= StatVal STAT_MetaVisibility 0 ifNoObjections EWM StatVal 4 Exit StatVal 4>
+roguechar <^>
+SDL_Sprite <meta_terrain.png>

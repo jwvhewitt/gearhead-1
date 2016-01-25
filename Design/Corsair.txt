@@ -1,0 +1,74 @@
+Battroid 4
+Name <Corsair>
+Desig <SDH-22>
+SDL_Sprite <btr_corsair.png>
+desc <At one time the Federation Defense Force mainline combat unit, the Corsair is being phased out in favor of more specialized combat units such as the Kojedo.>
+
+Mod Head
+	Armor 4
+	sub
+		CPit
+
+		Sensor 5
+	end
+
+Mod Body
+	Armor 4
+	sub
+		Mount
+		inv
+			MLauncher 5
+			Name <Rocket Launcher>
+			Range 7
+			Speed 1
+			Magazine 12
+			sub
+				Rockets 5
+				Type <BLAST 1>
+			end
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Hand
+		inv
+			STC LAS-10
+		end
+	end
+	inv
+		Shield 2
+		Name <Shoulder Shield>
+		DefBonus -4
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+	end
+	inv
+		Shield 2
+		Name <Shoulder Shield>
+		DefBonus -4
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Size 5
+	Armor 4
+	sub
+		Wheels 5
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Size 5
+	Armor 4
+	sub
+		Wheels 5
+	end
+end

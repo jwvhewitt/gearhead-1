@@ -1,0 +1,24 @@
+Plot 0
+	name <PLOT: Shimli 7>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Easygoing Citizen>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 4 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 4 -1 NewChat Say 4>
+	Msg1 <I've been thinking today about what I'm going to do this weekend... Got any suggestions?>
+	Msg2 <That's a good idea. I think I'll browse the internet.>
+	Msg3 <Sorry, I guess being an adventurer is a full time job... Maybe I'll get a hobby.>
+	Msg4 <That's a good idea. I think I'll go out dancing.>
+	prompt1 <Stay home and take it easy.>
+	prompt2 <You get weekends off? I'm jealous.>
+	prompt3 <Get out, try something exciting!>
+
+end

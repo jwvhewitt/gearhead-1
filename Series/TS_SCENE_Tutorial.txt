@@ -1,0 +1,78 @@
+Scene 0 2
+% Tutorial Driving Test
+ArenaMap
+
+Special <ShowAll NoExit>
+
+% V1 = Phase Counter
+% V2 = Sign Update
+% V3 = Waypoint UID
+
+NU1 <if= t1 0 Salvage Return>
+
+start <if= V1 0 V= 1 1 ifYesNo 1 101 102 else GoEndTutorial ifYesNo 2 101 102 else GoEndTutorial Print 202>
+
+GoEndTutorial <ifYesNo 103 104 105 Return>
+
+TM1 <if= V1 1 else GoTM1_2 ifYesNo 3 101 102 else GoEndTutorial V= 1 2 Print 203>
+GoTM1_2 <ifG 20 V1 else GoTM1_3 V+ 1 1>
+GoTM1_3 <if= 20 V1 else GoTM1_4 ifYesNo 4 101 102 else GoEndTutorial Print 204 V= 1 21 ifYesNo 5 101 102 else GoEndTutorial>
+GoTM1_4 <if= 21 V1 else GoTM1_5 ifYesNo 6 101 102 else GoEndTutorial V= 1 22 Print 206>
+GoTM1_5 <ifG 42 V1 else GoTM1_6 V+ 1 1>
+GoTM1_6 <if= V1 42 else GoTM1_7 ifYesNo 7 101 102 else GoEndTutorial V= 1 43 V= 2 1 UpdateProps Print 207>
+GoTM1_7 <if= V1 43 else GoTM1_8 ifG 3 Range PCUID V3 ifYesNo 8 101 102 else GoEndTutorial V= 1 44 Print 208 ifYesNo 9 101 102 else GoEndTutorial>
+GoTM1_8 <ifG 47 V1 else GoTM1_9 ifG Range PCUID V3 4 V= 1 47>
+GoTM1_9 <if= V1 47 else GoTM1_10 ifYesNo 10 101 102 else GoEndTutorial Print 210 Print 211 V= 1 48 ifYesNo 11 101 102 else GoEndTutorial>
+GoTM1_10 <ifG 55 V1 else GoTM1_11 V+ 1 1>
+GoTM1_11 <ifG Range PCUID V3 7 ifYesNo 12 101 102 else GoEndTutorial XPV 100 Return>
+
+Msg1 <QUENTIN:// Can you hear me alright? Then let's begin the tutorial. You'll notice a control menu to your right. Use this command your mecha.>
+Msg2 <QUENTIN:// To start with, just move forward one square. Select the option marked "Walk" and press space.>
+Msg202 <Move forward using "Walk".>
+Msg3 <QUENTIN:// Good. Practice moving for a little while. You can also turn left and right using the menu. You'll see your facing as a compass display in the information window.>
+Msg203 <Practice movement using the menu.>
+Msg4 <QUENTIN:// A bit lower on your menu is an item marked "Roll". Select that option now, and you'll change from walking to using the wheels in your mecha's feet.>
+Msg5 <QUENTIN:// Go forward using 'Cruise Speed' or 'Full Speed'. Rolling is faster than walking, but you lose a certain amount of maneuverability.>
+Msg204 <Change move mode to "Roll", then move using "Cruise Speed".>
+Msg6 <QUENTIN:// Excellent. Move around using the wheels for a bit. I'll call you in a minute with further instructions.>
+Msg206 <Practice movement again.>
+Msg7 <QUENTIN:// Very good. I've indicated a waypoint for you. It should appear as a exclamation point on your map. Go there now.>
+Msg207 <Go to "!" waypoint.>
+Msg8 <QUENTIN:// Well done. By the way, if you want to look around the entire map at once, select 'Info Menu/Examine Map'. While you're on foot the same function can be selected by the 'l' key.>
+Msg9 <QUENTIN:// Put a bit of distance between yourself and the waypoint. Our next lesson is going to be with your mecha's weapon systems.>
+Msg208 <Move away from waypoint.>
+Msg10 <QUENTIN:// That's far enough. Rotate to face the waypoint. Then, open your weapons menu and fire at it.>
+Msg210 <Fire Laser Cannon at waypoint using "Weapons Menu".>
+Msg211 <Move away from waypoint to end tutorial.>
+Msg11 <QUENTIN:// Select the laser cannon, then choose the waypoint to fire. You won't destroy it, of couse, since it's just a hologram. When you're satisfied move away from the area.>
+Msg12 <QUENTIN:// That's the basics of mecha operation. If you don't like using the menu, you can set mecha control to the roguelike interface. Power down and come meet me in the shop.>
+
+Msg101 <Roger.>
+Msg102 <Let's end the tutorial.>
+Msg103 <QUENTIN:// Are you absolutely certain that you want to return? We haven't finished everything yet.>
+Msg104 <I wanna come home.>
+Msg105 <I'll stay for the rest.>
+
+sub
+	rect
+	width 5
+	height 5
+	special <StartHere>
+
+	rect
+	width 5
+	height 5
+	sub
+		sign
+		name <Waypoint>
+		roguechar <!>
+		Size 0
+		scale 2
+		SetTeam 2
+		update <if= L2 1 SetStat 5 0 L= 3 SelfUID>
+		stat 5 1
+		use <Print 1>
+		msg1 <Waypoint One>
+	end
+
+end

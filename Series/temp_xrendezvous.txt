@@ -1,0 +1,89 @@
+Plot 0
+	name <TEMPLATE XRAND RENDEZVOUS>
+
+	% An NPC will tell the PC to meet him in some other town in
+	% some length of time. The PC will then go meet the NPC, at which
+	% point in time he must perform some task in order to receive
+	% whatever it was that the NPC had promised.
+
+	% As usual, the  difficulcy level of the task should be set by
+	% the S103 variable. Examples include waiting until the PC has
+	% enough renown, fighting some enemy, retrieving an item from a
+	% dungeon, et cetera.
+
+	% Normally, these templates feature plenty of messages which are
+	% randomized. This template features just one message for each
+	% thing the NPC might want to say. Why? Because a regular combat
+	% mission might be encountered dozens of times over the course of
+	% a campaign, while this one will likely just be encountered once.
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the scene to be used in the second part of this episode.
+	Element1 <Grab 3>
+	Element2 <Character !Near 1>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Scene Town Target !Far 1 !Far 3>
+
+	% V1 = Time limit for move
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 dies, load a new plot.
+	start <ifPersona E2 else GoDelete if# V1 0 ifG ComTime V1 MoveCHar E2 E4 N= 3 E4 AdvancePlot 1>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+sub
+	Persona 2
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <>
+	% eg., rumor <!2 knows who killed your parents.>
+
+	% I don't know any way to do a generic conversation for this, so
+	% I'll just do the simplest thing possible. When you're ready to
+	% move on to the next part of the episode, just Goto GoStartCountdown.
+	greeting <NewChat Say 1 Goto GoStartCountdown>
+
+	% Freze the NPC and start the countdown until the meeting.
+	GoStartCountdown <Memo 101 P= 1 ComTime P+ 1 86400 FreezeChar E2>
+
+	Msg1 <Meet me in \ELEMENT 4 in twenty-four hours for something or another.>
+
+	% 101 - Memo message
+	Msg101 <\ELEMENT 2 asked you to meet in \ELEMENT 4 in 24 hours.>
+
+
+	Plot 1
+		% The NPC has moved to the new location, and is now
+		% waiting for the PC to arrive.
+
+		% V1 = Initialization Counter
+
+		% On a cleanup request just delete this plot.
+		cleanup <AdvancePlot 0>
+
+		% If Persona E2 dies, load a new plot.
+		% Perform initialization here as well.
+		start <ifPersona E2 else GoDelete if= V1 0 V= 1 1 Memo 1>
+		GoDelete <S= 101 1 AdvancePlot 0>
+
+		Msg1 <\ELEMENT 2 asked you to come to \ELEMENT 4 . It's time to go.>
+	sub
+		Persona 2
+		% Again, I have no idea what's going to be going on here,
+		% so this is just a blank stub.
+		greeting <NewChat Say 1 Goto GoEndMission>
+
+		% Do everything here that has to be done. If some of the ExtraRandom
+		% parameters need to be changed, do that here as well.
+		GoEndMission <S= 101 1 S+ 102 1 N= 3 E3 AdvancePlot 0>
+
+		Msg1 <You found me... great. Now go do something useful.>
+
+	end
+end
+

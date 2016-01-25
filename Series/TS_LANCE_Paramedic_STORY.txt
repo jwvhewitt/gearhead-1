@@ -1,0 +1,71 @@
+Story
+	name <LM: Paramedic>
+
+	% N1 is the scene in which the MP will be deployed.
+	% N2 is the lancemate.
+	Element2 <Prefab>
+	% N3 is the sign to the trail.
+	Element3 <Prefab>
+
+	% S1 = INitialization/NPC reputation
+	% S2 = NPC has joined party.
+
+	% At startup, set the potential lancemate's skill level and reputation.
+	start <ifPersona N2 else GoDelete if= S1 0 S= 1 d50 S+ 1 20 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 ItemVar= N3 1 N2 ItemVar= N3 3 S1>
+	GoDelete <EndStory>
+
+
+sub
+	% In SubComponents, the persona for the lancemate.
+	Persona 2
+	greeting <NewChat if= S2 1 else GoFirstTime Say 1>
+	GoFirstTime <Say 2 AddChat 1 AddChat 2>
+
+	result1 <NewChat Say 3 Reputation 1 1 MoveChar N2 N1 PCAlly N2 XPV 100 ItemVar= N3 1 0 S= 2 1 Return>
+	result2 <NewChat Say 4 MoveChar N2 N1 XPV 100 CashPrize Reward Threat S1 250 100 ItemVar= N3 1 0 S= 2 1 Return>
+
+	Msg1 <It's important to take care of your health.>
+	Msg1_2 <You know, I could have finished my internship, but then I'd have to spend the rest of my life in one place.>
+	Msg1_3 <I think I'm running low on gauze...>
+	Msg2 <I came here to gather some plants to process into antibiotics, but I slipped down a bank and lost my glasses. Now I can't find my way out of this maze.>
+	Msg3 <Thank you, that's very kind! If ever you're in need, I'll try to be there for you.>
+	Msg4 <Well, I guess I don't have too much of a choice, now do I? Alright, bring me back to town and I can give you a reward when we get to a bank machine.>
+
+	Prompt1 <I can lead you back to town.>
+	Prompt2 <For a price, I can help you out.>
+
+end
+inv
+	NPC Doctor
+	job <Paramedic>
+	chardesc Heroic Lawful
+	EquipChar 5000
+	statline 10 12 13 14 15 10 15 11
+	skill 1 8
+	skill 3 8
+	skill 5 10
+	skill 6 8
+	skill 10 12
+	skill 13 5
+	skill 16 15
+	skill 20 15
+	skill 26 10
+	skill 30 10
+	skill 33 5
+	skill 36 5
+	CHAT_ATTACK1 <Someone's gonna need medical help in a second...>
+	CHAT_ATTACK2 <Ouch, that looks like it hurts.>
+	CHAT_ATTACK3 <It's all fun and games until someone loses an eye.>
+	CHAT_EJECT1 <I don't want to end up in an ambulance myself...>
+
+	Sign
+	place <1>
+	% V1 = CID of the paramedic
+	% V3 = Difficulcy Meter
+	use <ifYesNo 1 2 3  LoadD .sitename PassVar 1 V1 PassVar 2 V3 PassVar 3 10 SeekGate -1>
+	.sitename <SCENE_MeetingPath.txt>
+	Msg1 <There's a hiking trail leading up into the mountains.>
+	Msg2 <Follow the trail.>
+	Msg3 <Don't bother.>
+
+end

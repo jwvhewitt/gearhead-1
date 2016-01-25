@@ -1,0 +1,28 @@
+scene 0 2
+% "Defeat the Leader" scene
+
+% V1 = Leader UID
+% V3 = Leader has been stopped if V3=1
+
+ForestMap
+
+start <if= V1 0 V= 1 ?M2 Alert 1 Compose TD V1 .courierdown>
+
+Nu1 <if= T1 0 Return>
+
+.courierdown <if= V3 0 Print 3 V= 3 1>
+
+Msg1 <\PILOT L1 is the leader. You must defeat him; all other mechas are incidental.>
+Msg3 <\PILOT L1 has been defeated! Your mission is a success.>
+
+sub
+	Team 1
+	SetAlly -1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	PARAX 25
+	PARAY 25
+end
+

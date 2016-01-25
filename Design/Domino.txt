@@ -1,0 +1,82 @@
+Arachnoid 3
+Name <Domino>
+Desig <ED-210>
+
+Mod Head
+	Size 1
+	Armor 2
+	sub
+		Sensor 6
+	end
+
+Mod Body
+	Armor 3
+	sub
+		CPit
+		Armor 2
+
+		Gun 1
+		Name <Machine Gun>
+		Type <INTERCEPT>
+		Range 2
+		Acc -2
+		BV 5
+		Magazine 60
+		sub
+			Ammo 1
+		end
+
+		Sensor 1
+
+		TarComp 2
+	end
+
+Mod Turret
+	Name <Right Sponson>
+	Size 2
+	Armor 3
+	sub
+		STC PAR-2
+
+		Mount
+		Name <Right Sponson Mount>
+	end
+
+Mod Turret
+	Name <Left Sponson>
+	Size 2
+	Armor 3
+	sub
+		STC PAR-2
+
+		Mount
+		Name <Left Sponson Mount>
+	end
+
+Mod Leg
+	Name <Right Leg 1>
+	Size 2
+	Armor 3
+
+Mod Leg
+	Name <Left Leg 1>
+	Size 2
+	Armor 3
+
+Mod Leg
+	Name <Right Leg 2>
+	Size 2
+	Armor 3
+
+Mod Leg
+	Name <Left Leg 2>
+	Size 2
+	Armor 3
+
+	SkillModifier 40
+	Name <Stealth System>
+	Type <MECHA>
+	CyberSlot <ELECTRONICS>
+	SkillModStealth
+	SkillModAmount 3
+end

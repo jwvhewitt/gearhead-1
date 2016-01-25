@@ -1,0 +1,78 @@
+Plot 0
+	name <PLOT: Deep Basement>
+
+	element1 <Character Shy Citizen>
+	element2 <Prefab>
+
+	% P2 = Have entered dungeon
+	% P3 = Have been given email
+	% P4 = Have picked up the skull
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 21600 Compose GET E2 .get>
+	GoCheckTime <ifG ComTime V1 if= P2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+	.get <if= P4 0 P= 4 1 XPV 100>
+
+	5Min <if= d70 23 if= V3 0 ifG RReact E1 d30 ifG PCRep 2 d50 V= 3 1 Email d5>
+
+	Msg1 <\ELEMENT 1 @ \SCENE EScene 1 :// Hey, I have a deal for you. Let's be partners!>
+	Msg2 <\ELEMENT 1 @ \SCENE EScene 1 :// Are you busy? I could use the skills of an adventurer like you!>
+	Msg3 <\ELEMENT 1 @ \SCENE EScene 1 :// I have a business offer, sort of, if you've got nothing better to do...>
+	Msg4 <\ELEMENT 1 @ \SCENE EScene 1 :// I found something cool and you were the first person who came to mind.>
+	Msg5 <\ELEMENT 1 @ \SCENE EScene 1 :// I discovered something... I don't know if it's gonna be valuable or not yet.>
+
+sub
+	Persona 1
+	rumor <!1 has a really deep basement.>
+	% V1 = Has been given job
+	% V2 = Randomizer
+	greeting <NewChat if= P2 1 else GoCheckStart Say 13 AddChat 8 ifKeyItem E2 else GoNoKey AddChat 9>
+	GoNoKey <DeleteKeyItem E2>
+	GoCheckStart <if= V1 1 else GoCheckEmail Say 11 AddChat 5 AddChat 6>
+	GoCheckEmail <if= P3 1 else GoCheckFriend Say 3 AddChat 1 AddChat 2>
+	GoCheckFriend <ifG React d100 else GoDenied ifG PCRep 2 d50 else GoDenied Say 2 AddChat 1 AddChat 2>
+	GoDenied <Say 1 AdvancePlot 0>
+
+	result1 <NewChat Say 4 AddChat 3 AddChat 4>
+	result2 <NewChat Say 5 Reputation 6 1 AdvancePlot 0>
+	result3 <NewChat Say 6 V= 1 1 Memo 7 AddChat 5 AddChat 6 AddChat 7>
+	result4 <NewChat Say 8 AdvancePlot 0>
+	result5 <EndChat Say 10 SavePos LoadD .scene P= 2 1 V= 2 PCRep 6 V+ 2 -d20 PassVar 1 E2 PassVar 2 V2 PassVar 3 5 PassVar 4 4 SeekGate -1>
+	.scene <SCENE_ItemDungeon.txt>
+	result6 <NewChat Say 12>
+	result7 <NewChat AddReact -3 Say 9 AdvancePlot 0>
+	result8 <NewChat Say 14 AdvancePlot 0 if= P4 1 AddReact -20 Reputation 2 -5>
+	result9 <NewChat Say 15 DeleteKeyItem E2 AdvancePlot 0 CashPrize Reward Threat PCRep 6 200 100 Reputation 6 1>
+
+	Msg1 <I should hire a plumber to come patch up the hole in my basement wall.>
+	Msg2 <Hey, I know that you're a cavalier. I have a partnership deal for you, if you don't have anything more important to do.>
+	Msg3 <Did you get my email? I've discovered something that might be worth some money, if you can help me out with it... That is, of course, if you don't have anything more important to do. I'd hate to interfere.>
+	Msg4 <In the last rainstorm part of my basement washed out, and I found a tunnel down there. I think it might be some kind of Pre-Zero ruin. There might be all kinds of treasure down there, if someone were to go in and find it...>
+	Msg5 <I should've guessed that... You've got a lot of important things to work on. This isn't really important. I won't bother you about it again...>
+	Msg6 <Yeah, I figured you could. Anything you find down there we'll split fifty-fifty. How does that sound?>
+	Msg7 <\ELEMENT 1 in \SCENE EScene 1 asked you to go search for treasure in the basement.>
+	Msg8 <Really? Well, I guess they are kind of dangerous... and smelly... and dark... and there's really no guarantee that there's anything down there anyways. I see your point.>
+	Msg9 <Oh... well, I was counting on my half of the money to hire a carpenter to patch the hole in the wall, but I guess now I'll have to sell a kidney or something...>
+	Msg10 <I don't know what you'll find down there, but if it's anything interesting then come back up and let me see!>
+	Msg11 <Are you ready to go into my basement yet? I've heard some things scurrying around down there... I want to get the hole patched up as soon as possible!>
+	Msg12 <Well, go do what you have to do and I'll wait here.>
+	Msg13 <You made it back! I was a bit worried for a while. So, did you find anything interesting down there?>
+	Msg14 <I should've guessed as much... I would never be so lucky as to find a buried treasure or anything like that...>
+	Msg15 <Wow! That's beautiful! And spooky... Tell you what, I'm sure I can get around $ \VAL Reward Threat PCRep 6 400 100 for it on internet. Here's your half. Now I can seal up that hole in the basement before anything horrible crawls out...>
+
+	Prompt1 <Let me hear about your plan.>
+	Prompt2 <Of course I have better things to do.>
+	Prompt3 <And you want me to do that?>
+	Prompt4 <Sorry, I don't do dungeons.>
+	Prompt5 <I'm ready to go there now.>
+	Prompt6 <I better get prepared first.>
+	Prompt7 <Not good enough.>
+	Prompt8 <Nope, nothing.>
+	Prompt9 <I found this skull!>
+
+end
+inv
+	Treasure 1500
+	name <Crystal Skull>
+end
+

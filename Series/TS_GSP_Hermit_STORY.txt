@@ -1,0 +1,84 @@
+Story
+	name <STORY: The Hermit Hop>
+
+	% N1 is the scene where this story was placed.
+	% N2 is the sign leading to Hermit Hop.
+	Element2 <PREFAB>
+
+	% N3 is the monk who will teach the PC.
+	Element3 <PREFAB>
+
+	% S1 = Initialization counter
+	% S2 = Challenge Rating
+
+	start <ifPersona N3 else GoDelete if= S1 0 ItemVar= N2 1 N3 ItemVar= N2 3 25 S= 1 1>
+	GoDelete <EndStory>
+
+sub
+	Persona 3
+	greeting <NewChat ifG S2 4 else GoNoMaster Say 9 AddChat 4>
+	GoNoMaster <Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat AddChat 3 S+ 2 1 if= d5 5 else GoR1_2 Say 2 SkillXP 1 * S1 100 SkillXP 6 * S1 100   Goto GoResetSign>
+	GoR1_2 <if= d4 4 else GoR1_3 Say 3 SkillXP 2 * S1 100 SkillXP 7 * S1 100   Goto GoResetSign>
+	GoR1_3 <if= d3 1 else GoR1_4  Say 4 SkillXP 3 * S1 100 SkillXP 8 * S1 100   Goto GoResetSign>
+	GoR1_4 <if= d2 1 else GoR1_5 Say 5 SkillXP 4 * S1 100 SkillXP 9 * S1 100   Goto GoResetSign>
+	GoR1_5 <Say 6 SkillXP 5 * S1 100 SkillXP 10 * S1 100  Goto GoResetSign>
+
+	result2 <EndChat Say 7 Reputation 3 -d5 Goto GoResetSign>
+
+	result3 <NewChat Say 8>
+
+	GoResetSign <V= 2 ComTime V+ 2 172800 ItemVar= N2 2 V2 V= 2 25 V+ 2 * S2 20 ItemVar= N2 3 V2  RunAway N3>
+
+	result4 <EndChat Say 10 School .skills Say 11>
+	.skills <1 2 3 4 5 6 7 8 9 10 33 18 13 12 11>
+
+	Msg1 <You have made it all the way to the top of the hill. Now, you have proven yourself worthy to be my pupil.>
+	Msg2 <The most important thing about surviving combat is not getting hit yourself. To that end, I recommend using a gun. Stand far away from your target and blast away.>
+	Msg3 <When your enemy is bigger and stronger than you, only proper technique can save your hide... and the technique I reccomend is unloading the biggest gun you can find into the bugger. It may not be sporting but it is good for your health.>
+	Msg4 <You must master these techniques of swordmanship. Only someone who has learned the proper use of a blade can truly be respected as a warrior.>
+	Msg5 <Martial Arts is the most edifying skill of all... To turn your own body into a lethal weapon, that is true power. Come, let me show you something.>
+	Msg6 <Many warriors seek glory in defeating their opponents... but it is just as important to not be defeated by them. I will teach you all about that.>
+	Msg7 <Those who refuse to listen refuse to learn.>
+	Msg8 <I will leave here now... You may return after two days, and I will teach you some more.>
+	Msg9 <You have learned all that I have to teach. Of course, if you want some more practice, we may do that as well.>
+	Msg10 <Focus your mind and your body, keep your eyes open and safely away from your ass.>
+	Msg11 <This was fun. Drop by again and we can play some more.>
+
+	Prompt1 <Teach me, oh hermit.>
+	Prompt1_1 <What do you have to teach me?>
+
+	Prompt2 <Who said I even wanted that!?>
+	Prompt2_1 <No thanks, I'm just hiking.>
+
+	Prompt3 <Thanks for the lesson!>
+	Prompt3_1 <Anything else?>
+
+	Prompt4 <Let's do that.>
+	Prompt4_1 <Alright.>
+	Prompt4_2 <That's what I came here for.>
+	Prompt4_3 <I am ready to learn.>
+
+end
+inv
+	Sign
+	place <1>
+	% V1 = CID of the hermit
+	% V2 = Training recharge timer
+	% V3 = Training Level
+	use <ifYesNo 1 2 3 ifPersona V1 else GoInfinite ifG ComTime V2 else GoInfinite Goto GoFinite>
+	GoFinite <LoadD .sitename PassVar 1 V1 PassVar 2 V3 PassVar 3 10 SeekGate -1>
+	GoInfinite <LoadD .sitename PassVar 2 V3 PassVar 3 10 SeekGate -1>
+	.sitename <SCENE_MeetingPath.txt>
+
+	Msg1 <On this sign is a hiking map for a place named "Hermit Hop". It appears to be that mountain in the distance.>
+	Msg2 <Follow the map.>
+	Msg3 <Don't bother.>
+
+	NPC Monk
+	job <Hermit>
+	chardesc old old shy easygoing cheerful
+	EquipChar 15000
+
+end

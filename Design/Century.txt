@@ -1,0 +1,65 @@
+Battroid 4
+Name <Century>
+Desig <CNA-15>
+
+Mod Head
+	Armor 4
+	sub
+		CPit
+		Armor 2
+
+		BeamGun 5
+		Name <Medium Laser>
+		Range 3
+		Acc 1
+
+		Sensor 5
+	end
+
+Mod Body
+	Armor 4
+	sub
+		MLauncher 2
+		Name <Long Range Missiles>
+		Range 7
+		Speed 1
+		Magazine 40
+		sub
+			Rockets 2
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 4
+	sub
+		Gun 10
+		Name <Autocannon>
+		Range 5
+		Speed 3
+		Magazine 20
+		sub
+			Ammo 10
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 4
+	sub
+		Hand
+
+		BeamGun 5
+		Name <Medium Laser>
+		Range 3
+		Acc 1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+end

@@ -1,0 +1,150 @@
+Plot 0
+	name <Archeology By Force>
+
+	% An item will be recovered. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	% As long as E3 can be picked up some time, or the code
+	% contained under ".getkey" below is otherwise executed
+	% at some time, what E4 does exactly doesn't matter.
+	Element4 <Character Scientist !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have picked up item
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose GET E3 .getKey Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% As soon as the item is gotten, this plot starts the clue
+	% countdown and loads the next relay. You might want to move
+	% this so that the countdown starts only if the item is given
+	% to E4 or some other condition...
+	.getkey <if= V1 1 S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 P= 3 1 V= 1 2>
+	% When the item is used, it reveals the next clue.
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 1 AdvancePlot 0>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+sub
+	Persona 4
+	rumor <!4 has been exploring the PreZero ruins.>
+	%  V1 =  Mission Accepted Counter
+	%  V2 =  Message Randomizer
+	greeting <NewChat if= P3 2 else GoCheckWin SayAnything>
+	% Upon winning the mission, you may want to destroy the item if
+	% the NPC takes it. Otherwise the NPC can just let the PC keep it.
+	GoCheckWin <if= P3 1 else GoCheckMission Memo 0 Say d3 P= 3 2 XPV 100>
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 105 Goto GoAddComOps>
+	GoDelete <Say 101 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React d20 else GoNoChance V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoNoChance <V= 2 9 V+ 2 d3 Say V2 S= 201 0 AdvancePlot 0>
+
+	GoAddComOps <V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat V= 1 1 Memo 104 V= 2 3 V+ 2 d3 Say V2 Goto GoAddComOps>
+	result2 <Goto result1>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result3 <NewChat Say 102 AdvancePlot 0>
+	result4 <Goto result3>
+
+	% For the purposes of this template, I'll use the ITEM DUNGEON scene.
+	result5 <EndChat V= 2 12 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos LoadD .scene PassVar 1 WMThreat S2 DynaItem E3 SeekGate -1>
+	.scene <SCENE_ItemPit.txt>
+	.monster <Ruins Cave Earth>
+	result6 <Goto result5>
+
+	result7 <NewChat Say 103>
+	result8 <Goto result7>
+
+	%  01 - 03 :  PC has retrieved the item.
+	Msg1 <This? It's just a box of noodles... one of my grad students probably left it behind while exploring.>
+	Msg2 <All you found was a box of noodles? Maybe this excavation site has been picked clean... Well, thanks for your efforts, anyway.>
+	Msg3 <You didn't find anything but a box of noodles? How disappointing. You can keep it, though you should probably check the best before date if you plan on eating it.>
+
+	%  04 - 06 :  Mission description.
+	Msg4 <I can show you to the entrance of the ruin now, if you'd like to go. The good artifacts have mostly been found around \VAL S2 meters deep. Bring back something of interest and I'll reward you accordingly.>
+	Msg5 <Our main excavations have been taking place at \VAL S2 meters beneath the surface. If you can recover an interesting artifact I'll pay good money for it!>
+	Msg6 <Most of the good finds have been made at \VAL S2 meters deep. If you can recover anything from down there, bring it to me and I'll tell you if it's worth anything or not.>
+
+	%  07 - 09 :  PC will be offered the mission here.
+	Msg7 <I have discovered a PreZero residential arcology near town. I could use some help exploring the ruins and looking for artifacts, if you'd be interested in helping.>
+	Msg8 <Archeology is fascinating work. You can spend hours cleaning the dirt off some rusted broken thing, then whole weeks trying to figure out what it might have originally been. So, how'd you like to help my field research?>
+	Msg9 <The ruins near town are fascinating, but they are unfortunately filled with monsters of all unpleasant kinds. I could use an adventurer's help to go down there and try to find some ancient artifacts.>
+
+	%  10 - 12 :  Mission will be implied.
+	Msg10 <If the ruins I discovered were an ancient military base, I could get a corporate research grant for sure...>
+	Msg11 <If I'm really lucky I can write a paper on the ruins that we found.>
+	Msg12 <So many rusted broken things to catalogue...>
+
+	%  13 - 15 :  Combat is starting.
+	Msg13 <That's the spirit! I hope you find something interesting, and don't get eaten by giant killer banana slugs on the way.>
+	Msg14 <Good luck! I hope you don't end up like that grad student last week who was eaten by a giant banana slug...>
+	Msg15 <Have fun down there. Don't get eaten by anything.>
+
+	%  101 :  The item somehow got destroyed...
+	Msg101 <There's nothing worthwhile left at the dig site. I'm suspending the expedition.>
+
+	%  102 :  The PC refused the mission.
+	Msg102 <That's too bad. Fortunately, graduate students are cheap and plentiful.>
+
+	%  103 :  The PC needs some time to get ready.
+	Msg103 <Well, just come back whenever you're ready and you can start then.>
+
+	%  104 :  Memo
+	Msg104 <\ELEMENT 4 in \SCENE EScene 4 asked you to retrieve an item.>
+
+	%  105 :  PC has come back after getting ready
+	Msg105 <Are you ready to examine the dig site yet?>
+
+	%  01 - 02 :  PC will accept the mission.
+	Prompt1 <Tell me more.>
+	Prompt2 <I'd like to do that.>
+
+	%  03 - 04 :  PC doesn't want the mission.
+	Prompt3 <I don't think I'd like that.>
+	Prompt4 <Thanks, but no thanks.>
+
+	%  05 - 06 :  Start the mission now.
+	Prompt5 <Let's go digging!>
+	Prompt6 <Just show me to the dig site!>
+
+	%  07 - 08 :  PC needs time to prepare.
+	Prompt7 <Maybe I should prepare first.>
+	Prompt8 <Give me some time to get ready.>
+
+end
+inv
+	Food 50
+	name <Macaroni and Cheese>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <The best before date on this food passed over two hundred years ago... And, if your knowledge of geography is up to par, it was packaged someplace near \SCENE V1 .>
+	Msg2 <You can't determine anything from this artifact.>
+
+end

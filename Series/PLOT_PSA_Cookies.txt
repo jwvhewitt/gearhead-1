@@ -1,0 +1,47 @@
+Plot 0
+	name <PLOT: PSA Fortune Cookie>
+
+	% Another public service announcement, this time containing
+	% various cookies for the PC. Ehhh, just a catchall collection
+	% of advice and clues, really. Not many good cookies here.
+
+	element1 <Character HasMecha Sociable>
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <!1 really likes fortune cookies.>
+	Greeting <NewChat ifG React 0 else GoNoLike Say d25 AdvancePlot 0>
+	GoNoLike <SayAnything AdvancePlot 0>
+
+	Msg1 <If you specialize in armed combat, you might want to think about getting a boomerang or a spear so you'll have a missile attack which uses your best skill.>
+	Msg2 <Cybernetics may make you more powerful, but the side effects are killer if you don't know what you're getting into.>
+	Msg3 <The higher a shield's defense bonus, the harder it is to attack with that arm.>
+	Msg4 <Stealth isn't very useful if you're standing in the open.>
+	Msg5 <Zoanoids are deadly in close combat, but pretty much useless at range.>
+	Msg6 <Puffins fly, penguins plummet.>
+	Msg7 <Only villainous people like email spam.>
+	Msg8 <Running is good for your health.>
+	Msg9 <Fixing things is a good experience.>
+	Msg10 <If you keep buying and selling things, you'll get the hang of it eventually.>
+	Msg11 <The more difficult the fight, the more you'll learn from it.>
+	Msg12 <You can shoot carefully or you can shoot lots but you can't do both at once.>
+	Msg13 <The small pepper is hotter.>
+	Msg14 <If you're down on your luck and your mecha's been trashed, maybe you should get a corporate job instead.>
+	Msg15 <Survivalists often find dead animals very useful.>
+	Msg16 <Mystics can learn a lot from shrines.>
+	Msg17 <If you would be a great warrior, you must battle through the cave naked, armed only with a toothpick.>
+	Msg18 <Scientists spend too much time looking at rocks.>
+	Msg19 <An honest shopkeeper won't buy stolen goods.>
+	Msg20 <Installing cyberware is a pragmatic decision.>
+	Msg21 <Spiritual people should keep their bodies pure.>
+	Msg22 <Save your fighting for the battlefield. There's no reason to pull a gun on someone in town, unless they attack you first.>
+	Msg23 <Whoever pulls their gun out first will get blamed for starting the fight.>
+	Msg24 <Jumping out of an arena before the match is over is a very cowardly act.>
+	Msg25 <There actually is such a thing as a stupid question.>
+
+end
+

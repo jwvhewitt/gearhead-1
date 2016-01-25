@@ -1,0 +1,52 @@
+Plot 0
+	name <ARC: Bandits Close Shop>
+	% While the bandits are on the loose, there could be shortages
+	% and other inconveniences for the average consumer, or even the PC.
+
+	Element1 <Character Shopkeeper>
+
+	% V1 = Time Limit
+
+	% This plot will last for around 24 hours.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 V+ 1 d86400>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% On a cleanup request, just delete this plot.
+	cleanup <AdvancePlot 0>
+
+
+sub
+	Persona 1
+	rumor <!1 has been robbed!>
+	% V1 = Phase Indicator
+	greeting <NewChat ifG V1 0 else GoFirstTime Say 101 AddChat 1>
+	GoFirstTime <V= 1 1 Say d5 AddChat 1 AddChat 2 AddChat 3>
+
+	result1 <EndChat Say 102 Shop NoWares Say 103>
+	result2 <NewChat ifG React d30 else GoR2Nothing ifG SkRoll 19 4 else GoR2Nothing ifG PCRep 1 d90 else GoR2NoHero AddReact d8 Say 105 AddChat 1>
+	GoR2NoHero <Reputation 1 1  Say 106 AddChat 1>
+	GoR2Nothing <Say 104 AddChat 1>
+	result3 <NewChat ifG React d40 else GoR3Nothing ifG SkRoll 28 7 else GoR3Nothing Say 108 Reputation 6 1 Reputation 3 -d3 AddChat 1>
+	GoR3Nothing <Say 107 AddReact -d8 AddChat 1>
+
+	Msg1 <The store is closed. Thanks to those bandits, our latest shipment never arrived. I'm completely out of stock and have no idea when I'll be able to reopen.>
+	Msg2 <We're closed. None of my shipments have made it through, ever since those bandits started attacking caravans. The shop will re-open once I have some things to sell.>
+	Msg3 <I'm sorry, but we're closed today. You've probably heard that there's been a lot of bandits lately... Well, they made off with my last shipment of goods, and now I'm completely out of stock!>
+	Msg4 <The shop is closed. Our delivery truck was robbed by bandits, so I have nothing to sell.>
+	Msg5 <My shop is closed, I'm afraid. We can't get new supplies in because of those bandits, and almost everything's out of stock.>
+
+	Msg101 <The shop's still closed. We aren't likely to get any new stock in until tomorrow.>
+	Msg102 <Sure, you can do that. I've got some duct tape in the back, that should do.>
+	Msg103 <Come back tomorrow and we should have stock in.>
+	Msg104 <Nope, nothing.>
+	Msg105 <Sure, you can come back tomorrow when I have stock again and buy something. That'd make me feel better, at least.>
+	Msg106 <That's a nice thought, but I don't think there's anything that can be done. It's most likely that my goods have already been sold off on the black market...>
+	Msg107 <That's a stupid idea. First, most likely my goods have already been sold off on the black market, so that wouldn't do me any good. Second, I was just robbed, so I don't have much cash to be throwing around. Third... you get the point.>
+	Msg108 <Hm, it's too late to help me, but you may be able to do something about those bandits... Go speak to one of the guardians. They might have a job for you.>
+
+	Prompt1 <Can I get my stuff repaired?>
+	Prompt2 <Is there anything I could do to help?>
+	Prompt3 <For a price, I could hunt those bandits down.>
+
+end

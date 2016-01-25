@@ -1,0 +1,47 @@
+Plot 1
+	% The player and his enemy will have a chat.
+	name <PLOT: Enemy 1>
+
+	element1 <Character ArchEnemy Sociable !G>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	greeting <AdvancePlot 0 ifG React 80 else GoHiReact NewChat Say 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+	GoHiReact <ifG React 42 else GoMedReact NewChat Say 2 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+	GoMedReact <ifG React d30 else GoLowReact NewChat Say 3 AddChat 4>
+	GoLowReact <EndCHat AddReact -11 AddReact d10 Say 4>
+
+	result1 <NewChat Reputation 4 -1 ifG PCRep 6 d200 else GoR1NoRenown Say 5 AddChat 3 AddChat 4>
+	GoR1NoRenown <ifG React d300 else GoR1NoLike Say 6 AddChat 3 AddChat 4 AddChat 5>
+	GoR1NoLike <Say 7 AddChat 3 AddChat 4>
+	result2 <NewChat Reputation 3 1 ifG React d100 else GoR2NoReact Say 8 AddChat 4 AddChat 5>
+	GoR2NoReact <Say 9 AddChat 3 AddChat 4>
+	result3 <NewChat Reputation 5 -1 Say 10>
+	result4 <NewChat Reputation 5 1 Say 11>
+	result5 <NewChat Say 12 AddReact d10>
+
+	Msg1 <It's too bad that we are on opposite sides. I will deeply regret it when I am forced to kill you in combat.>
+	Msg2 <I like you. It's going to be a real shame when I have to kill you in combat.>
+	Msg3 <It's interesting to meet you outside of combat.>
+	Msg4 <Get away from me. I have no desire to talk to the likes of you today.>
+	Msg5 <It's quite possible that you will. You are a very skilled pilot.>
+	Msg6 <That's not very reassuring!>
+	Msg7 <Those are the chances we take, every time we take to the field.>
+	Msg8 <Maybe some day we'll be figting on the same side, but for right now we must oppose each other. It certainly would be nice to fight alongside you. You are a great pilot.>
+	Msg9 <It's not much use to think about that now, since we're on opposite sides and there's nothing we can do to change that.>
+	Msg10 <That's certainly true.>
+	Msg11 <That's a good idea.>
+	Msg12 <You're welcome.>
+
+	Prompt1 <Maybe I'll kill you first.>
+	Prompt2 <Can't we just be friends?>
+	Prompt3 <War extracts a terrible price on us all.>
+	Prompt4 <Let's not talk about unpleasant things.>
+	Prompt5 <Thank you very much.>
+
+end

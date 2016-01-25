@@ -1,0 +1,38 @@
+Scene 0 2
+	% CoreIntro Mecha Mission
+	%
+	% Bring NPC to central point to end mission.
+
+	WildMap
+
+	% V1 = Initialization counter
+	% V2 = Final conversation counter
+	% V10 = NPC ID
+
+	Type <NoPillage>
+
+	start <if= V1 0 V= 1 1 ForceChat V10>
+
+	nu1 <if= t1 0 Return>
+	nu2 <if= T2 0 ifPersona V10 else GoV10Dead if= V2 0 V= 2 1 ForceChat V10>
+	GoV10Dead <Retreat 1>
+
+sub
+	Team 1
+	SetAlly 3
+	SetEnemy 2
+	home <Starting Point>
+
+	Team 2
+	SetEnemy 1 3
+
+	Team 3
+	SetAlly 1
+	SetEnemy 2
+	home <Starting Point>
+
+	rect
+	height 5
+	width 5
+	name <Starting Point>
+end

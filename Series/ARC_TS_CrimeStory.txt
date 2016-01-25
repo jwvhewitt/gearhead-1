@@ -1,0 +1,156 @@
+Plot 0
+	% A bandit will provide the PC with a mecha & some guidance,
+	% leading eventually to a first encounter with WarChild.
+	name <ARC: Crime Story>
+
+	% Element 1 is Hogye
+	element1 <Scene>
+	Stat 1 2
+
+	% Element 2 is the prefab bandit character
+	element2 <Prefab>
+
+	% Element 3 is the guardian who holds the bandit's parking tickets.
+	element3 <Character>
+	Stat 3 12
+
+	rumor <!2 has been looking for you.>
+
+sub
+	Persona 2
+
+	Greeting <NewChat if= V1 0 else GoMetBefore Say 1 AddChat 1 AddChat 2 AddChat 3>
+	GoMetBefore <Say 5 AddChat 4 AddChat 5>
+	result1 <NewChat V= 1 -1 Say 2 AddChat 4 AddChat 5>
+	result2 <NewChat V= 1 -1 Say 3 AddChat 4 AddCHat 5>
+	result3 <NewChat V= 1 -1 Say 4 AddChat 4 AddChat 5>
+	result4 <NewChat AdvancePlot 1 Reputation 2 -3 AddReact 10 Say 6>
+	result5 <NewChat Say 7>
+	Msg1 <I heard about what you said to Megi. She's still really angry at you... So, are you really a thief set to rob this town of everything it has?>
+	Msg2 <You've got that right. Still, if you were interested in making a bit of illicit cash while you're in town, I might just have a few jobs for you...>
+	Msg3 <Well, you aren't going to have a very long career as a thief if you're that obvious about it. I could give you some pointers, help you out a bit... what do you say?>
+	Msg4 <I guess not. Still, you should know that Megi really thinks you were being serious. If you were interested I know how we could make some quick cash, if you really are up for a bit of petty thievery.>
+	Msg5 <Hello again. My offer is still good... How'd you like to be my partner in crime?>
+	Msg6 <Very good... There's a wide world of oppurtunity and vice out there for sharp young entrepraneurs like you and me. Meet me back here in a few minutes, I'll fill you in on the details then.>
+	Msg7 <That's too bad. I could really use someone with your obvious talents on my side... If you ever change your mind, be sure to come back.>
+	prompt1 <Megi really can't take a joke.>
+	prompt2 <Yes, I am.>
+	prompt3 <If I was, would I be so obvious!?>
+	prompt4 <I'd like that very much.>
+	prompt5 <That's not my thing.>
+
+
+	Plot 1
+		% The player has accepted the Life of Crime career path.
+		% Gosh, that sounds like The Sims, doesn't it?
+		% Var 1 = Has received parking ticket briefing.
+
+	sub
+		Persona 2
+		greeting <NewChat if= P1 0 else GoMissionStarted P= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+		GoMissionStarted <ifPersona E3 else GoGuardDead if= P1 2 else GoNotComplete Say 6 AddChat 4>
+		GoGuardDead <Say 7 AddChat 4>
+		GoNotComplete <NewChat Say 5>
+
+		result1 <NewChat Say 2 AddChat 2>
+		result2 <NewChat Say 3>
+		result3 <NewChat Say 4>
+		result4 <NewChat Say 8 MechaPrize .BMek CashPrize 2500 AdvancePlot 2 AddReact 25 AddChat 5>
+		.BMek <Razer.txt>
+		result5 <NewChat Say 9>
+
+		Msg1 <Before we can start on our wonderful crime spree, there's something I need you to do. See, I've got a bunch of unpaid parking tickets, and \ELEMENT 3 has imponded my car. I need for you to convince him to forget about my record.>
+		Msg2 <Uh, I don't think that's a good idea. Aside from the fact that \ELEMENT 3 has a lot of friends around here, you should also know that guardians are pretty tough fighters. I'd suggest that you find a more peaceful solution.>
+		Msg3 <Go talk to \PERSONA E3 and see if you can reach a mutual understanding. Intimidation is one of a career criminal's best tools, as is the ability to tell a convincing lie...>
+		Msg4 <Because \PERSONA E3 doesn't like me and won't listen to a thing I say. Maybe you can have better luck...>
+		Msg5 <Go talk to \ELEMENT 3 about my parking tickets. We can't do anything else until you get my car out of stock.>
+		Msg6 <Good job. You'll make a great con artist someday. Now that my vehicles are out of the stockade, we can begin phase two of the plan.>
+		Msg7 <Uhhh... that was a bit of unnessecary violence, wasn't it!? Anyhow, you got the tickets cancelled, for that I'm grateful... now we start phase two of the plan.>
+		Msg8 <Robbing convoys is the mainstay of the bandit trade, and for that you'll need a mecha. Here are the keys to my Razer; it's a bit light, but that's perfect for sneaky hit and run attacks.>
+		Msg9 <Head to the town of Ipshil. Connect up with the bandits there; maybe some of them will have jobs for you. Get some experience and reputation, then come back here.>
+
+		prompt1 <Alright, I'll just rough him up a bit.>
+		prompt2 <How do you suggest I do that?>
+		prompt3 <Why don't you do that yourself?>
+		prompt4 <What's that?>
+		prompt5 <Where should I go now?>
+
+		Persona 3
+		greeting <NewChat if= P1 1 else GoNoMission Say 1 AddChat 1 AddChat 2 AddChat 3>
+		GoNoMission <SayAnything>
+
+		result1 <NewChat Say 2 AddChat 4 AddChat 5 AddCHat 6>
+		result2 <NewChat Say 3 AddChat 5 AddChat 6 AddChat 7>
+		result3 <NewChat Say 4>
+
+		result4 <NewChat ifG PCRep 2 25 else GoNotLawful Say 5 P= 1 2 Reputation 2 -3 XPV 100>
+		GoNotLawful <Say 6>
+
+		result5 <NewChat ifG SkRoll 28 7 else GoNotScary Say 7 P= 1 2 Reputation 2 -5 Reputation 4 -1 XPV 100>
+		GoNotScary <Say 8>
+
+		result6 <NewChat ifG React 45 else GoMedReact Say 9 P= 1 2 Reputation 3 2 AddReact -10 XPV 100>
+		GoMedReact <ifG React -1 else GoLowReact Say 10>
+		GoLowReact <Say 11>
+
+		result7 <NewChat ifG SkRoll 19 9 else GoNoCon Say 12 P= 1 2 Reputation 2 -10 Reputation 7 1 XPV 100>
+		GoNoCon <Say 13>
+
+		Msg1 <What can I do for you today?>
+		Msg2 <Really? Well, what do you have to say about all these unpaid parking tickets? I suppose you just expect me to forget about them...>
+		Msg3 <Some business, huh? This wouldn't have anything to do with \ELEMENT 2 and all those parking tickets, would it? I hope you don't expect me to just drop all the charges.>
+		Msg4 <Okay, let's chat.>
+		Msg5 <Do you really think so? Well, I guess that I could have been mistaken... With a character reference like you I'll have to reassess things. You can tell \ELEMENT 2 that the tickets have been cancelled.>
+		Msg6 <I don't believe that for one second. You're not exactly known as the most reliable character witness, you know.>
+		Msg7 <Hey, they're just parking tickets, no reason to get upset. If you're gonna risk your life by threatening a guardian this must be pretty important to you. Tell \ELEMENT 2 that the tickets have been revoked.>
+		Msg8 <And if you want to live, you won't go around talking that way to guardians.>
+		Msg9 <For you, sure, I can do that. Tell \ELEMENT 2 that the parking tickets have been cancelled.>
+		Msg10 <You seem like a nice enough person, but I'm sorry I can't do that for you.>
+		Msg11 <Why would I do that!? I don't even like you! You annoy me!>
+		Msg12 <A bribe, huh? I'll make you a deal... I will forget about the parking tickets, if you go away and stop bothering me. Okay?>
+		Msg13 <Are you offering me a bribe? Look, if you had the kind of money it'd take to bribe me, you'd have more than enough to just simply pay the fines.>
+
+		Prompt1 <\ELEMENT 2 sent me to talk.>
+		Prompt2 <We have some business to discuss.>
+		Prompt3 <I just want to chat.>
+		Prompt4 <It's a mistake! \ELEMENT 2 is innocent!>
+		Prompt5 <If you want to live, you will.>
+		Prompt6 <Can you do it as a personal favor to me?>
+		Prompt7 <I could make it worth your while.>
+
+
+		Plot 2
+
+		sub
+			Persona 2
+			greeting <NewChat ifG PCRep 6 35 else GoMedRep Say 7 AddReact 10 MechaPrize .BMek2 AdvancePlot 0>
+			.BMek2 <Alba.txt>
+			GoMedRep <ifG PCRep 6 15 else GoLowRep Say 1 AddChat 1 AddChat 2 AddChat 3>
+			GoLowRep <ifG PCRep 6 0 else GoNegRep Say 2 AddChat 1 AddChat 2 AddChat 3>
+			GoNegRep <Say 3 AddChat 1 AddChat 2 AddChat 3>
+
+			result1 <Say 4>
+			result2 <Say 5>
+			result3 <Say 6>
+
+			Msg1 <You've been doing pretty good for yourself, I see. Everybody around knows that you're a badass pilot. There's still a way to go, though.>
+			Msg2 <What you need to do right now is to start working on your reputation. Once you've done that come back here and I'll have a special something for you.>
+			Msg3 <Welcome back buddy... It's been hard out there, I see. Everybody's been saying that you're some kind of loser, but I know that can't be true. Keep working on the rep and you'll show them.>
+			Msg4 <The easiest way to improve your rep is to successfully complete lots of missions. Of course, if you fail in a mission that'll hurt your rep, so you should be careful to pick jobs appropriate to your talents.>
+			Msg5 <Fame has several benefits. A renowned pilot will be offered better missions. Also, people you're talking to may well be impressed by your accomplishments.>
+			Msg6 <You need to seek out contacts who might want to hire you. There's lots of bandits in Ipshil, so that might be a good destination. I hear that the factory in Gyori and the police department in Snake Lake also need pilots.>
+			Msg7 <Well, I was waiting for someone to come along who really deserved this, and that person is you. Here's my old mecha, from back in the days when I used to be a pilot myself. Take good care of her.>
+
+			prompt1 <How do I improve reputation?>
+			prompt2 <Why is my rep that important?>
+			prompt3 <Where should I go next?>
+		end
+	end
+
+end
+inv
+	NPC Citizen
+	place <1 Ally>
+	chardesc Chaotic Chaotic Chaotic Assertive Old
+
+end

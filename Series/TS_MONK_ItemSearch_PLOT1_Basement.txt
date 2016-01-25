@@ -1,0 +1,149 @@
+Plot 0
+	name <Basement Discovery>
+
+	% An item will be recovered. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	% As long as E3 can be picked up some time, or the code
+	% contained under ".getkey" below is otherwise executed
+	% at some time, what E4 does exactly doesn't matter.
+	Element4 <Character Citizen !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have picked up item
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose GET E3 .getKey Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% As soon as the item is gotten, this plot starts the clue
+	% countdown and loads the next relay. You might want to move
+	% this so that the countdown starts only if the item is given
+	% to E4 or some other condition...
+	.getkey <if= V1 1 S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 V= 1 2 P= 3 1 FacXP+ N1 1>
+	% When the item is used, it reveals the next clue.
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 1 AdvancePlot 0>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+sub
+	Persona 4
+	rumor <!4 found something interesting in the basement.>
+	%  V1 =  Mission Accepted Counter
+	%  V2 =  Message Randomizer
+	greeting <NewChat if= P3 2 else GoCheckWin SayAnything>
+	% Upon winning the mission, you may want to destroy the item if
+	% the NPC takes it. Otherwise the NPC can just let the PC keep it.
+	GoCheckWin <if= P3 1 else GoCheckMission Say d3 P= 3 2 XPV 100 Memo 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 105 Goto GoAddComOps>
+	GoDelete <Say 101 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React 10 else GoNoChance V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoNoChance <V= 2 9 V+ 2 d3 Say V2 S= 201 0 AdvancePlot 0>
+
+	GoAddComOps <V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat V= 1 1 Memo 104 V= 2 3 V+ 2 d3 Say V2 Goto GoAddComOps>
+	result2 <Goto result1>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result3 <NewChat Say 102 Reputation 5 -d10  AdvancePlot 0>
+	result4 <Goto result3>
+
+	% For the purposes of this template, I'll use the ITEM DUNGEON scene.
+	result5 <EndChat V= 2 12 V+ 2 d3 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos LoadD .scene PassVar 1 WMThreat S2 DynaItem E3 SeekGate -1>
+	.scene <SCENE_ItemPit.txt>
+	result6 <Goto result5>
+
+	result7 <NewChat Say 103>
+	result8 <Goto result7>
+
+	%  01 - 03 :  PC has retrieved the item.
+	Msg1 <That's it? A photo? Sorry for wasting your time... I was really hoping that there'd be some kind of treasure involved.>
+	Msg2 <The only thing you found was an old photograph? That's worthless. Sorry for wasting so much of your time... you can keep it.>
+	Msg3 <This old photo is the only thing you found down there? I don't guess it's even worth enough to pay for patching up the hole... you can keep it.>
+
+	%  04 - 06 :  Mission description.
+	Msg4 <You'd like to? Great! We can split the proceeds fifty-fifty if you find anything interesting.>
+	Msg5 <Really? I'm kind of doubtful that there really is anything down there, but it couldn't hurt to check. That's the only reason I haven't called a plumber to come patch it up yet.>
+	Msg6 <Great! You can go down there right away, if you'd like. I'd like to do any explorations quickly so I can get a plumber to come in and patch the hole.>
+
+	%  07 - 09 :  PC will be offered the mission here.
+	Msg7 <After the rains last week there's been a big hole in my basement wall. It seems to lead into some kind of ruin or cave... I'm kind of worried about monsters coming out, but kind of curious if there might be treasure down there.>
+	Msg8 <A crack in my basement wall leads into some kind of maze. It might be a ruin... there may even be treasure down there! Unfortunately I'm too worried about monsters to go check it myself...>
+	Msg9 <After cleaning I found a hole in my basement wall. It leads into some kind of cave, or maybe an old ruin... I thought about going in to look for treasure, but I heard that all kinds of monsters live in places like that.>
+
+	%  10 - 12 :  Mission will be implied.
+	Msg10 <I've got a huge secret, if only I had someone to share it with...>
+	Msg11 <My basement may be the key to everything...>
+	Msg12 <You'd think that all the good stuff around here had already been discovered. I'm hoping that it hasn't been...>
+
+	%  13 - 15 :  Combat is starting.
+	Msg13 <Good luck down there. Don't get eaten by a killer banana slug or anything!>
+	Msg14 <Come back up when you find anything interesting. I hope it's something cool like a crystal skull!>
+	Msg15 <Have fun down there, and try not to get hurt...>
+
+	%  101 :  The item somehow got destroyed...
+	Msg101 <This hole-in-the-wall exploration is too much of a bother. I'm calling someone to come patch up my basement right away.>
+
+	%  102 :  The PC refused the mission.
+	Msg102 <Don't rain on my dreams. This is the most excitement I've had all week!>
+
+	%  103 :  The PC needs some time to get ready.
+	Msg103 <Before the great war they used to build really huge buildings. My basement could be the entrance to an ancient city!>
+
+	%  104 :  Memo
+	Msg104 <\ELEMENT 4 in \SCENE EScene 4 asked you to search \PPR E4 basement for treasure.>
+
+	%  105 :  PC has come back after getting ready
+	Msg105 <Are you ready to explore my basement now?>
+
+	%  01 - 02 :  PC will accept the mission.
+	Prompt1 <I could check, if you want...>
+	Prompt2 <I can go see if you like.>
+
+	%  03 - 04 :  PC doesn't want the mission.
+	Prompt3 <There's probably nothing down there.>
+	Prompt4 <I doubt you'd find anything.>
+
+	%  05 - 06 :  Start the mission now.
+	Prompt5 <Just show me to your basement!>
+	Prompt6 <I'm ready to go right now.>
+
+	%  07 - 08 :  PC needs time to prepare.
+	Prompt7 <I need some time to prepare.>
+	Prompt8 <I better get ready first.>
+
+end
+inv
+	treasure 50
+	name <Aerial Photograph>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <It's an old photograph. It looks like it might be an aerial shot of \SCENE V1 .>
+	Msg2 <It's an old photograph. It looks like it might be an aerial shot of the Earth.>
+
+end

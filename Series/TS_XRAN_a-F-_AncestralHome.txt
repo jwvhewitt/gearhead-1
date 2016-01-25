@@ -1,0 +1,216 @@
+plot 0
+	name <PLOT: Ancestral Home>
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will give the PC a mission.
+	% E3 is the scene to be used in the next episode.
+	% E4 is the NPC who the PC must battle
+	Element1 <Grab 3>
+	Element2 <Prefab>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Prefab>
+
+	% P1 = Conversation Counter
+	% P2 = Combat Counter
+	% P3 = Conversation with E4
+	%     if P3=2, PC has resolved the matter peacefully
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If Persona E2 dies, load a new plot.
+	% Upon entering combat, force a conversation with the supposed enemy.
+	start <ifPersona E2 else GoDelete if= V1 0 if= SceneID E1 ifNPCInPlay E2 NPCGoPC E2>
+	GoDelete <S= 101 1 N= 3 E3 S= 105 -1  AdvancePlot 0>
+
+	TM1 <if= SceneID E1 ifNPCinPlay E2 if= V1 0 ifG 6 Range PCUID NPCUID E2  Print 1 ForceChat E2>
+	Msg1 <\ELEMENT 2 strikes up a conversation with you.>
+
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  if# P3 2 XPV 100>
+
+sub
+	Persona 2
+	rumor <!2 has been researching the families that lived in this area many years ago.>
+	% V1 = Have been offered mission
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 19 AdvancePlot 1 if= P3 2 else GoNoP3 MoveChar E4 E1>
+	GoNoP3 <History 20 DeleteChar E4>
+	GoCheckLoss <if# P2 0 else GoCheckMission Say 16 V= 2 ComTime V+ 2 80000 P= 2 0>
+	GoCheckMission <ifG ComTime V2 else GoRecharge if= V1 1 else GoNoMission Say 14 AddChat 13 AddChat 6 AddChat 14>
+	GoNoMission <if= P1 1 else GoFirstTime Say 2 AddChat 2 AddChat 3>
+	GoFirstTime <P= 1 1 Say 1 AddChat 1 AddChat 2>
+	GoRecharge <Say 15>
+
+	result1 <NewChat Say 3 V= 1 1 Memo 7 AddChat 4>
+	result2 <NewChat Say 4 Reputation 3 -d8>
+	result3 <NewChat Say 5 V= 1 1 Memo 7 AddChat 4>
+	result4 <NewChat Say 6 AddChat 5 AddChat 6 AddChat 7>
+	result5 <NewChat Say 8 addCHAT 8 AddChat 9 AddChat 10>
+	result6 <NewChat Say 9 AddChat 11 AddChat 12 AddChat 10>
+	result7 <NewChat Say 10 Reputation 5 -d4>
+	result8 <EndChat Say 17 SavePos P= 2 1  Dynamic 2 Threat S103 150 .nu1 .nu2 if= d3 1 if= P3 0 DynaNPC E4 2 NPCLevel E4 S103 ComposeD START .start PassVar 1 E4>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	.start <if# L1 0 ForceChat L1 L= 1 0>
+	result9 <NewChat Say 11 AddChat 8 AddChat 10>
+	result10 <NewChat Say 12>
+	result11 <EndChat Say 18 Reputation 1 1 SavePos P= 2 1 Dynamic 0 Threat S103 3 .nu1 .nu2 if= P3 0 DynaNPC E4 2 NPCLevel E4 S103 ComposeD START .start PassVar 1 E4>
+	result12 <NewChat Say 13 AddChat 5 AddChat 7>
+	result13 <Goto result8>
+	result14 <NewChat Say 12>
+
+	Msg1 <Excuse me, are you \PC ? I've been looking for someone of that name... I have an important message.>
+	Msg2 <I'm looking for someone named \PC . I've heard that they're visiting town, but I can't find them... You wouldn't know where they are, would you?>
+	Msg3 <I've been researching your family. Many years ago during the Age of Superpowers your ancestors were quite influential, and they used to live in this area. I've discovered a ruin that once was their home, but have been unable to examine it.>
+	Msg4 <That's too bad. Well, I'll have to keep looking.>
+	Msg5 <Really? I thought I asked you that earlier... I must have been mistaken. Anyhow, many years ago your ancestors were very influential in this region. I've discovered an old house of theirs that I'm hoping to study, but haven't been able to yet.>
+	Msg6 <There's a ravager tribe living on the land. I've tried to get permission to enter, but they're quite unfriendly to outsiders.>
+	Msg7 <\ELEMENT 2 in \ELEMENT 1 has been researching the home of your ancestors.>
+	Msg8 <That would be a great help! Are you prepared to head out now, or do you need to get ready?>
+	Msg9 <I'm not sure that's a good idea. As I mentioned, they're not very friendly to outsiders. You'd probably be attacked as soon as you got near their camp. Do you really think you have a chance of reasoning with them?>
+	Msg10 <I was afraid of that.>
+	Msg11 <I'm not in the mecha business so I can't say for certain. From what I've heard you should be able to take them, I'm certain.>
+	Msg12 <Alright. Whenever you're ready we can start then.>
+	Msg13 <I don't think it is... There must be a safer way to handle the problem...>
+	Msg14 <I'm waiting to investigate your family home, but the ravagers still won't let me in. Think you can help me?>
+	Msg15 <Come back tomorrow and we can try to engage the ravagers again.>
+	Msg16 <You didn't manage to drive them off... Come back tomorrow and we can try again.>
+	Msg17 <Here are the coordinates you'll have to examine. Come back here when you're done and let me know how it went.>
+	Msg18 <You're very brave, I'll say that much... Here are the coordinates of the ruin. If you can get close to the camp, you'll probably be brought to speak with their leader.>
+	Msg19 <You cleared out the ravagers! Now I'll be able to start my explorations... Come back tomorrow or sometime; I may have some interesting finds.>
+	Msg20 <You reclaimed your ancestral home.>
+
+	Prompt1 <I'm \PC . What do you want?>
+	Prompt2 <I don't know who you're looking for...>
+	Prompt3 <Actually, I'm \PC .>
+	Prompt4 <Why not?>
+	Prompt5 <I can remove them for you.>
+	Prompt6 <Let me speak with them.>
+	CPrompt6 <if= P3 0 Accept>
+	Prompt7 <I guess there's nothing we can do.>
+	Prompt8 <I'm ready to go now.>
+	Prompt9 <How many mecha do they have?>
+	Prompt10 <Give me some time to prepare first.>
+	Prompt11 <I'll go speak with them now.>
+	Prompt12 <Maybe this isn't a good idea...>
+	Prompt13 <All ready to drive out the ravagers...>
+	Prompt14 <I'll be back later.>
+
+
+	Persona 4
+	% The leader of the ravagers...
+	greeting <NewChat P= 3 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+
+	result1 <NewChat ifG PCRep 6 S103 else GoR1Fail Say 2 AddChat 4 AddChat 5>
+	GoR1Fail <EndChat Say 4>
+	result2 <NewChat ifG PCRep 2 d30 else GoR2Fail Say 3 AddChat 6 AddChat 7>
+	GoR2Fail <EndChat Say 5>
+	result3 <NewChat ifG PCRep 1 d10 else GoR3Fail Say 6 AddChat 4 AddChat 5>
+	GoR3Fail <EndChat Say 17>
+	result4 <NewChat ifG PCRep 3 0 else GoR4Fail Say 7 P= 3 2 XPV 150 Retreat 2 History 9 History 16 PCFamily E4>
+	GoR4Fail <EndChat Say 8>
+	result5 <NewChat ifG 0 PCRep 3 else GoR5Fail Say 10 P= 3 2 XPV 150 Retreat 2 History 9 History 16 PCFamily E4>
+	GoR5Fail <EndChat Say 11>
+	result6 <NewChat ifG PC$ Threat S103 10 else GoR6Fail Say 12 Retreat 2 Cash+ -Threat S103 10>
+	GoR6Fail <EndChat Say 13>
+	result7 <NewChat ifG React d60 else GoR7Fail Say 15 AddChat 4 AddChat 5>
+	GoR7Fail <EndChat Say 14>
+
+	Msg1 <This is the land of my tribe. We will destroy any who come here without permission. State your purpose here, stranger.>
+	Msg2 <This is your land? Who are you to make such an outrageous claim!?>
+	Msg3 <Negotiate? There was another recently who wanted to visit our land... If it is so important for you to enter here, you will agree to the small price of $ \VAL Threat S103 10 .>
+	Msg4 <Don't make me laugh. You've lived a soft life in the greenzone; I can tell just by looking at you. You have no place here... you will die!>
+	Msg5 <No, you're here to steal from us... I know your kind. We won't permit you to do that!>
+	Msg6 <Talk? Who are you to think you can simply walk in here and expect to walk out alive again!?>
+	Msg7 <\PC ? Why, of course we know you! You are of the same blood as our tribe. This is our land... Put down your arms, you are welcome here.>
+	Msg8 <Nope, never heard of you. Now you die!!!>
+	Msg9 <You reclaimed your ancestral home, and met some distant relatives.>
+	Msg10 <Ah, very mysterious... You must be \PC . Your adventures are known to us... In fact, you are of the same blood as our tribe! Put down your arms, you are welcome in our camp.>
+	Msg11 <How can we trust you if you don't even give your name!? You have no honor! You will die here!>
+	Msg12 <Ah, money opens all doors. You are now free to explore our land... our tribe will be moving on soon anyhow.>
+	Msg13 <You don't have that kind of money! Now you will pay for wasting our time and making us disappointed!>
+	Msg14 <If you aren't willing to pay, then you aren't welcome here!>
+	Msg15 <You aren't willing to pay? Who do you think you are that you can just come here and expect us to let you pass freely!?>
+	Msg16 <\ELEMENT 4 the ravager chieftan is related to you.>
+	Msg17 <Why should I believe that? You've only come to take what's ours! And now you will die for trespassing where you don't belong!>
+
+	Prompt1 <This is my land, and I will take it!>
+	Prompt2 <I am here to negotiate.>
+	Prompt3 <Don't shoot, I just want to talk.>
+	Prompt4 <Surely you've heard of \PC !>
+	Prompt5 <My name isn't important.>
+	Prompt6 <Alright, I can give you that.>
+	Prompt7 <That's too much money!>
+
+
+	Plot 1
+	% P1 = Initialization Counter
+	start <ifPersona E2 else GoDelete if= V1 0 Memo 1 V= 1 1>
+	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
+	cleanup <AdvancePlot 0>
+	Msg1 <\ELEMENT 2 in \ELEMENT 1 has some information about your family history.>
+
+	sub
+
+	Persona 2
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat if= d2 1 else GoR1_2 XRMystery NAV_XRMResolved V= 2 10 V+ 2 d3 Say V2 V+ 2 5 History V2 Goto GoEndPlot>
+	GoR1_2 <if# d3 1 else GoR1_3 XRMystery NAV_XRMItem V= 2 20 V+ 2 d2 sAY V2 V+ 2 5 History V2 Goto GoEndPlot>
+	GoR1_3 <Say 31 History 36 Goto GoEndPlot>
+	GoEndPlot <S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1  AdvancePlot 0>
+
+	result2 <NewChat Say 2>
+
+	Msg1 <My research at your ancestral home has finally turned up some interesting results... Would you like to hear about it?>
+	Msg2 <Come back when you're less busy and I can explain it all to you then.>
+
+	Msg11 <Long ago, your family was a powerful ninja clan... but they were almost entirely wiped out by a rival clan. It's possible that the rival clan still exists, and they may not even have forgotten of this centuries-old conflict.>
+	Msg12 <You come from a noble line. During the Age of Superpowers your ancestors ruled this area. The site I investigated was a factory to produce "Cyclops" biosoldiers. Your family must have been very powerful. They probably had a lot of enemies...>
+	Msg13 <Your ancestors practiced an ancient form of martial arts. However, they were destroyed by a rival clan and scattered across the world. It's possible that this rival clan still exists.>
+
+	Msg16 <Your ancestors were ninjas whose enemies still exist today.>
+	Msg17 <Your ancestors were a noble house from the Age of Superpowers.>
+	Msg18 <Your ancestors were martial artists whose enemies still exist.>
+
+	Msg21 <Your ancestors came from a noble house of the Age of Superpowers. Many of them were high placed officers in the army. It's possible that your family heirlooms hold much information about this period.>
+	Msg22 <In PreZero times, your ancestors were laborers. The site used to be a factory for "Cyclops" biosoldiers. One peasant stole something from the factory and the nobles burnt down the entire village, scattering your family across the globe.>
+
+	Msg26 <Your ancestors were nobles, who held items of great importance.>
+	Msg27 <You discovered that an ancestor stole something of great value.>
+
+	Msg31 <Ever hear of "Idealist"? This was a genetic engineering project during the Age of Superpowers, seeking to create a better human being. Your ancestors were "Idealists", you perhaps contain some of their modified genes.>
+	Msg36 <Your ancestors were genetically enhanced "Idealists".>
+
+	Prompt1 <Tell me what you've found.>
+	Prompt2 <I'll listen some other time.>
+
+
+	Persona 4
+	greeting <NewChat Say 1>
+	Msg1 <Well met, cousin! I hope we can fight alongside one another some day.>
+
+	end
+
+end
+inv
+	NPC Professor
+	job <Archaeologist>
+	Place <1 Ally Pass>
+
+	NPC Mercenary
+	job <Chieftan>
+	teamdata <SD Ally>
+	EquipChar 10000
+	Mecha <Kojedo.txt>
+
+end

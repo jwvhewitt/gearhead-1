@@ -1,0 +1,88 @@
+ENEMY TYPE
+	U = Unknown			(0)
+	C = Character			(1)
+	F = Faction			(2)
+
+MYSTERY TYPE
+	R = Resolved			(0)
+	U = Unknown			(1)
+	F = Family Secret		(2)
+	A = Amnesia			(3)
+	N = PC is Not Human		(4)
+	I = Searching for Item		(5)
+
+BAD THING
+	R = Resolved			(0)
+	U = Unknown			(1)
+	F = Family died			(2)
+	I = Incriminated		(3)
+	S = Seeking Revenge		(4)
+	X = Ex-Member of Enemy		(5)
+	L = Lost Love (not introduced)	(6)
+		When the lost love is introduced, change XRB to Resolved
+
+STARTING SCENARIOS
+	Family died mysteriously*	UFF
+	Lunar refugee*			FUS
+	Total Amnesia*			UAU
+	Orphan*				UFU
+	Ex-Member of Aegis*		FUX
+
+PLOTS
+	Must gain enemy's attention*	C??	F??
+	Need money for sibling*		?FF	??R
+	Investigate cause*		??F	??I C?? F??
+	Family home must be reclaimed*	?F?	?R?
+	Plantation under attack*	F??
+	Meet me in two days*		?A?	C?? F?? ?N?
+	Assassins!*			U??	C?? F??
+	Have a price on head*		F??
+	Doctor Kim was Kidnapped!*	UF?	C?? F?? ?N?
+
+	Enemy sighted in _Loc_		C??	?F?
+	Must recover artifact		?F?	?R? C??
+	Must capture witness		??I	C?? F?? ??R ??U
+	Answers lie in lab		?N?	F?? ?R?
+	Faction must lose		F??
+	Faction strike team in town	F??
+	Archaeological Dig		CA?	?N? ?F?
+	Cyclops seeks PC		?N?	CR? FR?
+	I didn't do it!			C?F	C?? F??
+	Too dangerous to live		FR?
+
+
+ENDINGS
+	Must defeat enemy		C??
+	Must destroy faction		F??
+
+
+STANDARDS FOR STORY/PLOT DESIGN
+
+	% This is the standard controller for the extra-random stories.
+
+	GoCheckClue <ifG S105 0 else GoNoClue Memo 5 S= 105 0>
+	GoNoClue <ifG 0 S105 Memo 0 S= 105 0>
+	Msg5 <Your personal quest has so far led to \NARRATIVE 3 .>
+
+	hour <if= S101 1 else GoCheckHint ifG S103 75 else GoLoadEpisode XRanPlot .xend S= 101 0 S+ 103 d10>
+	GoLoadEpisode <XRanPlot .xplot S= 101 0 ifG S102 S104 S+ 103 10 S+ 103 d10 S= 104 S102 NPCLevel N1 S103 ifFaction N2 PCFEnemy N2>
+	GoCheckHint <if= d30 1 ifG 76 S103 StoryLine .xhint>
+	.xplot <TS_XRAN_a###_*.txt>
+	.xend <TS_XRAN_b###_*.txt>
+	.xhint <TS_XRAN_Hint_*.txt>
+
+	---------------
+	XRAN_a### plots
+	---------------
+	Narrative 1 = Enemy (Character)
+	  if N1=0, no specific character enemy at the moment
+	Narrative 2 = Enemy (Faction)
+	  if N2=0, no specific faction enemy at the moment
+	Narrative 3 = Scene for next episode
+	S101 = Load new episode when S101 = 1
+	S102 = # PC Wins
+	S103 = Difficulcy Level, load ending when S103>75
+	S104 = # Wins when level last increased
+	S105 = Have received location clue
+
+

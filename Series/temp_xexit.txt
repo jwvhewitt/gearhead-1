@@ -1,0 +1,67 @@
+Plot 0
+	name <TEMPLATE XRAND EXIT TOWN ENCOUNTER>
+
+	% The PC will be informed that someone is waiting for her outside of
+	% town. When the PC next enters the world map, a combat encounter will
+	% happen.
+
+	% Normally, these templates feature plenty of messages which are
+	% randomized. This template features just one message for each
+	% thing the NPC might want to say. Why? Because a regular combat
+	% mission might be encountered dozens of times over the course of
+	% a campaign, while this one will likely just be encountered once.
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	Element1 <Grab 3>
+	Element2 <Character !Near 1>
+	Element3 <Scene Town Target !Far 1>
+
+	% V1 = Combat Can Start
+	% V2 = Combat Indicator
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If the combat start counter has been set, and the PC enters the world map,
+	% better start combat. At this point in time the NPC who starts the mission
+	% becomes irrelevant.
+	start <if= V1 1 else GoCheckPersona if= SceneID 1 Goto GoStartCombat>
+
+	% If Persona E2 dies, load a new plot.
+	GoCheckPersona <ifPersona E2 else GoDelete>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	GoStartCombat <Block Print 101 SavePos P= 2 1 Dynamic 2 Threat S103 140 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7 S= 101 1 N= 3 E3 AdvancePlot 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 S= 101 1 S+ 102 1 N= 3 E3 AdvancePlot 0>
+
+
+	Msg101 <You are attacked by mecha!>
+
+sub
+	Persona 2
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <>
+	% eg., rumor <!2 knows who killed your parents.>
+
+	% I won't even bother to try and anticipate how this conversation
+	% might work out. So, it will just set the variable and exit.
+	greeting <NewChat Say 1 P= 1 1>
+
+	% 1 :  Player informed of combat
+	Msg1 <>
+
+end
+

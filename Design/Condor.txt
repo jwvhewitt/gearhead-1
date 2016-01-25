@@ -1,0 +1,96 @@
+Battroid 4
+Name <Condor>
+Desig <RW-2016>
+SDL_Sprite <btr_condor.png>
+desc <At one time the Condor was the Solar Navy's main aerial battroid. Recently however they have been searching for a more capable mecha to replace their ageing fleet.>
+
+Mod Head
+	Armor 3
+	Size 3
+	Mass -1
+	sub
+		CPit
+
+		Sensor 5
+	end
+
+Mod Body
+	Armor 3
+	Mass -2
+	sub
+		Mount
+		Name <Right Collar Mount>
+		inv
+			STC LRL-32
+		end
+
+		Mount
+		Name <Left Collar Mount>
+		inv
+			STC LRL-32
+		end
+
+		Flight 4
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 3
+	Armor 3
+	sub
+		Hand
+		inv
+			STC MAC-4
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 3
+	Armor 3
+	sub
+		Hand
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Size 3
+	Armor 2
+	sub
+		Flight 3
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Size 3
+	Armor 2
+	sub
+		Flight 3
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 3
+	sub
+		Mount
+		Name <Right Hip Mount>
+		inv
+			STC SWML-20
+		end
+
+		Flight 2
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 3
+	sub
+		Mount
+		Name <Left Hip Mount>
+		inv
+			STC SWML-20
+		end
+
+		Flight 2
+	end
+end

@@ -1,0 +1,174 @@
+Plot 0
+	name <PLOT: GuardFight1>
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Combat Indicator
+
+	element1 <Character Guardian>
+	% Element 2 -> Difficulcy Level
+
+	rumor <bounty hunting is a lucrative career. !1 sometimes posts reward notices for wanted criminals.>
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 15500>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+	% If combat has been entered, V2 = 1. This is important to keep
+	% the events below from activating in scenes other than the
+	% plot's combat...
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -4          V= 2 2>
+	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1    V= 2 2>
+
+sub
+	Persona 1
+	% The NPC who will offer the job.
+	% Only PCs with good reaction score will be offered a job.
+	greeting <NewChat ifG E2 0 else GoFirstTime Say 1 AddChat 6 AddChat 7>
+
+	GoFirstTime <ifG React 75 else GoMedReact Goto GoJobDesc>
+
+	% PCs with a medium reaction score have a chance to get offered a job,
+	% if they make a good impression on the NPC.
+	GoMedReact <ifG PCRep 1 -25 else GoLowReact ifG PCRep 2 -25 else GoLowReact ifG PCRep 2 45 else GoMed2 Say 2 AddChat 4 AddChat 5>
+	GoMed2 <ifG React 45 else GoMed3 Say 3 AddChat 4 AddChat 5>
+	GoMed3 <ifG PCRep 6 20 else GoMed4 Say 4 AddChat 1 AddChat 2 AddChat 3>
+	GoMed4 <ifG React 15 else GoMed5 Say 5 AddChat 1 AddChat 2 AddChat 3>
+	GoMed5 <ifG PCRep 2 -1 else GoLowReact Say 6 AddChat 1 AddChat 2 AddChat 3>
+
+	% PCs with a low reaction score will not be told anything.
+	GoLowReact <SayAnything>
+
+	% Result 1 -> The player wants the job
+	result1 <NewChat ifG SkRoll 19 5 else GoNoCon Goto GoJobDesc>
+	GoNoCon <AdvancePlot 0 Say 9>
+
+	% Result 2 -> The player doesn't want to be a bounty hunter.
+	result2 <NewChat Reputation 2 -1 AddReact -10 AdvancePlot 0 Say 8>
+
+	% Result 3 -> The player goes quietly away.
+	result3 <NewChat Say 7>
+
+	% Result 4 -> Go straight to the job description.
+	result4 <Goto GoJobDesc>
+
+	% Result 5 -> Go away.
+	result5 <NewChat Say 10>
+
+	% The NPC will describe the job being offered. This will depend upon the
+	% PC's reputation.
+	% V1 = Threat Value of Encounter
+	GoJobDesc <ifG PCRep 6 90 Else GoLvl9 V= 1 10000 E= 2 10 Say 11 goto GoChoose>
+	GoLvl9 <ifG PCRep 6 80 Else GoLvl8 V= 1  8000 E= 2 9 Say 12 goto GoChoose>
+	GoLvl8 <ifG PCRep 6 70 Else GoLvl7 V= 1  6500 E= 2 8 Say 13 goto GoChoose>
+	GoLvl7 <ifG PCRep 6 60 Else GoLvl6 V= 1  5000 E= 2 7 Say 14 goto GoChoose>
+	GoLvl6 <ifG PCRep 6 50 Else GoLvl5 V= 1  4000 E= 2 6 Say 15 goto GoChoose>
+	GoLvl5 <ifG PCRep 6 40 Else GoLvl4 V= 1  3000 E= 2 5 Say 16 goto GoChoose>
+	GoLvl4 <ifG PCRep 6 30 Else GoLvl3 V= 1  2500 E= 2 4 Say 17 goto GoChoose>
+	GoLvl3 <ifG PCRep 6 20 Else GoLvl2 V= 1  2000 E= 2 3 Say 18 goto GoChoose>
+	GoLvl2 <ifG PCRep 6 10 Else GoLvl1 V= 1  1500 E= 2 2 Say 19 goto GoChoose>
+	GoLvl1 <ifG PCRep 6  0 Else GoLvl0 V= 1  1000 E= 2 1 Say 20 goto GoChoose>
+	GoLvl0 <V= 1  500 E= 2 1 Say 20 goto GoChoose>
+
+	% The encounter has been described, and a threat rating been set.
+	% See whether or not the PC will accept the job.
+	GoChoose <NewChat AddChat 6 AddChat 7>
+
+	Result6 <EndChat P= 2 1 SavePos Dynamic 0 V1 FrzNU1 FrzNU2 Reputation 2 1 ifG PCMeks 0 else GoNoMeks Say 21>
+	GoNoMeks <Say 22>
+	FrzNU1 <if= T1 0 Return>
+	FrzNU2 <if= T2 0 Return>
+
+	Result7 <Say 10 NewChat>
+
+	Msg1 <Are you ready for the mission yet? I have all of the data for you here.>
+	Msg2 <A gang of violent criminals is thought to be hiding in this area. There's a reward being offered for anybody to stop them. How would you like to help?>
+	Msg3 <I've got a bounty available, if you're interested. A group of violent criminals are hiding in this area. There's a pretty substantial reward being offered for the gang, dead or alive. Want to hear about the job?>
+	Msg4 <A person like you could have a bright future in law enforcement. Have you ever thought about becoming a bounty hunter?>
+	Msg5 <There's good money to be made in tracking down wanted criminals. You might want to think about taking up bounty hunting.>
+	Msg6 <There aren't enough guardians to handle all of the dangerous and deranged criminals out there, so we often offer rewards to anyone who can bring said criminals to justice.>
+	Msg7 <Guardians often have jobs available for people interested in enforcing the law. See you around.>
+	Msg8 <If that's your opinion, so be it...>
+	Msg9 <Right now? No, there are no bounties available at the moment. Thanks for your interest, though.>
+	Msg10 <Do whatever you need to do, then head back here and I'll tell you where to find the criminals.>
+
+	Msg11 <Our intelligence branch has been tracking a special forces military unit that went AWOL. They seem to be planning some kind of terrorist attack. There's a bounty of $10000 to bring them in before they can carry out their plan.>
+	Msg12 <A charismatic madman and his murderous followers have set up a cult headquarters outside of town. It's worth $8000 if you can stop them before they kill again.>
+	Msg13 <We recently busted a ring of organ harvesters. The doctor is behind bars, but his collectors are still at large. They are extremely dangerous and have no regard whatsoever for human life. There's a reward of $6500 for their heads.>
+	Msg14 <There's a reward of $5000 being offered for a gang of thrill-killers that seems to be passing through this area. It's vital that we stop them before anybody gets hurt.>
+	Msg15 <A group of escaped convicts is thought to be hiding near here. They are dangerous killers, and there's a reward of $4000 to bring them back dead or alive.>
+	Msg16 <It's been discovered that this town is the hideout of a notorious arms smuggler. The gang isn't particularly skilled, but they have access to some nice hardware. There's a reward of $3000 for them.>
+	Msg17 <One of the local biker gangs has been implicated in several cases of arson. This has raised the bounty for their arrest from $1500 to $2500.>
+	Msg18 <A company executive was charged with murdering his superior at work. Rather than face the charges, he and his cronies fled town. There's a reward of $2000 being offered for them.>
+	Msg19 <Our armor division recently crushed a vicious gang of mecha bandits. Their vehicles were disabled, but the bandits themselves escaped. There's a reward of $1500 for them.>
+	Msg20 <A group of robbers killed someone during a hold-up and now they're on the run from the law. There's a reward of $1000 being offered to bring these creeps to justice.>
+
+	Msg21 <Here are the last known coordinates of the gang. You can proceed to the area by mecha, but you'll need to investigate on foot. I want you to bring them back dead or alive.>
+	Msg22 <Here are the last known coordinates of the gang. I want you to bring them back dead or alive. Be careful out there.>
+
+	prompt1 <Do you have any bounties available?>
+	prompt2 <I'm not interested in being a police-dog.>
+	prompt3 <I'll think about it.>
+	prompt4 <Give me the details.>
+	prompt5 <I'm not interested.>
+	prompt6 <I'm ready to go.>
+	prompt7 <I need some time to prepare.>
+
+
+	Plot 1
+		% The player lost the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 3500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		% The exact message given by the NPC will vary depending on
+		% whether or not the PC is well-liked...
+		greeting <NewChat AdvancePlot 0 ifG React 50 else GoMedReact Say 1>
+		GoMedReact <ifG PCRep 6 75 else GoMedRenown Say 2>
+		GoMedRenown <ifG React 15 else GoLowReact Say 3>
+		GoLowReact <ifG PCRep 6 25 else GoLowRenown Say 4>
+		GoLowRenown <Say 5>
+
+		Msg1 <You didn't manage to catch the crooks. I hope you have better luck next time.>
+		Msg2 <The criminals got away, but at least you live to fight again.>
+		Msg3 <Maybe bounty hunting isn't such a good job choice for you. It's never too late to go back to university.>
+		Msg4 <I know that you're very good at many things... apparently bounty hunting isn't one of them.>
+		Msg5 <That mission ended pretty badly, didn't it?>
+	end
+
+	Plot 2
+		% The player won the battle.
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat AdvancePlot 0 AddReact 1 if= E2 10 Else GoLvl9 CashPrize 10000 Goto GoSaySomething>
+		GoLvl9 <if= E2 9 Else GoLvl8 CashPrize 8000 Goto GoSaySomething>
+		GoLvl8 <if= E2 8 Else GoLvl7 CashPrize 6500 Goto GoSaySomething>
+		GoLvl7 <if= E2 7 Else GoLvl6 CashPrize 5000 Goto GoSaySomething>
+		GoLvl6 <if= E2 6 Else GoLvl5 CashPrize 4000 Goto GoSaySomething>
+		GoLvl5 <if= E2 5 Else GoLvl4 CashPrize 3000 Goto GoSaySomething>
+		GoLvl4 <if= E2 4 Else GoLvl3 CashPrize 2500 Goto GoSaySomething>
+		GoLvl3 <if= E2 3 Else GoLvl2 CashPrize 2000 Goto GoSaySomething>
+		GoLvl2 <if= E2 2 Else GoLvl1 CashPrize 1500 Goto GoSaySomething>
+		GoLvl1 <CashPrize 1000 Goto GoSaySomething>
+
+		GoSaySomething <if= d6 1 else GoSay2 Say 1>
+		GoSay2 <if= d5 1 else GoSay3 Say 2>
+		GoSay3 <if= d4 1 else GoSay4 Say 3>
+		GoSay4 <if= d3 1 else GoSay5 Say 4>
+		GoSay5 <if= d2 1 else GoSay6 Say 5>
+		GoSay6 <Say 6>
+
+		Msg1 <Good job. Here's your reward for stopping the criminals.>
+		Msg2 <Justice has been served. Here's the bounty that you've earned.>
+		Msg3 <Very good. Here's your pay for a job well done.>
+		Msg4 <Congradulations, you stopped the criminals. Here's your reward.>
+		Msg5 <Here's the cash you earned for stopping those lowlifes.>
+		Msg6 <Here's your reward. Be seeing you around.>
+	end
+
+
+end
+

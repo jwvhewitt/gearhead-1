@@ -1,0 +1,131 @@
+Plot 0
+	name <>
+
+	% An item will be recovered. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	% As long as E3 can be picked up some time, or the code
+	% contained under ".getkey" below is otherwise executed
+	% at some time, what E4 does exactly doesn't matter.
+	Element4 <Character Bandit !Near 1>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have picked up item
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose GET E3 .getKey Compose KEY E3 .useKey>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% As soon as the item is gotten, this plot starts the clue
+	% countdown and loads the next relay. You might want to move
+	% this so that the countdown starts only if the item is given
+	% to E4 or some other condition...
+	.getkey <if= V1 1 S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 P= 3 1 V= 1 2>
+	% When the item is used, it reveals the next clue.
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 2 AdvancePlot 0>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0>
+
+sub
+	Persona 4
+	rumor <>
+	%  V1 =  Mission Accepted Counter
+	greeting <NewChat if= P3 2 else GoCheckWin SayAnything>
+	% Upon winning the mission, you may want to destroy the item if
+	% the NPC takes it. Otherwise the NPC can just let the PC keep it.
+	GoCheckWin <if= P3 1 else GoCheckMission Say 1 P= 3 2 XPV 100>
+	GoCheckMission <if= V1 1 else GoCheckFirst ifItemOK E3 else GoDelete Say 2 Goto GoAddComOps>
+	GoDelete <Say 3 S= 201 0 AdvancePlot 0>
+
+	% Right now the PC has only one chance to get the mission-
+	% be reasonably well liked. This can be altered so the PC
+	% can get the mission if his traits are right, if he's been
+	% given the mission by N1, or whatever else.
+	GoCheckFirst <ifG React 10 else GoNoChance Say 4 AddChat 1 AddChat 2>
+	GoNoChance <Say 5>
+
+	GoAddComOps <AddChat 3 AddChat 4>
+
+	result1 <NewChat V= 1 1 Memo 6 Say 7 Goto GoAddComOps>
+
+	% If the PC doesn't want this mission, the entire story will
+	%  be blocked. No point continuing if the player doesn't want...
+	result2 <NewChat Say 8 AdvancePlot 0>
+
+	% For the purposes of this template, I'll use the ITEM DUNGEON scene.
+	result3 <EndChat Say 9 Goto GoStartCombat>
+	GoStartCombat <SavePos LoadD .scene PassVar 1 E3 PassVar 2 S2 PassVar 3 5 PassVar 4 3 SeekGate -1>
+	.scene <SCENE_ItemDungeon.txt>
+
+	result4 <NewChat Say 10>
+
+	%  01 :  PC has retrieved the item.
+	Msg1 <>
+
+	%  02 :  PC has come back after getting ready
+	Msg2 <>
+
+	%  03 :  The item somehow got destroyed...
+	Msg3 <The item we've been searching for has been destroyed. Too bad...>
+
+	%  04 :  PC will be offered the mission here.
+	Msg4 <>
+
+	%  05 :  Mission will be implied.
+	Msg5 <>
+
+	%  06 :  Memo
+	Msg6 <\ELEMENT 4 in \SCENE EScene 4 asked you to retrieve an item.>
+
+	%  07 :  Mission description.
+	Msg7 <>
+
+	%  08 :  The PC refused the mission.
+	Msg8 <>
+
+	%  09 :  Combat is starting.
+	Msg9 <>
+
+	%  10 :  The PC needs some time to get ready.
+	Msg10 <>
+
+
+	%  01 :  PC will accept the mission.
+	Prompt1 <>
+
+	%  02 :  PC doesn't want the mission.
+	Prompt2 <>
+
+	%  03 :  Start the mission now.
+	Prompt3 <>
+
+	%  04 :  PC needs time to prepare.
+	Prompt4 <I need some time to prepare.>
+
+end
+inv
+	treasure 1000
+	name <MacGuffin>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <ifG PCSkillVal 37 V4 else GoDid Mental V= 4 PCSkillVal 37 ifG SkRoll 37 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <The next location will be \SCENE V1 .>
+	Msg2 <You can't determine anything from this artifact.>
+
+end

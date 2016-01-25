@@ -1,0 +1,99 @@
+story
+	name <STORY: Expansion and Conquest>
+
+	% The corporation is planning a new operation of some kind
+	% in the dead zone. First they're going  to have to secure the
+	% territory in question from the current inhabitants.
+
+	% This plot involves lots of missions fighting the dead-zone
+	% "ravagers", and maybe some missions from dead-zone residents
+	% fighting the corporate "invaders".
+
+	% There may also be a second thread in this story about public
+	% opposition to the development. If enough negative publicity is
+	% generated the project will have to be abandoned, regardles of
+	% how the military action is proceeding.
+
+	% Element 1 = Controlling Faction
+
+	% There are no other elements for this story.
+
+	% The story will end if...
+	%  - Corp Victory score (v101) goes over 20
+	%  - Corp Victory score (v101) drops below -20
+	%  - Public Opposition score (v102) goes over 20
+
+	start <if# V2 0 else GoCheckWin ifG ComTime V2 EndStory>
+	% Check for a win...
+	GoCheckWin <ifG V101 19 else GoCheckLoss News d5 Trigger FACWIN N1 Goto GoSetTimer>
+	% Check for a loss...
+	GoCheckLoss <ifG -19 V101 else GoCheckOpp V= 3 50 V+ 3 d5 News V3 Trigger FACLOSE N1 Goto GoSetTimer>
+	% Check for public opposition halting the project...
+	GoCheckOpp <ifG V102 19 V= 3 100 V+ 3 d5 News V3 Trigger FACLOSE N1 Goto GoSetTimer>
+	GoSetTimer <PurgeStory V= 2 ComTime V+ 2 86400>
+
+	% V2 = Time Limit, activated after the story has officially ended.
+	%   So, if V2<>0, the story is officially over.
+	% V3 = Message Randomizer
+	% V101 = Corporate Victories
+	% V102 = Public Opposition
+
+	% Every hour, load a plot, as long as the story isn't yet over.
+	hour <if= V2 0 storyline .expstory>
+	.expstory <TS_CORP_DZProject_PLOT_*.txt>
+
+	% Every quarter, update the news, as long as the story isn't over yet.
+	quarter <if= V2 0 ifG V102 d20 else GoCheckNews1 V= 3 150 V+ 3 d5 News V3>
+	GoCheckNews1 <ifG V101 d12 else GoCheckNews2 V= 3 200 V+ 3 d5 News V3>
+	GoCheckNews2 <ifG -d10 V101 else GoCheckNews3 V= 3 250 V+ 3 d5 News V3>
+	GoCheckNews3 <V= 3 300 V+ 3 d5 News V3>
+
+	% 01 - 05 :  Story has ended, corporation was successful.
+	Msg1 <\NARRATIVE 1 has established new mining operation in dead zone. Many new jobs to be created in FedTer.>
+	Msg2 <\NARRATIVE 1 has built state of the art waste processing facility in dead zone. Outdated local plant to be closed.>
+	Msg3 <\NARRATIVE 1 has expanded its influence with three new facilities in the dead zone.>
+	Msg4 <\NARRATIVE 1 has constructed resource gathering waystation on dead-zone border.>
+	Msg5 <Despite protests, \NARRATIVE 1 has gone ahead with dead zone mining venture.>
+
+	% 51 - 55 :  Story has ended, corporation was defeated.
+	Msg51 <\NARRATIVE 1 abandons dead zone construction project, citing dangerous working conditions as the reason.>
+	Msg52 <\NARRATIVE 1 has been forced to pull out of dead zone project. No further ventures in that area are planned.>
+	Msg53 <Ravagers oppose \NARRATIVE 1 development plan in dead zone; corporation decides to pull out.>
+	Msg54 <Dead zone tribes defend their land against corporate expansion; \NARRATIVE 1 forced to pull out of region.>
+	Msg55 <\NARRATIVE 1 forced to abandon new expansion project due to eco-terrorist attacks.>
+
+	% 101 - 105 :  Story has ended, public outcry stopped expansion.
+	Msg101 <\NARRATIVE 1 forced to abandon dead zone construction project following public outcry over treatment of local residents.>
+	Msg102 <\NARRATIVE 1 to be investigated for human rights abuses in failed dead zone mining project.>
+	Msg103 <Victory for human rights. \NARRATIVE 1 forced out of dead zone following acts of violent supression against tribal residents.>
+	Msg104 <\NARRATIVE 1 bows to public pressure; abandons plan to place toxic waste dump in tribal village.>
+	Msg105 <FedTer Council orders \NARRATIVE 1 to halt dead zone expansion after evidence of human rights abuses discovered.>
+
+	% 151 - 155 :  Public opposes corporate expansion.
+	Msg151 <Dead zone residents rightful owners of territory being exploited by \NARRATIVE 1 .>
+	Msg152 <FedTer council warns \NARRATIVE 1 to respect international law and human rights in its dead zone expansion project.>
+	Msg153 <Guardians investigate \NARRATIVE 1 for violently supressing dead zone residents in its expansion project.>
+	Msg154 <\NARRATIVE 1 suspected of destroying peaceful settlements in order to secure territory for its dead zone expansion program.>
+	Msg155 <Critics say \NARRATIVE 1 purge of dead zone "ravagers" actually intended to quell dissent against expansion program.>
+
+	% 201 - 205 :  Corporation is "civilizing" the dead zone.
+	Msg201 <\NARRATIVE 1 has clashed with dead zone ravagers in battle for control of untapped mineral wealth.>
+	Msg202 <\NARRATIVE 1 dead zone expansion project proceeding smoothly.>
+	Msg203 <\NARRATIVE 1 expects to soon secure the land for their new development initiative.>
+	Msg204 <\NARRATIVE 1 clashes with ravagers at site of new dead zone industrial project.>
+	Msg205 <New \NARRATIVE 1 industrial project expected to aid those living in dead zone.>
+
+	% 251 - 255 :  Dead zone resistance stronger than expected.
+	Msg251 <\NARRATIVE 1 industrial development stalled by constant clashes with dead zone ravagers.>
+	Msg252 <Dead zone combat tribes fight against \NARRATIVE 1 encroachment onto their territory.>
+	Msg253 <Resistance from dead zone combat tribes more fierce than originally expected, says \NARRATIVE 1 spokesperson.>
+	Msg254 <Workers will not arrive at new \NARRATIVE 1 industrial complex until fighting with local ravagers has ended.>
+	Msg255 <Ravager agression blamed for delays in \NARRATIVE 1 industrial expansion project.>
+
+	% 301 - 305 :  Just tell that corp is expanding without elaboration.
+	Msg301 <\NARRATIVE 1 plans new industrial complex on edge of dead zone.>
+	Msg302 <\NARRATIVE 1 to secure territory for new dead zone industrial project.>
+	Msg303 <\NARRATIVE 1 seeks territory in dead zone for site of future industrial complex.>
+	Msg304 <New \NARRATIVE 1 dead zone expansion project expected to create jobs.>
+	Msg305 <\NARRATIVE 1 seeks primary resources in unclaimed lands of dead zone.>
+

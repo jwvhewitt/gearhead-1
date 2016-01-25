@@ -1,0 +1,49 @@
+GroundHugger 5
+Name <Doom Buggy>
+Desig <TPO-X>
+SDL_Sprite <ghu_doombuggy.png>
+Scale 1
+
+Mod Turret
+	Armor 3
+	sub
+		Gun 1
+		Name <Chain Gun>
+		Speed 3
+		BV 4
+		Magazine 50
+		sub
+			Ammo 1
+		end
+
+		Mount
+		inv
+			Gun 16
+			Name <Mech Cannon>
+			Speed 3
+			Magazine 50
+			sub
+				Ammo 16
+			end
+		end
+	end
+
+Mod Body
+	Armor 2
+	sub
+		CPit
+		Armor 1
+
+		Sensor 2
+
+		MLauncher 3
+		Name <Missile Pod>
+		Speed 1
+		Magazine 16
+		sub
+			Rockets 3
+		end
+
+		Wheels 6
+	end
+end

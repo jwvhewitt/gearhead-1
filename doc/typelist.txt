@@ -1,0 +1,60 @@
+TYPES LIST
+
+GEAR GENERAL DESCRIPTORS
+-10:	Story
+-9 :	Plot
+-8 :	Map Feature
+-7 :	Adventure
+-6 :	Faction
+-5 :	Persona
+-4 :	Team
+-3 :	Scene
+-2 :	Unit
+-1 :	Delete this gear
+ 0 :	Mecha
+ 1 :	Module
+ 2 :	Character
+ 3 :	Cockpit / Submecha Storage
+ 4 :	Weapon System
+ 5 :	Ammunition
+ 6 :	Movement System
+ 7 :	Holder
+ 8 :	Sensor System
+ 9 :	Support Equipment
+10 :	Shield
+11 :	External Armor
+12 :	Swag
+13 :	Prop
+14 :	Electronics (ghsensor.pp)
+15 :	MetaTerrain (ghprop.pp)
+16 :	Usables (ghswag.pp)
+17 :	Repair Fuel (ghswag.pp)
+18 :	Consumable (ghswag.pp)
+19 :	Modifier (ghmodule.pp)
+20 :	Weapon Add-On (ghweapon.pp)
+
+NUMERICAL ATTRIBUTE GENERAL DESCRIPTORS
+-6 :	ParaLocation
+-5 :	Visibility Marker {locale.pp}
+-4 :	Episode Data
+-3 :	Weapon Modifiers
+-2 :	Action Data
+-1 :	Location Data / Game Map Coordinates
+ 0 :	Script Variable (ArenaScript.pp)
+ 1 :	Skill (GHChar.pp)
+ 2 :	Gear Options (gear.pp)
+ 3 :	Character Description (GHChar.pp)
+ 4 :	Experience Record (GHChar.pp)
+ 5 :	Personal Variables (interact.pp)
+ 6 :    Relationship Score (interact.pp)
+ 7 :	Narrative Variables (gears.pp)
+ 8 :	Faction Score (interact.pp)
+ 9 :	Condition (ghchars.pp)
+10 :    Relationship Type (interact.pp)
+11 :	Statistic Improvement Level (ghchar.pp)
+12 :	Damage (damage.pp)
+13 :	SDL Frame Number (gears.pp)
+14 :	Status Effect Counter (ghweapon.pp)
+15 :	Prefrences (gears.pp)
+16 :	Talents (ghchars.pp)
+17 :	Scene Data (locale.pp)

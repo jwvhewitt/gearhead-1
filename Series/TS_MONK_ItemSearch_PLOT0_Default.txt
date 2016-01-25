@@ -1,0 +1,164 @@
+Plot 0
+	name <Investigation>
+
+	% This plot contains the monk who will be investigating
+	% the artifact. The PC can always come back to this monk
+	% to learn the results of the investigation.
+
+	element1 <Grab 1>
+	element2 <Character Monk Knowledge !Comrade 1>
+
+	start <ifPersona E2 else GoCleanDelete>
+
+	% If the master of this plot has died, better load a new
+	% investigative plot.
+	GoCleanDelete <S= 204 0 AdvancePlot 0>
+
+	% At cleanup, delete this plot. If the PC has been given the
+	% mission advance to the plot which will tell him it's over.
+	cleanup <if# S103 0 else GoRealDelete if# S104 0 else GoTimeOver AdvancePlot 2>
+	GoTimeOver <AdvancePlot 1>
+	GoRealDelete <AdvancePlot 0>
+
+	% Every 5 minutes, check for email.
+	5Min <if= d30 1 if= S103 0 else GoCheckUpdate if= PCFac E1 Email 1 S= 103 1 P= 101 S202>
+	GoCheckUpdate <if# P101 S203 ifG ComTime S205 Email 2 P= 101 S203 if# S202 S203 S= 203 S202>
+
+	% Msg1 : Initial message
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// Our quest for ancient knowledge has led to \NARRATIVE 2 . Go there and see what you can find.>
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// Explore \NARRATIVE 2 for lost technology and relics of the past. Report your findings to me.>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// Here is a quest for you from the temple: Proceed to \NARRATIVE 2 and search for artifacts from the past age.>
+	Msg1_3 <\ELEMENT 2 @ \SCENE EScene 2 :// Our research has led us to \NARRATIVE 2 . You should proceed there and quest for relics from the past age.>
+	Msg1_4 <\ELEMENT 2 @ \SCENE EScene 2 :// The library has determined that something important must be located in \NARRATIVE 2 .>
+
+	% Msg2 : Reminder message
+	Msg2_1 <\ELEMENT 2 @ \SCENE EScene 2 :// The results are in. \NARRATIVE 2 should be your next destination.>
+	Msg2_2 <\ELEMENT 2 @ \SCENE EScene 2 :// The clues uncoveres so far all point to \NARRATIVE 2 .>
+
+
+sub
+	Persona 2
+	rumor <!2 has been searching for PreZero artifacts>
+	% V2 = Message Randomizer
+	% To start with, check to see whether or not the PC has already
+	% been given this mission.
+	greeting <NewChat if= S103 0 else GoStartWithCase if= PCFac E1 else GoCheckRep Say d3 AddChat d3>
+	GoCheckRep <ifG React d50 else GoNoChance V= 2 3 V+ 2 d3 Say V2 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoNoChance <V= 2 9 V+ 2 d3 Say V2>
+
+	% If the number of clues equals the number of wins, then E2
+	% can tell the PC where to head next.
+	GoStartWithCase <NewChat if= S202 S203 else GoCheckClue V= 2 15 V+ 2 d5 Say V2>
+
+	% If the clue timer has run its course, tell the PC the next
+	% place to go now.
+	GoCheckClue <ifG ComTime S205 else GoMustWait S= 203 S202 V= 2 21 V+ 2 d3 Say V2 V= 2 6 V+ 2 d3 AddChat V2>
+
+	% If the PC must wait, then there's not much else to do
+	% but wait. Bummer.
+	GoMustWait <V= 2 24 V+ 2 d3 Say V2>
+
+	result1 <NewChat S= 103 1 Goto GoStartWithCase>
+	result2 <Goto Result1>
+	result3 <Goto result1>
+
+	result4 <NewChat V= 2 12 V+ 2 d3 Say V2>
+	result5 <Goto Result4>
+	result6 <Goto result4>
+
+	result7 <NewChat V= 2 15 V+ 2 d5 Say V2>
+	result8 <Goto Result7>
+	result9 <Goto result7>
+
+	%  01 - 03 :  PC is faction member; automatically offered job.
+	Msg1 <Ah, \RANK \PC . I have a quest for you.>
+	Msg2 <It's good to see you, \RANK . The temple has need of a skilled volunteer such as yourself.>
+	Msg3 <\PC , you have come at a good time. I have a quest which requires your skills.>
+
+	%  04 - 06 :  PC is liked; will be offered the job.
+	Msg4 <Greetings, \PC . The temple archive has a quest available for an adventurer. If you are interested, we may discuss the specifics.>
+	Msg5 <Ah, \PC . If you aren't busy the temple has a job which requires a person with broad skills.>
+	Msg6 <I have a job that you may be interested in. The temple library has need of a cavalier to perform some field research.>
+
+	%  10 - 12 :  PC is denied mission; NPC will just imply it.
+	Msg10 <I'm very busy today... our temple archive is conducting some field research.>
+	Msg11 <Did you know that in the Night of Fire more than two thirds of the people on Earth died? It's a wonder that all of human civilization wasn't lost.>
+	Msg12 <It is our job to investigate the past, to make sure that the mistakes of history are not allowed to repeat themselves.>
+
+	%  13 - 15 :  PC doesn't want the job.
+	Msg13 <So that's the way it goes.>
+	Msg14 <I guess we will find another cavalier, then.>
+	Msg15 <In that case, I will find another.>
+
+	%  16 - 20 :  General clue reminder.
+	Msg16 <Our research indicates that some PreZero artifacts may be located in \NARRATIVE 2 . You should go there and see what you can find.>
+	Msg17 <The research we've been doing points to \NARRATIVE 2 as the site of an important artifact. Go there and explore. Report back here when you've found anything.>
+	Msg18 <There is an artifact in \NARRATIVE 2 which is vital to our research. You should travel there and seek it out.>
+	Msg19 <In \NARRATIVE 2 there's a ruin containing information about the previous age. You should attempt to locate it, and recover any artifacts that may be there. I'd give you more information but we don't know any more ourselves.>
+	Msg20 <Search \NARRATIVE 2 for a prezero ruin of some type. In that ruin you will find an artifact which is of great importance to our studies.>
+
+	%  22 - 24 :  The next clue has been discovered! Yay!
+	Msg22 <We have considered the evidence you uncovered, and have reached a conclusion.>
+	Msg23 <Our archivist has examined all the evidence, and determined where our search for artifacts should proceed next.>
+	Msg24 <Your discoveries have been added to the archive. It's been determined where our research should lead us next.>
+
+	%  25 - 27 :  PC must wait for the lab report.
+	Msg25 <The archivists are now interpreting your discoveries. It will take some hours before we have any results.>
+	Msg26 <Your discoveries are still being analyzed. Check back in a few hours and I can tell you then what we've discovered.>
+	Msg27 <We are currently busy with analyzing these new archeological finds. Come back here in a little while and I may be able to tell you more.>
+
+	%  01 - 03 :  PC is interested in taking the case.
+	Prompt1 <I'll get to work on it.>
+	Prompt2 <I'd like to help you.>
+	Prompt3 <Alright, I'll do the quest.>
+
+	%  04 - 06 :  PC won't take the case.
+	Prompt4 <I have more important things to do.>
+	Prompt5 <Sorry, I can't.>
+	Prompt6 <Don't you have anyone else?>
+
+	%  07 - 09 :  Next clue has been discovered.
+	Prompt7 <What did you find out?>
+	Prompt8 <Well, tell me what you found.>
+	Prompt9 <Where should I go search next?>
+
+
+	Plot 1
+	% This plot exists only to tell the PC that the time is up.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email d5>
+	GoCheckTime ifG ComTime V1 AdvancePlot 0
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You may cease your searching. Our research grant has run out.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// Your quest has ended. The trail of clues has ended.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Time has expired. We no longer require you to search.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// Our exploration has ended. Your quest for us has come to an end.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// We have found all there is to be found, this time. Your quest is ended.>
+	sub
+		Persona 2
+		greeting <NewChat Say d5 AddReact d6 AdvancePlot 0>
+		Msg1 <The sequence of expeditions has reached an end. There are no more artifacts to be discovered, until we discover a new lead.>
+		Msg2 <We have exhausted the leads. This research project has come to an end... There will be more later, of course.>
+		Msg3 <The research project has ended. We ran out of money.>
+		Msg4 <This line of research has been productive, but the time has come to move on to other things. Thanks for your help.>
+		Msg5 <Our research has come to an end. The time has come to focus on other matters... Thank you for your help.>
+	end
+
+	Plot 2
+	% This plot exists to reward the PC for solving the case.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Email d5>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// The research project is complete. Come here for a reward.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// I have a reward for your participation in our research initiative.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// You've done very well in researching the past. Come here for a reward.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// The project is ended; come here for your reward.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// Our research is complete. You've done very well. I have a reward for you.>
+	sub
+		Persona 2
+		greeting <NewChat Say d5 CashPrize Reward Threat PCRep 6 100 500 XPV 100 FacXP+ E1 5 AdvancePlot 0>
+		Msg1 <We've completed the set of artifacts that we set out to recover. Thank you for making this possible. Here's a reward for you.>
+		Msg2 <All the artifacts we required have been recovered. Our archivists will be studying these for years. Thank you very much for your help... here's a reward.>
+		Msg3 <Everything we were looking for has been found. The research project is a complete success, thanks to your efforts. Here's a reward.>
+		Msg4 <This research project has been a complete success. Take this reward; you've earned it.>
+		Msg5 <Thanks to you, our research project has been completed ahead of schedule. Here's a reward.>
+	end
+
+end

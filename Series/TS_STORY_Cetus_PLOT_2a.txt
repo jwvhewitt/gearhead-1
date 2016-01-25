@@ -1,0 +1,70 @@
+Plot 0
+	name <PLOT: Cetus vs Town>
+	% Cetus will attack a town. Yay!
+
+	element1 <Scene Town Target>
+	element2 <Character HasMecha !Near 1>
+
+
+	% V1 = Bombing Counter
+	% V2 = Combat Indicator
+
+	% On a cleanup request, just delete this plot.
+	cleanup <if= P2 0 AdvancePlot 0>
+
+	start <ifG V1 0 if= SceneID 1 ifYesNo 4 5 6 else GoResolve Goto GoStartCombat>
+	GoResolve <AdvancePlot 0>
+
+	% This plot goes very quickly. So, the updates happen
+	% every 5 minutes, and the entire plot resolves within 30...
+	5Min <ifG V1 0 else GoCheckInit if= V2 0 V+ 1 1 ifG V1 6 else GoBomb Alert 3 AdvancePlot 0>
+	GoBomb <if= SceneID E1 Bomb>
+
+	% The plot only works if the PC is in the right town when
+	% it starts; otherwise it concludes immediately without
+	% the PC.
+	GoCheckInit <if= SceneID E1 else GoNotInTown Alert 1 Print 2 AirRaidSiren V+ 1 1>
+	GoNotInTown <AdvancePlot 1>
+
+	% If the PC exits town in time, he can face Cetus in combat.
+	GoStartCombat <SavePos NewD 2 ComposeD NU1 .nu1 ComposeD NU2 .nu2 DynaNPC N1 2 P= 2 1>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -4  AdvancePlot 1>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 1 1  Reputation 6  1  XPV 200 AdvancePlot 2>
+
+
+	Msg1 <Suddenly, an alarm rings! In the distance you can see the biomonster Cetus, approaching quickly...>
+	Msg2 <An air raid siren rings!>
+	Msg3 <Cetus drifts away, apparently saitsfied with the destruction it has caused.>
+
+	Msg4 <Do you want to fight Cetus, or are you just trying to get away?>
+	Msg5 <Fight Cetus.>
+	Msg6 <Run away.>
+
+sub
+
+	Plot 1
+	% PC was not in town. Print a news story saying that
+	% Cetus attacked this town.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Goto GoCheckCetus>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoCheckCetus <ifG NPCRep E2 6 d1000 else GoNPCLost News 21 DeleteChar N1>
+	GoNPCLost <News d5>
+	Msg1 <Biomonster "Cetus" attacks \ELEMENT 1 ; military searches for way to stop this terror.>
+	Msg2 <Massive fires in \ELEMENT 1 following an attack by Cetus.>
+	Msg3 <Families of victims in \ELEMENT 1 seek class action suit against BioCorp following an attack by the biomonster Cetus.>
+	Msg4 <East \ELEMENT 1 in ruins following a suprise attack by the biomonster Cetus.>
+	Msg5 <\ELEMENT 1 shopping area destroyed after being attacked by Cetus. At least seven people dead.>
+	Msg21 <Famed pilot \ELEMENT 2 of \ELEMENT 1 has succeeded in destroying the biomonster Cetus.>
+
+	Plot 2
+	% PC defeated Cetus in combat. Yay!
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Goto GoResolve>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoResolve <News 1 History 2>
+	Msg1 <Pilot \PC defended \ELEMENT 1 against Cetus, finally ending the monster's reign of terror.>
+	Msg2 <You killed the biomonster Cetus in \ELEMENT 1 .>
+
+end
+

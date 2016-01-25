@@ -1,0 +1,47 @@
+scene 0 2
+% "Heavy Gear II Rip-Off" scene
+%
+%  One mecha on the enemy side needs to be captured. To do this, you
+%  must destroy every other mecha on his team except him.
+
+% V1 = Target UID
+% V2 = Victory Indicator; if V2=1 then the PC has won
+% V3 = Target has been destroyed
+
+WildMap
+type <SOLO>
+
+% At startup, choose which mecha will be the target.
+start <ifG T2 1 else GoOnlyOne if= V1 0 V= 1 ?M2 Alert 1 Compose TD V1 .targetdown>
+GoOnlyOne <V= 1 -1 Alert 4>
+
+Nu1 <if= T1 0 Return>
+NU2 <ifG V1 0 else GoNormal if= V2 0 if= T2 1 else GoCheckEnd ifM V1 V= 2 1 Alert 3 LocalRunAway V1>
+GoCheckEnd <if= T2 0 V= 2 -1 Return>
+GoNormal <if= T2 0 V= 2 1 Return>
+
+.targetdown <if= V3 0 Print 2 V= 3 1>
+
+Msg1 <\PILOT L1 must be forced to surrender. Eliminate all enemy mecha except for \PILOT L1 .>
+Msg2 <\PILOT L1 has been disabled. The mission is a failure.>
+Msg3 <\PILOT L1 has surrendered. The mission is a success.>
+Msg4 <\PILOT ?M1 must be stopped. Disable his mecha.>
+
+% Linking code... assumes that the plot calling this scene sets P2=1
+% when combat is entered, as per the templates...
+%	nu1 <if= T1 0 if= V2 1 if= L2 1 else GoLose  V= 2 3>
+%	GoLose <V= 2 2 Reputation 6 -3>
+%	nu2 <if= V2 1 if= L2 1 else GoNU2Lose  V= 2 3>
+%	GoNU2Lose <if= L2 -1 V= 2 2 Reputation 6 -3>
+
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	ParaX 25
+	ParaY 25
+end
+

@@ -1,0 +1,37 @@
+Story
+	name <Rat Infestation Mk2>
+
+	% N1 is the town that's infested.
+
+	% no other elements are needed for this story...
+
+	rumor <!1 has a serious vermin problem.>
+
+	% Every 6 hours, maybe load a plot.
+	quarter <if= d3 1 StoryLine .ratplot>
+	.ratplot <TS_GSP_Rats_PLOT_*.txt>
+
+	% S1 = Applause Counter
+	% S2 = Warning Recharge
+
+	% This story may be completed if the PC is a musician. Like the legend
+	% of the pied piper, the rats in this town are attracted to music. If the
+	% PC plays enough music in town the rats are going to come streaming out
+	% of the woodwork and he may be in trouble...
+
+	% At startup, clear the applause counter if this isn't N1.
+	start <if# SceneID N1 S= 1 0>
+	APPLAUSE <if= SceneID N1 S+ 1 1 ifG S1 30 else GoCheckWarning Alert 2 Goto GoStartCombat>
+	GoCheckWarning <ifG S1 d40 ifG ComTime S2 Print 1 S= 2 ComTime>
+	GoStartCombat <LoadD .ratscene PassVar 1 N1 History 3 EndStory>
+	.ratscene <TS_GSP_Rats_SCENE_1.txt>
+
+	Msg1 <You hear an ominous squeaking noise from below street level...>
+	Msg1_1 <You hear more squeaking... The noise seems to be following you...>
+	CMsg1_1 <ifG S2 0 Accept>
+	Msg1_2 <You hear a faint squeaking noise, as though hundreds of tiny animals were trying to sing along with your music...>
+	Msg2 <Suddenly the ground beneath your feet collapses, and you find yourself falling into the \NARRATIVE 1 sewer!>
+	Msg3 <Your music beguiled the Rat King of \NARRATIVE 1 .>
+
+
+

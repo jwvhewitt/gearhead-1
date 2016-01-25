@@ -1,0 +1,270 @@
+Plot 0
+	name <PLOT: Default>
+	% [[Ver1.3]]
+	% Nov 11 2003 : Added FacXP+ command
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+
+	% E1 is the scene where this plot will take place.
+	Element1 <Grab 2>
+
+	% E2 is the NPC who will give the PC the mission.
+	% Right now it will just be a member of E1.
+	Element2 <Character Guardian !Near 1>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	%  S101 = Faction Victory Count
+	%  S102 = Enemy Victory Count (if appropriate)
+	%  S103 = How many times PC fought for faction
+	%  S104 = How many times PC fought against faction
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  S+ 101 1 FacXP+ N1 1>
+
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 if= PCFac N1 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// Assistance required in \SCENE EScene 2 .>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// I have a mission for you in \SCENE E1 .>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Urgent Guardian business. Proceed to \SCENE E1 as soon as possible.>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// We could use some backup in \SCENE E1 ... head over here right away.>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// There's a gang war in \SCENE E1 ; your assistance is requested.>
+
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <!2 has a job available for a hunter.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 FacVar N1 1000 V+ 3 d6 V= 4 Threat V3 1 Goto GoCheckFaction>
+	GoCheckFaction <if= PCFac N1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+
+	GoCheckFriend <ifG PCRep 2 d50 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2  Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Reputation 2 1 Goto GoStartCombat>
+
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 MDynamic 0 V3 .edesc .nu1 .nu2  Reputation 2 1 SetMapType -6>
+	.edesc <Criminal>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat ifG Intimidation 10 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1>
+
+
+	% The PC tries to get the job via "PLAN B"- be melancholy.
+	result14 <NewChat ifG -PCRep 5 d25 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Reputation 5 d6 Say 106 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Here's your pay.>
+	Msg2 <Good job. The streets will be a bit safer after that.>
+	Msg3 <Nice work out there. Here's your reward.>
+	Msg4 <They didn't stand a chance. Here's the money you earned.>
+	Msg5 <You did it.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <You didn't complete the mission, so no pay.>
+	Msg7 <What was that? You let them get away!>
+	Msg8 <The mission was a failure.>
+	Msg9 <That didn't work.>
+	Msg10 <You ran away... How could you?>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <There's a gang of criminals who have been offing their rivals. They need to be taken out before anyone innocent gets hurt. The mission pays $ \VAL V4 .>
+	Msg12 <One of our local gangs has started doing drive-by shootings; they need to be stopped. The bounty on their heads is $ \VAL V4 , payable dead or alive.>
+	Msg13 <Your job is to eliminate one of out most brutal gangs. I can pay you $ \VAL V4 for the mission.>
+	Msg14 <A gang of street punks has been terrorizing the warehouse district. They have to be brought in, either dead or alive. The reward for this mission will be $ \VAL V4 .>
+	Msg15 <Your target is a street gang that's been responsible for some of the worst violence this city has ever seen. There's a reward of $ \VAL V4 for bringing them to justice.>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Are you looking for a job? We're hiring bounty hunters to help deal with the gang war that's broken out.>
+	Msg17 <If you're looking for work, the Guardians need some freelance hunters to help deal with all the gang violence in \SCENE E1 .>
+	Msg18 <I have a contract available for a freelance bounty hunter, if you're into that line of work.>
+	Msg19 <There's a gang war taking place here in \SCENE E1 . I've been authorized to hire bounty hunters to help deal with the caseload. Would you be interested in taking a contract?>
+	Msg20 <How'd you like to run a mission for the guardians? You'd be protecting this city, and earning a few bucks in the process.>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <The streets of \SCENE E1 have gone straight to hell. It's all we can do now to keep chaos from reigning.>
+	Msg22 <It's war out here... I've never seen violence like this in my time on the force. It's absolutely sickening.>
+	Msg23 <Look, if you don't have urgent business in town, you might want to think about going somewhere else for a few days. There's been a lot of violence on the street.>
+	Msg24 <The situation in \SCENE E1 is desperate. Every day there's another murder, and we haven't found a way to end the violence...>
+	Msg25 <We've been trying to keep the gangs under control, but it feels like this is a losing battle.>
+
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <Maybe you could help us. I've got a bounty hunting contract available, if you want it.>
+	Msg32 <How'd you like to work for the guardians?>
+	Msg33 <I could use someone like you on our side. How'd you like to run a mission for the guardians?>
+	Msg34 <You seem like you may have what it takes. How would you like to run a guardian mission?>
+	Msg35 <I have a bounty hunting contract available, if you're interested.>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Go, and save the streets...>
+	Msg37 <Here's all the info you should need. I'll see you when you've finished the job.>
+	Msg38 <Good luck out there.>
+	Msg39 <Be careful out there.>
+	Msg40 <Kick some ass in the name of law and justice!>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to go?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's the problem- nobody wants to get involved.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Come back when you're ready and we can start the mission then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <We don't have enough budget to hire anyone at the moment, I'm afraid.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <You don't look like the kind of person who has ever known the kind of desperation we have on the streets. You'd never understand.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <This isn't a land of sunshine.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a bounty hunting mission.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <Be back when I'm done.>
+	Prompt2 <All ready to start.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Just a minute while I get ready.>
+	Prompt4 <I better pick up some ammo first.>
+
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I'll do it.>
+	Prompt8 <Give me the mission info.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <I'm not into that kind of work.>
+	Prompt10 <I'm not looking for a job.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <What you need is a hunter on your side.>
+	Prompt12 <Looking to hire someone?>
+	Prompt13 <I could help you deal with the situation.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	Prompt14 <I've seen worse, and survived.>
+	Prompt15 <I've been in worse situations before.>
+	Prompt16 <This isn't the worst that I've seen.>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <I'm sure it can't be as bad as you say.>
+	Prompt18 <I won't worry about it.>
+	Prompt19 <They'll get tired of fighting eventually.>
+
+
+end
+

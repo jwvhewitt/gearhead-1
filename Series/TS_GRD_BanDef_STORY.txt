@@ -1,0 +1,33 @@
+Story
+	name <STORY: Bandits! Default...>
+	% Nothing much exciting going on, except that more mecha combat
+	% missions than usual will be offered.
+
+	% Element 1 is the calling faction. Always. Forever.
+
+	%  V1 = Time Limit
+
+	%  V101 = Faction Victory Count
+	%  V102 = Enemy Victory Count (if appropriate)
+	%  V103 = How many times PC fought for faction
+	%  V104 = How many times PC fought against faction
+
+	% This story will last for 2 - 4 days.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800>
+	GoCheckTime <ifG ComTime V1 EndStory ifG V101 5 FacXP+ N1 V103>
+
+	% Every hour, it will attempt to load a plot.
+	hour <StoryLine .plotname>
+	.plotname <TS_GRD_BanDef_PLOT_*.txt>
+
+	% Every quarter, print a new news story.
+	quarter <News d7>
+
+	Msg1 <Guardians combat new wave of bandit raiders.>
+	Msg2 <Highway robbery on the rise, according to recent study.>
+	Msg3 <Bandit raiders from the dead zone have moved into the Federated Territories. Guardians scramble to combat this menace.>
+	Msg4 <Mecha-equipped raiders new threat to commerce, says industry analyst.>
+	Msg5 <Ravager tribes from the wastes find rich hunting grounds in FedTer wilds. Corporate leaders call for increased security.>
+	Msg6 <Corporate leaders call for more guardian patrols of major trade routes.>
+	Msg7 <Trucker union calls for higher corporate defense budget following a string of bandit raids in Federated Territories.>
+

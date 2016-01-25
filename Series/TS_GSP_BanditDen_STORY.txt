@@ -1,0 +1,52 @@
+Story
+	name <Bandit's Den>
+
+	% A gang of bandits has a hidden base somewhere near town. One of the local
+	% guardians may offer the PC several missions to locate the base and eventually
+	% destroy it.
+
+	% N1 is the location where this story will take place.
+	% N2 is the chief investigating guardian.
+	Element2 <Character Guardian !Near 1>
+
+	% S1 = Initialization Counter and Bandit Strength
+	% S2 = Number of wins
+
+	% If the guardian gets killed, delete this story.
+	start <ifPersona N2 else GoDelete if= S1 0 S= 1 15 Compose EWM N1 .entry>
+	GoDelete <EndStory>
+
+	% There's no guarantee that this scene has access to the world map. It could be the
+	% factory, the Snake Lake waterfront, or some other sub-area of a city. Just in case,
+	% here's a possible encounter with the local bandit thugs.
+	% Fortunately the bandits are only interested in mecha.
+	.entry <ifG PCScale 0  if= d3 1  BLOCK ifYesNo 4 5 6 else GoTryStealth Goto GoAttack>
+	GoTryStealth <Reputation 3 -d4 ifG SkRoll 25 6 else GoFailStealth Print 7 XPV 50 exit N1>
+	GoFailStealth <Print 1 Reputation 6 -1 Goto GoStartCombat>
+	GoAttack <Reputation 3 d4 Goto GoStartCombat>
+	GoStartCombat <SavePos Dynamic 2 Threat PCRep 6 75 .nu1 .nu2 PassVar 1 N1>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 if= V2 0 V= 2 1 Reputation 6 1 Exit V1 SeekGate 1>
+
+	Msg1 <You are spotted! You'll have to defend yourself.>
+	Msg4 <While entering \NARRATIVE 1 , you are confronted by a rag-tag gang of bandits.>
+	Msg5 <Attack them!>
+	Msg6 <Try to sneak away.>
+	Msg7 <You manage to quite easily slip past the bandits, and enter the city.>
+
+	% Every quarter, try to load a story.
+	quarter <if= d3 1 StoryLine .bandenplot>
+	.bandenplot <TS_GSP_BanditDen_PLOT_*.txt>
+
+sub
+	Persona 2
+	rumor <!2 has been trying to run the local bandit lord out of town.>
+	greeting <NewChat ifG React 20 else GoNoChance Say 1>
+	GoNoChance <Say 2>
+	Msg1 <There's been no activity from the Bandit's Den for a while now. We're still looking for their hideout... once we find it, we can end their crime spree!>
+	Msg1_1 <I've been investigating the Bandit Den of \NARRATIVE 1 . If I find any new information, I may have a job for a mecha pilot later on.>
+	Msg2 <Rest assured that the Guardians are doing all we can to bring the Bandit Den of \NARRATIVE 1 to justice.>
+
+end
+
+

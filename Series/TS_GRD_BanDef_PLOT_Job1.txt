@@ -1,0 +1,277 @@
+Plot 0
+	name <Default Combat Plot>
+	% Nov 11 2003 : Added FacXP+ command
+
+
+	% This is a skeleton for a generic combat mission.
+	% You can make it into a complete combat mission just
+	% by filling in the blanks in the MESSAGE BLOCKs below.
+
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	% This plot will likely be called from a faction story.
+	% So, it will grab the identity of the faction as its first
+	% element, and a member of the faction to give the job to
+	% the PC.
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	% Right now it will just be a member of E1.
+	Element2 <Character Guardian Lawful>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% V1 = Time Limit
+	% V2 = Combat Indicator, if V2=1 combat has been entered
+	% V3 = Email sent indicator.
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 45500>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100  S+ 101 1 FacXP+ E1 1>
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 if= PCFac E1 ifG RReact E2 d20 V= 3 1 Email d5>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// Got mecha thieves on the loose here; report for duty immediately.>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// I have a combat mission for you if you're in the area. Come see me.>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Mecha thieves operating in \SCENE EScene 2 . Report here for operations.>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// Thieves base has been located in \SCENE EScene 2 ; need mecha support for cleanup.>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// Got a mecha mission for you, if you're not otherwise busy.>
+
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <mecha thieves have been operating in the area. !2 is working on the case.>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat FacVar E1 1000 100 V= 4 Reward V3 150 if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it,
+	GoCheckFriend <ifG PCRep 2 35 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG PCRep 2 -d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything AdvancePlot 0>
+
+	GoAddComOps <V= 1 1 Memo 107 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 SavePos P= 2 1 Reputation 2 1 Dynamic 2 V3 .nu1 .nu2 Encounter 5 25 .edesc>
+	.edesc <Chaotic Shy Bandit +PCRA>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 AddReact -d3 AdvancePlot 0>
+	result10 <Goto result9>
+
+	result11 <NewChat ifG Conversation 10 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 AdvancePlot 0>
+
+	result14 <NewChat ifG PCRep 2 d25 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1 AdvancePlot 0>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1 AdvancePlot 0>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Excellent work. Here's a reward for your efforts.>
+	Msg2 <There wasn't much left of the stolen mecha to return, but at least justice has been served. Here's your reward.>
+	Msg3 <Here's your pay. I hope to work with you again in the future.>
+	Msg4 <You have caught the thieves. Here is your reward.>
+	Msg5 <That was a great battle. Here's the cash I promised you.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <You failed to stop the thieves... At least you didn't get hurt.>
+	Msg7 <The thieves got away, the mission was a failure. If it's any consolation at least the bullet holes you put there should reduce the resale value of their wares.>
+	Msg8 <The mission was a complete failure.>
+	Msg9 <That mission was a disaster.>
+	Msg10 <You didn't stop the thieves, but I hope you at least put a few holes in their mecha...>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <The junkyard has been attacked by bandits. That wouldn't be so bad, except for the recently decommisioned assault mecha waiting to be scrapped there. Pay is $ \VAL V4 to eliminate them.>
+	Msg12 <A number of combat meks have been stolen from a mercenary team serving in the region. Pay is $ \VAL V4 if you can catch the thieves.>
+	Msg13 <A bandit raid against a munitions factory has netted them a number of advanced model mechas. If you can capture them there's a reward of $ \VAL V4 .>
+	Msg14 <An arms shipment turned up at the base a couple of mecha short. I think I've located where the missing armors are. It's worth $ \VAL V4 if you can capture or disable them.>
+	Msg15 <One of the local bandit gangs hit the jackpot when a caravan they raided was transporting light mecha armors. They need to be stopped before they get a chance to use their new toys. Pay is $ \VAL V4 .>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Would you be interested in helping me bring some criminals to justice? A number of mechas have been stolen recently. I'm looking for a pilot to aprehend the thieves.>
+	Msg17 <I have a job available for a mecha pilot, if you'd like to help maintain law and order. What do you say?>
+	Msg18 <Mecha thieves have been operating in town. I could use a mecha pilot to help bring them to justice. Can you do it?>
+	Msg19 <How'd you like to do a mission for the guardians? There are some mecha thieves in town, and I need a pilot to bring them in.>
+	Msg20 <I need a pilot to run a combat mission for the guardians. Are you interested in that kind of thing?>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <There have been a number of mecha thefts reported lately. However, there is absolutely no reason for citizens to be worried.>
+	Msg22 <There have been a number of stolen mecha reported lately, but please be sure that we guardians are doing everything possible to catch the perpetrators.>
+	Msg23 <I've got a lot of work to do today. There are mecha thieves on the loose, but there's no reason for the public to worry.>
+	Msg24 <It's true that we have some mecha thieves here in \SCENE EScene 2 , but there's no reason for people to worry about it. The guardians are doing all we can to catch them.>
+	Msg25 <Be careful of the mecha theives which are now operating in town, but rest assured that the guardians are doing all we can to bring them to justice. There's no reason for anyone to be alarmed.>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points worth of enemy hardware. Do you feel up to the challenge?>
+	Msg27 <It seems like you'll be up against \VAL V3 tactical points worth of mecha.>
+	Msg28 <The bandits stole $ \VAL V3 worth of meks, so you'll likely be fighting at least that much.>
+	Msg29 <The thieves made off with $ \VAL V3 worth of military hardware, so that's probably around as much as you'll be facing.>
+	Msg30 <They've got \VAL V3 tactical threat points worth of mecha, all of it stolen.>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <Okay, maybe there is some reason to worry. I think I've located the thieves HQ but they've got all those stolen meks... I need a good pilot to help us catch them.>
+	Msg32 <I've discovered where the thieves are, but I need a pilot to disable their mecha. Would you like to run a mission for the Guardians?>
+	Msg33 <You can help me if you want. I've discovered the hideout of the mecha thieves and now I need a pilot to go eliminate them.>
+	Msg34 <How'd you like to help in the case? I need a pilot to bring in the thieves. The brass want the stolen mechas returned intact, but personally I just want to see the thieves stopped...>
+	Msg35 <If you're looking for a job I've got one to offer you. I need a pilot to go capture the bandits. What do you say?>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <These are the last known coordinates of the thieves. Report back here once they have been disabled.>
+	Msg37 <Report back here once the bandits have been disabled and I'll give you your reward.>
+	Msg38 <I'll upload the waypoint info to your navcomp. Good luck out there.>
+	Msg39 <Head to the bandit compound and eliminate all resistance. Head back here when you've finished the mission.>
+	Msg40 <Here's the data you'll need. Good luck.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's too bad.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Okay. Hurry back once your equipment is in shape and we can start the mission then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <I said there was no reason to worry and I meant it! I'm working on the case and expect to have the thieves in custody by evening.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <I don't need your help. I'm handling this case fine by myself.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Be careful out there, okay?>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 has offered you a mission to catch some mecha thieves.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <I'm on the case!>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <I better fix up my mecha, first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <What sort of meks do the bandits have?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <Absolutely.>
+	Prompt8 <I can do that.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <That's not my kind of work.>
+	Prompt10 <I hope you find a pilot.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	Prompt11 <There's really no reason to worry?>
+	Prompt12 <Are you sure about that?>
+	Prompt13 <In any case, I'm getting new locks installed.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	Prompt14 <Maybe I could help you with that.>
+	Prompt15 <If you need help, I'm available.>
+	Prompt16 <Need any help on the case?>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <Keep up the good work. Bye.>
+	Prompt18 <Thanks for the info.>
+	Prompt19 <Good luck catching them.>
+
+
+end
+

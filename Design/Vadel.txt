@@ -1,0 +1,139 @@
+Battroid 5
+Name <Vadel>
+Desig <AD26>
+SDL_Sprite <btr_vadel.png>
+desc <Fast and well-armed, the Vadel is the high end battroid against which all others are measured.>
+
+Mod Head
+	Size 3
+	Armor 5
+	Mass -3
+	sub
+		Sensor 5
+
+		TarComp 1
+	end
+
+Mod Body
+	Armor 4
+	Mass -6
+	sub
+		CPit
+		Armor 2
+		Mass -1
+
+		Gyro 2
+
+		Sensor 1
+
+		STC VC-5
+		Name <Twin Vulcan Cannon>
+
+		STC VC-5
+		Name <Twin Vulcan Cannon>
+
+		HoverJet 4
+
+		Overcharger 8
+	end
+	inv
+		BodyArmor 3
+		Mass -5
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 4
+	Armor 4
+	Mass -3
+	sub
+		Hand
+		inv
+			BeamGun 5
+			Name <Plasma Rifle>
+			Acc 1
+			Range 6
+			BV 2
+		end
+	end
+	inv
+		ArmArmor 2
+		Mass -3
+		sub
+			MLauncher 8
+			Name <Heavy Rocket Pod>
+			Magazine 5
+			sub
+				Rockets 8
+			end
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 4
+	Armor 4
+	Mass -3
+	sub
+		Hand
+		inv
+			Melee 7
+			Name <Sword>
+		end
+	end
+	inv
+		ArmArmor 2
+		Mass -3
+		sub
+			MLauncher 8
+			Name <Heavy Rocket Pod>
+			Magazine 5
+			sub
+				Rockets 8
+			end
+		end
+
+		Shield 3
+		DefBonus -1
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	Mass -3
+	sub
+		Mount
+		Name <Right Leg Mount>
+
+		HoverJet 4
+	end
+	inv
+		LegArmor 3
+		Mass -5
+		sub
+			HoverJet 3
+
+			Overcharger 4
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	Mass -3
+	sub
+		Mount
+		Name <Left Leg Mount>
+
+		HoverJet 4
+	end
+	inv
+		LegArmor 3
+		Mass -5
+		sub
+			HoverJet 3
+
+			Overcharger 4
+		end
+	end
+end

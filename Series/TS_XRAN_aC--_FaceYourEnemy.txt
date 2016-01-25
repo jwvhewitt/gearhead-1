@@ -1,0 +1,255 @@
+plot 0
+	name <PLOT: Face Your Enemy>
+	% Edited to v0.901 standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will give the PC a mission.
+	% E3 is the scene to be used in the next episode.
+	Element1 <Grab 3>
+	Element2 <Grab 1>
+	Element3 <Scene Town Target !Far 1>
+	Element4 <Character Citizen !Near 1>
+	Element5 <Faction GoodEnemy>
+
+	% V1 = Initialization Counter
+	% V2 = Combat Counter
+	% V3 = Conversation Counter
+	% V4 = Combat Trigger
+	% V5 = Enemy only dies once...
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+
+	start <if= P4 1 else GoCheckInit if= SceneID 1 if= P2 0 Goto GoStartCombat>
+	GoCheckInit <if= P1 0 else GoCheckSet   P= 1 1   MoveChar E2 E1   Compose UTD E2 .e2dies>
+	.e2dies <ifFaction N2 else GoE2DiesNoFac Goto GoE2DeathFinal>
+	GoE2DiesNoFac <N= 2 E5 Goto GoE2DeathFinal>
+	GoE2DeathFinal <if= V5 0 Alert 1 V= 5 1 XPV 150 N= 3 E3 S= 101 1 S+ 102 1 S= 105 -1 XREnemy NAV_XREFaction History 2 AdvancePlot 0>
+
+	% Upon entering the episode location, the trigger for combat upon leaving town will
+	% be set.
+	GoCheckSet <if= SceneID E1 P= 4 1>
+
+
+	Msg1 <\ELEMENT 2 : I die... but \NARRATIVE 2 will avenge me...>
+
+	Msg2 <You killed \ELEMENT 2 , who was working for \NARRATIVE 2 .>
+
+	Msg3 <That seems to be the last of your attackers.>
+
+	GoStartCombat <Print 101 Block FreezeChar E2 SavePos P= 2 1 Dynamic 2 Threat S103 100 .nu1 .nu2 DynaNPC E2 2 ComposeD Start .start PassVar 1 E2>
+	.start <if= L2 0 ForceChat L1 L= 2 1>
+	.nu1 <if= T1 0 Return if= L3 0 L= 3 1 ifPersona L1 ForceChat L1>
+	.nu2 <if= T2 0 if= L3 0 L= 3 1 Salvage Reputation 6  1 ifPersona L1 XPV 100 ForceChat L1>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Print 3>
+
+	Msg101 <While leaving town, you are attacked by mecha!>
+
+sub
+	Persona 2
+	greeting <EndChat if= P2 3 else GoCheckLoss Say 1 S= 101 1 S+ 102 1 S= 105 1 N= 3 E3 History 2 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckFirst Say 5 History 6 S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
+	GoCheckFirst <ifG P2 0 else GoInTown Say 7 AddChat 1 AddChat 2>
+	GoInTown <NewChat Say 10 AddChat 3 AddChat 4 AddChat 5>
+
+	result1 <EndChat Say 8>
+	result2 <EndChat Say 9  Reputation 4 d10>
+	result3 <NewChat if= XRB NAV_XRBUnknown else GoR3NoMystery Say 18 XRBadThing NAV_XRBLostLove AddChat 6 AddChat 7>
+	GoR3NoMystery <Say 15 FreezeChar E2>
+	result4 <NewChat Say 16 FreezeChar E2>
+	result5 <NewChat if= XRB NAV_XRBUnknown else GoR5NoMystery Say 24 XRBadThing NAV_XRBLostLove AddChat 6 AddChat 7>
+	GoR5NoMystery <Say 17 FreezeChar E2>
+	result6 <NewChat Say 19 History 21 FreezeChar E2 Reputation 3 d6  AddChat 8 AddChat 9>
+	result7 <NewChat Say 20 History 21 FreezeChar E2 Reputation 3 -d6 AddChat 8 AddChat 9>
+	result8 <EndChat Say 22>
+	result9 <EndChat Say 23>
+
+	Msg1 <Don't think that you've won today. You've merely prolonged the inevitable. Come face me aqain in \ELEMENT 3 ... next time, it is I who will be victorious!>
+	Msg1_1 <You think you've got the better of me, but you haven't... As long as I live I will continue to hunt you down wherever you may be! Let's have a rematch in \ELEMENT 3 ... next time, it's I who will win!>
+	CMsg1_1 <ifNPCSociable Accept>
+	Msg1_2 <Sleep with one eye open, \PC . I'll see you again in \ELEMENT 3 .>
+	CMsg1_2 <ifNPCShy Accept>
+	Msg1_3 <Ah, so it seems you got lucky today. That luck will run out eventually. Meet me in \ELEMENT 3 for a rematch... This time I won't hold back!>
+	CMsg1_3 <ifNPCCheerful Accept>
+	Msg1_4 <You merely delay the inevitable march of death, \PC ... Let's meet again in \ELEMENT 3 and finish this.>
+	CMsg1_4 <ifNPCMelancholy Accept>
+	Msg1_5 <So this time you win. Very well... next time I will, and you can expect no mercy. Meet me in \ELEMENT 3 for a rematch if you're brave enough.>
+	CMsg1_5 <ifNPCEasygoing Accept>
+	Msg1_6 <Your powers are formidible... But you are nothing to me, and I will crush you in time! I demand a rematch, in \ELEMENT 3 ! Meet me if you dare!>
+	CMsg1_6 <ifNPCPassionate Accept>
+	Msg1_7 <An honorable duel, \PC ... You have bested me today. I demand a rematch... what say, in \ELEMENT 3 ? I know you won't be able to resist...>
+	CMsg1_7 <ifNPCLawful Accept>
+	Msg2 <You defeated \ELEMENT 2 outside of \ELEMENT 1 .>
+
+	Msg5 <You are lucky to have escaped us today. That luck will soon run out, I assure you. Until the next time we meet...>
+	Msg5_1 <Now that you've been humiliated, I hope you will tell everyone what an incredible pilot \ELEMENT 2 is. I'm sure you'll come back to challenge me again but I assure you it will be equally pointless.>
+	CMsg5_1 <ifNPCSociable ifPCOK Accept>
+	Msg5_2 <You lose.>
+	CMsg5_2 <ifNPCShy Accept>
+	Msg5_3 <I win! I will have to toast a drink to your crushing defeat, \PC .>
+	CMsg5_3 <ifNPCCheerful Accept>
+	Msg5_4 <How unfortunate, it was my intention to kill you today... When I see you again, I will do just that.>
+	CMsg5_4 <ifNPCMelancholy IfPCOK Accept>
+	Msg5_5 <So, this time I win... but you have escaped from the field of battle. I could hunt you down but it's not worth getting worked up over such small things. Until the next time we meet...>
+	CMsg5_5 <ifNPCEasygoing IfPCOK Accept>
+	Msg5_6 <You are no match for me, wangtta. Next time I see you I'll end your worthless life.>
+	CMsg5_6 <ifNPCPassionate Accept>
+	Msg5_7 <You fought honorably, but your skills have been found wanting. Next time I will deliver the killing blow.>
+	CMsg5_7 <ifNPCLawful Accept>
+
+	Msg6 <You were defeated by \ELEMENT 2 outside of \ELEMENT 1 .>
+	Msg7 <I've been waiting for you to show yourself. Now, we will battle!>
+	Msg7_1 <It's so good that you've decided to join us. I've prepared a small party for you... Now, it's time for you to go down!>
+	CMsg7_1 <ifNPCSociable Accept>
+	Msg7_2 <I've been waiting. It's time for you to die.>
+	CMsg7_2 <ifNPCShy Accept>
+	Msg7_3 <This is going to be such fun... Prepare for battle, \PC . I am here to finish you.>
+	CMsg7_3 <ifNPCCheerful Accept>
+	Msg7_4 <Death is waiting for you, \PC , and I am her messenger. You can try to run but I will only find you again.>
+	CMsg7_4 <ifNPCMelancholy Accept>
+	Msg7_5 <What luck! Imagine finding you here... why, \PC , you're making the job of killing you trivially easy. Not that I'm complaining, mind you... Let's get this over with.>
+	CMsg7_5 <ifNPCEasygoing Accept>
+	Msg7_6 <Prepare yourself! We are about to do battle, a battle which only one of us can walk away from!>
+	CMsg7_6 <ifNPCPassionate Accept>
+	Msg7_7 <\PC , you are hereby challenged to a duel, to take place right here and right now. If you dishonor me by refusing I will have no choice but to kill you.>
+	CMsg7_7 <ifNPCLawful Accept>
+	Msg7_8 <I'll bet you weren't expecting this! Welcome to my ambush, \PC .>
+	CMsg7_8 <ifNPCChaotic Accept>
+	Msg7_9 <Welcome, \PC ... I've made arrangements for you to join your parents.>
+	CMsg7_9 <if= XRB NAV_XRBFamilyDied Accept>
+
+
+	Msg8 <You're going down...>
+	Msg8_1 <Don't worry. After you're dead I'll be sure to tell everyone that you fought valliantly.>
+	CMsg8_1 <ifNPCSociable Accept>
+	Msg8_2 <Let's begin.>
+	CMsg8_2 <ifNPCShy Accept>
+	Msg8_3 <Let's see if it's true that you fight like a cow!>
+	CMsg8_3 <ifNPCCheerful Accept>
+	Msg8_4 <You will die in pain...>
+	CMsg8_4 <ifNPCMelancholy Accept>
+	Msg8_5 <I won't even have to break a sweat to defeat you.>
+	CMsg8_5 <ifNPCEasygoing Accept>
+	Msg8_6 <I hope you prove to be an adequate test of my skills. Otherwise, this entire fight will just be boring.>
+	CMsg8_6 <ifNPCPassionate Accept>
+	Msg8_7 <May the better pilot win...>
+	CMsg8_7 <ifNPCLawful Accept>
+	Msg8_8 <No rules, no holds barred... only one survivor.>
+	CMsg8_8 <ifNPCChaotic Accept>
+	Msg8_13 <You could've been on the winning side, \PC , but you decided to betray us...>
+	CMsg8_13 <if= XRB NAV_XRBExMember Accept>
+
+	Msg9 <I am a force you should not take so lightly!!!>
+	Msg9_3 <Ah, it's good to see that I will be facing someone with at least a modicun of wit.>
+	CMsg9_3 <ifNPCCheerful Accept>
+	Msg9_4 <If you fight as well as you insult, this should be an easy fight for me...>
+	CMsg9_4 <ifNPCMelancholy Accept>
+
+	Msg10 <Imagine seeing you here. So long as we are both in town there is no reason why we should not be civil. Once we leave here, though, we will be enemies again.>
+	Msg10_2 <Eh, you!? Look, we're in town. We can't start anything here.>
+	CMsg10_2 <ifNPCShy Accept>
+	Msg10_4 <Just what I need, to ruin my day off... What do you want, \PC !?>
+	CMsg10_4 <ifNPCMelancholy Accept>
+	Msg10_7 <I certainly hope that you're not looking for trouble. The guards around here wouldn't react kindly if you started a fight... Surely we're civilized enough to wait until later to begin our duel.>
+	CMsg10_7 <ifNPCLawful Accept>
+	Msg10_8 <Well, if it isn't \PC . Count yourself lucky that we're in town, otherwise I'd snuff out your worthless life in an instant.>
+	CMsg10_8 <ifNPCChaotic Accept>
+	Msg10_10 <Hello \PC . It's a shame what happened to your parents. I wouldn't worry; you'll be joining them soon enough...>
+	CMsg10_10 <if= XRB NAV_XRBFamilyDied Accept>
+	Msg10_11 <When you were a member of \NARRATIVE 2 , I used to look up to you. Now I see what a failure you've become... If we weren't in town right now, I'd send you to your grave.>
+	CMsg10_11 <if= XRB NAV_XRBExMember ifFaction N2 Accept>
+	Msg10_12 <Ah, \PC . We were all surprised to learn that you were still alive... though greatly relieved that your memories are gone. Are you still searching for your lost life? It seems that some day I'll have to finish the job I started...>
+	CMsg10_12 <if= XRM NAV_XRMAmnesia Accept>
+	Msg10_13 <So the clues have led you here as well? Don't waste your time... I have already determined that there is nothing in \ELEMENT 1 to interest either of us.>
+	CMsg10_13 <if= XRM NAV_XRMItem Accept>
+
+
+	Msg15 <You haven't figured that out on your own yet? You must be stupider than you look. Perhaps they are wrong... perhaps you're not as much of a danger as they say.>
+	Msg15_1 <I'd love to explain everything to you but my masters have asked that I not get personally involved with the quarry.>
+	CMsg15_1 <ifNPCSociable Accept>
+	Msg15_2 <Don't ask questions you don't really want answered.>
+	CMsg15_2 <ifNPCShy Accept>
+	Msg15_8 <Ah, but that would be telling... You can't expect me to hand you everything on a silver platter, can you?>
+	CMsg15_8 <ifNPCChaotic Accept>
+	Msg15_9 <You honestly can't remember a thing? If I could trust in that, it would be merciful to let you live... but if your memories ever return, you could be a danger to the project. So you must be eliminated.>
+	CMsg15_9 <if= XRM NAV_XRMAmnesia Accept>
+	Msg15_10 <You are the continuation of a remarkable bloodline, \PC ; a bloodline that must be eliminated if we are to immanentize the eschaton. Nothing more need be said.>
+	CMsg15_10 <if= XRM NAV_XRMFamilySecret Accept>
+	Msg15_11 <You appear to be seeking the same item as my masters. We obviously cannot afford to have someone else discover it first. If the only way to stop you is to kill you, then that is what must be done.>
+	CMsg15_11 <if= XRM NAV_XRMItem Accept>
+	Msg15_12 <We're on opposite sides of the great conflict. Like two mad dogs, there's nothing left for us but to fight, and in the end only one will survive.>
+	CMsg15_12 <if= XRB NAV_XRBSeekingRevenge Accept>
+	Msg15_13 <Because you are a traitor to our order! You must be killed, to serve as an example... The time of the eschaton is nearly upon us, and we can afford no complications.>
+	CMsg15_13 <if= XRB NAV_XRBExMember Accept>
+
+	Msg16 <In the middle of \ELEMENT 1 ? You must be daft. Aside from the obvious problems of bystanders and the Guardians, there's also my reputation to think about.>
+	Msg16_1 <That's not going to happen. There's too many bystanders, and guards who would probably interfere. Plus, what would people say about me if I behaved like a common rougheon? No, when we fight, it will be at a time and place of my choosing.>
+	CMsg16_1 <ifNPCSociable Accept>
+	Msg16_2 <No. This is no place for a fight. We will continue this discussion later.>
+	CMsg16_2 <ifNPCShy Accept>
+	Msg16_3 <Are you completely bonkers? Start a fight in the middle of \ELEMENT 1 ? Look, we'll fight later, but not here.>
+	CMsg16_3 <ifNPCCheerful Accept>
+	Msg16_4 <This isn't the place for that, idiot. Too many people around to interfere. No, we will not fight here, but rest assured that your death approaches...>
+	CMsg16_4 <ifNPCMelancholy Accept>
+	Msg16_5 <I don't want to fight you now. I've got other things to do. If you want, I promise that I'll come back to fight you later...>
+	CMsg16_5 <ifNPCEasygoing Accept>
+	Msg16_6 <It's taking every bit of self control I have to not run you through where you stand. But, there are things that just aren't done... I will kill you later, when we are both beyond the walls of civilization.>
+	CMsg16_6 <ifNPCPassionate Accept>
+	Msg16_7 <Fight here in the middle of town? Are you a barbarian? That's not something a civilized warrior would even consider. There are too many bystanders who could get hurt...>
+	CMsg16_7 <ifNPCLawful Accept>
+	Msg16_8 <Eh, I'd rather not. I'll be seeing you again, sometime when I hold the advantage...>
+	CMsg16_8 <ifNPCChaotic Accept>
+
+	Msg17 <Then why did you speak with me? If you have nothing to say, then don't disturb me.>
+	Msg17_2 <Then go away.>
+	CMsg17_2 <ifNPCShy Accept>
+	Msg17_3 <Ah, so that's why you're the one who came up to me. I understand now. Idiot.>
+	CMsg17_3 <ifNPCCheerful Accept>
+	Msg17_4 <Excuse me, you're the one who started this conversation. Idiot.>
+	CMsg17_4 <ifNPCMelancholy Accept>
+	Msg17_9 <You have nothing to say, but maybe you're hoping that I do... You are hunting for any small clue to the secret of your past. Well, perhaps I will tell you who you are, right before I end your life...>
+	CMsg17_9 <if= XRM NAV_XRMAmnesia Accept>
+
+	Msg18 <What? You mean, you don't recognize me? How could you forget so easily... Think harder, back to middle school...>
+	Msg19 <Then you'll also remember how I swore my eternal revenge on you, for winning the heart of the one who should have been mine! I have nothing more to say to you, except that you still aren't forgiven...>
+	Msg20 <I wonder if you remember anything else, then... remember how you stole the love of the one who should have been mine, and how on that day I swore my eternal revenge!>
+	Msg21 <\ELEMENT 2 hates you because of a love triangle from middle school.>
+	Msg22 <Don't try to make lightly of other people's emotions! I have been waiting for my revenge; since you stole my love away it's all I've had to live for.>
+	Msg23 <You're saying that my one true love who chose you over me means nothing to you!? How callous! You will pay dearly for your insensitivity!!!>
+	Msg24 <I knew it! So that means you still remember, and you hate me as much as I hate you... You do still remember, don't you? Think hard... all the way back to middle school... You couldn't have forgotten that so easily...>
+
+	Prompt1 <I'm ready to take you.>
+	Prompt1_1 <I will defeat you.>
+	Prompt1_2 <Let's get started.>
+	Prompt1_3 <I will avenge my parents!>
+	CPrompt1_3 <if= XRB NAV_XRBFamilyDied Accept>
+	Prompt2 <Sure, I have nothing better to do.>
+	Prompt2_1 <Why not? I could use the practice.>
+	Prompt3 <Why do you want to kill me?>
+	Prompt3_1 <Why have you been trying to kill me?>
+	Prompt4 <Let's settle this here.>
+	Prompt4_1 <I'll kill you right here!>
+	Prompt4_2 <You'll pay for what you did to my parents.>
+	CPrompt4_2 <if= XRB NAV_XRBFamilyDied Accept>
+	Prompt5 <I have nothing to say to you.>
+	Prompt5_1 <I don't want to talk to you.>
+	Prompt6 <Ah, \ELEMENT 2 , now I remember you...>
+	Prompt7 <Nope. I'm getting nothing.>
+	Prompt8 <Come on, that was years ago.>
+	Prompt9 <I can't even remember the person...>
+
+	Persona 4
+	rumor <!4 saw !2 in town.>
+	greeting <NewChat ifNPCInPlay E2 else GoNotInPlay Say 1>
+	GoNotInPlay <SayAnything>
+	Msg1 <\ELEMENT 2 is in town doing some shopping.>
+
+end

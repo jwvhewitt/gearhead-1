@@ -1,0 +1,218 @@
+Plot 0
+	name <PLOT: Murder Investigation>
+
+	% Element1 is just the leader of some town.
+	element1 <Character Leader>
+	element2 <Character Guardian !Near 1>
+	element3 <PREFAB>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%  V4 = Mission Given Indicator
+	%  V5 = Amount of evidence gained
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete  if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  DeleteKeyItem E3 if= L101 0 else GoPCWon V= 2 2  Reputation 6 -5>
+	GoPCWon <V= 2 3  V= 5 L101  Reputation 6  1  XPV 50>
+
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 ifG PCRep 1 d20 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// There's been a murder in \SCENE EScene 1 . We need some help in the investigation.>
+	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// The local guardians office has a murder investigation; I was thinking that you might be able to help.>
+	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// We've had a murder in \SCENE EScene 1 . The guardian office could use some outside help.>
+	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// There's been a murder here; if you think you can help the investigation, please come.>
+	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// \SCENE EScene 1 has been the scene of a murder. I could use a good investigator to aid the guardians office.>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E1.
+	Persona 1
+	rumor <!1 is looking for a freelance investigator.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+
+	greeting <NewChat if= P2 3 else GoCheckLoss ifG P5 d20 else GoNotEnough Say d2 AddReact d5 Reputation 1 1 CashPrize V4 AdvancePlot 0>
+	GoNotEnough <V= 2 2 V+ 2 d3 Say V2 V= 4 Reward V3 75 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckMission <if= P4 1 else GoCheckFirst Say 101>
+
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 200 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer V= 2 10 V+ 2 d5 Say V2  Goto GoAddAcceptOps>
+	% If the PC has "the right stuff", an offer will be made immediately.
+	% If not, no offer will be made at all. In the example provided
+	% below, "the right stuff" is a Lawful reputation + being liked.
+	GoMakeOffer  <V= 2 PCRep 2 V+ 2 React ifG V2 40 else GoNoOffer V= 2 15 V+ 2 d5 Say V2 Goto GoAddAcceptOps>
+
+	GoAddAcceptOps <P= 3 1 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+
+	GoNoOffer <Say 102 AdvancePlot 0>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
+
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 P= 4 1 V= 2 20 V+ 2 d5 Say V2 Memo 103>
+	result2 <Goto Result1>
+	result3 <Goto Result1>
+
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
+	result5 <Goto Result4>
+	result6 <Goto Result4>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <You did really well! The evidence you gathered will be more than enough to ensure a conviction. Here's your reward.>
+	Msg2 <The information you found will put the killer away for life! Excellent work, \PC . Here's your reward.>
+	Msg3 <You've helped the investigation, but I'm afraid that the information you recovered won't be enough to get a conviction. The guardians will continue to investigate the case. Here's a small reward for your efforts.>
+	Msg4 <Hm, you did manage to find some incriminating evidence, but I don't think it'll be enough to make an arrest. The guardians will continue to investigate. Here's a small reward for your efforts; I know you tried your best.>
+	Msg5 <The information you recovered might be useful, but it's not the smoking gun we were hoping for. Thanks for trying.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <I'm afraid that you didn't manage to recover any information whatsoever. The investigation will continue, but I'm not sure that we'll be able to make an arrest.>
+	Msg7 <You didn't find any evidence whatsoever. We still don't have enough information to make an arrest, let alone to secure a conviction.>
+	Msg8 <You didn't come back with even a shred of evidence. The guardians will continue to investigate this case, though I'm not optimistic that it will ever be solved.>
+	Msg9 <You have failed. We still don't have any evidence.>
+	Msg10 <Your investigation turned up nothing. Maybe you should stick to piloting mechas.>
+
+	% 11 - 15 :  PC got email about mission; asked to accept
+	Msg11 <So, you got the email? Then you know. There's been a murder in town, and the guardians could use some help investigating it. We need someone to do some leg work, hopefully turn up some evidence on our prime suspect.>
+	Msg12 <I'm glad you came so soon. There's been a murder in town. I need someone to help the guardians, do some investigation, and hopefully turn up some evidence on our prime suspect.>
+	Msg13 <I'm glad you came. We could use your help... the guardians are working on a murder investigation. I need someone to do some recon work, trying to recover evidence on our prime suspect.>
+	Msg14 <Good to see you. \SCENE ESCene 1 needs your help. There's been a murder, and the guardians could use someone for an evidence recovery mission. It's likely to be very dangerous, and will require a great deal of skill and expertese.>
+	Msg15 <You made it. The guardians in town need someone to do an evidence recovery mission. If you can do that kind of work, I'd like for you to help.>
+
+	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <There's been a murder in \SCENE EScene 1 . The guardians need someone to run an evidence recovery mission. If you've got the required expertise, what about volunteering?>
+	Msg17 <We've had a murder in town. The guardians are investigating, but they haven't collected enough evidence yet. What they really need is for someone to do a search mission.>
+	Msg18 <The guardian office has a mission available for a freelance investigator. There's been a murder; they're trying to build a case against a local crime boss, but need to search his mansion.>
+	Msg19 <\SCENE EScene 1 may need your help. There's been a murder, and the guardians are investigating. They need a freelance investigator to run an evidence recovery mission.>
+	Msg20 <The guardians are busy investigating a murder. They have a contract available for a freelance investigator to run an evidence recovery mission.>
+
+	% 21 - 25 :  PC has accepted; describe the mission.
+	Msg21 <Great! You'll need to see the guardians to get the mission details. Go speak with \ELEMENT 2 about the case.>
+	Msg22 <That's great! Go see \ELEMENT 2 about the mission details. Please hurry, \SCENE EScene 1 is depending on you!>
+	Msg23 <You can get the mission information from \ELEMENT 2 . When you've completed the mission come back here and I'll give you a reward.>
+	Msg24 <You'll have to speak with \ELEMENT 2 about starting the mission. If you recover any useful evidence, come back here and I'll give you a reward.>
+	Msg25 <\ELEMENT 2 is the one you have to see about getting started. Good luck. If you recover any useful evidence, I'll make sure that you get a reward.>
+
+
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <Go speak with \ELEMENT 2 about the murder investigation.>
+	% 102 :  Player doesn't have "the right stuff" for this mission.
+	Msg102 <There's been a murder in town. The guardians are looking for someone to help in the investigation.>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 asked you to see \ELEMENT 2 about a murder investigation.>
+	% 104 :  PC didn't want the job.
+	Msg104 <That's too bad. I'll have to find someone else to do it, then.>
+
+	% 01 - 03 :  PC will accept the mission.
+	Prompt1 <Alright, I'll try to help you.>
+	Prompt2 <I think I can help you.>
+	Prompt3 <Let me try to help you.>
+
+	% 04 - 06 :  PC doesn't want this mission.
+	Prompt4 <I'm not much of an investigator.>
+	Prompt5 <I don't think I have the needed skills.>
+	Prompt6 <I'm a fighter, not an investigator.>
+
+
+
+	Persona 2
+	greeting <NewChat if= P2 2 else GoCheckCombat V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckCombat <ifG P2 0 else GoCheckFirst Say 101>
+	GoCheckFirst <if= P4 1 else GoNoMission Say d5 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2>
+	GoNoMission <SayAnything>
+
+	result1 <EndChat V= 2 10 V+ 2 d5 Say V2 V= 3 PCRep 6 V= 4 V3 V+ 4 -d12 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 LoadD .scene MStockD V3 .mdesc TMStockD 3 V4 .mdesc TMStockD 4 V4 .mdesc PassVar 2 10 DynaItemTeam E3 5>
+	.scene <SCENE_GuardedMansion.txt>
+	.mdesc <GUARD ROBOT SYNTH CRIMINAL>
+	result2 <Goto result1>
+
+	result3 <NewChat V= 2 15 V+ 2 d5 Say V2 AddChat d2 V= 2 4 v+ 2 d2 AddChat V2>
+	result4 <Goto result3>
+
+	result5 <NewChat Say 102>
+	result6 <Goto result5>
+
+	Msg1 <So \ELEMENT 1 sent you to help, eh? Well, we've got a suspect in the murder case... a local crime boss... but we'll need evidence. To get that, we'll need someone to enter his mansion and have a look around.>
+	Msg2 <Good to have you on our team, \PC . Our main suspect in the murder case is a crime boss... We suspect that there's incriminating evidence in his mansion, but we need someone to go in there and retrieve it. That's where you come in.>
+	Msg3 <\ELEMENT 1 said you were coming. We're investigating a crime boss in connection with a recent murder. In order to make our case we're going to need evidence, and that evidence is most likely in his mansion. I need you to get it.>
+	Msg4 <Here's the deal. We think a local crime boss commited the murder, but in order to find out for sure we're going to have to investigate his mansion. Only problem is that it's heavily guarded... I want you to slip in and see what you can find.>
+	Msg5 <In order to charge our suspect with murder, we'll need evidence. If you were to sneak into his mansion and have a look around, you might be able to recover the evidence that we need. Only problem is that it's heavily guarded.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <I'm afraid that you didn't manage to recover any information whatsoever. The investigation will continue, but I'm not sure that we'll be able to make an arrest.>
+	Msg7 <You didn't find any evidence whatsoever. We still don't have enough information to make an arrest, let alone to secure a conviction.>
+	Msg8 <You didn't come back with even a shred of evidence. The guardians will continue to investigate this case, though I'm not optimistic that it will ever be solved.>
+	Msg9 <You have failed. We still don't have any evidence.>
+	Msg10 <Your investigation turned up nothing. Maybe you should stick to piloting mechas.>
+
+	Msg11 <Don't try to engage the guards directly; there's far too many of them. Just slip in, find the evidence, and get back out again.>
+	Msg12 <Remember, you're not going in to fight the guards. Just search for evidence and get out as quickly as possible.>
+	Msg13 <Remember, this isn't a combat mission. You're just going in to search the place. Find as much information as you can, then get out of there.>
+	Msg14 <Find what you can, then return here and we'll analyze the data.>
+	Msg15 <Do your best. Try to find any kind of evidence... If there's anything incriminating, it's probably locked up secure in the mansion.>
+
+	Msg16 <I'll be honest, it won't be easy getting in. The front of the mansion is patrolled by robots. Inside the mansion there are at least two guard stations.>
+	Msg17 <It's very well guarded. In all honesty, you shouldn't think about charging in with guns blazing... This mission is going to require a more stealthy approach.>
+	Msg18 <The mansion is virtually a fortress. Most of the guards patrol the driveway out front, but there are a number of guard posts in the mansion itself.>
+	Msg19 <Well, seeing as how this mansion is the hideout for a large criminal organization, it's pretty well defended. You can't really hope to force your way in.>
+	Msg20 <It's nearly impervious. If we wanted to fight them, we'd call out the mecha division. As it is you should rely on stealth and speed moreso than firepower to get you inside.>
+
+	Msg101 <We'll examine the evidence you recovered and let you know if there's anything useful. In the meantime, you should report back to \ELEMENT 1 .>
+	Msg102 <That's probably a good idea. Make sure you come back soon, though- we only have a short window of opportunity to do this mission.>
+
+	Prompt1 <I'm ready to go right now.>
+	Prompt2 <All ready to start the mission.>
+
+	Prompt3 <How well is the mansion defended?>
+	Prompt4 <What kind of defenses does the mansion have?>
+
+	Prompt5 <I need some time to get ready.>
+	Prompt6 <Give me some time to prepare.>
+
+
+end
+inv
+	STC FILINGCABINET
+	use <Print 1 if= L101 0 L= 101 1>
+	Clue37 <Mental V= 1 SkRoll 37 ifG V1 L101 else GoNoNew L= 101 V1 Print 2>
+	GoNoNew <Print 3>
+	Msg1 <It's a filing cabinet. You could probably find some incriminating evidence in there if you investigated thoroughly.>
+	Msg2 <You search through the filing cabinet. You find some things which may be of interest.>
+	Msg3 <You search through the filing cabinet. You don't find anything new.>
+
+end

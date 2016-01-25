@@ -1,0 +1,73 @@
+scene 0 2
+%  There's a target hidden in a fortress filled with enemy mecha.
+%
+
+
+% V1 = Target UID
+% V2 = Victory Indicator; if V2=1 then the PC has won
+% V3 = Reinforcements value
+
+ForestMap
+
+% At startup, choose which mecha will be the target.
+start <if= V1 0 V= 1 ?M3 Alert 1 Compose TD V1 .targetdown>
+
+Nu1 <if= T1 0 Return>
+
+5Min <ifG L3 0 ifG 10 SkRoll 25 WMecha 4 L3>
+
+.targetdown <if= V2 0 Print 2 XPV 100 V= 2 1>
+
+Msg1 <You must penetrate the enemy fortress and destroy their generator.>
+Msg2 <That target has been destroyed. The mission is a success.>
+
+sub
+	Team 1
+	SetEnemy 2 3 4
+	home <PC Team Start>
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3 4
+	home <The Fortress>
+
+	Team 3
+	SetEnemy 1
+	SetAlly 2 4
+	home <The Fortress>
+
+	Team 4
+	SetEnemy 1
+	SetAlly 2 3
+	home <Entry 2>
+
+	rect
+	width 5
+	height 5
+	name <PC Team Start>
+
+	rect
+	width 5
+	height 5
+	name <Entry 2>
+
+	rect
+	width 20
+	height 20
+	sub
+		Fortress
+		name <The Fortress>
+		Height 12
+		Width 12
+	end
+
+end
+inv
+	Prop 50
+	SetTeam 3
+	Scale 2
+	name <Machinery>
+	roguechar <&>
+
+end
+

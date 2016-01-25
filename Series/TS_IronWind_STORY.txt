@@ -1,0 +1,109 @@
+Story
+	name <STORY: Ironwind Prophecy>
+
+	% N1 is the keeper of the law in Ironwind Fortress. Speaking to him will start
+	% the whole quest in motion. Or get the PC killed. Or some combination of the two.
+	element1 <Character>
+	stat 1 4315
+
+	start <ifPersona N1 else GoEndStory>
+	GoEndStory <EndStory>
+
+	% At the 30Min interval, try to load a plot if appropriate.
+	halfhour <if= S1 0 else GoMission3>
+	GoMission3 <if= S1 3 else GoMission2  if= S2 2  storyline .m3  S= 2 3>
+	GoMission2 <if= S1 2 else GoMission1  if= S2 1  storyline .m2  S= 2 2>
+	GoMission1 <if= S1 1                  if= S2 0  storyline .m1  S= 2 1>
+	.m3 <TS_IronWind_PLOT3.txt>
+	.m2 <TS_IronWind_PLOT2.txt>
+	.m1 <TS_IronWind_PLOT1.txt>
+
+	% S1 = Mission counter; if V1 # 0 , PC has accepted the IronWind quest.
+	% S2 = Mission Loaded Indicator; if S1=S2 then mission has been loaded.
+	% S3 = Mission completed indicator; if S3=S1 then mission has been completed.
+
+	% S10 = Number of missions won in alternate way
+	% S11 = Have won mission 1 in alternate way
+
+sub
+	Persona 1
+	% V1 = Have been told prophecy
+	greeting <NewChat ifFactionEnemy 9 else GoNoEnemy EndChat Say 1 if= SceneID 43 TeamAttack 3 MonsterUp 3 40 MonsterUp 3 d40>
+
+	% Check to see if the PC has completed a mission.
+	GoNoEnemy <if# S1 0 else GoCheckProphecy if= S1 S3 else GoNormal if= S3 3 else GoWin_M2 if= S10 3 else GoPyrrhicVictory  Goto GoGoodVictory>
+	GoGoodVictory <History 15 EndStory Say 19 XPV 1000 FacAlliance 9 2 FacAlliance 2 9 FacAlliance 10 9 FacAlliance 9 10>
+	GoPyrrhicVictory <History 16 EndStory DeleteFaction 9 Say 17 AddChat 11>
+	GoWin_M2 <if= S3 2 else GoWin_M1 S= 1 3 Say 25>
+	GoWin_M1 <S= 1 2 if= S11 1 else GoWin_M1_Norm Say 20 AddChat 12 AddChat 13>
+	GoWin_M1_Norm <Say 21>
+	GoNormal <Say 2 AddChat 10>
+
+	% Check to see if the PC will be told of the prophecy.
+	GoCheckProphecy <if= V1 1 else GoCheckRenown Goto GoProphecy>
+	GoCheckRenown <if= V1 0 else GoNothing ifG PCRep 6 30 else GoCheckItem Goto GoProphecy>
+	GoCheckItem <ifKeyItem 44 else GoNothing Say 3 AddChat 1 AddChat 2>
+	GoNothing <SayAnything>
+
+	GoProphecy <Say 4 V= 1 1 AddChat 3 AddChat 4 AddChat 5>
+
+	result1 <NewChat Reputation 4 -5 Goto GoProphecy>
+	result2 <NewChat Reputation 4  5 Goto GoProphecy>
+	result3 <NewChat Say 8 AddChat 8 AddChat 9>
+	result4 <NewChat Say 5 V= 1 -1 Reputation 7 10>
+	result5 <NewChat Say 6 AddChat 3 AddChat 4 AddChat 6>
+	result6 <NewChat Say 7 AddChat 7 AddChat 4>
+	result7 <Goto result3>
+	result8 <NewChat Say 9>
+	result9 <NewChat Say 10 S= 1 1 SetPlayerFaction 9 XPV 500 History 14>
+	result10 <NewChat if= S1 3 else GoR10_M2 Say 11>
+	GoR10_M2 <if= S1 2 else GoR10_M1 Say 12>
+	GoR10_M1 <Say 13>
+	result11 <NewChat Say 18 XPV 500>
+	result12 <NewChat Say 22 Reputation 4 10 AddChat 14>
+	result13 <NewChat Say 23 Reputation 1 1  AddChat 14>
+	result14 <NewChat Say 24>
+
+	Msg1 <You should not have come here, outsider. The wastes will devour your bones!>
+	Msg2 <Are you working on realizing the dream of the prophet?>
+	Msg3 <You have recovered the lost scepter of the founder! Surely you are the one of whom the legends speak... Have you come to fulfil the prophecy?>
+	Msg4 <In the days of the exodus, in the final days of the founder, a great stone was erected in this place. Upon it was inscribed the last prophecy of the founder, and the promise that some day a hero would arrive to fulfil what was written.>
+	Msg5 <It may be that you are correct, and all we have waited for is a lie... But what choice do we have other than to wait?>
+	Msg6 <The prophecy promised that at the time of the hero: our enemies will be made to suffer for what they have done to us, our land shall grow fat and prosperous, and Clan Ironwind will reign supreme over all!>
+	Msg7 <It's not a literal translation, true, but you have to understand the will of the founder. These things have to be taken in context.>
+	Msg8 <Are you saying that you're willing to give up your past life, to dedicate yourself entirely to Clan Ironwind and follow the path of the prophecy?>
+	Msg9 <The hero of legend must be dedicated entirely to our clan, with all the responsibility that entails.>
+	Msg10 <It is one thing to say you are a hero, but quite another to prove it. I will induct you into the clan. Your first task shall be the punishment of our foes.>
+	Msg11 <All conflict shall end once Clan Ironwind has completely destroyed our enemies. We shall start with Clan Markheim...>
+	Msg12 <Our land shall be made green and prosperous. For this, I think it is obvious that we will need water... There has been talk of capturing a desalination plant from our enemies. See what you can find about this.>
+	Msg13 <The ancient wrongs shall be righted. Many years ago the band of the Scorcher Khan stole an artifact of great value from us. You must recover this treasure, then kill every man in the Khan's camp.>
+	Msg14 <You joined Clan Ironwind to fulfil their prophecy.>
+	Msg15 <The prophecy was fulfilled, to the benefit of Clan Ironwind.>
+	Msg16 <The prophecy was fulfilled with the destruction of Clan Ironwind.>
+	Msg17 <You have finally done it, the prophecy has been fulfilled... what fools we have been...>
+	Msg18 <While you were away our enemies attacked. They destroyed everything... killed everyone... Clan Ironwind shall have no more enemies to fight, because the Clan is no more... The words of the founder have been our undoing. Your work is done.>
+	Msg19 <All three of the prophecies have been fulfilled. The wrongs of the past have been righted, the land has been made green, and we have made peace with our enemies. I doubted you, but you are undoubtedly truly the hero of legend!>
+	Msg20 <The ring of the founder has been returned to IronWind, though the Scorcher Khan has not been sufficiently punished. The people will begin to doubt you if you show weakness like this again.>
+	Msg21 <Good... our revenge upon the Clan of the Scorcher Khan is complete. Next, we must begin >
+	Msg22 <If you show mercy to your enemies it's likely to get us all killed. You must forget the ways of the greenzone if you are to survive here... but no matter, the first part of the prophecy has been fulfilled.>
+	Msg23 <Your heart is soft, like that of the other greenzoners... but no matter, the first part of the prophecy has been fulfilled.>
+	Msg24 <The lands are to be made green again. For this, we are going to need water... There was some talk earlier of capturing a desalination plant from our enemies. See what you can find.>
+	Msg25 <The second part of the prophecy has been fulfilled... Now, it's time for the final stage: Ironwind Fortress shall fight no more, once all our enemies have been annihilated.>
+
+	Prompt1 <That's right, I'm the guy of legend.>
+	Prompt2 <What's all this prophecy nonsense about?>
+	Prompt3 <A hero? That's me.>
+	Prompt4 <Sounds like a load of bull.>
+	Prompt5 <What did this prophecy say?>
+	Prompt6 <I don't think that's really what it says.>
+	CPrompt6 <ifG PCSkillVal 34 4 Accept>
+	Prompt7 <If it's a hero you need, I'm here.>
+	Prompt8 <Wait, that sounds a bit heavy...>
+	Prompt9 <Yes, that's what I'm saying.>
+	Prompt10 <What am I supposed to be doing?>
+	Prompt11 <What do you mean!? Where is everyone?>
+	Prompt12 <I am sorry for failing.>
+	Prompt13 <I won't destroy an entire village for revenge.>
+	Prompt14 <So what's next?>
+
+end

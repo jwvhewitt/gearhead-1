@@ -1,0 +1,26 @@
+Plot 0
+	name <PLOT: Shimli 2>
+	% Shimli tests are those personality quizzes that one can find
+	% in women's magazines. Shimli plots are multiple choice
+	% conversations that may somehow affect the PC's reputation.
+	element1 <Character Villainous>
+	element2 <Character Heroic Lawful Spiritual Renowned>
+	% Time limit - this plot will fade after a short time.
+	rumor <!2 used to sell poison milk to babies. It's true!>
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 1000>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <Reputation 1 1 NewChat Say 2>
+	result2 <NewChat Say 3>
+	result3 <Reputation 1 -1 NewChat Say 4>
+	Msg1 <Only the strong survive. The weak are worthless, and exist only to serve those who can master them. This is a universal truth; it transcends all laws, all cultures, and all of nature. Are you one of the strong or are you one of the chattel?>
+	Msg2 <Believe what you like, but in the end the only real virtue is power.>
+	Msg3 <What kind of a stupid answer was that!? You're pissing me off.>
+	Msg4 <That's the attitude. Don't owe anything to anyone, don't take any disrespect from anybody, and don't ever let them see you with your back turned.>
+	prompt1 <I'm definitely not one of you.>
+	prompt2 <Time will tell.>
+	prompt3 <One of the strong of course.>
+
+end

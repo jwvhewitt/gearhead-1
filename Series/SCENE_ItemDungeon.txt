@@ -1,0 +1,55 @@
+SCene 0
+% Item Dungeon Scene
+
+% This is an infinite dungeon. Once the specified level is reached,
+% the item will be inserted. If V1=0, no item will be inserted, and
+% this will just be a big featureless dungeon.
+
+% V1 = *Item to insert
+% V2 = *Depth at which to insert
+% V3 = *Current Depth
+% V4 = *Current Monster Rating
+% V5 =  Initialization Counter
+
+	special <NoExit>
+	NU1 <if= T1 0 Return>
+	CaveMap
+	BorderType 31
+
+	start <Print 1 if= V5 0 V= 5 1 MonsterUp 2 V4 if# V1 0 Compose Get L1 .getitem>
+	Msg1 <You are approximately \VAL V3 meters below the surface.>
+	.getitem <L= 1 0>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Cave Earth Animal Mutant>
+
+	Team 3
+	home <Down SPot>
+
+	rect
+	width 3
+	height 3
+	sub
+		StairsUp
+		Destination -1
+		use <Print 1 Return>
+	end
+
+	rect
+	width 3
+	height 3
+	name <Down SPot>
+	sub
+		StairsDown
+		Destination 1
+		use <Print 1 L+ 3 5 L+ 4 2 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 PassVar 4 L4 SeekGate -1 if# L1 0 ifG L3 L2 DynaItemTeam L1 3>
+		.sitename <SCENE_ItemDungeon.txt>
+		update <if# L1 0 ifG L3 L2 ifG L3 5  SetStat STAT_MetaVisibility -1>
+	end
+
+end

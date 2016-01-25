@@ -1,0 +1,80 @@
+AeroFighter 7
+Name <Gigas>
+Desig <AET-52>
+SDL_Sprite <aer_gigas.png>
+desc <Aegis Overlord's main bomber.>
+
+Mod Body
+	Armor 7
+	Mass -9
+	sub
+		CPit
+		Armor 2
+
+		Sensor 6
+
+		TarComp 2
+
+		Mount
+		Name <Body Mount>
+		inv
+			STC SWML-60
+		end
+
+		STC LAS-5
+
+		Flight 8
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Size 8
+	Armor 7
+	Mass -10
+	sub
+		Mount
+		Name <Right Wing Mount>
+		inv
+			STC NUKE-1
+		end
+
+		Flight 7
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Size 8
+	Armor 7
+	Mass -10
+	sub
+		Mount
+		Name <Left Wing Mount>
+		inv
+			STC NUKE-1
+		end
+
+		Flight 7
+	end
+
+Mod Storage
+	Name <Right Pod>
+	Size 5
+	Armor 6
+	Mass -3
+	sub
+		STC PAR-6
+
+		Flight 2
+	end
+
+Mod Storage
+	Name <Left Pod>
+	Size 5
+	Armor 6
+	Mass -3
+	sub
+		STC PAR-6
+
+		Flight 2
+	end
+end

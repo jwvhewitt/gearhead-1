@@ -1,0 +1,201 @@
+Plot 0
+	name <Leader Mission Template>
+
+	% A leader will offer a combat mission. Yay! So what's different
+	% between this one and the regular combat template? Well, first of
+	% all this one isn't linked to a story, so it's good for making
+	% independant PLOT_*.txt missions. Secondly, some of the things have
+	% been rebalanced so a deserving PC will get the mission more easily
+	% while an undeserving one won't. Leaders generally like Heroic, Lawful
+	% types.
+
+	% Element1 is just the leader of some town.
+	element1 <Character Leader>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50>
+
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// >
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E1.
+	Persona 1
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !1 will add the name of the NPC.
+	rumor <>
+	% eg., rumor <!1 might have a job for you.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say d5 AddReact d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 100 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer V= 2 10 V+ 2 d5 Say V2  Goto GoAddAcceptOps>
+	% If the PC has "the right stuff", an offer will be made immediately.
+	% If not, no offer will be made at all. In the example provided
+	% below, "the right stuff" is a Lawful reputation + being liked.
+	GoMakeOffer  <ifG React d25 else GoNoOffer ifG PCRep 2 d25 else GoNoOffer V= 2 15 V+ 2 d5 Say V2 Goto GoAddAcceptOps>
+
+	GoAddAcceptOps <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoAddComOps <V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2 V= 2 10 V+ 2 d2 AddChat V2>
+
+	GoNoOffer <Say 102 AdvancePlot 0>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
+
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 V= 2 20 V+ 2 d5 Say V2 Memo 103 Goto GoAddComOps>
+	result2 <Goto Result1>
+	result3 <Goto Result1>
+
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
+	result5 <Goto Result4>
+	result6 <Goto Result4>
+
+	% PC will enter combat now.
+	result7 <EndChat V= 2 25 V+ 2 d5 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	result8 <Goto result7>
+
+	% PC will ask how many points the enemy has.
+	result9 <NewChat V= 2 30 V+ 2 d5 Say V2 AddChat 7 AddChat 11>
+	result10 <Goto result9>
+
+	% PC needs some time to get ready.
+	result11 <NewChat Say 105>
+	result12 <Goto result11>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <>
+	Msg2 <>
+	Msg3 <>
+	Msg4 <>
+	Msg5 <>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <>
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+	Msg10 <>
+
+	% 11 - 15 :  PC got email about mission; asked to accept
+	Msg11 <>
+	Msg12 <>
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <>
+	Msg17 <>
+	Msg18 <>
+	Msg19 <>
+	Msg20 <>
+
+	% 21 - 25 :  PC has accepted; describe the mission.
+	Msg21 <>
+	Msg22 <>
+	Msg23 <>
+	Msg24 <>
+	Msg25 <>
+
+	% 26 - 30 :  Combat is starting
+	Msg26 <>
+	Msg27 <>
+	Msg28 <>
+	Msg29 <>
+	Msg30 <>
+
+	% 31 - 35 :  Describe enemy point value
+	Msg31 <>
+	Msg32 <>
+	Msg33 <>
+	Msg34 <>
+	Msg35 <>
+
+
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <Are you ready to start the mission yet?>
+	% 102 :  Player doesn't have "the right stuff" for this mission.
+	Msg102 <I'm very busy right now. Please come again later.>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 offered you a mission.>
+	% 104 :  PC didn't want the job.
+	Msg104 <That's too bad. I'll have to find someone else to do it, then.>
+	% 105 :  PC needs time to get ready.
+	Msg105 <Do whatever you need to do, then come back here and we'll start.>
+
+	% 01 - 03 :  PC will accept the mission.
+	Prompt1 <>
+	Prompt2 <>
+	Prompt3 <>
+
+	% 04 - 06 :  PC doesn't want this mission.
+	Prompt4 <>
+	Prompt5 <>
+	Prompt6 <>
+
+	% 07 - 08 :  Combat is starting.
+	prompt7 <>
+	prompt8 <>
+
+	% 09 - 10 :  How many points?
+	prompt9 <>
+	prompt10 <>
+
+	% 11 - 12 :  Just a minute...
+	prompt11 <>
+	prompt12 <>
+
+end

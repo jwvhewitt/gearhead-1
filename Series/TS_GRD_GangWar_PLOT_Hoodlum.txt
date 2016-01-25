@@ -1,0 +1,47 @@
+Plot 0
+	name <PLOT: Hoodlum!>
+
+	Element1 <Grab 2>
+	Element2 <Prefab>
+
+	% On a cleanup request, just delete this plot.
+	CleanUp <DeleteChar E2 AdvancePlot 0>
+
+	% V1 = Phase Counter
+	% V2 = Reward Counter
+
+	start <ifPersona E2 else GoEndPlot if= V1 0 else GoSetOrder V= 1 1 Compose UTD E2 .killerdies NPCLevel E2 PCRep 6 Goto GoSetOrder>
+	GoEndPlot <AdvancePlot 0>
+	.killerdies <if= V2 0 else GoEndPlot V= 2 1 FacXP+ N1 1 AdvancePlot 0>
+	GoSetOrder <ifNPCInPlay E2 NPCGoPC E2>
+
+	TM1 <if= SceneID E1 ifNPCinPlay E2 if= V1 1 ifG 6 Range PCUID NPCUID E2 V= 1 2 Print 1 ForceChat E2>
+	Msg1 <\ELEMENT 2 shouts at you!>
+
+sub
+	Persona 2
+	greeting <EndCHat Say d10 SoloAttack E2>
+
+	Msg1 <Alright! Now everybody dies!>
+	Msg2 <This city belongs to the bloods!>
+	Msg3 <This city belongs to the crips!>
+	Msg4 <This is for Mickey!>
+	Msg5 <I'm the king of the world!>
+	Msg6 <Come on, I can take the lot of you!>
+	Msg7 <I'm going down in flames! You're all coming with me!>
+	Msg8 <Stay off of our turf!>
+	Msg9 <I'm a Jet! I'm a Jet to the end!>
+	Msg10 <You talking to me? You die!!!>
+
+end
+inv
+	NPC Citizen
+	place <1 Pass>
+	Skill 6 4
+	Skill 7 4
+	Skill 8 4
+	skill 9 4
+	skill 10 4
+	EquipChar 5000
+
+end

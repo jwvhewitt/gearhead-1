@@ -1,0 +1,580 @@
+plot 0
+	name <PLOT: Truck Job 1>
+
+	element1 <Character Shopkeeper>
+	element2 <Character Guardian Lawful !Near 1>
+	element3 <Character Shopkeeper !Far 1 Lawful Renowned>
+	element4 <Character Shopkeeper !Far 1 !Far 2>
+	element5 <Character Guardian Shy Heroic !Near 4>
+
+	rumor <mecha-equipped bandits can often steal entire convoys of trucks at once.>
+
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 12500>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+sub
+	persona 1
+	greeting <NewChat ifG React 80 else GoMedReact ifG PCRep 1 30 else GoNoHero Say 1 AddChat 3 AddChat 4 ifG PCMeks 0 else GoNoMeks AddChat 1>
+	GoNoHero <Say 9 AddChat 3 AddChat 4 ifG PCMeks 0 else GoNoMeks AddChat 1>
+	GoNoMeks <ifG PCRep 1 0 else GoNMNH AddChat 2>
+	GoNMNH <AddChat 7>
+	GoMedReact <ifG React 25 else GoLowReact Say 2 AddChat 4 ifG PCRep 1 5 AddChat 5>
+	GoLowReact <ifG React -5 else GoVeryLow Say 3 AddChat 4 ifG PCRep 3 20 else GoNoSocial AddChat 6>
+	GoNoSocial <ifG PCRep 2 55 AddChat 6>
+	GoVeryLow <Say 4>
+	result1 <NewChat Say 5 AddChat 8 AddChat 9 AddChat 10>
+	result2 <NewChat Say 6 AdvancePlot 1 AddChat 4>
+	result3 <EndChat AdvancePlot 0 AddReact -10 Reputation 1 -1 ifG React 50 else GoLowReject Say 7>
+	GoLowReject <Say 8>
+	result4 <Say 10 shop NoWares Say 11 EndChat>
+	result5 <NewChat ifG PCMeks 0 else GoR5NoMeks say 12 AddChat 8 AddChat 9 AddChat 10>
+	GoR5NoMeks <Say 13 AdvancePlot 1>
+	result6 <NewChat AddChat 4 AddChat 11 ifG PCRep 2 15 else GoR6NoLaw Say 14 AddChat 5>
+	GoR6NoLaw <ifG PCRep 1 15 else GoR6NoHero Say 15 AddChat 5>
+	GoR6NoHero <AdvancePlot 0 Say 16>
+	result7 <NewChat Say 17 AdvancePlot 1 Reputation 1 1 AddChat 4>
+	result8 <NewChat Say 19 AddChat 4 Reputation 5 1 AdvancePlot 2>
+	result9 <NewChat Say 20 AddChat 4 Reputation 4 -1 AdvancePlot 0>
+	result10 <NewChat Say 21 AddChat 4 AddChat 12 AddChat 13>
+	result11 <NewChat AdvancePlot 0 Say 18 AddChat 4>
+	result12 <NewChat AdvancePlot 2 Say 22 AddChat 4>
+	result13 <NewChat AdvancePlot 0 Say 23 AddChat 4>
+	Msg1 <You've got to help me! A big shipment of merchandise that I had coming from \SCENE EScene 3 was stolen by mecha bandits!>
+	Msg2 <Sorry, the shop's closed. A big shipment of merchandise I had coming got nabbed by a mecha gang. Come back tomorrow.>
+	Msg3 <The shop's closed.>
+	Msg4 <Get out. We're closed.>
+	Msg5 <That'd be nice, but they're probably long gone by now. I had something more mundane in mind. I'd like for you to go to \SCENE ESCene 3 and pick up my replacement order.>
+	Msg6 <\PERSONA E2 has been tracking the bandits who nabbed my stuff. Maybe you can help catch them.>
+	Msg7 <I know, everybody's got their own problems...>
+	Msg8 <And I don't care what you think. The shop's closed, get out of here.>
+	Msg9 <I'm afraid I don't have anything for sale today. My regular shipment of merchandise was nabbed by a mecha gang.>
+	Msg10 <I guess so. Let me have a look.>
+	Msg11 <Take it easy, there's some rough characters out there.>
+	Msg12 <Well, you're something of a pilot, I know. If you wouldn't mind you could head over to \SCENE EScene 3 and pick up my replacement supplies.>
+	Msg13 <The bandits who nabbed my shipment are being investigated by \PERSONA E2 now. Maybe you could help with the case.>
+	Msg14 <I've been robbed! My shipment of goods which was supposed to be coming from \SCENE EScene 3 got nabbed by a gang of mecha bandits.>
+	Msg15 <I don't have anything in stock. Mecha bandits made off with my latest shipment of goods. If this keeps up, I'll be out of business.>
+	Msg16 <My most recent shipment of goods from \SCENE EScene 3 was looted by bandits, but the guardians are investigating the matter. The store will be open again later.>
+	Msg17 <That's very kind of you. \PERSONA E2 is taking care of the investigation. Maybe there's some way you could help with that.>
+	Msg18 <Thanks for your sympathy.>
+	Msg19 <\PERSONA E3 in \SCENE EScene 3 is the merchant I placed the order with. Please go there and pick up the replacement goods. I'll pay you when you return.>
+	Msg20 <I suppose you have more interesting things to do. I'll find another driver for this job.>
+	Msg21 <Pay is $1500 if you can deliver the goods within three hours. It goes down after that. Are you interested in the job?>
+	Msg22 <Great! \PERSONA E3 in \SCENE EScene 3 is your contact for picking up the merchandise. Please hurry back, I really need those supplies!>
+	Msg23 <I know, you're not a trucker... I guess I have to find someone else for this job.>
+	prompt1 <Do you want me to fight the bandits?>
+	prompt2 <What can I do? I don't have a mek!>
+	prompt3 <I don't care about your problems.>
+	prompt4 <Can I at least get my stuff repaired?>
+	prompt5 <Is there anything I can do to help?>
+	prompt6 <What's the matter?>
+	prompt7 <I'd like to help you.>
+	prompt8 <I'll do it!>
+	prompt9 <Sounds too boring.>
+	prompt10 <What does this job pay?>
+	prompt11 <That's too bad.>
+	prompt12 <I'm interested.>
+	prompt13 <I'm not interested.>
+
+	Plot 1
+		% The PC will investigate on foot, potentially gaining a mecha.
+		rumor <mecha-equipped bandits can often steal entire convoys of trucks at once.>
+
+		% Time limit - this plot will fade after a short time.
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 2500>
+		GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+
+		% If combat has been entered, V2 = 1. This is important to keep
+		% the events below from activating in scenes other than the
+		% plot's combat...
+		NU1 <if= T1 0 if= V2 1 AdvancePlot 3 Reputation 6 -5  V= 2 2>
+		NU2 <if= T2 0 if= V2 1 AdvancePlot 4 XPV 50           V= 2 2>
+
+	sub
+		Persona 2
+		% Guardian investigating the bandits.
+		% V1 => Combat Mission Accepted.
+		greeting <NewChat ifG V1 0 else GoStart Say 17 AddChat 6 AddChat 7>
+		GoStart <ifG React 70 else GoMedReact Say 1 AddChat 1 AddChat 2 AddChat 3>
+		GoMedReact <ifG PCRep 6 10 else GoNoRenown ifG PCRep 2 30 else GoNoLaw Say 2 AddChat 1 AddChat 2 AddChat 3>
+		GoNoLaw <ifG PCRep 1 30 else GoNoHero Say 3 AddChat 1 AddChat 2 AddChat 3>
+		GoNoHero <ifG React 30 else GoLowReact ifG PCRep 1 -1 else GoLowReact ifG PCRep 2 -10 else GoLowReact Say 4 AddChat 1 AddChat 2 AddChat 3>
+		GoNoRenown <ifG PCRep 2 20 else GoLowReact Say 5 AddChat 1 AddChat 2 AddChat 3>
+		GoLowReact <ifG PCRep 2 -1 else GoChaos Say 6 AddChat 4 AddChat 5>
+		GoChaos <ifG PCRep 1 -1 else GoVillain Say 7 AddChat 4 AddChat 5>
+		GoVillain <Say 8 AddChat 4 AddChat 5>
+		result1 <V= 1 1 NewChat Say 9 AddChat 6 AddChat 7>
+		result2 <NewChat ifG React 45 else GoR2Low Say 10 AddChat 8 AddChat 9>
+		GoR2Low <AdvancePlot 0 Say 11>
+		result3 <NewChat Say 12 AddChat 10 AddChat 11 AddChat 12>
+		result4 <NewChat Say 13 AddChat 1 AddChat 2 AddChat 3>
+		result5 <V= 1 1 NewChat Reputation 1 1 AddChat 6 AddChat 7 ifG 0 PCRep 1 else GoR5NoVillain Say 14>
+		GoR5NoVillain <ifG 0 PCRep 2 else GoR5NoChaos Say 15>
+		GoR5NoChaos <Say 16>
+		Result6 <EndChat P= 2 1 SavePos Dynamic 0 3500 FrzNU1 FrzNU2 Say 24>
+		FrzNU1 <if= T1 0 Return>
+		FrzNU2 <if= T2 0 Return>
+		result7 <NewChat Say 18>
+		result8 <NewChat Say 19 V= 1 1 AddChat 6 AddChat 7>
+		result9 <NewChat AdvancePlot 0 Say 20>
+		result10 <NewChat Say 21 V= 1 1 AddChat 6 AddChat 7>
+		result11 <NewChat AdvancePlot 0 Reputation 5 -1 Say 22>
+		result12 <NewChat AdvancePlot 0 Reputation 2 -1 Say 23>
+		Msg1 <Were you talking to \PERSONA E1 about the bandits? How'd you like to help me with the case? I could really use your assistance.>
+		Msg2 <You've probably heard about the criminal gangs operating in this area. They've been raiding convoys and have been getting increasingly bold in their attacks. How'd you like a chance to help catch these thieves?>
+		Msg3 <\PERSONA E1 is the latest victim of the bandits operating in this area. They need to be stopped before anyone else gets hurt. I could really use your help in bringing these criminals to justice.>
+		Msg4 <How'd you like to help the community? I've heard that you buy things from \PERSONA E1 sometimes. Bandits robbed an important shipment of goods, and I could use someone to help track them down.>
+		Msg5 <Bandits have been robbing \PERSONA E1 and other local merchants. I could use your help in catching them, if you're interested.>
+		Msg6 <Good day, citizen. How may I help you?>
+		Msg7 <I'm on the job right now. What do you want?>
+		Msg8 <I'm busy. Come back later.>
+		Msg9 <Excellent. Look at this HandiMap of the area. This is where the bandit base is... right now they're servicing their meks. If we catch them unaware, we can nab them before they refuel. Are you ready to take them on?>
+		Msg10 <That's too bad. You know, there is a reward available...>
+		Msg11 <That's too bad.>
+		Msg12 <A lot of shopkeepers have been losing money to this gang, and they've put together quite a substantial reward. Is $5000 enough for you?>
+		Msg13 <Really? I'm investigating the bandits who stole his merchandise right now. I could use some help on the case, if you're interested.>
+		Msg14 <Trying to make good, huh? Well, I could use whatever help I can get... Here's the deal. I've found the bandit's hideout. They're refueling their mecha as we speak. If we strike now, we can take them before they get back on board.>
+		Msg15 <Normally I'd be suspicious but in this case I need all the help I can get. Here are the coordinates of the bandit camp. If we can approach them while they're refueling, they won't have a chance to get back to their mecha.>
+		Msg16 <I'm glad to hear that! There's a reward available for catching the bandits. They're refueling right now. This may be our one chance to catch them out of their mecha.>
+		Msg17 <Are you ready yet? We don't have much time before the bandits move again.>
+		Msg18 <Get your gear in order, then hurry back. We don't have much time.>
+		Msg19 <Here's the info. The bandits have a camp outside of town. Right now they're refueling, so we can catch them outside of their meks.>
+		Msg20 <Okay, okay, I get the hint... I'll stop bothering you about it now.>
+		Msg21 <Here are the details. The bandit camp is just outside of town. Right now their mecha are being serviced, so if we strike now we can catch them unaware.>
+		Msg22 <That's a good point. Well, I'm sure I'll find someone else who's willing to do this mission.>
+		Msg23 <Well, That's all I have to offer, so I guess I'll need to find someone else for this job.>
+		Msg24 <Good luck. Report back here once you're finished.>
+		prompt1 <Count me in.>
+		prompt2 <I can't help you.>
+		prompt3 <Is there a reward?>
+		prompt4 <\PERSONA E1 sent me to talk with you.>
+		prompt5 <I want to help you catch the bandits.>
+		prompt6 <I'm ready to go.>
+		prompt7 <Give me some time to prepare.>
+		prompt8 <In that case, okay!>
+		prompt9 <No, this isn't my kind of job.>
+		prompt10 <Alright, sounds good...>
+		prompt11 <Can't spend money if you're dead.>
+		prompt12 <I don't work that cheap.>
+
+
+		Plot 3
+			% The player lost the mission.
+			% Time limit - this plot will fade after a short time.
+			START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 1500>
+			GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		sub
+			Persona 2
+			greeting <Say 1 AdvancePlot 0>
+			Msg1 <The bandits got away. They've moved camp... there's no telling when they'll strike next.>
+		end
+
+		Plot 4
+			% The player won the mission.
+			% Time limit - this plot will fade after a short time.
+			START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 50000>
+			GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+		sub
+			Persona 2
+			greeting <NewChat AdvancePlot 5 CashPrize 5000 ifG PCRep 2 30 else GoNotLawful Say 1 AddChat 1 MechaPrize .LawMek>
+			GoNotLawful <ifG PCRep 1 0 else GoNotHeroic Say 1 AddChat 1 MechaPrize .HeroMek>
+			GoNotHeroic <Say 2 AddChat 2>
+			.LawMek <Corsair.txt>
+			.HeroMek <Badger.txt>
+			result1 <NewChat Say 3>
+			Msg1 <Good job stopping the bandits! Here's your reward. Also, you can have one of the bandit mecha we recovered. You may need it.>
+			Msg2 <Here's your reward for a job well done. If you'd like to do more bounty hunting, go to \SCENE EScene 5 and ask \PERSONA E5 about it. I hear they have bandit problems too.>
+			Msg3 <There's another gang of bandits that's been raiding \SCENE EScene 5 lately. You should head there and talk to \PERSONA E5 about stopping them. It could mean another bounty for you.>
+			Prompt1 <What for?>
+
+
+			Plot 5
+				% Player is heading to S5 for another bounty hunt.
+				% V1 = Time Limit
+				% V2 = Combat Indicator
+				% V3 = Phase Indicator
+				% V4 = Know where convoy attacked
+
+				% If combat has been entered, V2 = 1. This is important to keep
+				% the events below from activating in scenes other than the
+				% plot's combat...
+				NU1 <if= T1 0 if= V2 1 AdvancePlot 6                 Reputation 6 -9  V= 2 2>
+				NU2 <if= T2 0 if= V2 1 AdvancePlot 7 XPV 150 Salvage Reputation 6 1   V= 2 2>
+
+				% Time limit - this plot will fade after a short time.
+				START <ifPersona E5 else GoDelete ifPersona E4 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 150000>
+				GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+				GoDelete <AdvancePlot 0>
+			sub
+				Persona 2
+				% Guardian who gave previous mission.
+				greeting <NewChat ifG React 25 else GoMedReact Say 1 AddChat 1 AddChat 2>
+				GoMedReact <ifG React 3 else GoLowReact Say 1 AddChat 1 AddChat 2>
+				GoLowReact <Say 3 AddChat 1 AddChat 2>
+				result1 <NewChat AddChat 2 Say 4>
+				result1 <NewChat AddChat 1 Say 5>
+				Msg1 <Greetings, again. How may I be of service?>
+				Msg2 <Hello, again. What can I help you with?>
+				Msg3 <You're back again. What do you want this time?>
+				Msg4 <\SCENE EScene 5 is the place I asked you to go to. They're having trouble with bandits there.>
+				Msg5 <You need to ask \PERSONA E5 about the bandit gangs. There might be another reward for you if you do that.>
+				prompt1 <Where am I supposed to go?>
+				prompt2 <Who am I supposed to meet?>
+
+				Persona 5
+				% Guardian who will give the next mission.
+				greeting <NewChat ifG P3 2 else GoPhase2 Say 22 AddChat 19 AddChat 15 ifG P4 0 AddChat 16>
+				GoPhase2 <if= P3 2 else GoPhase1 Say 17 AddChat 15 ifG P4 0 AddChat 16>
+				GoPhase1 <if= P3 1 else GoStart Say 16>
+				GoStart <ifG React 45 else GoMedReact Say 1 AddChat 1 AddChat 2>
+				GoMedReact <ifG PCRep 6 25 else GoLowRenown Say 2 AddChat 1 AddChat 2>
+				GoLowRenown <Say 3 AddChat 3 AddChat 4>
+				result1 <NewChat Say 4 P= 3 1 AddChat 5 AddChat 6>
+				result2 <NewChat Say 5 P= 3 1 AddChat 7>
+				result3 <NewChat Say 6 AddChat 8>
+				result4 <NewChat Say 7 AddChat 8>
+				result5 <NewChat Say 8>
+				result6 <NewChat Say 9 AddChat 5>
+				result7 <NewChat Say 10>
+				result8 <NewChat Say 11 AddChat 9 AddChat 10 AddChat 11 AddChat 12 AddChat 13>
+				result9 <NewChat AddChat 14 P= 3 1 Reputation 1 1 ifG PCRep 1 2 else GoDontThinkSo Say 12>
+				result10 <NewChat AddChat 14 P= 3 1 Reputation 2 1 ifG PCRep 2 2 else GoDontThinkSo Say 12>
+				result11 <NewChat AddChat 14 P= 3 1 Reputation 3 1 ifG PCRep 3 2 else GoDontThinkSo Say 12>
+				result12 <NewChat AddChat 14 P= 3 1 Reputation 2 -1 ifG 0 PCRep 2 else GoDontThinkSo Say 14>
+				result13 <NewChat AddChat 14 P= 3 1 Reputation 7 -1 ifG 0 PCRep 7 else GoDontThinkSo Say 12>
+				GoDontThinkSo <Say 13>
+				result14 <NewChat Say 15>
+				result15 <NewChat Say 18 ifG P4 0 AddChat 16>
+				result16 <NewChat ifG PCMeks 0 else GoR16NoMeks Say 20 AddChat 17 AddChat 18>
+				GoR16NoMeks <Say 19 AddChat 15 ifG P3 2 AddChat 19>
+				result17 <EndChat P= 2 1 SavePos Dynamic 2 150000 FrzNU1 FrzNU2 Say 26>
+				result18 <NewChat Say 21>
+				result19 <NewChat Say 23 AddChat 20 AddChat 21>
+				result20 <EndChat P= 2 1 SavePos Dynamic 0 2500 FrzNU1 FrzNU2 Say 25>
+				FrzNU1 <if= T1 0 Return>
+				FrzNU2 <if= T2 0 Return>
+				result21 <NewChat Say 24>
+				Msg1 <\PERSONA E2 told me that you'd be coming. I've been investigating the \SCENE Escene 3 mecha gangs and their attacks against our caravans. Will you help with the investigation?>
+				Msg2 <I heard that you've been fighting against the \SCENE Escene 3 mecha gangs. Well, I've been doing that too. How'd you like to join forces?>
+				Msg3 <Yes, what can I help you with today?>
+				Msg4 <Your help will be much appreciated. \PERSONA E4 was the latest merchant to be robbed. You should go see what you can find out.>
+				Msg5 <There's likely to be a large reward... once we find out where these bandits are. I'm still investigating the case. You could help, if you'd like.>
+				Msg6 <Really? Why?>
+				Msg7 <In this day and age almost every town has some trouble with bandits. What concern is it of yours?>
+				Msg8 <\PERSONA E4 can probably tell you something about the attack.>
+				Msg9 <Well, yes, that's what investigate usually means...>
+				Msg10 <\PERSONA E4 was the latest merchant to be robbed. Go see if you can find out anything abut the attack that might help us.>
+				Msg11 <Why do you want to do that?>
+				Msg12 <I can see that's important to you. You help would be gladly appreciated.>
+				Msg13 <I don't think that's why you're really here... but I need whatever help I can get.>
+				Msg14 <We'll talk about your reward once the bandits have been located. Right now I could use your help in finding out where they are.>
+				Msg15 <The first thing to do is find out where the bandits are camped. \PERSONA E4 was their latest victim... maybe you can find some information about the circumstances of the attack.>
+				Msg16 <Talk to \PERSONA E4 about the bandit attacks.>
+				Msg17 <So, what did you find out?>
+				Msg18 <Well, that's something at least. Maybe if you spoke to the merchant who sent the order we can find out more.>
+				Msg19 <That's an important piece of information. Unfortunately we don't have the equipment to set up any kind of ambush. What we really need is a mecha...>
+				Msg20 <Good job. We have a choice to make now... it may be possible to set an ambush for the bandits in that same area. However, this will be very dangerous, so we should also look into other options.>
+				Msg21 <Keep asking around. Come back when you hear something new.>
+			 	Msg22 <How is the investigation going?>
+				Msg23 <That's very interesting... We can check out potential buyers for the biomem, and catch the bandits when they arrange a sale. Are you ready to go?>
+				Msg24 <Reload your weapons and patch up your armor. Come back here when you're ready to start the mission.>
+				Msg25 <This is the location where I believe the bandits will try to make their sale. Intercept them, and take them out before they can complete their deal.>
+				Msg26 <Suit up and head over to the coordinates of the last attack. Hopefully the bandits are still in the area. Come back here when you're finished.>
+				prompt1 <That's what I'm here for.>
+				prompt2 <That depends... what's the reward?>
+				prompt3 <\PERSONA E2 sent me.>
+				prompt4 <I hear you have a bandit problem.>
+				prompt5 <I'm on the case!>
+				prompt6 <You mean, go ask questions and stuff?>
+				prompt7 <What should I do?>
+				prompt8 <I want to help catch the bandits.>
+				prompt9 <To protect the innocent.>
+				prompt10 <To uphold the law.>
+				prompt11 <My friend \PERSONA E1 was also robbed.>
+				prompt12 <For the reward money.>
+				prompt13 <I'm on a quest!>
+				prompt14 <What do you need me to do?>
+				prompt15 <I know where the shipment came from.>
+				prompt16 <I know where the attack happened.>
+				prompt17 <I want to ambush the bandits in my mecha.>
+				prompt18 <I'll keep investigating.>
+				prompt19 <I know what was in the shipment.>
+				prompt20 <I am ready to go now.>
+				prompt21 <I need more time to prepare.>
+
+				Persona 4
+				% The latest target of the bandit raids.
+				greeting <NewChat ifG P3 2 else GoPhase1 Say 13 AddChat 1>
+				GoPhase1 <IfG P3 0 else GoStart Say 4 AddChat 2 AddChat 3>
+				GoStart <Say 1 AddChat 1>
+				result1 <Say 2 Shop NoWares Say 3 EndChat>
+				result2 <NewChat Say 5 AddChat 5 AddChat 6 AddChat 9>
+				result3 <NewChat Say 6 AddChat 4 AddChat 9>
+				result4 <NewChat Say 7 AddChat 9>
+				result5 <NewChat Say 8 P= 3 2 AddChat 6 AddChat 7>
+				result6 <NewChat Say 9 P= 3 2 P= 4 1 AddChat 5 AddChat 7>
+				result7 <NewChat Say 10 AddChat 8 AddChat 9>
+				result8 <NewChat Say 11 AddChat 9>
+				result9 <NewChat Say 12 AddChat 1 AddChat 2 AddChat 3>
+				Msg1 <Sorry, the store is closed. Our latest shipment of goods was nabbed by a bandit gang. I'm afraid I have nothing left to sell.>
+				Msg2 <Yes, I can at least do that.>
+				Msg3 <Be sure to come back once we get new stock in!>
+				Msg4 <\PERSONA E5 asked you to come talk with me about the bandit attack. I don't know how much help I can be... What do you need to know?>
+				Msg5 <Mostly just consumer electronics. A few boxes of handphone accessories. Nothing I would've thought bandits would be interested in.>
+				Msg6 <No, not really.>
+				Msg7 <Well, there's that guy who called me wangtta in high school, but I don't think he would've done something like this.>
+				Msg8 <It was coming from \SCENE ESCEne 3 and was supposed to arrive on Friday, though it didn't make it.>
+				Msg9 <The convoy was supposed to be following the Blue Highway to here, but it got attacked around the Serpent's Pass.>
+				Msg10 <\PERSONA E3 is the merchant I placed my order with.>
+				Msg11 <I believe that \PERSONA E3 lives in \SCENE EScene 3 but I could be wrong.>
+				Msg12 <Sure. Go ahead.>
+				Msg13 <I hope you catch those bandits soon so that business can return to normal.>
+				Prompt1 <Can you repair my stuff?>
+				Prompt2 <What was in the stolen shipment?>
+				Prompt3 <Do you have any enemies?>
+				Prompt4 <What do you mean, "not really"?>
+				Prompt5 <Where was the shipment coming from?>
+				Prompt6 <Where was the shipment attacked?>
+				Prompt7 <Who did you place the order with?>
+				Prompt8 <Where does \PERSONA E3 live?>
+				Prompt9 <Let me ask you something else.>
+
+				Persona 3
+				% The merchant who filled these orders.
+				greeting <NewChat ifG P3 1 else GoNoClue Say 3 AddChat 1 AddChat 2>
+				GoNoClue <AddChat 1 ifG React 32 else GoLowReact Say 1>
+				GoLowReact <Say 2>
+				result1 <Say 4 Shop NoWares Say 5 EndChat>
+				result2 <NewChat Say 6 AddChat 3 AddChat 4 AddChat 5>
+				result3 <NewChat Say 7 AddChat 6 AddChat 7>
+				result4 <NewChat Say 8 AddChat 10>
+				result5 <NewChat Say 9 AddChat 10>
+				result6 <NewChat Say 10 P= 3 3 AddChat 8>
+				result7 <NewChat Say 11 AddChat 10>
+				result8 <NewChat Say 12 AddChat 10 ifG SkRoll 29 8 AddChat 9>
+				result9 <NewChat Say 13 AddChat 10 if= V25 0 V= 25 1 XPV 100>
+				result10 <NewChat Say 14 AddChat 1 AddChat 3 AddChat 4 AddChat 5>
+				Msg1 <It seems like I'll be filling out insurance forms until my grandkids are in college... I'm sorry, the shop's closed today. I have a lot of paperwork to file.>
+				Msg2 <The shop is closed. I've got a lot of paperwork to do today.>
+				Msg3 <My shop is closed today. What can I help you with?>
+				Msg4 <I don't have a lot of time, but I'll do what I can to help.>
+				Msg5 <Take good care of your stuff.>
+				Msg6 <Oh... This has to do with the bandit raids, doesn't it? What do you need to know?>
+				Msg7 <Electronics, gadgets, some foodstuffs and knick-knacks, a crate of biomem shards for the \SCENE ESCENE 4 Science Academy. A full manifest was submitted to the insurance company.>
+				Msg8 <No, as far as I know I'm quite well liked by all the people I deal with.>
+				Msg9 <The normal route from here to \SCENE EScene 4 is to follow the Blue Highway.>
+				Msg10 <Most of the things that were stolen could probably be unloaded anywhere. There's a big black market for electronics and the like. The biomem shards, on the other hand... Only AI researchers have any use for those.>
+				Msg11 <No, none. I often deal in defense hardware, but this shipment was purely civilian.>
+				Msg12 <Yes, Artificial Intelligence. Biomem plastic is still pretty experimental stuff. They're saying that Optic-Organic computing could be the way of the future, but the manufacturing price will have to come down before that happens.>
+				Msg13 <That's correct. You must really know your science... Regulations prevent it from being bought or sold without a special license. Licenses are generally only given to qualified labs.>
+				Msg14 <Go ahead.>
+				Prompt1 <Can you repair my equipment?>
+				Prompt2 <I'm here to ask you a few questions.>
+				Prompt3 <What was in the \SCENE ESCENE 2 shipment?>
+				Prompt4 <Do you have any enemies?>
+				Prompt5 <What route do your trucks follow?>
+				Prompt6 <Who'd want to steal any of that stuff?>
+				Prompt7 <No weapons or mecha parts in the shipment?>
+				Prompt8 <AI researchers?>
+				Prompt9 <BioMem is a controlled substance, right?>
+				Prompt10 <There's something else I need to ask.>
+
+				Plot 6
+					% PC lost the mission.
+					% Time limit - this plot will fade after a short time.
+					START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 3500>
+					GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+				sub
+					Persona 5
+					greeting <NewChat Say 1 AdvancePlot 0>
+					Msg1 <The bandits got away, but it appears that our actions drove them out of the region. We're safe, for now, but they'll be back some day...>
+				end
+
+				Plot 7
+					% PC won the mission.
+					% Time limit - this plot will fade after a short time.
+					START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 15000>
+					GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+				sub
+					Persona 4
+					greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 AddReact 25>
+					GoBeenBefore <Say 2>
+					Msg1 <Thank you so much for taking care of those bandits! I am so grateful to you.>
+					Msg2 <I hear that \PERSONA E5 is looking for you. You've apparently earned a very nice reward.>
+
+					Persona 5
+					greeting <NewChat Say 1 CashPrize 7500 AdvancePlot 0 AddReact 10>
+					Msg1 <The bandit ring has been crushed! Here's your reward.>
+				end
+			end
+
+		end
+	end
+
+	Plot 2
+		% The PC will go to loc 3 to pick up and then deliver the goods.
+
+		% V1 = Time Limit
+		% V2 = Phase
+		% V3 = Three Hour Time
+		% V4 = Second Job Offer
+
+		% Time limit - this plot will fade after a short time.
+		START <ifPersona E1 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 86000 V= 3 Comtime V+ 3 10800>
+		GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+		GoDelete <AdvancePlot 0>
+	sub
+		Persona 1
+		% Shopkeeper awaiting the delivery.
+		greeting <NewChat if= P2 1 else GoStart Say 10 AddChat 4>
+		GoStart <ifG React 40 else GoMedReact Say 1 AddChat 1 AddChat 2>
+		GoMedReact <Say 2 AddChat 1 AddChat 2>
+		result1 <NewChat Say 3 AddChat 2 AddChat 3>
+		result2 <NewChat Say 4 AddChat 1>
+		result3 <NewChat AddChat 2 ifG PCRep 6 25 else GoR3NoRenown Say 5>
+		GoR3NoRenown <Say 6>
+		result4 <NewChat ifG PCMeks 0 else GoMekLost AddReact 15 XPV 75 ifG ComTime P3 else GoOnTime Say 7 CashPrize 1000 ifG P4 0 else GoNoOffer AdvancePlot 8>
+		GoOnTime <Say 9 CashPrize 1500 Reputation 6 1 ifG P4 0 else GoNoOffer AdvancePlot 8>
+		GoMekLost <Say 8 P= 2 0>
+		GoNoOffer <AdvancePlot 0>
+		Msg1 <Hello again. Have you picked up my supplies yet?>
+		Msg2 <What are you doing here!? I thought you were going to go pick up my supplies!>
+		Msg3 <\SCENE EScene 3 is the place from which my order should be coming. Just go there, pick it up, and bring it back here.>
+		Msg4 <\PERSONA E3 is the one you have to speak with. Get going, I really need those supplies!>
+		Msg5 <I thought you were an experienced pilot!? How is it possible that you don't know where \SCENE ESCene 3 is? Keep looking, I guarantee that it's out there somewhere.>
+		Msg6 <You don't know where it is!? Well, I guess I shouldn't be suprised, you do look a little wet behind the ears... Keep looking. It's out there somewhere.>
+		Msg7 <Very good! Thank you very much for delivering my order. I can now re-open the store. Here's your pay for the job.>
+		Msg8 <Where's the merchandise!? Don't tell me that your mecha was taken by bandits... This is horrible. I still really need those supplies...>
+		Msg9 <Incredible! To be honest with you, I didn't expect you to make it back this quickly. Here's the $1500 that I promised you.>
+		Msg10 <I've had a lot of people call, asking when the store will be open again. I really need to get new supplies.>
+		Prompt1 <Where am I supposed to go again?>
+		Prompt2 <Who am I supposed to talk with there?>
+		Prompt3 <I don't know where that it...>
+		Prompt4 <I'm back from \SCENE ESCENE 3 with your goods.>
+
+		Persona 3
+		% Shopkeeper sending the delivery.
+		greeting <NewChat if= P2 0 else GoBeenBefore Say 5 AddChat 2>
+		GoBeenBefore <ifG React 15 else GoLowReact Say 1 if= PCMEks 0 AddCHat 1>
+		GoLowReact <Say 2 if= PCMEks 0 AddCHat 1>
+		result1 <NewChat ifG PCRep 6 0 else GoNoRenown Say 3 MechaPrize .BadMek Reputation 6 -10>
+		GoNoRenown <Reputation 6 -25 AddReact -5 Say 4 AdvancePlot 0>
+		.BadMek <Vespa.txt>
+		.OkayMek <Rover.txt>
+		result2 <NewChat P= 2 1 ifG PCMeks 0 else GoNoNecha ifG PCRep 2 25 else GoR1NoLaw Say 8 P= 4 1>
+		GoR1NoLaw <ifG PCRep 6 75 else GoR1NoRenown Say 9 P= 4 1>
+		GoR1NoRenown <ifG React 62 else GoR1NoLike Say 10 P= 4 1>
+		GoR1NoLike <Say 11>
+		GoNoMecha <ifG PCRep 6 10 else GoR2Low Say 6 MechaPrize .OkayMek>
+		GoR2Low <Say 7 MechaPrize .BadMek>
+		Msg1 <How are things? Are you ready to bring the shipment to \SCENE ESCENE 1 yet?>
+		Msg2 <Why are you still here? I though you were on the way to \SCENE ESCENE 1 with the merchandise!>
+		Msg3 <Argh... Those bandits are going to cost me a fortune. Here, take this delivery cycle. It should get you as far as \SCENE EScene 1 at least. Don't lose it this time!>
+		Msg4 <That's bad news. It looks like it's not worth my while to trade with \PERSONA E1 any more... None of my shipments make it through.>
+		Msg5 <Hello. May I help you?>
+		Msg6 <How does \PERSONA E1 expect you to carry the merchandise without a mecha? You've got a pretty dependable reputation. Here, take this courier van for the job.>
+		Msg7 <It's going to be pretty hard for you to bring 500kg of merchandise to \SCENE ESCENE 1 without a vehicle! Tell you what, you can take one of our delivery cycles for the job.>
+		Msg8 <Here's the stuff. I'll have my assistant load it onto your mecha. You know, you have a real reputation for dependability... Once you finish with \PERSONA E1 come back and I may have another job for you.>
+		Msg9 <Great! I'll have my stock boy load the merchandise onto your vehicle. I have to say, it's a great honor to be working with you. Come back after you deliver the stuff to \PERSONA E1 and I may have another job.>
+		Msg10 <Here you go. I'll just have the stock boy load all this into your vehicle and you can head back to \SCENE ESCENE 1 with it. If you're interested, once you're done with that, come back here and I'll find another job for you.>
+		Msg11 <Here's the merchandise. I'll tell the stock boy to load this into your vehicle.>
+		Prompt1 <I lost my mecha.>
+		Prompt2 <\PERSONA E1 sent me to pick up the shipment.>
+
+
+		Plot 8
+			% Shopkeeper will pay PC to deliver goods to
+			% other towns.
+
+			% P1 = Time Limit
+			% P2 = Phase
+
+			% Time limit - this plot will fade after a short time.
+			START <ifPersona E3 else GoDelete ifPersona E4 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 25000>
+			GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+			GoDelete <AdvancePlot 0>
+		sub
+			Persona 3
+			% Shopkeeper sending the delivery.
+			greeting <NewChat if= P2 0 else GoStart Say 1 AddChat 1 AddChat 2>
+			GoStart <Say 17 AddChat 8 AddChat 9 if= PCMeks 0 AddChat 10>
+			result1 <NewChat Say 5 P= 2 1 AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+			result2 <NewChat AdvancePlot 0 ifG React 50 else GoMedReact Say 2>
+			GoMedReact <ifG PCRep 6 25 else GoLowRenown Say 3>
+			GoLowRenown <Say 4>
+			result3 <NewChat AddChat 7 Reputation 7 1 Say 6>
+			result4 <NewChat AddChat 7 ifG PCRep 6 45 else GoR4NoRenown Say 13>
+			GoR4NoRenown <ifG 0 PCRep 3 else GoR4NoShy Say 14 Reputation 3 -1>
+			GoR4NoShy <AddReact -1 Say 7 ifG PCRep 6 0 Reputation 6 -1>
+			result5 <NewChat AddChat 7 ifG -25 PCRep 2 else GoR5NoChaos Say 8 Reputation 2 -1>
+			GoR5NoChaos <ifG PCRep 1 10 else GoR5NoHero Say 9>
+			GoR5NoHero <Say 10 Reputation 2 -3>
+			result6 <NewChat AddChat 7 ifG PCRep 2 -1 else GoR6Chaos Reputation 2 1 AddReact d6 Say 11>
+			GoR6Chaos <AddReact 5 Say 12>
+			Result7 <NewChat ifG PCMEks 0 else GoR7NoMek Say 15>
+			GoR7NoMek <Say 16>
+			Result8 <NewChat Say 18>
+			Result9 <NewChat Say 19 AdvancePlot 0 Reputation 6 -3>
+			Result10 <NewChat Say 20 AddChat 9>
+			Msg1 <Hello again. Have you thought about my offer? I've got a trucking job available, if you want it.>
+			Msg2 <That's too bad. I really enjoyed working with you.>
+			Msg3 <Well, I guess you have a bunch of more important things to do. Thanks for your help earlier, anyhow.>
+			Msg4 <Okay. It's not that important.>
+			Msg5 <That's good to hear. Industry wouldn't be possible without an efficient transportation network connecting producer and consumer. Highway bandits are the scourge of this network, harming not only individuals but also society's infrastructure.>
+			Msg6 <You're very focused on your work. I like that. Let's talk business.>
+			Msg7 <Sorry if I was talking over your head. Let's talk about the job.>
+			Msg8 <I can see this is a subject that you and I just aren't going to agree on, so let's get down to business.>
+			Msg9 <Don't let your compassion get the better of your reason. I think we can both agree that it'd be better for all involved if bandits would just get law-abiding jobs. Let's just move on to business.>
+			Msg10 <Not at the cost of innocent lives, they don't. In any case, it is your job as trucker to make sure that the bandits don't succeed at their job. Let's get down to business.>
+			Msg11 <It is your job, as courier, to make sure that the merchandise reaches its destination safely. You may need to defend yourself against raiders. Let's talk about the details.>
+			Msg12 <I'm suprised to hear you agreeing with me. It will be your task, of course, to protect the shipment from bandits. Let's discuss the specifics of this job.>
+			Msg13 <I'm sorry if I was boring you, but I like to make sure that the people I work with are aware of the big picture. Let's get down to business, shall we?>
+			Msg14 <Sorry, sometimes I tend to ramble. I know that you're not one for idle chatter, so let's just get down to business, shall we?>
+			Msg15 <This shipment is bound to \SCENE EScene 4 where \PERSONA E4 will receive it. Once the delivery is made, head on back here to pick up your salary.>
+			Msg16 <Where's the mecha you had last time you were here? I'm afraid that you can't very well deliver these materials to \SCENE EScene 4 if you don't have a vehicle. Come back when you're ready.>
+			Msg17 <Hello. Is there any problem with the shipment? How can I help you?>
+			Msg18 <\PERSONA E4 in \SCENE ESCene 4 is the buyer for this merchandise.
+			Msg19 <Really? That's too bad. I'll have to find another courier now.>
+			Msg20 <Well, you're going to have to get one if you want to be a trucker.>
+			Prompt1 <I'd like that.>
+			Prompt2 <No thanks, I'm out of the trucking business.>
+			Prompt3 <Tell me about the job.>
+			Prompt4 <Uh... Whatever.>
+			Prompt5 <You know, bandits have to eat too.>
+			Prompt6 <Absolutely.>
+			Prompt7 <Yes, let's do that.>
+			Prompt8 <Can you remind me where I'm going?>
+			Prompt9 <I don't want to be a trucker any more.>
+			Prompt10 <My mecha has been destroyed.>
+
+			Persona 4
+			% Shopkeeper recieving the delivery.
+			greeting <NewChat if= P2 0 else GoStart Say 1 AddChat 1>
+			GoStart <ifG PCMeks 0 else GoNoMeks Say 3 AddChat 2>
+			GoNoMeks <Say 4 P= 2 0>
+			result1 <NewChat Say 2>
+			result2 <NewChat Say 5 AdvancePlot 9 AddReact d10>
+			Msg1 <Sorry, the store is closed right now. I'm waiting for an important delivery.>
+			Msg2 <No, sorry, I can't. I have absolutely nothing left in stock.>
+			Msg3 <The store is closed right now. I'm waiting on a big delivery from \SCENE EScene 3 which should arrive soon.>
+			Msg4 <I certainly hope that my shipment arrives soon... I can't open the store until it does.>
+			Msg5 <Thank you very much for delivering my order! I'll be able to open the store as soon as the stock boy unloads the stuff from your vehicle!>
+			Prompt1 <Can you repair my equipment?>
+			Prompt2 <I've got your shipment right here!>
+
+			Plot 9
+				% Player has successfully made the delivery.
+				% Time limit - this plot will fade after a short time.
+				START <ifPersona E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 75000>
+				GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+				GoDelete <AdvancePlot 0>
+			sub
+				Persona 3
+				greeting <NewChat Say 1 CashPrize 3500 AdvancePlot 0>
+				Msg1 <Here's your pay for delivering the goods. I hope to work with you again in the future.>
+			end
+		end
+	end
+
+end

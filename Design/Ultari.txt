@@ -1,0 +1,182 @@
+GroundHugger 5
+Name <Ultari>
+Desig <ULT-16f>
+SDL_Sprite <ghu_ultari.png>
+
+Mod Turret
+	Armor 5
+	sub
+		Gun 9
+		Name <Primary Cannon>
+		Speed 1
+		Magazine 50
+		sub
+			Ammo 9
+		end
+	end
+
+Mod Body
+	Armor 5
+	sub
+		CPit
+		Armor 2
+
+		Sensor 4
+
+		MLauncher 2
+		Name <Missile Pod>
+		Range 3
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 9
+		Magazine 200
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Storage
+	Size 3
+	Armor 3
+	Name <Right Track>
+	sub
+		Tracks 6
+	end
+
+Mod Storage
+	Size 3
+	Armor 3
+	Name <Left Track>
+	sub
+		Tracks 6
+	end
+end
+
+GroundHugger 5
+Name <Ultari>
+Desig <ULT-16p>
+SDL_Sprite <ghu_ultari.png>
+
+Mod Turret
+	Armor 5
+	sub
+		BeamGun 7
+		Name <Plasma Cannon>
+		Type <SCATTER>
+		Speed 1
+		BV 4
+	end
+
+Mod Body
+	Armor 5
+	sub
+		CPit
+		Armor 2
+
+		Sensor 4
+
+		MLauncher 2
+		Name <Missile Pod>
+		Range 3
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 9
+		Magazine 200
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Storage
+	Size 3
+	Armor 3
+	Name <Right Track>
+	sub
+		Tracks 6
+	end
+
+Mod Storage
+	Size 3
+	Armor 3
+	Name <Left Track>
+	sub
+		Tracks 6
+	end
+end
+
+GroundHugger 5
+Name <Ultari>
+Desig <ULT-16k>
+SDL_Sprite <ghu_ultari.png>
+
+Mod Turret
+	Armor 5
+	sub
+		MLauncher 8
+		Name <Rocket Launcher>
+		Range 8
+		Speed 1
+		Magazine 16
+		sub
+			Rockets 8
+			Type <BLAST 3>
+		end
+	end
+
+Mod Body
+	Armor 5
+	sub
+		CPit
+		Armor 2
+
+		Sensor 4
+
+		MLauncher 2
+		Name <Missile Pod>
+		Range 3
+		Speed 1
+		Magazine 24
+		sub
+			Rockets 2
+		end
+
+		Gun 1
+		Name <Machine Gun>
+		Acc -2
+		BV 9
+		Magazine 200
+		sub
+			Ammo 1
+		end
+	end
+
+Mod Storage
+	Size 3
+	Armor 3
+	Name <Right Track>
+	sub
+		Tracks 6
+	end
+
+Mod Storage
+	Size 3
+	Armor 3
+	Name <Left Track>
+	sub
+		Tracks 6
+	end
+end

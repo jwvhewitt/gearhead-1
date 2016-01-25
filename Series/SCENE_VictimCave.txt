@@ -1,0 +1,50 @@
+Scene 0 0
+% Victim's Cave scene
+%  There's been a cave-in, or a party of explorers went missing, or
+%  whatever. The back story isn't important. What is important is
+%  that we have a cave with monsters and 10 victims in it. The PC
+%  will supposedly be responsible for rescuing as many of those
+%  victims as is possible.
+
+% *V1 = WMon strength value
+
+	CaveMap
+	special <NOEXIT>
+
+	% At the start, set the monster value.
+	start <if# V1 0 MonsterUp 2 V1 V= 1 0>
+
+	NU1 <if= T1 0 Return>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <ANIMAL CAVE EARTH DARK>
+
+	% Attempting to go upstairs will retreat the PC from the map.
+	rect
+	Width 3
+	Height 3
+	special <StartHere>
+	sub
+		StairsUp
+		USe <Print 1 Retreat 1>
+	end
+
+end
+inv
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+	STC VICTIM-1
+end
+

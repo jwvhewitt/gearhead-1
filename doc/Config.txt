@@ -1,0 +1,124 @@
+CONFIGURATION FILE SUPPORT
+
+GearHead now has configuration file support. Yay!
+
+To create a configuration file, make a new text file named "arena.cfg"
+in the same directory as the arena executable. To this file you can
+add various labels which will alter the behavior of the program.
+
+Here's an overview of what the configuration file is capable of:
+
+REDEFINE GAME KEYS
+  To redefine a game key, you're going to have to know the command's
+  proper name. This can be found via the in-game help menu. Just type
+  the command's name followed by the new key you want to use for it.
+  For instance, to redefine the ApplySkill command so that it is
+  activated by the "n" key, you'd use the following line:
+
+    ApplySkill n
+
+  Note that no checking is done to ensure that the keys are unique.
+  If you assign two commands to the same key, only one of them will
+  work.
+
+CONTROL ANIMATION SPEED
+  You can redefine the animation speed, if you'd like combat animations
+  to proceed faster or slower. To change the animation delay to 100 you'd
+  use the following line:
+
+    AnimSpeed 100
+
+  Note that the lower the AnimSpeed value, the faster the animations
+  will be. Default values are 100 for ASCII and 50 for SDL.
+
+SET CONTROL TYPES
+  There are three commands that cover this: MechaControl, CharaControl,
+  and WorldControl. Each one can be assigned either M for Menu-based
+  input or R for RogueLike input. For example, to change things so that
+  your mecha is controlled using the RogueLike interface, use the
+  following line:
+
+    MechaControl R
+
+SET WEAPON ATTACK OPTION
+  You can set the default burst value for each type of burst-firing
+  weapon. There are three commands that cover this: MissileBV,
+  BallisticBV, and BeamGunBV. They can be assigned four possible values:
+  Off, 1/4, 1/2, and Max.
+
+  To set the default missile BV to 1/2 load, use the following line:
+
+    MissileBV 1/2
+
+CONTROL DIRECT XP
+  By default, direct skill XP will not cause the PC to learn new
+  skills. This is to prevent the PC from learning unwanted skills.
+  If you would like to enable the learning of skills from direct XP,
+  add the following label to your configuration file:
+
+    DIRECTSKILLOK
+
+NOAUTOSAVE
+  Whenever your character visits a new location, the campaign is saved
+  to disk. Some people don't like this behavior... using the label
+  NOAUTOSAVE will disable this.
+
+ALWAYS SAVE CHARACTER
+  Normally, when a character enters an adventure, the CHA file is deleted
+  and doesn't get restored until the adventure is finished. By setting
+  the label ALWAYSSAVECHARACTER you can override this behavior.
+
+DISABLE COMBAT TAUNTS
+  If the game runs slowly on your computer, disabling combat taunts may help.
+  Yes, it's pathetic, I know... type NOCOMBATTAUNTS in your config file to
+  achieve this.
+
+CONTROL ALPHA BLENDING
+  For SDL mode only. If you don't like the transparency effect, or it it doesn't
+  run well on your computer, use NOALPHA to disable it. You can set the amount
+  of transparency with "ALPHALEVEL x"- enter a value from 0 (transparent) to
+  255 (opaque).
+
+CONTROL NUMBER OF PLOTS PER ADVENTURE
+  The number of plots currently in play can have a great effect on the speed of
+  your game. The default maximum number of plots is 50; to reduce this (and
+  hopefully get things moving faster) use "NUMPLOTS x". For example, to reduce
+  the maximum number of plots to 30, insert the following line in the config
+  file:
+
+    NUMPLOTS 30
+
+LIMIT PLOT LOADING TO START OF SCENE
+  Normally the game will load new plots every 5 minutes. This may cause a noticeable
+  pause on some computers. To change things so that plots are only loaded when
+  entering or exiting a scene, add LoadPlotsAtStart to your config file.
+
+CONTROL SIZE OF ASCII SCREEN
+  You can control the size of the screen with SCREENWIDTH and SCREENHEIGHT. The minimum
+  size for the screen is 80x25.
+
+ACTIVATE MINI-MAP
+  You can activate the mini-map by adding MINIMAPON to your config file.
+
+PLAY IN WINDOW
+  You can play in a window on your main screen by adding WINDOW to the config file.
+  You can play in fullscreen mode by adding FULLSCREEN to the config file.
+
+DISABLE MOUSE
+  You can disable the mouse with the NOMOUSE option.
+
+ENABLE NAMES-ABOVE_HEADS
+  Add NAMESON to your config file, and the names of all gears on the map will appear
+  above their heads.
+
+DISABLE PILLAGING
+  Add NOPILLAGE to your config file to not automatically pillage everything on the map
+  after winning a mission.
+
+ENABLE TACTICS MODE [experimental]
+  Add USETACTICSMODE to the config file, and the player will be able to control
+  lancemates directly in mecha combat.
+  This mode is experimental and may result in the game crashing or other unexpected
+  behavior. You have been warned.
+
+

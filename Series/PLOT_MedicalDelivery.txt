@@ -1,0 +1,101 @@
+Plot 0
+	name <Medical Delivery>
+
+	ELEMENT1 <CHARACTER NURSE>
+	ELEMENT2 <SCENE TOWN FORTRESS !FAR 1>
+	ELEMENT3 <CHARACTER DOCTOR !NEAR 2>
+	ELEMENT4 <PREFAB>
+
+	% P1 = Time Limit
+	% P2 = Have been given mission
+
+	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete if= P1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 Goto GoInit>
+	GoCheckTime <ifG ComTime V1 if= P2 0 Goto GoDelete>
+	GoDelete <AdvancePlot 0 ifKeyItem E4 else GoDeleteItem>
+	GoDeleteItem <DeleteKeyItem E4>
+
+	GoInit <Compose GET E4 .getit Compose EWM E2 .entercity>
+	.getit <if= P2 0 AdvancePlot 0>
+	.entercity <if= P2 1 BLOCK Alert 1 Dynamic 2 Threat PCRep 6 120 .nu1 .nu2 PassVar 1 E2 PassVar 2 SceneID>
+	.nu1 <if= T1 0 if= L3 0 L= 3 1 Reputation 6 -3 Return>
+	.nu2 <if= T2 0 if= L3 0 L= 3 1 Reputation 6 1 Exit L1 SeekGate L2>
+
+	Msg1 <While entering \ELEMENT 2 , you are attacked by drug trafficers intent on stealing your cargo!>
+
+
+sub
+	Persona 1
+	rumor <!1 needs a courier to bring some things to the dead-zone.>
+	% V1 = Misc. Counter
+
+	greeting <NewChat if= P2 1 else GoNoMission Say 1 ifItemOK E4 else GoItemNotOkay>
+	GoItemNotOkay <AddChat 1>
+
+	% If the mission hasn't yet been offered, there will be two chances to get the
+	% mission. The first is if the PC is somewhat well liked and lawful. The second
+	% is if the PC is heroic and/or very well liked.
+	GoNoMission <ifG React 10 else GoNoChance ifG PCRep 2 0 else GoCheckHeroic Say 4 AddChat 2 AddChat 3 AddChat 4 AddChat 5>
+	GoCheckHeroic <V= 1 PCRep 1 V+ 1 React ifG V1 100 else GoNoChance Say 5 AddChat 2 AddChat 3 AddChat 4 AddChat 5>
+
+	GoNoChance <Say 3 DeleteKeyItem E4 AdvancePlot 0>
+
+	result1 <NewChat Say 2 Reputation 1 -3 Reputation 2 -1 Reputation 6 -15 AdvancePlot 0>
+	result2 <NewChat Say 6 AddChat 6 AddChat 5>
+	result3 <NewChat Say 7  Reputation 5  d6  Goto GoGetMission>
+	result4 <NewChat Say 7  Reputation 5 -d6  Goto GoGetMission>
+	result5 <NewChat Say 9  DeleteKeyItem E4  AdvancePlot 0>
+	result6 <NewChat Say 7     Goto GoGetMission>
+	GoGetMission <Memo 8 GiveKeyItem E4 P= 2 1>
+
+	Msg1 <You should deliver that medicine to \ELEMENT 3 in \ELEMENT 2 . Please hurry... It's urgently needed to help control the outbreak!>
+	Msg2 <You lost it!? What kind of an idiot are you!?>
+	Msg3 <There's been an outbreak of Anthrax-Leprosy-Pi in \ELEMENT 2 . We've sent some medicine there... I hope that it will be enough to help.>
+	Msg3_1 <I'm busy today.>
+	CMsg3_1 <ifG 0 NPCRep E1 3 Accept>
+	Msg4 <I need a mecha pilot for an immediate delivery mission. There's been an outbreak of Anthrax-Leprosy-Pi in \ELEMENT 2 ; they need to get the antiserum right away!>
+	Msg4_1 <I have some medicine that must go to the hospital in \ELEMENT 2 . How'd you like to take the mission?>
+	CMsg4_1 <ifG 0 NPCRep E1 3 Accept>
+	Msg5 <Not many people would trust you with a courier mission, but I know you better than them... There's been an outbreak of Anthrax-Leprosy-Pi in \ELEMENT 2 ; I need a mecha pilot to deliver the antiserum.>
+	Msg5_1 <I think I can trust you with this... There's some medicine that must go to \ELEMENT 2 . There's a small reward if you can deliver it.>
+	CMsg5_1 <ifG 0 NPCRep E1 3 Accept>
+	Msg6 <It doesn't pay much, I'm afraid... You'll get $ \VAL Reward Threat PCRep 6 100 50 for the delivery. I don't expect this to be a difficult job, unless you run into drug smugglers... the underworld price for A.L.P. antiserum is staggering.>
+	Msg7 <That's great! Here's the medicine... You'll need to bring it to Doctor \ELEMENT 3 in \ELEMENT 2 . He'll give you your pay then. Thank you so much for helping us!>
+	Msg7_1 <Very good. Here's the package. You'll get paid upon delivery by \ELEMENT 3 in \ELEMENT 2 .>
+	CMsg7_1 <ifG 0 NPCRep E1 3 Accept>
+	Msg8 <\ELEMENT 1 in \SCENE ESCene 1 gave you a crate of medicine to bring to \ELEMENT 3 in \ELEMENT 2 .>
+	Msg9 <In that case I better call the local trucker's union. I'm sure they can find someone to deliver the package.>
+
+	Prompt1 <Uh... I lost the medicine.>
+	Prompt2 <How much does the job pay?>
+	Prompt3 <Don't worry, I'll get the package there!>
+	Prompt4 <I'll help you, before more people die.>
+	Prompt5 <I'm not interested in this job.>
+	Prompt6 <Alright, I'll do it.>
+
+
+	Persona 3
+	greeting <NewChat if= P2 1 else GoNoMission ifKeyItem E4 else GoNoMission Say 4 DeleteKeyItem E4 CashPrize Reward Threat PCRep 6 100 50 AdvancePlot 0 AddChat 1 AddChat 2>
+	GoNoMission <Say 1 AddChat 1>
+
+	result1 <EndChat Say 2 Shop .nowares Say 3>
+	result2 <NewChat Reputation 2 -5 ifG PCRep 6 d100 else GoR2Fail Say 5 CashPrize Reward Threat PCRep 6 100 70>
+	GoR2Fail <AddReact -30 Say 6>
+
+	Msg1 <This village is suffering from an outbreak of Anthrax-Leprosy-Pi. I'm awaiting a shipment of drugs from \SCENE EScene 1 that should help greatly.>
+	Msg2 <Let me take a look at you. Despite the shortages, I'll do what I can.>
+	Msg3 <If you notice any white spots forming on your skin, you should have about four hours to live...>
+	Msg4 <Ah, the antiserum has finally arrived! Thank you very much... Here's the reward you were promised. I hope you had no difficulty in getting here.>
+	Msg5 <I suppose you do deserve more than was offered... Here, take this. It's the most I can afford to give.>
+	Msg6 <You would try to profit off the suffering of my people!? Get away from me, you filth...>
+
+	Prompt1 <I need medical help.>
+	Prompt2 <I was promised more money than this.>
+
+end
+inv
+	Treasure 100
+	name <Medicine>
+	type <STOLEN>
+	place <1>
+end
+

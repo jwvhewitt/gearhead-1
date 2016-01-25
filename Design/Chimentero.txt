@@ -1,0 +1,236 @@
+Battroid 7
+Name <Chimentero>
+Desig <CHR-3L>
+desc <This mecha is Aegis Overlord's city-smashing siege breaker. It has been nicknamed "The Gargoyle" due to its fearsome appearance.>
+
+Mod Storage
+	Armor 6
+	Mass -1
+	Name <Right Thruster>
+	sub
+		HoverJet 13
+
+		Mount
+		Name <Right Thruster Mount>
+		inv
+			BeamGun 8
+			Name <Heavy Phase Cannon>
+			Acc -1
+			Range 7
+			BV 5
+			Speed 1
+			Mass -4
+		end
+	end
+	inv
+		StorageArmor 3
+		Mass -5
+		sub
+			MLauncher 20
+			Name <Leveler Missiles>
+			Type <BLAST 1>
+			Magazine 2
+			sub
+				Rockets 20
+			end
+		end
+	end
+
+Mod Storage
+	Armor 6
+	Mass -1
+	Name <Left Thruster>
+	sub
+		HoverJet 13
+
+		Mount
+		Name <Right Thruster Mount>
+		inv
+			BeamGun 8
+			Name <Heavy Phase Cannon>
+			Acc -1
+			Range 7
+			BV 5
+			Speed 1
+			Mass -4
+		end
+	end
+	inv
+		StorageArmor 3
+		Mass -5
+		sub
+			MLauncher 20
+			Name <Leveler Missiles>
+			Type <BLAST 1>
+			Magazine 2
+			sub
+				Rockets 20
+			end
+		end
+	end
+
+Mod Body
+	Armor 7
+	Mass -4
+	sub
+		CPit
+		Armor 2
+		Mass -1
+
+		Sensor 9
+
+		TarComp 6
+
+		Gyro 5
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		BeamGun 15
+		Name <Plasma Core Cannon>
+		Range 14
+		Acc 1
+		Speed 1
+
+		MLauncher 12
+		Name <Drone Launcher>
+		Range 5
+		Magazine 12
+		sub
+			Rockets 12
+			Type <DRONE>
+		end
+
+		Mount
+		Name <Top Weapon Mount>
+		inv
+			MLauncher 3
+			Name <Hellfire Rocket Pack>
+			Type <BURN SWARM>
+			Range 6
+			Acc -1
+			Magazine 60
+			sub
+				Rockets 3
+			end
+		end
+	end
+
+Mod Arm
+	Size 5
+	Armor 7
+	Mass -5
+	Name <Right Arm>
+	sub
+		Hand
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			Gun 22
+			Name <Monster Assault Cannon>
+			Type <SWARM>
+			Acc -2
+			BV 4
+			Range 5
+			Speed 1
+			Magazine 50
+			Mass -7
+			sub
+				Ammo 22
+				Mass -3
+			end
+		end
+
+		MLauncher 20
+		Name <Leveler Missiles>
+		Type <BLAST 1>
+		Magazine 2
+		sub
+			Rockets 20
+		end
+	end
+
+Mod Arm
+	Size 5
+	Armor 7
+	Mass -5
+	Name <Left Arm>
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			Gun 22
+			Name <Monster Assault Cannon>
+			Type <SWARM>
+			Acc -2
+			BV 4
+			Range 5
+			Speed 1
+			Magazine 50
+			Mass -7
+			sub
+				Ammo 22
+				Mass -3
+			end
+		end
+
+		MLauncher 20
+		Name <Leveler Missiles>
+		Type <BLAST 1>
+		Magazine 2
+		sub
+			Rockets 20
+		end
+	end
+
+Mod Leg
+	Size 8
+	Armor 7
+	Mass -7
+	Name <Right Leg>
+	sub
+		HoverJet 6
+
+		MLauncher 20
+		Name <Leveler Missiles>
+		Type <BLAST 1>
+		Magazine 3
+		sub
+			Rockets 20
+		end
+	end
+
+Mod Leg
+	Size 8
+	Armor 7
+	Mass -7
+	Name <Left Leg>
+	sub
+		HoverJet 6
+
+		MLauncher 20
+		Name <Leveler Missiles>
+		Type <BLAST 1>
+		Magazine 3
+		sub
+			Rockets 20
+		end
+	end
+
+Mod Tail
+	Size 3
+	Armor 5
+	Mass -3
+	sub
+		Melee 10
+		Name <Tail Spike>
+		Speed 3
+		Acc 2
+	end
+end

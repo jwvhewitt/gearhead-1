@@ -1,0 +1,107 @@
+Gerwalk 3
+Name <Neko>
+Desig <MCI-74>
+SDL_Sprite <ger_neko.png>
+desc <Originally from Mars, the Neko is now a popular hybrid fighter throughout the solar system.>
+
+Mod Body
+	Armor 3
+	Mass -3
+	sub
+		Mount
+		Name <Torso Mount>
+
+		CPit
+
+		Gyro 3
+
+		Sensor 7
+
+		TarComp 1
+
+		ArcJet 2
+
+		BeamGun 1
+		Name <AM Beamgun>
+		BV 4
+		Range 2
+		Type <INTERCEPT>
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 2
+	Armor 3
+	Mass -2
+	sub
+		Hand
+		Name <Right Hand>
+		inv
+			STC PAR-6
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 2
+	Armor 3
+	Mass -2
+	sub
+		Hand
+		Name <Left Hand>
+	end
+	inv
+		Shield 3
+		DefBonus -1
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Armor 2
+	Mass -3
+	sub
+		Mount
+		Name <Right Wing Mount>
+		inv
+			STC ICML-12
+		end
+
+		ArcJet 3
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Armor 2
+	Mass -3
+	sub
+		Mount
+		Name <Left Wing Mount>
+		inv
+			STC ICML-12
+		end
+
+		ArcJet 3
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 2
+	Mass -2
+	sub
+		Mount
+		Name <Right Leg Mount>
+
+		Flight 2
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 2
+	Mass -2
+	sub
+		Mount
+		Name <Left Leg Mount>
+
+		Flight 2
+	end
+end

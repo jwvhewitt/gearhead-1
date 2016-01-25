@@ -1,0 +1,70 @@
+story
+	name <STORY: Corp War>
+
+	% Two of the corporations are fighting a secret war. To outsiders
+	% it looks like business as usual, but in fact the corporations
+	% are launching raids against each other under the guise of
+	% bandit attacks, and doing other kinds of stuff like that.
+
+	% The winner is the first corp to get 20 victories.
+
+	% If the publicity score reaches 20, though, the corporations
+	% are forced to abandon the conflict and they both lose...
+
+	% Element 1 is the governing faction.
+	Element2 <Faction Corporate !Enemy 1>
+
+	% V2 = Time Limit, activated after the story has officially ended.
+	%  if V2=0, the corp war is still going on.
+	% V101 = Corp N1 Victories
+	% V102 = Corp N2 Victories
+	% V103 = Public knowledge of the secret war
+
+	hour <if= V2 0 Storyline .defstory>
+	.defstory <TS_CORP_CorpWar_PLOT_*.txt>
+
+	start <if# V2 0 else GoCheckWin ifG ComTime V2 EndStory>
+	% Check for a win...
+	GoCheckWin <ifG V101 19 else GoCheckLoss News d5 Trigger FACWIN N1 Trigger FACLOSE N2 Goto GoSetTimer>
+	% Check for a loss...
+	GoCheckLoss <ifG V102 19 else GoCheckOpp V= 3 50 V+ 3 d5 News V3 Trigger FACLOSE N1 Trigger FACWIN N2 Goto GoSetTimer>
+	% Check for public opposition halting the project...
+	GoCheckOpp <ifG V103 19 V= 3 100 V+ 3 d5 News V3 Trigger FACLOSE N1 Trigger FACLOSE N2 Goto GoSetTimer>
+	GoSetTimer <PurgeStory V= 2 ComTime V+ 2 86400>
+
+	Quarter <if= V2 0 ifG V103 d15 else GoEraseNews V= 3 150 V+ 3 d10 News V3>
+	GoEraseNews <News 0>
+
+	% 01 - 05 :  Story has ended, N1 won.
+	Msg1 <\NARRATIVE 1 stocks have reached record high value.>
+	Msg2 <\NARRATIVE 2 stocks have plunged in value.>
+	Msg3 <\NARRATIVE 1 announces plan to expand corporate infrastructure.>
+	Msg4 <\NARRATIVE 1 gains lucrative contract to develop five new mecha varaints for Navy.>
+	Msg5 <\NARRATIVE 1 beats \NARRATIVE 2 in net profits for this past fiscal period.>
+
+	% 51 - 55 :  Story has ended, N2 won.
+	Msg51 <\NARRATIVE 1 experiencing financial trouble. Layoffs expected.>
+	Msg52 <\NARRATIVE 1 profits down, expenses up.>
+	Msg53 <\NARRATIVE 1 loses vital contract to develop new arachnoid missile carrier for Defense Force.>
+	Msg54 <\NARRATIVE 2 beats \NARRATIVE 1 in consumer confidence index.>
+	Msg55 <\NARRATIVE 1 forced to abandon its previously announced expansion program. Company heads look for new options.>
+
+	% 101 - 105 :  Story has ended, public outcry stopped everything.
+	Msg101 <\NARRATIVE 1 , \NARRATIVE 2 admit to charges of industrial sabotage against one another.>
+	Msg102 <Guardians crack down on corporate "Secret War". Names of those charged not yet released.>
+	Msg103 <Corporations behaving badly. \NARRATIVE 1 and \NARRATIVE 2 punished by stockholders for mismanagement of security funds.>
+	Msg104 <Companies \NARRATIVE 1 and \NARRATIVE 2 admit to waging "Secret War". FedTer council to decide upon criminal charges.>
+	Msg105 <Corporate leaders from \NARRATIVE 1 and \NARRATIVE 2 to face criminal charges for their part in waging "Secret War" against one another.>
+
+	% 151 - 155 :  News reports something is going on...
+	Msg151 <Corporate revenue lost due to mecha attacks rising, despite decrease in number of bandit attacks.>
+	Msg152 <\NARRATIVE 1 under investigation for undocumented loss of several million dollars allocated for security purposes.>
+	Msg153 <\NARRATIVE 2 under investigation for unexplained death of security personnel.>
+	Msg154 <Professor speculates that corporations are waging "Secret War" over control of resources.>
+	Msg155 <Fifty percent of citizens interviewed believe corporations are using their resources to fund "Secret War" against one another.>
+	Msg156 <Industrial sabotage suspected in mecha raid against \NARRATIVE 1 .>
+	Msg157 <Corporate defense spending up, reports of bandit activity down.>
+	Msg158 <Mecha battle witnessed outside \NARRATIVE 2 facility; corporate heads decline to comment on nature of conflict.>
+	Msg159 <Trucker captures fierce mecha battle on camcorder. Identity, purpose of combatants currently unknown.>
+	Msg160 <Mecha repair shops report recent surge in customers.>
+

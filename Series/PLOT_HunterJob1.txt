@@ -1,0 +1,102 @@
+Plot 0
+	name <PLOT: Hunter Job 1>
+
+	% VARIABLES USED
+	% 1 -> Time Limit Timer
+	% 2 -> Phase counter
+
+	Element1 <Character Hunter>
+	Element2 <Scene Dungeon Scale0 !F 1>
+	Element3 <Prefab>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17000>
+	GotoCheckTime <ifG ComTime V1  if= V2 0  AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+
+sub
+	Persona 1
+	% V2 = Randomizer
+	% V3 = Reward
+	rumor <!1 needs a hunter to make a dungeon run.>
+	greeting <NewChat if= P2 0 else GoBeenBefore  P= 2 1  ifG React d100 else GoNoJob  ifG PCRep 6 d100 else GoNoJob  Say 6  AddChat 9 AddChat 7 AddChat 8>
+
+	GoBeenBefore <if= P2 2 else GoDelete  Say d5  ifPersona E3 else GoBanditDead  AddChat d2 V= 2 2 V+ 2 d2  AddChat V2>
+	GoBanditDead <V= 2 4 V+ 2 d2  AddChat V2>
+	GoNoJob <V= 2 6 V+ 2 d4  Say V2  AdvancePlot 0>
+	GoDelete <SayAnything  AdvancePlot 0>
+
+	result1 <NewChat V= 2 10 V+ 2 d5 Say V2>
+	result2 <Goto result1>
+	result3 <NewChat V= 2 15 V+ 2 d5 Say V2>
+	result4 <Goto result3>
+	result5 <NewChat Say 21  CashPrize V3  AdvancePlot 0  XPV 250>
+
+	result6 <Goto result5>
+	% The reward for this mission will be 5x that which can be obtained from a
+	% mecha mission by the PC. Reward( Threat( PCRep( 6 ) , 100% ) , 500% ) in simple form
+	result7 <NewChat  V= 3 Reward Threat PCRep 6 100 500  V= 2 15 V+ 2 d5 Say V2  AddChat 10  AddChat 11>
+	result8 <Reputation 2 -1  Reputation 4 -5  Goto result7>
+	result9 <NewChat  Say 22  AdvancePlot 0>
+	result10 <NewChat  P= 2 2  MoveChar E3 E2  Say 23  Memo 24>
+
+	result11 <Goto result9>
+
+	Msg1 <Well, what's the status on the contract? Have you tracked down that madman yet?>
+	Msg2 <Back already? You look in better shape than I thought you would... So, have you brought that killer to justice?>
+	Msg3 <I want to hear some good news right now. What's the status of the mission I sent you on?>
+	Msg4 <Have you completed the mission yet?>
+	Msg5 <How's the mission going?>
+
+	Msg6 <Good to see you. I have a mission available if you're looking for work, but I don't know if it's the kind of thing you'd be interested in.>
+	Msg7 <Bounty hunting is tough, dangerous, and often dehumanizing... But at least it gets you out in the fresh air.>
+	Msg8 <There's too much to do, and I don't have enough time to spread around.>
+	Msg9 <The only thing worse than when business is bad is when business is good.>
+	Msg10 <If you're looking for a job, you'll probably want to work on your relationships.>
+
+	Msg11 <Come back here when you're done and I'll see about providing that reward I offered.>
+	Msg12 <You shouldn't waste my time if you haven't completed the job yet. Most hunters aren't as forgiving of annoyance as I am.>
+	Msg13 <Come back when you have some results.>
+	Msg14 <Don't bother coming back unless you've caught the bandit.>
+	Msg15 <Huh.>
+
+	Msg16 <\Element 3 is a psychotic murderer who is supposed to be hiding in the \ELEMENT 2 area. There's a bounty of \VAL V3 to bring this creep to justice. I wouldn't waste any time trying to reason with him...>
+	Msg17 <You're after a psychopath who's been hiding out in \ELEMENT 2 or thereabouts. Supposedly \ELEMENT 3 took too many shots of combat-stim, and now just can't stop killing... The reward is \VAL V3 creds, payable dead or alive.>
+	Msg18 <Your target is a psycho killer on the run from the guardians, the army, and who knows who else. His mind is completely destroyed... The reward is \VAL V3 dollars. \ELEMENT 2 is where you should be able to find him.>
+	Msg19 <I need you to track down an escaped killer, a complete brainfrag by the name of \ELEMENT 3 who's been hiding out in \ELEMENT 2 for the past few months. Reward is \VAL V3 payable upon confirmation of the target's death.>
+	Msg20 <\Element 3 has been hiding in \ELEMENT 2 after a killing spree which left 17 innocent civilians dead. Don't even think of trying to reason with this animal. The reward for stopping this crack is \VAL V3 payable upon confirmation of death.>
+
+	Msg21 <Justice has been served. Congratulations on a job well done.>
+	Msg22 <Eh, those are the breaks...>
+	Msg23 <When you're done with the mission come see me and I'll fix you up with that reward.>
+	Msg24 <\ELEMENT 1 in \SCENE EScene 1 asked you to go to \ELEMENT 2 to eliminate a wanted murderer>
+
+	Prompt1 <I'm working on it.>
+	Prompt2 <Everything's going according to plan.>
+	Prompt3 <Could you remind me of the details?>
+	Prompt4 <What am I supposed to do again?>
+	Prompt5 <The mission has been completed.>
+
+	Prompt6 <The killer has been eliminated.>
+	Prompt7 <What kind of mission is it?>
+	Prompt8 <I'll do anything if the pay is good.>
+	Prompt9 <Sorry, I'm too busy with other matters.>
+	Prompt10 <I'll do it.>
+
+	Prompt11 <No, I don't want this mission...>
+
+end
+inv
+	NPC Bandit
+	chardesc villainous villainous villainous chaotic passionate
+	% The bandit will get some extra skill points, just to make
+	% the encounter interesting... :)
+	skill 6 12
+	skill 8 15
+	skill 12 8
+	skill 13 10
+	skill 26 9
+	teamdata <sd enemy>
+
+end

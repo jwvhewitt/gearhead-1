@@ -1,0 +1,45 @@
+Plot 0
+	name <PLOT: Shimli 5>
+
+	element1 <Character Citizen Cheerful Passionate>
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoDelete <AdvancePlot 0>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+
+sub
+	Persona 1
+	greeting <NewChat ifG React d10 else GoNothing Say d5 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2 AdvancePlot 0>
+	GoNothing <SayAnything AdvancePlot 0>
+
+	result1 <NewChat V= 2 5 V+ 2 d3 Say V2 AddReact d3 Reputation 5 d6>
+	result2 <Goto result1>
+	result3 <Goto result1>
+
+	result4 <NewChat V= 2 8 V+ 2 d3 Say V2 Reputation 5 -d6>
+	result5 <Goto result4>
+	result6 <Goto result4>
+
+	Msg1 <Have a nice day!>
+	Msg2 <I hope you're enjoying this lovely day!>
+	Msg3 <It's a wonderful day, isn't it? I hope you're enjoying it.>
+	Msg4 <I hope you're having a good time today!>
+	Msg5 <Here's wishing you a good time today!>
+
+	Msg6 <If you give someone a smile, you'll get a smile in return!>
+	Msg7 <Some people think I'm annoying but I'm just really really cheerful!>
+	Msg8 <You have to take time out to enjoy life!>
+
+	Msg9 <You know, it takes twice as many muscles to frown as it does to smile!>
+	Msg10 <Nice way to rain on someon's parade, \PC .>
+	Msg11 <Well, you're a real gloomy gus today.>
+
+	Prompt1 <The same to you.>
+	Prompt2 <You have a nice day, too!>
+	Prompt3 <Good to see you!>
+
+	Prompt4 <Up yours!>
+	Prompt5 <Don't bother me.>
+	Prompt6 <Stop annoying me.>
+
+end

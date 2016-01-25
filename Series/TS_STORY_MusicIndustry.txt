@@ -1,0 +1,67 @@
+Story
+	name <Music Industry Story>
+
+	% The PC has a chance to become a pop star, or maybe even
+	% to get a number one record. Yay! This is entirely a side
+	% story... no real point to it, other than to get some money
+	% and maybe a line or two in the history file.
+
+	% Here's what happens...
+	%
+	% PHASE ONE: PC needs a recording contract!
+	%   In the news, it will be announced that [AGENT] is scouting
+	%   for talent in [SCENE]. If the PC is in [SCENE] and scores
+	%   a lot of APPLAUSE, he'll get an email telling him to meet
+	%   somewhere very soon. If he meets, and the agent likes him,
+	%   he may get a recording contract. Yay! XP and cash...
+	%
+	% PHASE TWO: Marketing!
+	%   The PC needs to promote his music, right? The NPC will send
+	%   emails telling the PC where to play and what to do. If the
+	%   PC manages 10 "missions" of increasing difficulcy, he'll get
+	%   a number one album. Yay PC!
+	%
+	% PHASE THREE: There is no phase three
+	%   After the number one album, the PC can take a vacation from
+	%   performing for a while. No further plots will be loaded.
+
+	% E1 is a random city
+	Element1 <Scene City Town>
+
+	% E2 is the agent character
+	Element2 <Prefab>
+
+	% V101 = Load new plot when V101=0; opposite of XRan plots...
+	% V102 = Number of PC "victories". If V102=0, PC hasn't got contract
+	% V103 = Difficulcy level; amount of applause needed in 24 hours.
+	% V104 = Number of victories when difficulcy last increased...
+
+	% End the story immediately if the NPC dies...
+	start <ifPersona N2 else GoDelete>
+	GoDelete <EndStory>
+
+	quarter <if= S101 0 if= d4 1 if= S102 0 else GoLoadEpisode StoryLine .first S= 101 1 S= 103 5 S+ 103 d6>
+	GoLoadEpisode <StoryLine .second S= 101 1 ifG S102 S104 S+ 103 d6 S= 104 S102>
+	.first <TS_STORY_MusicIndustry_a*.txt>
+	.second <TS_STORY_MusicIndustry_b*.txt>
+
+sub
+	Persona 2
+	rumor <!2 is a big name in the music business.>
+	greeting <NewChat ifG S102 0 else GoNoContract Say 1 AddChat 1>
+	GoNoContract <SayANything>
+	result1 <EndChat Say 2 School .skills Say 3>
+	.skills <19 21 27 30 35 26>
+	MSg1 <If you want to reach the top of the charts, your skills have to be at their best.>
+	Msg2 <Here are the things I think will be most important to you.>
+	Msg3 <You're headed for the top!>
+	Prompt1 <Let's practice.>
+
+end
+
+inv
+	NPC Celebrity
+	job <Talent Agent>
+	place <1 pass>
+
+end

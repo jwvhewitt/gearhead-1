@@ -1,0 +1,131 @@
+Scene 0
+	CityMap
+
+	% V1 = General Purpose Counter
+	% V2 = NPC has confronted PC
+	% V3 = NID of victim prop
+
+	% If the player team runs out of members, return.
+	% If the NPC team runs out of members, print a message.
+	NU1 <if= T1 0 Return>
+	NU2 <if= T2 0 if= V1 1 V= 1 2 ifItemOK L3 else GoGirlDied Print 2>
+	GoGirlDied <Print 3 Retreat 1>
+
+	start <if= V1 0 Print 1 V= 1 PCRep 6 V+ 1 -10 NPCLevel -1 V1 V= 1 1>
+	Msg1 <You enter the warehouse district. There are a lot of shady looking characters milling about. Hopefully you'll be able to find the hotel before it's too late.>
+	Msg2 <All of the kidnappers seem to have been dealt with.>
+	Msg3 <All of the kidnappers are dead, but so is the girl you were sent to rescue.>
+
+sub
+	team 1
+	% Player team
+	SetEnemy 2
+
+	team 2
+	% Body Snatchers
+	SetEnemy 1
+	home <Golden Hotel>
+
+	team 3
+	% Just for the victim.
+	home <Golden Hotel>
+
+	team 4
+	% Citizens
+	% Set this team's default orders to PASSIVE
+	Stat 1 3
+	SetEnemy 2
+
+	rect
+	width 3
+	height 3
+	special <StartHere>
+
+	room 15 15
+	name <Golden Hotel>
+	FloorType 25
+	BorderType 24
+	sub
+		Door 15
+		USE <ifG -99 MetaPass else GoCloseDoor  if= StatVal STAT_Lock 0 else GoDoorLocked  Print 1  SetStat STAT_Pass 0  Transform 1 if= L2 0 L= 2 1 ifPersona -1 ForceChat -1>
+		UPDATE <if= V1 0 V= 1 1 if# d4 2 SetStat STAT_Lock 15>
+	end
+
+	room 8 8
+	FloorType 14
+	BorderType 29
+
+	room 8 8
+	FloorType 14
+	BorderType 29
+
+	room 8 8
+	FloorType 14
+	BorderType 29
+
+
+	Persona -1
+	% The NPC in charge of the operation. This is one of the ones
+	% that the PC is going to have to deal with.
+	greeting <EndChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+	GoBeenBefore <Say 3>
+	result1 <EndChat Reputation 4 d5 Say 2>
+	result2 <EndChat Reputation 5 d8 Say 4>
+	result3 <EndChat Reputation 4 -d6 Say 2>
+	Msg1 <Who are you and what are you doing here!? Guards, destroy this intruder...>
+	Msg1_1 <Hey look at this, we're going to get two bodies for the price of one... As long as we don't put too many holes through the most valuable organs.>
+	Msg1_2 <Huh!? I thought we locked all the doors... No matter, guards, attack!>
+	Msg1_3 <What's this!? You're not one of us... Guards, attack! Aim for the head, that way we can get an extra set of organs from this distraction.>
+	Msg1_4 <An intruder! Kill!!!>
+	Msg2 <We don't have time to waste with you... so, please forgive me if I kill you too quickly.>
+	Msg3 <Less talking, more fighting, fool!!!>
+	Msg4 <Don't take me so lightly, fool! It's time for you to die!>
+	Prompt1 <Sorry, I'll have to ruin your plans.>
+	Prompt2 <Who ordered a pizza?>
+	Prompt3 <Now you will all die for your evil acts.>
+
+end
+inv
+	NPC Bandit
+	SetTeam 2
+	Job <Harvester>
+	SetPersona -1
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Trucker
+	SetTeam 4
+
+	NPC Trucker
+	SetTeam 4
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Trucker
+	SetTeam 4
+
+	NPC Trucker
+	SetTeam 4
+
+	NPC Citizen
+	SetTeam 4
+
+	NPC Trucker
+	SetTeam 4		
+
+end
+

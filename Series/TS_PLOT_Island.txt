@@ -1,0 +1,168 @@
+Plot 0
+	name <Tokto Cursed Island>
+
+	% E1 is the shaman
+	element1 <Character>
+	stat 1 6001
+
+	% E2 is the chieftan
+	element2 <Character>
+	stat 2 6002
+
+	% E3 is the professor who will ask the PC to search for his colleague.
+	element3 <Character>
+	stat 3 1605
+
+	% E4 is the data slate, E5 is the diary
+	element4 <Prefab>
+	element5 <Prefab>
+
+	% E6 is the missing explorer
+	element6 <Prefab>
+
+	% E8 = PC has accepted mission from E3.
+
+	% V1 = Initialization Counter
+	% V2 = Have seduced E1, or as I like to say,
+	%       "someone squeezed the shaman!"
+	% V3 = Have been told by E2 about the sacrifice
+
+	start <if= V1 0 V= 1 1 MoveKeyItem E5 61 FreezeChar E6>
+	LOCAL1 <if= SceneID 60 AdvancePlot 1>
+
+sub
+	Persona 1
+	rumor <!1 is the village shaman.>
+	greeting <NewChat if= P2 1 else GoNoSqueeze Say 1>
+	GoNoSqueeze <ifG React 20 else GoNoFriend Say 2 AddChat 1 AddChat 2 if= E8 1 AddChat 7>
+	GoNoFriend <Say 3 AddChat 1 ifG P3 0 else GoCheckE6 AddChat 2 Goto GoCheckE6>
+	GoCheckE6 <if= E8 1 AddChat 7>
+	result1 <NewChat Say 4 AddChat 3 AddCHat 4>
+	result2 <NewChat Say 5 AddChat 4 ifG TruePCSkillVal 27 0 AddChat 5>
+	result3 <NewChat Say 6>
+	result4 <NewChat Say 7>
+	result5 <NewChat Say 8 ifG TruePCSkillVal 27 4 ifNPCSexy E1 AddChat 6>
+	result6 <EndChat Say 9 AddReact SkillRoll 27 P= 2 1 Trigger LOCAL 2>
+	result7 <NewChat Say 10>
+	Msg1 <How could I allow that to happen? I have been shamed... I am no longer worthy to be a sacrifice to Ladon...>
+	Msg2 <You should leave here, stranger... the people of this island hear the voice of Ladon, the mountain-mother, but we are not enough to feed her hunger. I fear I am the only one of true virtue left. I must give myself to the volcano soon.>
+	Msg3 <You are not one of us. Only the people of the island hear the voice of Ladon, the mountain-mother. You should leave here before her spirit punishes you.>
+	Msg4 <Ladon is the spirit of the mountain and the protector of our land. She speaks to us in whispers. She has been the protector for a long time... She defeated the tyrant from the north. We in turn must feed her. That is our duty, as her children.>
+	Msg5 <The mountain-mother was injured a long time ago, protecting us from the tyrant of the north. Only blood can heal her wounds. I am the only young person left in the village. So, I must give myself to her...>
+	Msg6 <Ladon eats the spirits of the pure. Only blood can heal her wounds. When it is our time, she calls us to the volcano. I have seen all of my friends consumed by the mother... When it is my time, I will go as well.>
+	Msg7 <You cannot understand. Ladon only speaks to the people of the island... if ever you heard her voice, you would know for certain that what I speak is the truth.>
+	Msg8 <It's sad, I know, but we must do as Ladon says... All my friends have already given themselves. Soon it will be my time.>
+	Msg9 <Oh, I don't know... Well, I guess there's no harm in it... Alright, let's go!>
+	Msg10 <\ELEMENT 6 was an outsider, but heard the voice of Ladon... \OPR E6 is gone now. No-one in the village knows where.>
+	Prompt1 <What is this "Ladon" thing?>
+	Prompt2 <Why must you sacrifice yourself?>
+	Prompt3 <What does Ladon eat?>
+	Prompt4 <Do you really believe all that stuff?>
+	Prompt5 <You're too young to die that way.>
+	Prompt6 <Come on, let's have some fun before then!>
+	Prompt7 <I'm looking for \ELEMENT 6 .>
+
+	Persona 2
+	rumor <!2 is the village leader.>
+	greeting <NewChat if= P2 1 else GoNoSqueeze EndChat Say 1 Trigger LOCAL 1 AdvancePlot 1>
+	GoNoSqueeze <Say 2 P= 3 1 AddChat 1 AddChat 2 if= E8 1 AddChat 3>
+	result1 <NewChat Say 3 AddChat 2 if= E8 1 AddChat 3>
+	result2 <NewChat Say 4 AddChat 4 V= 2 PCEgo V+ 2 PCRep 1 ifG V2 20 AddChat 5>
+	result3 <NewChat Say 5 AddChat 6>
+	result4 <NewChat Say 6 AddChat 1 if= E8 1 AddChat 3>
+	result5 <NewChat Say 8 AddChat 7 AddChat 8 AddChat 9>
+	result6 <NewChat Say 7 AddChat 1 AddChat 2>
+	result7 <NewChat Say 9 AddChat 10 AddChat 11 if= V3 0 V= 3 1 Reputation 4 -d10>
+	result8 <NewChat Say 10 AddChat 10 AddChat 11 if= V3 0 V= 3 1 Reputation 3 -d10>
+	result9 <NewChat Say 11 AddChat 10 AddChat 11>
+	result10 <NewChat Say 12 AddChat 12 AddChat 11>
+	result11 <NewChat Say 13>
+	result12 <EndChat Say 14 Trigger LOCAL 1 AdvancePlot 1>
+	Msg1 <HOW COULD YOU DO THAT TO MY CHILD!? Our family has been shamed! There is only one way to redeem \ELEMENT 1 ... TO THE VOLCANO WITH YOU!!!>
+	Msg2 <These are dark times for our island. Ladon, the mountain-mother, has grown even more hungry as of late. Now, my only child \ELEMENT 1 has been called to sacrifice \PPR E1 self.>
+	Msg3 <Ladon is the mountain-mother, the guardian spirit of our people. We hear her voice and cannot refuse to answer. Many years ago she saved us from the tyrant of the north... To deny her sacrifice would sentence the entire village to death.>
+	Msg4 <No, all the other villages of proper age and virtue true have already been sacrificed... Such is the enormous hunger of the mountain-mother.>
+	Msg5 <\ELEMENT 6 ? An outsider by that name was in this village some moons ago... \OPR E6 left as quietly as \OPR E6 came. I couldn't say what became of \SPR E6 .>
+	Msg6 <That may be best, this talk of sacrifice is depressing.>
+	Msg7 <In that case, you may ask.>
+	Msg8 <Not just anyone can do that. To be a sacrifice to Ladon, you must be of pure virtue. I must ask... you are, I hope, of bodily innocence?>
+	Msg9 <Hmm... No, not really, I guess. Look, if you're going to be tossed into a volcano, this isn't exactly the kind of decision you can change your mind about later. Are you really certain that you want to do this?>
+	Msg10 <I guess that answers my question then. You would be perfect for the sacrifice, in place of \ELEMENT 1 ... the only question is, are you absolutely certain that you're willing to be tossed into a volcano?>
+	Msg11 <Good enough. We're ready to carry out the ceremony right away. I need you to think very carefully about this... are you certain that you're willing to be sacrificed to the volcano?>
+	Msg12 <I mean, are you really really certain?>
+	Msg13 <Don't get my hopes up like that.>
+	Msg14 <That's exactly what I wanted to hear! Let's get moving!>
+	Prompt1 <Why do you have to sacrifice anybody?>
+	Prompt2 <Isn't there anyone else that can go?>
+	Prompt3 <Know where I can find \ELEMENT 6 ?>
+	Prompt4 <Let's talk about something else.>
+	Prompt5 <Maybe you could sacrifice me!>
+	Prompt6 <I've got something else to ask you.>
+	Prompt7 <Does it really matter?>
+	Prompt8 <I don't even know what you're talking about.>
+	Prompt9 <Of course I am!>
+	Prompt10 <I'm certain.>
+	Prompt11 <No, I don't want to.>
+	Prompt12 <I'm really really certain.>
+
+	Persona 3
+	rumor <!3 needs to hire an explorer for a dangerous mission.>
+	greeting <NewChat if= E8 1 else GoFirstTime Say 1>
+	GoFirstTime <ifG PCRep 6 50 else GoCheckFriend Say 3 AddChat 1 AddChat 2>
+	GoCheckFriend <ifG React 40 else GoNoChance Say 4 AddChat 1 AddChat 2>
+	GoNoChance <Say 2>
+	result1 <NewChat Say 6 AddChat 3 AddChat 4>
+	result2 <NewChat Say 5>
+	result3 <NewChat Say 7 Memo 8 GiveKeyItem E4 E= 8 1>
+	result4 <NewChat Say 9>
+	Msg1 <You should go to Tokto Island and search for \ELEMENT 6 .>
+	Msg2 <I haven't heard from \ELEMENT 6 in a long time. I hope nothing has gone wrong during the expedition.>
+	Msg3 <You might be able to help me. I require the services of a cavalier to search for a colleague who went missing in the east sea.>
+	Msg4 <I need the services of a cavalier, and was wondering if you'd be interested. One of my assistants has gone missing. I need someone to go search for \SPR E6 .>
+	Msg5 <That's too bad. I'll just have to keep hoping that everything is alright...>
+	Msg6 <\ELEMENT 6 was doing research on a primitive tribe. The last emails I received from \SPR E6 were disturbing... \OPR E6 discovered something bad, possibly something that drove \SPR E6 insane. The last communication I received was in June.>
+	Msg7 <Very good. \ELEMENT 6 was last seen on Tokto, an island several hundred kilometers south of here. Here is a dataslate containing the last emails \OPR E6 sent... it may be some help. If you can discover what happened to \SPR E6 I'll reward you.>
+	Msg8 <\ELEMENT 3 in \SCENE EScene 3 asked you to go to Tokto Island and investigate the disappearance of \ELEMENT 6 .>
+	Msg9 <I must find someone... these mysteries must be answered.>
+	Prompt1 <Give me some more information.>
+	Prompt2 <Sorry, I can't help you.>
+	Prompt3 <Alright, I'll go search for \SPR E6 .>
+	Prompt4 <Scary. I don't think I can help.>
+
+	Plot 1
+	% The second part of the plot... activates when the PC is
+	% tossed into Ladon.
+
+	start <if= E8 1 else GoDelete ifPersona E3 else GoDelete Memo 1>
+	GoDelete <DeleteChar E6 AdvancePlot 0>
+	Msg1 <\ELEMENT 3 in \SCENE EScene 3 asked you to go to Tokto Island and investigate the disappearance of \ELEMENT 6 .>
+
+	sub
+
+	Persona 3
+	greeting <NewChat Say 1 AdvancePlot 0 CashPrize 100000 ifKeyItem E5 AddChat 1>
+	result1 <NewChat Say 2 XPV 250 DeleteKeyItem E5 PCAlly E3 DeleteChar E6>
+	Msg1 <So \ELEMENT 6 perished on the island, the victim of a monster that was apparently controling the villagers through some kind of mind control. It will take years before we can fully understand what happened on Tokto. Thank you for your help.>
+	Msg2 <The last records of \ELEMENT 6 ... This should be very helpful to our investigation. Thank you again.>
+	Prompt1 <I found this diary as well.>
+
+	end
+
+end
+inv
+	Treasure 50
+	name <Data Slate>
+	place <3>
+	use <Print 1 MoreText .txt>
+	.txt <TS_TEXT_Ladon1.txt>
+	Msg1 <You read the messages on the data slate.>
+
+	Treasure 10
+	name <Tattered Diary>
+	use <Print 1 MoreText .txt>
+	.txt <TS_TEXT_Ladon2.txt>
+	Msg1 <You read the diary.>
+	home <Final Rest>
+
+	NPC Professor
+end

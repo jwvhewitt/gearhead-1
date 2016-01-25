@@ -1,0 +1,91 @@
+Zoanoid 5
+Name <Scylla>
+Desig <SD-76g>
+SDL_Sprite <zoa_scylla.png>
+desc <This is one of BioCorp's "Biometrics" mecha. Its structure is based on that of a tiger.>
+
+Mod Head
+	Size 6
+	Armor 5
+	sub
+		CPit
+		Armor 1
+
+		Sensor 7
+
+		BeamGun 8
+		Name <Plasma Breath>
+		Range 4
+		Type <SCATTER>
+	end
+
+Mod Body
+	Armor 5
+	sub
+		Mount
+		Name <Back Weapon Mount>
+		inv
+			STC LRL-48
+		end
+
+		Mount
+		Name <Belly Weapon Mount>
+		inv
+			STC HRP-6
+		end
+
+		Flight 4
+	end
+
+Mod Leg
+	Name <Right Leg 1>
+	Size 4
+	Armor 5
+	sub
+		EMelee 6
+		Name <Beam Scythe>
+		Speed 1
+		Acc 1
+		Type <OVERLOAD>
+	end
+
+Mod Leg
+	Name <Left Leg 1>
+	Size 4
+	Armor 5
+	sub
+		EMelee 6
+		Name <Beam Scythe>
+		Speed 1
+		Acc 1
+		Type <OVERLOAD>
+	end
+
+Mod Leg
+	Name <Right Leg 2>
+	Size 4
+	Armor 5
+	sub
+		Mount
+		Name <Right Weapon Mount>
+		inv
+			STC SWML-20
+		end
+
+		Flight 2
+	end
+
+Mod Leg
+	Name <Left Leg 2>
+	Size 4
+	Armor 5
+	sub
+		Mount
+		Name <Left Weapon Mount>
+		inv
+			STC SWML-20
+		end
+
+		Flight 2
+	end
+end

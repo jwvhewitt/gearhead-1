@@ -1,0 +1,75 @@
+Plot 0
+	name <Evil Deeds>
+	% The PC is being called up on the deal he made with the slaver...
+	% Report to N2 within 24 hours and help escort a shipment past the
+	% guardian blockade. If the PC doesn't respond to the email, he will
+	% incur the wrath of the slaver...
+
+	cleanup <if= P3 0 AdvancePlot 0>
+
+	element1 <Grab 4>
+	element2 <Grab 2>
+
+	% P1 = Time Limit / Initialization Counter
+	% P2 = Combat Indicator
+	% P3 = Don't advanceplot indicator
+
+	nu1 <if= T1 0 if= V2 1  if= L2 1 else GoPCLost V= 2 3  Reputation 6  1>
+	GoPCLost <V= 2 2  Reputation 6 -3>
+
+	start <if= P1 0 else GoCheckTime P= 1 ComTime P+ 1 86400 Email 1>
+	GoCheckTime <if= P2 0 ifG ComTime P1 FreezeChar E1 PCEnemy E1 P= 3 1 EndStory AdvancePlot 1>
+
+	Msg1 <\ELEMENT 1 @ \SCENE ESCene 1 :// Remember the mission you agreed to do for me? Well, it's time. Get here immediately or there will be consequences.>
+
+sub
+	Persona 1
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoF2 Say 2 PCEnemy E1 EndStory AdvancePlot 0>
+	GoF2 <ifG V3 0 else GoFirst Say 4 AddChat 1 AddChat 2 AddChat 3>
+	GoFirst <V= 3 Threat PCRep 6 130 V= 4 Reward V3 300 Say 3 AddChat 1 AddChat 2 AddChat 3 ifG PCRep 1 0 AddChat 4>
+	result1 <EndChat Say 5 Reputation 1 -5 Reputation 2 -10 FacXP+ 3 -100 FacXP+ 1 -100 FacXP+ 2 -100 FacXP+ 11 -100 FacXP+ 12 -100 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 Staged .scene V3 Encounter 50 0 .edesc>
+	.scene <SCENE_ProtectConvoy.txt>
+	.edesc <GUARDIAN HEROIC +PCRA>
+	result2 <EndChat Say 6>
+	result3 <NewChat Say 7 AddChat 1 AddChat 2>
+	result4 <NewChat AddReact -20 Say 8 AddChat 5 AddChat 6>
+	result5 <EndChat Say 9  Reputation 1 1 FreezeChar E1 PCEnemy E1 P= 3 1 EndStory AdvancePlot 1>
+	result6 <NewChat Say 10 Reputation 6 -10 AddChat 1 AddChat 2>
+	Msg1 <The shipment was delivered to my customers no problem. Here's your pay. I'll call when I have another job for you.>
+	Msg2 <I warned you not to fail me, didn't I? That shipment cost me a lot of money... Get out of here; I don't want to see you here ever again.>
+	Msg3 <I have a shipment that's heading out today. The guardians have a plan to stop it... They don't know exactly what kind of contraband I'm shipping so if they decide to shoot down the truck it could get kind of messy, you know? Pay is $ \VAL V4 .>
+	Msg4 <Are you ready to get going yet? The longer my cargo sits in the dock the more money I lose feeding them.>
+	Msg5 <Very good. The most important thing is that the truck get through safely; if you can, demolish the guardians as well. That will teach them to interfere with me...>
+	Msg6 <Time is money. You should have prepared before coming here... Well, get ready and hurry back.>
+	Msg7 <The guardians have \VAL V3 threat points worth of equipment waiting just outside of town.>
+	Msg8 <Are you being serious about that? Look, we had a deal... if you were to betray me, I would be very angry. And I'd make sure that the rest of your life is both miserable and short. You should think very hard before saying things like that...>
+	Msg9 <Fine. You won't change anything by your decision, there are plenty of mecha pilots whose services can be bought. And I will have my revenge...>
+	Msg10 <Don't play games with me, I have no tolerance for disrespect from my underlings. Are you ready to start the mission now or not?>
+	Prompt1 <Let's get this over with.>
+	Prompt1_1 <I'm ready to go.>
+	Prompt1_2 <All ready to move out.>
+	Prompt2 <I need some time to get ready.>
+	Prompt2_1 <Give me a minute to prepare.>
+	Prompt3 <What am I going to be up against?>
+	Prompt3_1 <How much am I going to have to fight?>
+	Prompt4 <I'm not going to do your dirty work.>
+	Prompt5 <I've made up my mind.>
+	Prompt6 <Sorry, I'll be good....>
+
+	Plot 1
+	% The PC has refused the mission, or just didn't show up in time... The NPC will
+	% now cause payback. Revenge lasts for 10 whole days. Bummer.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 864000 E= 1 0>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	ENC1 <Goto GoStartCombat>
+	ENC2 <if= d2 1 Goto GoStartCombat>
+	GoStartCombat <ifG PCScale 0 BLOCK Alert 1 SavePos Dynamic 2 Threat PCRep 6 200 .nu1 .nu2 Encounter 45 15 .edesc>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+	.edesc <ArchEnemy Chaotic>
+	Msg1 <Without warning, you are attacked by mecha bearing the colors of that slaver from \ELEMENT 2 !>
+
+end
+

@@ -1,0 +1,256 @@
+Plot 0
+	name <Thief Advancement>
+
+	% Unlike the other promotions, the PC is gonna have to work for
+	% his reward here. However, the rewards should be pretty good.
+
+	% Element 1 is the calling faction
+	% Element 2 is the character who'll give the PC the reward
+	Element2 <Character !Comrade 1>
+
+	% These are faction rewards...
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+	Element6 <Prefab>
+	Element7 <Prefab>
+
+	% P1 = Email Indicator
+	% P2 = Combat Indicator
+	% P3 = Level the PC is being rewarded for
+
+	% This plot will remain active until the PC collects his
+	% reward, until the NPC dies, or until the PC is no longer
+	% a member of the calling faction.
+	start <ifPersona E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d1 V= 1 1>
+	GoReschedule <FacVar+ E1 1 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% If combat has started, if the local variable 2 is nonzero, if the PC has left the map,
+	% then he's gonna get rewarded based on P1.
+	nu1 <if= P2 1 if= T1 0 if# L2 0 P= 2 2 ifG P3 10 else GoLvl10 MechaPrize .topmek AdvancePlot 0>
+	.topmek <*.txt>
+	GoLvl10 <if= P3 10 else GoLvl9 GiveKeyItem E7 AdvancePlot 0>
+	GoLvl9 <if= P3 9 else GoLvl8 GiveKeyItem E6 AdvancePlot 0>
+	GoLvl8 <if= P3 8 else GoLvl7 mechaprize .huge2mek AdvancePlot 0>
+	.huge2mek <Savin.txt>
+	GoLvl7 <if= P3 7 else GoLvl6 mechaprize .hugemek AdvancePlot 0>
+	.hugemek <Longman.txt>
+	GoLvl6 <if= P3 6 else GoLvl5 GiveKeyItem E5 AdvancePlot 0>
+	GoLvl5 <if= P3 5 else GoLvl4 mechaprize .bigmek AdvancePlot 0>
+	.bigmek <Zerosaiko.txt>
+	GoLvl4 <if= P3 4 else GoLvl3 GiveKeyItem E4 AdvancePlot 0>
+	GoLvl3 <if= P3 3 else GoLvl2 mechaprize .medmek AdvancePlot 0>
+	.medmek <Fenris.txt>
+	GoLvl2 <if= P3 2 else GoLvl1 GiveKeyItem E3 AdvancePlot 0>
+	GoLvl1 <mechaprize .lowmek AdvancePlot 0>
+	.lowmek <Trailblazer.txt>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You've shown some talent. I have a big job for you.>
+	Msg1_1 <\ELEMENT 2 @ \SCENE EScene 2 :// How'd you like to expand your skills into something bigger?>
+	Msg1_2 <\ELEMENT 2 @ \SCENE EScene 2 :// Got a lead on something you'd like to own, I'm sure.>
+	Msg1_3 <\ELEMENT 2 @ \SCENE EScene 2 :// Come on over, you dirty \RANK .>
+	Msg1_4 <\ELEMENT 2 @ \SCENE EScene 2 :// I have something for you. Better hurry before I take it myself.>
+	Msg1_5 <\ELEMENT 2 @ \SCENE EScene 2 :// Hey \PC , got a surprise to celebrate your new status as \RANK .>
+	CMsg1_5 <ifG RReact E2 25 Accept>
+
+sub
+	Persona 2
+	% V1 = Have been offered mission
+	greeting <NewChat if# P2 0 else GoCheckMission Say 1 AdvancePlot 0>
+	GoCheckMission <if# P3 0 else GoFirstTime Say 3 AddChat 1 AddChat 2>
+	GoFirstTime <P= 3 FacVar E1 2 P+ 3 1 FacVar= E1 2 P3  Say 4 AddChat 1 AddChat 2>
+
+	result1 <EndChat Say 2 Goto GoStartCOmbat>
+	GoStartCombat <SavePos LoadD .scene PassVar 1 WMThreat FXPNeeded P3 P= 2 1>
+	.scene <SCENE_Thief_*.txt>
+	result2 <NewChat Say 5>
+
+	Msg1 <So, you didn't manage to do it?>
+	Msg1_1 <You don't look any richer... I guess you were defeated?>
+	Msg1_2 <That was a complete mess-up, wasn't it?>
+
+	Msg2 <Good luck out there. It's a big job.>
+	Msg2_1 <Here's all the information you'll need to make it to the base. Once there, you're on your own.>
+	CMsg2_1 <ifNPCSociable Accept>
+	Msg2_2 <Here's the info. Good luck.>
+	CMsg2_2 <ifNPCShy Accept>
+	Msg2_3 <With any luck there won't be a lot of guards on site... Yeah, like that's gonna happen...>
+	CMsg2_3 <ifNPCEasygoing Accept>
+	Msg2_4 <This place is guarded to the hilt. It'll take all your skills if you hope to get in and out again.>
+	CMsg2_4 <ifNPCPassionate Accept>
+	Msg2_5 <Nobody really knows what they're working on at the lab, but that just makes stealing it all the more exciting!>
+	CMsg2_5 <ifNPCCheerful Accept>
+	Msg2_6 <There's a lot of guards so be careful. If you make it back alive, I certainly hope that whatever you find was worth the trouble...>
+	CMsg2_6 <ifNPCMelancholy Accept>
+	Msg2_7 <The guards might very well kill you. If so, I'll learn something about their defenses, for when I try to steal it myself...>
+	CMsg2_7 <ifG 10 React Accept>
+
+	Msg3 <Are you all ready to go steal something nice?>
+	Msg3_1 <Time's still wasting. Ready to go now?>
+
+	Msg4 <The army's been working on an experimental mecha system. I've found out where the test site is; if you can sneak in there, we can help ourselves to the newest in weapons technology.>
+	Msg4_1 <BioCorp has been working on something new. They aren't supposed to do weapon systems, but apparently they have been. I've discovered where the secret lab is. If you can sneak in there, you can sneak out with something very valuable.>
+	CMsg4_1 <ifNPCSociable Accept>
+	Msg4_2 <There's a secret Kettel Industries testing lab where a new mecha is being developed. We have a good chance to steal whatever it is they're working on.>
+	CMsg4_2 <ifNPCShy Accept>
+	Msg4_3 <A lab near town is working on some mecha project for the Navy. If you can slip in there, you can steal the latest in weapons technology. Sounds like it should be an easy job.>
+	CMsg4_3 <ifNPCEasygoing Accept>
+	Msg4_4 <This is a real challenge... but you've proven that you're a skilled thief. An army base near town is home to an experimental new mecha. If you can slip past their guards, it could easily be yours.>
+	CMsg4_4 <ifNPCPassionate Accept>
+	Msg4_5 <Opportunities like this don't come by too often. RegEx corp is developing a new mecha weapon, and I've discovered where they're housing the prototypes! If you can sneak into their complex, all that new technology could be yours.>
+	CMsg4_5 <ifNPCCheerful Accept>
+	Msg4_6 <Kettel Industries has started a new mecha program. They've caused enough bloodshed with their terror weapons, selling them to any dead-zone tyrant who can meet the price. I say we steal the prototype, and put it to better use!>
+	CMsg4_6 <ifNPCMelancholy ifNPCHeroic Accept>
+
+	Msg5 <Alright. Come back when you're ready and we can start the job then.>
+	Msg5_1 <You do whatever it is that you do. Better hurry, before anyone catches word of our plan.>
+	Msg5_2 <I'll be waiting.>
+
+	Prompt1 <I'd like to go now.>
+	Prompt1_1 <Let's start this thing.>
+	Prompt1_2 <I'm ready to do it!>
+	Prompt2 <I need some more time first.>
+	Prompt2_1 <Give me a sec, my shoes are untied.>
+	Prompt2_2 <Be back in a minute.>
+
+end
+inv
+	STC GR-12
+
+	EMelee 9
+	scale 2
+	name <Neutron Lash>
+	type <Extend Overload Flail>
+	Speed 6
+	Acc 1
+	desc <An experimental mecha weapon.>
+
+	STC NUKE-1
+
+	Gun 7
+	scale 2
+	name <Glass Cannon>
+	Speed 4
+	range 5
+	magazine 20
+	desc <An experimental mecha weapon.>
+	sub
+		Ammo 7
+		type <RUST>
+	end
+
+	Battroid 4
+	name <Anubis>
+	desig <LH-X13>
+	SDL_SPRITE <btr_zerosaiko.png>
+	SDL_COLORS <103 3 45 80 90 85 200 150 0>
+	BioTech
+
+	mod head
+		size 3
+		Armor 4
+		mass -3
+		sub
+			Sensor 8
+			TarComp 2
+			STC LAS-5
+			name <Intercept Beam>
+			type <INTERCEPT>
+			Speed 5
+		end
+	mod body
+		Armor 4
+		mass -5
+		sub
+			CPit
+			Armor 2
+			mass -1
+
+			Gyro 3
+			Armor 2
+			mass -1
+
+			Engine 4
+			Armor 2
+			mass -1
+			HighOutput
+
+			Mount
+			name <Right Shoulder Mount>
+
+			Mount
+			name <Left Shoulder Mount>
+
+			ECM 5
+
+			ArcJet 4
+		end
+	mod arm
+		size 3
+		Armor 4
+		mass -4
+		name <Right Arm>
+		sub
+			Hand
+			Mount
+			name <Right Arm Mount>
+			Melee 6
+			name <Spike Lash>
+			Recharge 3
+			type <ArmorPiercing Extend Flail>
+		end
+	mod arm
+		size 3
+		Armor 4
+		mass -4
+		name <Left Arm>
+		sub
+			Hand
+			Mount
+			name <Left Arm Mount>
+			Melee 6
+			name <Spike Lash>
+			Recharge 3
+			type <ArmorPiercing Extend Flail>
+		end
+	mod leg
+		size 5
+		armor 4
+		mass -5
+		name <Right Leg>
+		sub
+			Mount
+			name <Right Leg Mount>
+			ArcJet 4
+		end
+	mod leg
+		size 5
+		armor 4
+		mass -5
+		name <Left Leg>
+		sub
+			Mount
+			name <Left Leg Mount>
+			ArcJet 4
+		end
+
+	SkillModifier 40
+		Name <Active Stealth System>
+		Type <MECHA>
+		CyberSlot <ELECTRONICS>
+		SkillModStealth
+		SkillModAmount 5
+		mass 120
+
+	SkillModifier 40
+		Name <Combat Cortex>
+		Type <MECHA>
+		CyberSlot <PILOT INTERFACE>
+		SkillModMechaFighting
+		SkillModAmount 5
+		mass 74
+
+	end
+
+end

@@ -1,0 +1,27 @@
+This directory contains a hack to allow linedrawing characters to be used on
+Linux, both in the raw console and in an XTerm or PuTTY client.  It is
+dependent on some modifications to the standard CRT library included with
+FreePascal.
+
+In addition, the CRT mods fix the cursor-off routines to use sequences
+understood by XTerm, PuTTY and old versions of Linux, instead of sequences
+specific to Linux.
+
+These mods are specific to FPC version 2.0.4 on unix.
+
+To use it:
+
+1.  Obtain the files:
+     fpc/rtl/unix/crt.pp
+     fpc/rtl/inc/crth.inc
+     fpc/rtl/inc/textrec.inc
+from the FreePascal sources.  Copy them all into the the main gearhead
+directory, alongside the existing *.pp files.
+
+2. Apply the patch "crt.pp.diff" in this directory.
+
+3. Copy the file "boxdraw.inc" in this directory to the main gearhead
+directory, overwriting the original version.
+
+4. Compile Gearhead normally.  The crt.pp in the current directory will
+automatically be used instead of the standard version.

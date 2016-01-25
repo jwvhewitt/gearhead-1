@@ -1,0 +1,82 @@
+Story
+	name <LM: Omega 1004>
+
+	% N1 is the scene where the story takes place. Always, forever.
+	% N2 is the trapdoor to the lab.
+	% N3 is the Omega-1004 prop.
+	% N4 is Omega-1004 itself.
+	element2 <Prefab>
+	element3 <Prefab>
+	element4 <Prefab>
+
+	% S1 = Initialization Counter
+	% S2 = Have recovered Omega-1004
+
+	start <ifPersona N4 else GoDelete if= S1 0 S= 1 1 ItemVar= N2 1 N3 Compose KEY N3 .useprop>
+	GoDelete <EndStory>
+
+	.useprop <ForceChat N4 PCAlly N4 MoveChar N4 N1 ItemVar= N2 1 0 DeleteKeyItem N3>
+
+sub
+	Persona 4
+	greeting <NewChat if= S2 1 else GoFirstTime Say 1>
+	GoFirstTime <S= 2 1 Return Say 2 AddChat 1 AddChat 2>
+
+	result1 <NewChat Say 3>
+	result2 <NewChat Say 4 Reputation 3 d6>
+
+	Msg1 <All systems operational.>
+	Msg1_1 <I am operating within specified parameters.>
+	Msg1_2 <There are so many things to learn in this world. I must catalogue as much as possible.>
+	Msg2 <Begin logon sequence. Faulty responsometer has been repaired. System check complete. You... You must be the one who has repaired me.>
+	Msg3 <I will begin Introduction Program Gamma. My name is OMEGA-1004. Due to a manufacturing error, I was created with an awareness of my existence that others of my kind lack. May we continue this conversation above ground?>
+	Msg4 <I am OMEGA-1004, a security designation androbot. Due to a manufacturing error, I was created with an awareness of my existence that others of my kind lack. Shall we go back to \NARRATIVE 1 ?  I have been down here for years already...>
+
+	Prompt1 <That's right.>
+	Prompt2 <Who are you?>
+
+end
+inv
+	Trapdoor
+	% V1 = NID of the robot prop
+	Hide 10
+	use <if= StatVal STAT_MetaVisibility 0 if# V1 0 else GoDid Print 1 SavePos LoadD .scene PassVar 1 V1 PassVar 2 14 PassVar 3 5 PassVar 4 10 SeekGate -1>
+	GoDid <Print 101>
+	place <1>
+	.scene <SCENE_ItemDungeon.txt>
+	msg101 <There's nothing else to see in the cave.>
+
+
+	Prop 65
+	name <Robot>
+	sdl_sprite <monster_androbot.png>
+	sdl_colors <130 143 114 116 100 13 0 230 0>
+	Clue15 <Mental ifG SkRoll 15 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
+	Clue23 <Mental ifG SkRoll 23 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
+	Clue29 <ifG PCSkillVal 38 0 else GoC29NoGood Mental ifG SkRoll 38 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
+	GoC29NoGood <Print 3>
+	GoFail <Print 2>
+	Clue37 <Print 4>
+	Msg1 <You attempt to fix this old robot. Suddenly, it begins to move!>
+	Msg2 <You attempt to fix this old robot.>
+	Msg3 <Robotics is a little bit outside of your field.>
+	Msg4 <It's a robot. Judging by how it's not moving at all, it's probably broken.>
+
+
+	Monster Androbot
+	name <Omega-1004>
+	job <ROBOT>
+	sdl_colors <130 143 114 116 100 13 0 230 0>
+	DAge -17
+	chardesc Pragmatic Pragmatic Pragmatic Pragmatic Pragmatic
+	stat 7 25
+	stat 8 14
+	skill 1 4
+	skill 4 5
+	skill 5 5
+	CHAT_ATTACK1 <Begin self-defense program.>
+	CHAT_ATTACK2 <Initiating attack pattern alpha.>
+	CHAT_ATTACK3 <Collecting data on enemy formations.>
+	CHAT_EJECT1 <Maintaining current position would risk permanent damage to this unit.>
+
+end

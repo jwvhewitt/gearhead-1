@@ -1,0 +1,24 @@
+Plot 0
+	Element1 <Character Young Villainous Sociable Body>
+	rumor <!1 is very rude.>
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <Say 1 AdvancePlot 0 EndChat AddChat 1 AddChat 2>
+	result1 <Reputation 3 -1 Say 2 EndChat>
+	result2 <Reputation 3 1 Say 3 EndChat AddChat 3 AddChat 4>
+	result3 <Reputation 3 -1 Say 4 EndChat>
+	result4 <ifG SkRoll 28 7 else GoNotScared say 5 XPV 25 NewChat>
+	GoNotScared <say 6 EndChat>
+	Msg1 <What do you think you're looking at, loser?>
+	Msg2 <Get lost. I've got more important things to do than waste time with spit like you.>
+	Msg3 <You want to get your ass handed to you!? You don't talk to me that way... Take it back or I'll be slicing you a new face.>
+	Msg4 <That's right! Go crawling away, maggot.>
+	Msg5 <Woah... I'm only joking around. We're cool, right? Don't be angry... please...>
+	Msg6 <I don't have to waste my time fighting trash like you. Besides, the cops would be all over my ass... again...>
+	Prompt1 <Sorry, didn't mean to disturb you.>
+	Prompt2 <A colossal jerk, apparently...>
+	Prompt3 <No offense... I'll go away.>
+	Prompt4 <It's your funeral, buddy.>
+end

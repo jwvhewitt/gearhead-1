@@ -1,0 +1,84 @@
+Plot 0
+	name <ARC: Reporter>
+
+	% The corporations are fighting their "Secret War", and this
+	% reporter wants to know about it.
+
+	% Nov 11 2003 : Added FacXP+ command
+
+	Element1 <Character Journalist>
+
+
+	cleanup <AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <ifG ComTime V1 S+ 103 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	% V1 = One-run-through-only counter
+	rumor <!1 is writing a news article about the corporations.>
+
+	greeting <NewChat if= V1 0 else GoDelete V= 1 1 ifG React d10 else GoDelete if= PCFac N1 else GoCheckN2 Say d5 AddChat 1 AddChat 4 AddChat 6>
+	GoCheckN2 <if= PCFac N2 else GoNoFaction Say d5 AddChat 1 AddChat 5 AddChat 7>
+
+	% The PC may or may not have a faction, but he doesn't belong to
+	% either of the ones we're interested in.
+	GoNoFaction <Say d5 AddChat 1 AddChat 2 AddChat 3>
+
+	GoDelete <SayAnything>
+
+	result1 <NewChat Say 6 Reputation 3 -d4 if= PCFac N1 else GoR1CheckN2 Reputation 6 1 Reputation 7 d8>
+	GoR1CheckN2 <if= PCFac N2 Reputation 6 1 Reputation 7 d8>
+	result2 <NewChat Say 7 S+ 103 1>
+	result3 <NewChat Say 7 Reputation 5 d8>
+	result4 <NewChat S+ 103 d2 S+ 102 1 FacXP+ N1 -3 FacXP+ N2 -3 Goto Go45>
+	result5 <NewChat S+ 103 d2 S+ 101 1 FacXP+ N1 -3 FacXP+ N2 -3 Goto Go45>
+	Go45 <Reputation 4 -d8 Say 8 AddChat 8 AddChat 9 AddChat 1 AddCHat 10>
+	result6 <NewChat S+ 103 1 Reputation 3 d8 Say 9 AddChat 1 AddChat 9 AddChat 11 AddCHat 12>
+	result7 <Goto result6>
+	result8 <NewChat S+ 103 d4 Say 10 Reputation 5 d6 FacXP+ N1 -1 FacXP+ N2 -1>
+	result9 <NewChat AddReact -10 Reputation 1 -1 Reputation 2 -1 ifG Intimidation 40 else GoR9NoInt S+ 103 -d10 Say 11>
+	GoR9NoInt <S+ 103 5 Say 12>
+	result10 <NewChat Reputation 5 d8 Reputation 4 d8 Say 13>
+	result11 <NewChat ifG PCRep 2 d25 else GoR11Fail Say 14 S+ 103 -7 FacXP+ N1 1 FacXP+ N2 1>
+	GoR11Fail <S+ 103 1 Say 15 FacXP+ N1 -1 FacXP+ N2 -1>
+	result12 <NewChat Say 16 S+ 103 d3 Reputation 4 -d6>
+
+	Msg1 <I'm writing a story about the corporations. Some people believe that they are currently waging a "Secret War" against one another... What's your opinion about that?>
+	Msg2 <Hello. I'm collecting information for a news article about the corporations. Do you believe they've been actually fighting one another? Do you have any interesting insights?>
+	Msg3 <The corporations are powerful; can they truly be held accountable for their actions? There have been rumors of a "Secret War" between the corps. What's your opinion about that?>
+	Msg4 <\NARRATIVE 1 and \NARRATIVE 2 are in direct competition with each other. Some even say they've been having a war out in the dead zone. Care to comment?>
+	Msg5 <Know anything about the corporations, or the "Secret War"? Think it's actually happening? Who's going to win?>
+
+	Msg6 <Alright. I've been hearing a lot of that lately, especially from the corp employees...>
+	Msg7 <Thank you for your time.>
+	Msg8 <So... You admit that \NARRATIVE 1 and \NARRATIVE 3 are involved in a "Secret War"? Can you give me any more details?>
+	Msg9 <Interesting. Has your corporation taken any retaliatory measures?>
+	Msg10 <That's very insightful. Well, thank you for your time.>
+
+	Msg11 <I understand... That's all the questions for now, then. I doubt I'll have any later, either...>
+	Msg12 <Why, what do you have to hide? This case gets more interesting the more I peer into it...>
+	Msg13 <I see. Well, that's all the questions I have. Thank you for your time.>
+	Msg14 <So I've heard. Well, thank you for your time. I have no further questions.>
+	Msg15 <That doesn't seem too likely, coming from you. In any case I have no further questions.>
+
+	Msg16 <I understand. Well, thank you, you've been most helpful. That's all the questions I have right now.>
+
+	Prompt1 <No comment.>
+	Prompt2 <It's possible they would do that.>
+	Prompt3 <I don't think they would do that.>
+	Prompt4 <\NARRATIVE 1 will be victorious!>
+	Prompt5 <\NARRATIVE 2 will be victorious!>
+	Prompt6 <\NARRATIVE 2 attacked us, the criminals...>
+	Prompt7 <\NARRATIVE 1 has been attacking us.>
+	Prompt8 <We're going to defeat them!>
+	Prompt9 <You shouldn't ask difficult questions.>
+	Prompt10 <It's a fun time to be a pilot.>
+	Prompt11 <We strictly obey the law.>
+	Prompt12 <Of course we have.>
+
+end

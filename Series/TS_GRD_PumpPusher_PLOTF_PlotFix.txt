@@ -1,0 +1,8 @@
+Plot 0
+	name <Pump Pusher Fixer>
+	% Apparently there's no guardian in town. Move one there.
+
+	Element1 <Grab 2>
+	Element2 <Character Guardian>
+
+	Start <MoveChar E2 E1 AdvancePlot 0>

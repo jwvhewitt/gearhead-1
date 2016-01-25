@@ -1,0 +1,97 @@
+Story
+	name <LM: Martian Princess>
+	% A Martian Princess is on Earth, being pursued by assassins from
+	% back home. If the PC aids her, he may get a new lancemate.
+
+	% N1 is the scene in which the MP will be deployed.
+	% N2 is the MP herself.
+	Element2 <Prefab>
+	Element3 <Prefab>
+
+	% S1 = Initialization Counter (MP Reputation)
+	%      If S1=1, PC has defeated the attackers
+	% S2 = PC has fought the attackers (1)
+	%      PC has spoken to the princess afterwards (2)
+	%      FMR ambassador has arrived (3)
+	% S3 = Have won combat exactly once
+
+	% At startup, set the potential lancemate's skill level and reputation.
+	start <ifPersona N2 else GoDelete if= S1 1 else GoInit S= 1 2 MoveChar N2 N1>
+	GoInit <if= S1 0 S= 1 d50 S+ 1 10 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 Compose ENC 2 .encounter>
+	GoDelete <EndStory>
+	.encounter <if= S2 0 if= d3 1 ifG PCScale 0 Block ifYesNo 1 2 3 else GoRefuse Goto GoStartCombat>
+	% Failing to aid the princess results in the end of this story.
+	GoRefuse <EndStory>
+	GoStartCombat <SavePos Dynamic 2 Threat S1 120 .nu1 .nu2 S= 2 1 DynaNPC N2 -1 ComposeD START .encstart PassVar 1 N2>
+	.nu1 <if= T1 0 if= L3 0 L= 3 1 Reputation 1 -8 Return>
+	.nu2 <if= T2 0 if= L3 0 L= 3 1 XPV 100 Reputation 6 1 Reputation 1 1 Return>
+	nu1 <if= T1 0 if= S3 0 S= 2 0>
+	nu2 <if= T2 0 if= S2 1 if= S3 0 S= 3 1 S= 1 1 History 4 ifG SkRoll 11 15 else GoNU2NoSee Print 5>
+	GoNU2NoSee <Print 6>
+	.encstart <if= L2 0 ForceChat L1 L= 2 1>
+
+	Msg1 <In the distance you see a lone mecha pilot being pursued by several attackers.>
+	Msg2 <Help the pilot.>
+	Msg3 <It's none of my business.>
+	Msg4 <You rescued Princess \NARRATIVE 2 from her Martian enemies.>
+	Msg5 <You see the Martian princess speed away in the direction of \NARRATIVE 1 .>
+	Msg6 <You see the Martian princess speed away.>
+
+	quarter <if= S2 2 if= d20 1 StoryLine .plot S= 2 3>
+	.plot <TS_LANCE_Martian_PLOT_*.txt>
+
+sub
+	% In SubComponents, the persona for the princess.
+	Persona 2
+	greeting <NewChat ifG S2 1 else GoCheckFirst Say 3>
+	GoCheckFirst <if= S1 2 else GoInCombat S= 2 2 PCAlly N2 AddReact 10 Say 2 GiveKeyItem N3 AddChat 1 AddChat 2>
+	GoInCombat <EndChat Say 1>
+
+	result1 <NewChat Reputation 1 1 Say 4>
+	result2 <NewChat Reputation 6 1 Reputation 4 d10 ifG PCRep 6 NPCRep N2 6 else GoR2NoGood AddReact 10 Say 5>
+	GoR2NoGood <Say 6>
+
+	Msg1 <My name is \NARRATIVE 2 of the Free Mars Republic. I was sent to Earth for safety, but the enemies of my people have followed me here. Help me to defeat them and you will be greatly rewarded.>
+	Msg2 <\PC , we meet again. I didn't have a chance to reward you for helping to fight the assassins. I hope this emerald will be sufficient... I am unfamiliar with the customs of the birthworld, perhaps you can help me to learn.>
+	Msg3 <I feel so heavy on this planet... I hope it's just the gravity, and not the food...>
+	Msg3_1 <I long to once more behold the red dust valley. The terrain on this planet is so alien and unfamiliar to me.>
+	Msg3_2 <I am standing on the world where humanity was born... but yet, this is not my home.>
+	Msg4 <My planet is trapped in a never-ending series of wars. This place is supposed to be more peaceful, but I have learned there are many dangers here as well. Fortunately I am not entirely helpless.>
+	Msg5 <You are highly skilled... I may have need of your services again. So long as you defend me against the enemies of my people, I can guarantee that you will be rewarded.>
+	Msg6 <There isn't much on this world that I cannot afford. Should I require assistance I will keep you in mind.>
+
+	Prompt1 <I'm glad to be of help.>
+	Prompt2 <Maybe, if you can afford my rates.>
+
+end
+inv
+	NPC Mecha Pilot
+	job <Princess>
+	chardesc Female Sociable
+	EquipChar 5000
+	statline 16 8 13 17 7 13 15 18
+	SDL_COLORS <100 200 80  250 212 200  220 20 55>
+	Age 1
+	skill 12 5
+	skill 17 15
+	skill 19 10
+	skill 39 10
+	mecha <Neko.txt>
+	CHAT_ATTACK1 <These opponents are not worthy of my fantastic skill.>
+	CHAT_ATTACK2 <You would not last an hour on Mars.>
+	CHAT_ATTACK3 <For the glory of my people!>
+	CHAT_SAFE1 <How very interesting.>
+	CHAT_SAFE2 <They don't have this on my world.>
+	CHAT_SAFE3 <What is this called?>
+	CHAT_EJECT1 <My bloodline must be preserved!>
+
+	BigTreasure 25
+	name <Phobos Emerald>
+	mass 1
+	clue29 <Print 1>
+	Msg1 <Emeralds like these are formed on Phobos and Demois during cosmic storms. This one seems unusually large.>
+	clue37 <Print 2>
+	Msg2 <This enormous emerald is absolutely flawless... it must be worth a fortune.>
+
+
+end

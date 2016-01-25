@@ -1,0 +1,37 @@
+Story
+	name <STORY: Bandits! Default...>
+	% Nothing much exciting going on, except that more mecha combat
+	% missions than usual will be offered.
+
+	% Element 1 is the calling faction. Always. Forever.
+
+	%  V1 = Time Limit
+
+	%  V101 = Faction Victory Count
+	%  V102 = Enemy Victory Count (if appropriate)
+	%  V103 = How many times PC fought for faction
+	%  V104 = How many times PC fought against faction
+
+	% This story will last for 2 - 4 days.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800>
+	GoCheckTime <ifG ComTime V1 EndStory ifG V101 5 FacXP+ N1 V103>
+
+	% Every hour, it will attempt to load a plot.
+	hour <StoryLine .plotname>
+	.plotname <TS_CORP_BanDef_PLOT_*.txt>
+
+	% Every quarter, print a new news story.
+	quarter <News d10>
+
+	Msg1 <\NARRATIVE 1 faces increasing pressure from daring bandit attacks.>
+	Msg2 <\NARRATIVE 1 vows to increase defense spending in the wake of several recent bandit attacks.>
+	Msg3 <Executives from \NARRATIVE 1 claim that reports of bandit activity have been grossly overstated.>
+	Msg4 <Highway robbery! \NARRATIVE 1 expected to lose profits this quarter due to bandit attacks.>
+	Msg5 <\NARRATIVE 1 new security program appears to be working against highway bandits.>
+	Msg6 <\NARRATIVE 1 to tighten up security protocols. Contracts available for freelance pilots.>
+	Msg7 <\NARRATIVE 1 could use a few good pilots. New route security contracts available to combat highway robbery.>
+	Msg8 <Cavaliers looking for work should seek out \NARRATIVE 1 . The company is hiring mecha pilots to combat a rising bandit threat.>
+	Msg9 <\NARRATIVE 1 has announced new funds for hiring freelance mecha pilots.>
+	Msg10 <Bandits attack \NARRATIVE 1 convoy; Corporate heads downplay significance of loss.>
+
+

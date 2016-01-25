@@ -1,0 +1,130 @@
+Plot 0
+	name <ARC: Hyolee's Journal>
+
+	% Element 1 is Hyolee.
+	element1 <Character>
+	Stat 1 1
+
+	% Element 2 is Calmegie Research Station
+	element2 <Scene>
+	stat 2 8
+
+	% Element 3 is Fluffy
+	element3 <Prefab>
+
+	% Element 4 is also Prefab
+	element4 <Prefab>
+
+	% This story arc will exit if Hyolee is killed.
+	UTD1 <AdvancePlot 0>
+
+sub
+	Persona 1
+	greeting <NewChat if= V1 0 else GoQuestStarted Say 2 AddChat 1 AddChat 2>
+	goQuestStarted <Say 11 IfKeyItem E4 else GoNoJournal AddChat 8>
+	goNoJournal <AddChat 9 AddChat 12>
+
+	result1 <V= 1 1 NewChat Say 4 Memo 18 AddChat 3 AddChat 4 AddChat 7>
+	result2 <NewChat Say 3>
+	result3 <NewChat Say 5 AddChat 4 AddChat 7 ifG SkRoll 29 7 AddChat 5>
+	result4 <NewChat Say 9>
+	result5 <NewChat XPV 25 Say 6 AddChat 4 AddChat 6>
+	result6 <NewChat Say 7 AddChat 4>
+	result7 <NewChat Say 8 AddChat 4 AddChat 3>
+	result8 <NewChat AdvancePlot 0 DeleteKeyItem E4 History 17 V= 1 2 Say 12 XPV 100 AddReact 5 AddChat 10 AddChat 11>
+	result9 <NewChat Say 13>
+	result10 <EndChat ifPersona E3 else GoReallyDead Reputation 2 -5 Say 14 DeleteChar E3>
+	GoReallyDead <Reputation 2 1 Say 14>
+	result11 <NewChat ifPersona E3 else GoFluffyDied  NewChat Reputation 1 1 Say 15 CashPrize d100 DeleteChar E3>
+	GoFluffyDied <Reputation 1 -1 Reputation 2 -10 Say 16>
+	result12 <NewChat Say 8>
+
+	msg2 <Hello again. Um... I don't want to impose, but... I know that you've done all kinds of adventurous things. I have a favor to ask of you.>
+	msg3 <Oh, okay. I suppose I'll have to figure something else out. My, what a horrible mess this all has become...>
+	msg4 <I left all my research notes are at the Calmegie genetics station. I need them to continue my work... the problem is, Fluffy won't let me get to them.>
+	msg5 <She's a Styracosaurus, genetically created from fossilized DNA. Lately she's been acting very agressive... I think she wants a boyfriend. Anyhow, I'm afraid to enter the enclosure now.>
+	msg6 <Before the great war a powerful corporation tried to resurrect dinosaurs for entertainment purposes. I've been examining their data, and Fluffy is my first success. I think this technology can be used to help heal the Earth.>
+	msg7 <Don't be stupid. I may be able to use this technology to ressurect contemporary species which didn't survive the nuclear winter.>
+	msg8 <The Calmegie Genetics Research Station is a sealed biodome built in the core of an extinct volcano. It was important to make sure no contaminants could get in, and no experiments could get out. The entrance is via a cave North of here.>
+	msg9 <Could you? I'd be eternally grateful. One more thing... please don't hurt Fluffy. She's the only one of her kind, and usually she has such a sweet personality.>
+
+	msg11 <Have you found my journal yet?>
+	msg12 <Oh, thank you very much! Um... you didn't have to hurt Fluffy to get it, did you?>
+	msg13 <Please do your best. And please, don't hurt poor Fluffy... she's not acting like herself.>
+	msg14 <I was afraid of that. Thank you for risking your life. This research will be very important, I promise I'll do my best.>
+	msg15 <You're wonderful!!! Here, I don't have much to offer as a reward, but here's a little bit of cash I was saving up. I want you to have it. Thank you so much! I am forever in your debt!>
+	msg16 <Great! I can't wait to see her next time I visit the station. Thanks for your help!>
+	Msg17 <You recovered Hyolee's journal.>
+	Msg18 <Hyolee asked you to return her journal from the Calmegie Research Station.>
+
+	prompt1 <Certainly. How may I help you?>
+	prompt2 <I'm too busy to help right now.>
+	prompt3 <Who is "Fluffy"?>
+	prompt4 <I can get your notes for you.>
+	prompt5 <Why do you have a dinosaur for a pet!?>
+	prompt6 <By filling it with dinosaurs?>
+	prompt7 <Tell me about the Calmegie station.>
+	prompt8 <Here it is. [give journal]>
+	prompt9 <I'm still looking for it...>
+	prompt10 <Sorry, I had to defend myself...>
+	prompt11 <Fluffy is alive and well.>
+	prompt12 <Where did you say it was again?>
+
+	Persona 3
+	% If the PC makes an intimidation roll vs 10, Fluffy will run away!
+	greeting <endchat say 1 ifG SkRoll 28 10 XPV 50 RunAway E3>
+	msg1 <GROWF!!!>
+
+end
+inv
+
+	Chara
+	name <"Fluffy" the Styracosaurus>
+	job <ANIMAL>
+	place <2 enemy>
+	roguechar <D>
+	home <Meadow>
+	chardesc Female
+	sdl_sprite <monster_styracosaurus.png>
+	sdl_colors <100 130 110 240 200 50 220 0 0>
+	scale 1
+	statline 12 19 10 7 5 6 2 2
+	size 1
+	skill 8 6
+	skill 9 4
+	skill 10 4
+	skill 12 8
+	skill 13 5
+	mod head
+		Armor 1
+		sub
+			gear 4 0 2
+			name <Horns>
+			stat 3 1
+		end
+	mod body
+		Armor 5
+	mod leg
+		Armor 3
+		name <Right Front Leg>
+	mod leg
+		Armor 3
+		name <Left Front Leg>
+	mod leg
+		Armor 3
+		name <Right Rear Leg>
+	mod leg
+		Armor 3
+		name <Left Rear Leg>
+	mod tail
+		Armor 2
+	end
+
+	Gear 12 1 25
+	name <Research Journal>
+	scale 0
+	place <2>
+	home <Meadow>
+
+
+end

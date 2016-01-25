@@ -1,0 +1,162 @@
+Plot 0
+	name <Member Three>
+
+	% Member Three is "The Collector", a gifted student who
+	% collects body parts from his victims. As of the PC's entry
+	% into this story E4 has kidnapped a citizen from E1. It
+	% will be up to the PC to head in there and rescue the
+	% hapless local.
+
+	% E1 is the scene for this episode; E2 the scene for the next
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1 !Member 11>
+
+	% E3 is the guardian who will give the PC a reward
+	element3 <Character Guardian !Near 1>
+
+	% E4 is the murderer, E5 is the victim.
+	element4 <Prefab>
+	element5 <Character Citizen !Near 1>
+
+	% E6 is the prop to be used for the victim.
+	% E7 is the prop that can tell the PC where to go next.
+	element6 <PREFAB>
+	element7 <PREFAB>
+
+	% V1 = Initialization Counter / NPC defeated indicator
+	% V2 = Combat has been entered
+	% V3 = Time limit for rescue; 6 hours from start of plot
+	% V4 = Have rescued E5
+	% V5 = Conversation indicator
+
+	start <ifPersona E3 else GoDelete if= V1 0 V= 1 1 FreezeChar E5 Goto GoInitNPC>
+	GoInitNPC <S= 6 E4 Compose UTD E4 .e4dies NPCLevel E4 S2 P= 3 ComTime P+ 3 21600 Goto GoInitItem>
+	GoInitItem <Compose KEY E6 .usekey Compose KEY E7 .useclue ItemVar= E6 1 P3 ItemVar= E6 2 E5 ItemVar= E6 4 E4 ItemVar= E7 10 E2>
+	.e4dies <if= P1 1 P= 1 2 P= 2 3 S= 201 0 S+ 202 1 S= 5 ComTime S+ 5 13800 N= 2 E2>
+	.usekey <if= V4 0 V= 4 1 Return>
+	.useclue <ifG S202 S203 S= 203 S202 FacXP+ N1 1>
+	GoDelete <S= 201 0 N= 2 E2 AdvancePlot 0>
+
+	% On a cleanup request, put everything back to normal,
+	% unless the PC has started the combat mission.
+	CleanUp <if= V2 0 MoveChar E5 E1 DeleteChar E4 AdvancePlot 0>
+
+	TM1 <if= SceneID 0 ifNPCinPlay E4 if= V5 0 ifG 6 Range PCUID NPCUID E4 V= 5 1 Print 101 ForceChat E4>
+	Msg101 <\ELEMENT 4 shouts at you!>
+
+sub
+	Persona 3
+	rumor <!3 has been investigating the "Murder Club".>
+	% V1 = Given mission or not
+	% V2 = Message Randomizer
+	% V4 = Cash reward offered
+	greeting <NewChat if= P4 1 else GoNoRescue ifPersona S7 else GoNoS7 Say 1 CashPrize V4 MoveChar E5 E1 S+ 103 1 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 1>
+	GoNoS7 <Say 2 CashPrize V4 MoveChar E5 E1 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 1>
+	GoNoRescue <if= P1 2 else GoNoCapture V= 2 2 V+ 2 d2 Say V2 CashPrize V4 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 0>
+	GoNoCapture <ifG P2 0 else GoCheckMission V= 2 4 V+ 2 d2 Say V2 Reputation 6 -10 DeleteChar E4 DeleteChar E5 S= 201 0 N= 2 E2 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoFirstTime Say 7 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoFirstTime <V= 4 Reward Threat S2 100 200 V= 1 1 V= 2 8 V+ 2 d2 Say V2 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2 if# PCFac N1 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <EndCHat Memo 101 V= 2 11 V+ 2 d2 Say V2 SavePos Goto GoStartCombat>
+	GoStartCombat <LoadD .scene MStockD S2 .mdesc P= 2 1 DynaNPC E4 3 DynaItemTeam E6 4 DynaItemTeam E7 3>
+	.scene <SCENE_Stronghold.txt>
+	.mdesc <Robot Synth>
+	result2 <Goto result1>
+	result3 <Goto result1>
+
+	result4 <NewChat Say 8>
+	result5 <Goto result4>
+	result6 <Goto result4>
+
+	result7 <EndChat Reputation 1 -5 Say 11 DeleteChar E4 DeleteChar E5 AdvancePlot 0>
+	result8 <goto result7>
+
+	Msg1 <You did it! The killer has been stopped, and \PERSONA E5 has been rescued. Here's the money you earned. When \OPR E5 gets out of the hospital, you should go visit \SPR E5 . Also you should visit \PERSONA S7 in \SCENE S8 .>
+	Msg2 <You rescued \ELEMENT 5 ! The killer has been taken out of action, and we're hopefully one step closer to ending this "Murder Club" once and for all. Here's your reward.>
+	Msg3 <The killer has been stopped, but not before taking one last victim... You did the best you could. Here's the reward I promised you.>
+	Msg4 <You stopped the murderer, just unfortunately not in time. At least he won't be able to kill again. Here's your reward.>
+	Msg5 <That was a complete failure. \ELEMENT 4 escaped capture.>
+	Msg6 <You have failed. \ELEMENT 4 got away.>
+	Msg7 <Are you ready for the mission yet?>
+	Msg8 <Don't take too long. Remember, the killer has a hostage... there's no telling what is going on right now.>
+	Msg9 <It's an emergency! One of our town citizens, \ELEMENT 5 , has been kidnapped by a member of the "Murder Club"! I need a hunter immediately to go perform a rescue mission. If you can help, we'll discuss payment when you get back...>
+	Msg10 <\ELEMENT 5 has been kidnapped by a member of the "Murder Club"! We have to stage a rescue mission quickly, before the killer has a chance to finish \PPR E4 deed! Can you help us? We have to hurry... we can discuss payment after you get back...>
+	Msg11 <You don't care about other people, but some day you may need their help.>
+	Msg12 <Good luck out there. Don't become their next victim.>
+	Msg13 <Good luck. I only hope that we aren't too late...>
+	Msg101 <\ELEMENT 3 in \SCENE EScene 5 asked you to rescue \ELEMENT 5 from the murder club.>
+
+	Prompt1 <I'm ready to go right now.>
+	Prompt2 <There's no time to lose.>
+	Prompt3 <Let's catch this killer.>
+	Prompt4 <I need some time to get ready.>
+	Prompt5 <Maybe I should get ready first.>
+	Prompt6 <I'll start the mission in a bit.>
+	Prompt7 <I don't care about \PERSONA E5 .>
+	Prompt8 <That's not my problem.>
+
+	Persona 4
+	greeting <EndChat if= V1 0 else GoAgain V= 1 d5 Say V1>
+	GoAgain <Say V1>
+	Msg1 <So, you've discovered my lair. They call me "The Collector". Killing is how I get materials for my study... After I'm finished with this one, I'll take you apart and see what makes you so special.>
+	Msg2 <Welcome to my lair. It would be a shame not to introduce myself. In the murder club I'm known as "Dark Harvest". I like to collect all the interesting things people have inside their bodies. Prepare to become my next acquisition...>
+	Msg3 <My name in the murder club is "Doctor". I think you need some of my attention... a nice painful death by vivisection is what I prescribe.>
+	Msg4 <Ah, another specimen has come to my lair. I'm known as "Gore Collector" because I like to keep parts of everyone I kill. Your head will make a splendid trophy, preserved in formaldehyde...>
+	Msg5 <You've wandered into the lair of "Mad Genius". That's what they call me at school. Try not to fight too hard. I'm hoping to remove your brain intact for one of my projects.>
+
+
+	Plot 1
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Memo 1>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	Msg1 <You should go speak with \ELEMENT 5 in \SCENE EScene 5 .>
+	sub
+		Persona 5
+		rumor <!5 has been waiting to speak with you.>
+		greeting <NewChat AddReact 20 Reputation 1 1 Say d3 AdvancePlot 0>
+		Msg1 <Thank you for rescuing me! You're very heroic.>
+		Msg2 <The doctors say I still have all my organs. Thank you so much for rescuing me!>
+		Msg3 <Thanks for rescuing me! Without your help, I'd most certainly be dead by now.>
+	end
+
+end
+inv
+	NPC Soldier
+	job <Student>
+	chardesc Young Pragmatic Villainous Villainous Villainous
+	equipchar 15000
+
+	STC VICTIM-1
+	% V1 = Time limit for healthy rescue
+	% V2 = Identity of the victim
+	% V3 = Have tended to the victim's wounds
+	% V4 = Identity of E4
+	use <ifPersona V4 else GoE4Dead Print 1>
+	GoE4Dead <if= V3 1 else GoCheckStatus Print 2>
+	GoCheckStatus <ifG V1 ComTime else GoHurt V= 3 1 Alert 3 Trigger KEY SelfNID>
+	GoHurt <ifYesNo 4 5 6 Mental ifG SkRoll 16 7 else GoDead Print 8 V= 3 1 Trigger KEY SelfNID>
+	GoDead <Print 7 SelfRunAway DeleteChar V2>
+	Msg1 <You can't do anything for \PERSONA V2 while \PERSONA V4 is still fighting you!>
+	Msg2 <\PERSONA V2 will be fine, thanks to you.>
+	Msg3 <You arrived here in time. \PERSONA V2 has been drugged but doesn't appear to have been harmed.>
+	Msg4 <\PERSONA V2 looks as if \OPR V2 has been operated upon. You may need to use Medical skill to save \PPR V2 life.>
+	Msg5 <Attempt medical aid.>
+	Msg6 <I'm not qualified.>
+	Msg7 <\PERSONA V2 dies.>
+	Msg8 <You stabilize \PERSONA V2 , and call for backup.>
+
+	STC APPARATUS-2
+	% V10 = Location of next town
+	update <>
+	clue29 <Print 101>
+	Msg101 <It's a collection of actual human body parts.>
+	Clue37 <if= T3 0 else GoNotDead if= V30 0 else GoDid Mental ifG SkRoll 37 6 else GoFail V= 30 1 Print 2 XPV 100 Trigger KEY SelfNID>
+	GoNotDead <Print 4>
+	GoFail <V= 30 -1 Print 1>
+	GoDid <Print 3>
+	Msg1 <You don't learn anything from this macabre collection.>
+	Msg2 <One of the names on a sample jar matches that of a missing person from \SCENE V10 .>
+	Msg3 <You've already examined this collection. You don't want to do it again.>
+	Msg4 <You shouldn't take time out to examine things while there's still someone trying to kill you.>
+
+end
+

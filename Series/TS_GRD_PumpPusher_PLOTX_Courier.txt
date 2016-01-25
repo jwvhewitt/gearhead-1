@@ -1,0 +1,326 @@
+Plot 0
+	name <Courier>
+	% [[Ver1.6]]
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	% This plot will likely be called from a faction story.
+	% So, it will grab the identity of the faction as its first
+	% element, and a member of the faction to give the job to
+	% the PC.
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	Element2 <Character Guardian>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%       If P3=-1, PC has been denied the job
+
+	%  S101 = Faction Victory Count
+	%  S102 = Enemy Victory Count (if appropriate)
+	%  S103 = How many times PC fought for faction
+	%  S104 = How many times PC fought against faction
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  if= L3 0 else GoWin V= 2 2  Reputation 6 -5>
+	GoWin <V= 2 3  Reputation 6  1  XPV 150  S+ 101 1  FacXP+ E1 1>
+
+
+	% Email check.
+	5Min <if= d70 23 if= V3 0 ifG RReact E2 d70 V= 3 1 Email 1>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// Got a job for you here. Come see me about it.>
+	Msg1_2 <\PERSONA E2 @ \SCENE EScene 2 :// How'd you like to help me send down some drug dealers? Come see me about a mission.>
+	Msg1_3 <\PERSONA E2 @ \SCENE EScene 2 :// The "Pump Pushers" are operating in \SCENE ESCene 2 . I could use some backup on a case.>
+	Msg1_4 <\PERSONA E2 @ \SCENE EScene 2 :// I've got a mission for you from the Guardians, if you're in the area.>
+	Msg1_5 <\PERSONA E2 @ \SCENE EScene 2 :// There's a drug dealer in the area who needs to be stopped. Come see me about it.>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+	rumor <!2 is looking for a fast pilot to do some guardian work.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say 1 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob Say 6 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 130 V= 4 Reward V3 200 Goto GoCheckFaction>
+	GoCheckFaction <if= PCFac E1 else GoCheckEmail Say 11 Goto GoAddComOps>
+	GoCheckEmail <if= P3 1 else GoCheckFriend Say 11 Goto GoAddComOps>
+	GoCheckFriend <ifG React 40 else GoNoAutomatic ifG PCRep 2 d10 else GoNoAutomatic Say 16 AddChat 7 AddChat 9>
+
+	GoNoAutomatic <ifG React -d10 else GoDenied ifG PCRep 2 -d10 else GoDenied Say 21 AddChat 11 AddChat 14 AddChat 17>
+	GoDenied <V= 1 -1 P= 3 -1 SayAnything AdvancePlot 0>
+
+	GoAddComOps <V= 1 1 P= 3 1 AddChat 1 AddChat 3 AddChat 5 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat Say 36 Reputation 2 1 Goto GoStartCombat>
+
+	GoStartCombat <SavePos P= 2 1 Staged .scene V3>
+	.scene <SCENE_StopCourier.txt>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat Say 26 AddChat 1 AddChat 3>
+
+	% The PC accepts the job offer.
+	result7 <NewChat Say 11 Goto GoAddComOps>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 P= 3 -1>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing. This plan uses Intimidation skill in order to
+	% succeed. If you want to change it, some alternate "PLAN A"
+	% types are presented... uncomment the one you like.
+	result11 <NewChat ifG Intimidation 10 else GoR11Lose Say 31 AddChat 7 AddChat 9>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 P= 3 -1>
+
+
+	% The PC tries to get the job via "PLAN B"- be friendly.
+	% This is done with the Conversation skill.
+	result14 <NewChat ifG Conversation 15 else GoR14Lose Say 31 AddChat 7 AddChat 9>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1 P= 3 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1 P= 3 -1>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Player has won the battle and is being paid.
+	Msg1 <The shipment will never reach the streets. Here's your reward for helping to stop the smugglers.>
+	Msg1_1 <That did it, they'll never get to sell their filthy poison now. Here's the reward you earned. I look forward to working with you again someday.>
+	CMsg1_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg1_2 <You did it. Here's your reward.>
+	CMsg1_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg1_3 <Here's your reward for giving those "Pump Pushers" a really, really bad day. Thanks.>
+	CMsg1_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg1_4 <Woo-hoo! The mission was a complete success! We did it!>
+	CMsg1_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg1_5 <The drugs have been stopped! This is going to clean up our streets. Here's your reward.>
+	CMsg1_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg1_6 <We stopped this shipment, but there's probably a dozen more that got through. Here's your pay.>
+	CMsg1_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+	Msg1_7 <If people were sensible, they wouldn't be taking dangerous street drugs like "Pump" and we wouldn't have this problem to begin with. In any case, the shipment has been destroyed. Here's your reward.>
+	CMsg1_7 <ifG NPCRep E2 7 0  Accept> %Pragmatic
+	Msg1_8 <Thank the heavens that we managed to win, this time. Here's your reward.>
+	CMsg1_8 <ifG 0 NPCRep E2 7  Accept> %Spiritual
+
+
+	% 06 :  Player has lost the battle.
+	Msg6 <The shipment made it through... We've failed.>
+	Msg6_1 <You lost the mission. Now the drugs will end up on the streets here, in a few hours.>
+	CMsg6_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg6_2 <You lost.>
+	CMsg6_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg6_3 <The drug smugglers made it through... you win some and you lose some...>
+	CMsg6_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg6_4 <The mission was a complete failure. This is terrible...>
+	CMsg6_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg6_5 <The smugglers made it through. Oh, well... at least we weren't trying to stop a murderer or a terrorist or anything like that.>
+	CMsg6_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg6_6 <The drugs made it through. They'll be on the street within hours... and then we can expect a few more "Pump" related deaths in \SCENE EScene 2 .>
+	CMsg6_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+	Msg6_8 <The mission was a failure... but all things happen for a reason.>
+	CMsg6_8 <ifG 0 NPCRep E2 7  Accept> %Spiritual
+
+	% 11 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <A drug smuggler is bringing a shipment of "Pump" into town. He's got some mecha guards, but really I only care about stopping him. Pay for the mission is $ \VAL V4 .>
+	Msg11_1 <There's a drug smuggler coming to town with a trailerload of "Pump". It's going to be bad news once that hits the street. I want you to stop him... I'm authorized to offer you $ \VAL V4 for the mission. Does that sound good?>
+	CMsg11_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg11_2 <There's a drug smuggler coming in to town. He must be stopped. I can offer you $ \VAL V4 to do this.>
+	CMsg11_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg11_3 <We have a smuggler bringing in a shipment of "Pump". Your job will be to disable his mecha so we can grab the contraband... Pay will be $ \VAL V4 ; you only have to stop one mek so this should be an easy job.>
+	CMsg11_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg11_4 <A smuggler with a shipment of "Pump" is heading to \SCENE EScene 2 . You've got to stop him... If the shipment gets here, who knows what'll happen. I can offer $ \VAL V4 for the mission.>
+	CMsg11_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg11_5 <We have to stop a drug smuggler from delivering his goods. With any luck he's sampled some of the merchandise himself, and will be easier to take down. Pay for the mission is $ \VAL V4 .>
+	CMsg11_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg11_6 <A shipment of Pump is being delivered to \SCENE EScene 2 . It must be stopped before it can harm anyone. Pay for this mission will be $ \VAL V4 .>
+	CMsg11_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+
+	% 16 :  Player is asked if he is looking for a job.
+	Msg16 <How'd you like to run a mission for me? I have a drug interception job lined up.>
+	Msg16_1 <The "Pump Pushers" have been selling their filthy drugs all over the FedTer. I've got a mission lined up to intercept and destroy one of their shipments; I need a pilot to carry out the operation, if you're up for it.>
+	CMsg16_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg16_2 <I need a pilot to intercept a narcotics shipment. Interested?>
+	CMsg16_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg16_3 <There's a shipment of illegal drugs coming into town today, and I'd just as soon that it not make it. I have an interception mission lined up if you're looking for a job.>
+	CMsg16_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg16_4 <The "Pump Pushers" have been selling drugs all over, but now they have their sights set on \SCENE EScene 2 . I cannot allow my city to be soiled by their crimes! If you could run a mecha mission, I have an interception set up.>
+	CMsg16_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg16_5 <Hey, it's good to see you! I've got a mission to intercept some drug runners if you're interested in taking it.>
+	CMsg16_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg16_6 <There's an urgent matter that needs to be settled. I have a mission available for a mecha pilot, if you're free to take it.>
+	CMsg16_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+	Msg16_7 <Ah, \PC . I need a pilot to run a mission for the guardians, and it is imperative that we act quickly. Could you assist me?>
+	CMsg16_7 <ifG NPCRep E2 7 0  Accept> %Pragmatic
+
+	% 21 :  NPC implies job, PC might have chance to get it.
+	Msg21 <There's been trouble with drug trafficking lately, but the Guardians are doing everything we can to fight the problem.>
+	Msg21_1 <>
+	CMsg21_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg21_2 <>
+	CMsg21_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg21_3 <>
+	CMsg21_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg21_4 <>
+	CMsg21_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg21_5 <>
+	CMsg21_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg21_6 <>
+	CMsg21_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+	Msg21_7 <>
+	CMsg21_7 <ifG NPCRep E2 7 0  Accept> %Pragmatic
+	Msg21_8 <>
+	CMsg21_8 <ifG 0 NPCRep E2 7  Accept> %Spiritual
+
+	% 26 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <The smuggler has \VAL V3 threat points worth of mecha guarding him. As mentioned, though, all you have to do is stop his mecha.>
+
+	% 31 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <You might be able to help me. I have a piloting mission lined up, if you're interested.>
+	Msg31_1 <Hey, I've been looking for someone like you. We've got a mission lined up to stop some "Pump Pushers". How'd you like to take a job for the Guardians?>
+	CMsg31_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg31_2 <I have a job for a mecha pilot, if you're interested.>
+	CMsg31_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg31_3 <Eh, I don't have anyone else to do this, so I may as well ask you... I have a mission for a mecha pilot. Are you interested?>
+	CMsg31_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg31_4 <If you're ready to defend our city against those criminals who prey on the weak and desperate, I have a mission you may want to take part in.>
+	CMsg31_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg31_5 <I was just about to start looking for a pilot! If you can run a mission for us, that'd be great.>
+	CMsg31_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg31_6 <The Guardians need a pilot for an immediate mission.>
+	CMsg31_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+	Msg31_7 <I have a mission available right now. You would be the logical choice to carry it out, if you're prepared.>
+	CMsg31_7 <ifG NPCRep E2 7 0  Accept> %Pragmatic
+	Msg31_8 <Was it fate that led you here today? I have a mission available for a mecha pilot; if you're interested, the job is yours.>
+	CMsg31_8 <ifG 0 NPCRep E2 7  Accept> %Spiritual
+
+	% 36 :  Combat is starting.
+	Msg36 <Good luck out there. I'll identify which mecha belongs to the smuggler when you reach the field. Stop him, then come back here and I'll give you the reward.>
+	Msg36_1 <Good luck on the mission. When you get to the field, I'll identify the smuggler's mecha. He'll probably try to escape so you should focus your attention on him.>
+	CMsg36_1 <ifG NPCRep E2 3 0  Accept> %Sociable
+	Msg36_2 <Here are the operation coordinates. The mecha belonging to the smuggler will be identified when you reach the field.>
+	CMsg36_2 <ifG 0 NPCRep E2 3  Accept> %Shy
+	Msg36_3 <I've sent the mission data to your navcomp. Go to the coordinates, destroy the smuggler's mecha, then get out of there before his friends catch up with you.>
+	CMsg36_3 <ifG NPCRep E2 4 0  Accept> %Easygoing
+	Msg36_4 <I'll upload the operation coordinates to your navcomp. Don't you dare let that smuggler through... we can't afford any mistakes.>
+	CMsg36_4 <ifG 0 NPCRep E2 4  Accept> %Passionate
+	Msg36_5 <Here's where you can find the smuggler. I'm sure you'll have no trouble in stopping him.>
+	CMsg36_5 <ifG NPCRep E2 5 0  Accept> %Cheerful
+	Msg36_6 <Be careful of the smuggler's bodyguards... Disable his mecha before he can escape, but don't get killed yourself.>
+	CMsg36_6 <ifG 0 NPCRep E2 5  Accept> %Melancholy
+	Msg36_7 <Aim straight for the smuggler... his bodyguards don't have to be stopped. Outmaneuver them and you'll definitely win.>
+	CMsg36_7 <ifG NPCRep E2 7 0  Accept> %Pragmatic
+	Msg36_8 <May the heavens guide your aim... good luck.>
+	CMsg36_8 <ifG 0 NPCRep E2 7  Accept> %Spiritual
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission yet?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's a shame. I'll have to find someone else.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Okay. Hurry back once your equipment is in shape and we can start the mission then.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <I don't need any help with this assignment.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Huh, are you taking drugs yourself?>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Winners don't use drugs.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a drug interception mission.>
+
+	% 01 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt1_1 <All ready to go.>
+
+	% 03 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt3_1 <I need some time to get ready.>
+
+	% 05 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt5_1 <How many mecha do they have?>
+
+	% 07 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <Absolutely.>
+	Prompt7_1 <Tell me more.>
+
+	% 09 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Definitely not.>
+	Prompt9_1 <I can't help you.>
+
+	% 11 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <Got any missions for an ace pilot?>
+	Prompt11_1 <I'd show those drug dealers a thing or two...>
+
+	% 14 : Player tries to get job using PLAN "B".
+	%   By default, PLAN "B" is to be friendly and personable.
+	Prompt14 <I'm looking for work, if you have any.>
+	Prompt14_1 <Are you looking for a pilot?>
+
+	% 17 : Player doesn't much care for the job.
+	Prompt17 <That doesn't concern me.>
+	Prompt17_1 <Why should I care about that?>
+
+
+end
+

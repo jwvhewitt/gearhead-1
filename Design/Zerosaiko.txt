@@ -1,0 +1,133 @@
+Battroid 5
+Name <Zerosaiko>
+Desig <Z45-60>
+SDL_Sprite <btr_zerosaiko.png>
+desc <The Zerosaiko is known as the favorite mecha of professional duelists.>
+
+Mod Head
+	Size 4
+	Armor 5
+	sub
+		Sensor 5
+
+		TarComp 3
+	end
+	inv
+		HeadArmor 2
+		Mass -1
+		Fits <Battroid>
+	end
+
+Mod Body
+	Armor 5
+	sub
+		CPit
+		Armor 2
+
+		Gyro 4
+		Armor 1
+
+		STC LRL-24
+
+		ArcJet 3
+
+		Mount
+		Name <Right Collar Mount>
+		inv
+			STC LAS-5
+			Name <Point Cannon>
+			Type <INTERCEPT>
+			Speed 1
+		end
+
+		Mount
+		Name <Left Collar Mount>
+		inv
+			STC LAS-5
+			Name <Point Cannon>
+			Type <INTERCEPT>
+			Speed 1
+		end
+	end
+	inv
+		BodyArmor 4
+		Mass -2
+		Fits <Battroid>
+		sub
+			ArcJet 4
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 5
+	sub
+		Hand
+		inv
+			Gun 6
+			Name <Massdriver>
+			Range 5
+			Magazine 20
+			sub
+				Ammo 6
+			end
+		end
+
+		Mount
+		Name <Right Arm Mount>
+	end
+	inv
+		Shield 2
+		DefBonus -4
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 5
+	sub
+		Hand
+		inv
+			EMelee 9
+			Speed 3
+			Name <Beam Sword>
+		end
+
+		Mount
+		Name <Left Arm Mount>
+	end
+	inv
+		Shield 2
+		DefBonus -4
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 5
+	sub
+		ArcJet 5
+	end
+	inv
+		LegArmor 2
+		Fits <Battroid>
+		Mass -2
+		sub
+			ArcJet 2
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 5
+	sub
+		ArcJet 5
+	end
+	inv
+		LegArmor 2
+		Fits <Battroid>
+		Mass -2
+		sub
+			ArcJet 2
+		end
+	end
+end
+

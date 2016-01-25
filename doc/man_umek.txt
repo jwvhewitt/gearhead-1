@@ -1,0 +1,168 @@
+% UNDERSTANDING YOUR MECHA Doc Jan 6 2003
+************************************
+***  UNDERSTANDING  YOUR  MECHA  ***
+************************************
+ 
+ Maneuverability, abbreviated as MV on the display, indicates how
+ agile your mecha is. A high MV score will allow you to dodge attacks
+ in combat more easily.
+ 
+ Targeting, abbreviated as TR on the display, indicates how good your
+ onboard targeting systems are. A high TR score will allow you to hit
+ enemies more often in combat.
+  
+ Sensors, abbreviated as SE on the display, indicates how much
+ information about the outside world your mecha passes on to you. A
+ high score means that your mecha has a wonderful sensor package, with
+ resolution enhancers and target highlighters. A low score could mean
+ that you're forced to stare out a tiny window at the front of your
+ cockpit while listening for pings from your obsolete radar unit.
+ 
+ Mass is listed in either kg or tons, depending upon the scale of the
+ mecha being described. It doesn't have much direct effect upon the
+ game, but it does determine the base values for maneuverability,
+ targeting, and speed.
+ 
+ 
+**************************
+***  TYPES  OF  MECHA  ***
+**************************
+  
+ Mecha can be built according to one of several design types. There
+ are a few things that all mecha have in common. They are all
+ constructed from a series of modules. They all require a body
+ module, a cockpit, an engine, a gyroscope, and sensors.
+ 
+ Battroids are traditional giant robots. They usually have two arms,
+ two legs, and a head but can vary significantly from this plan. They
+ have good maneuverability and targeting scores. Battroids don't have
+ any special bonuses other than their versatility, but then again they
+ don't have any special weaknesses either.
+ 
+ Groundhuggers are low-lying wheeled or hover vehicles. Because of
+ their sloped design and compact propulsion, groundhuggers have a
+ better targeting score and better armor protection than battroids.
+ However, their maneuverability is worse. Possibly the greatest
+ advantage that groundhuggers have is their ability to use the
+ turret module; weapons mounted in a turret may be fired in a
+ 360-degree arc.
+ 
+ Zoanoids are mecha built in the form of animals. Often these mecha
+ are designed to resemble either big cats or dinosaurs. Because their
+ frame construction exactly mirrors that of a living creature, these
+ mecha have incredible strength and maneuverability. Unfortunately this
+ design also prevents zoanoid mecha from optimizing their weapon arrays,
+ so their targeting score suffers.
+ 
+ Arachnoids are walking tanks. They usually resemble spiders, though
+ they may have as few as two legs. Their legs provide a great
+ range of motion and they therefore have better maneuverability than
+ groundhuggers, while the stability of their form gives them a better
+ targeting score than battroids. Arachnoid mecha can make use of
+ turret modules.
+ 
+ 
+***********************
+***  MECHA  COMBAT  ***
+***********************
+ 
+ The best way to survive an attack is to not get hit. If you're a
+ mecha pilot, this means that you're going to have to practice
+ the Mecha Piloting skill. It is this skill which determines whether
+ or not any attack will hit your mecha. A good MV score, some cover,
+ and a long distance between yourself and the opponent will also
+ help you to avoid attacks.
+ 
+ Of course, not even the best pilot is going to dodge every shot.
+ Fortunately mecha have very thick armor. The first couple of shots in
+ any battle are likely to bounce off this protection without causing any
+ apparent damage. However, with each hit the armor gets a little bit
+ weaker. Eventually the armor will give way and the mecha will collapse
+ like a house of cards.
+ 
+ Weapons like machine guns and swarm missiles are good for weakening
+ armor, since they can hit the target several times with each attack.
+ High damage non-repeating weapons like gauss rifles and beam swords
+ are more likely to penetrate armor on the first hit, but don't tend
+ to weaken the armor as well as a low damage weapon with a high burst
+ value. Most mecha have at least one weapon of each type, allowing them
+ to choose an attack suited to their opponent's skill level and armor
+ rating.
+ 
+ The ultimate weapon would have both a high burst value and
+ high damage, but it would likely be both prohibitively expensive to
+ manufacture and too heavy to mount on anything short of a Monstrous.
+  
+  
+****************************
+***  ATTACK  ATTRIBUTES  ***
+****************************
+ 
+ANTI-AIR
+    Flying targets are harder to hit. Anti-Air weapons ignore this
+    penalty.
+ 
+ARMORPIERCING
+    Armor-Piercing weapons are good at penetrating armor. Your target
+    gets only half armor protection from attacks of this type.
+ 
+BLAST <X>
+    Blast weapons affect everything in a radius from their detonation
+    point.
+ 
+BRUTAL
+    Brutal weapons cause a lot of messy, obvious damage. They eat
+    through armor at twice the normal rate.
+ 
+DRONE
+    Drone weapons release a number of small robotic airplanes which will
+    then attack your enemies.
+ 
+EXTEND
+    Extended melee weapons may be used to attack at a target up to two
+    squares distant, as opposed to regular melee weapons which are limited
+    to a range of one.
+  
+FLAIL
+    Flails are flexible weapons. They may not be easily blocked or parried.
+ 
+GAS
+    Gas weapons do no damage, but release a toxic gas which can quickly
+    kill living beings.
+ 
+HYPER
+    Hyper weapons are particularly devastating. They deal damage to every
+    component piece of a target simultaneously.
+  
+INTERCEPT
+    A weapon with the Intercept attack attribute may be used to shoot
+    down incoming missiles.
+ 
+LINE
+    A line attack affects every target in a straight line.
+ 
+OVERLOAD
+    These weapons cause electrical interference to an enemy mecha's
+    powerplant.
+ 
+SCATTER
+    Instead of dealing a single powerful hit, scatter weapons divide
+    their damage into multiple smaller attacks, thereby spreading out
+    over more of the target.
+ 
+SMOKE
+    Smoke weapons cause no damage, but may be used to provide cover.
+ 
+SWARM
+    Swarm weapons spread out to attack multiple targets simultaneously.
+ 
+THROWN
+    Throwable melee weapons may be thrown. The range depends on your
+    character's BODY stat.
+ 
+THROWN, RETURNING
+    Some throwing weapons will return to the user after they've been
+    thrown. Things like boomerangs and rocket-powered tridents fall in
+    this category.
+ 
+ 

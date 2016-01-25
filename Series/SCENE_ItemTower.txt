@@ -1,0 +1,71 @@
+SCene 0
+% Item Tower Scene
+
+% This is an infinite dungeon. Once the specified level is reached,
+% the item will be inserted. If V1=0, no item will be inserted, and
+% this will just be a big featureless dungeon.
+
+% V1 = *Item to insert
+% V2 = *Challenge rating at which to insert
+% V3 = *Current Floor
+% V4 = *Current Challenge-Depth
+% V5 =  Initialization Counter
+
+	special <NoExit>
+	NU1 <if= T1 0 Return>
+	MonkeyMap
+	BorderType 23
+	FloorType 16
+
+	start <Print 1 if= V5 0 V= 5 1 MonsterUp 2 WMThreat V4 if# V1 0 Compose Get L1 .getitem>
+	Msg1 <You are on floor \val v3 .>
+	.getitem <L= 1 0>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Ruins Air Mutant City>
+
+	Team 3
+	home <Down SPot>
+
+	rect
+	width 3
+	height 3
+	sub
+		StairsDown
+		Destination -1
+		use <Print 1 Return>
+	end
+
+	rect
+	width 3
+	height 3
+	name <Down SPot>
+	sub
+		StairsUp
+		Destination 1
+		use <Print 1 L+ 3 1 L+ 4 15 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 PassVar 4 L4 SeekGate -1 if# L1 0 ifG L4 L2 DynaItemTeam L1 3>
+		.sitename <SCENE_ItemTower.txt>
+		update <if# L1 0 ifG L4 L2 ifG L3 1  SetStat STAT_MetaVisibility -1>
+	end
+
+	rect
+	FloorType 16
+	name <Computer Spot>
+end
+inv
+	STC COMPUTER-1
+	home <Computer Spot>
+	update <if= V1 0 V= 1 1 ifG d12 L3 GrabSource DeleteGG>
+	Clue32 <if= V2 0 else GoDone V= 2 1 Mental ifG SkRoll 32 * L3 2 else GoFail Print 1 MagicMap>
+	GoFail <Print 2>
+	GoDone <Print 3>
+	Msg1 <You hack into this computer and find a map of this floor's layout.>
+	Msg2 <You attempt to hack into this computer, but don't find anything of interest.>
+	Msg3 <You've already used this computer.>
+
+end

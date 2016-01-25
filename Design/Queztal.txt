@@ -1,0 +1,91 @@
+HoverFighter 5
+Name <Queztal>
+Desig <TN89z>
+SDL_Sprite <aer_queztal.png>
+
+Mod Turret
+	Name <Upper Turret>
+	Size 6
+	Armor 5
+	Mass -4
+	sub
+		STC SWML-60
+	end
+
+Mod Turret
+	Name <Lower Turret>
+	Size 2
+	Armor 5
+	Mass -3
+	sub
+		BeamGun 4
+		Name <Gatling Laser>
+		Range 8
+		BV 3
+		Speed 4
+		Acc 1
+
+		Mount
+		Name <Turret Weapon Mount>
+		inv
+			STC HWML-4
+		end
+	end
+	inv
+		TurretArmor 4
+		Mass -6
+	end
+
+Mod Body
+	Armor 5
+	Mass -4
+	sub
+		CPit
+
+		Sensor 7
+
+		TarComp 1
+
+		Gyro 2
+
+		ArcJet 9
+	end
+	inv
+		BodyArmor 4
+		Mass -6
+		Fits <Hoverfighter>
+		sub
+			ArcJet 4
+		end
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Size 4
+	Armor 4
+	Mass -2
+	sub
+		ArcJet 3
+
+		Mount
+		Name <Right Wing Mount>
+		inv
+			STC HRP-6
+		end
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Size 4
+	Armor 4
+	Mass -2
+	sub
+		ArcJet 3
+
+		Mount
+		Name <Left Wing Mount>
+		inv
+			STC HRP-6
+		end
+	end
+end

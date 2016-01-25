@@ -1,0 +1,93 @@
+Plot 0
+	name <Talent Scout>
+
+	% The agent will pick a town for talent scouting, and the PC
+	% might be able to get a record contract if he performs there.
+
+	% E1 is the town where the talent search will take place
+	Element1 <Scene Town>
+	% E2 is the talent agent
+	Element2 <Grab 2>
+
+	% V1 = Timer
+	% V2 = Applause Counter
+
+	% On a CLEANUP request, just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% Every half hour, check the time limit...
+	HALFHOUR <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 News d20>
+	GoCheckTime <ifG ComTime V1 ifG P2 S103 else GoNoWin AdvancePlot 1>
+	GoNoWin <S= 101 0 AdvancePlot 0>
+
+	% Every time the PC earns applause, check what town we're in.
+	APPLAUSE <if= SceneID E1 V+ 2 1>
+
+	Msg1 <Music agent \ELEMENT 2 is holding a talent search in \ELEMENT 1 today.>
+	Msg2 <\ELEMENT 2 will be in \ELEMENT 1 searching for new musical talent today. Aspiring musicians are encouraged to attend.>
+	Msg3 <There's a music industry talent search in \ELEMENT 1 today. Many bands and performers are likely to attend.>
+	Msg4 <Music scout \ELEMENT 2 will be signing a new band from \ELEMENT 1 today.>
+	Msg5 <Musicians in \ELEMENT 1 are excited; famous talent scout \ElEMENT 2 is coming to town today.>
+
+	Msg6 <Busking festival in \ELEMENT 1 today. All kinds of performers and musicians to attend.>
+	Msg7 <Singing contest in \ELEMENT 1 today. Aspiring musicians are invited to attend.>
+	Msg8 <There's a music festival in \ELEMENT 1 today. Many different acts to perform.>
+	Msg9 <A street party has been announced in \ELEMENT 1 tonight. Several celebrities are expected to attend.>
+	Msg10 <Massive dance party scheduled in \ELEMENT 1 today. Aspiring DJs to face off for a chance at a recording contract.>
+
+	Msg11 <New music style. \ELEMENT 1 has become the hot new center for rising pop stars.>
+	Msg12 <Can \ELEMENT 1 be cool? The kids think so. New pop stars signed from area.>
+	Msg13 <Will \ELEMENT 1 synthpop be the next big craze? New artists change cultural landscape of city.>
+	Msg14 <It's a return to \ELEMENT 1 style. Local music scene is happening.>
+	Msg15 <Revival for the \ELEMENT 1 sound. New singers emerging from the town.>
+
+	Msg16 <\ELEMENT 1 lovepunk is the new sound of the Federated Territories. New artists top the music charts.>
+	Msg17 <The new hot pop is \ELEMENT 1 classical grunge. Local pop acts rocket to superstardom.>
+	Msg18 <The new buzz in the music world is about the \ELEMENT 1 indie scene. Several acts expected to be signed to major labels.>
+	Msg19 <Bootleg pop from \ELEMENT 1 a hit with college school students. Guardians make effort to stop illegal file sharing.>
+	Msg20 <Got groove? \ELEMENT 1 country funk is what the kids are listening to.>
+
+sub
+
+PLOT 1
+	% The PC may be offered a contract...
+
+	cleanup <AdvancePlot 0>
+
+	halfhour <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 36000 EMail d5>
+	GoCheckTime <ifG ComTime V1 S= 101 0 AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// \PC , I heard you playing in \ELEMENT 1 . Come see me.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// I've got an offer for you if you come immediately.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// A good musician needs good representation. Come see me about it.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// I heard you in \ELEMENT 1 . You've got talent, but need some guidance to become a star.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// I've got a business offer for you. Meet me here pronto.>
+
+sub
+	Persona 2
+	rumor <!2 has been waiting for you.>
+	greeting <NewChat Say d3 AddChat 1 AddChat 2>
+	result1 <NewChat V= 1 PCRep 6 V+ 1 React ifG V1 50 else GoR1NotReady Say 4 AddChat 3 AddChat 4>
+	GoR1NotReady <Say 6 S= 101 0 AdvancePlot 0>
+	result2 <NewChat Reputation 6 1 Reputation 3 -d10 Say 8 S= 101 0 AdvancePlot 0>
+	result3 <NewChat Say 7 S= 101 0 S+ 102 1 CashPrize 150000 XPV 500 Reputation 6 d5 History 5 AdvancePlot 0>
+	result4 <NewChat Say 9 Reputation 4 d8 S= 101 0 AdvancePlot 0>
+	Msg1 <Good to see you. I heard your singing... You've got a lot of talent, that's for sure. But if you want to become a superstar you're gonna need guidance, you're gonna need training, and you're gonna need a major label contract.>
+	Msg2 <Ah, \PC . You've got a great voice, you know that? I think that you could someday be a number one artist... But to get there, you're gonna need some help. You're also going to need a recording contract.>
+	Msg3 <Your show in \ELEMENT 1 was amazing. I think you could go professional... Of course, in order to do that you're going to need an agent and a recording contract. Fame and fortune are within your grasp.>
+	Msg4 <As a matter of fact, I can. I want to release an album of your songs. You'll need to sign a recording contract, of course, and do some promotional shows later on... I'll pay $150,000 for your first album. Are you ready?>
+	Msg5 <You were signed to a recording contract by \ELEMENT 2 .>
+	Msg6 <Not yet. I don't think you're ready for that kind of fame yet... Take some time to work on your act, and maybe then you'll convince me.>
+	Msg7 <Great! Your album will be in the stores by Monday. The next challenge will be making it to the top of the pop charts, but with your kind of talent I'm sure that'll be no problem.>
+	Msg8 <Really? That aloof attitude you're working on is kind of cool... Keep practicing your songs and I might offer you a recording contract someday.>
+	Msg9 <They say that opportunity only knocks once. If you keep working on your music I might be inclined to make this offer again, but like anything else in life there's no guarantee.>
+	Prompt1 <Can you help me become a star?>
+	Prompt2 <Sorry, I don't care about fame.>
+	Prompt3 <I'll do it!>
+	Prompt4 <Maybe some other time...>
+
+end
+
+
+
+end

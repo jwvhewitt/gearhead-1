@@ -1,0 +1,38 @@
+% Extra-Extra-Random test components.
+START1 <Your family died in a mysterious accident.>
+START1DESC <+Mfs+Bfd>
+START1TASK <+I##>
+COMP1 <[C] has been investigating your family. You are sent to speak with [E].>
+COMP1DESC <+Bfd+I##>
+COMP1RESULT <-G##-Tse+I--+H##>
+COMP2 <On the way to [loc], you are attacked by thugs!>
+COMP2DESC <-G##>
+COMP2RESULT <-G-->
+COMP3 <At [loc], you find police searching for [E].>
+COMP3DESC <+Bfd-Tse>
+COMP3RESULT <-Tle-G-->
+COMP4 <You speak with [E], who is suprised to see you, and then disappears.>
+COMP4DESC <-Tse>
+COMP4RESULT <-Tam-G-->
+COMP5 <When leaving [loc], you are attacked by [E]'s men!>
+COMP5DESC <-Tam>
+COMP5RESULT <-T--+E##>
+COMP6 <When returning to [C], you are attacked by [E]'s men!>
+COMP6DESC <-Tam+H##>
+COMP6RESULT <-T--+E##>
+COMP7 <You speak with [E], who warns that [C] killed your family! (swap [C] and [E] tokens)>
+COMP7DESC <-Tse>
+COMP7RESULT <-eof-Tam-G-->
+COMP8 <You find someone in a bar who says [E] is at [loc].>
+COMP8DESC <-Tle>
+COMP8RESULT <-Tfe>
+COMP9 <You fight [E] at [loc]. You discover [fac] paid to kill your family.>
+COMP9DESC <-Tfe+Bfd>
+COMP9RESULT <-T-->
+COMP10 <You find [E]'s henchman, fight him, discover [E] went to [loc].>
+COMP10DESC <-Tle>
+COMP10RESULT <-T-->
+COMP11 <[loc] is the site of your >
+COMP11DESC <+Mfs+I##>
+COMP11RESULT <-G##-Tse+I-->
+

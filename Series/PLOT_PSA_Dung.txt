@@ -1,0 +1,63 @@
+PLOT 0
+	% PSA - Public Service Announcement. Back in Canada we
+	% have loads of them. Here in Korea we don't have nearly
+	% enough. For GearHead, it's kind of a way to explain
+	% things to the player, while knowing that they won't
+	% bother to read all the docs.
+	name <PLOT: Dungeon PSA>
+	element1 <Character HasMecha Heroic>
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+sub
+
+	Persona 1
+	greeting <NewChat AdvancePlot 0 ifG PCRep 6 25 else GoNoRenown Say 1 AddChat 1 AddChat 2>
+	GoNoRenown <ifG React 0 else GoNoLike Say 2 AddChat 3 AddCHat 4 AddChat 5>
+	GoNoLike <SayAnything>
+
+	result1 <NewChat Say 3 AddChat 8>
+	result2 <NewChat Say 4 AddChat 5 AddChat 6 AddChat 7>
+	result3 <NewChat Say 5 AddChat 9 AddChat 10>
+	result4 <NewChat Say 6 AddChat 5 AddChat 11>
+	result5 <NewChat Say 7 AddChat 7 AddChat 11 AddChat 12>
+	result6 <NewChat Say 8 AddChat 7 AddChat 11 AddChat 12>
+	result7 <NewChat Say 9 AddChat 11 AddChat 12>
+	result8 <NewChat Say 10>
+	result9 <NewChat Say 11>
+	result10 <NewChat Say 12 AddChat 7 AddChat 11 AddChat 12>
+	result11 <NewChat Say 13 AddChat 12>
+	result12 <NewChat Say 14>
+
+	Msg1 <I suppose that a seasoned adventurer such as yourself has had plenty of experience in the dungeons.>
+	Msg2 <Have you visited the dungeons yet? They're very dangerous.>
+	Msg3 <There's no end to the monsters in a dungeon. Some scientists were trying to find out where all the monsters come from, but they all met untimely (and grisly) deaths...>
+	Msg4 <Dungeons are very dangerous places. You'd be best advised to take precautions before entering one.>
+	Msg5 <Oh, you have? Well, I guess you already know everything I was going to tell you...>
+	Msg6 <Originally the word "dungeon" meant an underground chamber, but in modern times it's come to mean a dangerous location infested with monsters.>
+	Msg7 <Primarily because of all the monsters that live there. Secondarily because in a dungeon, there's no safe place to rest.>
+	Msg8 <Bring plenty of ammunition, good armor, weapons, and a GPS locator so your family can locate your remains if you get slaughtered by the monsters.>
+	Msg9 <Sometimes there's lost treasure in a dungeon. Some criminals use them as hideouts. Also, many adventurers say that fighting monsters is the best way to gain fighting practice.>
+	Msg10 <For every one Steve Irwin there's about a dozen Marlon Perkinses who have to lose their lives tragically, it seems.>
+	Msg11 <Good luck, and safe journeys!>
+	Msg12 <Not much. I was just going to tell you about how dangerous dungeons are, how they're full of monsters, and how they can steadily peck even an experienced warrior to death.>
+	Msg13 <All kinds. Radioactive mutants, genetic experiments gone wrong, alien exo-fauna. You name it, and you can probably find it in a dungeon.>
+	Msg14 <Nobody knows. Certainly, these creatures breed quickly. They often live in small crevices which are impassable to human beings. Also, they can smell fresh food from a long distance away... That'd be adventurers, quite often.>
+
+	Prompt1 <Yes I have.>
+	Prompt2 <No, not really.>
+	Prompt3 <I've seen them.>
+	Prompt4 <What's a dungeon?>
+	Prompt5 <Why are they so dangerous?>
+	Prompt6 <What kind of precautions?>
+	Prompt7 <Why would I even want to enter one?>
+	Prompt8 <I'm not suprised.>
+	Prompt9 <Probably.>
+	Prompt10 <What were you going to say?>
+	Prompt11 <What kind of monsters?>
+	Prompt12 <Where do all the monsters come from?>
+
+end
+

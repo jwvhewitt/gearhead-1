@@ -1,0 +1,153 @@
+Story
+	name <STORY: Family Died Mysteriously>
+
+	% V1 = Initialization Counter
+	% S101 = Load new episode when S101 = 1
+	% S102 = # PC Wins
+	% S103 = Difficulcy Level, load ending when S103>75
+	% S104 = # Wins when level last increased
+	% S105 = Location Clue
+
+	% The first START, force a conversation with Hyolee.
+	Start <if= V1 0 else GoCheckClue V= 1 1  MoreText .intro  S= 103 7  Print 1 ForceChat 1 History 2 History 3 Goto GoSetOps>
+	GoSetOps <N= 2 0  NPCLevel N1 S103>
+	.intro <TS_TEXT_Entry_Family.txt>
+	Msg1 <Hyolee strikes up a conversation with you.>
+	Msg2 <You have lived in Hogye all your life.>
+	Msg3 <Your parents died under mysterious circumstances.>
+
+	GoCheckClue <ifG S105 0 else GoNoClue Memo 5 S= 105 0>
+	GoNoClue <ifG 0 S105 Memo 0 S= 105 0>
+	Msg5 <Your personal quest has so far led to \NARRATIVE 3 .>
+
+
+	Element1 <Prefab>
+	Element2 <Faction GoodEnemy>
+	Element3 <Scene>
+	Stat 3 10
+
+	XREnemy 0
+	XRMystery 2
+	XRBadThing 2
+
+	hour <if= S101 1 else GoCheckHint ifG S103 75 else GoLoadEpisode XRanPlot .xend S= 101 0 S+ 103 d10>
+	GoLoadEpisode <XRanPlot .xplot S= 101 0 ifG S102 S104 S+ 103 10 S+ 103 d10 S= 104 S102 NPCLevel N1 S103 ifFaction N2 PCFEnemy N2>
+	GoCheckHint <if= d30 1 ifG 76 S103 StoryLine .xhint>
+	.xplot <TS_XRAN_a###_*.txt>
+	.xend <TS_XRAN_b###_*.txt>
+	.xhint <TS_XRAN_Hint_*.txt>
+
+inv
+	NPC Mecha Pilot
+	mecha <Vadel.txt>
+	EquipChar 50000
+
+	Plot 0
+	% Note that I am hotloading this plot- DO NOT
+	% DO THIS YOURSELF!!! I can get away with it because
+	% I'm the programmer. Note that because this plot is
+	% getting sneaked into the adventure riding under a
+	% story gear, it will not be initialized by the
+	% MATCH_PLOT_TO_ADVENTURE procedure. In this case
+	% it shouldn't matter because the story is loaded at
+	% the game's setup, and all the elements are starting
+	% initialized. However, in general, I think this is
+	% very bad form...
+	name <PLOT: Temporary Personas>
+
+	start <ifPersona E2 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% Element 1 is Hyolee.
+	Element1 <Character>
+	Stat 1 1
+
+	% Element 2 is Megi.
+	Element2 <Character>
+	Stat 2 17
+	sub
+		Persona 1
+		% Hyolee will greet the PC and tell him to go
+		% speak with Megi.
+		greeting <NewChat if= V1 0 else GoBeenBefore AddReact d30 V= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+		result1 <NewChat Reputation 4 d8 Say 2 AddChat 4 AddChat 5>
+		result2 <NewChat Reputation 5 -d10 Say 3 AddChat 4 AddChat 5>
+		result3 <NewChat Reputation 3 d10 Say 4 AddChat 4 AddChat 5>
+		result4 <NewChat Say 5>
+		result5 <NewChat Say 6>
+		Msg1 <Hi \PC . I heard that you were planning to leave here soon.>
+		Msg2 <Yeah, there isn't much here, unless you want to grow potatoes for the rest of your life... Oh, I heard that Megi wanted to see you before you leave. She probably has some advice or something. You know her...>
+		Msg3 <I understand. If I were you I'd want to get as far away from this place as I could... Before you go, though, Megi wanted to speak with you. She's been very concerned about you since the accident.>
+		Msg4 <Sounds like fun, but I really can't. This is the best place for my research... no distractions. By the way, Megi said that she wants to see you before you leave. Maybe she wants to go with you herself? That's a scary thought...>
+		Msg5 <Good luck. We'll miss you here.>
+		Msg6 <In the same place you usually can, in her house, that white one over there with the red carpet... Hm, I hope that when you go exploring the world, you don't get lost. Your direction sense never was that good...>
+		Prompt1 <I want to see the world.>
+		Prompt2 <There's nothing much left for me in Hogye.>
+		Prompt3 <Why don't you come with me?>
+		Prompt4 <I'll go see her, then.>
+		Prompt5 <Where can I find her?>
+		GoBeenBefore <Say 101 AddChat 101 AddCHat 102>
+		result101 <NewChat Say 102>
+		result102 <NewChat Say 103>
+		Msg101 <Hi. Have you spoken with Megi yet? She wanted to see you before you head out.>
+		Msg102 <It's the white house with the red carpet. There's only one like it in town. Come to think of it, there aren't that many houses in Hogye, anyhow... You should be able to find it by trial and error if you had to.>
+		Msg103 <Good luck, with whatever the future holds...>
+		Prompt101 <Where is Megi's house, again?>
+		Prompt102 <I'm on my way.>
+
+
+
+		Persona 2
+		% Megi will speak with the PC and then allow
+		% conversation branches to load the various job
+		% plots, or the tutorial plot.
+		greeting <NewChat if= V1 1 else GoFirstTime Say 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+
+		result1 <NewChat Say 2 S= 101 1 StoryLine .Tutorial AdvancePlot 0>
+		result2 <NewChat Say 3 S= 101 1 StoryLine .JobStory AdvancePlot 0>
+		result3 <NewChat Say 4 S= 101 1 History 6 AdvancePlot 0>
+		result4 <NewChat Say 5 S= 101 1 Reputation 2 -10 AddReact -30 StoryLine .CrimeStory AdvancePlot 0>
+
+		.JobStory <ARC_TS_JobStory.txt>
+		.CrimeStory <ARC_TS_CrimeStory.txt>
+		.Tutorial <TS_PLOT_Tutorial.txt>
+
+		Msg1 <So, \PC , is there anything I can do for you before you leave here?>
+		Msg2 <You'll want to speak with Quentin in the general store about that.>
+		Msg3 <I think that Doctor Kim needs some help over at the clinic... You can ask about a job there.>
+		Msg4 <As you wish. Remember, this will always be your home.>
+		Msg5 <When you leave this town, please don't go ruining our good name across the Federated Territories. If anyone asks, tell them you're from Ipshil...>
+		Msg6 <You did not request any help from Megi.>
+
+		Prompt1 <Better give me the tutorial.>
+		Prompt2 <I could use a first job.>
+		Prompt3 <Thanks, but I don't need any help.>
+		Prompt4 <Thought I'd rob a bank or something.>
+
+		GoFirstTime <V= 1 1 Say 101 AddChat 101 AddChat 102>
+
+		result101 <NewChat Say 102 Reputation 4 -d10 Reputation 1 d3 AddChat 103 AddChat 104 AddChat 105 AddChat 106>
+		result102 <NewChat Say 103 Reputation 4 d10 Reputation 5 d10 AddChat 103 AddChat 104 AddChat 105 AddChat 106>
+		result103 <NewChat Say 104 Reputation 2 d6 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+		result104 <NewChat Say 105 Reputation 6 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+		result105 <NewChat Say 106 Reputation 4 d8 Reputation 7 d6 AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+		result106 <NewChat Say 107  AddChat 1 AddChat 2 AddChat 3 AddChat 4>
+
+		Msg101 <I've heard that you will be leaving us soon, \PC . I wanted to wish you good luck on your travels, and see if there's anything I can do for you before you leave.>
+		Msg102 <If it is true that they were murdered, I would hate for you to become the killer's next victim. Please be careful. Aside from that, have you given any thought to what kind of job you will be looking for?>
+		Msg103 <There isn't much here in Hogye to keep young people in the community. It's a shame, but there isn't much that can be done about it so long as there's no work in the area. What do you expect to do?>
+		Msg104 <That would be a good job to take, if you can pass their strict entrance requirements. Before you go, is there anything that I can help you with?>
+		Msg105 <That's a dangerous and in my opinion foolish job to take... but, if that is your desire, nothing I say will stop you. Before leaving town, is there any last thing I can do to help prepare you for your journey?>
+		Msg106 <A corporate job does offer steady employment, but I'm not so sure we can trust those big companies... RegEx Corp is okay, though. Before you go, is there anything that you need?>
+		Msg107 <You'll find all kinds of employment opportunities as you travel. Before you begin your jouney, though, is there anything I can do to help prepare you for what lies ahead?>
+
+		Prompt101 <I will find my parent's killers.>
+		Prompt102 <I'm off to find my place in the world.>
+		Prompt103 <I'll join the guardians.>
+		Prompt104 <I'd like to be a mecha pilot.>
+		Prompt105 <I want a nice, boring corporate job.>
+		Prompt106 <No idea, yet...>
+
+	end
+
+end

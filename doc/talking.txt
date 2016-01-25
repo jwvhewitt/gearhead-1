@@ -1,0 +1,33 @@
+**********************
+***  CONVERSATION  ***
+**********************
+
+The towns and cities of the GearHead RPG campaign are full of
+characters for your PC to talk with.
+
+*******************************
+***  CONVERSATION  DISPLAY  ***
+*******************************
+
+The first bar in the conversation display, indicated by a smiley
+face, represents how much the NPC likes your character. If the bar
+is green, it means that you are getting along well together. If it's
+yellow, that means the NPC has no opinion about your character one
+way or the other. If the bar is red, that means the NPC doesn't like
+your character, and may even be hostile.
+
+The second bar in the conversation display, indicated by "Zz",
+represents the NPC's patience.
+
+*******************************
+***  CONVERSATION  OPTIONS  ***
+*******************************
+
+Chatting can do a number of useful things for your character. First,
+it's the best way to improve your reaction score with the NPC. There
+are numerous benefits to being well-liked. Shopkeepers will lower
+their prices for you, certain characters may offer you jobs, and you're
+more likely to hear useful information while chatting.
+
+Second, chatting may provide you with some useful rumors.
+

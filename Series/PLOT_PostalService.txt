@@ -1,0 +1,122 @@
+Plot 0
+	name <PLOT: Postal Service>
+
+	% V1 = Time Limit
+
+	element1 <Character Citizen Young Cheerful Sociable>
+	element2 <Character Young Easygoing !Far 1>
+
+
+	% Time limit - this plot will fade after a short time.
+	START <ifPersona E1 else GoDelete ifPersona E2 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10000>
+	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	% V1 = Reputation points earned
+	greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 ifG React 75 else GoMedReact>
+	GoBeenBefore <SayAnything AdvancePlot 0>
+	GoMedReact <ifG React 55 else GoLowReact Say >
+	GoLowReact <ifG React 10 else GoNoReact Say 2 AddChat 1 AddChat 2 AddChat 3>
+	GoNoReact <AdvancePlot 0 Say 1>
+
+	Result1 <NewChat AddReact d10  Say 3  AddChat 4  AddChat 5  Reputation 5 1>
+	Result2 <NewChat Say 4  AddChat 6  AddChat 7  Reputation 3 1>
+	Result3 <NewChat AddReact -2  Say 5  AddChat 8  AddChat 9  Reputation 3 -1>
+	Result4 <NewChat AddReact d10  Reputation 3 1  Say 6  AddChat 8>
+	Result5 <NewChat Say 7 AddChat 6 AddChat 7>
+	Result6 <NewChat Say 8  AddChat 10 AddChat 11 AddChat 12>
+	Result7 <NewChat Say 9  AdvancePlot 0>
+	result8 <NewChat Say 10  AddChat 10 AddChat 11 AddChat 12>
+	result9 <NewChat Say 11  AdvancePlot 0  Reputation 5 -1>
+	result10 <NewChat Say 12  AddChat 11  AddChat 13>
+	result11 <NewChat  AdvancePlot 1  Say 13  AddReact d5>
+	result12 <NewChat  Say 14  Reputation 5 -1  AddChat 11 AddChat 13>
+	result13 <NewChat  Say 15  AdvancePlot 0>
+
+	Msg1 <Email is so convenient. I can keep up with my friends in \SCENE EScene 2 without needing to wait for postal delivery.>
+	Msg2 <Do you use email? I just love writing letters to my friends all over the world.>
+	Msg3 <Yes I do! My favorite is the little winking smilie face... You know! One of my chat buddies emailed me a big list of hypercons once. It was so cute. I could foreword it to you, if you'd like.>
+	Msg4 <I guess you get to do a lot of traveling, but most of us aren't so lucky. Say, do you know where \SCENE EScene 2 is?>
+	Msg5 <Ah. Well, for those of us who like to use it, it's a wonderful tool. Most of the time, that is...>
+	Msg6 <That's so great! I check and reply to my email every day. I wish everyone were so thoughtful...>
+	Msg7 <Sort of. Tell me, do you know where \SCENE EScene 2 is?>
+	Msg8 <My friend \PERSONA E2 who lives in \SCENE EScene 2 is always late replying to email. I could really use for someone to go remind \PERSONA E2 to check my letter.>
+	Msg9 <That's too bad... My friend \PERSONA E2 lives there. I hear that it's very nice.>
+	Msg10 <Kind of. My friend \PERSONA E2 who lives in \SCENE EScene 2 is really bad at replying to email. I need someone to go remind \PERSONA E2 to check their mail.>
+	Msg11 <Then don't blame me when kids start calling you "Gramps".>
+	Msg12 <I don't know... I just thought that maybe, if you were in \SCENE EScene 2 some time, you could just do this on your way through. Can you do this for me?>
+	Msg13 <Thank you very much! Remember, tell \PERSONA E2 in \SCENE EScene 2 to check email. I appreciate this very much!>
+	Msg14 <I honestly don't think so... \PERSONA E2 is just really really bad at replying to email. Will you deliver the message for me?>
+	Msg15 <Oh, that's too bad.>
+
+	Prompt1 <Me too! Do you like emoticons?>
+	Prompt2 <I prefer meeting friends in person.>
+	Prompt3 <No, I don't.>
+	Prompt4 <I'd like that!>
+	Prompt5 <Does this conversation have a point?>
+	Prompt6 <Yes... Why?>
+	Prompt7 <No I don't.>
+	Prompt8 <Do you have a problem with your email?>
+	Prompt9 <I don't really care about it.>
+	Prompt10 <What's it worth to you?>
+	Prompt11 <I can do that.>
+	Prompt12 <Maybe \PERSONA E2 doesn't want to talk to you.>
+	Prompt13 <I don't want to.>
+
+
+	Plot 1
+		name <PLOT: Postal Service[1]>
+
+		% Mortality Check - If either of the elements have
+		% been removed, delete this plot.
+		START <ifPersona E1 else GoDelete ifPersona E2 else GoDelete>
+		GoDelete <AdvancePlot 0>
+	sub
+		Persona 1
+		greeting <NewChat Say 1>
+		Msg1 <\PERSONA E2 still hasn't answered my email. I wonder what's happening in \SCENE EScene 2 lately?>
+
+		Persona 2
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+
+		result1 <NewChat  AdvancePlot 2  Say 2  AddChat 3>
+		result2 <NewChat  AdvancePlot 2  Say 3  AddChat 3  Reputation 4 -1>
+		result3 <NewChat  Say 4  AddChat 4  AddChat 5  AddChat 6  AddChat 7>
+		result4 <NewChat  Say 5  AddReact d3>
+		result5 <NewChat  Say 6  Reputation 5 1>
+		result6 <NewChat  Say 7  Reputation 5 -1>
+		result7 <NewChat  Say 8  Reputation 4 1>
+
+		Msg1 <I get the feeling there's something I ought to do... Oh well. I guess it couldn't be all that important.>
+		Msg2 <Argh! I forgot that I had to reply to my email! \PERSONA E1 is probably really upset by now...>
+		Msg3 <Oh, that's right! I probably have some mail from \SCENE EScene 1 that's at least a month old!>
+		Msg4 <I know, I know, but I'm very busy during the day, keeping up with my job and my various hobbies... Is \PERSONA E1 mad at me?>
+		Msg5 <That's a relief. Well, I better write a reply, before I forget again.>
+		Msg6 <You know, I get asked that a lot. Maybe if I replied to email more often it wouldn't happen.>
+		Msg7 <Eek... Well, it's my own fault for not bothering to reply in such a long time...>
+		Msg8 <That's how I feel, but \PERSONA E1 takes email so seriously...>
+
+		Prompt1 <\PERSONA E1 sent me to %t!>
+		Prompt2 <\PERSONA E1 says to check your mail.>
+		Prompt3 <You should reply to email promptly.>
+		Prompt4 <No, just annoyed.>
+		Prompt5 <No, just wondering if you're dead.>
+		Prompt6 <Yes. You better apologize.>
+		Prompt7 <It's no big deal.>
+
+		Plot 2
+			% Time Limit
+			START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 72000>
+			GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+			GoDelete <AdvancePlot 0>
+		sub
+			Persona 1
+			greeting <NewChat  Say 1  AdvancePlot 0  AddReact d10  XPV 100>
+			Msg1 <Thank you very much for delivering my message!>
+		end
+
+	end
+
+end

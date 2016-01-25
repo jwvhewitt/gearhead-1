@@ -1,0 +1,14 @@
+Plot 0
+	% Sad Plot - Does almost nothing. Just kind of a test.
+	Element1 <Character Melancholy Shy>
+	rumor <!1 is sometimes overcome by sadness.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 2000>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <if= V1 0 else GoTestReaction V= 1 React SayAnything NewChat>
+	GoTestReaction <ifG React V1 else GoNotWell Say 1 NewChat XPV 25 AdvancePlot 0>
+	GoNotWell <SayAnything NewChat>
+	Msg1 <I haven't been in a very good mood today, but speaking with you makes me feel better.>
+end

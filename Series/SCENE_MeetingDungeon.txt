@@ -1,0 +1,60 @@
+SCene 0
+% Meeting Dungeon Scene
+
+% This is an infinite dungeon. Once the specified level is reached,
+% the PC requested will be inserted on TEAM 3 and will then try to
+% move towards the PC, triggering a conversation when they are close
+% enough.
+
+% V1 = *Persona to insert
+% V2 = *Depth at which to insert
+% V3 = *Current Depth
+% V4 = *Current Monster Rating
+% V5 =  Initialization Counter
+
+	special <NoExit>
+	NU1 <if= T1 0 Return>
+	CaveMap
+	BorderType 31
+
+	start <Print 1 if= V5 0 V= 5 1 MonsterUp 2 V4 ifNPCInPlay L1 NPCgoPC L1>
+	Msg1 <You are approximately \VAL V3 meters below the surface.>
+
+	TM3 <ifNPCinPlay L1 if= V5 1 ifG 6 Range PCUID NPCUID L1 V= 5 2 Print 2 ForceChat L1>
+	Msg2 <\PERSONA V1 strikes up a conversation with you.>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Cave Earth Animal Mutant>
+
+	Team 3
+	home <Down SPot>
+
+	rect
+	width 3
+	height 3
+	sub
+		StairsUp
+		Destination -1
+		use <Print 1 L+ 3 -5 L+ 4 -2 ifG 1 L3 else GoUpStairs Return>
+		GoUpStairs <LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 PassVar 4 L4 SeekGate 1>
+		.sitename <SCENE_MeetingDungeon.txt>
+	end
+
+	rect
+	width 3
+	height 3
+	name <Down SPot>
+	sub
+		StairsDown
+		Destination 1
+		use <Print 1 L+ 3 5 L+ 4 2 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 PassVar 4 L4 SeekGate -1 ifG L3 L2 DynaNPC L1 3>
+		.sitename <SCENE_MeetingDungeon.txt>
+		update <if# L1 0 ifNPCinPlay L1 SetStat STAT_MetaVisibility -1>
+	end
+
+end

@@ -1,0 +1,138 @@
+THE RULES OF GEARHEAD
+
+
+
+CONSTRUCTION RULES
+
+	v1.0 Mecha System
+
+	INVENTORY RULES
+	*Illegal inventory for master gears must be explicitly excluded
+	*Legal inventory for other types must be explicitly defined
+	Master gears may not equip:
+		MetaTerrain
+	MetaTerrain may not equip:
+		MetaTerrain
+	Mounting Points may equip:
+		weapons, move systems
+	Hands may equip:
+		weapons
+	Arms and Tails may equip:
+		armor, shields
+	Other Modules may equip:
+		armor
+	Weapons may equip (only if they themselves are invcom):
+		WeaponAddOn
+	A gear may only equip one item of any specific type
+
+	SUBCOMPONENT RULES
+	*Legal subcomponent types must be explicitly defined
+	No two siblings may share the same CyberSlot SAtt
+	At most one movement system of specific type per location
+	At most one support system of specific type per location
+	At most one Module/Body per location (i.e. a mek can only have one body)
+	At most one holder of specific type per location, except...
+	Module/Body may have up to two holders installed
+	At most one ammunition gear per location
+	Mecha may have as subcoms:
+		Modules, Modifiers (mecha type only)
+	Body Modules may have:
+		Cockpits, Weapons, MoveSys, Holders (Mount), Sensors, Support, Electronics
+	Arm Modules may have:
+		Cockpits, Weapons, MoveSys, Holders (Mount + Hand), Sensors, Electronics
+	Other Modules may have as subcoms:
+		Cockpits, Weapons, MoveSys, Holders (Mount), Sensors, Electronics
+	Characters may have as subcoms:
+		Modules, Modifiers (chara type only)
+	Cockpits may have as subcoms:
+		Characters
+	Physical Shields may have as subcoms:
+		Weapons
+	External Armor may have as subcoms:
+		Weapons, Movement Systems, Electronics
+	Weapon/Projectile may have as subcoms:
+		Ammo/Projectile
+	Weapon Add-Ons may have as subcoms:
+		Weapons
+	Weapon/Missile may have as subcoms:
+		Ammo/Missile
+	Props may have any gears as subcoms
+
+
+	If cockpit located in head, +1 bonus to MV and TR
+	Armor value of any component may not exceed Mecha Size
+	Mecha must have exactly one Body module
+	Size of Body module must equal size of Mecha
+	Modules may be no larger than Mecha Size + 1
+	Ammunition in a Weapon can't exceed the magazine rating
+	Modules size may be in the range from 1 to 10
+	Mecha size may be in the range from 1 to 10
+	Weapon size may be in the range from 1 to 25
+	Mecha must have exactly one cockpit
+	Any module may have at most one weapon mount
+	Any module may have at most one hand
+	Hands may only be mounted in Arm modules
+	Support Systems may only be mounted in Body
+	Only one support system of each type may be mounted
+	Engine size must be the same as mecha size
+	ExArmor may range in size from 0 to 10
+	Shields may range in size from 1 to 10
+	Props may range in size from 1 to 100
+
+	if total wing points >= mecha size, 25% bonus to flight
+	Storage modules get a +2 bonus to armor rating
+
+
+MOVEMENT SYSTEMS
+
+Legs:
+    Full movement rate is attained when S(Legs) + N(Legs) = S(Body) * 2
+    Movement is lost when the total number of functional legs drops to half
+
+EXPERIENCE RULES
+
+	+1 XP for avoiding attack
+	+1 XP for hitting target
+	+5 XP for destroying target master gear
+	+1 XP for destroying other gear
+	+1 XP per natural Measure Of Success
+
+ADVANCEMENT RULES
+
+	Skills may be improved up to rank 15
+	Attributes may be improved if sufficient skill ranks are met
+
+ADVENTURE STRUCTURE
+
+	Adventure Gear
+		Sub
+			Scene Gears
+				Sub
+					Map Features
+					Teams
+					Personas
+				Inv
+					NPCs
+					Items
+				End
+		Inv
+			Plot Gears
+				Sub
+					Meta-Personas
+					Plot Gears
+				Inv
+					NPCs to be placed during plot
+					Items to be placed during plot
+				end
+			Dynamic Scene Gears
+				{ Note that dynamic scenes may be defined }
+				{ exactly as regular scene gears, but they get }
+				{ deleted after the player exits them. }
+			Global NPCs
+				{ These NPCs can potentially appear in }
+				{ multiple scenes, as defined by their }
+				{ Locations SAtt. Also, if they are either }
+				{ allies or enemies of the PC, they can }
+				{ possibly appear in Dynamic encounters. }
+			Faction Gears
+		end

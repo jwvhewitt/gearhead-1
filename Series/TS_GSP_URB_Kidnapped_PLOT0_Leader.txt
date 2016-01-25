@@ -1,0 +1,74 @@
+Plot 0
+	name <The Leader's Bit>
+
+	element1 <Grab 1>
+	element2 <Character Leader !Near 1>
+
+	cleanup <AdvancePlot 0>
+
+	start <if= V1 0 N= 2 E2 V= 1 1>
+
+	% Every half hour, check whether or not to announce the story.
+	HalfHour <if= d10 1 if= S1 0 ifG RReact E2 d120 else GoCheckNews S= 1 1 EMail 102>
+	GoCheckNews <if= d20 1 S= 1 -1 News d5>
+
+	% News Announcements
+	Msg1 <\ELEMENT 2 , the mayor of \ELEMENT 1 , has offered a substantial reward for help in local kidnapping case.>
+	Msg2 <There's trouble in \ELEMENT 1 . The niece of town leader \ELEMENT 2 has disappeared. The guardians are searching for any leads.>
+	Msg3 <\NARRATIVE 3 , the niece of \ELEMENT 1 mayor \ELEMENT 2 , has been kidnapped.>
+	Msg4 <\ELEMENT 1 resident \NARRATIVE 3 has disappeared. She's the niece of town leader \ELEMENT 2 ; police expect to receive a ransom notice soon.>
+	Msg5 <The niece of civic leader \ELEMENT 2 has been kidnapped from her \ELEMENT 1 home.>
+	Msg102 <\ELEMENT 2 @ \NARRATIVE 1 :// I need your help immediately! Please see me in \SCENE N1 at once.>
+
+sub
+	Persona 2
+	greeting <NewChat N= 2 E2 ifG S201 0 else GoCheckLoss Say 3 CashPrize S2 XPV 250 Reputation 6 1 History 15 EndStory>
+	GoCheckLoss <ifG 0 S201 else GoCheckMission Say 2 EndStory>
+
+	% if S1 = 2, PC has accepted misison.
+	GoCheckMission <if= S1 2 else GoCheckEmail  Say 7>
+	% if S1 = 1, PC has been emailed about the case.
+	GoCheckEmail <if= S1 1 else GoCheckNews  Say 6  AddChat 1 AddChat 2 AddChat 3>
+	% if S1 = -1, the case has been reported by the media.
+	GoCheckNews <if= S1 -1 else GoNothing  Say 5  AddChat 1 AddChat 2 AddChat 3>
+
+	% The PC may be offered this mission, as long as he is somewhat
+	% well liked and not villainous.
+	GoNothing <ifG React d23 else GoAway ifG PCRep 1 -d10 else GoAway  Say 4  AddChat 1 AddChat 2 AddChat 3>
+	GoAway <Say 1>
+
+	result1 <NewChat S= 2 15000 Say 8  Goto GoStart>
+	result2 <NewChat S= 2 15000 Say 9 AddChat 4 AddChat 5>
+	result3 <NewChat Reputation 5 d6 S= 2 15000 Say 10 AddChat 5>
+	result4 <NewChat ifG dReward Threat PCRep 6 100 100 S2 else GoR4NoBetter S= 2 50000 Say 13 AddChat 5>
+	GoR4NoBetter <ifG React d100 else GoR4Nothing  Say 12 AddChat 5>
+	GoR4Nothing <Say 11 EndStory AddReact -d10>
+	result5 <NewChat Say 14 Goto GoStart>
+
+	GoStart <S= 101 1 S= 1 2>
+
+	Msg1 <Yes, what is it? I'm far too busy. I have an entire city to look after, you know.>
+	Msg2 <All has been lost...>
+	Msg3 <Thank you for rescuing \NARRATIVE 3 ! Here is a small reward for your heroic deeds.>
+	Msg4 <I need your help! My niece \NARRATIVE 3 has been kidnapped.>
+	Msg5 <I suppose that you've heard the news. My niece \NARRATIVE 3 has been kidnapped. Any help or information leading to her safe return would be greatly appreciated.>
+
+	Msg6 <Did you get my email!? My niece \NARRATIVE 3 has been kidnapped. Please find her for me!>
+	Msg7 <Please find \NARRATIVE 3 !>
+	Msg8 <Thank you very much! I'm afraid that there aren't many clues to help you. Return \NARRATIVE 3 to us safely and I'll give you a reward of $ \VAL S2 .>
+	Msg9 <I can offer a reward of \VAL S2 for her safe return. There aren't many clues to go on at the moment. Please help me!>
+	Msg10 <No, I can't trust that! The guardians won't get involved until she's been missing at least a week... \NARRATIVE 3 could be dead by then! Won't you help?>
+
+	Msg11 <In that case I will find someone else to help me.>
+	Msg12 <That's all I have to offer, I'm afraid. Please help me!>
+	Msg13 <Alright, I know that you are not used to working for so little money... I can offer you $ \VAL S2 . Will that be enough?>
+	Msg14 <That's good news! Please start looking for \PERSONA N3 right away.>
+	Msg15 <You rescued the niece of \NARRATIVE 1 mayor \NARRATIVE 2 .>
+
+	Prompt1 <I will help you.>
+	Prompt2 <How much is the reward?>
+	Prompt3 <I'm sure she'll turn up by herself.>
+	Prompt4 <That's not enough.>
+	Prompt5 <Okay, I'll do it.>
+
+end

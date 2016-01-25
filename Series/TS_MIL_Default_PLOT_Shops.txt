@@ -1,0 +1,29 @@
+Plot 0
+	name <Wartime Shortages>
+
+	% E1 is the scene under attack
+	element1 <Grab 3>
+	element2 <Character Shopkeeper !Near 1>
+
+	start <ifPersona E2 else CleanUp if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 15000>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	CleanUp <AdvancePlot 0>
+
+sub
+	Persona 2
+	greeting <NewChat Say d5 AddChat d3>
+	result1 <EndChat Say 6 Shop .nowares Say 7>
+	result2 <goto result1>
+	result3 <goto result1>
+	Msg1 <The shop is closed. Thanks to all those mecha from \NARRATIVE 2 outside I haven't been able to get any stock in.>
+	Msg2 <This battle with \NARRATIVE 2 had better end soon... Because of the fighting, I'm completely out of stock!>
+	Msg3 <The shop's closed. Because of the fighting outside I'm nearly all out of stock. Come back tomorrow and I might have something in.>
+	Msg4 <We're closed today. The trucks couldn't make it through because of the fighting, so I have nothing left to sell.>
+	Msg5 <Sorry, I don't have anything to sell today. It's all because of \NARRATIVE 2 ...>
+	Msg6 <I suppose so. I have some duct tape left in the back... that ought to be enough.>
+	Msg7 <Remember, come back tomorrow and buy lots of stuff!>
+	Prompt1 <Can I at least get my stuff repaired?>
+	Prompt2 <I need to get my things repaired.>
+	Prompt3 <Could I get my stuff repaired?>
+
+end

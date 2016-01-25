@@ -1,0 +1,39 @@
+Plot 0
+	name <PLOT: BioCorp Basement>
+
+	% Element 1 is the BioCorp scientist
+	Element1 <Character>
+	stat 1 2407
+
+	start <ifPersona E1 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	% V1 = Mission Counter
+	greeting <NewChat if= V1 1 else GoNoMission ifItemOK 4 else GoFinished Say 10>
+	GoFinished <Say 11 CashPrize 23000 XPV 250 FacXP+ 5 10 History 2 AdvancePlot 0>
+	GoNoMission <Say 1 AddChat 1 AddChat 2>
+	result1 <NewChat Say 4 Reputation 4 -d6 Reputation 2 1 Reputation 7 -d6 FacXP+ 5 -10 AdvancePlot 0>
+	result2 <NewChat Say 5 AddChat 3 AddChat 4 ifG SkRoll 29 7 AddChat 5>
+	result3 <NewChat Say 6 Memo 7 V= 1 1 UpdateProps>
+	result4 <NewChat Say 8 Memo 7 V= 1 1 UpdateProps>
+	result5 <NewChat Say 9 AddChat 3 AddChat 4>
+	Msg1 <You shouldn't go poking around here. You aren't authorized for this lab. However, since you are the type to go poking around... I have a job you may be interested in.>
+	Msg2 <You destroyed the spawning vat in the BioCorp lab basement.>
+	Msg4 <It's not very reasonable to refuse my offer before you've even heard the details.>
+	Msg5 <BioCorp industries has a delicate problem. Beneath this lab is an old production complex, currently infested with bioweapons. If their spawning vat were destroyed, they could no longer reproduce. I'll pay $23000 it you can destroy it.>
+	Msg6 <Yes. You can find the entrance to the complex in our storage cell. Be careful of the monsters... they are the most dangerous creatures technology can produce.>
+	Msg7 <\PERSONA 2407 in \SCENE SCeneID wants you to destroy the spawning vat in the basement of BioCorp Labs.>
+	Msg8 <It is.>
+	Msg9 <We were obliged to, it is true, but deactivating the Hunter-X series has proved to be more difficult than was expected. In this case we have opted for containment instead.>
+	Msg10 <Please put an end to these unwanted creatures once and for all.>
+	Msg11 <Thank you for destroying the spawning vat. Here's your reward. I think we may all sleep a little easier tonight.>
+	Prompt1 <I'm not interested in working for you.>
+	Prompt2 <Tell me about it.>
+	Prompt3 <I'll do it for you.>
+	Prompt4 <That sounds too dangerous.>
+	Prompt5 <Wasn't BioCorp ordered to destroy them?>
+
+
+end

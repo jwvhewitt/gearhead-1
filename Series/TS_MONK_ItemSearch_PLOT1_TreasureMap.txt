@@ -1,0 +1,135 @@
+Plot 0
+	name <Treasure Map>
+
+	% An item will be recovered. This item will lead to the next
+	% clue; the PC can discover the next clue himself by examining
+	% the item.
+
+	element1 <Grab 2>
+	element2 <Scene Town !Far 1>
+	element3 <PreFab>
+
+	% E4 is the persona to control this plot.
+	% As long as E3 can be picked up some time, or the code
+	% contained under ".getkey" below is otherwise executed
+	% at some time, what E4 does exactly doesn't matter.
+	Element4 <Character Bandit !Near 1>
+	Element5 <Prefab>
+
+	%  V1 = Initialization Counter
+	%  V2 = Clue number for this plot
+	%  V3 = Have picked up item
+	%  V4 = Have purchased or stolen the map
+
+	% At startup, initialize the item.
+	start <if= V1 0 else GoCheckClue V= 1 1 ItemVar= E3 1 E2 V= 2 S202 V+ 2 1 Compose GET E3 .getKey Compose KEY E3 .useKey Goto GoInitMap>
+	GoInitMap <ItemVar= E5 1 E1 ItemVar= E5 2 E3 ItemVar= E5 3 S2 Compose GET E5 .getmap>
+	GoCheckClue <ifG V2 S203 else GoDelete>
+	GoDelete <AdvancePlot 0 DeleteKeyItem E5>
+
+	% As soon as the item is gotten, this plot starts the clue
+	% countdown and loads the next relay. You might want to move
+	% this so that the countdown starts only if the item is given
+	% to E4 or some other condition...
+	.getkey <if= V1 1 S= 201 0 S+ 202 1 S= 205 ComTime S+ 205 13800 N= 2 E2 P= 3 1 V= 1 2>
+	% When the item is used, it reveals the next clue.
+	.usekey <ifG V2 S203 S= 203 V2 FacXP+ N1 1 AdvancePlot 0>
+	% If the map is gotten, set P4 to 1.
+	.getmap <P= 4 1>
+
+	% At cleanup just get rid of this plot.
+	cleanup <AdvancePlot 0 DeleteKeyItem E5>
+
+sub
+	Persona 4
+	rumor <!4 found a treasure map!>
+	%  V2 =  Message Randomizer
+	%  V4 =  Price asked for map
+	greeting <NewChat V= 4 Reward Threat S2 100 45 if= P4 1 else GoSellMap SayAnything>
+	GoSellMap <AddChat d2 V= 2 4 V+ 2 d2 AddChat V2 if= V1 0 else GoSecondTime V= 1 1 Say d3 if= V1 1 V= 2 2 V+ 2 d2 AddChat V2>
+	GoSecondTime <V= 2 3 V+ 2 d3 Say V2 if= V1 1 V= 2 2 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat ifG V4 PC$ else GoR1Buy Say 101 AddReact -d3>
+	GoR1Buy <P= 4 1 AddReact d5 Cash+ -V4 V= 2 9 V+ 2 d3 Say V2 GiveKeyItem E5>
+	result2 <Goto Result1>
+
+	result3 <NewChat V= 1 2 V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 4 V+ 2 d2 AddChat V2>
+	result4 <Goto Result3>
+
+	result5 <NewChat Say 102 AdvancePlot 0>
+	result6 <goto result5>
+
+	%  01 - 03 :  Bandit will offer the map for sale, first time.
+	Msg1 <You look like a pretty smart investor. I've come into the posession of a most valuable treasure map... if you were to buy it for $ \VAL V4 , you could find the treasure and earn many times that investment!>
+	Msg2 <Hey, have I got a deal for you... I got this treasure map off a martian pirate. He says it leads to some abandoned tomb loaded with valuable stuff. If you want, I could let you have it for $ \VAl V4 .>
+	Msg3 <How'd you like to strike it rich? I happen to posess a genuine treasure map leading to the Lost Tomb of Gates. It can be yours for the low price of $ \VAL V4 .>
+
+	%  04 - 06 :  Bandit will offer the map for sale, second time.
+	Msg4 <So, have you decided that you want to buy my map yet? It's still a bargain at only $ \VAL V4 .>
+	Msg5 <Good to see you back. I still have that map I told you about, and I'll still let you have it for the low price of only $ \VAL V4 .>
+	Msg6 <Hey \PC , have you made any more money yet? I'll let you have my treasure map for a mere $ \VAL V4 .>
+
+	%  07 - 09 :  Bandit will explain why he doesn't want map himself.
+	Msg7 <You see, I'm just getting over a bad case of strep throat, and I'm not in any condition to be doing any adventuring or heavy lifting. Other than that I'd be after the treasure myself.>
+	Msg8 <Are you crazy!? Abandoned tombs and dungeons are always loaded with monsters... You'd have to be crazy to go someplace like that! Er, I mean, unless you're a buff adventurer such as yourself...>
+	Msg9 <Claustrophobia. I'm afraid of small places. Especially when they're crawling with monsters... You'd have nothing to worry about, though. What are you waiting for?>
+
+	%  10 - 12 :  PC has purchased the map.
+	Msg10 <Here's your map. All purchases are final.>
+	Msg11 <Here you go. It's been a pleasure doing business with you.>
+	Msg12 <Alright, this is the map that's gonna make you rich. Good luck.>
+
+	%  101 :  PC can't afford the map.
+	Msg101 <You don't have enough money to buy it. Come back when you've got some more cash on you.>
+	%  102 :  PC doesn't want the map.
+	Msg102 <Well, if you don't want it, I'll find someone else who does. There's a sucker born every minute they say...>
+
+	%  01 - 02 :  Player will buy the map.
+	Prompt1 <I'll buy it!>
+	Prompt2 <I'll take it!>
+
+	%  03 - 04 :  Player will ask what's wrong with the map.
+	Prompt3 <If it's so good, why don't you use it?>
+	Prompt4 <Why aren't you looking for the treasure?>
+
+	%  05 - 06 :  Player isn't interested in the map.
+	Prompt5 <I don't want your map.>
+	Prompt6 <I'm not interested in your map.>
+
+end
+inv
+	treasure 5000
+	name <Crystal Fragment>
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	% V1 = Location of next encounter
+	% V2 = Clue number for this item
+	% V3 = Investigation Indicator
+	% V4 = PC Investigation skill when last tried
+	use <if= V3 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <Print 3>
+	Clue29 <ifG PCSkillVal 29 V4 else GoDid Mental V= 4 PCSkillVal 29 ifG SkRoll 29 10 else GoNoSolve V= 3 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V3 1 else GoNoSolve Print 1>
+	Msg1 <You realize that this crystal is an ancient computer core. You access its databank, and are shown a map of what would now be \SCENE V1 .>
+	Msg2 <It's a mysteriously glowing crystal, but more than thay you really can't say.>
+	Msg3 <You can't determine anything from this crystal. It could probably benefit from a more scientific analysis.>
+
+	Treasure 1
+	name <Treasure Map>
+	place <4>
+	% V1 = Scene to be used in.
+	% V2 = E3 item
+	% V3 = Difficulcy Level
+	use <if= SceneID V1 else GoNotHere ifItemOK V2 else GoPlotOver ifYesNo 3 4 5 Goto GoStartCombat>
+	GoStartCombat <SavePos LoadD .scene PassVar 1 WMThreat V3 DynaItem V2 SeekGate -1>
+	.scene <SCENE_ItemPit.txt>
+	GoNotHere <Print 1>
+	GoPlotOver <Print 2>
+	Msg1 <It's a treasure map leading from \SCENE V2 to a secret cave.>
+	Msg2 <This map is pretty much useless now.>
+	Msg3 <This is a treasure map leading from here to a secret cave. Do you want to follow the map right now?>
+	Msg4 <Let's go.>
+	Msg5 <No, not right now.>
+
+end

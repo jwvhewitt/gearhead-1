@@ -1,0 +1,14 @@
+story
+	name <GSP: Atomic War Club>
+	% Quite possibly the simplest GSP story yet... Just a loader for the Atomic War Club
+	% plot, so that it will only happen once per adventure.
+
+	% N1 is the scene where the story will take place.
+	% N2 is the character who will give the mission. Maybe.
+	%  At least we know that there's a scientist in town...
+	Element2 <Character Scientist !Near 1>
+
+	quarter <ifPersona E2 else GoDelete if= d12 1 StoryLine .plot EndStory>
+	.plot <TS_GSP_WarClub_PLOT_*.txt>
+	GoDelete <EndStory>
+

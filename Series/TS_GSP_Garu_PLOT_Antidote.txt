@@ -1,0 +1,48 @@
+Plot 0
+	name <GARU Antidote>
+
+	% E1 is the town where the PC bought GARU serum; we want the scientist
+	% to be far away from there.
+	element1 <Grab 1>
+	element2 <Character Scientist !Far 1>
+
+	start <ifPersona E2 else cleanup>
+	cleanup <AdvancePlot 0>
+
+sub
+	Persona 2
+	rumor <!2 has been researching the GARU syndrome.>
+	% V1 = Cure search timer
+	greeting <NewChat ifG V1 0 else GoFirstTime ifG ComTime V1 else GoStillLooking Say 9 AddChat 7>
+	GoStillLooking <Say 2>
+	GoFirstTime <Say 1 Memo 10 AddChat 1 AddChat 2 AddChat 3>
+
+	result1 <NewChat Say 3 AddChat 4 AddChat 5>
+	result2 <NewChat Say 4>
+	result3 <NewChat Say 5 AddCHat 6>
+	result4 <NewChat Say 7>
+	result5 <NewChat Say 8 V= 1 ComTime V+ 1 256700>
+	result6 <NewChat Say 6 AddChat 1 AddChat 2>
+	result7 <EndChat Say 11 time 8000 PCStat= 1 S11 PCStat= 2 S12 PCStat= 3 S13 PCStat= 7 S17 PCStat= 8 S18 EndStory>
+
+	Msg1 <I've been researching "GARU Syndrome". GARU is a gene-altering drug developed by the Aegis military; they abandoned it for being unpredictable and dangerous.>
+	Msg2 <I'm still looking for a cure to the GARU syndrome. Come back later and I may have some results then.>
+	Msg3 <Did you take original Aegis serum or synthetic Terran serum? Or were you infected by a GARU carrier? Well, in any case, I'll need a sample of your blood. This will allow me to determine exactly how the virus is affecting you genetically.>
+	Msg4 <Well, I better get back to work.>
+	Msg5 <It's a retroviral agent which alters the DNA of its subject, inserting the draconic complex into his genome. Usually the virus goes dormant a few weeks after being administered, but in some cases it remains active.>
+	Msg6 <A carrier with active retrovirus can infect other people through the exchange of bodily fluids. Left unchecked, criminal use of synthetic GARU serum might corrupt large parts of the human gene pool.>
+	Msg7 <I can't force you to do anything you don't want to. You may experience side effects... Forgetfulness, confusion, fits of rage... If you start to feel any of that come see me immediately.>
+	Msg8 <Good. I'll get to work on this... It will take several days to complete all the needed analysis.>
+	Msg9 <My work is complete. From your blood, I've formulated an antidote for the GARU syndrome... at least, for your case of it. But this will go a long way towards a general antidote that can be used on anyone.>
+	Msg10 <\ELEMENT 2 in \SCENE EScene 2 is working on a cure for GARU syndrome.>
+	Msg11 <This injection should restore you to your former self. You may feel terrible for a few hours, but after that it will be much better.>
+
+	Prompt1 <Help me, I've got the syndrome...>
+	Prompt2 <That's no problem to me.>
+	Prompt3 <How does GARU serum work?>
+	Prompt4 <No way, I can't stand needles!>
+	Prompt5 <Alright, let's do that.>
+	Prompt6 <What happens then?>
+	Prompt7 <Give it to me!>
+
+end

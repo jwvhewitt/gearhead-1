@@ -1,0 +1,403 @@
+Plot 0
+	name <>
+
+	% This is a needlessly complex plot that I nonetheless
+	% hope will add something to the game. This is my second
+	% draft of the template for it so it sure as #$#@$$ better
+	% work this time...
+
+	% NPC-1 can offer the PC a mission to go to SCENE
+	% to find something. The finding of something isn't
+	% tied to being offered the mission, nessecarily, so
+	% the PC can do it even if not offered the mission.
+	% After the PC finds whatever he can bring it back to
+	% the NPC-1 to get the next clue, or he can use a skill
+	% to determine the clue himself. Confused yet?
+
+	% E1 is the controlling faction; E2 is a member
+	element1 <Grab 1>
+	element2 <Character !Comrade 1>
+
+	% E3 is the scene for this episode.
+	% E4 is the scene for the next episode.
+	Element3 <Grab 2>
+	Element4 <Scene Town !Far 3>
+
+	% E5 is the item to be recovered.
+	% Upon recovering the item, the plot will immediately
+	% advance to phase 1 and the 
+	Element5 <Prefab>
+
+	% E6 and E7 are free for use in E3. In this default
+	% template, E6 is a character who will offer an item
+	% recovery mission to locate E5.
+	Element6 <Character !Near 3>
+
+	% E8 is used to indicate whether or not the PC took the mission.
+
+	%  V1 = Initialization Counter
+
+	%  S103 = How many times PC fought for faction
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+	%  S203 = Number of clues accumulated
+	%  S204 = # of clues when memo last updated
+
+
+	% On a cleanup request, just clean up everything.
+	Cleanup <AdvancePlot 0>
+
+	% At startup, initialize the item.
+	start <if= V1 0 V= 1 1 Compose GET E5 .getitem ItemVar= E5 1 E4>
+
+	% Recovering the item ups the victory counter, loads the next
+	% plot, and advances this plot to phase 1.
+	.getitem <if# V1 2 V= 1 2 N= 2 E4 S= 201 0 S+ 203 1 FacXP+ E1 2 AdvancePlot 1 Trigger JumpStart 0>
+
+	% If the PC gets email about the mission, that counts as tacit
+	% acceptance of the mission. Why? So if the PC completes the
+	% mission without first going to see E2, E2 won't
+	% be surpised when the PC returns the item.
+	5Min <if= d20 1 if= PCFac E1 if= S202 S203 if= E8 0 Email d5 E= 8 1 S+ 103 1>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 ://>
+
+sub
+	Persona 2
+	rumor <>
+	%  V2 = Message Randomizer
+	% E2 can only offer the next mission if the PC's clues
+	% are up to date. Otherwise, E2 must remain silent.
+	greeting <NewChat if= S202 S203 else GoMissionImpossible if= E8 1 else GoCheckMission Say d3>
+
+	% The PC might be offered the mission if he's a member of E1,
+	% if he's finished an earlier faction assignment, or if he's
+	% well liked.
+	% I'm keeping it simple here; you can make it more complex in
+	%  specific plots.
+	GoCheckMission <if= PCFac E1 else GoCheckPrevious V= 2 3 V+ 2 d3 Say V2 AddChat d2>
+	GoCheckPrevious <ifG S103 0 else GoCheckReact V= 2 6 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoCheckReact <ifG React 30 else GoNoChance V= 2 9 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+
+	GoNoChance <V= 2 12 V+ 2 d3 Say V2>
+
+	% If enough clues haven't been accumulated, this mission
+	% is impossible.
+	GoMissionImpossible <SayAnything>
+
+	% R1: PC will accept the mission.
+	result1 <NewChat V= 2 15 V+ 2 d5 Say V2 E= 8 1 S+ 103 1 Memo 23>
+	result2 <Goto result1>
+
+	% R3: PC doesn't want the mission.
+	result3 <NewChat V= 2 20 V+ 2 d2 Say V2>
+	result4 <Goto result3>
+
+	%  01 - 03 :  PC took mission; remind him here.
+	Msg1 <>
+	Msg2 <>
+	Msg3 <>
+
+	%  04 - 06 :  PC is faction member; will be given mission.
+	Msg4 <>
+	Msg5 <>
+	Msg6 <>
+
+	%  07 - 09 :  PC did previous mission; will be given this one too.
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+
+	%  10 - 12 :  PC is well liked; will be given mission.
+	Msg10 <>
+	Msg11 <>
+	Msg12 <>
+
+	%  13 - 15 :  PC can't get mission, but it may be implied.
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	%  16 - 20 :  PC has accepted; now mission orders.
+	Msg16 <>
+	Msg17 <>
+	Msg18 <>
+	Msg19 <>
+	Msg20 <>
+
+	%  21 - 22 :  PC has rejected the mission.
+	Msg21 <>
+	Msg22 <>
+
+	%  23      :  Mission memo.
+	Msg23 <>
+
+
+	%  01 - 02 :  PC will accpet the mission.
+	Prompt1 <>
+	Prompt2 <>
+
+	%  03 - 04 :  PC doesn't want the mission.
+	%             Not available to faction members...
+	Prompt3 <>
+	Prompt4 <>
+
+
+	Persona 6
+	% This persona should be completely replacable. You should be
+	% able to substitute in almost any mission-giving persona, so
+	% long as it will end with the PC picking up the treasure (or
+	% you manually submit a GET E5 trigger). Since the story will
+	% be blocked if the PC can't get the mission, you should probably
+	% allow multiple retries here.
+	rumor <>
+
+	% In this default template, I'm just going to do an arena-type
+	% automatic mission. The PC doesn't have to apply... the mission
+	% is always available. Depending upon the plot being constructed,
+	% you may want to open this mission only if the PC has spoken to
+	% E2, or make the PC do skill rolls to get the mission, or
+	% anything else.
+	%  V1 :  PC has been given mission.
+	%  V2 :  Message Randomizer
+	greeting <NewChat if= V1 1 else GoFirstTime Say d2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoFirstTime <V= 2 2 V+ 2 d3 Say V2 V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+
+	result1 <EndChat V= 2 12 V+ 2 d3 Say V2 Goto GoStartCombat>
+	result2 <Goto result1>
+
+	% For the purposes of this template, I'll just use the Item Dungeon
+	% scene since that's the simplest one that suits our purposes.
+	GoStartCombat <SavePos LoadD .scene PassVar 1 E5 PassVar 2 S2 PassVar 3 5 PassVar 4 4 SeekGate -1>
+	.scene <SCENE_ItemDungeon.txt>
+
+	result3 <NewChat V= 2 10 V+ 2 d2 Say V2>
+	result4 <Goto result3>
+
+	result5 <NewChat V= 1 1 Memo 16 V= 2 5 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	result6 <Goto result5>
+
+	result7 <NewChat V= 2 8 V+ 2 d2 Say V2>
+	result8 <Goto result7>
+
+	%  01 - 02 :  PC is returning a second time to try the dungeon.
+	Msg1 <>
+	Msg2 <>
+
+	%  03 - 05 :  Initial description of the mission.
+	%             PC can choose whether to participate or not.
+	Msg3 <>
+	Msg4 <>
+	Msg5 <>
+
+	%  06 - 08 :  Detailed description; PC has chosen to participate.
+	Msg6 <>
+	Msg7 <>
+	Msg8 <>
+
+	%  09 - 10 :  PC has chosen not to participate.
+	Msg9 <>
+	Msg10 <>
+
+	%  11 - 12 :  PC needs time to get ready.
+	Msg11 <>
+	Msg12 <>
+
+	%  13 - 15 :  The mission is starting.
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	%  16      :  Memo
+	Msg16 <\ELEMENT 6 in \ELEMENT 3 asked you to check \PPR E6 basement for treasure.>
+
+	%  01 - 02 :  PC is ready to start the mission.
+	Prompt1 <>
+	Prompt2 <>
+
+	%  03 - 04 :  PC needs time to get ready.
+	Prompt3 <>
+	Prompt4 <>
+
+	%  05 - 06 :  PC is interested in the mission.
+	Prompt5 <>
+	Prompt6 <>
+
+	%  07 - 08 :  PC doesn't want to help E6.
+	Prompt7 <>
+	Prompt8 <>
+
+
+	Plot 1
+	% The item has been gotten.
+
+	%  V1 = Initialization counter
+	%  V2 = Player has discovered the clue by himself.
+	%  V3 = Clue Acquirement Timer
+
+	% This plot has a JUMPSTART initialization.
+	% The PC might try using the item as soon as it's
+	% discovered... so, this is needed.
+	JUMPSTART0 <if= V1 0 V= 1 1 Compose Use E5 .useitem>
+	.useitem <if= P2 0 S+ 203 1 P= 2 1>
+
+	% At startup, check to see if the item is OK.
+	% If it's been destroyed/sold/lost, and the PC isn't
+	% waiting for the clue, delete this plot.
+	start <ifItemOK E5 else GoCheckDelete>
+	GoCheckDelete <if= V3 0 AdvancePlot 0>
+
+	% On a cleanup request, advance to the story over message plot.
+	Cleanup <AdvancePlot 2>
+
+	sub
+
+	Persona 2
+	rumor <>
+	% V2 = Message Randomizer
+	% V3 = Reward offered
+	% This NPC will take the item if the PC has it, which will then
+	% set the clue timer going, unless the PC has discovered the
+	% clue by himself.
+	greeting <NewChat ifG P3 ComTime else GoCheckStart V= 2 3 V+ 2 d3 Say V2 if= P2 0 else GoJustEnd S+ 203 1 P= 2 1 AdvancePlot 0>
+	GoJustEnd <AdvancePlot 0>
+	GoCheckStart <ifG P3 0 else GoCheckFirst Say d3>
+	GoCheckFirst <ifG S103 0 else GoNoMission V= 2 6 V+ 2 d3 Say V2 ifKeyItem E5 AddChat 1>
+
+	% If the PC wasn't given the mission but shows up with the
+	% item anyways, the NPC will offer to take it from him and
+	% may even let the PC into the plot.
+	GoNoMission <ifKeyItem E5 else GoItemGone V= 2 12 V+ 2 d3 Say V2 V= 2 1 V+ 2 d2 AddChat V2 V= 2 3 V+ 2 d2 AddChat V2>
+
+	% If the item is gone but the plot isn't exited, there's nothing
+	% really to say...
+	GoItemGone <SayAnything>
+
+	result1 <NewChat V= 2 9 V+ 2 d3 Say V2 Memo 16 DeleteKeyItem E5 P= 3 ComTime P+ 3 9000>
+
+	result2 <NewChat V= 3 Reward Threat PCRep 6 100 100 V= 2 17 V+ 2 d3 Say V2 ifKeyItem E5 AddChat 6>
+	result3 <Goto result2>
+
+	% Denying that he has the item should increase either Chaoticness
+	% or Shyness, depending on whether the PC tells an outright lie
+	% or just avoids the question.
+	result4 <NewChat V= 2 19 V+ 2 d2 Say V2 Reputation 3 -d8>
+	result5 <Goto result4>
+
+	% Selling the item to the NPC may or may not let the PC
+	% "into the loop" of the overall story.
+	result6 <NewChat DeleteKeyItem E5 CashPrize V3 ifG React d60 else GoR6NoFriend Say 23 Memo 16 S+ 103 1 P= 3 ComTime P+ 3 9000>
+	GoR6NoFriend <V= 2 23 V+ 2 d2 Say V2 AdvancePlot 0>
+
+	%  01 - 03 :  Waiting for the results of the check.
+	Msg1 <Come back in a few hours and I might be able to tell you something.>
+	Msg2 <>
+	Msg3 <>
+
+	%  04 - 06 :  Reveal clue; tell PC where to go next.
+	Msg4 <>
+	Msg5 <>
+	Msg6 <>
+
+	%  07 - 09 :  PC has returned after recovering item.
+	Msg7 <>
+	Msg8 <>
+	Msg9 <>
+
+	%  10 - 12 :  PC has given the item, told to wait for analysis.
+	Msg10 <>
+	Msg11 <>
+	Msg12 <>
+
+	%  13 - 15 :  PC will be asked if he has ELEMENT5.
+	Msg13 <>
+	Msg14 <>
+	Msg15 <>
+
+	%  16      :  Memo... come back in a few hours.
+	Msg16 <\ELEMENT 2 in \SCENE ESCene 2 asked you to return in a few hours.>
+
+	%  17 - 19 :  PC has admitted to having E5; will be asked to sell.
+	%             V3 contains the reward; use "$ \VAL V3"
+	Msg17 <>
+	Msg18 <>
+	Msg19 <>
+
+	%  20 - 22 :  PC denies having E5.
+	Msg20 <>
+	Msg21 <>
+	Msg22 <>
+
+	%  23      :  PC is asked to join story;
+	%             told to come back in several hours.
+	Msg23 <>
+
+	%  24 - 25 :  PC is paid for E5 but that's all.
+	Msg24 <>
+	Msg25 <>
+
+
+	%  01      :  PC will give the item to E2 for analysis.
+	Prompt1 <Here it is. [Give \ELEMENT 5 ]>
+
+	%  02 - 03 :  "Yes, I have E5"
+	Prompt2 <>
+	Prompt3 <>
+
+	%  04 - 05 :  "No, I've never seen E5" or "It's mine! Mine!"
+	Prompt4 <>
+	Prompt5 <>
+
+	%  06      :  PC will give the item to E2 for money.
+	Prompt6 <It's a deal. [Give \ELEMENT 5 ]>
+
+
+	Persona 6
+	% For the purposes of right now, after the item is recovered,
+	% persona 6 isn't going to do anything else.
+	rumor <>
+	greeting <NewChat Say d5>
+	%  01 - 05 :  Generic message; go see E2, or whatever.
+	Msg1 <>
+	Msg2 <>
+	Msg3 <>
+	Msg4 <>
+	Msg5 <>
+
+
+	Plot 2
+		% The story is over... all that's left is to tell the PC.
+		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+		sub
+			Persona 2
+			greeting <NewChat Say 1 AdvancePlot 0>
+			Msg1 <It's too late. Our need for the artifact you recovered is past.>
+
+			Persona 6
+			greeting <NewChat Say 1 AdvancePlot 0>
+			Msg1 <That thing you recovered? I don't need it anymore. You can keep it.>
+		end
+
+	end
+
+end
+inv
+	treasure 1000
+	name <MacGuffin>
+	% V1 = Location of next scene
+	% V2 = Investigation indicator
+	%   instead of investigation you can use Science(29), Mysticism(34),
+	%    CodeBreaking(32) or Survival(14)
+	use <if= V2 1 else GoNoSolve Print 1>
+	GoNoSolve <Print 2>
+	Clue37 <if= V2 0 else GoDid Mental ifG SkRoll 37 10 else GoNoSolve V= 2 1 Print 1 XPV 100 Trigger KEY SelfNID>
+	GoDid <if= V2 1 else GoNoSolve Print 1>
+	Msg1 <You have determined that the next part will be found in \SCENE V1 .>
+	Msg2 <You can't determine anything from this artifact.>
+
+end

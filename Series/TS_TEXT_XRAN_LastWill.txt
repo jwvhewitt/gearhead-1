@@ -1,0 +1,21 @@
+% Text for XRAN Plot "Last Will"
+\PC ,
+ 
+If you are reading this it means that something must have happened to
+us. You are likely in danger yourself. The information contained in this
+letter may well be the best protection we can give you now. I pray it
+will be enough.
+ 
+Our family is the keeper of an ancient and dark secret. We have tried to
+protect this knowledge against those who would abuse it, and to protect
+you until such a time as you would be ready to learn of your duty. That
+time is now. You must assume the mantle of protector, and defend the
+knowledge our family has safeguarded for generations against those who
+would use it for evil.
+ 
+I realize that you must be confused. I regret that we cannot be there to
+provide you with guidance. All of your questions will be answered in time.
+ 
+Travel to \SCENE V1 ; you will find the first part of the riddle there.
+ 
+With all our love and all our hopes, Mom and Dad.

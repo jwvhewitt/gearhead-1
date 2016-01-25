@@ -1,0 +1,819 @@
+Battroid 7
+Name <Savin>
+Desig <RIG-01 Zero>
+SDL_Sprite <btr_savin.png>
+Desc <Maquise Spinner's premier mecha suit. The Zero Savin is a general purpose fighter.>
+
+Mod Head
+	Armor 5
+	Size 5
+	Mass -5
+	sub
+		Sensor 6
+
+		STC VC-5
+		Type <INTERCEPT>
+		Name <Vulcan Interceptor>
+	end
+	inv
+		HeadArmor 5
+		Mass -5
+	end
+
+Mod Body
+	Armor 7
+	Mass -7
+	sub
+		Sensor 1
+
+		CPit
+		Armor 2
+		Mass -1
+
+		TarComp 3
+
+		Gyro 4
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		STC LAS-5
+
+		STC LAS-5
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 8
+		Mass -9
+		sub
+			STC HWML-4
+
+			STC HWML-4
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Right Hand>
+		inv
+			Gun 10
+			Name <Breaker Cannon>
+			Range 8
+			Magazine 12
+			sub
+				Ammo 10
+				Type <ARMORPIERCING HYPER>
+			end
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			EMelee 12
+			Name <Nova Sword>
+			Speed 3
+			Acc 1
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Left Hand>
+
+		Mount
+		Name <Left Arm Mount>
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+
+		Shield 5
+		DefBonus 1
+		Mass -5
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Right Leg Mount>
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			STC SWML-60
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Left Leg Mount>
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			STC SWML-60
+		end
+	end
+end
+
+Battroid 7
+Name <Savin>
+Desig <RIG-02 Overkill>
+SDL_Sprite <btr_savin.png>
+Desc <Maquise Spinner's premier mecha suit. The Overkill Savin is a heavy artillery platform.>
+
+Mod Head
+	Armor 5
+	Size 5
+	Mass -5
+	sub
+		Sensor 6
+
+		STC VC-5
+		Type <INTERCEPT>
+		Name <Vulcan Interceptor>
+	end
+	inv
+		HeadArmor 4
+		Mass -4
+	end
+
+Mod Body
+	Armor 7
+	Mass -7
+	sub
+		Sensor 1
+
+		CPit
+		Armor 2
+		Mass -1
+
+		TarComp 3
+
+		Gyro 4
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		STC LAS-5
+
+		STC LAS-5
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 6
+		Mass -8
+		sub
+			STC LAS-5
+
+			STC LAS-5
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Right Hand>
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			STC RG-16
+			Mass -6
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 5
+		Mass -3
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Left Hand>
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			STC RG-16
+			Mass -6
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 5
+		Mass -3
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Right Leg Mount>
+		inv
+			STC SWML-40
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 4
+		Mass -3
+		sub
+			STC SWML-40
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Left Leg Mount>
+		inv
+			STC SWML-40
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 4
+		Mass -3
+		sub
+			STC SWML-40
+		end
+	end
+end
+
+Battroid 7
+Name <Savin>
+Desig <RIG-03 Reaper>
+SDL_Sprite <btr_savin.png>
+Desc <Maquise Spinner's premier mecha suit. The Reaper Savin is a close combat fighter.>
+
+Mod Head
+	Armor 5
+	Size 5
+	Mass -5
+	sub
+		Sensor 6
+
+		STC VC-5
+		Type <INTERCEPT>
+		Name <Vulcan Interceptor>
+	end
+	inv
+		HeadArmor 5
+		Mass -5
+	end
+
+Mod Body
+	Armor 7
+	Mass -7
+	sub
+		Sensor 1
+
+		CPit
+		Armor 2
+		Mass -1
+
+		TarComp 3
+
+		Gyro 4
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		STC LAS-5
+
+		STC LAS-5
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 7
+		Mass -8
+		sub
+			ArcJet 4
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Right Hand>
+		inv
+			EMelee 20
+			Name <Nova Scythe>
+			Speed 3
+			Acc 2
+			Type <ARMORPIERCING EXTEND>
+			Mass 6
+		end
+
+		Mount
+		Name <Right Arm Mount>
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Left Hand>
+
+		Mount
+		Name <Left Arm Mount>
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+
+		Shield 3
+		DefBonus -1
+		sub
+			EMelee 5
+			Name <Shield Blade>
+			Type <RETURN THROWN>
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Right Leg Mount>
+		inv
+			STC HWML-2
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			ArcJet 6
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Left Leg Mount>
+		inv
+			STC HWML-2
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			ArcJet 6
+		end
+	end
+end
+
+Battroid 7
+Name <Savin>
+Desig <RIG-04 Fortress>
+SDL_Sprite <btr_savin.png>
+Desc <Maquise Spinner's premier mecha suit. The Fortress Savin is a long range sniper.>
+
+Mod Head
+	Armor 5
+	Size 5
+	Mass -5
+	sub
+		Sensor 6
+
+		STC VC-5
+		Type <INTERCEPT>
+		Name <Vulcan Interceptor>
+	end
+	inv
+		HeadArmor 5
+		Mass -5
+	end
+
+Mod Body
+	Armor 7
+	Mass -7
+	sub
+		Sensor 1
+
+		CPit
+		Armor 2
+		Mass -1
+
+		TarComp 3
+
+		Gyro 4
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		STC LAS-5
+
+		STC LAS-5
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 8
+		Mass -10
+		sub
+			STC MAC-4
+			Mass -5
+
+			STC MAC-4
+			Mass -5
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Right Hand>
+		inv
+			Melee 10
+			Name <Ion Sabre>
+			Acc 1
+			Type <ARMORPIERCING OVERLOAD>
+			Mass -5
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			STC GR-24
+			Mass -8
+			Speed 2
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Left Hand>
+
+		Mount
+		Name <Left Arm Mount>
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+
+		Shield 5
+		DefBonus 1
+		Mass -5
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Right Leg Mount>
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			STC SWML-40
+
+			ArcJet 2
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Left Leg Mount>
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			STC SWML-40
+
+			ArcJet 2
+		end
+	end
+end
+
+Battroid 7
+Name <Savin>
+Desig <RIG-05 Dragon>
+SDL_Sprite <btr_savin.png>
+Desc <Maquise Spinner's premier mecha suit. The Dragon Savin is a short range assault platform.>
+
+Mod Head
+	Armor 5
+	Size 5
+	Mass -5
+	sub
+		Sensor 6
+
+		STC VC-5
+		Type <INTERCEPT>
+		Name <Vulcan Interceptor>
+	end
+	inv
+		HeadArmor 5
+		Mass -5
+	end
+
+Mod Body
+	Armor 7
+	Mass -7
+	sub
+		Sensor 1
+
+		CPit
+		Armor 2
+		Mass -1
+
+		TarComp 3
+
+		Gyro 4
+		Armor 2
+		Mass -1
+
+		Engine 7
+		Armor 2
+		Mass -1
+
+		STC LAS-5
+
+		STC LAS-5
+
+		ArcJet 8
+	end
+	inv
+		BodyArmor 8
+		Mass -9
+		sub
+			ArcJet 6
+		end
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Right Hand>
+		inv
+			EMelee 12
+			Name <Double Lance>
+			Type <EXTEND>
+			Mass 5
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			Melee 4
+			Name <Dragon Fang>
+			Mass -3
+			Speed 1
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Size 6
+	Armor 5
+	Mass -6
+	sub
+		Hand
+		Name <Left Hand>
+		inv
+			Melee 10
+			Name <Dragon Sword>
+			Type <OVERLOAD>
+			Acc 1
+			Mass -4
+		end
+
+		Mount
+		Name <Left Arm Mount>
+		inv
+			Melee 4
+			Name <Dragon Fang>
+			Mass -3
+			Speed 1
+		end
+
+		ArcJet 4
+	end
+	inv
+		ArmArmor 6
+		Mass -7
+		sub
+			STC AC-2
+			Mass -5
+		end
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Right Leg Mount>
+		inv
+			Gun 12
+			Name <Flame Cannon>
+			Mass -10
+			Type <BLAST 1 BURN>
+			Range 4
+			Speed 1
+			Magazine 10
+			sub
+				Ammo 12
+			end
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			ArcJet 3
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 7
+	Mass -7
+	sub
+		Mount
+		Name <Left Leg Mount>
+		inv
+			Gun 12
+			Name <Flame Cannon>
+			Mass -10
+			Type <BLAST 1 BURN>
+			Range 4
+			Speed 1
+			Magazine 10
+			sub
+				Ammo 12
+			end
+		end
+
+		ArcJet 6
+	end
+	inv
+		LegArmor 6
+		Mass -7
+		sub
+			ArcJet 3
+		end
+	end
+end

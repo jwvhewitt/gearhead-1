@@ -1,0 +1,51 @@
+Scene 0
+	% ASSASSINS special plot encounter
+	% The PC will penetrate the assassin's hideout and try
+	% to find evidence of who the boss is. But, there's a
+	% deadly security system...
+
+
+	CityMap
+
+	% V1 = Got the info
+	% V2 = Phase counter
+	% V3 = Clues accumulated so far...
+	%     used to calculate the various difficulcy numbers needed
+	% V4 = Computer difficulcy number
+	% V5 = Stealth difficulcy number
+
+	start <if= V2 0 Print 101 V= 2 1   V= 4 8 V+ 4 V3 V+ 4 V3 V+ 4 V3   V= 5 3 V+ 5 V3>
+	Msg101 <You enter the ruins which are the hideout of the gang. The place appears to be empty... but then again, appearances can be deceiving.>
+
+	TM1 <ifG V5 SkRoll 25 MonsterUp 2 d4 if= d5 1 print d5>
+	Msg1 <You hear footsteps in the distance.>
+	Msg2 <You hear people shouting in the distance.>
+	Msg3 <You hear something.>
+	Msg4 <You accidentally step on a metal plate, causing a noise.>
+	Msg5 <You step on a twig, causing a noise.>
+
+sub
+	Team 1
+	SetEnemy 2
+
+	Team 2
+	SetEnemy 1
+	type <Criminal Synth Robot HUNTER-X>
+
+	rect
+	Width 3
+	Height 3
+	special <StartHere>
+
+	room 5 5
+	name <Data Center>
+	bordertype 29
+	sub
+		Door 10
+		Lock 5
+		GoDoorLocked <Print 6 MonsterUp 2 d10>
+		GoNoUnlock <Print 4 MonsterUp 2 d6>
+		Msg4 <You do not manage to unlock the door. An alarm sounds from the inside.>
+		Msg6 <The door is locked. An alarm sounds as you try to open it.>
+	end
+end

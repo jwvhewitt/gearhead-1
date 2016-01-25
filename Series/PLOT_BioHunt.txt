@@ -1,0 +1,335 @@
+Plot 0
+	name <PLOT: Bio-Hunt>
+	% There's been an outbreak of biotech monsters. The PC may be hired to go
+	% exterminate some... but this mission will be 10 points above his normal
+	% reputation, so it should be pretty dangerous. Pay is nice though.
+
+	% [[Ver1.6]]
+	Element1 <Character Bounty Hunter>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+	%       If P3=-1, PC has been denied the job
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 100>
+
+
+	% Email check. If the PC belongs to the same faction as the NPC,
+	% he may receive an email about the mission. Make a check every
+	% 5 minutes.
+	5Min <if= d50 23 if= V3 0 ifG RReact E2 d50 ifG PCRep 6 d105 V= 3 1 Email 1>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// Got some monsters in the city dump; I could use some help clearing them out.>
+	Msg1_1 <\PERSONA E1 @ \SCENE EScene 1 :// Help serve the community. Come help me exterminate some monsters.>
+	CMsg1_1 <ifNPCLawful Accept>
+	Msg1_2 <\PERSONA E1 @ \SCENE EScene 1 :// Looking for some easy money? I've got a job for you in \SCENE EScene 1 .>
+	CMsg1_2 <ifNPCChaotic Accept>
+	Msg1_3 <\PERSONA E1 @ \SCENE EScene 1 :// Hey, long time no see. If you're in the area I'd love to chat. In fact, I may even have a job for you.>
+	CMsg1_3 <ifNPCSociable Accept>
+	Msg1_4 <\PERSONA E1 @ \SCENE EScene 1 :// Biomonsters on the loose in \SCENE EScene 1 . Come for mission, if you're available.>
+	CMsg1_4 <ifNPCShy Accept>
+	Msg1_5 <\PERSONA E1 @ \SCENE EScene 1 :// Hope I'm not catching you at a bad time. We've got a problem in \SCENE EScene 1 ; I may have a job for you.>
+	CMsg1_5 <ifNPCEasygoing Accept>
+	Msg1_6 <\PERSONA E1 @ \SCENE EScene 1 :// Come quickly, before all is lost! A colony of bioweapons has taken hold in \SCENE EScene 1 . We must stop them before it's too late!>
+	CMsg1_6 <ifNPCPassionate Accept>
+	Msg1_7 <\PERSONA E1 @ \SCENE EScene 1 :// Looking for work? You're lucky, I have a job available here if you want it.>
+	CMsg1_7 <ifNPCCheerful Accept>
+	Msg1_8 <\PERSONA E1 @ \SCENE EScene 1 :// A hunter's job is never done. There's a contract here to exterminate some bioweapons before they kill somebody.>
+	CMsg1_8 <ifNPCMelancholy Accept>
+	Msg1_9 <\PERSONA E1 @ \SCENE EScene 1 :// It seems impossible, but a colony of active bioweapons has been discovered near \SCENE EScene 1 . I need someone to fulfil the extermination contract.>
+	CMsg1_9 <ifNPCPragmatic Accept>
+	Msg1_10 <\PERSONA E1 @ \SCENE EScene 1 :// May the heavens guard us... a pod of bioweapons has gone active near town. I need a hunter to do extermination.>
+	CMsg1_10 <ifNPCSpiritual Accept>
+
+sub
+	Persona 1
+	rumor <!1 is looking for a hunter to exterminate some monsters.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say 1 CashPrize V4 AddReact d5 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob Say 6 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRep 6 V+ 3 d30 V= 4 Reward Threat V3 100 350 Goto GoCheckEmail>
+
+	GoCheckEmail <if= P3 1 else GoCheckFriend Say 16 AddChat 7 AddChat 9>
+
+	GoCheckFriend <ifG React 50 else GoNoAutomatic Say 16 AddChat 7 AddChat 9>
+
+	GoNoAutomatic <ifG React d10 else GoDenied Say 21 AddChat 11 AddChat 14 AddChat 17>
+	GoDenied <V= 1 -1 P= 3 -1 SayAnything AdvancePlot 0>
+
+	GoAddComOps <V= 1 1 P= 3 1 AddChat 1 AddChat 3  Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat Say 36 Goto GoStartCombat>
+
+	GoStartCombat <SavePos P= 2 1 MDynamic 0 V3 .mon .nu1 .nu2 SetMapType 7  Reputation 2 1>
+	.mon <Synth Mutant Dark Hunter-X>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+
+	% The PC accepts the job offer.
+	result7 <NewChat Say 11 Goto GoAddComOps>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1 P= 3 -1 AdvancePlot 0>
+
+	% The PC tries to get the job via "PLAN A"- be forceful and
+	% convincing.
+	result11 <NewChat ifG PCRep 6 d40 else GoR11Lose Say 31 AddChat 7 AddChat 9>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1 P= 3 -1 AdvancePlot 0>
+
+
+	% The PC tries to get the job via "PLAN B"- Scientific curiosity.
+	result14 <NewChat Say 31 AddChat 7 AddChat 9>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1 P= 3 -1 AdvancePlot 0>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Player has won the battle and is being paid.
+	Msg1 <Very well done. The monsters have been eliminated. Here's the pay you earned.>
+	Msg1_2 <An honest day's pay for an honest day's work... I don't get a chance to say that very often. Here's the money you earned.>
+	CMsg1_2 <ifNPCChaotic Accept>
+	Msg1_3 <The monsters were completely annihilated. Good work, \PC . The city dump is safe once more... or as safe as it ever is, with all those core worms crawling around beneath the surface...>
+	CMsg1_3 <ifNPCSociable Accept>
+	Msg1_4 <You did it. Here's your pay for the mission.>
+	CMsg1_4 <ifNPCShy Accept>
+	Msg1_5 <Well, the biomonsters have been stopped, and you appear to still have all your original limbs. Here's the money I promised you.>
+	CMsg1_5 <ifNPCEasygoing Accept>
+	Msg1_6 <They've been destroyed! That must have been a terrific fight... Here's the pay you earned.>
+	CMsg1_6 <ifNPCPassionate Accept>
+	Msg1_7 <The biomonsters have been destroyed, and no-one got hurt. The mission was a smooth success. Here's your pay.>
+	CMsg1_7 <ifNPCCheerful Accept>
+	Msg1_8 <The biomonsters were destroyed, but we still don't know where they came from. It's only a matter of time before someone's going to get killed... In any case, thanks for your help. Here's your pay.>
+	CMsg1_8 <ifNPCMelancholy Accept>
+	Msg1_9 <The bioweapons have been eliminated. Here's your reward. Still, I wonder where they came from... Surely nobody could still be producing these things, could they?>
+	CMsg1_9 <ifNPCPragmatic Accept>
+	Msg1_10 <Destiny is on your side. Here's the pay you earned for exterminating the monsters.>
+	CMsg1_10 <ifNPCSpiritual Accept>
+
+	% 06 :  Player has lost the battle.
+	Msg6 <You were defeated... but at least they didn't eat you.>
+	Msg6_3 <So, the biomonsters were too tough for you, huh? I'm not surprised. That's why I didn't want to perform the extermination myself. Guess I should have told you that at the beginning, huh?>
+	CMsg6_3 <ifNPCSociable Accept>
+	Msg6_4 <You were defeated.>
+	CMsg6_4 <ifNPCShy Accept>
+	Msg6_5 <The extermination mission was a failure... At least you made it back alive. That's more than most people can say after they've faced the Hunter-X series.>
+	CMsg6_5 <ifNPCEasygoing Accept>
+	Msg6_6 <You couldn't defeat the biomonsters!? They're too powerful...>
+	CMsg6_6 <ifNPCPassionate Accept>
+	Msg6_7 <You couldn't defeat the monsters? Oh well... On the bright side, this does mean that I'll get to use an orbital neutron blast on the dump site. I've always wanted to do that!>
+	CMsg6_7 <ifNPCCheerful Accept>
+	Msg6_8 <The mission was a failure. These monsters are too powerful... If they were ever to get loose in an urban setting, too many lives would be lost.>
+	CMsg6_8 <ifNPCMelancholy Accept>
+	Msg6_9 <You failed. Calculations show that if we can't find some way to stop these biomonsters, \SCENE EScene 1 may be doomed.>
+	CMsg6_9 <ifNPCPragmatic Accept>
+	Msg6_10 <You failed to destroy the monsters; may the heavens deliver us...>
+	CMsg6_10 <ifNPCSpiritual Accept>
+
+	% 11 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <Destroy all the monsters and you'll earn $ \VAL V4 . That's really all there is to it.>
+	Msg11_1 <This contract is for complete destruction of the biomonster nest. All monsters mst be eliminated in order to collect. Manage that, and you'll earn $ \VAL V4 .>
+	CMsg11_1 <ifNPCLawful Accept>
+	Msg11_2 <It's not often that I'll take a mission from the Guardians, but when the safety of \SCENE EScene 1 is at stake I'll make an exception. Destroy all the bioweapons and I'll give you $ \VAL V4 . Ready to go?>
+	CMsg11_2 <ifNPCChaotic Accept>
+	Msg11_3 <Here's the problem. The city dump isn't so valuable but there are settlements all around it. So, we can't send in mecha, and bombardment is a last resort. You'll have to go in on foot and kill the monsters. Pay will be $ \VAL V4 .>
+	CMsg11_3 <ifNPCSociable Accept>
+	Msg11_4 <Destroy the monsters and you'll get $ \VAL V4 . All ready?>
+	CMsg11_4 <ifNPCShy Accept>
+	Msg11_5 <Should be an easy mission. The only complicating factor is that there's really a lot of monsters... I mean a lot... but, if you can exterminate them all, you'll earn $ \VAL V4 . Deal?>
+	CMsg11_5 <ifNPCEasygoing Accept>
+	Msg11_6 <Every single last biomonster in that dump must be destroyed. What I'm looking for here is a liberal application of unrestrained violence... Are you down with that? Anyhow, complete the mission and you'll earn $ \VAL V4 .>
+	CMsg11_6 <ifNPCPassionate Accept>
+	Msg11_7 <Go in, kill the monsters, and you'll earn $ \VAL V4 . Fairly standard heroic intervention. You know the deal.>
+	CMsg11_7 <ifNPCCheerful Accept>
+	Msg11_8 <It's important that we exterminate these monsters before they can kill anyone who lives near there. Get rid of the entire pod of bioweapons and you'll earn $ \VAL V4 .>
+	CMsg11_8 <ifNPCMelancholy Accept>
+	Msg11_9 <Hunter-X synths are crafty. If we don't eliminate them now, they'll set up a defensive perimiter and firing points and it'll take an orbital bombardment to get them out. Exterminate the monsters for $ \VAL V4 . I'll pay you then.>
+	CMsg11_9 <ifNPCPragmatic Accept>
+	Msg11_10 <The Hunter-X series are an abomination upon this green Earth... They must be destroyed. Complete this mission and you'll earn $ \VAL V4 . Ready to start?>
+	CMsg11_10 <ifNPCSpiritual Accept>
+
+	% 16 :  Player is asked if he is looking for a job.
+	Msg16 <There's a colony of weapons-grade biomonsters living in the \SCENE EScene 1 dump. I need someone to go eliminate them. Do you think you can help me?>
+	Msg16_1 <Greetings, citizen. A pod of synthetic monsters has been sighted in the city dump. I need a hunter to perform an extermination mission... Feel like serving your community?>
+	CMsg16_1 <ifNPCLawful Accept>
+	Msg16_3 <There's been a pod of biomonsters sighted in the city dump. We don't know where they came from or how they got there, but they must be destroyed before someone gets killed. I've got a mission contract for a hunter to do just that. Interested?>
+	CMsg16_3 <ifNPCSociable Accept>
+	Msg16_4 <I've got a contract for a hunter to eliminate some biomonsters. Want to have a look?>
+	CMsg16_4 <ifNPCShy Accept>
+	Msg16_5 <Man, I wish I could get a vacation, but there's always something going on... This time it's a pod of biomonsters at the city dump. How'd you like to take the contract?>
+	CMsg16_5 <ifNPCEasygoing Accept>
+	Msg16_6 <The life of a bounty hunter is never dull... That's why it's the life I choose. Right now there's a hive of biomonsters at the city dump. I'd like you to run the extermination mission... How about it?>
+	CMsg16_6 <ifNPCPassionate Accept>
+	Msg16_7 <You're in luck. I have a contract for a hunter to go kill some monsters. Are you feeling up for that?>
+	CMsg16_7 <ifNPCCheerful Accept>
+	Msg16_8 <There's a serious problem in town. A pod of bioweapons has appeared at the city dump... we don't know how. I need a hunter to exterminate them. Do you think you can help us?>
+	CMsg16_8 <ifNPCMelancholy Accept>
+	Msg16_9 <A group of bioweapons has activated at \SCENE EScene 1 dump. These spontaneous appearances go against everything we know about synth propogation, something must be going on... I need a hunter to exterminate them. Interested?>
+	CMsg16_9 <ifNPCPragmatic Accept>
+	Msg16_10 <You arrived in the nick of time. A group of biomonsters has been sighted at \SCENE EScene 1 dump. I need you to exterminate them... Are you available?>
+	CMsg16_10 <ifNPCSpiritual Accept>
+
+	% 21 :  NPC implies job, PC might have chance to get it.
+	Msg21 <\SCENE EScene 1 has a problem. A colony of weapons-grade biomonsters has moved into the dump. Nobody really knows where they came from... now, I need someone to help get rid of them.>
+	Msg21_1 <\SCENE Escene 1 has a problem, which means that Guardians have a problem, which means that I've got a headache. Biomonsters have been spotted at the dump. Now I've got to find someone to exterminate them.>
+	CMsg21_1 <ifNPCLawful Accept>
+	Msg21_3 <It's always something. Right now I need a hunter to perform some biomonster extermination... A large group of Hunter-X synths has been sighted at the city dump. I wonder if I'll find anyone crazy enough to take them on?>
+	CMsg21_3 <ifNPCSociable Accept>
+	Msg21_4 <There are biomonsters living in the \SCENE EScene 1 dump. I need a hunter to run an extermination mission.>
+	CMsg21_4 <ifNPCShy Accept>
+	Msg21_5 <Just when I was starting to enjoy my holiday, there's another emergency here in \SCENE EScene 1 . Turns out that there are weapon-synths living in the city dump. Now I have to find a hunter for the extermination mission.>
+	CMsg21_5 <ifNPCEasygoing Accept>
+	Msg21_6 <There's an urgent matter in \SCENE EScene 1 . Biomonsters are on the loose, and a hunter is needed to get rid of them.>
+	CMsg21_6 <ifNPCPassionate Accept>
+	Msg21_7 <It would be a good time to be a hunter in \SCENE EScene 1 . Biomonsters have been sighted at the city dump, so there's a lot of work to go around.>
+	CMsg21_7 <ifNPCCheerful Accept>
+	Msg21_8 <It's a bad time to be in \SCENE EScene 1 . Bioweapons have been sighted near the city dump, and all our hunters are busy fighting them.>
+	CMsg21_8 <ifNPCMelancholy Accept>
+	Msg21_9 <It's strange. Some biomonsters have been spotted in the city dump... but where did they come from? In any event, hunters are needed to go exterminate the pod.>
+	CMsg21_9 <ifNPCPragmatic Accept>
+	Msg21_10 <There must be a curse on our city... recently biomonsters have been seen at the city dump. We need a hunter to go down there and eliminate them.>
+	CMsg21_10 <ifNPCSpiritual Accept>
+
+	% 31 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <If you think you're up for the challenge, I could hire you for the mission. Think you can survive?>
+	Msg31_1 <I have to be honest with you... There's a very good chance that if you accept this mission, you won't be coming back alive. Still interested?>
+	CMsg31_1 <ifNPCLawful Accept>
+	Msg31_2 <I'm no fan of truthfulness, but I have to tell you that this mission is tantamount to suicide. Do you really want to try?>
+	CMsg31_2 <ifNPCChaotic Accept>
+	Msg31_3 <This could be very convenient, if you're interested in taking the mission. I've been looking for someone to do it and now here you are. It'll be dangerous, of course. What do you say, are you up for it?>
+	CMsg31_3 <ifNPCSociable Accept>
+	Msg31_4 <If you want it, the mission contract is yours. Think you have what it takes?>
+	CMsg31_4 <ifNPCShy Accept>
+	Msg31_5 <It'd be easy on me if you could take the contract. Interested in hunting some monsters?>
+	CMsg31_5 <ifNPCEasygoing Accept>
+	Msg31_6 <You must be very brave... I like that! If you want to try, the extermination contract is yours. Deal?>
+	CMsg31_6 <ifNPCPassionate Accept>
+	Msg31_7 <I'm certain that if you tried, you could defeat the monsters! Want to see?>
+	CMsg31_7 <ifNPCCheerful Accept>
+	Msg31_8 <Do you really think you could fight them and survive? If so, the extermination contract is yours...>
+	CMsg31_8 <ifNPCMelancholy Accept>
+
+	% 36 :  Combat is starting.
+	Msg36 <Good luck. Come back here when you're done and I'll give you your pay.>
+	Msg36_3 <This is gonna be a long fight. Hopefully everything will go well. Come see me after you've finished and I'll give you the reward you've been promised then.>
+	CMsg36_3 <ifNPCSociable Accept>
+	Msg36_4 <Exterminate them all. Good luck.>
+	CMsg36_4 <ifNPCShy Accept>
+	Msg36_5 <If they try to bite you, make sure they don't go for the neck or the face. Come back after all the monsters are gone and you'll get your pay.>
+	CMsg36_5 <ifNPCEasygoing Accept>
+	Msg36_6 <Eliminate the entire hive, make sure there's nothing left. When you're done I'll give you the reward.>
+	CMsg36_6 <ifNPCPassionate Accept>
+	Msg36_7 <Just kill the monsters then come back here for the money. Good luck.>
+	CMsg36_7 <ifNPCCheerful Accept>
+	Msg36_8 <Try hard not to get yourself killed. I'll be waiting here for you to report in.>
+	CMsg36_8 <ifNPCMelancholy Accept>
+	Msg36_10 <Good luck. May the heavens protect you.>
+	CMsg36_10 <ifNPCSpiritual Accept>
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to exterminate some monsters?>
+
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <It's a dirty job, but someone has to do it... someone suicidal preferably.>
+
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Make sure that your equipment is in top form, and all your guns are loaded. This is likely to be a dangerous job.>
+
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <Thanks for the thought, but I have to make sure that whoever we send in there is up to the job. Otherwise all I've done is give the synths a free lunch.>
+
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <It's not likely that I'll find anyone. We may have to bomb the dump from orbit...>
+	msg106_1 <I don't think anyone's going to volunteer. This means I may get to call in an orbital strike against the dump! I'm excited!>
+	cmsg106_1 <ifNPCCheerful Accept>
+
+	% 107 :  Memo
+	msg107 <\ELEMENT 1 in \SCENE EScene 1 offered you a mission to exterminate some biomonsters.>
+
+	% 01 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+
+	% 03 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+
+	% 07 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I'm pretty sure.>
+	Prompt7_1 <Damn straight I can.>
+	CPrompt7_1 <ifG 0 PCRep 4 Accept>
+	Prompt7_2 <I have to try.>
+	CPrompt7_2 <ifG PCRep 1 25 Accept>
+	Prompt7_3 <Maybe not, but I'll try.>
+	CPrompt7_3 <ifG 0 PCRep 5 Accept>
+
+	% 09 :  After being asked if he wants a job, PC says no.
+	Prompt9 <Maybe I shouldn't...>
+	Prompt9_1 <Actually, I'd rather not...>
+	Prompt9_2 <Sorry, I'd rather live.>
+	CPrompt9_2 <ifG 0 PCRep 5 Accept>
+
+	% 11 : Player tries to get job using PLAN "A".
+	%   By default, PLAN "A" is to sound tough and experienced.
+	Prompt11 <I'd like the chance to face them.>
+	Prompt11_1 <Someone ought to exterminate them all.>
+	Prompt11_2 <If you need an ace hunter, I'm here.>
+	CPrompt11 <ifG PCRep 1 d10 Accept>
+
+	% 14 : Player tries to get job using PLAN "B".
+	Prompt14 <It would be fascinating to see those monsters.>
+	Prompt14_1 <Hm, I wish I could see them in the wild.>
+	CPrompt14 <ifG PCRep 7 25 Accept>
+
+	% 17 : Player doesn't much care for the job.
+	Prompt17 <I'd rather not mess with hunter synths.>
+	Prompt17_1 <Think you'll get anyone for the job?>
+
+
+end
+

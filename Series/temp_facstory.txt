@@ -1,0 +1,26 @@
+Story
+	% Generic story template for a faction
+	% Actually, this is more of a description than a real
+	% usable template.
+
+	% This story will last for one week, during which time the faction
+	% will supposedly offer missions to the PC. At the end of the week,
+	% if the faction has "won", the PC gets a number of fac points
+	% equal to the number of missions he took part in.
+
+	% Element 1 is the calling faction. Always. Forever.
+	% Element 2 should be the enemy, if this story has an enemy.
+	%   It could alternatively be a location, if this story has
+	%   a location.
+
+	% The following variables are used by all the plot templates:
+	%  V101 = Faction Victory Count
+	%  V102 = Enemy Victory Count (if appropriate)
+	%  V103 = How many times PC fought for faction
+	%  V104 = How many times PC fought against faction
+
+	% The following variables may be used, if this particular story
+	% calls for them:
+	%  V105 = Load new plot if V105=0
+
+

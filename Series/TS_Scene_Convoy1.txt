@@ -1,0 +1,148 @@
+Scene 0 2
+	% V1 = Chat Status with Transport Driver
+	%   if 1 then driver has already spoken.
+	%   if 2 then driver ready to surrender.
+
+	% V2 = Amount PC can steal
+	% V3 = Amount PC will be offered to leave truck alone
+
+	WildMap
+
+	Start <if= V1 0  ForceChat -1  V= 1 1  V= 2 Reward Threat PCRep 6 100 750 V= 3 Reward Threat PCRep 6 100 50>
+	NU1 <if= T1 0  Reputation 6 -5  Return>
+	NU2 <if= T2 0  Salvage  ifG T3 0  if= V1 1  V= 1 2  ForceChat -1>
+
+sub
+	Team 1
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3
+
+	Team 3
+	Stat 1 4
+
+
+	Persona -1
+	% V1 = Message Randomizer
+	% V2 = Chatted before
+	greeting <NewChat if= L1 2 else GoNoSurrender  Say d5  CashPrize L2  Return  Reputation 2 -5  Reputation 6 1  G+ 2 1000  AddChat d5>
+	GoNoSurrender <if= V2 0 else GoAlreadySaid  V= 2 1  V= 1 10 V+ 1 d10 Say V1   V= 1 5 V+ 1 d5 AddChat V1   V= 1 10 V+ 1 d5 AddChat V1>
+	GoAlreadySaid <SayAnything>
+
+	result1 <EndChat V= 1 5 V+ 1 d5 Say V1>
+	result2 <Goto result1>
+	result3 <Goto result1>
+	result4 <Goto result1>
+	result5 <Goto result1>
+
+	result6 <EndChat V= 1 20 V+ 1 d5 Say V1  Return>
+	result7  <Goto result6>
+	result8  <Goto result6>
+	result9  <Goto result6>
+	result10 <Goto result6>
+
+	result11 <EndChat  Reputation 2 -5  ifG SkRoll 28 20 else GoR11Maybe  ifG PCRep 6 d80 else GoR11Bargain  Say d5  XPV 100  CashPrize L2  Return>
+	GoR11Maybe <ifG SkRoll 28 12 else GoR11Fight  Goto GoR11Bargain>
+	GoR11Fight  <V= 1 25 V+ 1 d5 Say V1>
+	GoR11Bargain  <NewChat  V= 1 30 V+ 1 d5 Say V1  AddChat 16 AddChat 17>
+	result12 <Goto result11>
+	result13 <Goto result11>
+	result14 <Goto result11>
+	result15 <Goto result11>
+
+	result16 <EndChat Reputation 4 1  V= 1 35 V+ 1 d5  Say V1  CashPrize L3  Return>
+	result17 <EndChat Reputation 4 -1  goto GoR11Fight>
+
+	Msg1 <I surrender! Take my load, it's yours!>
+	Msg2 <All right, I give up! Here, take everything you want!>
+	Msg3 <Don't hurt me! Here, you can have all my stuff!>
+	Msg4 <I don't want to die! I give up! You can take my load if that's what you're after.>
+	Msg5 <Okay, I surrender! Take whatever you want!>
+	Msg6 <I'm getting out of here!!!>
+	Msg7 <Just take everything and leave me alone!>
+	Msg8 <Hopefully my insurance will cover this...>
+	Msg9 <I should've listened to Mom and became a teacher...>
+	Msg10 <Take it and let me run away in peace!>
+
+	Msg11 <You have approached within this convoy's defense perimeter. Please state your business here.>
+	Msg12 <What is the nature of your business in this area? I'm afraid we can't let you get any closer until we know who you are.>
+	Msg13 <This convoy is under the protection of Kettle Industries. Kindly remove yourself from our defense perimiter.>
+	Msg14 <You have entered the defense perimiter of this convoy. Please leave this area as quickly as possible.>
+	Msg15 <You have intruded into our convoy defense zone. If you don't leave right away the defense force is cleared to open fire upon you.>
+	Msg16 <You are intruding in our defense zone. Identify yourself or we'll open fire.>
+	Msg17 <It's company policy to attack unidentified mecha which stray too close to our convoy. There's a lot of bandits out there and we have to be careful, you know.>
+	Msg18 <Who are you and what are you doing here?>
+	Msg19 <This is truck \VAL d99 of BioCorp Industries. We are running a secure shipment and you have entered the threat zone. Leave this area immediately or face the consequences.>
+	Msg20 <You have entered this convoy's threat zone. State your purpose and identification, then leave this area or we will be forced to open fire.>
+
+	Msg21 <Keep on trucking!>
+	Msg22 <Be careful, there's a lot of bandits out there...>
+	Msg23 <Oh, okay. We have to be very careful you know.>
+	Msg24 <Have a nice day.>
+	Msg25 <Ten four, roger and out.>
+
+	Msg26 <I don't think so. Our security detachment should make short work of you...>
+	Msg27 <You can try, but my tenders are gonna have a word or two to say about that...>
+	Msg28 <If you want a fight then come on, let's see what you've got.>
+	Msg29 <If you want to die right here then you're more than welcome to try.>
+	Msg30 <Guards, attack this moron!>
+
+	Msg31 <I don't have time to be slowed down by a petty criminal like yourself. Tell you what... I'll give you $ \VAL L3 to just buzz off.>
+	Msg32 <You've got pretty big ambitions for such a petty criminal. I'll make a deal with you... You can have $ \VAL L3 if you just go away.>
+	Msg33 <A fight would only weaken you and slow me down, so why don't we make a deal? I'll give you $ \VAL L3 to just leave us alone. What do you say?>
+	Msg34 <Sorry, I have a policy of only surrendering to big-name criminals. I can make a deal with you, though... $ \VAL L3 to leave us alone.>
+	Msg35 <I can offer you $ \VAL L3 to leave the convoy alone. Don't think of it as giving up... Think of it as the start of a beautiful protection racket.>
+
+	Msg36 <Here's your money, now get lost.>
+	Msg37 <Thanks for not destroying us...>
+	Msg38 <Now leave us alone. We'll have to hurry if we're still going to make our deadline.>
+	Msg39 <You've been quite reasonable.>
+	Msg40 <It's nice doing business with a professional crook.>
+
+	Prompt1 <Been a pleasure doing business with you.>
+	Prompt2 <See you next time.>
+	Prompt3 <That's a smart decision.>
+	Prompt4 <That wasn't so hard, was it?>
+	Prompt5 <Hand over the loot.>
+
+	Prompt6 <Sorry, I'll go away.>
+	Prompt7 <I'll be going now.>
+	Prompt8 <Don't worry, I'm not a bandit.>
+	Prompt9 <I'm just patroling the area.>
+	Prompt10 <I am not your enemy!>
+
+	Prompt11 <Give me your goods and no-one gets hurt.>
+	Prompt12 <Your money or your life!>
+	Prompt13 <I'm here to rob you blind!>
+	Prompt14 <Hand over your cargo or else.>
+	Prompt15 <I'm a bandit, here to rob you!>
+
+	Prompt16 <I'll take it.>
+	Prompt17 <Not good enough...>
+
+end
+inv
+	GroundHugger 8
+	name <Heavy Transport>
+	MidX
+	MidY
+	update <if= V1 0 GrabSource GSetNAtt 4 2 L2 V= 1 1>
+
+	SetTeam 3
+	sub
+		mod Body
+		armor 8
+		mass 81
+		sub
+			Sensor 1
+			CPIT
+			sub
+				NPC Trucker
+				SetPersona -1
+			end
+			hoverjet 6
+		end
+	end
+
+end

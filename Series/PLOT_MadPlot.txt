@@ -1,0 +1,12 @@
+Plot 0
+	% Mad Plot - Does nothing. Just kind of a test.
+	Element1 <Character Passionate Ego>
+	rumor <!1 is very angry about something.>
+	% Time limit - this plot will fade after a short time.
+	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 750>
+	GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+sub
+	Persona 1
+	greeting <Say 1 EndChat>
+	Msg1 <I'm not in the mood to talk right now. Come back later.>
+end

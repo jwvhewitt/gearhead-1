@@ -1,0 +1,75 @@
+Story
+	name <High School Murder Club>
+
+	% This story will run for 3 days, or until completed by the PC.
+	% To complete, the PC must go on a relay from town to town
+	% completing plots at each stop.
+
+	% Element 1 -> Controlling Faction
+	% Element 2 is the scene where the relay will take place.
+	%  The value of N2 will be changed by plots over the course
+	%  of this adventure.
+	Element2 <Scene Town !Member 11>
+
+	% **********************
+	% ***  SCRIPT BLOCK  ***
+	% **********************
+	%  S1 = Time Limit
+	%  S2 = Challenge Rating
+	%  S3 = Message Randomizer
+	%  S4 = Load Lead Plot if S4=0
+	%  S5 = Clue Timer
+	%  S6 = Identity of next member
+	%  S7 = Identity of lead investigator
+	%  S8 = Location of lead investigator
+
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+	%  S203 = Number of clues accumulated
+	%  S204 = # of clues when memo last updated
+
+	% At the START trigger, check for the end of the story
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 FacVar N1 1000>
+	GoCheckTime <ifG ComTime V1 else GoCheckMemo FacXP+ N1 * 3 S202 EndStory>
+	GoDelete <FacXP+ N1 S202 EndStory>
+
+	% If the PC has taken part in the relay, store a memo.
+	GoCheckMemo <if= S203 S202 ifG S103 0  Memo 1>
+
+	% Every half-hour, load a new plot.
+	halfhour <if# S2 0 ifG S202 3 else GoCheckRelay EndStory>
+	GoCheckRelay <if= S201 0 else GoLoadLead StoryLine .relayplot S= 201 1 S+ 2 d2>
+	GoLoadLead <if= S4 0 StoryLine .leadplot S= 4 1>
+	% Fill in the filename patterns for the plot types.
+	.relayplot  <TS_GRD_MurderClub_PLOT_*.txt>
+	.leadplot  <TS_GRD_MurderClub_PLOT2_*.txt>
+
+	% Every quarter, load a news story.
+	% Implementation thereof is left as an exercise to the reader.
+	quarter <S= 3 100 S+ 3 d5 News S3>
+
+	% ***********************
+	% ***  MESSAGE BLOCK  ***
+	% ***********************
+	% 1 :  Relay Memo
+	Msg1 <\SCENE N2 is where the next member of the murder club will be found.>
+
+	% 101 - 105 :  News Messages
+	Msg101 <FedTer gripped by terror as a high school murder club goes on a killing spree.>
+	Msg102 <New trends in delinquency? Local high school has spawned a "Murder Club"; members currently at large.>
+	Msg103 <\SCENE N2 gripped by terror as reports indicate this is the latest target of infamous "Murder Club".>
+	Msg104 <Guardians search for youth gone wild; "Murder Club" rampages across the nation.>
+	Msg105 <Victims continue to pile up in bizarre "Murder Club" case. Residents advised to practice extreme caution.>
+
+
+	% ***********************
+	% ***  LINKING PLOTS  ***
+	% ***********************
+
+	% If a relay plot ends in victory for N1, do the following:
+	%  S= 201 0 S+ 202 1 S= 5 ComTime S+ 5 13800 N= 2 [element number of next scene]
+	% If it ends in failure, or gets cancelled:
+	%  S= 201 0
+

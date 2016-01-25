@@ -1,0 +1,134 @@
+Battroid 5
+Name <Daum>
+Desig <SAN-D2 Zeta>
+SDL_Sprite <btr_daum.png>
+desc <Fifty years after the release of the original Daum, RegEx corporation has once again updated the design.>
+
+Mod Head
+	Armor 4
+	mass -3
+	sub
+		Sensor 6
+		TarComp 1
+
+		BeamGun 3
+		Name <Defensive Beamgun>
+		type <INTERCEPT>
+		Range 3
+		Acc 1
+		BV 4
+	end
+	inv
+		HeadArmor 3
+		Mass -3
+	end
+
+Mod Body
+	Armor 4
+	mass -5
+	sub
+		CPit
+		Armor 2
+
+		Gyro 2
+		Armor 1
+
+		Engine 5
+		Armor 1
+
+		Sensor 3
+
+		Mount
+		Name <Right Torso Mount>
+
+		Mount
+		Name <Left Torso Mount>
+		inv
+			STC SWML-40
+		end
+
+		ArcJet 5
+	end
+	inv
+		BodyArmor 4
+		Mass -4
+	end
+
+Mod Arm
+	Name <Right Arm>
+	Armor 3
+	mass -3
+	sub
+		Hand
+		inv
+			STC RG-8
+		end
+
+		Mount
+		Name <Right Arm Mount>
+		inv
+			Melee 7
+			name <Dueling Lance>
+			mass -3
+		end
+	end
+	inv
+		ArmArmor 3
+		Mass -3
+	end
+
+Mod Arm
+	Name <Left Arm>
+	Armor 3
+	Mass -3
+	sub
+		Hand
+
+		Mount
+		Name <Left Arm Mount>
+	end
+	inv
+		ArmArmor 3
+		Mass -3
+
+		EShield 4
+		DefBonus 2
+	end
+
+Mod Leg
+	Name <Right Leg>
+	Armor 4
+	mass -3
+	sub
+		ArcJet 4
+
+		Mount
+		Name <Right Leg Mount>
+	end
+	inv
+		LegArmor 3
+		Mass -2
+		sub
+			ArcJet 2
+		end
+	end
+
+Mod Leg
+	Name <Left Leg>
+	Armor 4
+	mass -3
+	sub
+		ArcJet 4
+
+		Mount
+		Name <Left Leg Mount>
+	end
+	inv
+		LegArmor 3
+		Mass -2
+		sub
+			ArcJet 2
+		end
+	end
+end
+

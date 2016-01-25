@@ -1,0 +1,6 @@
+% Default Stairs Up %
+name <Stairs Up>
+use <if= StatVal STAT_MetaVisibility 0  Print 1 Exit StatVal 4>
+roguechar </>
+SDL_Sprite <meta_terrain.png>
+Msg1 <You go up the stairs.>

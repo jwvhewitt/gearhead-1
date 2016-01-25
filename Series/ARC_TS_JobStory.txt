@@ -1,0 +1,171 @@
+Plot 0
+	% The player has requested a job. He will perform several tasks
+	% for Hogye Hospital, earning some cash and XP, then be told to
+	% report to Snake Lake to see how the hospital there is doing.
+
+	% V1 = Job Stage
+
+	% Nurse Park
+	stat 1 2
+	element1 <Character>
+
+	% Doctor Kim
+	stat 2 3
+	element2 <Character>
+
+	% Nurse at Snake Lake.
+	stat 3 25
+	element3 <Character>
+
+sub
+	Persona 1
+	% V2 -> PC Skill Roll for jobs.
+	greeting <NewChat if= P1 0 else GoStage1 ifG React 25 else GoMedReact Say 1>
+	GoMedReact <ifG React 5 else GoLowReact Say 2>
+	GoLowReact <Say 3>
+
+	GoStage1 <if= P1 1 else GoStage2 Say 4 AddChat 1>
+	GoStage2 <if= P1 2 else GoStage3 Say 9>
+	GoStage3 <if= P1 3 else GoStage4 AddChat 2 P+ 1 1 ifG React 5 else GoLowS3 Say 10>
+	GoLowS3 <Say 11>
+	GoStage4 <Say 12>
+
+	% Player is attempting the repair.
+	Result1 <NewChat Time 3600 P= 1 2 V= 2 SkRoll 23 ifG V2 9 else GoGR2 AddReact 7 Say 5 CashPrize 200 XPV 25>
+	GoGR2 <ifG V2 6 else GoGR3 Say 6 AddReact 5 CashPrize 150 XPV 50>
+	GoGR3 <ifG V2 3 else GoGR4 Say 7 AddReact 3 CashPrize 100 XPV 75>
+	GoGR4 <AddReact -10 Say 8 CashPrize 50 XPV 100>
+
+	Msg1 <I heard that you've been offered a job here. I can't wait to start working with you! Speak with Doctor Kim; he'll tell you what to do.>
+	Msg2 <Welcome to Hogye Hospital. Ask Doctor Kim about the job you've been offered. He'll explain what your duties will be.>
+	Msg3 <You want a job here? I don't know anything about that... talk to Doctor Kim.>
+	Msg4 <We do all kinds of diagnostic work here at the hospital. I'm supposed to do some blood analysis, but our centrifuge is busted. Maybe you could have a look at it. I think it's a simple electrical problem.>
+	Msg5 <Wow! That was fantastic! I think the centrifuge works better now than it did when we bought it... Good job! You've earned $200 for your efforts, but I guess this was so easy for you that you probably didn't learn much.>
+	Msg6 <Very good. The centrifuge is working again, I can get back to analyzing blood samples. Go report to Doctor Kim.>
+	Msg7 <You've repaired the centrifuge. It's working well enough for me to do this blood analysis, but I think I should bring it to Quentin later so he can take a look at it. Go report to Doctor Kim.>
+	Msg8 <Argh! Please, stop doing that to my poor delicate machine! Maybe you should study some general repair before trying something like this again. I certainly hope that taking my centrifuge apart was educational... Go report to Doctor Kim.>
+	Msg9 <I'm busy doing blood analysis. Doctor Kim might have another task for you.>
+	Msg10 <I know that working in this hospital isn't very exciting. Maybe if we were a big city emergency center... But, I have a job for you that should be more interesting. Supplies need to be delivered to Snake Lake. Come back in a few minutes.>
+	Msg11 <Oh, it's you again. How would you like to leave here and go someplace more exciting? We've got a package of medical supplies that needs to be delivered to Snake Lake. It'll be finished in a few minutes, you can take it then.>
+	Msg12 <The package is ready. Doctor Kim will set you up with some transportation.>
+
+	Prompt1 <[Attempt Repair]>
+
+
+	Persona 2
+	% V1 = Has met before.
+	% V2 = Skill Roll
+	greeting <NewChat if= P1 0 else GoStage1 if= V1 0 else GoMetBefore Say 1 AddChat 1 AddChat 2 AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+	GoMetBefore <Say 2 AddChat 1 AddChat 2 AddChat 3 AddChat 4 AddChat 5 AddChat 6>
+
+	GoStage1 <if= P1 1 else GoStage2 Say 7 Time 200 AddChat 8>
+	GoStage2 <if= P1 2 else GoStage3 Say 8 AddChat 7 AddChat 6>
+	GoStage3 <if= P1 3 else GoStage4 Say 13 AddChat 8>
+	GoStage4 <AdvancePlot 1 Say 14 MechaPrize .DocWagon AddChat 8 AddChat 9>
+	.DocWagon <Rover.txt>
+
+	result1 <Say 5 Goto GoStartMission>
+	result2 <Say 5 Goto GoStartMission>
+	result3 <Say 5 Goto GoStartMission>
+	result4 <Say 6 Goto GoStartMission>
+	result5 <Say 6 Goto GoStartMission>
+	GoStartMission <NewChat AddReact 2 P= 1 1>
+
+	result6 <Say 3 Shop NoWares EndChat Say 4>
+
+	% Player is checking the mycotoxosis slides.
+	Result7 <NewChat Time 3600 P+ 1 1 V= 2 SkRoll 11 ifG V2 9 else GoAw2 Say 9 AddReact 5 CashPrize 200 XPV 25>
+	GoAw2 <ifG V2 6 else GoAw3 Say 10 AddReact 3 CashPrize 150 XPV 50>
+	GoAw3 <ifG V2 3 else GoAw4 Say 11 AddReact 1 CashPrize 100 XPV 75>
+	GoAw4 <Say 12 CashPrize 50 XPV 100>
+
+	result8 <Say 3 Shop NoWares EndChat Say 4>
+	result9 <NewChat AddChat 8 Say 15>
+
+	Msg1 <So, Megi tells me that you're looking for a job. Very good... We could use all kinds of help here at the hospital. To start with, what would you say your major skills are?>
+	Msg2 <You haven't started on your job yet... The position is still open if you're still interested. You can earn some money and gain some experience. First I need to know, what are your skills?>
+	Msg3 <Oh, sorry, I didn't notice that you were bleeding all over the place. Where does it hurt?>
+	Msg4 <Take care out there. It's a dangerous world.>
+	Msg5 <Well, you'll probably get a chance to use your talents here. Go talk to Nurse Park about the centrifuge. The stupid thing is broken again.>
+	Msg6 <You probably won't get a chance to do much of that here, but well, you never can tell. Life is sort of unpredictable. I believe that Nurse Park could use your help right about now; see what you can do.>
+	Msg7 <Go speak to Nurse Park.>
+	Msg8 <Hello. I have another task for you. It's quite simple, really. Here are some mycotoxosis test slides. I need you to check each of them, and indicate any slides which have a blue spot.>
+
+	Msg9 <Excellent work. You have really good eyesight. We used to have a robot for sorting these tests, but you know they just don't build help like they used to.>
+	Msg10 <Thank you very much. Your eyesight is quite good... I ruined mine by playing too many computer games in university.>
+	Msg11 <That's done. Now I can tell Hyolee that all of her mutant rabbits are perfectly healthy. Thanks for helping.>
+	Msg12 <Are you by any chance color blind? Here, I'll finish this up myself. You might want to think about practicing your Awareness skill some time, you know.>
+
+	Msg13 <I don't need any more help right now, but I might later. Go talk to Nurse Park.>
+
+	Msg14 <There's a crate of medical supplies which has to be delivered to Snake Lake Hospital. Here's a car for you to travel in... I know it's a generous gift, but us doctors are loaded. Come back after you've dropped off the goods.>
+	Msg15 <I'm not entirely sure... I'd assume that it's somewhere next to a lake, but I could be completely wrong about that. I only know Nurse \ELEMENT 3 from internet, I'm afraid.>
+
+	prompt1 <I'm good at Medicine.>
+	prompt2 <I'm good at First Aid.>
+	prompt3 <I'm good at Science.>
+	prompt4 <Fighting and killing, mostly.>
+	prompt5 <Piloting giant robots.>
+	prompt6 <Before that, I could use some help.>
+	prompt7 <[Begin Analysis]>
+	prompt8 <Doctor, I need medical aid.>
+	prompt9 <Where is Snake Lake?>
+
+	Plot 1
+		% Player has the crate, and will travel to Snake Lake.
+	sub
+		Persona 3
+		greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+
+		result1 <NewChat Say 2 AdvancePlot 2 AddChat 4 AddChat 5 AddChat 6>
+		result2 <Say 7 Shop NoWares Say 8 EndChat>
+		result3 <NewChat Say 6 AddChat 1 AddChat 2>
+		result4 <NewChat Say 4 Reputation 1 3 AddReact 15 AddChat 2>
+		result5 <NewChat Say 5 Reputation 1 -5 Reputation 2 -4 AddReact -3 CashPrize 500>
+		result6 <NewChat Say 3 Reputation 5 1 AddReact 5 AddChat 2>
+
+		Msg1 <Welcome to Snake Lake Hospital. How may I help you?>
+		Msg2 <Great! I've been waiting for this shipment to arrive! This will help us to deal with the recent outbreak of beaver fever.>
+		Msg3 <You wouldn't believe how often I get that question. Bever fever is caused by a protozoan called "giardia lamblia". The main symptom of this disease is diarrhea. Beaver fever is usually spread through contaminated water; be careful.>
+		Msg4 <Believe me, your work is greatly appreciated. I'm sorry that I don't have anything to offer you as a reward.>
+		Msg5 <Here's your money.>
+		Msg6 <Well, ever since Doctor Wiseman died I've had to run this hospital by myself. It's tough keeping everything running, and there's not a lot of either time or money to spread around.>
+		Msg7 <Let me take a look at your injuries.>
+		Msg8 <Safe journeys.>
+
+		prompt1 <I have your supplies from Hogye.>
+		prompt2 <I need medical aid.>
+		prompt3 <Why is this hospital so dusty?>
+		prompt4 <I'm just glad to help.>
+		prompt5 <That'll be $500 for delivery.>
+		prompt6 <Is that a real disease?>
+
+
+		Plot 2
+			% The player has delivered the goods, and now will
+			% return to Hogye for the reward.
+		sub
+			Persona 2
+			greeting <NewChat AddChat 1 if= V1 0 else GoMetBefore V= 1 1 Say 1 CashPrize 5000 XPV 150 AddReact 5>
+			GoMetBefore <ifG PCRep 1 50 else GoMedHero Say 4 AdvancePlot 0 CashPrize 300000 XPV 250 AddReact 15>
+			GoMedHero <ifG PCRep 1 25 else GoLowHero Say 5>
+			GoLowHero <ifG PCRep 1 10 else GoNoHero Say 6>
+			GoNoHero <ifG PCRep 1 -1 else GoVillain Say 7>
+			GoVillain <Say 8>
+
+			Result1 <Say 2 Shop NoWares Say 3 EndChat>
+
+			Msg1 <Thank you very much for delivering the supplies to Snake Lake! I'm afraid that \ELEMENT 3 isn't well off like us, so I like to help whenever I can. Here's some pay for your good deed. Keep helping people and they'll help you.>
+			Msg2 <Allow me to examine your wounds, and I'll have you as good as new in no time.>
+			Msg3 <See you again!>
+			Msg4 <Everybody has been talking about your heroic deeds. I told you that if you help others then they'll help you... Allow me to do just that. Here's a small gift, in honor of your virtuous nature.>
+			Msg5 <You've been doing a lot of good in the world, just as I thought you would. How can I help you today?>
+			Msg6 <You're starting to get a bit of a heroic reputation. Keep on helping people, and your good deeds will come back to you.>
+			Msg7 <How can I help you today?>
+			Msg8 <It's important to help people, even those who might not be deserving of your aid. What can I do for you today?>
+
+			Prompt1 <I've been wounded.>
+		end
+	end
+
+end

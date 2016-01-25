@@ -1,0 +1,17 @@
+% Default Trap Door %
+name <Trapdoor>
+use <if= StatVal STAT_MetaVisibility 0 if= StatVal STAT_Lock 0 else GoLocked Print 1 Exit StatVal 4>
+GoLocked <Print 3>
+REVEAL <Print 2>
+roguechar <.>
+CLUE32 <if# StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 6 XPV 100 SetStat STAT_Lock 0>
+GoNoUnlock <Print 4>
+GoNotLocked <Print 5>
+SDL_Sprite <meta_terrain.png>
+Msg1 <You go down the trapdoor.>
+Msg2 <You find a hidden trapdoor!>
+Msg3 <The trapdoor is locked.>
+Msg4 <You do not manage to unlock the trapdoor.>
+Msg5 <The trapdoor does not appear to be locked.>
+Msg6 <You unlock the trapdoor.>
+

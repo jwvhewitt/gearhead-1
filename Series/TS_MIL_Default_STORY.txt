@@ -1,0 +1,35 @@
+Story
+	name <STORY: Military Skirmish>
+	% Nothing much exciting going on, except that more mecha combat
+	% missions than usual will be offered.
+
+	% Element 1 is the calling faction. Always. Forever.
+	Element2 <Faction Military !Enemy 1>
+	Element3 <Scene Town Target !Member 11>
+
+	rumor <!3 is under attack.>
+
+	%  V1 = Time Limit
+
+	%  V101 = Faction Victory Count
+	%  V102 = Enemy Victory Count (if appropriate)
+	%  V103 = How many times PC fought for faction
+	%  V104 = How many times PC fought against faction
+
+	% This story will last for 2 - 5 days.
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V+ 1 d86400>
+	GoCheckTime <ifG ComTime V1 EndStory ifG V101 5 FacXP+ N1 V103 Trigger FacWin N1 Trigger FacLose N2>
+
+	% Every hour, it will attempt to load a plot.
+	hour <StoryLine .plotname>
+	.plotname <TS_MIL_Default_PLOT_*.txt>
+
+	% Every quarter, print a new news story.
+	quarter <News d5>
+
+	Msg1 <\NARRATIVE 3 under fire as \NARRATIVE 1 skirmishes with \NARRATIVE 2 invaders.>
+	Msg2 <Some fighting between \NARRATIVE 1 and \NARRATIVE 2 near \NARRATIVE 3 .>
+	Msg3 <Better cancel vacation plans for \NARRATIVE 3 , as a \NARRATIVE 2 combat group has been spotted in the area.>
+	Msg4 <Infiltrators from \NARRATIVE 2 suspected to be hiding near \NARRATIVE 3 ; \NARRATIVE 1 has dispatched a team to face this menace.>
+	Msg5 <Patrol groups from \NARRATIVE 2 and \NARRATIVE 1 have fought outside of \NARRATIVE 3 ; military commanders say that there is no cause for alarm.>
+

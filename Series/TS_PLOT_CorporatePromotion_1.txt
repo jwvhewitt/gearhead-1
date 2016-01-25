@@ -1,0 +1,87 @@
+Plot 0
+	name <Promotion Reward>
+	% The PC has gone up a rank in the military, and will
+	% now get a reward for it.
+
+	% Element 1 is the calling faction
+	% Element 2 is the character who'll give the PC the reward
+	Element2 <Character !Comrade 1>
+
+	% These are faction rewards...
+	Element3 <Prefab>
+	Element4 <Prefab>
+	Element5 <Prefab>
+
+	% V1 = Email Indicator
+
+	% This plot will remain active until the PC collects his
+	% reward, until the NPC dies, or until the PC is no longer
+	% a member of the calling faction.
+	start <ifPersona E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d5 V= 1 1>
+	GoReschedule <FacVar+ E1 1 1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You've earned a promotion. Come see me to accept your reward.>
+	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// I have urgent business which requires your attention at once.>
+	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Report here for debriefing at once, soldier.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// You have been promoted. Report here to receive your comission.>
+	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// Your presence is required at headquarters immediately.>
+
+sub
+	Persona 2
+	% V1 = Faction level the PC is being rewarded for.
+	greeting <NewChat XPV 100 V= 1 FacVar E1 2 V+ 1 1 FacVar= E1 2 V1 AdvancePlot 0 Goto GoL0>
+	GoL0 <ifG 9 V1 else GoBigLevel ifG FXPNeeded V1 PCRep 6 else GoL1 CashPrize Reward Threat FXPNeeded V1 100 250 Say 10>
+	GoL1 <if= V1 1 else GoL2 Say 1 CashPrize 150000>
+	GoL2 <if= V1 2 else GoL3 Say 2 MechaPrize .mek1>
+	.mek1 <Daum.txt>
+	GoL3 <if= V1 3 else GoL4 Say 3 GiveKeyItem E3>
+	GoL4 <if= V1 4 else GoL5 Say 4 CashPrize 450000>
+	GoL5 <if= V1 5 else GoL6 Say 5 MechaPrize .mek2>
+	.mek2 <Jos.txt>
+	GoL6 <if= V1 6 else GoL7 Say 6 GiveKeyItem E4>
+	GoL7 <if= V1 7 else GoL8 Say 7 MechaPrize .mek3>
+	.mek3 <Maanji.txt>
+	GoL8 <if= V1 8 else GoBigLevel Say 8 GiveKeyItem E5>
+	GoBigLevel <Say 9 CashPrize 500000>
+
+	Msg1 <You have been promoted to \FacRank E1 V1 . Here's a cash bonus for your good performance.>
+	Msg2 <You have been promoted to \FacRank E1 V1 . You'll need a better mecha than the one you started out with... This one should do nicely.>
+	Msg3 <You have been promoted to \FacRank E1 V1 . To mark your new rank, here is the latest model cybereye produced by our company. All of the executives are having them implanted, to improve performance.>
+	Msg4 <You have been promoted to \FacRank E1 V1 . Here's a cash bonus to reward your loyal service.>
+	Msg5 <You have been promoted to \FacRank E1 V1 . As a reward, here is the latest alpha-grade mecha from Kettel Industries, the Jos.>
+	Msg6 <You have been promoted to \FacRank E1 V1 . Here, this is an advanced neural booster unit. All of the top executives have had one installed. You can't expect to advance far in the company relying just upon your human brain, can you?>
+	Msg7 <You have been promoted to \FacRank E1 V1 . Here's a mecha worthy of your station, the Harpy.>
+	Msg8 <You have been promoted to \FacRank E1 V1 . This is our most advanced cybernetics kit.>
+	Msg9 <Here is a cash reward for your continued loyal service to \ELEMENT 1 .>
+	Msg10 <You have been promoted to \FacRank E1 V1 . Here is a small cash reward in recognition of your service.>
+
+end
+inv
+	StatModifier 30
+	name <Advanced Cybereyes>
+	CyberSlot <EYES>
+	type <CYBER CHARA>
+	Reflexes 3
+	Perception 4
+	Craft 2
+	Charm -1
+
+	StatModifier 40
+	name <Neural Cyberboost>
+	CyberSlot <BRAIN>
+	type <CYBER CHARA>
+	Craft 3
+	Knowledge 5
+	Ego -1
+
+	StatModifier 60
+	name <Body Optimization>
+	CyberSlot <MUSCULATURE>
+	type <CYBER CHARA>
+	Body 5
+	Speed 3
+	Reflexes 2
+	Ego 3
+
+end

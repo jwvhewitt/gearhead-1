@@ -1,0 +1,51 @@
+Plot 0
+	name <PLOT: Justice>
+
+	element1 <Character Bounty Hunter HasMecha Lawful>
+
+	% V1 = Time Limit
+	% V2 = Encounter PV
+
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 Compose ENC 1 .encounter>
+	GoCheckTime <ifG ComTime V1 if= L2 0 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	.encounter <ifG PCRep 6 d80 else GoDelete ifG -9 PCRep 1 else GoCheckChaos V= 2 Threat PCRep 6 150 Goto GoStartCombat>
+	GoCheckChaos <ifG -d50 PCRep 2 else GoDelete V= 2 Threat PCRep 6 80 Goto GoStartCombat>
+
+	GoStartCombat <Block ifG SkRoll 11 15 else GoNoWarning ifYesNo 2 3 4 else GoRealCombat Mental ifG SkRoll 25 12 else GoStealthFailed Print 5 AdvancePlot 0>
+	GoNoWarning <Alert 1 goto GoRealCombat>
+	GoStealthFailed <Print 6 goto GoRealCombat>
+
+	GoRealCombat <SavePos  Dynamic 2 V2 .nu1 .nu2 DynaNPC E1 2 ComposeD START .start PassVar 1 E1>
+	.nu1 <if= T1 0 if= L2 0 L= 2 1 Reputation 6 -10 Return>
+	.nu2 <if= T2 0 if= L2 0 L= 2 1 Reputation 6 1   XPV 50  Salvage Return>
+	.start <if# V1 0 ForceChat V1 V= 1 0>
+
+	Msg1 <Without warning, you are attacked by several large mecha!>
+
+	Msg2 <You are approached by several large mecha. They appear to be hostile.>
+	Msg3 <Try to sneak away.>
+	Msg4 <Attack!>
+
+	Msg5 <You evade your pursuers.>
+	Msg6 <You don't manage to get away!>
+
+sub
+	Persona 1
+	rumor <!1 has been looking for a big-time criminal.>
+	greeting <if= P2 0 else GoCombatStarted NewChat SayAnything>
+	GoCombatStarted <EndChat Say 1 AdvancePlot 0 ifG 1 PCRep 1 PCEnemy E1>
+	Msg1 <The guardians have offered a bounty for anyone who can stop your crime spree... That's what I plan on doing!>
+	Msg1_1 <You've broken the law. I'm bringing you in.>
+	CMsg1_1 <ifG 0 NPCRep E1 3 Accept>
+	Msg1_2 <I can't allow criminals like you to harm innocent people. In the name of the law, I'm bringing you in!>
+	CMsg1_2 <ifG NPCRep E1 1 0 Accept>
+	Msg1_3 <Finally, I get my chance to put you in your place... There's a bounty on your head, and I intend to collect.>
+	CMSg1_3 <ifG 0 React Accept>
+	Msg1_4 <This isn't one of my underworld contracts... I was sent to bring you in by the guardians themselves. I'm going to enjoy breaking you.>
+	CMsg1_4 <ifG 0 NPCRep E1 1 Accept>
+	Msg1_5 <Sorry it has to go down like this, but there's been a bounty placed on your head for all the crimes you've comitted. I'm going to have to fight you.>
+	CMsg1_5 <ifG React 35 Accept>
+
+end

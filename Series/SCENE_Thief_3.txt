@@ -1,0 +1,145 @@
+scene 0 0
+% The PC is here to steal a mecha, or at least some mecha equipment.
+
+% The following interface details must remain constant
+% throughout all Thief_* scenes:
+
+%   Team 2 = Default enemies
+%   Team 3 = WMon enemies
+
+%   V1 = If nonzero, have some wandering monsters
+%   V2 = If nonzero, PC has succeeded in his quest.
+
+% The following interface details may be changed:
+
+%   V3 = Have opened the gate.
+
+
+WildMap
+GapFill <-4 -4 -7 -10 -10 -10>
+
+start <if# L1 0 MonsterUp 3 L1 L= 1 0>
+5Min <ifG 10 SkRoll 25 MonsterUp 3 d6>
+
+UTD-1 <MonsterUp 3 20>
+
+% If the PC leaves or is killed, return to the calling scene.
+Nu1 <if= T1 0 Return>
+
+sub
+	forest
+	width 5
+	height 5
+	special <StartHere>
+
+	Complex
+	width 12
+	height 12
+	LockedDoorChance 50
+	SecretDoorChance 30
+	sub
+		rect
+		FloorType 16
+		special <Cell>
+		sub
+			StairsDown
+			Use <Print 1 if= L3 1 else GoNoOpen Alert 3 L= 2 1 Retreat 1>
+			GoNoOpen <Alert 2>
+			Msg2 <The doors of the mecha bay are closed. There's no way you can get out this way.>
+			Msg3 <You grab what you came here for and make a hasty retreat.>
+		end
+	end
+
+	room 7 7
+	LockedDoorChance 90
+	sub
+		rect
+		width 3
+		height 3
+		FloorType 16
+		name <Lab>
+	end
+
+
+	Team 1
+	SetEnemy 2 3
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3
+	type <Robot Guard>
+
+	Team 3
+	SetEnemy 1
+	SetAlly 2
+	type <Robot Guard>
+
+	Team 4
+
+	Persona -1
+	greeting <NewChat if= L3 1 else GoFirstTime SayAnything>
+	GoFirstTime <ifG PCRep 1 d120 else GoNoKnow ifG PCRep 6 d80 else GoNoKnow Say 7 AddChat 5>
+	GoNoKnow <Say 1 AddChat 1 AddChat 2>
+
+	result1 <NewChat Say 3 AddChat 3 AddChat 4>
+
+	result2 <NewChat Say 2>
+
+	result3 <EndChat Reputation 4 -d12 ifG Intimidation 8 else GoR3Fail Say 5 L= 3 1 XPV 100>
+	GoR3Fail <Say 4 MonsterUp 3 10 RunAway -1>
+
+	result4 <EndChat Reputation 4 d8 ifG Conversation 15 else GoR4Fail Say 6 L= 3 1 XPV 100>
+	GoR4Fail <Say 4 RunAway -1>
+
+	result5 <NewChat Say 8 L= 3 1 XPV 100>
+
+	Msg1 <Who are you!? How did you get in here!?>
+	Msg1_1 <Who let you in here!? Get out at once or I'll call the guards!>
+	Msg1_2 <You're not supposed to be here. Get out of my lab!>
+
+	Msg2 <Well, don't let it happen again!>
+	Msg2_1 <Don't let the door hit your ass on the way out!>
+
+	Msg3 <You're a thief!? What do you want from me?>
+	Msg3_1 <Don't hurt me! I'm just a researcher... What do you want?>
+
+	Msg4 <No, I can't! Guards, guards! The thief is here!!!>
+	Msg4_1 <I'll never help you! Guards, the thief is here!!!>
+	Msg4_2 <You can't expect me to do that! Guards, hurry! The thief is in here!>
+
+	Msg5 <Alright, I'll do it! Just don't do anything violent! There... the doors have been opened.>
+	Msg5_1 <Ulp... Okay, I can do that for you... Here, the gates have been opened...>
+
+	Msg6 <Alright, I'll help you... I never did like my boss, this is my chance for revenge. Here. The bay doors have been opened. You can get out from there now.>
+	Msg6_1 <You want to steal our prototype? Hm... This could be my revenge on Jenkins from accounting. Okay, I'll help you. The mecha bay has been opened.>
+
+	Msg7 <You're \PC , right? I've heard about you... I have a favor to ask.>
+	Msg7_1 <Aren't you \PC , the famous cavalier? There's something I want you to do...>
+
+	Msg8 <Steal our prototype. I can't bear to see my research used for evil... The only way to save it is if you take it away, now. I've opened the mecha bay doors so you should have no trouble getting out.>
+	Msg8_1 <Steal my prototype, and take it far away from here. You can't imagine the evil the company has planned for it... The only way to redeem my work is if my mecha is used for good. Here, the bay doors have been opened. You can get out now.>
+
+	Prompt1 <I'm here to rob the place.>
+	Prompt1_1 <What do you have worth stealing?>
+	Prompt1_2 <Show me to the loot!>
+
+	Prompt2 <Sorry, must've taken a wrong turn...>
+	Prompt2_1 <Sorry, I'm in the wrong place.>
+
+	Prompt3 <Open the mecha bay doors, or I kill you.>
+	Prompt3_1 <Give me the prototype or else you die.>
+
+	Prompt4 <Just help me out a little and I'll go away.>
+	Prompt4_1 <I want to see what you've been working on.>
+
+	Prompt5 <What is it?>
+	Prompt5_1 <What do you want?>
+
+end
+inv
+	NPC Scientist
+	home <Lab>
+	SetPersona -1
+	SetTeam 4
+
+end

@@ -1,0 +1,314 @@
+plot 0
+	name <PLOT: Business Offer>
+
+	% E1 is the leader who's renewing the service contract
+	% E2 is a corporate faction
+	% E3 is the member of the faction who's doing the deal
+	element1 <Character Leader Sociable>
+	element2 <Faction Corporate>
+	element3 <Character Executive !Comrade 2 !Far 1>
+
+	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 News d5>
+	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	Msg1 <\SCENE EScene 1 to renew public utilities contract with \ELEMENT 2 .>
+	Msg2 <\ELEMENT 1 , mayor of \SCENE ESCENE 1 , to enter into public services contract negotiations.>
+	Msg3 <\SCENE EScene 1 to seek more advantageous public utilities contract from \ELEMENT 2 .>
+	Msg4 <\ELEMENT 3 of \ELEMENT 2 to submit new proposal for \SCENE EScene 1 public utilities program.>
+	Msg5 <\SCENE EScene 1 public works service contract up for renewal; \ELEMENT 2 expected to submit proposal.>
+
+sub
+	Persona 1
+	% V2 = Message randomizer
+	greeting <NewChat ifG React 30 else GoNoFriend ifG PCRep 2 d40 else GoNoFriend Say d5 V= 2 9 V+ 2 d3 AddChat V2 V= 2 12 V+ 2 d3 AddChat V2>
+	GoNoFriend <ifG PCRep 2 -1 else GoNoChance ifG React 0 else GoNoChance V= 2 5 V+ 2 d5 Say V2 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2>
+	GoNoChance <V= 2 10 V+ 2 d5 Say V2 AdvancePlot 0>
+
+	result1 <NewChat ifG 10 SkRoll 21 else GoOffer Say 105>
+	result2 <Goto result1>
+	result3 <Goto result1>
+
+	result4 <NewChat ifG 10 SkRoll 19 else GoOffer Say 106>
+	result5 <Goto result4>
+	result6 <Goto result4>
+
+	GoOffer <V= 2 15 V+ 2 d5 Say V2 AdvancePlot 1>
+
+	result7 <NewChat Reputation 5 -d8 ifG 0 NPCRep E1 5 else GoR7Nope Say 101 AddReact d10 AdvancePlot 0>
+	GoR7Nope <Say 102 AdvancePlot 0>
+	result8 <NewChat Reputation 5 d8 ifG NPCRep E1 5 0 else GoR8Nope Say 103 AddReact d10 AdvancePlot 0>
+	GoR8Nope <Say 104 AdvancePlot 0>
+
+	result10 <NewChat V= 2 20 V+ 2 d5 Say V2 AdvancePlot 1>
+	result11 <Goto result10>
+	result12 <Goto result10>
+
+	result13 <NewChat V= 2 25 V+ 2 d3 Say V2 AdvancePlot 0>
+	result14 <Goto result13>
+	result15 <Goto result13>
+
+	% 01 - 05 :  PC is favored for this job.
+	Msg1 <Hello \PC . I have a favor to ask of you... The \SCENE Escene 1 public works contract is up for renewal, and I would appreciate it if you would be the town's negotiator.>
+	Msg2 <How would you like to help the city? Our public works contract is up for renewal, and I need someone to go to \SCENE EScene 3 and try to negotiate a better deal.>
+	Msg3 <I've got a job for you, if it's the type of thing you'd be interested in. I need someone to contact \ELEMENT 2 and arrange a public utilities contract for \SCENE EScene 1 .>
+	Msg4 <It's good to see you. If you're free at the moment, I have a job you might be able to help me with. We're arranging a new public works contract with \ELEMENT 2 . I could use someone to go negotiate us the best possible deal.>
+	Msg5 <I need someone to go to \SCENE EScene 3 and arrange a public works contract for the city with \ELEMENT 2 . How'd you like to help me?>
+
+	% 06 - 10 :  Job will be implied; PC may be able to get it.
+	Msg6 <Tomorrow we'll begin negotiations to renew the public works contract with \ELEMENT 2 . I hope we can get a good deal; otherwise I might get voted out of office!>
+	Msg7 <I've got to put together a proposal for \ELEMENT 2 to handle the city utilities for \SCENE EScene 1 . Hopefully they'll give us a better deal than last time.>
+	Msg8 <Some investors from \ELEMENT 2 have submitted a proposal to handle the city's infrastructure services. I have to go over all the data and decide whether or not it'd be in our financial interests to agree.>
+	Msg9 <As you may know \ELEMENT 2 handles the utilities for \SCENE EScene 1 . The contract is coming up for renewal soon, and I should try to get a better deal for the city.>
+	Msg10 <I've got to review these contracts from \ELEMENT 2 . The city needs to save money, but they're the only company that can give us the services we need.>
+
+	% 11 - 15 :  PC has no chance to get this job.
+	Msg11 <I'm very busy today. If you have anything to discuss, please come back later.>
+	Msg12 <I'm busy working on the new public utilities strategy for \SCENE EScene 1 .>
+	Msg13 <You can rest assured that your tax dollars are being put to good use in \SCENE EScene 1 .>
+	Msg14 <If only I had a nice, dependable assistant, I wouldn't have so much work to do myself...>
+	Msg15 <The new public utilities agreement will be unveiled tomorrow.>
+
+	% 16 - 20 : PC has earned the mission.
+	Msg16 <I think you'd be a good choice to help me. Go speak with \ELEMENT 3 in \SCENE EScene 3 about the contract. If you can arrange a sweet deal, there'll be a reward for you.>
+	Msg17 <You might be the person this city needs. If you can go to \SCENE EScene 3 and get a better deal from \ELEMENT 3 , I could reward you with the first month of savings.>
+	Msg18 <I'll tell you what. Go speak with \ELEMENT 3 in \SCENE EScene 3 . If you can arrange a more advantageous deal for the utilities contract, as a reward I'll give you the first month's savings.>
+	Msg19 <Alright, I'll accept your offer of help. The person you need to speak with is \ELEMENT 3 in \SCENE EScene 3 . Get the city a better deal on our utilities contract and I'm sure I can find a sizable reward for you.>
+	Msg20 <Do you really think you can help us? Go speak with \ELEMENT 3 in \SCENE EScene 3 about the utilities contract. If you can manage to negotiate a better deal, there'll be a reward waiting back here for you.>
+
+	% 21 - 25 : Mission details
+	Msg21 <\ELEMENT 3 in \SCENE EScene 3 is the one handling the deal for \ELEMENT 2 . You'll have to speak with \SPR E3 about the contract. If you can get the city a good deal, I'll give you a reward.>
+	Msg22 <The one you'll have to speak with is \ELEMENT 3 in \SCENE EScene 3 . Try to negotiate a better deal for \SCENE EScene 1 ... If you can do that, I'll give you our first month of savings as a reward!>
+	Msg23 <Go to \SCENE EScene 3 and speak with \ELEMENT 3 . Try to get the best possible deal for our city... If you can do that, I'll give you a sizable reward.>
+	Msg24 <Here's the deal. You should go speak with \ELEMENT 3 in \SCENE EScene 3 ... that's who's making the deal for \ELEMENT 2 . If you can save the city some money in our utilities contract, I'll pass some of that on to you in the form of a reward.>
+	Msg25 <You'll have to go to the \ELEMENT 2 office in \SCENE EScene 3 and speak with \ELEMENT 3 . If you can negotiate a favorable deal for \SCENE EScene 1 I'll reward you when you get back.>
+
+	% 26 - 28 : PC has refused the mission.
+	Msg26 <That's too bad. I guess that means I'll actually have to do some work myself...>
+	Msg27 <I'll find someone else for it then.>
+	Msg28 <I'm sure I can find someone else.>
+
+	Msg101 <You're absolutely right... That's why I have to pay extra careful attention to this contract.>
+	Msg102 <Gee, thanks for the show of confidence!>
+	Msg103 <Thanks for your support! For the good of \SCENE EScene 1 , I'll do my best!>
+	Msg104 <I appreciate the support, but it really doesn't help the situation any.>
+	Msg105 <I've already got someone looking into that. Your concern is appreciated, however.>
+	Msg106 <What, are you saying I'm not a good negotiator myself!? I don't need any help...>
+
+	% 01 - 03 : I can get you a better deal.
+	Prompt1 <I may be able to get you a better deal.>
+	Prompt2 <I bet I can get you a discount.>
+	Prompt3 <I can try to get you a discount.>
+
+	% 04 - 06 : What you need is a good negotiator.
+	Prompt4 <What you need is a good negotiator.>
+	Prompt5 <Are you looking for a mediator?>
+	Prompt6 <I could act as the city's negotiator.>
+
+	% 07 - 08 : Miscellaneous brush-off.
+	Prompt7 <Those corps will try to screw the city...>
+	Prompt8 <Good luck. I know you can do it!>
+	% Reserve 9 in case I think of a good third...
+
+	% 10 - 12 : PC will accept the mission.
+	Prompt10 <I can do that for you.>
+	Prompt11 <Alright, I'll see what I can do.>
+	Prompt12 <Tell me everything I need to know.>
+
+	% 13 - 15 : PC doesn't want the mission.
+	Prompt13 <I don't think I can help you.>
+	Prompt14 <Sorry, but I can't do that.>
+	Prompt15 <I'm too busy to do that now.>
+
+
+Plot 1
+	% PC has accepted the mission.
+
+	% P1 = result holder
+	%   if P1=-2, PC agreed to a worse deal.
+	%   if P1=-1, PC agreed to the old deal.
+	%   if P1=1, PC has arranged a better deal.
+	% P2 = Have told about worse deal...
+
+	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete Memo 101>
+	GoDelete <AdvancePlot 0>
+
+	Msg101 <\ELEMENT 1 in \SCENE EScene 1 asked you to speak with \ELEMENT 3 in \SCENE EScene 3 about the city utilities contract.>
+
+sub
+	Persona 1
+	greeting <NewChat if= P2 1 else GoCheckNeg SayAnything>
+	GoCheckNeg <if= P1 0 else GoHasResult Say 1>
+	GoHasResult <if= P1 -2 else GoOther Say 2 AddChat 1>
+	GoOther <if= P1 -1 else GoGood Say 2 AddChat 2>
+	GoGood <Say 2 AddChat 3>
+	result1 <NewChat Say 3 AddReact -d10 P= 2 1>
+	result2 <NewChat Say 4 AddReact d5 AdvancePlot 0>
+	result3 <NewChat Say 5 AddReact d10 CashPrize Reward Threat PCRep 6 100 750 AdvancePlot 0>
+	Msg1 <Go visit \ELEMENT 3 in \SCENE EScene 3 and try to negotiate a better utilities contract for \SCENE ESCene 1 .>
+	Msg2 <So, have you spoken with \ELEMENT 3 ? How did the negotiations turn out?>
+	Msg3 <They're going up!? This is horrible! How could this happen? I should've changed to another service provider rather than allow you to sign that contract...>
+	Msg4 <So you couldn't get a better deal? Well, that can't be helped... you did your best. Thanks for trying.>
+	Msg5 <That's wonderful news! You did a good thing for \SCENE EScene 1 . Here's a reward for your help.>
+	Prompt1 <The price for utilities is going up.>
+	Prompt2 <Not well, I'm afraid.>
+	Prompt3 <Very well.>
+
+	Persona 3
+	% E3 will, of course, try to resist a better contract.
+	% There are two routes- if E3 is villainous, will attempt to
+	%  worsen the contract. If E3 isn't, will just try to maintain
+	%  the status quo.
+	% V2 = Message Randomizer
+	% V3 = Have attempted negotiation...
+	% V105 = Have attempted SHOPPING roll
+	% V107 = Have attempted INTIMIDATION roll
+	% V109 = Have attempted trait matching
+	greeting <NewChat if= P2 1 else GoCheckNeg Say 117 AddReact d10 CashPrize Reward Threat PCRep 6 100 1250 AdvancePlot 0 Reputation 1 -1>
+	GoCheckNeg <if# P1 0 else GoDeal SayAnything>
+	GoDeal <ifG NPCRep E3 1 -10 else GoE3Villain ifG React 35 else GoNoFriend Say d3 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	GoNoFriend <V= 2 3 V+ 2 d3 Say V2  Goto GoAddNegOps>
+
+	GoAddNegOps <V= 2 4 V+ 2 d2 AddChat V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2 if= V3 1 V= 2 10 V+ 2 d2 AddChat V2>
+
+	result1 <NewChat P= 1 -1 Say 101 AddReact d10 Reputation 3 d4 Reputation 4 d4 Reputation 2 -1>
+	result2 <Goto result1>
+
+	result3 <NewChat V= 2 6 V+ 2 d3 Say V2 Goto GoAddNegOps>
+	result4 <Goto result3>
+
+	result5 <NewChat V= 3 1 if= V105 0 else GoTried V= 105 1 ifG SkRoll 21 10 else GoR5NoDice Say 102 P= 1 1>
+	GoR5NoDice <Say 103 V= 2 14 V+ 2 d2 AddChat V2>
+	result6 <Goto result5>
+	result7 <NewChat V= 3 1 if= V107 0 else GoTried V= 107 1 ifG SkRoll 28 10 else GoR7NoDice Say 104 P= 1 1>
+	GoR7NoDice <Say 105 V= 2 14 V+ 2 d2 AddChat V2>
+	result8 <Goto result7>
+	result9 <NewChat V= 3 1 if= V109 0 else GoTried V= 109 1 Say 106 AddChat 17 AddChat 18 AddChat 19 AddChat 20>
+	result10 <Goto result9>
+	GoTried <V= 2 9 V+ 2 d3 Say V2 V= 2 12 V+ 2 d2 AddChat V2>
+
+	result11 <NewChat Say 109 P= 1 -1>
+	result12 <Goto result11>
+
+	result13 <NewChat Say 116 Goto GoAddNegOps>
+	result14 <Goto result13>
+	result15 <Goto result13>
+	result16 <Goto result13>
+
+	result17 <NewChat ifG 0 NPCREp E3 2 else GoR17NoDice Reputation 2 -1 Say 107 P= 1 1>
+	GoR17NoDice <Say 108 AddReact -d8 V= 2 14 V+ 2 d2 AddChat V2>
+	result18 <NewChat ifG NPCREp E3 3 0 else GoR18NoDice Say 110 P= 1 1>
+	GoR18NoDice <Say 111 V= 2 14 V+ 2 d2 AddChat V2>
+	result19 <NewChat ifG NPCREp E3 1 0 else GoR19NoDice Say 112 P= 1 1>
+	GoR19NoDice <Say 113 V= 2 14 V+ 2 d2 AddChat V2>
+	result20 <NewChat ifG NPCREp E3 4 0 else GoR20NoDice Say 114 P= 1 1>
+	GoR20NoDice <Say 115 V= 2 14 V+ 2 d2 AddChat V2>
+
+
+	% 01 - 03 : PC is friend; will try to just renew old contract
+	Msg1 <Ah, \PC . So you're the one \SCENE EScene 1 sent to negotiate. Well, I'm all ready to authorize a renewal of the contract under the exact same conditions as last time. Just sign the papers and you can be on your way.>
+	Msg2 <\PC , let's get down to business. It would save us both some headaches if we just renew the old contract for another year. Sign here and you can be on your way.>
+	Msg3 <I'm glad that \ELEMENT 1 sent someone I know to be the \SCENE EScene 1 negotiator. Let's renew the contract from last year... that would save us a lot of effort.>
+
+	% 04 - 06 : NPC will begin the negotiations.
+	Msg4 <So \ELEMENT 1 sent you here to negotiate for a better contract. Well, tell me why I should make any concessions.>
+	Msg5 <You're here to negotiate for the \SCENE EScene 1 service contract, right? I think we should just renew the old agreement but if you have anything to say then I'll listen.>
+	Msg6 <Let's get down to business. \SCENE EScene 1 needs to renew its service contract. I'm prepared to renew the contract under the old terms, but if you have any changes to discuss we should do that first.>
+
+	% 07 - 09 : NPC will negotiate.
+	Msg7 <Alright. Why should \ELEMENT 2 give \SCENE EScene 1 a better deal?>
+	Msg8 <What have you got to offer us in exchange for this concession?>
+	Msg9 <Is there any reason why we should alter the contract to be less favorable to \ELEMENT 2 ?>
+
+	% 10 - 12 : PC has tried this tactic before...
+	Msg10 <You've tried that before. Let's move on to something else.>
+	Msg11 <I already rejected that argument... Let's move on to something original.>
+	Msg12 <I heard it before, and I didn't agree. Let's try to keep the meeting moving foreword.>
+
+	Msg101 <There. That was easy... now we have plenty of time left over to take a business lunch.>
+	Msg102 <You may be right... \ELEMENT 2 must not be undersold! You can tell \ELEMENT 1 \OPR E1 has a deal.>
+	Msg103 <That's impossible. \ELEMENT 2 already offers the lowest prices in this field. You'll have to do better than that, I'm afraid.>
+	Msg104 <Hmm... There are other contracts \ELEMENT 2 holds with the city which \ELEMENT 1 could possibly refuse to renew... Alright, to protect our other interests in \SCENE EScene 1 , I'll give a discount on this contract.>
+	Msg105 <We don't hold any other business interests in \SCENE EScene 1 which could possibly be affected by this. I still have no reason to modify the contract.>
+	Msg106 <Interesting... Well, what do you have to offer me in exchange for a better utilities deal?>
+	Msg107 <All kinds of under-the-table funds, eh? I'll admit that does sound attractive... and it would offset my smaller comission for lowering the rates. Alright, you've got yourself a deal!>
+	Msg108 <Do you think I'm some sort of criminal!? \ELEMENT 2 would never involve itself in corruption like that!>
+	Msg109 <You've been very reasonable. It's been a pleasure doing business with you.>
+	Msg110 <Hm, yes, lowering our price for the public service contract could be seen as helping out the community. That would generate some good publicity. Alright, you've got a deal!>
+	Msg111 <I'm in accounting, not in marketing. If we wanted more publicity in \SCENE EScene 1 I'm sure we'd hire an ad agency.>
+	Msg112 <You've got a point... Profit isn't everything, we also have to think about the common good. We can afford to cut rates by 15% and still turn a profit. You can take that offer back to \ELEMENT 1 .>
+	Msg113 <That's a noble idea but it's not very practical. \ELEMENT 2 is in business to make money. That's the nature of free enterprise.>
+	Msg114 <Hm. If I cared more about my job, I might just disagree with your logic right now. If you're going to stay here all day bugging me it'd be easier to just agree. How about a 15% discount? Go tell \ELEMENT 1 the good news.>
+	Msg115 <And if you would give in to me, you could stop working. That one cuts both ways.>
+	Msg116 <So what else do you have to say?>
+	Msg117 <Very good. Here's your cut of the first month's profits.>
+
+	% 01 - 02 : PC will agree to old contract.
+	Prompt1 <Alright, let's do that.>
+	Prompt2 <That sounds easiest.>
+
+	% 03 - 04 : PC will try to negotiate better contract.
+	Prompt3 <Sorry, I'm looking for a better deal.>
+	Prompt4 <We want a better deal this time.>
+
+	% 05 - 06 : I can get a better deal elsewhere.
+	Prompt5 <We can get a better deal elsewhere.>
+	Prompt6 <Another corp could offer us a better deal.>
+
+	% 07 - 08 : You don't want to lose our business.
+	Prompt7 <You don't want to lose our business.>
+	Prompt8 <We could take other contracts away.>
+
+	% 09 - 10 : I think we have something you'd like.
+	Prompt9 <I think we have something you'd like.>
+	Prompt10 <I have an offer you can't refuse.>
+
+	% 11 - 12 : PC will give up and accept the old contract.
+	Prompt11 <I'll just agree to the old contract...>
+	Prompt12 <Guess I should sign the old contract...>
+
+	% 13 - 14 : Alright, let's talk about something else...
+	Prompt13 <Alright, let's do that.>
+	Prompt14 <Sorry. I forgot.>
+
+	% 15 - 16 : I have something else.
+	Prompt15 <I have another idea.>
+	Prompt16 <Let's talk about something else.>
+
+	% 17 - 20 : NPC trait-based offers
+	%      If the NPC's traits match the offer, it will be accepted.
+	Prompt17 <You can get illicit bribes and kickbacks!>
+	Prompt18 <It'll be good advertising for the company.>
+	Prompt19 <Cutting rates would benefit the community.>
+	Prompt20 <Just give me a deal and I'll stop annoying you.>
+
+
+	GoE3Villain <ifG React 35 else GoVNoFriend V= 2 200 V+ 2 d3 Say V2 V= 2 200 V+ 2 d2 AddCHat V2 V= 2 202 V+ 2 d2 AddCHat V2>
+	GoVNoFriend <V= 2 203 V+ 2 d3 Say V2 P= 1 -1>
+
+	result201 <NewChat AddReact -d10 P= 1 -1 Say 252>
+	result202 <Goto result201>
+
+	result202 <NewChat P= 1 -2 Say 251 Reputation 1 -1 Reputation 2 -5>
+	result203 <Goto result202>
+
+	Msg201 <Ah, \PC . It's a lucky thing you were the negotiator sent by \ELEMENT 1 . I've decided to raise their sevice rates, and if you go along you can benefit as well.>
+	Msg202 <So \ELEMENT 1 sent you to negotiate, did \OPR E1 ? Well, I've already decided to raise their rates. You can benefit from this too if you play along.>
+	Msg203 <You're here to negotiate for the \SCENE EScene 1 service rates? I've decided to raise them... if you don't cause any trouble, I'll make sure you get a share of the first month's profits.>
+
+	Msg204 <You're here to negotiate for the \SCENE EScene 1 service contract. Well, there is to be no bargaining. The old contract won't be changed.>
+	Msg205 <I'm not in a mood to negotiate. The old rates are final. \ELEMENT 2 will not be making any concessions to \SCENE EScene 1 .>
+	Msg206 <Tell \ELEMENT 1 that \OPR E1 will have to agree to the contract under the previous terms or find another service provider. I'm not in any mood to negotiate.>
+
+	Msg251 <Go tell \ELEMENT 1 that \SCENE EScene 1 will be paying 25% more for utilities this year, then come back and I'll give you a cut of the new profits.>
+	Msg252 <Alright, we'll renew the contract under the old rates, then. That's the best I'm willing to offer, and only because you're a personal friend...>
+
+	Prompt201 <No deal.>
+	Prompt202 <I can't accept that.>
+
+	Prompt202 <Alright, I'll help you...>
+	Prompt203 <Okay, I can agree to that...>
+
+end
+
+end

@@ -1,0 +1,75 @@
+For support, promotion, and just being great in general:
+
+	Igor Savin
+	Bjorn Bergstrom
+	Kornel "Anubis" Kisielewicz
+	Aquillion
+	Johnny DMonic
+	Wyld Karde
+	Michalis Kamburelis
+	Michael Deutschmann
+	Tung Nguyen
+
+For the Linux port:
+
+	Philip Chimento
+	Mikolaj Celuch
+	Philipp Lucas
+	Joseph Larsen
+
+For artwork:
+
+	Mike Horvath
+		Terrain, cursors, major editing of just about everything
+		Condor, Rover
+	Nicolas Rotunno
+		Petrach
+	Paul Pekkarinen
+		Kojedo
+	Piotr Leszczynski
+		Ultari, Zerosaiko
+	Celso Meireles Alves
+		Raptor
+	Omega
+		Vespa, Neko, Osprey, Badger, Wraith, Gigas, many more...
+	Ladene Kosaka
+		Portraits
+	fmunoz.geo
+		Portraits
+	Phil Mun~oz
+		Portraits
+	Unknown
+		Roach
+
+For algorithms, bug reports, and other good things:
+
+	Aaron Lambert
+	ABCGi
+	Alex Duncan
+	Arthur J. O'Dwyer
+	Bohdan Linda
+	Bisyamon45
+	Christian Schmidt
+	Daniel Lowenstein
+	Dinthalion
+	Gerry Quinn
+	Hansjorg Malthaner
+	Isaac Kuo
+	Joachim Meissner
+	John Q. Smith
+	Jonathan Santaana
+	Kenneth Whitehouse
+	Malte Helmert
+	Michael Sauer
+	Peter Cordes
+	R. Alan Monroe
+	R. Dan Henry
+	Seiya
+	Shanya Almafeta
+	Slava
+	Tom Demuyt
+	Uriah Otting
+	Vasily Savin
+	William Davis
+
+

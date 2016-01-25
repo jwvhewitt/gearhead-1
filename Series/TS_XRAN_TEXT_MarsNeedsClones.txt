@@ -1,0 +1,37 @@
+% Data found in the clone lab
+********************
+*TRIUMVIRATE PROGRAM
+********************
+ 
+:- BIOFAC LAB ALPHA
+ 
+Though disappoingly not connected to the Triumvirate, arcotec lab site Alpha
+has provided us with remarkable technology. Activation of the Triumvirate will
+require the living sacrifice of one of our greatest pilots; subsequently, it
+has been recommended that the BioFac technology be used to create "backup
+copies". Creation of additional industrial BioFacs will be needed once the
+Triumvirate Genome is isolated. Acquisition of sufficient protomass to
+replicate the lost members of the Triumvirate may be problematic.
+ 
+:- TRJ-0
+:- DESIG "LADON"
+:- STATUS DESTROYED
+ 
+Our attempts to locate the wreckage of TRJ-0 have so far proved unsuccessful.
+Historical records indicate that this unit's final battle took place over
+Zeta territory. Repeated searches around the area of Nara have all failed.
+Presumably, nothing remains of TRJ-0.
+ 
+:- TRJ-1
+:- DESIG "CETUS"
+:- STATUS INCOMPLETE
+ 
+TRJ-1 has been located in Last Hope. Zeta did not complete work upon this
+unit, so it is thought to be nonviable. Our recon team will perform further
+research shortly. Even if activation proves impossible, samples of TRJ-1 may
+be instrumental in the replication of new units.
+ 
+:- TRJ-2
+:- DESIG "TYPHON"
+:- STATUS UNKNOWN
+ 

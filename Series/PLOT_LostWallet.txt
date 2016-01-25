@@ -1,0 +1,70 @@
+Plot 0
+	name <PLOT: Lost Wallet>
+
+	% A poor citizen has lost his wallet. The PC can find it and
+	% return it, or steal the money from it, or do whatever.
+
+	element1 <Character Citizen>
+	element2 <Prefab>
+
+	% V1 = Timer / Initialization Counter
+	% V2 = Have picked up item
+
+	% This plot will last for 6 hours.
+	start <ifPersona E1 else GoDelete ifItemOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 19800 Goto GoInit>
+	GoInit <MoveKeyItem E2 EScene 1 ItemVar= E2 1 E1 compose GET E2 .getitem compose KEY E2 .useitem>
+	GoCheckTime <ifG ComTime V1 if= V2 0 else GoCheckHas DeleteKeyItem E2 AdvancePlot 0>
+	% If time has run out, remove this plot if the PC doesn't have
+	% the wallet anymore.
+	GoCheckHas <ifKeyItem E2 else GoDelete>
+	.getitem <V= 2 1>
+	.useitem <AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+sub
+	Persona 1
+	rumor <!1 is looking for something.>
+
+	greeting <NewChat Say d5 ifKeyItem E2 AddChat 1>
+
+	result1 <NewChat ifG NPCRep E1 1 0 else GoR1NoHero Say 7 CashPrize 100 Goto GoEndPlot>
+	GoR1NoHero <Say 6 Reputation 1 1 Goto GoEndPlot>
+	GoEndPlot <XPV 25 Reputation 2 1 DeleteKeyItem E2 AdvancePlot 0>
+
+	Msg1 <I lost my wallet. I've been looking all over for it; I'm sure it must be here someplace.>
+	Msg2 <This is terrible. First I lost my contact lenses, then I lost my wallet... and I can't see very well to find where I dropped it!>
+	Msg3 <I can't find my wallet. I hope I left it at home, and I didn't drop it anywhere...>
+	Msg4 <I think I lost my wallet. I'm sure I brought it with me this morning...>
+	Msg5 <If you see a wallet anywhere, please return it to me. I lost my wallet this morning and it has all my cash in it.>
+	Msg6 <Yes it is! Thank you very much for returning it. I thought it was gone for sure.>
+	Msg7 <Yes it is! Thanks for bringing it back to me. Here's a small reward for your good deed.>
+
+	Prompt1 <Is this yours? [Give Wallet]>
+
+end
+inv
+	Treasure 1500
+	name <Wallet>
+	% We'll be placing the wallet manually so as to handle
+	% initialization of its variables.
+	% V1 = Reputation of NPC to whom wallet belongs;
+	%      determines how much cash is present.
+	% V2 = Opening Indicator
+	% V3 = Codebreaking Skill Roll
+
+	type <STOLEN>
+
+	use <Print 1>
+	% Using CodeBreaking might open the wallet...
+	Clue32 <if= V2 0 else GoDone V= 3 SkRoll 32  Mental  Reputation 2 -1  ifG V3 20 else GoCheckWeld V= 2 1 Print 5 Reputation 2 -5 CashPrize Threat V1 1 Trigger KEY SelfNID>
+	GoCheckWeld <ifG 5 V3 else GoNothing V= 2 -1 Print 3 Trigger KEY SelfNID>
+	GoNothing <Print 4>
+	GoDone <Print 2>
+
+	Msg1 <This is one of those new Secure-Lock wallets. You can't open it, and there's no address label or other identification...>
+	Msg2 <You've already done all you can with this wallet. It's useless now.>
+	Msg3 <You attempt to open the wallet. You trip the failsafe, and the wallet welds itself shut. There's no way you can open it now.>
+	Msg4 <You attempt to open the wallet. It's very difficult.>
+	Msg5 <You attempt to open the wallet. It opens!>
+
+end

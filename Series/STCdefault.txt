@@ -1,0 +1,800 @@
+% *********************************************
+% ***   STC  Standard  Item  Descriptions   ***
+% *********************************************
+
+	Gun 5
+	name <Smoke Launcher>
+	desig <SML-5>
+	type <SMOKE BLAST 3>
+	Range 5
+	Scale 2
+	Magazine 5
+	sub
+		Ammo 5
+	end
+
+	Gun 4
+	name <Machine Cannon>
+	desig <MAC-4>
+	Range 6
+	BV 3
+	scale 2
+	Magazine 60
+	sub
+		Ammo 4
+	end
+
+
+	Gun 5
+	name <Vulcan Cannon>
+	desig <VC-5>
+	mass -7
+	scale 2
+	range 3
+	acc -2
+	BV 7
+	magazine 80
+	sub
+		ammo 5
+	end
+
+	Gun 8
+	name <Phalanx Cannon>
+	desig <PC-8>
+	mass -8
+	scale 1
+	range 6
+	acc -2
+	BV 7
+	magazine 80
+	sub
+		ammo 8
+		type <SCATTER>
+	end
+
+	Gun 3
+	name <Light Autocannon>
+	desig <LAC-3>
+	scale 1
+	mass -3
+	range 4
+	acc -1
+	recharge 3
+	BV 4
+	Magazine 200
+	sub
+		ammo 3
+	end
+
+	Gun 2
+	scale 2
+	acc -2
+	mass -9
+	name <Autocannon>
+	desig <AC-2>
+	range 4
+	BV 5
+	magazine 120
+	sub
+		ammo 2
+	end
+
+	Gun 6
+	name <Heavy Autocannon>
+	desig <AC-6>
+	scale 2
+	mass -9
+	Range 5
+	ACC -1
+	Recharge 1
+	BV 3
+	Magazine 60
+	sub
+		Ammo 6
+	end
+
+	Gun 10
+	name <Very Heavy Autocannon>
+	desig <AC-10>
+	scale 2
+	mass -10
+	Range 7
+	ACC -1
+	Recharge 1
+	BV 3
+	Magazine 40
+	sub
+		Ammo 10
+	end
+
+Gun 8
+Scale 2
+name <Railgun>
+desig <RG-8>
+Range 6
+BV 4
+Magazine 100
+sub
+	Ammo 8
+	mass -8
+end
+
+Gun 16
+Scale 2
+name <Heavy Railgun>
+desig <RG-16>
+Range 7
+BV 3
+Magazine 60
+sub
+	Ammo 16
+	mass -10
+end
+
+Gun 12
+Scale 2
+name <Gauss Rifle>
+desig <GR-12>
+Range 10
+Recharge 1
+Magazine 16
+sub
+	Ammo 12
+end
+
+Gun 24
+Scale 2
+name <Heavy Gauss Rifle>
+desig <GR-24>
+Range 12
+Recharge 1
+Magazine 10
+sub
+	Ammo 24
+end
+
+BeamGun 5
+Scale 2
+name <Combat Laser>
+DESIG <LAS-5>
+Range 3
+Recharge 3
+ACC 1
+
+BeamGun 10
+Scale 2
+name <Laser Cannon>
+DESIG <LAS-10>
+Range 5
+Recharge 3
+ACC 1
+
+BeamGun 2
+Scale 2
+name <Particle Cannon>
+desig <PAR-2>
+type <OVERLOAD ANTIAIR>
+Range 7
+ACC 1
+Recharge 3
+
+BeamGun 6
+Scale 2
+name <Heavy Particle Cannon>
+desig <PAR-6>
+type <OVERLOAD ANTIAIR>
+Range 8
+ACC 1
+
+BeamGun 13
+Scale 2
+name <Superheavy Particle Cannon>
+desig <PAR-13>
+type <OVERLOAD ANTIAIR>
+Range 9
+Recharge 1
+
+BeamGun 8
+name <Phase Cannon>
+desig <PHS-8>
+type <ArmorPiercing>
+scale 2
+Range 12
+
+BeamGun 25
+name <Heavy Phase Cannon>
+desig <PHS-25>
+type <ArmorPiercing>
+Scale 2
+Range 8
+Recharge 1
+
+MLauncher 5
+name <Incendiary Missiles>
+SCALE 2
+desig <ICML-12>
+Range 8
+Magazine 12
+type <SWARM>
+sub
+	rockets 5
+	type <BURN>
+end
+
+
+MLauncher 4
+name <Haywire Missiles>
+desig <HWML-2>
+Scale 2
+type <HAYWIRE ANTIAIR>
+range 10
+acc 2
+Magazine 2
+sub
+	Rockets 4
+end
+
+MLauncher 4
+name <Haywire Missiles>
+desig <HWML-4>
+Scale 2
+type <HAYWIRE ANTIAIR>
+range 10
+acc 2
+Magazine 4
+sub
+	Rockets 4
+end
+
+MLauncher 4
+name <Haywire Missiles>
+desig <HWML-8>
+Scale 2
+type <HAYWIRE ANTIAIR>
+range 10
+acc 2
+Magazine 8
+sub
+	Rockets 4
+end
+
+MLauncher 1
+name <Light Rockets>
+desig <LRL-16>
+Scale 2
+Range 6
+ACC -2
+Magazine 16
+sub
+	Rockets 1
+end
+
+MLauncher 1
+name <Light Rockets>
+desig <LRL-32>
+Scale 2
+Range 6
+ACC -2
+Magazine 32
+sub
+	Rockets 1
+end
+
+MLauncher 1
+name <Light Rockets>
+desig <LRL-48>
+Scale 2
+Range 6
+ACC -2
+Magazine 48
+sub
+	Rockets 1
+end
+
+MLauncher 20
+name <Light Nuclear Missile>
+desig <NUKE-1>
+Scale 2
+Range 15
+Recharge 1
+Magazine 1
+sub
+	Rockets 20
+	type <Blast 3 Hyper Haywire>
+end
+
+MLauncher 20
+name <Light Nuclear Missiles>
+desig <NUKE-6>
+Scale 2
+Range 15
+Recharge 1
+Magazine 6
+sub
+	Rockets 20
+	type <Blast 3 Hyper Haywire>
+end
+
+MLauncher 15
+name <Gajira Heavy Missiles>
+scale 2
+desig <GHML-2>
+Range 10
+Magazine 2
+sub
+	Rockets 15
+end
+
+MLauncher 15
+name <Gajira Heavy Missiles>
+scale 2
+desig <GHML-3>
+Range 10
+Magazine 3
+sub
+	Rockets 15
+end
+
+MLauncher 14
+name <Heavy Rocket Pod>
+desig <HRP-6>
+scale 2
+acc -1
+range 13
+magazine 6
+sub
+	rockets 14
+end
+
+MLauncher 14
+name <Heavy Rocket Pod>
+desig <HRP-12>
+scale 2
+acc -1
+range 13
+magazine 12
+sub
+	rockets 14
+end
+
+
+	gear 4 4 2
+	scale 2
+	name <Swarm Missiles>
+	desig <SWML-20>
+	Range 8
+	Magazine 20
+	sub
+		gear 5 4 2
+		type <SWARM>
+	end
+
+	gear 4 4 2
+	scale 2
+	name <Swarm Missiles>
+	desig <SWML-40>
+	Range 8
+	Magazine 40
+	sub
+		gear 5 4 2
+		type <SWARM>
+	end
+
+	gear 4 4 2
+	name <Swarm Missiles>
+	scale 2
+	desig <SWML-60>
+	Range 8
+	Magazine 60
+	sub
+		gear 5 4 2
+		type <SWARM>
+	end
+
+	gear 4 4 2
+	name <Swarm Missiles>
+	scale 2
+	desig <SWML-120>
+	Range 8
+	Magazine 120
+	sub
+		gear 5 4 2
+		type <SWARM>
+	end
+
+
+%  ********************
+%  ***   TREASURE   ***
+%  ********************
+
+	Grenade 15
+	name <Flame Gland>
+	desig <FLAMEGLAND>
+	meat
+	Scale 0
+	type <Blast 2 BURN>
+
+	gear 10 0 6
+	name <Lobster Shield>
+	desig <LOBSTERSHIELD>
+	scale 0
+	stat 1 2
+	sub
+		gear 4 0 12
+		name <Spikes>
+		type <BRUTAL MYSTERY STUN>
+		scale 0
+		Recharge 3
+	end
+
+	GenRepairFuel 45
+	name <Spare Parts>
+	scale 0
+	desig <SPAREPARTS-1>
+	mass 1
+
+	MechaRepairFuel 250
+	name <Mecha Parts>
+	scale 0
+	desig <SPAREPARTS-2>
+	mass 1
+
+	SkillModifier 0
+	name <Sentinel FCS>
+	desig <SENTINELFCS>
+	CyberSlot <ARTILLERY>
+	type <CYBER MECHA>
+	Stat 1 2
+	Stat 2 3
+
+	SkillModifier 0
+	name <Self Defense Matrix>
+	desig <SELFDEFENSEMATRIX>
+	CyberSlot <FIGHTING>
+	type <CYBER MECHA>
+	Stat 1 4
+	Stat 2 1
+
+	Food 30
+	name <Red Bear Liver>
+	desig <REDBEARLIVER>
+	% Status Effect (1), Duration Step12, Regen(3), Skill25 but can't resist anyways
+	effect <1  12 3 25>
+	FoodXValue 1500
+	FoodMorale -5
+
+	Food 20
+	name <Dragon Heart>
+	desig <DRAGONHEART>
+	% Healing (2), restore Step9 damage using skill 20 (First Aid)
+	effect <2  9 20 0>
+	FoodXValue 2000
+	FoodMorale -2
+
+
+%  ***************
+%  ***  PROPS  ***
+%  ***************
+
+Prop 2
+name <Victim>
+desig <VICTIM-1>
+roguechar <_>
+SDL_SPRITE <prop_default.png>
+Frame 6
+% The PC must make a medical skill roll to revive the victim.
+% If the roll succeeds, increase the VICTIMSRECOVERED total.
+% If the roll fails badly, the victim might die... In any case,
+% attempting resuccitation costs MENTAL.
+Use <ifYesNo 1 2 3 Goto Clue16>
+Clue16 <V= 1 SkRoll 16 MENTAL ifG V1 11 else GoCheckDie Print 5 SelfRunAway OneVictimRecovered ifG #VictimsRecovered 1 Print 7>
+GoCheckDie <ifG 5 V1 else GoNoGood Print 4 SelfRunAway>
+GoNoGood <Print 6>
+Msg1 <This victim needs immediate medical aid. Do you attempt resuscitation?>
+Msg2 <Attempt resuscitation.>
+Msg3 <Don't bother.>
+Msg4 <The victim dies while being treated.>
+Msg5 <The victim regains consciousness and is removed from the scene.>
+Msg6 <You attempt to treat the victim's wounds.>
+Msg7 <\VAL #VictimsRecovered victims have been rescued.>
+
+Prop 2
+name <Mushrooms>
+desig <FUNGUS-1>
+roguechar <,>
+
+Prop 10
+name <Shrine>
+desig <SHRINE-1>
+SDL_SPRITE <prop_default.png>
+Frame 7
+roguechar <+>
+use <Print 1>
+clue34 <ifG ComTime V1 else GoBeenBefore V= 1 NextDay Reputation 7 -d4 MENTAL ifG SkRoll 34 10 else GoNoDice ifG d100 PCRep 7 else GoNoDice Print 2 XPV 150>
+GoNoDice <Print 3>
+GoBeenBefore <Print 4>
+Msg1 <It's a small shrine.>
+Msg2 <You meditate at the shrine. You feel enlightened.>
+Msg3 <You meditate at the shrine.>
+Msg4 <You've already meditated at this shrine today.>
+
+Prop 80
+name <Monolith>
+desig <MONOLITH>
+roguechar <~>
+SDL_SPRITE <prop_default.png>
+Frame 8
+
+Prop 3
+name <Physics Workbench>
+% This apparatus will have a different experiment every 24 hours.
+% The PC will be able to train his mecha skills by using it.
+% V1 = Recharge Time
+% V2 = Message Matcher
+% V3 = Skill Change Time
+% V4 = Skill to train
+desig <APPARATUS-1>
+update <ifG ComTime V3 V= 3 ComTime V+ 3 86400 V= 4 d5>
+roguechar <=>
+clue29 <V= 2 10 V+ 2 V4 ifYesNo V2 5 6 ifG ComTime V1 else GoBeenBefore Print 7 V= 1 NextDay Reputation 7 d4 MENTAL ifG SkRoll 29 10 else GoNoDice ifG PCRep 7 -d100 else GoNoDice Goto GoSuccess>
+GoSuccess <V= 2 20 V+ 2 V4 Print V2 SkillXP V4 100>
+GoNoDice <Print 2>
+GoBeenBefore <Print 3>
+Msg2 <The experiment fails.>
+Msg3 <You've already tried this experiment today.>
+Msg5 <Perform an experiment.>
+Msg6 <Don't touch anything.>
+Msg7 <You attempt an experiment...>
+Msg11 <The apparatus has been set up to investigate energy beam focusing technology.>
+Msg12 <The apparatus has been set up to investigate ballistic weapon trajectory calculation.>
+Msg13 <The apparatus has been set up to investigate extreme short range optimal mecha fire arcs.>
+Msg14 <The apparatus has been set up to investigate mecha limb flexibility and impact strength.>
+Msg15 <The apparatus has been set up to investigate mecha control factors.>
+Msg21 <The experiment is a success. You make some new discoveries about Mecha Gunnery.>
+Msg22 <The experiment is a success. You make some new discoveries about Mecha Artillery.>
+Msg23 <The experiment is a success. You make some new discoveries about Mecha Weapons.>
+Msg24 <The experiment is a success. You make some new discoveries about Mecha Fighting.>
+Msg25 <The experiment is a success. You make some new discoveries about Mecha Piloting.>
+
+Prop 5
+name <Anatomy Model>
+% This apparatus will have a different experiment every 24 hours.
+% The PC will be able to train his medical skills by using it.
+% V1 = Recharge Time
+% V2 = Message Matcher
+% V3 = Skill Change Time
+% V4 = Skill to train
+desig <APPARATUS-2>
+roguechar <=>
+update <ifG ComTime V3 V= 3 ComTime V+ 3 86400 if= d2 1 else GoMed V= 4 20>
+GoMed <V= 4 16>
+clue29 <V= 2 10 V+ 2 V4 ifYesNo V2 5 6 ifG ComTime V1 else GoBeenBefore Print 7 V= 1 NextDay Reputation 7 d4 MENTAL ifG SkRoll 29 10 else GoNoDice ifG PCRep 7 -d100 else GoNoDice Goto GoSuccess>
+GoSuccess <V= 2 30 V+ 2 V4 Print V2 SkillXP V4 100>
+GoNoDice <Print 2>
+GoBeenBefore <Print 3>
+Msg2 <The experiment fails.>
+Msg3 <You've already tried this experiment today.>
+Msg5 <Perform an experiment.>
+Msg6 <Don't touch anything.>
+Msg7 <You attempt an experiment...>
+Msg26 <The apparatus has been set up to investigate emergency medical techniques.>
+Msg30 <The apparatus has been set up to investigate new surgical techniques.>
+Msg46 <The experiment is a success. You make some new discoveries about First Aid.>
+Msg50 <The experiment is a success. You make some new discoveries about Medicine.>
+
+Prop 5
+name <COMPUTER>
+Desig <COMPUTER-1>
+roguechar <!>
+SDL_SPRITE <prop_default.png>
+Frame 0
+
+Prop 12
+% This one should be a server tower...
+name <COMPUTER>
+Desig <COMPUTER-2>
+roguechar <!>
+SDL_SPRITE <prop_default.png>
+Frame 3
+
+Prop 15
+name <Machine>
+Desig <MACHINE-1>
+roguechar <&>
+
+Prop 20
+name <Machine>
+Desig <MACHINE-2>
+roguechar <&>
+
+Prop 8
+name <Filing Cabinet>
+Desig <FILINGCABINET>
+roguechar <">
+SDL_SPRITE <prop_default.png>
+Frame 4
+
+Prop 15
+name <Bio-Tank>
+desig <BIOTANK>
+roguechar <~>
+SDL_SPRITE <prop_default.png>
+Frame 10
+
+Prop 12
+name <Bookshelf>
+Desig <BOOKSHELF-1>
+roguechar <">
+SDL_SPRITE <prop_default.png>
+Frame 9
+
+Prop 10
+name <Ultima Fighter>
+Desig <VIDEOGAME1>
+rogueChar <&>
+use <ifG ComTime V1 else GoAlreadyPlayed ifYesNo 1 2 3 ifG PC$ 100 else GoNoPlay Cash+ -100 V= 1 NextDay Goto GoStartGame>
+GoStartGame <PCMoraleDMG -d10 ifG SkRoll 4 25 else GoLose SkillXP 4 d100 Print 6 PCMoraleDMG -d10>
+GoLose <SkillXP 4 d6 Print 7>
+GoNoPlay <Print 4>
+GoAlreadyPlayed <Print 5>
+Msg1 <ULTIMA FIGHTER!!! $100 per play.>
+Msg2 <Play the game>
+Msg3 <Don't bother>
+Msg4 <You can't afford to play the game...>
+Msg5 <You've already played Ultima Fighter once today.>
+Msg6 <This is a great game! You defeated Lord Gariott, the final boss!>
+Msg7 <This is a great game!>
+
+Prop 5
+name <Vending Machine>
+Desig <VENDING-1>
+rogueChar <&>
+use <ifYesNo 1 2 3 ifG PC$ 49 Cash+ -50 GiveSTC .desc Print 4>
+.desc <FOOD-1>
+Msg1 <This vending machine sells boxed lunches for $50. Want to buy one?>
+Msg2 <Yes I do.>
+Msg3 <No, I don't.>
+Msg4 <You buy a boxed lunch.>
+SDL_SPRITE <prop_default.png>
+Frame 2
+
+Prop 25
+name <Kiosk>
+Desig <Kiosk>
+rogueChar <$>
+SDL_SPRITE <default_items.png>
+Frame 6
+
+
+Food 30
+name <Boxed Lunch>
+desig <FOOD-1>
+
+Food 20
+name <Hot Dog>
+desig <FOOD-2>
+
+Food 25
+name <Meat>
+desig <FOOD-3>
+FoodMorale -1
+
+Food 20
+name <Sashimi>
+desig <FOOD-4>
+FoodMorale 1
+
+Prop 3
+name <Video Terminal>
+desig <TV>
+roguechar <&>
+use <ifYesNo 1 2 3 MoreMemo News>
+Msg1 <This is a video info terminal. Would you like to check the news to see what's happening in the world?>
+Msg2 <Yes I would.>
+Msg3 <No, not really.>
+SDL_SPRITE <prop_default.png>
+Frame 1
+
+Cloud
+name <Smoke>
+desig <SMOKE-1>
+roguechar <*>
+stat 1 5
+stat 2 2
+stat 7 50
+
+Cloud
+name <Steam>
+desig <SMOKE-2>
+roguechar <*>
+stat 1 5
+stat 2 2
+stat 7 -1
+
+Cloud
+name <Toxic Gas>
+desig <GAS-1>
+roguechar <*>
+stat 1 5
+stat 2 1
+effect <0 6 0 15 POISON ARMORIGNORE NOMETAL CANRESIST>
+fx_desc <# chokes for # damage!>
+
+Flame
+name <Fire>
+desig <FIRE-1>
+roguechar <#>
+stat 1 3
+stat 2 3
+effect <0 3 0 13 BRUTAL CANRESIST>
+fx_desc <# is burnt by the fire for # damage!>
+
+MetaTerrain 0 5
+name <Box>
+desig <CHEST-1>
+roguechar <=>
+stat 6 5
+frame 15
+AltFrame 2 15
+AltFrame 1 16
+USE <if# 0 StatVal STAT_Lock else GoCloseDoor  if= StatVal STAT_Lock -1 else GoDoorLocked Print 1  SetStat STAT_Lock 0  Transform 1>
+GoDoorLocked <Print 6>
+GoCloseDoor <Print 2 SetStat STAT_Lock -1  Transform 2>
+roguechar <=>
+roguechar1 <->
+roguechar2 <=>
+SDL_Sprite <meta_terrain.png>
+CLUE32 <ifG StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV 50 SetStat STAT_Lock 0 Transform 1>
+GoNoUnlock <Print 4>
+GoNotLocked <Print 5>
+REVEAL <Print 7>
+Msg1 <You open the box.>
+Msg2 <You close the box.>
+Msg3 <You unlock the box.>
+Msg4 <You do not manage to unlock the box.>
+Msg5 <The box does not appear to be locked.>
+Msg6 <The box is locked.>
+Msg7 <You find a hidden box!>
+
+MetaTerrain 0 10
+name <Locker>
+desig <CHEST-2>
+roguechar <=>
+stat 6 5
+frame 15
+AltFrame 2 15
+AltFrame 1 16
+USE <if# 0 StatVal STAT_Lock else GoCloseDoor  if= StatVal STAT_Lock -1 else GoDoorLocked Print 1  SetStat STAT_Lock 0  Transform 1>
+GoDoorLocked <Print 6>
+GoCloseDoor <Print 2 SetStat STAT_Lock -1  Transform 2>
+roguechar <=>
+roguechar1 <->
+roguechar2 <=>
+SDL_Sprite <meta_terrain.png>
+CLUE32 <ifG StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal STAT_Lock else GoNoUnlock Print 3 XPV 50 SetStat STAT_Lock 0 Transform 1>
+GoNoUnlock <Print 4>
+GoNotLocked <Print 5>
+REVEAL <Print 7>
+Msg1 <You open the locker.>
+Msg2 <You close the locker.>
+Msg3 <You unlock the locker.>
+Msg4 <You do not manage to unlock the locker.>
+Msg5 <The locker does not appear to be locked.>
+Msg6 <The locker is locked.>
+Msg7 <You find a hidden locker!>
+
+ARCH Drone
+desig <DRONE-1>
+SDL_SPRITE <aer_drone.png>
+statline 10 10 10 10 10 5 2 2
+roguechar <d>
+metal
+mod Body
+	armor 2
+	sub
+		BeamGun 5
+		name <Combat Laser>
+		ArcJet 8
+	end
+end
+

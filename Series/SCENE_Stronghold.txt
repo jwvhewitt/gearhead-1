@@ -1,0 +1,46 @@
+scene 0 0
+% Enemy stronghold scene
+
+%  Team 2 = Default enemies, in the area around the stronghold
+%  Team 3 = More enemies, in the inner sanctum
+%  Team 4 = Non-enemy, located in the inner sanctum
+
+WildMap
+
+% If the PC leaves or is killed, return to the calling scene.
+Nu1 <if= T1 0 Return>
+
+sub
+	Forest
+	width 5
+	height 5
+	special <STARTHERE>
+
+	rect
+	width 20
+	height 20
+	name <Open Area>
+	sub
+		Room 10 10
+		name <Stronghold>
+		LockedDoorChance 50
+	end
+
+	Team 1
+	SetEnemy 2 3
+
+	Team 2
+	SetEnemy 1
+	SetAlly 3
+	home <Open Area>
+
+	Team 3
+	SetEnemy 1
+	SetAlly 2
+	home <Stronghold>
+
+	Team 4
+	home <Stronghold>
+
+end
+

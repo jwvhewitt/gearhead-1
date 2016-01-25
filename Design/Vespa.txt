@@ -1,0 +1,34 @@
+GroundHugger 1
+Name <Vespa>
+Desig <FLC-1>
+Scale 1
+SDL_Sprite <ghu_vespa.png>
+desc <Also known as the body bag on wheels, the vespa is a combat bike piloted only by those too poor or too suicidal to use anything else.>
+
+Mod Body
+	Armor 1
+	sub
+		CPit
+		Armor 1
+
+		Sensor 2
+
+		Wheels 2
+	end
+	inv
+		BodyArmor 4
+		Name <Combat Canopy>
+		Fits <Groundhugger>
+		Mass -5
+		sub
+			Gun 4
+			Name <Light Cannon>
+			Mass -2
+			Range 3
+			Magazine 24
+			sub
+				Ammo 4
+			end
+		end
+	end
+end

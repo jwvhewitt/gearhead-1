@@ -1,0 +1,272 @@
+*************************************
+***  GEARHEAD  CHARACTER  MANUAL  ***
+*************************************
+
+This file describes the stats and skills which are available to
+GearHead characters. There's a lot of information here, so if this
+is your first time playing you may be better off just reading the
+introduction.txt file and coming back to this one after you have
+a bit more experience.
+
+
+**************************
+***  CHARACTER  STATS  ***
+**************************
+
+01. Reflexes
+
+	If an action has to do with fine motor control, chances
+	are that it will be based on Reflexes.
+
+02. Body
+
+	Feats of strength, endurance, and physical conditioning are
+	governed by Body. This also determines your health points and
+	how much equipment you can carry.
+
+03. Speed
+
+	If an action involves either movement or reaction time, chances
+	are that it will be based on Speed.
+
+04. Perception
+
+	Noticing things and feats of spatial perception are covered
+	by Perception.
+
+05. Craft
+
+	Creating items, repairing things, and using tools are all actions
+	which are based on Craft.
+
+06. Ego
+
+	Actions involving force of will are based on Ego.
+
+07. Knowledge
+
+	Knowledge determines how many skills your character can learn
+	without receiving an experience penalty.
+
+08. Charm
+
+	The ability to get along well with other people without holding
+	a gun to their head is determined by Charm.
+
+
+*********************
+***  THE  SKILLS  ***
+*********************
+
+01. Mecha Gunnery (Reflexes)
+
+	This skill is used when attacking with projectile or beam
+	weapons which do Class 10 Damage or less.
+
+02. Mecha Artillery (Perception)
+
+	This skill is used when attacking with missiles or ranged
+	weapons which do Class 11 Damage or greater.
+
+03. Mecha Weapons (Reflexes)
+
+	This skill is used when attacking with mecha-mounted close
+	combat weapons. It is also used to parry with a weapon or
+	shield.
+
+04. Mecha Fighting (Speed)
+
+	This skill is used when attacking with a mecha's arms, legs,
+	and other limbs.
+
+05. Mecha Piloting (Reflexes)
+
+	The ability to control a mecha and, quite importantly, to
+	evade enemy fire.
+
+06. Small Arms (Reflexes)
+
+	This skill covers rifles and pistols with a Damage Class or 10
+	or lower.
+
+07. Heavy Weapons (Perception)
+
+	This skill covers personal missile launchers, miniguns, and
+	other large human scale weapons. It also covers the use of
+	most grenades.
+
+08. Armed Combat (Reflexes)
+
+	This skill covers swords, knives, axes, spears, and other
+	close combat weapons. It is also used to parry with a
+	weapon or shield.
+
+09. Martial Arts (Body)
+
+	The use of one's own body parts as weapons.
+
+10. Dodge (Speed)
+
+	The ability to get out of the way in a hurry.
+
+11. Awareness (Perception)
+
+	The ability to notice things at a distance. In game terms, the
+	ability to spot enemy units while they are behind cover.
+
+12. Initiative (Speed)
+
+	This skill helps to determine how quickly a character can
+	attack in combat.
+
+13. Vitality (Body)
+
+	An experienced character's learned resistance to pain and
+	injury. This skill increases a character's health points.
+
+14. Survival (Craft)
+
+	The ability to survive if lost in the woods.
+
+15. Mecha Repair (Craft)
+
+	The ability to fix mecha.
+
+16. Medicine (Knowledge)
+
+	A doctor's ability to treat long term illness and injury. If a
+	limb is reduced to 0 HP, medical skill may be used to treat
+	it.
+
+17. Electronic Warfare (Craft)
+
+	The ability to use ECM and other EW systems.
+
+18. Spot Weakness (Craft)
+
+	This skill improves the chance of scoring a critical hit in combat.
+	It doesn't work when making burst fire attacks.
+
+19. Conversation (Charm)
+
+	This skill determines interaction rolls while chatting politely.
+	Also, if you have a high conversation skill NPCs are more likely
+	to provide useful information while chatting.
+
+20. First Aid (Craft)
+
+	Knowledge of emergency medicine, and the ability to treat
+	injuries while in the field.
+
+
+21. Shopping (Charm)
+
+	A combination of bargain hunting and haggling. A character with
+	this skill will ensure the lowest possible price for any purchase.
+
+22. Bio Technology (Knowledge)
+
+	This skill covers the repair and maintenance of advanced
+	biological constructs.
+
+23. General Repair (Craft)
+
+	This skill allows a character to fix most kinds of human scale
+	equipment.
+
+24. Cybertech (Ego)
+
+	Sort of a cross between medicine and mecha tech, Cybernetics
+	is the science of augmenting human bodies with mechanical
+	components. This skill is needed to prevent the side effects
+	associated with excessive cybernetics use.
+
+25. Stealth (Speed)
+
+	This skill allows a character to hide more effectively. It is
+	automatically used if the character is in some terrain which
+	provides cover, and if the character is traveling at cruise
+	speed or slower.
+
+26. Athletics (Body)
+
+	This skill allows a character to perform physically tiring actions
+	for a longer time than normally possible. It increases the number
+	of stamina points available.
+
+27. Flirtation (Charm)
+
+	A character with this skill can get a better reaction from NPCs
+	of the opposite gender.
+
+28. Intimidation (Ego)
+
+	The ability to make threats which will be believed. This 
+	skill is often used when dealing with unfriendly NPCs. It
+	may also be used when your PC is trying to sound like a
+	tough guy (or gal).
+
+29. Science (Knowledge)
+
+	This skill covers knowledge of physics, chemistry, and biology.
+	It might not be a particularly useful skill for a mecha pilot, but
+	everyone needs a hobby. This skill is sometimes used when talking
+	with NPCs about scientific matters.
+
+30. Concentration (Ego)
+
+	A character with this skill is better able to work at mentally
+	challenging tasks. It increases the number of mental points
+	available.
+
+31. Mecha Engineering (Knowledge)
+
+	Used when altering a mecha.
+
+32. Code Breaking (Craft)
+
+	Ability to circumvent locks, passwords, and other security
+	measures.
+
+33. Weight Lifting (Body)
+
+	Increases the amount of equipment your character may carry.
+
+34. Mysticism (Ego)
+
+	Knowledge about religion and spiritual matters.
+
+35. Performance (Charm)
+
+	Ability to play musical instruments and otherwise entertain
+	people. Using this skill costs both SP and MP.
+
+36. Resistance (Ego)
+
+	Improves your chance to avoid negative status effects
+	such as poisoning, burns, and so on. Also helps to keep your
+	character in good spirits when the going gets rough.
+
+37. Investigation (Perception)
+
+	Ability to spot hidden doors and locate clues.
+
+38. Robotics (Knowledge)
+
+	Ability to construct robot pets from spare parts.
+	Using this skill costs mental points and, of course, the parts.
+
+39. Leadership (Charm)
+
+	This skill increases the number of lancemates who may accompany
+	you at one time.
+
+40. Dominate Animal (Ego)
+
+	You can tame wild animals.
+
+41. Pick Pockets (Craft)
+
+	You can steal money and items from NPCs. Using this skill is
+	a chaotic act, and is likely to make you somewhat unpopular.
+

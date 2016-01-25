@@ -1,0 +1,159 @@
+Story
+	name <STORY: Amnesia Entry>
+
+	% V1 = Initialization Counter
+	% S101 = Load new episode when S101 = 1
+	% S102 = # PC Wins
+	% S103 = Difficulcy Level, load ending when S103>75
+	% S104 = # Wins when level last increased
+	% S105 = Location Clue
+
+	% The first START, force a conversation with Hyolee, set the
+	% trapper as the PC's ally, and randomly determine which key
+	% NPC is the biggest bad guy.
+	Start <if= V1 0 else GoCheckClue V= 1 1  MoreText .intro  S= 103 7 Print 1 ForceChat 1 History 2 History 3 Goto GoSetOps>
+	GoSetOps <N= 2 0  NPCLevel N1 S103>
+	.intro <TS_TEXT_Entry_1.txt>
+	Msg1 <Hyolee strikes up a conversation with you.>
+	Msg2 <You were discovered near Hogye, horribly injured and nearly dead.>
+	Msg3 <You have no memories of your past life.>
+
+	GoCheckClue <ifG S105 0 else GoNoClue Memo 5 S= 105 0>
+	GoNoClue <ifG 0 S105 Memo 0 S= 105 0>
+	Msg5 <Your personal quest has so far led to \NARRATIVE 3 .>
+
+	Element1 <Prefab>
+	Element2 <Faction GoodEnemy>
+	Element3 <Scene>
+	Stat 3 10
+
+	% E4 is Hogye, E5 is the trapper
+	element4 <Scene>
+	Stat 4 2
+	element5 <Prefab>
+
+
+	XREnemy 0
+	XRMystery 3
+	XRBadThing 1
+
+	hour <if= S101 1 else GoCheckHint ifG S103 75 else GoLoadEpisode XRanPlot .xend S= 101 0 S+ 103 d10>
+	GoLoadEpisode <XRanPlot .xplot S= 101 0 ifG S102 S104 S+ 103 10 S+ 103 d10 S= 104 S102 NPCLevel N1 S103 ifFaction N2 PCFEnemy N2>
+	GoCheckHint <if= d30 1 ifG 76 S103 StoryLine .xhint>
+	.xplot <TS_XRAN_a###_*.txt>
+	.xend <TS_XRAN_b###_*.txt>
+	.xhint <TS_XRAN_Hint_*.txt>
+
+sub
+
+
+end
+inv
+	NPC Mecha Pilot
+	mecha <Alba.txt>
+	EquipChar 50000
+
+	NPC Bounty Hunter
+	job <Trapper>
+	place <4 SD ALly>
+	chardesc Male Old Heroic Shy
+
+	Plot 0
+	% Note that I am hotloading this plot- DO NOT
+	% DO THIS YOURSELF!!! I can get away with it because
+	% I'm the programmer. Note that because this plot is
+	% getting sneaked into the adventure riding under a
+	% story gear, it will not be initialized by the
+	% MATCH_PLOT_TO_ADVENTURE procedure. In this case
+	% it shouldn't matter because the story is loaded at
+	% the game's setup, and all the elements are starting
+	% initialized. However, in general, I think this is
+	% very bad form...
+	name <PLOT: Temporary Personas>
+
+	start <ifPersona E2 else GoDelete>
+	GoDelete <AdvancePlot 0>
+
+	% Element 1 is Hyolee.
+	Element1 <Character>
+	Stat 1 1
+
+	% Element 2 is Megi.
+	Element2 <Character>
+	Stat 2 17
+	sub
+		Persona 1
+		% Hyolee will greet the PC and tell him to go
+		% speak with Megi.
+		greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
+		GoBeenBefore <Say 6 AddChat 4 AddChat 6>
+		result1 <NewChat Reputation 5 -d10 Say 2 AddChat 4 AddChat 5>
+		result2 <NewChat Reputation 5  d10 Say 3 AddChat 4 AddChat 5>
+		result3 <NewChat  Say 3 AddChat 4 AddChat 5>
+		result4 <NewChat Say 4>
+		result5 <NewChat Say 5>
+		result6 <NewChat Say 7>
+		Msg1 <You're looking much better today. How are you feeling?>
+		Msg2 <Really? Well, you can complain to Doctor Kim about that later. Megi said that she wants to speak with you right away.>
+		Msg3 <That's good. You were in awful shape the first time I saw you... Doctor Kim didn't even think you'd survive. Anyhow, now that you're feeling better, Megi said that she needs to speak with you.>
+		Msg4 <Hm. I wonder if your head injury is interfering with short-term memory? She's in her house. It's the white one over there... The only one like it in town. You can't miss it.>
+		Msg5 <Bye. Take care.>
+		Msg6 <Have you spoken with Megi yet? It sounded like she had something important to speak with you about.>
+		Msg7 <Uh-huh. Well, you better get moving.>
+		Prompt1 <My body still hurts all over...>
+		Prompt2 <I'm feeling great!>
+		Prompt3 <Okay, I guess.>
+		Prompt4 <Where can I find Megi?>
+		Prompt5 <I'll head over to the mayor's house now.>
+		Prompt6 <Still working on it.>
+
+
+
+		Persona 2
+		% Megi will speak with the PC and then allow
+		% conversation branches to load the various job
+		% plots, or the tutorial plot.
+		greeting <NewChat if= V1 1 else GoFirstTime Say 12   AddChat 7 AddChat 8 AddChat 9 AddChat 10>
+		GoFirstTime <Say 1 V= 1 1 AddChat 1 AddChat 2 AddChat 3>
+		result1 <NewChat Say 2 Reputation 4 -d10 AddChat 4 AddChat 5>
+		result2 <NewChat Say 3 AddChat 4 AddChat 5>
+		result3 <NewChat Say 4 AddReact -d4 Reputation 6 -1 Reputation 4 d12 AddChat 6>
+		result4 <NewChat Say 6 Reputation 3 d20  AddChat 7 AddChat 8 AddChat 9 AddChat 10>
+		result5 <NewChat Say 7 Reputation 5 d20 Reputation 3 -d8  AddChat 7 AddChat 8 AddChat 9 AddChat 10>
+		result6 <NewChat Say 5 AddChat 4 AddChat 5>
+		result7 <NewChat Say 9 StoryLine .JobStory Goto GoEndPlot>
+		.JobStory <ARC_TS_JobStory.txt>
+		result8 <NewChat Say 10 StoryLine .CrimeStory Goto GoEndPlot>
+		.CrimeStory <ARC_TS_CrimeStory.txt>
+		result9 <NewChat Say 11 Reputation 3 d12  StoryLine .Tutorial Goto GoEndPlot>
+		.Tutorial <TS_PLOT_Tutorial.txt>
+		result10 <NewChat Say 8 Reputation 3 -d8  Reputation 6 1 History 13 Goto GoEndPlot>
+		GoEndPlot <S= 101 1 AdvancePlot 0>
+		Msg1 <Ah, \PC . It's good to see that you have recovered so well. Tell me, how are you feeling? I suppose you could call this the beginning of your new life.>
+		Msg2 <It's most likely that spirit which allowed you to survive. It is somewhat troubling that we still don't know where you came from. Tell me, what are your plans?>
+		Msg3 <Well, I expect that will depend on you. Your body has recovered but your memories have not. It will be difficult having no past, no family, no home.>
+		Msg4 <That won't be possible. We helped you when you were injured, but our village does not have the resources to accept a freeloader in our midst. You'll have to do something.>
+		Msg5 <What of your memories? So you still remember nothing. If you were to search for your home, this would at least give you something to work towards, if not immediately a livable trade.>
+		Msg6 <I wish you luck in that endeavor, and will provide you with as much aid as I can. Still, you will need some means to earn a living. Have you given that any thought?>
+		Msg7 <That's a positive attitude to take, but remember it is the present in which we live, and presently you will need some means to support yourself. Have you given this any thought?>
+		Msg8 <I wish you luck. You will always be welcome in Hogye.>
+		Msg9 <I believe that Doctor Kim and Nurse Park could use some help over at the hospital. You should go speak to them.>
+		Msg10 <Be careful of what you wish for... A life of crime is no fit life for anyone. I wish you the best of luck, and advise you to steer clear of trouble...>
+		Msg11 <A very wise decision, especially considering your head injury. Quentin would probably be the best one to teach you about life in the Federated Territories. You can find him in the general store.>
+		Msg12 <Have you thought about what you are going to do?>
+		Msg13 <You did not request any help from Megi.>
+		Prompt1 <I'm just glad to be out of that hospital bed.>
+		Prompt2 <I feel well, but where should I go from here?>
+		Prompt3 <Maybe I could use some more rest first.>
+		Prompt4 <I want to find out about my past.>
+		Prompt5 <I'm more concerned with my future.>
+		Prompt6 <So that's how it is...>
+		Prompt7 <Do you know of any jobs available in town?>
+		Prompt8 <Robbing a bank sounds like a good idea.>
+		Prompt9 <Gimme the tutorial, please.>
+		Prompt10 <I will find my own way, thanks.>
+
+	end
+
+end
+

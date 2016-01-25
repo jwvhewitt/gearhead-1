@@ -1,0 +1,56 @@
+Arachnoid 7
+Name <Esher>
+Desig <NEC-04>
+desc <A very old crabtank design, the Esher remains in service largely due to its brute durability.>
+
+Mod Turret
+	Armor 6
+	sub
+		STC PAR-13
+
+		Sensor 1
+	end
+
+Mod Body
+	Armor 6
+	sub
+		CPit
+		Armor 2
+
+		Sensor 4
+
+		TarComp 2
+
+		Mount
+		Name <Right Weapon Mount>
+		inv
+			STC LRL-48
+		end
+
+		Mount
+		Name <Left Weapon Mount>
+		inv
+			STC LRL-48
+		end
+	end
+
+Mod Leg
+	Name <Right Leg 1>
+	Size 4
+	Armor 4
+
+Mod Leg
+	Name <Right Leg 2>
+	Size 4
+	Armor 4
+
+Mod Leg
+	Name <Left Leg 1>
+	Size 4
+	Armor 4
+
+Mod Leg
+	Name <Left Leg 2>
+	Size 4
+	Armor 4
+end

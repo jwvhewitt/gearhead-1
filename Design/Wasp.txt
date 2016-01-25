@@ -1,0 +1,88 @@
+Ornithoid 4
+Name <Wasp>
+Desig <JMS-40>
+SDL_Sprite <orn_wasp.png>
+
+Mod Head
+	Size 3
+	Armor 3
+	sub
+		CPit
+
+		Sensor 7
+
+		Mount
+		Name <Head Weapon Mount>
+		inv
+			BeamGun 1
+			Name <Pulse Laser>
+			Range 3
+			BV 4
+			Speed 4
+		end
+	end
+
+Mod Body
+	Armor 3
+	sub
+		Mount
+		Name <Right Weapon Mount>
+		inv
+			MLauncher 2
+			Name <Swarm Rockets>
+			Type <SWARM>
+			Range 9
+			Acc -1
+			Magazine 24
+			sub
+				Rockets 2
+			end
+		end
+
+		Mount
+		Name <Left Weapon Mount>
+		inv
+			MLauncher 2
+			Name <Swarm Rockets>
+			Type <SWARM>
+			Range 9
+			Acc -1
+			Magazine 24
+			sub
+				Rockets 2
+			end
+		end
+
+		Flight 4
+	end
+
+Mod Wing
+	Name <Right Wing>
+	Armor 2
+	sub
+		Flight 4
+	end
+
+Mod Wing
+	Name <Left Wing>
+	Armor 2
+	sub
+		Flight 4
+	end
+
+Mod Tail
+	Size 3
+	Armor 2
+	sub
+		BeamGun 7
+		Name <Sting Blaster>
+		Acc 1
+		Range 6
+		Speed 3
+
+		Melee 4
+		Name <Tail Spike>
+
+		Flight 1
+	end
+end

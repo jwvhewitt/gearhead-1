@@ -1,0 +1,77 @@
+Story
+	name <Biotech Enemy>
+
+	% This story will run for 3 days, or until completed by the PC.
+	% To complete, the PC must go on a relay from town to town
+	% completing plots at each stop.
+
+	% Element 1 -> Controlling Faction
+	% Element 2 is the scene where the relay will take place.
+	%  The value of N2 will be changed by plots over the course
+	%  of this adventure.
+	Element2 <Scene Town !Member 11>
+
+	% **********************
+	% ***  SCRIPT BLOCK  ***
+	% **********************
+	%  S1 = Time Limit
+	%  S2 = Challenge Rating
+	%  S3 = Message Randomizer
+
+	%  S101 = Faction Victory Count
+	%      Add one for every mission the PC won,
+	%      even if it wasn't a relay mission. The relays
+	%      should probably be worth more, though.
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+
+	% At the START trigger, check for the end of the story
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 FacVar N1 1000>
+	GoCheckTime <ifG ComTime V1 else GoCheckMemo EndStory>
+
+	% If the PC has taken part in the relay, store a memo.
+	GoCheckMemo <ifG S202 0 Memo 1>
+
+	% Every hour, load a new plot.
+	Halfhour <if# S2 0 if= S201 0 else GoLoadRegular ifG S202 1 else GoLoadRelay StoryLine .endplot else GoLoadFixer S= 201 1 S+ 2 d8>
+	GoLoadRelay <StoryLine .relayplot else GoLoadFixer S= 201 1 S+ 2 d6 S+ 2 d6>
+	GoLoadRegular <StoryLine .miscplot>
+	GoLoadFixer <StoryLine .fixplot>
+	% Fill in the filename patterns for the plot types.
+	.endplot    <TS_GRD_Biotech_PLOT_c_*.txt>
+	.relayplot  <TS_GRD_Biotech_PLOT_r_*.txt>
+	.miscplot   <TS_GRD_Biotech_PLOT_m_*.txt>
+	.fixplot    <TS_GRD_Biotech_PLOT_f_*.txt>
+
+	% Every quarter, load a news story.
+	% Implementation thereof is left as an exercise to the reader.
+	quarter <if= d8 1 else GoDeleteNews S= 3 100 S+ 3 d5 News S3>
+	GoDeleteNews <News 0>
+
+	% ***********************
+	% ***  MESSAGE BLOCK  ***
+	% ***********************
+	rumor <lately monsters have been appearing for no natural reason.>
+
+	% 1 :  Relay Memo
+	Msg1 <\SCENE N2 is where the monsters have most recently been sighted.>
+
+	% 101 - 105 :  News Messages
+	Msg101 <Cattle mutilations outside of \NARRATIVE 2 ; no suspects named.>
+	Msg102 <Paranormal investigator has found strange animal footprints in \NARRATIVE 2 .>
+	Msg103 <Homes in \NARRATIVE 2 attacked by wild animal; claw impressions imply incredible strength.>
+	Msg104 <Monster reported rampaging through wilds; biologists stumped by description of creature.>
+	Msg105 <Guardians attempt to capture live specimen of "monster" reported to have killed several hikers.>
+
+
+	% ***********************
+	% ***  LINKING PLOTS  ***
+	% ***********************
+
+	% If a relay plot ends in victory for N1, do the following:
+	%  S= 201 0 S+ 202 1 S+ 101 d3 N= 2 [element number of next scene]
+	% If it ends in failure, or gets cancelled:
+	%  S= 201 0
+

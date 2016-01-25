@@ -1,0 +1,286 @@
+Plot 0
+	name <PLOT: Investigate Bioenemy>
+
+	% [[Ver1.0]]
+	% retain version number when writing derivative plots
+	% v1.0 :  Converted from combat template v1.3
+
+	% This is a skeleton for a relay-story combat mission.
+	% You can make it into a complete combat mission just
+	% by filling in the blanks in the MESSAGE BLOCKs below.
+
+	% If this mission is being offered by the enemy of the story's
+	% controlling faction, do a search for <ENEMY> and follow the
+	% instructions each time this label is found.
+
+	% **********************
+	% *** ELEMENTS BLOCK ***
+	% **********************
+	% This plot will likely be called from a faction story.
+	% So, it will grab the identity of the faction as its first
+	% element, and a member of the faction to give the job to
+	% the PC.
+
+	% E1 is the scene this time around
+	Element1 <Grab 2>
+
+	% E2 is the NPC who will give the PC the mission.
+	% Right now it will just be a person in E1.
+	Element2 <Character !Near 1 Guardian>
+
+	% E3 is the scene that will be used next
+	Element3 <Scene Town !Far 1 !Member 11>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	%  S2 = Encounter Challenge Rating
+
+	%  S101 = Faction Victory Count
+	%  S103 = How many times PC fought for faction
+
+	%  S201 = Load new "relay" plot if S201=0
+	%  S202 = Relay victory count; load conclusion when S202>3
+
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 S= 201 0 AdvancePlot 0>
+
+	% This plot will conclude immediately if NPC E2 is killed.
+	start <ifPersona E2 else GoDelete>
+	GoDelete <S= 201 0 AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	% Finally, if the player won, the calling story's faction victory
+	% count (by default now story variable 101) will be increased.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6 1 XPV 50 S= 201 0 S+ 202 1 S+ 101 d3 N= 2 E3>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+
+	% Fill in something for the rumor string, so the PC will know who
+	% has a job to offer. !2 will add the name of the NPC, while !1
+	% will add the name of the faction.
+	rumor <!2 was injured while fighting a monster.>
+	% eg., rumor <!2 might have a job for you.>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% If you're feeling faint of heart, just skip this
+	% and jump straight to the messages block below.
+	% Here are the variables used in this conversation:
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 P= 2 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 AddChat 1 AddChat 4>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+
+	% The PC will be denied the mission if he's helped the enemy.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 S2 V= 4 Threat V3 1 Goto GoCheckFaction>
+	GoCheckFaction <if= PCFac N1 else GoCheckPrev V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckPrev <ifG S202 0 else GoCheckFriend V= 2 40 V+ 2 d5 Say V2  V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it,
+	GoCheckFriend <ifG PCRep 2 d60 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
+	GoDenied <V= 1 -1 SayAnything>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 Goto GoStartCombat>
+
+	GoStartCombat <SavePos S+ 103 1 P= 2 1 MDynamic 0 V3 .mdesc .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	.mdesc <Mutant Synth>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1>
+	result10 <Goto result9>
+
+	% The PC tries to get the job via "PLAN A"
+	result11 <NewChat ifG PCRep 1 d50 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+
+	% PLAN "A", whatever it was, has failed...
+	GoR11Lose <NewChat Say 104 V= 1 -1>
+
+
+	% The PC tries to get the job via "PLAN B"- be scary.
+	result14 <NewChat Reputation 4 -d9 ifG Intimidation 15 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+
+	% PLAN "B", whatever it was, has failed...
+	GoR14Lose <NewChat Say 105 V= 1 -1>
+
+	% The player doesn't want this stinkin' job.
+	result17 <NewChat Say 106 V= 1 -1>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Here's your pay for the mission. If these creatures match the sample from \ELEMENT 3 , we may be on our way to building a case. I hear they've been hit pretty hard by the monsters over there.>
+	Msg2 <You did it! You must be a great fighter. Here's the reward. If you're interested, they could probably use your help in \ELEMENT 3 . I hear they've been having monster problems as well.>
+	Msg3 <That was great. Here's the bounty you earned. The lab boys say that the creatures you killed match those found in \ELEMENT 3 ; if you want to continue the investigation, that's where you should head next.>
+	Msg4 <Here's your reward. I got a call from the guardian office in \ELEMENT 3 ; they could use your help with their monsters.>
+	Msg5 <You've defended our city. If you're up for some more action, I hear that there's also been a monster attack in \ELEMENT 3 .>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <Nasty little buggers, aren't they? Maybe next time I should send a team out against them. You can try again when you're ready.>
+	Msg7 <Well, you survived, at least. We're going to have to increase security in town until all those creatures have been accounted for. If you want you can try again later.>
+	Msg8 <You have failed to stop the creatures. If you want, you can have another try later.>
+	Msg9 <The mission was a failure. You can try again, but next time try harder...>
+	Msg10 <Without any fresh carcasses to examine, our forensics department won't be able to tell where these monsters have been coming from, or even what they are. Come back later and you can try again.>
+
+	% 11 - 15 :  Description of mission.
+	Msg11 <I can give you $ \VAL V4 to hunt down and destroy these things. That way, our forensics lab will get some fresh carcasses to examine. How about it?>
+	Msg12 <The creatures seem to be coming from a wildzone just outside of town. There's a reward of $ \VAL V4 to eliminate them.>
+	Msg13 <We need a good sample for the forensics lab to analyze. It's my guess that these aren't natural creatures. There's a reward of $ \VAL V4 available for monster remains.>
+	Msg14 <Our best bet is that these monsters are some kind of biological weapon, probably escaped from a research facility. To find out for sure we'll need samples. There's a reward of $ \VAL V4 if you can get some.>
+	Msg15 <These creatures are dangerous. They nearly killed me, and I'm a guardian... they have to be stopped. There's a reward of $ \VAL V4 for doing so, if you think you can.>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <I haven't been working for a while ever since I got nearly torn to shreds by those... things. If you're looking for a job, I need someone to go hunt down some monsters.>
+	Msg17 <Are you up for some hunting work? I was attacked while investigating a mysterious creature... I need someone to go finish that job.>
+	Msg18 <Have you heard about the "monsters"? Well, I was nearly killed by one, and they're real enough! I don't know much more than that, unfortunately. I could use some help to get rid of them.>
+	Msg19 <Everybody's convinced that these mysterious creatures are "monsters". I've fought with them, and I think they may be man-made. I'll need the assistance of a hunter in order to prove that.>
+	Msg20 <Looking for work? I've got a hunting contract available.>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <You are advised to exercise caution when traveling beyond the city limits. There have been dangerous animals sighted near town... I assume you've heard of these "monsters"?>
+	Msg22 <An official warning has been extended to the \SCENE EScene 2 area. There are dangerous animals on the loose; all citizens should exercise caution until they have been captured.>
+	Msg23 <Take care. Word is that we've got "monsters" on the loose.>
+	Msg24 <Exercise caution when entering or leaving town. There have been reports of a vicious creature attacking travellers near the city limits.>
+	Msg25 <There's a dangerous monster in the area, so all travellers should be extra cautious.>
+
+	Msg26 <The best guess that we have so far: We're dealing with some kind of bioconstruct, a man-made organism, possibly a weapon. We'll need some fresh cadavers to find out who made them, if they can reproduce naturally...>
+	Msg27 <The best guess? That they're bioweapons, either escaped from an illegal facility or intentionally released. The greatest fear? That they can somehow reproduce by themselves, like the Cyclops. That's why we need samples.>
+	Msg28 <I don't know... no-one does, certainly. I had a good look at them and I think they were Hunter-X bioweapons. I have no idea who built them or how, that's why we need some samples.>
+	Msg29 <They're dangerous. More evidence will be needed before I can say anything more specific.>
+	Msg30 <These could be bioweapons... that would be a horror. Who's producing them, and why?>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <I've seen them myself, and I can tell you that they're very dangerous. You sure you want a chance to face them?>
+	Msg32 <If you'd like to see these creatures yourself, I think I can arrange a meeting. They nearly ripped me to shreds... I need someone to run patrols while I recover.>
+	Msg33 <You could be of use to us. If you're interested in a hunting job, I need someone to locate and destroy these creatures.>
+	Msg34 <I have a patrol mission available, if you're up for it. These creatures must be destroyed before they hurt anyone else. Do you want to take part?>
+	Msg35 <If you'd like to work for the guardians, I could use someone to go eliminate these creatures.>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Good luck.>
+	Msg37 <Break a leg... preferably one of theirs.>
+	Msg38 <Come back here for your reward if you survive.>
+	Msg39 <Come back alive.>
+	Msg40 <Meet me back here once you've finished the patrol.>
+
+	% 41 - 45 :  PC has done previous mission in set
+	Msg41 <I heard that you've fought against the same monsters I did. If you want to do it again, I have a mission available.>
+	Msg42 <Those monsters you fought before? They nearly killed me... they seem to become stronger and more numerous the closer we get to their source. How'd you like to take them on again?>
+	Msg43 <You have quite a reputation as a monster-slayer. We've been seeing strange creatures in this town as well... Have you come to help us?>
+	Msg44 <Huh, it seems that you dealt with your monsters far better than I did with mine. I've been off on disability since fighting them last. If you're willing to face them again, I have a patrol job open.>
+	Msg45 <I heard that you've been assisting in the "monster" investigation. If you'd like to continue that work, I have a mission for you.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <That's disappointing. I'll find someone else.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Reload, grab something to eat, and do whatever else you have to do.>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <Everything that can be done is being done. Don't worry about it.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <I went face to face with those creatures. Maybe someday you'll see them and change your tune.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <I should get back to work now.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 asked you to exterminate some monsters.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to go.>
+	Prompt2 <Let's move out.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <I better go check my gear first.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What kind of monsters are they?>
+	Prompt6 <What exactly are these creatures?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <I'd like that.>
+	Prompt8 <I want to help.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <I don't want to get involved.>
+	Prompt10 <This isn't my kind of thing.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	% Heroic reputation
+	Prompt11 <You need any help?>
+	Prompt12 <Someone ought to protect the city.>
+	Prompt13 <I wish there was something I could do.>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	% Intimidation
+	Prompt14 <Those monsters should look out for me.>
+	Prompt15 <I'm not scared. I can take them.>
+	Prompt16 <Dangerous for most people, not for me.>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <Whatever.>
+	Prompt18 <Let's talk about something else.>
+	Prompt19 <I'm not concerned about that.>
+
+
+end
+

@@ -1,0 +1,169 @@
+Plot 0
+	name <Your Parents Were Murdered>
+
+	% The PC will be informed that his parents were murdered.
+	% He's the only survivor. The guardian may also warn the PC
+	% that whoever killed his family may also be after him.
+
+	% When the PC leaves town, he is attacked by mecha. If the
+	% guardian who spoke to the PC is a villain, he'll appear
+	% to kill the PC, since telling him about his parents was
+	% part of a trap. If the guardian isn't a villain, he will
+	% show up just in time to help the PC fight off the attackers.
+
+	% - Edited to v0.901 "light" standard
+
+	% E1 is the scene for the current episode.
+	% E2 is the character who will tell the PC where to go.
+	% E3 is the scene to be used in the next episode.
+	Element1 <Grab 3>
+	Element2 <Prefab>
+	Element3 <Scene Town Target !Far 1>
+
+	% V1 = Combat Can Start
+	% V2 = Combat Indicator
+
+	% On a cleanup request just delete this plot.
+	cleanup <AdvancePlot 0>
+
+	% If the combat start counter has been set, and the PC enters the world map,
+	% better start combat. At this point in time the NPC who starts the mission
+	% becomes irrelevant.
+	start <if= V1 1 else GoCheckPersona if= SceneID 1 Goto GoStartCombat>
+
+	% If Persona E2 dies, load a new plot.
+	GoCheckPersona <ifPersona E2 else GoDelete>
+	GoDelete <S= 101 1 AdvancePlot 0>
+
+	GoStartCombat <Block Alert 101 SavePos P= 2 1 Dynamic 2 Threat S103 70 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7 S= 101 1 N= 3 E3 S= 105 -1  AdvancePlot 0>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1  Goto GoAdvance>
+	GoAdvance <ifG NPCRep E2 1 -1 else GoE2Villain AdvancePlot 1>
+	GoE2Villain <AdvancePlot 2>
+
+
+	Msg101 <As you leave town, you are ambushed by mecha!>
+
+sub
+	Persona 2
+	rumor <!2 has been looking all over for you.>
+
+	greeting <NewChat if= P1 0 else GoBeenBefore Say 1 AddChat 1 AddChat 2>
+
+	GoBeenBefore <SayAnything>
+
+	GoSetCombat <P= 1 1 XRMystery NAV_XRMResolved XRBadThing NAV_XRBFamilyDied History 7>
+
+	result1 <NewChat Reputation 4 -d8 Say 2 AddCHat 3 AddChat 4 AddChat 5 goto GoSetCombat>
+	result2 <NewChat Reputation 4 d4  Say 2 AddCHat 3 AddChat 4 AddChat 5 goto GoSetCombat>
+	result3 <Reputation 7 -d6 goto GoR345>
+	result4 <goto GoR345>
+	result5 <Reputation 5 -d12 goto GoR345>
+	GoR345 <NewChat Say 3 AddChat 6 AddChat 7 AddChat 8>
+	result6 <Reputation 3 d8 goto result7>
+	result7 <NewChat ifG NPCRep E2 1 0 else GoR7NoHero Say 4>
+	GoR7NoHero <Say 6>
+	result8 <NewChat Say 5 AddChat 9>
+	result9 <Goto result7>
+
+	Msg1 <Excuse me, are you \PC ? I've been looking all over for you. I have some bad news, I'm afraid... You might want to sit down.>
+	Msg2 <It's your family, I'm afraid. Your parents were murdered. It was an execution-style killing done by a professional. They were gunned down in their home.>
+	Msg3 <You were apparently the only survivor of the attack. I guess that means you're the last surviving member of your family, isn't that correct?>
+	Msg4 <We are investigating the case and will let you know when we find anything. You should be careful... Every last person in the house was killed. If the murderers find out that they missed one, they could be after you as well.>
+	Msg5 <I'm sorry, you're right... that was a very insensitive question.>
+	Msg6 <Rest assured that we will continue to investigate this case, and the killers of your family will be caught.>
+	Msg7 <\ELEMENT 2 informed you that your parents were murdered.>
+
+	Prompt1 <It takes an awful lot to shock me.>
+	Prompt2 <What kind of news? What happened?>
+	Prompt3 <Oh my god...>
+	Prompt4 <No, tell me it's not true...>
+	Prompt5 <Well, it's not like I was very close to them.>
+	Prompt6 <No, I think there are more of us.>
+	Prompt7 <It appears so.>
+	Prompt8 <What kind of a stupid question is that!?>
+	Prompt9 <It certainly was.>
+
+	Plot 1
+		% Second fight, but PC will be aided by E2.
+
+		% V1 = Conversation Counter
+		% V2 = Combat Indicator
+
+		start <if= V2 1 else GoCheckEnterCombat if= V1 0 V= 1 1 FOrceChat E2>
+		GoCheckEnterCombat <if= SceneID 1 Goto GoStartCombat>
+
+		GoStartCombat <Block Alert 101 SavePos P= 2 1 Dynamic 2 Threat S103 100 .nu1 .nu2 DynaNPC E2 -1>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Salvage Return>
+
+		% Combat check. If combat has been entered, V2=1.
+		% Combat ends in victory if the number of active masters on
+		% team two drops to zero, or ends in defeat is the number of
+		% active masters on team one drops to zero. After combat, V2=3
+		% if the player was victorious or V2=2 is the player lost.
+		nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2 AdvancePlot 0>
+		nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 PCAlly E2 History 102 AdvancePlot 0>
+
+		Msg101 <That wasn't the last of them. You are attacked again, but this time are joined by a new ally.>
+		Msg102 <You were ambushed near \ELEMENT 1 ; \ELEMENT 2 helped you.>
+	sub
+		Persona 2
+		greeting <EndChat Say 1 AddChat 1>
+		result1 <EndChat Say 2>
+		Msg1 <I thought you might need a little help. It looks like the ones who killed your parents want to finish off your entire family. Mind if I join you?>
+		Msg2 <I'll watch your back.>
+		Prompt1 <Let's do it.>
+	end
+
+	Plot 2
+		% Second fight, but PC will be attacked by E2!
+
+		% V1 = Conversation Counter
+		% V2 = Combat Indicator
+
+		start <if= V2 1 else GoCheckEnterCombat if= V1 0 V= 1 1 FOrceChat E2>
+		GoCheckEnterCombat <if= SceneID 1 Goto GoStartCombat>
+
+		GoStartCombat <Block Alert 101 SavePos P= 2 1 Dynamic 2 Threat S103 40 .nu1 .nu2 FreezeChar E2 NPCLevel E2 S103 DynaNPC E2 2 PCEnemy E2>
+		.nu1 <if= T1 0 Return>
+		.nu2 <if= T2 0 Salvage Return>
+
+		% Combat check. If combat has been entered, V2=1.
+		% Combat ends in victory if the number of active masters on
+		% team two drops to zero, or ends in defeat is the number of
+		% active masters on team one drops to zero. After combat, V2=3
+		% if the player was victorious or V2=2 is the player lost.
+		nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2 History 102 AdvancePlot 0>
+		nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 History 103 AdvancePlot 0>
+
+		Msg101 <That wasn't the last of them. You are attacked again, but this time facing a new enemy!>
+		Msg102 <You were ambushed near \ELEMENT 1 ; \ELEMENT 2 tried to kill you.>
+		Msg103 <You defeated an ambush led by \ELEMENT 2 near \ELEMENT 1 .>
+	sub
+		Persona 2
+		greeting <EndChat Say 1 AddChat 1>
+		result1 <EndChat Say 2>
+		Msg1 <Our trap worked. I knew that you'd come back here, and that I'd be able to finish the job of destroying your family by myself!>
+		Msg2 <Once you're gone, there will be no-one left to oppose us...>
+		Prompt1 <You? I will defeat you!!!>
+	end
+
+end
+inv
+	NPC Mecha Pilot
+	job <Guardian>
+	mecha <Corsair.txt>
+	Chardesc Lawful Lawful Lawful Sociable Easygoing
+	EquipChar 25000
+	place <1 Ally>
+
+end

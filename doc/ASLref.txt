@@ -1,0 +1,232 @@
+1. TRIGGERS
+
+	5MIN			Generated every five minutes
+	APPLAUSE		Using performance skill, favorable result
+	CLEANUP			Story is ending, do plot cleanup
+	ENC[encounter level]	World map encounter; 1=Combat,2=Special,3=Boon
+	END			Trigger placed when scene ends
+	EWM[scene number]	Objection Check: Enter via world map
+	FACWIN[faction ID]	Faction has won a story
+	FACLOSE[faction ID]	Faction has lost a story
+	FIRE!			Trigger set when a fire starts on map
+	GET[ID Number]		Get item which has Narrative ID
+	GREETING		First label called when interact started
+	HALFHOUR		Generated every half hour of game time
+	HOUR			Generated every hour of game time
+	JUMPSTART0		Used to jump-start a recently advanced plot
+	KEY[ID Number]		Objection Check; Item used/activated
+	LOCAL[ID Number]	Triggers a local event
+	NPCOPENDOOR		Request sent when NPC wants to open a door
+	NU[team]		Number of masters on team has changed
+	QUARTER			Generated every 6 hours (1/4 of a day)
+	RESULT[number]		Called when interact menu item selected
+	REVEAL			Called when hidden metaterrain is discovered
+	START			First trigger placed when scene entered
+	TD[uid]			Model on gameboard removed from play
+	THIEF!			Trigger set whenever PC botches a PickPockets roll
+	TM[team]		Member of given team has moved
+	UPDATE			Sent to all objects on gameboard at start and when requested
+	USE			First label called when prop activated
+	UTD[cid]		Model with Character ID has been destroyed
+
+	*** DEBUG TRIGGERS ONLY ***
+	PLAYERVILLAIN		Player has gained villainous reputation
+				from DeclarationOfHostilities procedure.
+		I'm hoping to use this to finally track down all the bugs.
+
+
+2. BASIC COMMANDS
+
+	ACCEPT			Return TRUE from ConditionAccepted
+	ADDCHAT [number]	Add prompt[num] to interact menu
+	ADDREACT [value]	Alter NPC reaction score
+	ADVANCEPLOT [subplot number]	Advance to sub-plot
+	AIRRAIDSIREN		All NPCs will flee the gameboard
+	ALERT [msg number]	Display a text message the PC won't ignore
+	ATTACK [Team1] [Team2]	Team1 will attack Team2
+	BATCHLOADPLOT [label] [n]	Load a number of plots all at once,
+					subject to config file option
+	BLOCK			Erase trigger, prevent further events
+	BOMB			Blow up current scene
+	CASHPRIZE [value]	Give player money
+	COMPOSE [trigger label] [parameter] [cmd line identifier]
+			Create new script event
+	DELETECHAR [Character ID]	Eliminate NPC
+	DELETEFACTION [Faction ID]	Deactivate faction
+	DELETEKEYITEM [Narrative ID]	Eliminate key item
+	DRAWTERR [x] [y] [terrain]	Alter the gameboard
+	DYNAMIC [Scale] [Point Value] [NU1 label] [NU2 label]
+			Start a dynamic scene
+	DYNANPC [cid] [team]	Insert NPC into dynamic scene
+	E=			Set Plot Element
+	EMAIL [idnum]		Store message for PC in source gear
+	ENCOUNTER [enemy%] [ally%] [description label]
+			Add NPCs to a dynamic scene
+	ENDCHAT			Delete all items from interact menu
+	ENDSTORY		Delete source story, pass CLEANUP to plots
+	EXIT [code]		Leave current scene with exit code
+	EXPRESSDELIVERY		Have shopkeeper ship mecha from another town
+	FORCECHAT [CID]		Force conversation with NPC
+	FREEZENPC [CID]		Remove NPC from play; store as global
+	G= [idnum] [value]	Set global variable
+	G+ [idnum] [value]	Add global variable
+	GLOBALSTORYPATTERN [scene label] [story label] loads as many stories
+		as possible matched to as many scenes as possible with no
+		duplication of either
+	GOTO [label]		Jump to another line in the program
+	HISTORY [idnum]		Add message to adventure history
+	IF= [value1] [value2] <ELSE [label]>
+	IF# [value1] [value2] <ELSE [label]>	If V1 <> V2...
+	IFFACTION [FID] <else [label]>	If faction is active...
+	IFFACTIONENEMY [FID] <else [label]>	If faction is arch-enemy of PC...
+	IFG [value1] [value2] <ELSE [label]>	If V1 > V2...
+	IFKEYITEM [NID] <ELSE [label]>	If PC has key item...
+	IFM [uid] <ELSE [label]>	If root level gear is active...
+	IFNOOBJECTIONS [trigger label] [parameter] <ELSE [label]>
+		If the produced trigger is not blocked...
+	IFNPCARCHENEMY [UID] <else [label]>	If NPC is arch-enemy of PC...
+	IFPERSONA [CID] <ELSE [label]>	If NPC is alive...
+	IFSCENE [label] <ELSE [label]>	If current scene 
+		matches description...
+	IFSTORYLESS <ELSE [label]>	If SOURCE has no linked story...
+	IFYESNO [desc msg] ["yes" msg] ["no" msg] <ELSE [label]>
+	L= [idnum] [value]	Set local variable
+	L+ [idnum] [value]	Add local variable
+	LOADD [script line label]	Load a dynamic scene
+	MAGICMAP		Makes all tiles on current map visible
+	MDYNAMIC [Scale] [PC Encounter Level] [MDesc Label] [NU1 label] [NU2 label]
+			Create dynamic scene with monsters
+	MECHAPRIZE [script line label]	Give PC a mecha
+	MEMO [idnum]		Store reminder for PC in source gear
+	MORETEXT [script line label]	Display text file from disk
+	MOREMEMO [tag]		View memos of type [tag] - EMAIL,MEMO,NEWS
+	MOVECHAR [CID] [Scene ID]	Move a character to the requested scene
+	MOVEKEYITEM [NID] [Scene ID]
+	MSTAGED [Label] [UPV] [MDesc Label]	Like Staged, with monsters
+	MSTOCKD [UPV] [MDesc Label]	Stock dynamic encounter with monsters
+	N=			Set Story Element
+	NEWCHAT			Reset interact menu
+	NEWD [scale]		Create a new dynamic scene
+	NEWS [idnum]		Store global news message in source gear
+	NPCABSOLUTELEVEL [NPC] [%]	Scales all skill values by percent
+	P= [idnum] [value]	Set plot variable
+	P+ [idnum] [value]	Add plot variable
+	PCENEMY [cid]		NPC will become PC's enemy
+	PRINT [idnum]		Display message in console area
+	PURGESTORY		Pass CLEANUP to and delete story plots
+	REPUTATION [rep num] [value]	Alter PC's reputation
+	RETREAT [team ID]	Remove team from the gameboard
+	RETURN			Exit a dynamic scene
+	RUNAWAY [CID]		Remove NPC from the gameboard
+	S= [idnum] [value]	Set story variable
+	S+ [idnum] [value]	Add story variable
+	SAVEPOS			Remember PC's current location
+	SAY [idnum]		Display message in interact area
+	SAYANYTHING		Say meaningless random message
+	SCHOOL [skill list identifier]	PC can train skills
+	SEEKGATE [scene ID]	Player will enter next map at entry of specified scene
+			***IMPORTANT*** Only works if called after Exit, Return, etc
+	SEEKTERR [terrain type]		Set where PC will enter next scene
+	SETPLAYERFACTION [faction ID]
+	SETSCENEFACTION [scene ID] [faction ID]
+	SHOP [wares identifier]
+	STAGED [Label] [Point Value]	Load dynamic scene from disk
+	STARTSTORY [script line label] <ELSE [label]>	Load a story
+	STOCKD [UPV]		Stock dynamic encounter with enemies
+	STORYLINE [script line label] <ELSE [label]>	Load a plot
+	TIME [delay]		Advance game clock
+	TMSTOCKD [team] [upv] [label]	Stock dynamic scene team with monsters
+	TORD [team] [order <parameters>]	Set orders for team
+	TRANSFORM [frame]	Switch a prop's appearance to alternate state
+	TREPUTATION [team number] [rep num] [value]	Set rep for team
+	TRIGGER [base] [value]	Add an event trigger to the queue
+	TSTOCKD [team] [upv]	Stock dynamic scene team with mecha
+	UPDATEPROPS		Sends an "UPDATE" trigger to all gears on gameboard
+	V= [idnum] [value]	Set source variable
+	V+ [idnum] [value]	Add source variable
+	VMSG [ident] [value]	Print standard value message
+	WMECHA [team] [upv]	Stock current scene with mecha
+	XPV [experience award]	Give PC experience
+	XRANPLOT [label]	Load plot using experimental Extra Randomness
+
+3. BASIC FUNCTIONS
+
+	?M[team number]		Random mecha UID
+	?P[team number]		Random pilot UID
+	@[gear ID]		UID of root-level gear
+	* [A] [B]		Returns A * B
+	CHATNPCID		CID of interact NPC
+	COMTIME
+	D[Die Size]
+	E[idnum]		Plot element value
+	EScene [idnum]		Element's scene ID
+	FacMem [idnum]		Number of members
+	FacScene [idnum]	Number of controlled scenes
+	FXPNeeded [level]	Number of faction XP for next level
+	G[idnum]		Global variable value
+	HOSTILEFACTIONS		Number of active, military factions with
+			active, military enemies
+	L[idnum]		Local variable value
+	MAPTILE [X] [Y]		Terrain value of tile X,Y
+	N[idnum]		Story (Narrative) element value
+	NPCREP [CID] [idnum]	NPC's reputation score
+	P[idnum]		Plot variable value
+	PCFAC			PC's faction ID
+	PCMEKS			Number of meks PC owns
+	PCREP [idnum]		PC's reputation score
+	PCSCALE			Scale of PC's root level gear
+	PCUID			PC's unique ID
+	PCX			PC X position
+	PCY			PC Y position
+	PCSKILLVAL [skill]	Highest rank in skill from PC, lancemates
+	RANGE [uid1] [uid2]	Range between two gears by UID
+	REACT			Reaction score with interact NPC
+	REWARD [threat value] [percent]	Good salary for combat mission
+	S[idnum]		Story variable
+	SCENEFACTION [scene ID]		Scene's faction ID
+	SCENEID			ID of current scene
+	SELFUID			Source's unique ID
+	SKROLL [Skill Number]	PC makes a skill roll
+	T[team number]		Number of active masters on team
+	THREAT [Reputation] [Percent]	Good difficulcy value for mission
+	V[idnum]		Source variable value
+	WMTHREAT [Reputation]	Good WMon difficlulcy value for level
+
+4. MESSAGE FORMATTING STRINGS
+	\DATE [time]		Converts [time] to game display format
+	\FACRANK [FID] [Rank]	Faction rank name
+	\PC			The PC's name
+	\RANK			PC's rank name
+
+5. GEAR GRABBERS
+	GRABLOCAL [uid]		Grabs a model from gameboard
+
+6. GRABBED GEAR COMMANDS
+	DELETEGG		Deletes the grabbed (physical) gear
+	DEPLOYGG [team]		Places the grabbed gear in the current scene
+	GABSOLUTELEVEL [%]	Scale skill values by percent
+	GADDNATT [G] [S] [V]
+	GIVEGG			Gives the grabbed (physical) gear to PC
+	GMENTAL			The grabbed gear will waitaminute and 1MP
+	GMORALEDMG [Morale]	Adds morale damage to the grabbed gear
+	GNEWPART [label]	Adds new item, monster, NPC to game board
+	GRUNAWAY		If easily found on map, GG runs away
+	GQUITLANCE		The grabbed gear quits the lance
+	GSETNATT [G] [S] [V]
+	GSETSATT [key] [info label]
+	GSETSTAT [Slot] [Value]
+	GSKILLLEVEL [Reputation]	Scales skill points to set level
+	GSKILLXP [Skill] [XP]	Gives skill-specific experience to GG
+	IFGARCHALLY		True if GG an arch-ally of PC
+	IFGARCHENEMY		True if GG an arch-enemy of PC
+	IFGINPLAY <else [label]>	True if GG on map and operational
+	IFGOK <else [label]>	True if GG exists and not destroyed
+	IFGSEXY <else [label]>	True if NPC GG exists and is sexy to PC
+	MOVEGG [Scene ID]	Moves the grabbed (physical) gear
+
+7. GRABBED GEAR FUNCTIONS
+
+
+8. METACOMMANDS
+	!Talk [CID]		Forces conversation with NPC
+

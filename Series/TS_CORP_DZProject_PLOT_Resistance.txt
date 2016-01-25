@@ -1,0 +1,244 @@
+Plot 0
+	name <ARC: DZ-Resistance>
+
+	% Faction N1 is trying to expand into the dead zone, but
+	% not everyone is happy about that.
+
+	% E1 is the faction behind the story
+	Element1 <Grab 1>
+
+	% E2 is the NPC who will give the PC the mission.
+	Element2 <Character Bandit HasMecha Heroic>
+
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	% V1 = Time Limit
+	% V2 = Combat Indicator, if V2=1 combat has been entered
+	% V3 = Email sent indicator.
+
+	% On a cleanup request, delete this plot unless combat has been
+	% entered.
+	cleanup <if= V2 0 AdvancePlot 0>
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E2 is killed. It will also conclude if the corporation has
+	% been behaving itself extremely well in the dead zone... as
+	% measured by the public opposition variable dropping beneath -d10.
+	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG S102 -d10 else GoFlatDelete ifG ComTime V1 if= d2 1 else GoDelete S+ 101 -1 AdvancePlot 0>
+	GoDelete <S+ 102 1 AdvancePlot 0>
+	GoFlatDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3  S+ 102 1>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  S+ 101 -d3 S+ 102 1>
+
+	5Min <if= d50 23 if= V3 0 ifG RReact E2 d70 if# PCFac E1 ifG -d25 PCRep 2 ifG PCRep 1 d25 V= 3 1 Email d5>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1 <\PERSONA E2 @ \SCENE EScene 2 :// I need some help. My home is in trouble... please respond.>
+	Msg2 <\PERSONA E2 @ \SCENE EScene 2 :// How'd you like to be an activist? Come see me for details.>
+	Msg3 <\PERSONA E2 @ \SCENE EScene 2 :// Got a mission planned against \ELEMENT 1 . Want to take part?>
+	Msg4 <\PERSONA E2 @ \SCENE EScene 2 :// \ELEMENT 1 is moving into my clan's territory, going to shut them down...>
+	Msg5 <\PERSONA E2 @ \SCENE EScene 2 :// Got a job for you if you're interested.>
+
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E2.
+	Persona 2
+	rumor <!2 has been fighting against the !1 dead zone industrial project.>
+
+
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+	% At startup, first check to see whether the PC has already
+	% completed the mission or not.
+	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC meets the NPC, the PC will be given the
+	% mission automatically if he's part of the same faction, or if
+	% he is a friend of the NPC, or if he's already been sent email.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat FacVar E1 1000 100 V= 4 Reward V3 100 if= PCFac E1 else GoCheckEmail Goto GoDenied>
+	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	% If the reaction score is greater than 40, PC will automatically
+	% be offered the job, but unlike above will not be automatically
+	% expected to accept it,
+	GoCheckFriend <ifG React 60 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	% If the PC is not automatically offered the job, there's still
+	% a chance to get the job... as long as the NPC doesn't hate him.
+	GoNoAutomatic <ifG React d40 else GoDenied ifG PCRep 1 d25 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 Say V2>
+	GoDenied <V= 1 -1 SayAnything AdvancePlot 0>
+
+	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
+
+	% The PC will enter combat here.
+	result1 <EndChat V= 2 35 V+ 2 d5 Say V2 SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2 Encounter 1 15 .edesc SetMapType RoughMap>
+	.edesc <ArchEnemy Lawful>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	result2 <Goto Result1>
+
+	% The PC needs some time to get ready.
+	result3 <NewChat Say 103>
+	result4 <Goto Result3>
+
+	% The PC will be told the enemy's point value.
+	result5 <NewChat V= 2 25 V+ 2 d5 Say V2 AddChat 1 AddChat 3>
+	result6 <Goto result5>
+
+	% The PC accepts the job offer.
+	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result8 <Goto result7>
+
+	% The PC refuses the job offer.
+	result9 <NewChat Say 102 V= 1 -1  AdvancePlot 0>
+	result10 <Goto result9>
+
+	% The PC will impress the NPC with CHAOTIC reputation...
+	result11 <NewChat ifG -PCRep 2 d75 else GoR11Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result12 <Goto result11>
+	result13 <Goto result11>
+	GoR11Lose <NewChat Say 104 V= 1 -1 AdvancePlot 0>
+
+	% The PC tries to get the job via "PLAN B"- be heroic.
+	result14 <NewChat ifG PCRep 1 d20 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	result15 <Goto result14>
+	result16 <Goto result14>
+	GoR14Lose <NewChat Say 105 V= 1 -1 AdvancePlot 0>
+
+	result17 <NewChat Say 106 V= 1 -1 AdvancePlot 0>
+	result18 <Goto result17>
+	result19 <Goto result17>
+
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Good job out there, but I don't think we can expect \ELEMENT 1 to give up so easily. Here's the cash I promised you.>
+	Msg2 <Maybe if we keep this up \ELEMENT 1 will get the message and pull out. Here's your reward; thanks for the help.>
+	Msg3 <You did it. Here's your pay.>
+	Msg4 <You've driven back the forces of \ELEMENT 1 . Here's the money I promised you.>
+	Msg5 <Here's the cash I promised you for a successful mission.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <Maybe \ELEMENT 1 is just too strong for us to defeat...>
+	Msg7 <The mission was a failure.>
+	Msg8 <We've failed... \ELEMENT 1 is one step closer to domination.>
+	Msg9 <They won, we lost, the mission is over.>
+	Msg10 <You got creamed by \ELEMENT 1 . Maybe they're too strong for us to face on our own...>
+
+	% 11 - 15 :  Description of mission.
+	%  use "$ \VAL V4 " to insert the pay for the mission,
+	%  and don't forget to mention that the PC also gets salvage.
+	Msg11 <A \ELEMENT 1 security team has been intimidating the settlements around their new project, trying to force people out of the area. Disable this team and I can give you $ \VAL V4 , plus whatever salvage you can find.>
+	Msg12 <\ELEMENT 1 has just moved a heavy strike force into the dead zone. This type of firepower isn't just for scaring off bandits... It's worth $ \VAL V4 plus salvage if you can get rid of them.>
+	Msg13 <A shiny new mecha security force has just moved into the dead zone. It's worth $ \VAL V4 plus salvage if you can make them move out again.>
+	Msg14 <They've been beefing up the security around one of the big projects, probably so they can start driving out the residents and move in some company men... I can offer $ \VAL V4 plus salvage to take out their security force.>
+	Msg15 <I can offer you $ \VAL V4 plus salvage to head in there and take out one of their security teams.>
+
+	% 16 - 20 :  Player is asked if he is looking for a job.
+	Msg16 <Hey, you wanna be an activist? \ELEMENT 1 is shaking down the communities around their dead zone project. It's time someone cut them down to size.>
+	Msg17 <You wanna get involved in this? \ELEMENT 1 is flexing its muscles in the dead zone, and neither the Guardians or the Council are gonna do anything about it.>
+	Msg18 <You want a job? I have a mission lined up fighting \ELEMENT 1 in the dead zone.>
+	Msg19 <The company bastards at \ELEMENT 1 have been stomping down the nomads in the dead zone. I'm planning a mission to give them some what-for, if you'd like to join in.>
+	Msg20 <I have a job available if you don't mind taking on \ELEMENT 1 . This is one of those missions of conscience, you know?>
+
+	% 21 - 25 :  NPC implies job, PC might have chance to get it.
+	Msg21 <\NARRATIVE 1 calls all the people who live in the dead zone "ravagers". That's just not true... they're saying it to justify their attacks against the people there.>
+	Msg22 <\NARRATIVE 1 has moved into the dead zone, and started claiming resources from the people who live there. Man I hate those corps...>
+	Msg23 <I grew up in the dead zone. It's a tough place, that's for sure. Now \NARRATIVE 1 is in there stealing what little the people have out from under them.>
+	Msg24 <Life has always been rough in the dead zone. We don't need corporations in there forcibly moving settlements just so they can get the best parts for themselves.>
+	Msg25 <\NARRATIVE 1 says it's "civilizing" the dead zone, says that the people they've been killing there are "ravagers" and "bandits". It's all bull.>
+
+	% 26 - 30 :  PC will be told exact enemy point value.
+	%  use "\VAL V3 " to insert the value.
+	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points.>
+	Msg27 <I've heard from some friends in Lost Hope that \ELEMENT 1 has around \VAL V3 threat points worth of mecha in the area.>
+	Msg28 <They've got \VAL V3 points worth of death in there, give or take a few hundred.>
+	Msg29 <You'll be fighting \VAL V3 tac-points of company mecha. Should be no problem for a badass like you, right?>
+	Msg30 <They've got around \VAL V3 worth in their strike team.>
+
+	% 31 - 35 :  "PLAN A" or "PLAN B" worked... the PC is offered
+	%  a job and may choose either prompt7/8 to accept or prompt9/10
+	%  to reject it.
+	Msg31 <Maybe you'd like to help. The corp security force has been raiding villages around their development site. I could use another pilot to cut them down a notch.>
+	Msg32 <How'd you like to join the cause? I could use a mecha pilot to run some interference. The corp security force has been beating down the settlements... I think they could use a beating down themselves.>
+	Msg33 <It's time the corporations got what was coming to them. I have a mission planned, if you'd like to run with it.>
+	Msg34 <I've got a job lined up against \NARRATIVE 1 , if you'd like to help out.>
+	Msg35 <The Guardians can't touch them because it's outside the FedTer, the Council won't do anything because of the money involved, so it's up to petty thugs like us to stand up against \ELEMENT 1 . Do you want in or not?>
+
+	% 36 - 40 :  Combat is starting.
+	Msg36 <Good luck out there. Don't get your ass kicked by a bunch of fatass wage-slaves.>
+	Msg37 <Here are the coordinates. Fight the power!>
+	Msg38 <Get out there and kick some corporate ass.>
+	Msg39 <They thought taking on the dead zone would be a walk in the park... let's prove that it won't be.>
+	Msg40 <Here's the navigation info that you're going to need. Good luck out there.>
+
+
+	% 101 :  Player accepted job, then left to get ready.
+	Msg101 <Are you ready to start the mission?>
+	% 102 :  Player has refused to take job; answer to prompts 9-10.
+	Msg102 <If you're not in it, you're out of it.>
+	% 103 :  Player has asked for some time to get ready.
+	Msg103 <Sure. Better make sure your gear is ready, because corp security doesn't take any prisoners...>
+	% 104 :  "PLAN A" has failed, and the PC is not offered a job.
+	Msg104 <Maybe not enough, though.>
+	% 105 :  "PLAN B" has failed, and the PC is not offered a job.
+	Msg105 <Yeah, but you should do something to change it, not just talk about it.>
+	% 106 :  Player doesn't want job; answer to prompts 17-19.
+	msg106 <Yeah, right. If the corps aren't opposed then they'll just continue doing whatever they like.>
+	% 107 :  Memo
+	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a combat mission.>
+
+	% 01 - 02 :  Ready to start the mission
+	Prompt1 <I'm ready to start the mission.>
+	Prompt2 <All ready to move out.>
+
+	% 03 - 04 :  Need time to get ready first.
+	Prompt3 <Give me some time to get ready.>
+	Prompt4 <I need some time to prepare.>
+
+	% 05 - 06 :  What is the enemy point value?
+	Prompt5 <What am I up against out there?>
+	Prompt6 <What kind of stuff do they have?>
+
+	% 07 - 08 :  After being asked if he wants a job, PC says yes.
+	Prompt7 <Give me the plan.>
+	Prompt8 <I'm in. Tell me the plan.>
+
+	% 09 - 10 :  After being asked if he wants a job, PC says no.
+	Prompt9 <I'm afraid I can't help.>
+	Prompt10 <I don't want to get involved in this.>
+
+	% 11 - 13 : Player tries to get job using PLAN "A".
+	Prompt11 <I hate the corps!>
+	Prompt12 <I have no love of the corporations.>
+	Prompt13 <Those corps get away with murder...>
+
+	% 14 - 16 : Player tries to get job using PLAN "B".
+	Prompt14 <Something ought to be done about it.>
+	Prompt15 <I wish there was some way I could help.>
+	Prompt16 <That just isn't right.>
+
+	% 17 - 19 : Player doesn't much care for the job.
+	Prompt17 <That's not my problem.>
+	Prompt18 <I can't get involved in this matter.>
+	Prompt19 <Big deal. It doesn't affect me.>
+
+
+end
+

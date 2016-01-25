@@ -1,0 +1,450 @@
+Plot 0
+	% This is the big ending! Yay!
+	%
+	% OUTLINE SPOILERS...
+	%
+	%  PHASE 1 - "The Attack"
+	%   - town the PC is currently in will be attacked
+	%   - bombs fall every five minutes
+	%   - advance to phase 2 when PC exits town
+	%   - First time entering world map, print desc of enemy mecha
+	%
+	%  PHASE 2 - "The Excavation"
+	%   - Move E2 and E3 to their scenes
+	%   - When entering attacked scene, prompt for entry to combat zone
+	%   - News: ENEMY has captured SCENE; military unable to proceed.
+	%   - Speak with general E2 to learn more or enter combat zone
+	%   - Speak with professor E3 to learn how to enter site (Clue1)
+	%   - Combat Zone encounters:
+	%       - First fight mecha to gain access
+	%       - First time, fight encounter against GARU supersoldiers
+	%       - Enter maze to find enemy or jump to last level (if Clue1)
+	%   - Enemy reveals plot (if spoken to) or awakens Typhon (if killed)
+	%   - Typhon awakens, cave is destroyed, PC escapes, goto Phase 3
+	%
+	%  PHASE 3 - "Segue to the Apocalypse"
+	%   - Set PC HP to 1, SP and MP to 0
+	%   - Send PC to town, force conversation with E2 (if alive)
+	%   - E2 informs PC where Typhon has gone
+	%   - Reveal ENEMY BASE on map
+	%   - Goto phase 4
+	%
+	%  PHASE 4 - "Apocalypse"
+	%   - if the PC enters ENEMY BASE, start the encounter
+	%   - at first start of encounter, forcechat with ENEMY
+	%   - ENEMY now inside Typhon, wants to control FedTer
+
+	% E1 is the scene where the professor lives.
+	Element1 <Scene Town Target>
+
+	% E2 is the mecha pilot who appears after the attack.
+	Element2 <Prefab>
+
+	% E3 is the professor who located the weapon.
+	Element3 <Prefab>
+
+	% E4 is TYPHON
+	Element4 <Prefab>
+
+	% E5 is a spare enemy in case the PC's current enemy is dead.
+	Element5 <Prefab>
+
+	% E6 is the "attacked scene"; the value chosen here will be
+	%   replaced based on what scene the PC is in.
+	Element6 <Scene>
+
+
+	% PHASE 1 START
+	% V1 = Initialization Counter; if V1=2 bombing has started
+
+	% At the start, check to see whether or not to advance.
+	start <if= V1 2 else GoCheckInit if# SceneID E6 Goto GoAlertEnemy>
+	GoCheckInit <if= V1 0 V= 1 1 FreezeChar E2 FreezeChar E3 FreezeChar E4 ifPersona N1 else GoReplaceEnemy DeleteChar E5 E= 5 N1>
+	GoReplaceEnemy <FreezeChar E5>
+
+	% Every half hour, check the location.
+	% If it matches our requirements then start the bombing!
+	halfhour <ifScene .scenedesc if= V1 1 if# SceneID E1 E= 6 SceneID P= 1 2 N= 3 SceneID Alert 2 AirRaidSiren Bomb>
+	.scenedesc <TOWN TARGET>
+
+	% Every 5 minutes, check to see whether or not to bomb.
+	5Min <if= P1 2 if= SceneID E6 BOMB>
+
+	% Depending on who the PC's enemy is, print a different message.
+	GoAlertEnemy <if= XRE NAV_XRECharacter else GoCheckFaction Alert 101 AdvancePlot 2>
+	GoCheckFaction <ifFaction N2 else GoMisc ifPersona N1 else GoFactionNoEnemy Alert 102 AdvancePlot 2>
+	GoFactionNoEnemy <Alert 103 AdvancePlot 2>
+	GoMisc <Alert 104 AdvancePlot 2>
+
+	Msg2 <Suddenly there is a huge explosion! In the distance you hear the sound of mecha fighting.>
+	Msg101 <As you flee town you get a look at the mecha who attacked. From among the crowd you manage to recognize \ELEMENT 5 .>
+	Msg102 <As you flee town you get a look at the mecha who attacked. They bear \NARRATIVE 2 insignia, and among them you recognize \ELEMENT 5 .>
+	Msg103 <As you flee town you get a look at the mecha who attacked. They are marked with \NARRATIVE 2 insignia.>
+	Msg104 <As you flee town you get a look at the mecha who attacked. You have no idea who they are but it's clear that something big is about to go down.>
+
+sub
+
+Plot 2
+	% PHASE 2 - "The Excavation"
+
+	% V1 = Initialization Counter
+	% G1003 = CLUE-1; E3 tells PC where to find E5
+
+	start <Goto GoCheckInit>
+	GoCheckInit <if= V1 0 MoveChar E2 E6 MoveChar E3 E1 Compose UTD E5 .EnemyDies Compose EWM E6 .EnterScene V= 1 1 G= 1001 E6 G= 1002 E5 Goto GoSetNews>
+
+	% If the enemy dies, better freeze him and awaken Typhon...
+	.EnemyDies <FreezeChar E5 History 6 Alert 2 Alert 3 Alert 4 Exit E6 AdvancePlot 3>
+
+	% When entering E6, prompt for entry to combat zone.
+	.EnterScene <ifYesNo 201 202 203 Block Goto GoEnterCombat>
+
+	% First the PC must fight mecha. Then he enters the ruins and
+	% must first fight the GARU guards, then descend into the cave.
+	GoEnterCombat <Print 1 SavePos  Dynamic 2 Threat S103 140 .NU1 .NU2>
+	.NU1 <if= T1 0 Return>
+	.NU2 <if= T2 0 if= V1 0 V= 1 1 Exit 46 SeekGate 1>
+
+	GoSetNews <ifFaction N2 else GoNewsNoFaction News 101>
+	GoNewsNoFaction <News 102>
+
+	Msg1 <As you approach the combat site, you are attacked by mecha!>
+
+	Msg2 <Just as you defeat \ELEMENT 5 , the ground begins to shake and the earth rips asunder!>
+	Msg3 <You catch a brief glimpse of something enormous rising from the depths as the cave collapses around you, then everything goes black...>
+	Msg4 <The crushing darkness surrounds you.>
+
+	Msg6 <You defeated \ELEMENT 5 in the \ELEMENT 6 ruin.>
+
+	Msg101 <Mecha from \NARRATIVE 2 under the command of \ELEMENT 5 have taken over part of \ELEMENT 6 . Military response hampered by presence of civilian hostages.>
+	Msg102 <Mecha team under the command of renegade \ELEMENT 5 have taken over part of \ELEMENT 6 . Military response hampered by presence of civilian hostages.>
+
+	Msg201 <Do you want to enter the city, or go to the combat zone?>
+	Msg202 <Enter combat zone.>
+	Msg203 <Enter city.>
+
+sub
+	Persona 2
+	% Can tell the PC the raiders came from E1,
+	% and can also let the PC enter combat from here.
+	rumor <!2 has been sent to defend our town against those raiders.>
+	greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+	result1 <NewChat Say 2 AddChat 2 AddChat 3>
+	result2 <NewChat AddChat 1 AddCHat 3 if= XRE NAV_XREFaction else GoR2NoFac Say 3>
+	GoR2NoFac <Say 4>
+	result3 <NewChat Say 5 AddChat 4 AddChat 5>
+	result4 <EndChat Say 6 Goto GoStartCombat>
+	GoStartCombat <SavePos  Dynamic 2 Threat S103 100 .NU1 .NU2>
+	.NU1 <if= T1 0 Return>
+	.NU2 <if= T2 0 if= V1 0 V= 1 1 Exit 46 SeekGate 1>
+	result5 <NewChat Say 7>
+	Msg1 <The raiders have been contained in the west side of town, but we can't risk the civilian casulties that would result if we tried to drive them out. They're quiet for now... best to just wait and see what they're going to do.>
+	Msg2 <That's something we've all been wondering. \ELEMENT 5 hasn't made any demands so far. They've stopped fighting and no reinforcements seem to be coming. They've settled into their defensive position, but for what purpose?>
+	Msg3 <Well, we believe them to be allied with \NARRATIVE 2 , but other than that we don't know a whole lot about them. Before attacking \ELEMENT 6 they came from \ELEMENT 1 , but they don't seem to have had a base there.>
+	Msg4 <Well, we don't know a whole lot about them. Before attacking \ELEMENT 6 they came from \ELEMENT 1 , but they don't seem to have had a base there.>
+	Msg5 <You think you could? A lone mecha could maybe break through their defenses without risking the hostages... You want to try it?>
+	Msg6 <I can share some of our information with you, show you where their defense is weakest... That should give you a better chance of actually breaking through. Good luck.>
+	Msg7 <If you're thinking of taking them on, you better make sure you're in top shape first. \ELEMENT 5 and the other raiders are pretty tough.>
+	Prompt1 <Why did they come here?>
+	Prompt2 <Where did they come from?>
+	Prompt3 <I could get them out.>
+	Prompt4 <I'm ready to go.>
+	Prompt5 <Maybe I'll try it later.>
+
+	Persona 3
+	% Can tell the PC what E5 is after, and also how to get there.
+	rumor <!3 had his research files stolen.>
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+	result1 <NewChat Say 2 AddChat 3 AddChat 4>
+	result2 <NewChat Say 3 AddChat 5 AddChat 6>
+	result3 <NewChat Say 4 AddChat 7>
+	result4 <NewChat Say 5 AddChat 7>
+	result5 <NewChat Say 6 AddChat 7>
+	result6 <NewChat Say 7 AddChat 7>
+	result7 <NewChat Say 8 Memo 9 G= 1003 1>
+	Msg1 <My computer has been plundered and my precious research stolen! Those no-good thieving bastards took everything... No doubt they're planning to use it for no good, I bet.>
+	Msg2 <I'm an archeologist. I was researching some PreZero ruins near \ELEMENT 6 , searching for information about the last days before the Night of Fire. Most of the records from that time were destroyed, you know. Any new data would be very helpful.>
+	Msg3 <I can't be entirely sure, you know... this isn't exactly scientific, but... but I think it was \ELEMENT 5 who did it.>
+	Msg4 <Aside from its academic value? Oh, who am I kidding... The site I am investigating was a military complex. They may have ancient weapons there, possibly even nuclear arms, or worse...>
+	Msg5 <Yes, many things... nothing that you'd find interesting, I suppose, but fascinating to an expert in the field. Oh, and there were probably ancient weapons stored at the site. Maybe nuclear missiles. I guess those could be valuable.>
+	Msg6 <Well, before my office was ransacked, \ELEMENT 5 kept coming around asking lots of questions. Now I heard about the ruckus in \ELEMENT 6 , and I worry that they're trying to access my site...>
+	Msg7 <Of course! But they've got their hands full right now. \ELEMENT 5 has a gang doing something horrible in \ELEMENT 6 , and I think they're trying to access my precious ruin!>
+	Msg8 <You're in luck. Not all of my research notes were entered into the computer when my data was stolen... I can show you a shortcut through the ruins, and maybe you can beat \ELEMENT 5 to the weapons...>
+	Msg9 <\ELEMENT 3 showed you a shortcut through the \ELEMENT 6 ruins.>
+	Prompt1 <What kind of research?>
+	Prompt2 <Who stole it?>
+	Prompt3 <Why would anyone want to steal that?>
+	Prompt4 <Find anything interesting?>
+	Prompt5 <Why do you think that?>
+	Prompt6 <Have you called the guardians?>
+	Prompt7 <Tell me about the research site.>
+
+	Persona 5
+	% Speaking with E5 will lead to the next phase. Killing him will
+	% also work, just in case the PC is a bit trigger-happy...
+	greeting <NewChat Say 1 SoloAttack E5 AddChat 1 ifG G1003 0 AddChat 2>
+	result1 <EndChat Say 2>
+	result2 <EndChat Say 3>
+	Msg1 <Hello, \PC . I thought you would make it here eventually... It's nice to see you one last time, but I'm afraid that you're far too late to stop us.>
+	Msg2 <What the plan is? It should be clear by now. The Federated Territories is the most powerful nation on Earth... in all of space, even... Whoever rules here shall determine the future history of the human race. That will be us!>
+	Msg3 <Nuclear weapons? No, I have found something far more powerful than that. The Federated Territories is the most powerful nation on Earth. Whoever rules here shall determine the future history of the human race. That will be us!>
+	Prompt1 <Tell me what your plan is.>
+	Prompt2 <So, you've found the nuclear weapons?>
+
+Plot 3
+	%  PHASE 3 - "Segue to the Apocalypse"
+	start <if= V1 0 else GoErrorCheck V= 1 1 Time 7200 Alert 1 ifPersona E2 else GoNoE2 ForceChat E2>
+	GoErrorCheck <AdvancePlot 4  G= 1004 1>
+	GoNoE2 <AdvancePlot 4  G= 1004 1>
+	Msg1 <You awake some time later in \ELEMENT 6 . Your body is bruised and sore but your wounds have been tended.>
+
+sub
+	Persona 2
+	greeting <NewChat Say 1 AddChat 1 AddChat 2>
+	result1 <NewChat Say 2 AddChat 3 AddChat 4>
+	result2 <Goto result1>
+	result3 <NewChat Say 3 AdvancePlot 4 G= 1004 1>
+	result4 <Goto result3>
+	Msg1 <So, you're awake, \PC . I thought we might have lost you.>
+	Msg2 <A gigantic mecha or something came out of the ground. There was a cave-in and the west side of town was seriously damaged. You were found by a rescue team... You're lucky to be alive.>
+	Msg3 <\ELEMENT 5 and the other raiders haven't been found, but the mysterious mecha was last seen heading towards Snake Lake City.>
+	Prompt1 <What happened?>
+	Prompt2 <I've lived through worse.>
+	Prompt3 <Where did the mecha go?>
+	prompt4 <What happened to \ELEMENT 5 ?>
+
+Plot 4
+	%  PHASE 3 - "Apocalypse"
+	% V2 = Conversation Indicator
+	rumor <hostile mecha have set up a fortress south of Snake Lake.>
+
+	start <if= G1004 0 else GoSecondStart G= 1004 1  News 3>
+	GoSecondStart <ifPersona E4 else GoTyphonDead ifNPCInPlay E4 if= V2 0 ForceChat E5 V= 2 1>
+	GoTyphonDead <Alert 1 History 2 Victory AdvancePlot 0>
+
+	% if the PC tries to enter the enemy fortress, go to the fight instead.
+	EWM47 <Block Staged .desc Threat S103 200 DynaNPC E4 3 Encounter 100 100 .x Encounter 75 100 .x Encounter 0 100 .x Encounter 0 100 .x>
+	.x <ArchEnemy Villainous>
+	.desc <TS_XRAN_SCENE_Ending.txt>
+
+	Msg1 <With Typhon and \ELEMENT 5 dead, the enemy forces were soon routed. Peace was restored to the territories.>
+	Msg2 <You defeated \ELEMENT 5 and Typhon in combat.>
+	Msg3 <A huge mecha base has appeared south of Snake Lake; all forces sent to counter this threat have been destroyed.>
+
+sub
+	Persona 5
+	greeting <Say 1 AddChat 1 AddChat 2>
+
+	result1 <EndChat Say 2 Memo 4>
+	result2 <EndChat Say 3 Memo 4>
+
+	Msg1 <So \PC , you survived the cave-in... Now, you will witness the dawn of humanity's new empire!>
+	Msg2 <Killed me? That was part of my plan... it was nessecary, you see, in order for my body to bond with this new one. The spillage of blood was needed to awaken Typhon from his slumber. Now, I am Typhon!!! You will feel my power!>
+	Msg3 <Yes, but this time I will waste no time in killing you... Last time we met, it was necessary for my blood to be spilled, in order to awaken Typhon from his slumber and bond with him. Now, we are one!!! You will feel my power!>
+	Msg4 <\ELEMENT 5 bonded with the biomonster Typhon.>
+
+	Prompt1 <I killed you already!>
+	Prompt2 <I thought we'd meet again...>
+
+
+% end PHASE-4 SUB below...
+end
+
+% end PHASE-3 SUB below...
+end
+
+% end PHASE-2 SUB below...
+end
+
+% end PHASE-1 SUB below...
+end
+inv
+	NPC Mecha Pilot
+	EquipChar 50000
+	chardesc Heroic
+
+	NPC Professor
+	CharDesc Old Male Shy Lawful
+
+	Chara
+	name <Typhon>
+	Scale 2
+	SDL_SPRITE <monster_typhon.png>
+	SDL_COLORS <240 190 170 170 112 89 0 255 0>
+	statline 19 32 17 19 16 21 16 11
+	% Typhon has the talent HARD AS NAILS
+	NAtt 16 8 1
+	% Typhon is _SERIOUSLY_ nasty... should be a really good challenge
+	% for experienced players. Or so I hope. Typhon has an achilles
+	% heel that Cetus didn't have... it has a body, making it possible
+	% to kill Typhon by critical. The body is well-armored, though...
+	% But still, aiming shots directly at the body will likely be a
+	% good strategy for taking him out.
+	skill 6 9
+	skill 7 9
+	skill 8 7
+	skill 9 12
+	skill 10 4
+	skill 11 5
+	skill 12 12
+	skill 13 60
+	skill 26 10
+	skill 28 10
+	skill 30 10
+	skill 33 20
+	skill 36 12
+	mod Turret
+	Armor 5
+	sub
+		BeamGun 3
+		name <Death Wave>
+		Range 9
+		Acc -3
+		type <HYPER OVERLOAD SWARM MYSTERY BRUTAL>
+		BV 7
+		recharge 3
+	end
+	inv
+		TurretArmor 7
+		mass -14
+	end
+	Mod Body
+	Armor 10
+	sub
+		BeamGun 1
+		name <Shining Beam>
+		BV 9
+		recharge 5
+		range 4
+		type <SWARM MYSTERY INTERCEPT>
+
+		BeamGun 12
+		name <Hellfire>
+		range 6
+		recharge 1
+		type <BURN>
+	end
+	inv
+		BodyArmor 10
+		name <Typhon Breastplate>
+		mass -20
+	end
+	Mod Arm
+	name <Right Arm>
+	Armor 7
+	sub
+		Hand
+	end
+	inv
+		Shield 8
+		name <Typhon Shield>
+		DefBonus 2
+
+		ArmArmor 7
+		Mass -14
+	end
+	Mod Arm
+	name <Left Arm>
+	Armor 7
+	sub
+		Hand
+		inv
+			EMelee 14
+			name <Plasma Spear>
+			type <Thrown Return Overload Extend>
+		end
+	end
+	inv
+		ArmArmor 7
+		Mass -14
+	end
+	Mod Wing
+	Armor 5
+	sub
+		Flight 5
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 3
+			range 12
+			name <Acid Spore>
+			type <RUST SWARM>
+			magazine 5
+			sub
+				Rockets 3
+			end
+		end
+	end
+	Mod Wing
+	Armor 5
+	sub
+		Flight 5
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 3
+			range 12
+			name <Acid Spore>
+			type <RUST SWARM>
+			magazine 5
+			sub
+				Rockets 3
+			end
+		end
+	end
+	Mod Wing
+	Armor 5
+	sub
+		Flight 5
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 3
+			range 12
+			name <Acid Spore>
+			type <RUST SWARM>
+			magazine 5
+			sub
+				Rockets 3
+			end
+		end
+	end
+	Mod Wing
+	Armor 5
+	sub
+		Flight 5
+	end
+	inv
+		WingArmor 7
+		mass -14
+		sub
+			MLauncher 3
+			range 12
+			name <Acid Spore>
+			type <RUST SWARM>
+			magazine 5
+			sub
+				Rockets 3
+			end
+		end
+	end
+	Mod Tail
+	name <Tendril>
+	Armor 5
+	type <EXTEND ARMORPIERCING OVERLOAD FLAIL>
+
+	end
+
+	% The spare enemy
+	NPC Mecha Pilot
+	mecha <Longman.txt>
+	EquipChar 35000
+	CharDesc Villainous
+	
+end
