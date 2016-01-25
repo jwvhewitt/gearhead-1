@@ -535,18 +535,18 @@ begin
 	if ( it = '' ) then begin
 		T := NAttValue( M^.NA , NAG_Location , NAS_Team );
 		Team := LocateTeam( GB , T );
-		if Team <> Nil then it := SAttValue( Team^.SA , 'SDL_COLORS' );
+		if Team <> Nil then it := SAttValue( Team^.SA , 'TEAM_COLORS' );
 
 		if it = '' then begin
 			if M^.G = GG_Character then begin
 				if T = NAV_DefPlayerTeam then begin
-					it := '66 121 179 255 212 195 205 25 0';
+					it := '66 121 179';
 				end else if AreEnemies( GB , T , NAV_DefPlayerTeam ) then begin
-					it := '180 10 120  255 212 195 170 205 75';
+					it := '180 10 120';
 				end else if AreAllies( GB , T , NAV_DefPlayerTeam ) then begin
-					it := '66 121 119 255 212 195 0 205 0';
+					it := '66 121 119';
 				end else begin
-					it := '175 175 171 255 212 195 0 200 200';
+					it := '175 175 171';
 				end;
 			end else begin
 				if T = NAV_DefPlayerTeam then begin
@@ -560,6 +560,11 @@ begin
 				end;
 			end;
 		end;
+
+		if M^.G = GG_Character then begin
+            it := it + ' ' + RandomColorString( CS_Skin ) + ' ' + RandomColorString( CS_Hair );
+        end;
+
 		SetSAtt( M^.SA , 'SDL_COLORS <' + it + '>' );
 	end;
 	TeamColorString := it;

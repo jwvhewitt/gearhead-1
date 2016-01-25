@@ -3,6 +3,10 @@
 *.ppu
 SaveGame/
 arena
+cosplay
+xxran
+*.exe
+*.dll
 
 # C extensions
 *.so

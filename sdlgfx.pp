@@ -176,7 +176,7 @@ const
 	GH_REPEAT_DELAY = 200;
 	GH_REPEAT_INTERVAL = 50;
 
-    {Color string constants.}
+    {Color set constants.}
 	CS_Clothing = 1;
 	CS_Skin = 2;
 	CS_Hair = 3;
@@ -201,6 +201,9 @@ var
 
 	Music_List: SAttPtr;
 {	MyMusic: P_Mix_Music;}
+
+Function RandomColorString( ColorSet: Integer ): String;
+
 
 Procedure GHFlip;
 

@@ -1,3 +1,5 @@
+- NPCs will now get random skin, hair colors (sdlmap.pp)
+- Added random color picker (sdlgfx.pp)
 - FindNAtt, FindSAtt should be faster, thanks to Buffered (gears.pp)
 - Stunt Driving should now work properly (effects.pp)
 - Fixed Renown/Morale bugs (ability.pp)
