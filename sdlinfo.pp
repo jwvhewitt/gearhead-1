@@ -671,8 +671,15 @@ end;
 Function PortraitName( NPC: GearPtr ): String;
 	{ Return a name for this NPC's protrait. }
 var
-	it: String;
-	PList: SAttPtr;	{ Portrait List. }
+	it,Criteria: String;
+	PList,P,P2: SAttPtr;	{ Portrait List. }
+	IsOld: Integer;	{ -1 for young, 0 for medium, 1 for old }
+	IsCharming: Integer;	{ -1 for low Charm, 0 for medium, 1 for high charm }
+	HasMecha: Boolean;	{ TRUE if NPC has a mecha, FALSE otherwise. }
+		{ Y Must have positive value }
+		{ N Must have negative valie }
+		{ - May have either value }
+	PisOK: Boolean;
 begin
 	{ Error check - better safe than sorry, unless in an A-ha song. }
 	if NPC = Nil then Exit( '' );
@@ -688,6 +695,50 @@ begin
 			PList := CreateFileList( Graphics_Directory + 'por_f_*.*' );
 		end;
 
+		{ Filter the portrait list based on the NPC's traits. }
+		if NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) < 6 then begin
+			IsOld := -1;
+		end else if NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) > 15 then begin
+			IsOld :=  1;
+		end else IsOld := 0;
+		if NPC^.Stat[ STAT_Charm ] < 10 then begin
+			IsCharming := -1;
+		end else if NPC^.Stat[ STAT_Charm ] >= 15 then begin
+			IsCharming :=  1;
+		end else IsCharming := 0;
+		HasMecha := SAttValue( NPC^.SA, 'MECHA' ) <> '';
+		P := PList;
+		while P <> Nil do begin
+			P2 := P^.Next;
+			Criteria := RetrieveBracketString( P^.Info );
+			PisOK := True;
+			if Length( Criteria ) >= 3 then begin
+				{ Check youth. }
+				Case Criteria[1] of
+					'O':	PisOK := IsOld > 0;
+					'Y':	PisOK := IsOld < 0;
+					'A':	PisOK := IsOld > -1;
+					'J':	PisOK := IsOld < 1;
+				end;
+
+				{ Check charm. }
+				if PisOK then Case Criteria[2] of
+					'C':	PisOK := IsCharming > 0;
+					'U':	PisOK := IsCharming < 0;
+					'P':	PisOK := IsCharming < 1;
+					'A':	PisOK := IsCharming > -1;
+				end;
+
+				{ Check mecha. }
+				if PisOK then Case Criteria[3] of
+					'Y':	PisOK := HasMecha;
+					'N':	PisOK := not HasMecha;
+				end;
+			end;
+			if not PisOK then RemoveSAtt( PList , P );
+			P := P2;
+		end;
+
 		{ As long as we found some appropriate files, select one of them }
 		{ randomly and save it for future reference. }
 		if PList <> Nil then begin
@@ -699,6 +750,7 @@ begin
 
 	PortraitName := it;
 end;
+
 
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
 	{ Show the needed information regarding this conversation. }

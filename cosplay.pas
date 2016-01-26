@@ -192,9 +192,6 @@ var
 	SpriteName: String;
 
 begin
-	Mouse_Pointer := Img_Load( 'Image\cosplay_pointer.png' );
-	SDL_SetColorKey( Mouse_Pointer , SDL_SRCCOLORKEY or SDL_RLEACCEL , SDL_MapRGB( Mouse_Pointer^.Format , 0 , 0, 255 ) );
-
 	FileMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 	BuildFileMenu( FileMenu , Graphics_Directory + '*.*' );
 	RPMSortAlpha( FileMenu );

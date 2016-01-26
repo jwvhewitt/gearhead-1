@@ -1,59 +1,102 @@
 % Standard Color List (flags: Personal R Y G  Mecha R Y G)
--+----:Light Skin <255 212 195>
-++++++:Chocolate <142 62 39>
-+-++++:Avocado <136 141 101>
-+-++++:Jade <66 121 119>
-+-++++:Aero Blue <201 205 229>
-+-++++:Azure <49 91 141>
-+-+++-:Battleship Grey <130 143 114>
+------:Pure Red <200 0 0>
+------:Pure Yellow <200 200 0>
+------:Pure Green <0 200 0>
++--++-:Royal Pink <212 155 196>
++-++++:Pink <255 192 203>
++-++++:Hot Pink <255 105 180>
++-+-++:Magenta <255 0 255>
++--+++:Aegis Crimson <230 20 130>
++-+++-:Maroon <176 48 96>
++--++-:Cardinal Red <180 46 60>
++-++++:Bright Red <220 44 51>
++-++++:Gun Red <194 16 38>
++-+++-:Pirate Sunrise <175 26 10>
++-+++-:Ace Scarlet <135 30 17>
 +-+++-:Black Rose <103 3 45>
-+-++++:Cinnamon <123 63 0>
-+-++++:Fuschia <122 88 193>
-++++++:Leather <150 112 89>
-+-++++:Lemon Yellow <244 216 28>
-++++++:Maize <245 213 160>
-+-++++:Mustard <116 100 13>
-+-++++:Terracotta <166 47 32>
-+-++++:Wine <152 61 97>
-+-++++:Bright Red <208 34 51>
-+-++++:Desert Yellow <234 180 88>
-+-++++:Hunter Orange <224 112 20>
-+-+++-:Olive <72 92 44>
-+-+++-:Pitch Black <0 0 0>
-+--+++:Pure White <255 255 255>
-+--++-:Dark Blue <0 0 139>
-+-++++:Dark Goldenrod 1 <255 185 15>
-+-+++-:Dark Gray <169 169 169>
-+--++-:Dark Green <0 100 0>
-+-++++:Deep Pink <255 20 147>
-+-+++-:Dim Gray <105 105 105>
-+--++-:Forest Green <34 139 34>
-+--+++:Green Yellow <173 255 47>
-+--+++:Hot Pink <255 105 180>
-+-+++-:Indian Red <205 92 92>
-+--++-:Medium Blue <0 0 205>
-+--++-:Midnight Blue <25 25 112>
-++--++:Misty Rose <255 228 225>
--+---+:Navajo White <255 222 173>
-+--++-:Navy Blue <0 0 128>
++-+++-:Comet Red <197 80 69>
 +-+-++:Orange Red <255 69 0>
--+----:Peach Puff <255 218 185>
-+--++-:Rosy Brown <188 143 143>
--+--+-:Sandy Brown <244 164 96>
-+--++-:Sea Green <46 139 87>
-+-+++-:Slate Gray <112 128 144>
-+--++-:Steel Blue <70 130 180>
-+---++:Aquamarine <127 255 212>
-+----+:Light Azure <240 255 255>
--+----:Bisque <255 228 196>
--+----:Burlywood <222 184 135>
--+----:Cornsilk <255 248 220>
-+---++:Cyan <0 255 255>
-+-++++:Gold <255 215 0>
++-++++:Persimmon <255 107 83>
++-++++:Hunter Orange <224 112 20>
++-+-++:Orange <255 165 0>
++-++++:Saffron <250 200 49>
++-++++:Desert Yellow <234 180 88>
 +--++-:Khaki 3 <205 198 115>
-+---++:Magenta <255 0 255>
-+--++-:Maroon <176 48 96>
-+---++:Orange <255 165 0>
-+--+++:Pink <255 192 203>
-+--+++:Red <255 0 0>
-+----+:Yellow <255 255 0>
++-++++:Lemon Yellow <225 201 48>
++-++++:Gold <255 215 0>
++-+--+:Electric Yellow <255 233 2>
++-++++:Noble Gold <211 195 82>
+--++++:Charred Blonde <222 222 156>
++-++++:Mustard <116 100 13>
++-++++:Green Yellow <173 255 47>
++-++++:Celadon <172 225 175>
++-++++:Mountain Dew <152 190 181>
++-++++:Avocado <136 141 101>
++--++-:Army Drab <104 130 117>
++-++++:Grass Green <113 175 98>
++--++-:Cactus <88 143 86>
++-+++-:Griffin Green <28 52 38>
++-+++-:Olive <79 101 48>
++-+++-:Dark Green <0 100 0>
++--++-:Massive Green <40 105 73>
++-+++-:Forest Green <36 140 46>
++-+++-:Malachite <11 218 81>
++-+++-:Sea Green <41 112 94>
++-+++-:Jade <66 121 119>
++-+++-:Viridian <77 156 131>
++--++-:Doctor Green <67 185 151>
+--+--+:Flourescent Green <70 230 30>
++--+++:Aero Blue <201 205 229>
++-+-++:Aquamarine <127 255 212>
++-++++:Sky Blue <75 200 220>
++-+-++:Cyan <0 240 240>
++--+++:Faded Denim <144 166 195>
++--++-:Steel Blue <70 130 180>
++-+++-:Freedom Blue <17 78 200>
+--++++:Plasma Blue <174 238 251>
++-+++-:Azure <49 91 141>
++--++-:Bug Blue <39 54 120>
++-+++-:Cobalt <6 42 120>
++-+++-:Prussian Blue <0 49 83>
++-+++-:Midnight Blue <25 25 112>
++-+++-:Deep Sea Blue <67 73 100>
++-+++-:Star Violet <172 128 185>
++-++++:Fuschia <122 88 193>
++-+++-:Heavy Purple <121 109 150>
++-++++:Wine <152 61 97>
++-++++:Eggplant <153 17 153>
++-++++:Grape <56 26 81>
+--+--+:Shining Violet <200 0 200>
++-+++-:Straw <185 159 92>
++--++-:Beige <170 132 80>
++--++-:Rosy Brown <188 143 143>
++--++-:Sandstone <150 94 69>
++-+++-:Dark Brown <100 49 30>
++-+++-:Cinnamon <123 63 0>
++-++++:Terracotta <166 47 32>
+-+----:Goth Skin <241 254 223>
+-+-++-:Alabaster <255 244 208>
+-+++++:Maize <245 213 160>
+-+----:Burlywood <222 184 135>
+-+----:Light Skin <250 183 139>
+-+--+-:Sandy Brown <244 164 96>
+-+----:Tanned Skin <184 124 81>
+-+----:Medium Skin <172 114 89>
+++-+++:Leather <150 112 89>
++++++-:Chocolate <142 62 39>
+-+----:Dark Skin <96 49 33>
++-+++-:Black <45 45 45>
++--++-:Deep Grey <80 80 85>
++--++-:Field Grey <77 93 83>
++-+++-:Dim Gray <105 105 105>
++-+++-:Warm Grey <119 110 89>
++--++-:Battleship Grey <130 143 114>
++--++-:Lunar Grey <122 130 130>
++-+++-:Slate Gray <112 128 144>
++-++++:Gull Grey <157 172 183>
++-+++-:Dark Gray <169 169 169>
++--+++:Ceramic <211 224 230>
++--+++:Cream <206 195 162>
++-++++:White <240 240 240>
++--+++:Shining White <236 254 255>
+

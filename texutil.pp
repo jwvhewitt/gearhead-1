@@ -30,6 +30,7 @@ Procedure DeleteFirstChar(var S: String);
 Function ExtractWord(var S: String): String;
 Function ExtractValue(var S: String): LongInt;
 Function RetrieveAString(const S: String): String;
+Function RetrieveBracketString(const S: String): String;
 Function RetrieveAPreamble(const S: String ): String;
 
 Function BStr( N: LongInt ): String;
@@ -162,6 +163,27 @@ begin
 
 	RetrieveAString := Copy(S,A1+1,A2-A1-1);
 end;
+
+Function RetrieveBracketString(const S: String): String;
+	{ Like the above, but the string is surrounded by ( and ) . }
+var
+	A1,A2: Integer;
+begin
+	{Locate the position of the two alligators.}
+	A1 := Pos('(',S);
+	A2 := Pos(')',S);
+
+	{If the string has not been declared with <, return}
+	{an empty string.}
+	if A1 = 0 then Exit('');
+
+	{If the string has not been closed with >, return the}
+	{entire remaining length of the string.}
+	if A2 = 0 then A2 := Length(S)+1;
+
+	RetrieveBracketString := Copy(S,A1+1,A2-A1-1);
+end;
+
 
 Function RetrieveAPreamble( const S: String ): String;
 	{ Usually an alligator string will have some kind of label in }

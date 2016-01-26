@@ -408,7 +408,7 @@ Scene 2 0
 		age 1
 		chardesc Female Heroic Cheerful
 		rumor <Hyolee is always working on something or another.>
-		sdl_portrait <por_f_hyoleenewver.png>
+		sdl_portrait <por_f_ladi_hyolee(YC-).png>
 		sdl_colors <70 121 119 142 62 39 234 180 88>
 
 		NPC Shopkeeper
@@ -451,7 +451,7 @@ Scene 2 0
 		NPC Mecha Pilot
 		name <Vikki>
 		mecha <Thorshammer.txt>
-		SDL_PORTRAIT <por_f_ladivikki.png>
+		SDL_PORTRAIT <por_f_ladi_vikki(JAY).png>
 		SDL_COLORS <201 205 229 255 212 195 245 213 160>
 		rumor <Vikki is one of the unluckiest mecha pilots ever.>
 		home <Mecha Sporch>
@@ -1369,7 +1369,7 @@ Scene 10 0
 		name <Elric>
 		mecha <>
 		home <Snake Lake Mall>
-		SDL_Portrait <por_m_elric.png>
+		% SDL_Portrait <por_m_elric.png>
 		SDL_Colors <6 50 140 240 212 180 234 180 88>
 		rumor <Elric used to live in Nara, but had to move shop when that town was destroyed by troglodytes.>
 		chardesc Male Old Passionate Cheerful Sociable Chaotic Renowned
@@ -1932,7 +1932,7 @@ Scene 12 0
 		NPC Leader
 		name <Elisha Kettel>
 		job <Corporate President>
-		sdl_portrait <por_f_elisha.png>
+		% sdl_portrait <por_f_elisha.png>
 		sdl_colors <80 40 120 255 230 200 166 47 32>
 		rumor <Elisha's father was a great man.>
 		home <The Office>
@@ -4854,7 +4854,7 @@ Scene 25 0
 		NPC Bandit
 		name <Weasely Crusher>
 		mecha <>
-		sdl_portrait <por_m_punk.png>
+		sdl_portrait <por_m_punk(J-Y).png>
 		sdl_colors <152 61 97 255 212 195 136 141 101>
 		chardesc Male Pragmatic Wangtta
 		SetTeam 2
@@ -4866,7 +4866,7 @@ Scene 25 0
 		name <Miaga>
 		home <Pirate's Den>
 		job <Reformed Pirate>
-		sdl_portrait <por_f_miaga.png>
+		sdl_portrait <por_f_ladi_miaga(YU-).png>
 		sdl_colors <255 150 120 142 62 39 1 75 67>
 		SetTeam 2
 		SetPersona 2512
@@ -5809,7 +5809,7 @@ Scene 36 0
 
 		Monster Assassin
 		name <Jiro>
-		sdl_portrait <por_m_ninja.png>
+		sdl_portrait <por_m_ninja(Y-Y).png>
 		chardesc Melancholy Melancholy Melancholy Melancholy Melancholy Male
 		roguechar <J>
 		SetPersona 3603
@@ -6185,7 +6185,7 @@ Scene 37 0
 
 		NPC Shopkeeper
 		name <Okko>
-		sdl_portrait <por_f_allisonnewver.png>
+		sdl_portrait <por_f_allisonnewver(J--).png>
 		sdl_colors <201 205 229 255 212 195 199 188 162>
 		chardesc Female Heroic Shy
 		Charm 22
@@ -6428,7 +6428,7 @@ Scene 38 0
 		job <Artist>
 		name <Kira>
 		home <Kira's Tattoos>
-		SDL_POrtrait <por_f_ladipunk.png>
+		SDL_POrtrait <por_f_ladi_punk(JA-).png>
 		SDL_Colors <112 28 28 245 213 160 99 181 175>
 		chardesc Female Passionate Chaotic
 		SetTeam 2
