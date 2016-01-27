@@ -1,3 +1,5 @@
+- Imported colormenu, cosplay programs from GH2 (colormenu.pp,cosplay.pas)
+- Imported portraits, portrait selector from GH2 (sdlinfo.pp)
 - NPCs will now get random skin, hair colors (sdlmap.pp)
 - Added random color picker (sdlgfx.pp)
 - FindNAtt, FindSAtt should be faster, thanks to Buffered (gears.pp)

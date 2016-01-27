@@ -238,6 +238,8 @@ Function MsgString( const MsgLabel: String ): String;
 Function MoreHighFirstLine( LList: SAttPtr ): Integer;
 Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 
+Procedure ClearExtendedBorder( Dest: TSDL_Rect );
+
 Procedure DrawBPBorder;
 Procedure DrawCharGenBorder;
 Procedure SetupCombatDisplay;

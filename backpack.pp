@@ -67,7 +67,7 @@ implementation
 {$IFDEF SDLMODE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
-     sdlinfo,sdlmap,sdlmenus,ghweapon;
+     sdlinfo,sdlmap,sdlmenus,ghweapon,colormenu;
 {$ELSE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
@@ -112,75 +112,23 @@ begin
 	NFGameMsg( MsgString( 'SELECT_ROBOT_PARTS' ) , ZONE_EqpMenu , MenuItem );
 end;
 
-
 Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
 	{ The player wants to change the colors for this part. Make it so. }
-	{ The menu will be placed in the Menu area; assume the redrawer will }
-	{ show whatever changes are made here. }
+	{ Use the colormenu unit, backported from GH2. }
 var
-	RPM,CMenu: RPGMenuPtr;
-	N,T,T2: Integer;
-	ColorList,C: SAttPtr;
-	oldcolor,msg,newcolor: String;
+    mysprite,startpal,mypal: String;
 begin
-	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+{$IFDEF SDLMODE}
+    startpal := SAttValue( m^.SA, 'SDL_COLORS' );
 	if M^.G = GG_Character then begin
-		AddRPGMenuItem( RPM , MsgString( 'EDITCOLOR_1' ) , 1 );
-		AddRPGMenuItem( RPM , MsgString( 'EDITCOLOR_2' ) , 2 );
-		AddRPGMenuItem( RPM , MsgString( 'EDITCOLOR_3' ) , 3 );
+        mypal := SelectColorPalette( colormenu_mode_character, SAttValue( m^.SA, 'SDL_PORTRAIT' ), startpal, 100, 150, 0, Redrawer );
 	end else begin
-		AddRPGMenuItem( RPM , MsgString( 'EDITCOLOR_4' ) , 4 );
-		AddRPGMenuItem( RPM , MsgString( 'EDITCOLOR_5' ) , 5 );
-		AddRPGMenuItem( RPM , MsgString( 'EDITCOLOR_6' ) , 6 );
-	end;
-	AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
-
-	repeat
-		N := SelectMenu( RPM , Redrawer );
-		if N > -1 then begin
-			{ Create the list of colors. }
-			CMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-			C := MasterColorList;
-			T := 1;
-			while C <> Nil do begin
-				if ( Length( C^.Info ) > 6 ) and ( C^.Info[ N ] = '+' ) then begin
-					AddRPGMenuItem( CMenu , Copy( RetrieveAPreamble( C^.Info ) , 7 , 255 ) , T );
-				end;
-				C := C^.Next;
-				Inc( T );
-			end;
-			if CMenu^.NumItem > 0 then begin
-				RPMSortAlpha( CMenu );
-				T := SelectMenu( CMenu , Redrawer );
-			end else begin
-				T := -1;
-			end;
-			DisposeRPGMenu( CMenu );
-			if T > 0 then begin
-				C := RetrieveSAtt( MasterColorList , t );
-				msg := RetrieveAString( C^.Info );
-
-				oldcolor := SAttValue( M^.SA , 'SDL_COLORS' );
-				newcolor := '';
-				for t := 0 to 2 do begin
-					if t = ( (N-1) mod 3 ) then begin
-						for t2 := 1 to 3 do begin
-							newcolor := newcolor + ' ' + BStr( ExtractValue( msg ) );
-							ExtractValue( oldcolor );
-						end;
-					end else begin
-						for t2 := 1 to 3 do begin
-							newcolor := newcolor + ' ' + BStr( ExtractValue( oldcolor ) );
-						end;
-					end;
-				end;
-				SetSAtt( M^.SA , 'SDL_COLORS <' + newcolor + '>' );
-			end;
-		end;
-	until N = -1;
-
-	DisposeRPGMenu( RPM );
+        mypal := SelectColorPalette( colormenu_mode_mecha, SAttValue( m^.SA, 'SDL_SPRITE' ), startpal, 64, 64, 8, Redrawer );
+    end;
+    SetSAtt( M^.SA, 'SDL_COLORS <' + mypal + '>' );
+{$ENDIF}
 end;
+
 
 Procedure SelectSprite( M: GearPtr; Redrawer: RedrawProcedureType );
 	{ The player wants to change the colors for sprite for this character. }

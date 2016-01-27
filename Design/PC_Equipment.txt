@@ -1146,12 +1146,6 @@ desc <A comfortable leather jacket with a zipper down the front.>
 Mass 3
 
 BodyArmor 2
-Name <Chainmail Bikini>
-Fits <Sex:F>
-desc <It's probably better for distracting than for actual combat. Still...>
-Mass -3
-
-BodyArmor 2
 Name <Armorweave Clothes>
 desc <Armor mesh has been integrated with these clothes, making them a little stiff.>
 Mass -3

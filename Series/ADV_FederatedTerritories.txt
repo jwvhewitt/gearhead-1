@@ -1579,6 +1579,7 @@ Scene 11 0
 		team 3
 		% Town Militia
 		SetAlly 1 2
+		team_colors <80 40 120>
 
 		rect
 		FloorType 17
@@ -1827,11 +1828,14 @@ Scene 12 0
 		SetAlly 1 3
 		% Set this team's default orders to PASSIVE
 		Stat 1 3
+		team_colors <80 40 120>
+
 
 		team 3
 		% Town Militia
 		SetAlly 1 2
 		type <ROBOT GUARD>
+		team_colors <80 40 120>
 
 		rect
 		width 40
@@ -1944,7 +1948,6 @@ Scene 12 0
 
 		NPC Soldier
 		job <Executive Assistant>
-		sdl_colors <80 40 120 255 212 195 80 80 85>
 		chardesc Lawful Female
 		SetTeam 3
 		SetPersona 1202
@@ -2989,11 +2992,12 @@ Scene 16 0
 		SetAlly 3 1
 		% Set this team's default orders to PASSIVE
 		Stat 1 3
-		team_colors <120 160 230>
+		team_colors <70 130 180>
 
 		team 3
 		% Town Militia
 		SetAlly 2 1
+        team_colors <75 200 220>
 
 		room 8 8
 		name <Colosseum>
@@ -3370,7 +3374,6 @@ Scene 16 0
 		SetTeam 3
 		SetFaction 1
 		mecha <Excel.txt>
-		sdl_colors <200 200 245 255 212 195 123 63 0>
 
 		NPC Shopkeeper
 		SetPersona 1619
@@ -3449,6 +3452,7 @@ Scene 17 0
 		team 3
 		% Town Militia
 		SetAlly 2 1
+        team_colors <77 156 131>
 
 		room 9 6
 		name <Elite Armaments>
@@ -3652,34 +3656,29 @@ Scene 17 0
 		SetPersona 1703
 		SetTeam 3
 		SetFaction 2
-		sdl_colors <100 150 60 255 212 195 244 216 28>
 
 		NPC Soldier
 		SetPersona 1704
 		SetTeam 3
 		SetFaction 2
-		sdl_colors <100 150 60 142 62 39 103 3 45>
 
 		NPC Mecha Pilot
 		SetPersona 1705
 		SetTeam 3
 		SetFaction 2
 		mecha <Zerosaiko.txt>
-		sdl_colors <100 150 60 255 212 195 150 112 89>
 
 		NPC Mecha Pilot
 		SetPersona 1706
 		SetTeam 3
 		SetFaction 2
 		mecha <Excel.txt>
-		sdl_colors <100 150 60 255 212 195 85 85 80>
 
 		NPC Mecha Pilot
 		SetPersona 1707
 		SetTeam 3
 		SetFaction 2
 		mecha <Puma.txt>
-		sdl_colors <100 150 60 255 212 195 244 216 28>
 
 		NPC Guardian
 		SetPersona 1708
@@ -3728,7 +3727,6 @@ Scene 17 0
 		SetTeam 3
 		SetFaction 2
 		home <Blue Fortress>
-		sdl_colors <100 150 60 255 212 195 123 63 0>
 
 		NPC Bartender
 		SetPersona 1719
@@ -5513,6 +5511,7 @@ Scene 35 0
 		team 3
 		% Town Militia
 		SetAlly 2 1
+        team_colors <77 156 131>
 
 		rect
 		width 5
@@ -6011,11 +6010,12 @@ Scene 37 0
 		% Set this team's default orders to PASSIVE
 		Stat 1 3
 		rumor <the SpacePort is the best place to go shopping.>
-		team_colors <120 160 230>
+		team_colors <70 130 180>
 
 		team 3
 		% Town Militia
 		SetAlly 2 1
+        team_colors <75 200 220>
 
 		rect
 		width 5
@@ -6149,21 +6149,18 @@ Scene 37 0
 		SetPersona 3705
 		SetTeam 3
 		SetFaction 1
-		sdl_colors <200 200 245 255 212 195 150 112 89>
 
 		NPC Mecha Pilot
 		mecha <Condor.txt>
 		SetPersona 3706
 		SetTeam 3
 		SetFaction 1
-		sdl_colors <200 200 245 255 212 195 244 216 28>
 
 		NPC Mecha Pilot
 		mecha <Jos.txt>
 		SetPersona 3707
 		SetTeam 3
 		SetFaction 1
-		sdl_colors <200 200 245 142 62 39 85 85 80>
 
 		NPC Citizen
 		SetPersona 3708
@@ -6767,7 +6764,6 @@ Scene 39 0
 
 		NPC Corporate Executive
 		home <BioCorp Head Office>
-		sdl_colors <201 205 224 255 212 195 6 42 120>
 		SetFaction 5
 		SetTeam 2
 		SetPersona 3909
@@ -6775,7 +6771,6 @@ Scene 39 0
 		NPC Leader
 		job <President>
 		home <BioCorp Head Office>
-		sdl_colors <201 205 224 255 212 195 6 42 120>
 		SetFaction 5
 		SetTeam 2
 		SetPersona 3910
@@ -6783,14 +6778,12 @@ Scene 39 0
 
 		NPC Corporate Executive
 		home <BioCorp Head Office>
-		sdl_colors <201 205 224 255 212 195 6 42 120>
 		SetFaction 5
 		SetTeam 2
 		SetPersona 3911
 
 		NPC Corporate Executive
 		home <BioCorp Head Office>
-		sdl_colors <201 205 224 255 212 195 6 42 120>
 		SetFaction 5
 		SetTeam 2
 		SetPersona 3912
