@@ -1,3 +1,7 @@
+- Configuration saved on exit (ui4gh.pp)
+- Save files, config file now stored in configuration folder (gears.pp)
+- Changed application name to gharena (gharena.pas)
+- Automatically saves game when player quits (pcaction.pp)
 - Imported colormenu, cosplay programs from GH2 (colormenu.pp,cosplay.pas)
 - Imported portraits, portrait selector from GH2 (sdlinfo.pp)
 - NPCs will now get random skin, hair colors (sdlmap.pp)

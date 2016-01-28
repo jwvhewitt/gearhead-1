@@ -3,7 +3,8 @@ CONFIGURATION FILE SUPPORT
 GearHead now has configuration file support. Yay!
 
 To create a configuration file, make a new text file named "arena.cfg"
-in the same directory as the arena executable. To this file you can
+in the configuration folder (usually a folder named "gharena" in your home
+folder; on Linux, you will find this folder in .config). To this file you can
 add various labels which will alter the behavior of the program.
 
 Here's an overview of what the configuration file is capable of:
@@ -59,9 +60,9 @@ CONTROL DIRECT XP
     DIRECTSKILLOK
 
 NOAUTOSAVE
-  Whenever your character visits a new location, the campaign is saved
-  to disk. Some people don't like this behavior... using the label
-  NOAUTOSAVE will disable this.
+  Whenever your character visits a new location or you quit the game, the
+  campaign is saved to disk. Some people don't like this behavior... using
+  the label NOAUTOSAVE will disable this.
 
 ALWAYS SAVE CHARACTER
   Normally, when a character enters an adventure, the CHA file is deleted

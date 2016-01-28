@@ -435,7 +435,6 @@ uses dos,ability,gears,texutil;
 
 					end else if cmd = 'NOAUTOSAVE' then begin
 						DoAutoSave := False;
-
 					end else if cmd = 'ALWAYSSAVECHARACTER' then begin
 						ALWAYS_SAVE_CHARACTER := True;
 					end else if cmd = 'NOCOMBATTAUNTS' then begin
@@ -492,6 +491,9 @@ uses dos,ability,gears,texutil;
 					end else if cmd = 'AdvancedColors' then begin
 						UseAdvancedColoring := True;
 
+				    end else if cmd[1] = '#' then begin
+					    S := '';
+
 					end;
 				end;
 			end;
@@ -502,8 +504,79 @@ uses dos,ability,gears,texutil;
 
 	end;
 
+    Procedure SaveConfig;
+	    { Open the configuration file and record the variables }
+	    { as needed. }
+    var
+	    F: Text;
+	    T: Integer;
+	    Procedure AddBoolean( const OpTag: String; IsOn: Boolean );
+		    { Add one of the boolean options to the file. }
+	    begin
+		    if IsOn then begin
+			    writeln( F , OpTag );
+		    end else begin
+			    writeln( F , '#' + OpTag );
+		    end;
+	    end;
+    begin
+	    { If we've found a configuration file, }
+	    { open it up and start reading. }
+	    Assign( F , Config_File );
+	    Rewrite( F );
+
+	    writeln( F , '#' );
+	    writeln( F , '# ATTENTION:' );
+	    writeln( F , '#   Only edit the config file if GearHead is not running.' );
+	    writeln( F , '#   Configuration overwritten at game exit.' );
+	    writeln( F , '#' );
+
+	    for t := 1 to NumMappedKeys do begin
+		    WriteLn( F, KeyMap[t].CmdName + ' ' + KeyMap[t].KCode );
+	    end;
+
+	    writeln( F, 'ANIMSPEED ' + BStr( FrameDelay ) );
+
+	    writeln( F, 'MECHACONTROL ' + ControlTypeName[ ControlMethod ] );
+	    writeln( F, 'CHARACONTROL ' + ControlTypeName[ CharacterMethod ] );
+	    writeln( F, 'WORLDCONTROL ' + ControlTypeName[ WorldMapMethod ] );
+
+	    writeln( F, 'MISSILEBV ' + BVTypeName[ DefMissileBV ] );
+	    writeln( F, 'BALLISTICBV ' + BVTypeName[ DefBallisticBV ] );
+	    writeln( F, 'BEAMGUNBV ' + BVTypeName[ DefBeamGunBV ] );
+
+	    AddBoolean( 'DIRECTSKILLOK' , Direct_Skill_Learning );
+	    AddBoolean( 'NOAUTOSAVE' , not DoAutoSave );
+	    AddBoolean( 'ALWAYSSAVECHARACTER' , Always_Save_Character );
+	    AddBoolean( 'NOCOMBATTAUNTS' , No_Combat_Taunts );
+
+	    AddBoolean( 'NOALPHA' , not Use_Alpha_Blending );
+        writeln( F, 'ALPHALEVEL ' + BStr( Alpha_Level ) );
+
+        writeln( F, 'NUMPLOTS ' + BStr( Max_Plots_Per_Adventure ) );
+	    AddBoolean( 'LOADPLOTSATSTART' , Load_Plots_At_Start );
+	    AddBoolean( 'MINIMAPON' , Display_Mini_Map );
+
+	    writeln( F , 'SCREENHEIGHT ' + BStr( ScreenRows ) );
+	    writeln( F , 'SCREENWIDTH ' + BStr( ScreenColumns ) );
+
+	    AddBoolean( 'WINDOW' , not DoFullScreen );
+	    AddBoolean( 'NOMOUSE' , not Mouse_Active );
+	    AddBoolean( 'NOPILLAGE' , not Pillage_On );
+	    AddBoolean( 'USETACTICSMODE' , UseTacticsMode );
+
+	    AddBoolean( 'ADVANCEDCOLORS' ,  UseAdvancedColoring );
+
+	    Close(F);
+    end;
+
+
 initialization
 
 	LoadConfig;
+
+finalization
+
+    SaveConfig;
 
 end.

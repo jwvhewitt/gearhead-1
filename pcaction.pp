@@ -3191,6 +3191,7 @@ begin
 			end else if KP = KeyMap[ KMC_Attack ].KCode then begin
 				RLQuickAttack( Camp^.GB , Mek );
 			end else if KP = KeyMap[ KMC_QuitGame ].KCode then begin
+				if DoAutoSave then PCSaveCampaign( Camp , Mek , True );
 				Camp^.GB^.QuitTheGame := True;
 
 			end else if KP = KeyMap[ KMC_Talk ].KCode then begin

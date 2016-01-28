@@ -126,11 +126,13 @@ Const
 	{ fine. }
 	Default_File_Ending = '.txt';
 	Default_Search_Pattern = '*.txt';
-	Save_Game_DirName = 'SaveGame';
+
+{	Save_Game_DirName = 'SaveGame';
 	Save_Game_Directory = Save_Game_DirName + OS_Dir_Separator;
 	Save_Character_Base = Save_Game_Directory + 'CHA';
 	Save_Unit_Base = Save_Game_Directory + 'GHU';
 	Save_Campaign_Base = Save_Game_Directory + 'RPG';
+}
 	Design_DirName = 'Design';
 	Design_Directory = Design_DirName + OS_Dir_Separator;
 	PC_Equipment_File = Design_Directory + 'PC_Equipment.txt';
@@ -169,7 +171,6 @@ Const
 	FieldHQ_Help_File = Doc_Directory + 'man_mecha.txt';
 	Chara_Help_File = Doc_Directory + 'man_chara.txt';
 
-	Config_File = 'arena.cfg';
 
 {$IFDEF SDLMODE}
 	Graphics_DirName = 'Image';
@@ -210,6 +211,11 @@ Type
 		invcom: GearPtr;	{Child External Gear}
 		parent: GearPtr;	{Parent of the current Gear.}
 	end;
+
+var
+	Save_Game_DirName,Save_Game_Directory,Save_Character_Base,Save_Unit_Base,Save_Campaign_Base: String;
+	Config_Directory,Config_File: String;
+
 
 
 Function CreateSAtt(var LList: SAttPtr): SAttPtr;
@@ -1205,8 +1211,11 @@ Procedure CheckDirectoryPresent;
 var
 	S: String;
 begin
-	if not DirectoryExists( Save_Game_DirName ) then begin
-		MkDir( Save_Game_DirName );
+	if not DirectoryExists( Config_Directory ) then begin
+		MkDir( Config_Directory );
+	end;
+	if not DirectoryExists( Save_Game_Directory ) then begin
+		MkDir( Save_Game_Directory );
 	end;
 
 	{ Check to make sure all the other directories can be found. }
@@ -1238,6 +1247,16 @@ end;
 
 initialization
 	{ Make sure we have the required data directories. }
+    Config_Directory := GetAppConfigDir(False);
+	Config_File := Config_Directory + 'gharena.cfg';
+
+	Save_Game_DirName := 'SaveGame';
+	Save_Game_Directory := Config_Directory + Save_Game_Dirname + OS_Dir_Separator;
+
+	Save_Character_Base := Save_Game_Directory + 'CHA';
+	Save_Unit_Base := Save_Game_Directory + 'GHU';
+	Save_Campaign_Base := Save_Game_Directory + 'RPG';
+
 {$IFNDEF go32v2}
 	CheckDirectoryPresent;
 {$ENDIF}

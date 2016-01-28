@@ -1,4 +1,4 @@
-program Arena;
+program GHArena;
 	{ This program can hopefully be used as a test for all }
 	{ the various GEARHEAD units. I want to make a game similar }
 	{ to the old Amiga MechFight game, but based on the }
