@@ -502,7 +502,7 @@ begin
 			end else begin
 				it := DefaultFemaleSpriteHead;
 			end;
-			it := it + SAttValue( M^.SA , 'JOB' ) + '.*';
+			it := it + LowerCase( SAttValue( M^.SA , 'JOB' ) ) + '.*';
 			FList := CreateFileList( Graphics_Directory + it );
 			if FList <> Nil then begin
 				it := SelectRandomSAtt( FList )^.Info;

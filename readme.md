@@ -13,10 +13,9 @@ The file doc/introduction.txt has some information and hints for new
 players.
 
 If you can't find the information you need, check the 'doc/' directory.
-If you're still lost you can check the wiki or the forum:
+If you're still lost you can check the homepage:
 
-  http://gearhead.chaosforge.org/wiki/index.php?title=GearHead
-  http://gearhead.chaosforge.org/forum/
+  http://gearheadrpg.com
 
 **********************
 ***  INSTALLATION  ***
@@ -165,5 +164,7 @@ GearHead: Arena is distributed under the terms of the LGPL. See "license.txt"
 for more details.
 
 pyrrho12@yahoo.ca
-http://gearhead.roguelikedevelopment.org/
+http://gearheadrpg.com
+https://github.com/jwvhewitt/gearhead-1
+
 

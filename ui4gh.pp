@@ -549,6 +549,7 @@ uses dos,ability,gears,texutil;
 	    AddBoolean( 'NOAUTOSAVE' , not DoAutoSave );
 	    AddBoolean( 'ALWAYSSAVECHARACTER' , Always_Save_Character );
 	    AddBoolean( 'NOCOMBATTAUNTS' , No_Combat_Taunts );
+	    AddBoolean( 'NAMESON' , Names_Above_Heads );
 
 	    AddBoolean( 'NOALPHA' , not Use_Alpha_Blending );
         writeln( F, 'ALPHALEVEL ' + BStr( Alpha_Level ) );

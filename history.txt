@@ -1,3 +1,5 @@
+- Fixed bug with character sprites on Linux (sdlmap.pp)
+- Added Evan, Aspis, Onawa, and Carter (ADV_FederatedTerritories.txt)
 - Configuration saved on exit (ui4gh.pp)
 - Save files, config file now stored in configuration folder (gears.pp)
 - Changed application name to gharena (gharena.pas)
