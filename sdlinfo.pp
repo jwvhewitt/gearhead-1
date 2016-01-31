@@ -454,7 +454,7 @@ Procedure MekStatDisplay( Mek: GearPtr; GB: GameBoardPtr );
 	{ there's gonna be a strange display. }
 var
 	msg: String;
-	MM,A,B: Integer;
+	MM,A,B,CurM,MaxM: Integer;
 	MD: GearPtr;
 	C: TSDL_Color;
 begin
@@ -507,13 +507,24 @@ begin
 	end else msg := 'Immobile';
 	AI_SmallTitle( msg , NeutralGrey );
 
+	{ Encumbrance information. }
+
+	{ Get the current mass of carried equipment. }
+	CurM := EquipmentMass( Mek );
+
+	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
+
+	AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , NeutralGrey );
+	AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+
 	DisplayStatusFX( Mek );
 end;
 
 Procedure CharacterInfo( Part: GearPtr; GB: GameBoardPtr );
 	{ This gear is a character. Print a list of stats and skills. }
 var
-	T,TT,Width,S: Integer;
+	T,TT,Width,S,CurM,MaxM: Integer;
 	C: TSDL_Color;
 	
 begin
@@ -553,6 +564,17 @@ begin
 		end;
 		AI_NextLine;
 	end;
+
+	{ Encumbrance information. }
+
+	{ Get the current mass of carried equipment. }
+	CurM := EquipmentMass( Part );
+
+	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+
+	AI_PrintFromRight( 'Enc:' , 1 , NeutralGrey );
+	AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , 36 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
 
 	DisplayStatusFX( Part );
 end;

@@ -370,7 +370,7 @@ Procedure MekStatDisplay( Mek: GearPtr );
 	{ there's gonna be a strange display. }
 var
 	msg: String;
-	MM,N,A,B: Integer;
+	MM,N,A,B,CurM,MaxM: Integer;
 	MD: GearPtr;
 begin
 	{ General mecha information - Name, mass, maneuver }
@@ -416,7 +416,18 @@ begin
 		msg := MoveModeName[ MM ];
 		msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
 	end else msg := 'Immobile';
-	AI_Title( msg , DarkGray );
+	AI_PrintFromRight( msg , ZX2 - ZX1 - 25 , DarkGray );
+
+	{ Encumbrance information. }
+
+	{ Get the current mass of carried equipment. }
+	CurM := EquipmentMass( Mek );
+
+	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
+
+	AI_PrintFromRight( 'Enc:' , ZX2 - ZX1 - 14 , NeutralGrey );
+	AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ZX2 - ZX1 - 9 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
 
 	AI_NextLine;
 	ShowStatus( Mek );
@@ -425,7 +436,7 @@ end;
 Procedure CharacterInfo( Part: GearPtr );
 	{ This gear is a character. Print a list of stats and skills. }
 var
-	T,TT,Width,S: Integer;
+	T,TT,Width,S,CurM,MaxM: Integer;
 	C: Byte;
 begin
 	{ Show the character's name and health status. }
@@ -442,6 +453,17 @@ begin
 	AI_PrintFromLeft( BStr( CharCurrentMental(Part)) + '/' + BStr( CharMental(Part)) , ZX2 - ZX1 - 2 , EnduranceColor( CharMental(Part) , CharCurrentMental(Part) ) );
 	AI_PrintFromLeft( 'Me' , ZX2 - ZX1 + 1 , LightGray );
 	AI_NextLine;
+
+	{ Encumbrance information. }
+
+	{ Get the current mass of carried equipment. }
+	CurM := EquipmentMass( Part );
+
+	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+
+	AI_PrintFromLeft( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , ZX2 - ZX1 - 2 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+	AI_PrintFromRight( 'Enc' , ZX2 - ZX1 - 1 , NeutralGrey );
 	AI_NextLine;
 
 
