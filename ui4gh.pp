@@ -472,8 +472,6 @@ uses dos,ability,gears,texutil;
 						else if T < 80 then T := 80;
 						ScreenColumns := T;
 
-					end else if cmd = 'WINDOW' then begin
-						DoFullScreen := False;
 					end else if cmd = 'FULLSCREEN' then begin
 						DoFullScreen := True;
 
@@ -561,7 +559,7 @@ uses dos,ability,gears,texutil;
 	    writeln( F , 'SCREENHEIGHT ' + BStr( ScreenRows ) );
 	    writeln( F , 'SCREENWIDTH ' + BStr( ScreenColumns ) );
 
-	    AddBoolean( 'WINDOW' , not DoFullScreen );
+	    AddBoolean( 'FULLSCREEN' , DoFullScreen );
 	    AddBoolean( 'NOMOUSE' , not Mouse_Active );
 	    AddBoolean( 'NOPILLAGE' , not Pillage_On );
 	    AddBoolean( 'USETACTICSMODE' , UseTacticsMode );
