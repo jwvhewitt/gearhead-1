@@ -518,6 +518,15 @@ Msg2 <You meditate at the shrine. You feel enlightened.>
 Msg3 <You meditate at the shrine.>
 Msg4 <You've already meditated at this shrine today.>
 
+Prop 50
+name <Target>
+desig <TARGET-BUILDING>
+Scale 2
+roguechar <&>
+SDL_SPRITE <prop_default.png>
+Frame 11
+
+
 Prop 80
 name <Monolith>
 desig <MONOLITH>

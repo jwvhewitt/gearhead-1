@@ -1,3 +1,6 @@
+- Incorporated encumberance display patch
+- Incorporated selecttarget_nil_weapon and longint_movement patches
+- Title screen picks mecha colors from standard list (sdlmap.pp)
 - Fixed bug with character sprites on Linux (sdlmap.pp)
 - Added Evan, Aspis, Onawa, and Carter (ADV_FederatedTerritories.txt)
 - Configuration saved on exit (ui4gh.pp)

@@ -1378,18 +1378,6 @@ const
 		'btr_*','zoa_*','ghu_*','ara_*','aer_*',
 		'orn_*','ger_*','hov_*','gca_*'
 	);
-	NumColorPat = 9;
-	ColorPat: Array [1..NumColorPat] of String = (
-		'66 121 179 255 212 195 205 25 0',
-		'180 10 120  255 212 195 170 205 75',
-		'66 121 119 255 212 195 0 205 0',
-		'122 88 193 208 34 51 0 200 0',
-		'130 143 114 199 188 162 200 0 0',
-		'122 88 193 1 75 67 0 200 0',
-		'201 203 229 234 180 88 200 0 0',
-		'36 46 22 80 80 85 200 200 0',
-		'208 34 31 200 200 200 200 200 0'
-	);
 var
 	GB: GameBoardPtr;
 	Scene: GearPtr;
@@ -1432,7 +1420,7 @@ begin
 	{ Add one sprite per 10x10 area of the map. }
 	for t := 0 to 24 do begin
 		name := SelectRandomSAtt( Sprite_Names )^.Info;
-		SS := ConfirmSprite( name , ColorPat[ Random( NumColorPat ) + 1 ] , 64 , 64 );
+		SS := ConfirmSprite( name , RandomColorString(CS_PrimaryMecha)+' '+RandomColorString(CS_SecondaryMecha)+' '+RandomColorString(CS_Detailing) , 64 , 64 );
 		if ( SS <> Nil ) and ( SS^.Img <> Nil ) then begin
 			{ The first part of the name will tell us what }
 			{ kind of a mecha we're dealing with. This is }

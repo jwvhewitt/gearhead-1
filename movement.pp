@@ -315,10 +315,10 @@ begin
 	CalcRoll := spd;
 end;
 
-function CalcSkim( Mek: GearPtr ): Integer;
+function CalcSkim( Mek: GearPtr ): LongInt;
 	{ Calculate the base hovering speed for this mecha. }
 var
-	mass,thrust,spd: Integer;
+	mass,thrust,spd: LongInt;
 begin
 	if Mek^.G = GG_Mecha then begin
 		{ Calculate the mass... }
@@ -354,13 +354,13 @@ begin
 	CalcSkim := spd;
 end;
 
-function CalcFly( Mek: GearPtr; TrueSpeed: Boolean ): Integer;
+function CalcFly( Mek: GearPtr; TrueSpeed: Boolean ): LongInt;
 	{ Calculate the base flight speed for this mecha. }
 	{ Set TRUESPEED to TRUE if you want the actual speed of the }
 	{ mecha, or to FALSE if you want its projected speed (needed }
 	{ to calculate jumpjet time- see below. }
 var
-	mass,thrust,spd,WingPoints: Integer;
+	mass,thrust,spd,WingPoints: LongInt;
 begin
 	if Mek^.G = GG_Mecha then begin
 		{ Calculate the mass... }
@@ -425,10 +425,10 @@ begin
 	CalcFly := spd;
 end;
 
-Function OverchargeBonus( Master: GearPtr ): Integer;
+Function OverchargeBonus( Master: GearPtr ): LongInt;
 	{ Overchargers add a bonus to a mek's FULLSPEED action. }
 var
-	mass,thrust,it,T,SF: Integer;
+	mass,thrust,it,T,SF: LongInt;
 begin
 	mass := GearMass( Master );
 	thrust := CountActivePoints( Master , GG_MoveSys , GS_Overchargers );

@@ -2099,6 +2099,7 @@ Procedure AimThatAttack( Mek,Weapon: GearPtr; CallShot: Boolean; GB: GameBoardPt
 var
 	WPM: RPGMenuPtr;
 	N,AtOp: Integer;
+	WeaponTmp: GearPtr;
 begin
 	if not ReadyToFire( GB , Mek , Weapon ) then begin
 		DialogMsg( ReplaceHash( MsgString( 'ATA_NotReady' ) , GearName( Weapon ) ) );
@@ -2106,11 +2107,11 @@ begin
 	end;
 
 	AtOp := DefaultAtOp( Weapon );
-	if SelectTarget( GB , Mek , Weapon , CallShot , AtOp ) then begin
+    WeaponTmp := Weapon;
+    if SelectTarget( GB , Mek , WeaponTmp , CallShot , AtOp ) then begin
 		{ Check to make sure the target is within maximum range, }
 		{ and that it falls within the correct arc. }
 		AtOp := DefaultAtOp( Weapon );
-
 		if ( LOOKER_Gear = Nil ) and RangeArcCheck( GB , Mek , Weapon , LOOKER_X , LOOKER_Y , TerrMan[ GB^.Map[ LOOKER_X , LOOKER_Y ].terr ].Altitude ) then begin
 			AttackerFrontEnd( GB , Mek , Weapon , LOOKER_X , LOOKER_Y , TerrMan[ GB^.Map[ LOOKER_X , LOOKER_Y ].terr ].Altitude , DefaultAtOp( Weapon ) );
 
