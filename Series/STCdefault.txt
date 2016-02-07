@@ -502,6 +502,9 @@ Prop 2
 name <Mushrooms>
 desig <FUNGUS-1>
 roguechar <,>
+SDL_SPRITE <prop_default.png>
+Frame 12
+
 
 Prop 10
 name <Shrine>
@@ -641,6 +644,8 @@ Prop 10
 name <Ultima Fighter>
 Desig <VIDEOGAME1>
 rogueChar <&>
+SDL_SPRITE <prop_default.png>
+Frame 13
 use <ifG ComTime V1 else GoAlreadyPlayed ifYesNo 1 2 3 ifG PC$ 100 else GoNoPlay Cash+ -100 V= 1 NextDay Goto GoStartGame>
 GoStartGame <PCMoraleDMG -d10 ifG SkRoll 4 25 else GoLose SkillXP 4 d100 Print 6 PCMoraleDMG -d10>
 GoLose <SkillXP 4 d6 Print 7>
