@@ -1,6 +1,7 @@
 Battroid 7
 Name <Chimentero>
 Desig <CHR-3L>
+SDL_Sprite <btr_chimentero.png>
 desc <This mecha is Aegis Overlord's city-smashing siege breaker. It has been nicknamed "The Gargoyle" due to its fearsome appearance.>
 
 Mod Storage
