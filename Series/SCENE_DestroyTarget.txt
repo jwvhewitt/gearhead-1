@@ -63,11 +63,8 @@ sub
 
 end
 inv
-	Prop 50
+    stc TARGET-BUILDING
 	SetTeam 3
-	Scale 2
-	name <Machinery>
-	roguechar <&>
 
 end
 

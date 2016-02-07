@@ -13,30 +13,32 @@ The file doc/introduction.txt has some information and hints for new
 players.
 
 If you can't find the information you need, check the 'doc/' directory.
-If you're still lost you can check the wiki or the forum:
+If you're still lost you can check the homepage:
 
-  http://gearhead.chaosforge.org/wiki/index.php?title=GearHead
-  http://gearhead.chaosforge.org/forum/
+  http://gearheadrpg.com
 
-**********************
-***  INSTALLATION  ***
-**********************
+****************************
+***  COMPILING THE GAME  ***
+****************************
 
-Unzip the game files to a directory on your hard drive. That should be
-just about all you need to do.
+First, you need a copy of the source code. If you are reading this you probably
+already have it. Next, you need to install FreePascal and the SDL 1.2 libraries.
+Open a terminal in the folder with the source code and type:
 
-If you are upgrading from a previous version of GearHead, delete the
-"Series" directory before installing the new package.
+    fpc -dSDLMODE gharena
 
-If you are installing the SDL version, things get a bit more
-complicated. You'll also need to download and install the image files,
-and the SDL libraries. The image files go in the directory
-"gearhead/image" alongside "gearhead/series", "gearhead/design", and all
-the other game directories. You'll also need to install the runtime
-libraries for SDL, SDL_Image, and SDL_ttf. These should be included for
-the Windows compile of the game; for Linux you can download them from
-www.libsdl.org. You can unzip the dll's to the same directory as
-"arena.exe", or install them in your System folder.
+For the ASCII version, just type:
+
+    fpc gharena
+
+If everything you need has already been installed, that should be it.
+
+Windows Notes: You need to download the binaries for SDL 1.2, SDL_TTF for
+SDL 1.2, and SDL_IMAGE for SDL 1.2. Put the .dll files in the same folder
+as gharena.exe.
+
+Linux Notes: You need the packages libsdl1.2, libsdl1.2-dev, libsdl-image1.2,
+libsdl-image1.2dev, libsdl-ttf2.0-0, and libsdl-ttf2.0-0dev.
 
 ****************************
 ***  THE  GAME  DISPLAY  ***
@@ -165,5 +167,7 @@ GearHead: Arena is distributed under the terms of the LGPL. See "license.txt"
 for more details.
 
 pyrrho12@yahoo.ca
-http://gearhead.roguelikedevelopment.org/
+http://gearheadrpg.com
+https://github.com/jwvhewitt/gearhead-1
+
 

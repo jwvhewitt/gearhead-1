@@ -1772,8 +1772,19 @@ Scene 11 0
 		SetTeam 2
 
 		NPC Trucker
+	    name <Carter>
+	    CharDesc Male Old Shy Easygoing Lawful
+	    mecha <Corsair.txt>
+	    StatLine 14 16 12 15 14 11 13 9
+	    SDL_Portrait <por_m_comiccarter(OUY).png>
+	    SDL_Colors <25 80 100 255 212 195 122 82 65>
 		SetPersona 1103
-		SetTeam 2
+		SetTeam 3
+        skill 1 6
+        skill 2 6
+        skill 3 6
+        skill 4 6
+        skill 5 7
 
 		STC TV
 		home <Stuckey's Truck Stop>
@@ -2843,6 +2854,12 @@ Scene 15 0
 		SetFaction 12
 
 		NPC Warrior Monk
+	    name <Aspis>
+        mecha <Phoenix.txt>
+	    CharDesc Male Heroic Sociable Passionate Cheerful Spiritual
+	    StatLine 17 14 15 14 10 15 16 24
+	    SDL_Portrait <por_m_ladi_aspis(-C-).png>
+	    SDL_Colors <166 47 32 255 212 195 245 215 150>
 		SetTeam 3
 		SetPersona 1502
 		SetFaction 12
@@ -3653,7 +3670,13 @@ Scene 17 0
 		mecha <>
 
 		NPC Soldier
+        name <Evan>
+        mecha <Esher.txt>
+    	SDL_PORTRAIT <por_m_ladi_ahnuld(O-Y).png>
+    	SDL_COLORS <166 47 32 184 124 81 136 141 101>
+    	statline 14 16 14 15 9 15 11 9
 		SetPersona 1703
+		chardesc Male Old Renowned Shy Spiritual
 		SetTeam 3
 		SetFaction 2
 
@@ -6787,6 +6810,17 @@ Scene 39 0
 		SetFaction 5
 		SetTeam 2
 		SetPersona 3912
+
+        NPC Mecha Pilot
+	    name <Onawa>
+        mecha <Scylla.txt>
+	    CharDesc Female Shy Easygoing Melancholy
+	    StatLine 15 14 14 15 12 15 12 11
+	    SDL_Portrait <por_f_joe_brianna(JAY).png>
+	    SDL_Colors <64 130 109 150 112 89 103 3 45>
+        SetFaction 5
+        SetTeam 3
+        SetPersona 3913
 
 		Monster Fire Penguin
 		SetTeam 3
