@@ -34,7 +34,7 @@ Procedure StatusEffectCheck( GB: GameBoardPtr );
 
 Procedure RandomExplosion( GB: GameBoardPtr );
 
-Procedure AdvanceGameClock( GB: GameBoardPtr );
+Procedure AdvanceGameClock( GB: GameBoardPtr; DoStatus: Boolean );
 Procedure QuickTime( GB: GameBoardPtr; Time: LongInt );
 
 
@@ -432,7 +432,7 @@ begin
 	end;
 end;
 
-Procedure AdvanceGameClock( GB: GameBoardPtr );
+Procedure AdvanceGameClock( GB: GameBoardPtr; DoStatus: Boolean );
 	{ Increment the game clock and do any checks that need to be }
 	{ done. }
 begin
@@ -454,7 +454,10 @@ begin
 	end;
 
 	{ Once every 3 minutes, update the status effects. }
-	if ( GB^.ComTime mod AP_3minutes ) = 97 then StatusEffectCheck( GB );
+    { Status effects will not take place during quicktime fast-forwards, }
+    { when the player has no ability to react to them. This shall be known as }
+    { the Cynjin Memorial Patch. }
+	if (( GB^.ComTime mod AP_3minutes ) = 97) and DoStatus then StatusEffectCheck( GB );
 
 end;
 
@@ -463,7 +466,7 @@ Procedure QuickTime( GB: GameBoardPtr; Time: LongInt );
 begin
 	while Time > 0 do begin
 		Dec( Time );
-		AdvanceGameClock( GB );
+		AdvanceGameClock( GB, False );
 	end;
 	UpdateCombatDisplay( GB );
 end;

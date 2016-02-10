@@ -39,7 +39,7 @@ plot 0
 	% team two drops to zero, or ends in defeat is the number of
 	% active masters on team one drops to zero. After combat, V2=3
 	% if the player was victorious or V2=2 is the player lost.
-	nu1 <if= T1 0 if= V2 1  V= 2 2 Reputation 6 -5>
+	nu1 <if= T1 0 if= V2 1  V= 2 2 LoseRenown>
 	nu2 <if= T2 0 if= V2 1  V= 2 3 Print 102>
 
 	Msg1   <\ELEMENT 2 @???:// I'm waiting for you in \ELEMENT 1 . Let's finish this.>
@@ -63,7 +63,7 @@ sub
 
 	result1 <EndChat  Reputation 4  d4  Say 5>
 	result2 <EndChat  Reputation 4 -d6  Say 6>
-	result3 <EndChat Say 7 Reputation 6 -10 Retreat 1 S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
+	result3 <EndChat Say 7 LoseRenown Retreat 1 S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
 
 	Msg2 <Urgent business calls me to \ELEMENT 3 ; count yourself lucky that I don't have time to remain here and call in reinforcements.>
 	Msg2_1 <How strange... You're far deadlier than your reputation would have me expect. I'll have to rethink my strategy before fighting you again. In the meantime, I must be off to \ELEMENT 3 , and I recommend that you get some repairs.>

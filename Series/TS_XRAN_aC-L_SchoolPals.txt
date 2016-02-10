@@ -46,7 +46,7 @@ Plot 0
 	.nu1 <if= T1 0 Exit 1 SeekGate V1>
 	.nu2 <if= T2 0 Exit V1 SeekGate 1>
 
-	NU1 <if= T1 0 if= P2 1 P= 2 2 Reputation 6 -5 S= 101 1 N= 3 E5 S= 105 -1          AdvancePlot 2>
+	NU1 <if= T1 0 if= P2 1 P= 2 2 LoseRenown S= 101 1 N= 3 E5 S= 105 -1          AdvancePlot 2>
 	NU2 <if= T2 0 if= P2 1 P= 2 3 Reputation 6 1  XPV 100 S= 101 1 S+ 102 1 N= 3 E5  if= V4 1 else GoJustWin MoveChar E4 E3 N= 1 0 AdvancePlot 1>
 	GoJustWin <AdvancePlot 1>
 

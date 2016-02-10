@@ -1,0 +1,169 @@
+Plot 0
+	name <Sick Mission>
+
+	% Based off the leader mission template. An NPC is injured and unable to
+    % complete a mission; if the PC is willing to do so, they will get half
+    % pay, salvage, and some valuable bonding with the NPC.
+
+	% Element1 is a miscellaneous cavalier.
+	element1 <Character HasMecha>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Time Limit
+	%  V2 = Combat Indicator, if V2=1 combat has been entered
+	%  V3 = Email sent indicator.
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E1 is killed.
+	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50>
+
+sub
+	Persona 1
+	rumor <!1 was injured in battle and can't go to work.>
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V2 = Message Randomizer
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
+    %  V5 = React threshold for mission
+
+	greeting <NewChat if= P2 3 else GoCheckLoss Say d5 BondWithChatNPC CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission V= 2 5 V+ 2 d5 Say V2 AddReact 1 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 50 Goto GoMakeOffer>
+	% If the PC has "the right stuff", an offer will be made immediately.
+	% If not, no offer will be made at all. In the example provided
+	% below, "the right stuff" is a Lawful reputation + being liked.
+	GoMakeOffer  <V= 5 10 V+ 5 d20 ifG React V5 else GoNoOffer V= 2 15 V+ 2 d5 Say V2 Goto GoAddAcceptOps>
+
+	GoAddAcceptOps <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	GoAddComOps <V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2 V= 2 10 V+ 2 d2 AddChat V2>
+
+	GoNoOffer <Say 102 AdvancePlot 0>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
+
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 V= 2 20 V+ 2 d5 Say V2 Memo 103 Goto GoAddComOps>
+	result2 <Goto Result1>
+	result3 <Goto Result1>
+
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
+	result5 <Goto Result4>
+	result6 <Goto Result4>
+
+	% PC will enter combat now.
+	result7 <EndChat V= 2 25 V+ 2 d5 Say V2 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
+	result8 <Goto result7>
+
+	% PC will ask how many points the enemy has.
+	result9 <NewChat V= 2 30 V+ 2 d5 Say V2 AddChat 7 AddChat 11>
+	result10 <Goto result9>
+
+	% PC needs some time to get ready.
+	result11 <NewChat Say 105>
+	result12 <Goto result11>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Player has won the battle and is being paid.
+	Msg1 <Thanks for your help. Maybe someday I'll be able to repay you the favor.>
+	Msg2 <You did it! And I'm feeling better now, too.>
+	Msg3 <Good going, \PC .>
+	Msg4 <Thanks, \PC . You saved my job and maybe my life.>
+	Msg5 <Thank you! I'm starting to feel better now.>
+
+	% 06 - 10 :  Player has lost the battle.
+	Msg6 <Too bad... but hey, at least you made it back.>
+	Msg7 <Tough luck out there, but thanks for trying.>
+	Msg8 <Thanks for trying.>
+	Msg9 <Wow. If you couldn't beat them, imagine how badly I would have done.>
+	Msg10 <That could have went better... though it probably did go better than if I had gone myself.>
+
+	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <I've got to do a mission soon, but I got wounded in the last one and don't think I'm ready yet. I can offer you $ \VAL V4 and salvage to do this mission for me.>
+	Msg17 <I feel absolutely terrible... Could you do this mission instead of me? There's $ \VAL V4 and salvage in it for you.>
+	Msg18 <They say these regen pills will fix you up instantly... they lie. I'm in no shape for this upcoming mission; if you'll do it for me, I can offer $ \VAL V4 and salvage.>
+	Msg19 <My doctor says I need rest, but I have to complete this mission. Can you take it instead? You can have $ \VAL V4 and salvage.>
+	Msg20 <They say I shouldn't pilot anything until I stop bleeding. Could you do a mission for me? It's worth $ \VAL V4 plus salvage.>
+
+	% 21 - 25 :  PC has accepted; describe the mission.
+	Msg21 <Alright, you're just gonna have to fight the enemy mecha, and that's about it, I think...>
+	Msg22 <There are some enemy mecha, whatever, you know how this works...>
+	Msg23 <I think... I don't remember who you're fighting, but they're bad guys, right?>
+	Msg24 <Here, the details are on my phone, I'll forward them to you...>
+	Msg25 <Uh, here's the info, you can figure it out yourself...>
+
+	% 26 - 30 :  Combat is starting
+	Msg26 <Good luck. Try not to get hurt.>
+	Msg27 <I'm going to go take a nap. Wake me when you get back.>
+	Msg28 <Bye bye...>
+	Msg29 <Be careful out there...>
+	Msg30 <Good night... I mean good luck.>
+
+	% 31 - 35 :  Describe enemy point value
+	Msg31 <I think they have \val v3 points worth of equipment? I'm not sure, I may have passed out during the briefing.>
+	Msg32 <As far as I know you'll be facing \val v3 points worth of enemies, so you can see why you need to be in a good condition for it.>
+	Msg33 <Maybe \val v3 threat points? I'm pretty out of it on medicine right now.>
+	Msg34 <The number \val v3 seems familiar... either that's their threat rating or a wild fever hallucination.>
+	Msg35 <They've got \val v3 points worth of equipment.>
+
+
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <Are you ready?>
+	% 102 :  Player doesn't have "the right stuff" for this mission.
+	Msg102 <I wish I could go back to bed... but this mecha isn't going to pilot itself.>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 offered you a mission.>
+	% 104 :  PC didn't want the job.
+	Msg104 <That's too bad. I hope I don't pass out and die in the cockpit.>
+	% 105 :  PC needs time to get ready.
+	Msg105 <Do whatever you need to do, then come back here and we'll start.>
+
+	% 01 - 03 :  PC will accept the mission.
+	Prompt1 <Sure, I can do that.>
+	Prompt2 <No problem.>
+	Prompt3 <Alright, I can help you.>
+
+	% 04 - 06 :  PC doesn't want this mission.
+	Prompt4 <Sorry, I've got my own problems.>
+	Prompt5 <That's your problem, not mine.>
+	Prompt6 <Maybe someone else can do it?>
+
+	% 07 - 08 :  Combat is starting.
+	prompt7 <I'll start that mission now.>
+	prompt8 <Be back when I'm finished.>
+
+	% 09 - 10 :  How many points?
+	prompt9 <How many points do they have?>
+	prompt10 <What exactly am I up against?>
+
+	% 11 - 12 :  Just a minute...
+	prompt11 <Give me a minute to get ready.>
+	prompt12 <I need some time first.>
+
+end

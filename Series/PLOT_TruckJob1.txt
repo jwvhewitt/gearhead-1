@@ -25,7 +25,7 @@ sub
 	GoVeryLow <Say 4>
 	result1 <NewChat Say 5 AddChat 8 AddChat 9 AddChat 10>
 	result2 <NewChat Say 6 AdvancePlot 1 AddChat 4>
-	result3 <EndChat AdvancePlot 0 AddReact -10 Reputation 1 -1 ifG React 50 else GoLowReject Say 7>
+	result3 <EndChat AdvancePlot 0 AddReact -10 ifG React 50 else GoLowReject Say 7>
 	GoLowReject <Say 8>
 	result4 <Say 10 shop NoWares Say 11 EndChat>
 	result5 <NewChat ifG PCMeks 0 else GoR5NoMeks say 12 AddChat 8 AddChat 9 AddChat 10>
@@ -88,7 +88,7 @@ sub
 		% If combat has been entered, V2 = 1. This is important to keep
 		% the events below from activating in scenes other than the
 		% plot's combat...
-		NU1 <if= T1 0 if= V2 1 AdvancePlot 3 Reputation 6 -5  V= 2 2>
+		NU1 <if= T1 0 if= V2 1 AdvancePlot 3 LoseRenown  V= 2 2>
 		NU2 <if= T2 0 if= V2 1 AdvancePlot 4 XPV 50           V= 2 2>
 
 	sub
@@ -199,7 +199,7 @@ sub
 				% If combat has been entered, V2 = 1. This is important to keep
 				% the events below from activating in scenes other than the
 				% plot's combat...
-				NU1 <if= T1 0 if= V2 1 AdvancePlot 6                 Reputation 6 -9  V= 2 2>
+				NU1 <if= T1 0 if= V2 1 AdvancePlot 6                 LoseRenown  V= 2 2>
 				NU2 <if= T2 0 if= V2 1 AdvancePlot 7 XPV 150 Salvage Reputation 6 1   V= 2 2>
 
 				% Time limit - this plot will fade after a short time.
@@ -458,8 +458,8 @@ sub
 		greeting <NewChat if= P2 0 else GoBeenBefore Say 5 AddChat 2>
 		GoBeenBefore <ifG React 15 else GoLowReact Say 1 if= PCMEks 0 AddCHat 1>
 		GoLowReact <Say 2 if= PCMEks 0 AddCHat 1>
-		result1 <NewChat ifG PCRep 6 0 else GoNoRenown Say 3 MechaPrize .BadMek Reputation 6 -10>
-		GoNoRenown <Reputation 6 -25 AddReact -5 Say 4 AdvancePlot 0>
+		result1 <NewChat ifG PCRep 6 0 else GoNoRenown Say 3 MechaPrize .BadMek LoseRenown>
+		GoNoRenown <LoseRenown AddReact -5 Say 4 AdvancePlot 0>
 		.BadMek <Vespa.txt>
 		.OkayMek <Rover.txt>
 		result2 <NewChat P= 2 1 ifG PCMeks 0 else GoNoNecha ifG PCRep 2 25 else GoR1NoLaw Say 8 P= 4 1>

@@ -30,7 +30,7 @@ Plot 0
 	GoStartCombat <SavePos NewD 2 ComposeD NU1 .nu1 ComposeD NU2 .nu2 DynaNPC N1 2 P= 2 1>
 	.nu1 <if= T1 0 Return>
 	.nu2 <if= T2 0 Return>
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -4  AdvancePlot 1>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown  AdvancePlot 1>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 1 1  Reputation 6  1  XPV 200 AdvancePlot 2>
 
 

@@ -9,7 +9,7 @@ Scene 0 2
 	WildMap
 
 	Start <if= V1 0  ForceChat -1  V= 1 1  V= 2 Reward Threat PCRep 6 100 750 V= 3 Reward Threat PCRep 6 100 50>
-	NU1 <if= T1 0  Reputation 6 -5  Return>
+	NU1 <if= T1 0  LoseRenown  Return>
 	NU2 <if= T2 0  Salvage  ifG T3 0  if= V1 1  V= 1 2  ForceChat -1>
 
 sub

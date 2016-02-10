@@ -20,7 +20,7 @@ Plot 0
 	% Combat check. If combat has been entered, V2=1.
 	% After combat, V2=3
 	% if the player was victorious or V2=2 is the player lost.
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -10>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 1  1  XPV 100>
 
 

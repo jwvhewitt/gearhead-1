@@ -32,7 +32,7 @@ Plot 0
 	GoFlatDelete <AdvancePlot 0>
 
 	% Combat check. If combat has been entered, V2=1.
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3  S+ 102 1>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown  S+ 102 1>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50  S+ 101 -d3 S+ 102 1>
 
 	5Min <if= d50 23 if= V3 0 ifG RReact E2 d70 if# PCFac E1 ifG -d25 PCRep 2 ifG PCRep 1 d25 V= 3 1 Email d5>

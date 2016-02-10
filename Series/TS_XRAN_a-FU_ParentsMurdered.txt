@@ -44,7 +44,7 @@ Plot 0
 	% team two drops to zero, or ends in defeat is the number of
 	% active masters on team one drops to zero. After combat, V2=3
 	% if the player was victorious or V2=2 is the player lost.
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -7 S= 101 1 N= 3 E3 S= 105 -1  AdvancePlot 0>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown S= 101 1 N= 3 E3 S= 105 -1  AdvancePlot 0>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1  Goto GoAdvance>
 	GoAdvance <ifG NPCRep E2 1 -1 else GoE2Villain AdvancePlot 1>
 	GoE2Villain <AdvancePlot 2>
@@ -110,7 +110,7 @@ sub
 		% team two drops to zero, or ends in defeat is the number of
 		% active masters on team one drops to zero. After combat, V2=3
 		% if the player was victorious or V2=2 is the player lost.
-		nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2 AdvancePlot 0>
+		nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown AdvancePlot 0>
 		nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 PCAlly E2 History 102 AdvancePlot 0>
 
 		Msg101 <That wasn't the last of them. You are attacked again, but this time are joined by a new ally.>
@@ -142,7 +142,7 @@ sub
 		% team two drops to zero, or ends in defeat is the number of
 		% active masters on team one drops to zero. After combat, V2=3
 		% if the player was victorious or V2=2 is the player lost.
-		nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2 History 102 AdvancePlot 0>
+		nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown History 102 AdvancePlot 0>
 		nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 History 103 AdvancePlot 0>
 
 		Msg101 <That wasn't the last of them. You are attacked again, but this time facing a new enemy!>

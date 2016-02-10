@@ -30,9 +30,9 @@ Msg4 <\PILOT ?M1 must be stopped. Disable his mecha.>
 % Linking code... assumes that the plot calling this scene sets P2=1
 % when combat is entered, as per the templates...
 %	nu1 <if= T1 0 if= V2 1 if= L2 1 else GoLose  V= 2 3>
-%	GoLose <V= 2 2 Reputation 6 -3>
+%	GoLose <V= 2 2 LoseRenown>
 %	nu2 <if= V2 1 if= L2 1 else GoNU2Lose  V= 2 3>
-%	GoNU2Lose <if= L2 -1 V= 2 2 Reputation 6 -3>
+%	GoNU2Lose <if= L2 -1 V= 2 2 LoseRenown>
 
 
 sub

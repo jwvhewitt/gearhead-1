@@ -142,7 +142,7 @@ sub
 		% team two drops to zero, or ends in defeat is the number of
 		% active masters on team one drops to zero. After combat, V2=3
 		% if the player was victorious or V2=2 is the player lost.
-		nu1 <if= T1 0 if= V2 1  V= 2 2  V+ 3 1   Reputation 6 -5>
+		nu1 <if= T1 0 if= V2 1  V= 2 2  V+ 3 1   LoseRenown>
 		nu2 <if= T2 0 if= V2 1  V= 2 3  V+ 3 1   Reputation 6  1  XPV 100>
 
 		Msg101 <You are attacked by mecha bearing \NARRATIVE 2 insignia!>

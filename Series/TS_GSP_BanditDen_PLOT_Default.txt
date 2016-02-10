@@ -10,7 +10,7 @@ Plot 0
 	start <ifPersona E2 else GoDelete>
 	cleanup <AdvancePlot 0>
 
-	nu1 <if= T1 0 if= V2 1  if= L2 0 else GoPCWon V= 2 2  Reputation 6 -10>
+	nu1 <if= T1 0 if= V2 1  if= L2 0 else GoPCWon V= 2 2  LoseRenown>
 	GoPCWon <V= 2 3  Reputation 6  1  FacXP+ 3 1>
 
 

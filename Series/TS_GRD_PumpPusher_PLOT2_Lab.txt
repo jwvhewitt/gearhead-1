@@ -13,7 +13,7 @@ Plot 0
 
 	GoDelete <EndStory AdvancePlot 0>
 
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 250  S= 104 1 EndStory AdvancePlot 0  Return>
 
 

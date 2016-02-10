@@ -124,7 +124,7 @@ sub
 	result1 <NewChat Say 2>
 	result2 <NewChat Say 3 AddChat 5  DeleteKeyItem E7  V= 1 Reward Threat S103 300 500 CashPrize V1 History 9 Goto GoEndMission>
 	result3 <NewChat Say 4>
-	result4 <NewChat Say 5 AddChat 5 Reputation 1 -1 Reputation 6 -10 goto GoEndMission>
+	result4 <NewChat Say 5 AddChat 5 Reputation 1 -1 LoseRenown goto GoEndMission>
 	result5 <NewChat History 8 ifG PCRep 1 0 else GoR5NoHero Say 6>
 	GoR5NoHero <Say 7>
 	GoEndMission <S= 101 1 S+ 102 1 N= 3 E2 S= 105 -1  AdvancePlot 0>

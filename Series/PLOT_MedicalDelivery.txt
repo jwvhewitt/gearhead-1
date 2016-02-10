@@ -17,7 +17,7 @@ Plot 0
 	GoInit <Compose GET E4 .getit Compose EWM E2 .entercity>
 	.getit <if= P2 0 AdvancePlot 0>
 	.entercity <if= P2 1 BLOCK Alert 1 Dynamic 2 Threat PCRep 6 120 .nu1 .nu2 PassVar 1 E2 PassVar 2 SceneID>
-	.nu1 <if= T1 0 if= L3 0 L= 3 1 Reputation 6 -3 Return>
+	.nu1 <if= T1 0 if= L3 0 L= 3 1 LoseRenown Return>
 	.nu2 <if= T2 0 if= L3 0 L= 3 1 Reputation 6 1 Exit L1 SeekGate L2>
 
 	Msg1 <While entering \ELEMENT 2 , you are attacked by drug trafficers intent on stealing your cargo!>
@@ -39,7 +39,7 @@ sub
 
 	GoNoChance <Say 3 DeleteKeyItem E4 AdvancePlot 0>
 
-	result1 <NewChat Say 2 Reputation 1 -3 Reputation 2 -1 Reputation 6 -15 AdvancePlot 0>
+	result1 <NewChat Say 2 Reputation 1 -3 Reputation 2 -1 LoseRenown LoseRenown AdvancePlot 0>
 	result2 <NewChat Say 6 AddChat 6 AddChat 5>
 	result3 <NewChat Say 7  Reputation 5  d6  Goto GoGetMission>
 	result4 <NewChat Say 7  Reputation 5 -d6  Goto GoGetMission>

@@ -39,8 +39,8 @@ Plot 0
 	GoStartCombat <Alert 2 Block SavePos NewD 2 ComposeD NU1 .nu1 ComposeD NU2 .nu2 DynaNPC N1 2 P= 2 1 SetMapType 39 if= P3 1 DynaNPC E5 -1>
 	.nu1 <if= T1 0 Return>
 	.nu2 <if= T2 0 Return>
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3  AdvancePlot 1>
-	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  3  XPV 500 AdvancePlot 2>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown  AdvancePlot 1>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  3  XPV 500 AdvancePlot 2 if= V3 1 ifNPCOK E5 BondWith E5>
 
 	Msg1 <The lab appears to have been the scene of a massive battle...>
 	Msg2 <As you approach town, you see a bizarre shape floating in the distance. It soon becomes apparent that this is the bioweapon Cetus, and you will have to defend yourself!>

@@ -18,7 +18,7 @@ Plot 0
 	% If combat has been entered, V2 = 1. This is important to keep
 	% the events below from activating in scenes other than the
 	% plot's combat...
-	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 Reputation 6 -3          V= 2 2>
+	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 LoseRenown          V= 2 2>
 	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1    V= 2 2>
 
 

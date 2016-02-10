@@ -568,4 +568,6 @@ PICKPOCKET_EMPTY <# doesn't seem to have anything worth stealing.>
 PICKPOCKET_FAIL <You don't manage to steal anything.>
 PICKPOCKET_CASH <You steal $#.>
 PICKPOCKET_CASH+ITEM <You steal $# and a #.>
+BONDING_LOVE <You get the feeling that # is attracted to you.>
+BONDING_ALLY <You get the feeling that you can count on #.>
 

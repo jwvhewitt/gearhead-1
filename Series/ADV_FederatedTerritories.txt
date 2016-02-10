@@ -302,7 +302,7 @@ Scene 2 0
 		result4 <NewChat Say 9 StoryLine GoVikki>
 		GoVikki <TS_PLOT_Hogye_Vikki.txt>
 		result5 <ifG PCMEKS 0 else goNoMeks EndChat Say 8 SavePos Dynamic 2 Threat V1 75 FrzNU1 FrzNU2 V= 2 ComTime V+ 2 50000 SetMapType ArenaMap SetMapString .map>
-		FrzNU1 <if= T1 0 Return if= V1 0 V= 1 1 Reputation 6 -5>
+		FrzNU1 <if= T1 0 Return if= V1 0 V= 1 1 LoseRenown>
 		FrzNU2 <if= T2 0 Return if= V1 0 V= 1 1 G+ 21 1 Reputation 6 1>
 		.map <SOLO>
 		goNoMeks <NewChat Say 7>
@@ -1643,7 +1643,7 @@ Scene 11 0
 		result1 <NewChat Say 2 AddChat 3 AddChat 4 if# PCFac 4  Reputation 2 1>
 		result2 <NewChat Say 3 AddChat 3 AddChat 4 if# PCFac 4  Reputation 2 -1>
 		result3 <ifG PCMEKS 0 else goNoMeks EndChat Say 4 SavePos Dynamic 2 Threat V1 75 FrzNU1 FrzNU2 V= 2 ComTime V+ 2 50000 SetMapType ArenaMap SetMapString .map>
-		FrzNU1 <if= T1 0 Return if= V1 0 V= 1 1 Reputation 6 -5>
+		FrzNU1 <if= T1 0 Return if= V1 0 V= 1 1 LoseRenown>
 		FrzNU2 <if= T2 0 Salvage Return if= V1 0 V= 1 1 G+ 22 1 Reputation 6 1>
 		.map <SOLO>
 		goNoMeks <NewChat Say 6>
@@ -3085,7 +3085,7 @@ Scene 16 0
 		GoNotReady <Say 2>
 		GoHereBefore <Say 3 AddChat 1 AddChat 2>
 		result1 <ifG PCMEKS 0 else goNoMeks EndChat Say 4 SavePos Dynamic 2 Threat V1 75 FrzNU1 FrzNU2 V= 2 ComTime V+ 2 50000 SetMapType ArenaMap SetMapString .map>
-		FrzNU1 <if= T1 0  if= V1 0 V= 1 1 Return Reputation 6 -5>
+		FrzNU1 <if= T1 0  if= V1 0 V= 1 1 Return LoseRenown>
 		FrzNU2 <if= T2 0  if= V1 0 V= 1 1 Return G+ 23 1 Reputation 6 1 XPV 50>
 		.map <SOLO>
 		goNoMeks <NewChat Say 5 L= 2 1>
@@ -7113,7 +7113,7 @@ Scene 43 0
 		goNotReady <NewChat Say 9>
 		result3 <EndChat Say 4 SavePos MDynamic 0 V1 .mdesc .nu1 .nu2 V= 2 ComTime V+ 2 43200 SetMapType ArenaMap SetMapString .map>
 		.mdesc <Mutant Animal Robot>
-		.NU1 <if= T1 0 Return  if= V1 0  V= 1 1 Reputation 6 -5>
+		.NU1 <if= T1 0 Return  if= V1 0  V= 1 1 LoseRenown>
 		.NU2 <if= T2 0 Return  if= V1 0  V= 1 1 G+ 25 1  XPV 50  Reputation 6 1>
 		.map <SOLO>
 		result4 <NewChat Say 5>
@@ -8510,7 +8510,7 @@ Scene 57 0
 		GoFirstTime <Say 7 AddChat 4 if= G7 3 AddChat 1>
 		result1 <NewChat Say 8 History 11 V= 1 1 XPV 500 Reputation 1 7 Reputation 6 3 CashPrize Reward Threat 90 100 300>
 		result2 <EndChat Say 9 V= 3 ComTime V+ 3 86400 SavePos Dynamic 2 Threat V4 100 .nu1 .nu2 SetMapType 11>
-		.nu1 <if= T1 0 Return if= V1 0 V= 1 1 Reputation 6 -7>
+		.nu1 <if= T1 0 Return if= V1 0 V= 1 1 LoseRenown>
 		.nu2 <if= T2 0 if= V1 0 Return  V= 1 1 G+ 8 1 Reputation 1 1>
 		result3 <NewChat Say 10>
 		result4 <NewChat Say 12 V= 4 30 AddChat 2 AddChat 3>

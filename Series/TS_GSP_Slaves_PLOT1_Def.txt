@@ -15,7 +15,7 @@ Plot 0
 	% P3 = Don't advanceplot indicator
 
 	nu1 <if= T1 0 if= V2 1  if= L2 1 else GoPCLost V= 2 3  Reputation 6  1>
-	GoPCLost <V= 2 2  Reputation 6 -3>
+	GoPCLost <V= 2 2  LoseRenown>
 
 	start <if= P1 0 else GoCheckTime P= 1 ComTime P+ 1 86400 Email 1>
 	GoCheckTime <if= P2 0 ifG ComTime P1 FreezeChar E1 PCEnemy E1 P= 3 1 EndStory AdvancePlot 1>
@@ -36,7 +36,7 @@ sub
 	result3 <NewChat Say 7 AddChat 1 AddChat 2>
 	result4 <NewChat AddReact -20 Say 8 AddChat 5 AddChat 6>
 	result5 <EndChat Say 9  Reputation 1 1 FreezeChar E1 PCEnemy E1 P= 3 1 EndStory AdvancePlot 1>
-	result6 <NewChat Say 10 Reputation 6 -10 AddChat 1 AddChat 2>
+	result6 <NewChat Say 10 LoseRenown AddChat 1 AddChat 2>
 	Msg1 <The shipment was delivered to my customers no problem. Here's your pay. I'll call when I have another job for you.>
 	Msg2 <I warned you not to fail me, didn't I? That shipment cost me a lot of money... Get out of here; I don't want to see you here ever again.>
 	Msg3 <I have a shipment that's heading out today. The guardians have a plan to stop it... They don't know exactly what kind of contraband I'm shipping so if they decide to shoot down the truck it could get kind of messy, you know? Pay is $ \VAL V4 .>

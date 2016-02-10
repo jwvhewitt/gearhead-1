@@ -49,7 +49,7 @@ sub
 	%  V4 = Reward offered to PC for the mission
 
 	greeting <NewChat ifG P2 0 else GoCheckMission ifG P4 0 else GoLoss Say d5 AddReact P4 CashPrize * P4 V4 XPV * P4 25 Reputation 1 1 AdvancePlot 0>
-	GoLoss <V= 2 5 V+ 2 d5 Say V2 Reputation 6 -10  AdvancePlot 0>
+	GoLoss <V= 2 5 V+ 2 d5 Say V2 LoseRenown  AdvancePlot 0>
 	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
 	% The first time the PC speaks to the NPC, initialize everything.

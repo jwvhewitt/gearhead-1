@@ -27,7 +27,7 @@ TRAITCHAT_Lead5 <You may have noticed that>
 TRAITCHAT_Lead6 <I should tell you that>
 TRAITCHAT_Lead7 <Everyone can tell that>
 AHook_Greeting <NewChat Say 1 AddChat 1>
-AHook_R_1 <NewChat Say 2>
+AHook_R_1 <NewChat Say 2 BondWithChatNPC>
 AHOOK_Msg1_1 <Hey there. I thought I'd come over and see if you needed any help.>
 AHOOK_Msg1_2 <I'm here to back you up. Let's fight these creeps together.>
 AHOOK_Msg1_3 <Right now it's \VAL T2 against 1... Here, I'll even up those odds.>

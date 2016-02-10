@@ -43,7 +43,7 @@ Plot 0
 	% team two drops to zero, or ends in defeat is the number of
 	% active masters on team one drops to zero. After combat, V2=3
 	% if the player was victorious or V2=2 is the player lost.
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2  S= 105 -1 N= 3 E3 History 103 AdvancePlot 1>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown  S= 105 -1 N= 3 E3 History 103 AdvancePlot 1>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50 S= 101 1 S+ 102 1 S= 105 -1 N= 3 E3 PCEnemy E2 History 104 AdvancePlot 0>
 
 	Msg101 <While leaving town, you are attacked by \ELEMENT 2 !>
@@ -100,7 +100,7 @@ sub
 	Msg1 <\ELEMENT 2 said that your old enemies were doing something in \ELEMENT 3 .>
 
 	nu1 <if= T1 0 if= V2 1 if= L2 1 else GoLose  V= 2 3>
-	GoLose <V= 2 2 Reputation 6 -2>
+	GoLose <V= 2 2 LoseRenown>
 
 	sub
 		Persona 5

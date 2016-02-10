@@ -30,7 +30,7 @@ Plot 0
 	CLEANUP <AdvancePlot 0>
 
 	% Combat check. If combat has been entered, V2=1.
-	NU1 <if= V2 1 if= t1 0 V= 2 2 S= 201 -1 Reputation 6 -5 Reputation 1 -1 AdvancePlot 2>
+	NU1 <if= V2 1 if= t1 0 V= 2 2 S= 201 -1 LoseRenown AdvancePlot 2>
 
 sub
 	Persona 2

@@ -18,7 +18,7 @@ Plot 0
 	% Every time the bone devils lose, add one point to the victory column.
 	FACLOSE10 <P+ 1 1>
 
-	nu1 <if= T1 0 if= V3 1  V= 3 2  Reputation 6 -5>
+	nu1 <if= T1 0 if= V3 1  V= 3 2  LoseRenown>
 	nu2 <if= T2 0 if= V3 1  V= 3 3  Reputation 6  1  Reputation 1 5  XPV 250 Goto GoWin>
 
 	GoWin <SetSceneFaction E1 11 PCEnemy 1401 PCEnemy 1402 PCEnemy 1403 PCEnemy 1404 PCEnemy 1405 PCAlly E2>

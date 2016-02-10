@@ -27,7 +27,7 @@ element4 <Prefab>
 	% plot's combat...
 	% A win increases G24, bringing the player closer to a tournament win.
 	% A loss decreases G24, moving the player further away.
-	NU1 <if= T1 0 if= V2 1  Reputation 6 -5         V= 2 0   V= 3 -1   ifG G24 0 ifG 10 G24 G+ 24 -1>
+	NU1 <if= T1 0 if= V2 1  LoseRenown         V= 2 0   V= 3 -1   ifG G24 0 ifG 10 G24 G+ 24 -1>
 	NU2 <if= T2 0 if= V2 1  XPV 100 Reputation 6 1   V= 2 0   V= 3  1   G+ 24 1>
 
 sub

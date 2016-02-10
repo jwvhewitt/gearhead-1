@@ -1080,7 +1080,12 @@ begin
 
 	{ Add all usable skills to the list, as long as the PC knows them. }
 	for N := 1 to NumSkill do begin
-		if ( SkillMan[ N ].Usage = USAGE_Clue ) and ( TeamHasSkill( GB , NAV_DefPlayerTeam , N ) or HasTalent( PC , NAS_JackOfAll ) ) then begin
+        { EXPERIMENTAL Feb 9 2016: I remember for some reason younger Joe }
+        {  was adamant that non-clue skills posessed by lancemates not be }
+        {  directly accessible by the PC. Well, older Joe can't remember why }
+        {  and this seems stupid to him, so for now all usable skills are }
+        {  accessible. Let's see what happens. }
+		if ( SkillMan[ N ].Usage > 0 ) and ( TeamHasSkill( GB , NAV_DefPlayerTeam , N ) or HasTalent( PC , NAS_JackOfAll ) ) then begin
 			AddRPGMenuItem( RPM , SkillMan[N].Name , N , SkillDesc( N ) );
 		end else if ( SkillMan[ N ].Usage > 0 ) and HasSkill( PC , N ) then begin
 			AddRPGMenuItem( RPM , SkillMan[N].Name , N , SkillDesc( N ) );

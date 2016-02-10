@@ -49,13 +49,13 @@ sub
 	result4 <NewChat ifG PCRep 6 50 else GoR4NoRenown Say 5 Goto GoR4End>
 	GoR4NoRenown <ifG PCRep 2 25 else GoR4NoLaw Say 6 Goto GoR4End>
 	GoR4NoLaw <ifG SkRoll 19 12 else GoR4NoCharm Say 7 Goto GoR4End>
-	GoR4NoCharm <Say 8 PCEnemy E1 PCFEnemy 4 Reputation 6 -8 Reputation 2 -5  Goto GoR4End>
+	GoR4NoCharm <Say 8 PCEnemy E1 PCFEnemy 4 LoseRenown Reputation 2 -5  Goto GoR4End>
 	GoR4End <AdvancePlot 0 if= P4 1 DeleteKeyItem E3 Reputation 1 1 XPV 100 History 14>
 	result5 <NewChat Say 16 AddChat 7 AddChat 8>
 	result6 <NewChat Say 15>
 	result7 <NewChat Say 17 CashPrize 25000 P= 3 1 Memo 9>
 	result8 <NewChat Say 18 DeleteKeyItem E3 AddReact -d8 AdvancePlot 0>
-	result9 <NewChat PCEnemy E1 PCFEnemy 4 AdvancePlot 0 if= PCFac 4 else GoR9NoMember Say 19 AddReact -10 Reputation 6 -30 FacXP+ 4 -9999 Goto GoR9End>
+	result9 <NewChat PCEnemy E1 PCFEnemy 4 AdvancePlot 0 if= PCFac 4 else GoR9NoMember Say 19 AddReact -10 LoseRenown FacXP+ 4 -9999 Goto GoR9End>
 	GoR9End <if= P4 1 DeleteKeyItem E3 XPV 200 Reputation 1 5 History 14>
 	GoR9NoMember <Say 20 AddReact -30  if= P4 1 DeleteKeyItem E3 History 14 XPV 100 Reputation 1 1>
 	Msg1 <I've been waiting to hear of your progress. Have you found the Ruby yet?>
@@ -114,7 +114,7 @@ sub
 	result11 <NewChat Say 13 AddChat 13 AddChat 14>
 	result12 <NewChat V= 1 1 if= PCFac 12 else GoR12NoMember Say 14 Reputation 1 -1 Reputation 2 -20 FacXP+ 12 -500 GiveKeyItem E3 P= 2 1>
 	GoR12NoMember <ifG Conversation 9 else GoR12NoDice Say 15 Reputation 2 -5 GiveKeyItem E3 P= 2 1>
-	GoR12NoDice <Say 16 AddReact -15 Reputation 2 -10 Reputation 6 -10>
+	GoR12NoDice <Say 16 AddReact -15 Reputation 2 -10 LoseRenown>
 	result13 <EndChat Say 17  Reputation 4 -d10 G= 3 -1  TeamAttack 2>
 	result14 <NewChat Say 18 AddChat 15 AddChat 16>
 	result15 <NewChat Say 19 P= 4 1>

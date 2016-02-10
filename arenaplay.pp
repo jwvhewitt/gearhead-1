@@ -224,7 +224,7 @@ begin
 	{Start main combat loop here.}
 	{Keep going until there's only one side left.}
 	while KeepPlayingSC( Camp^.GB ) do begin
-		AdvanceGameClock( Camp^.GB );
+		AdvanceGameClock( Camp^.GB, True );
 
 		{ Once every 10 minutes, roll for random monsters. }
 		if ( Camp^.GB^.ComTime mod AP_10minutes ) = 233 then RestockRandomMonsters( Camp^.GB );

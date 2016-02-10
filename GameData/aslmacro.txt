@@ -57,6 +57,7 @@ GIVEKEYITEM <GrabItem ?  GiveGG>
 IFSELFOK <GrabSource ifGOK>
 IFPERSONA <GrabNPC ?  IfGOK>
 IFPCOK <GrabPCPilot IfGOK>
+IFNPCOK <GrabNPC ? IfGOK>
 ifNPCinPlay <GrabNPC ?  IfGInPlay>
 IFM <GrabLocal ? IFGInPlay>
 IFITEMOK <GrabItem ? IfGOK>
@@ -116,4 +117,5 @@ GSetOptMax <GSetNAtt NAG_Personal NAS_OptMax ?>
 GSetOptMin <GSetNAtt NAG_Personal NAS_OptMin ?>
 Gut <GrabSource GSetNAtt NAG_EpisodeData 9 1>
 Flay <GrabSource GSetNAtt NAG_EpisodeData 10 1>
+BondWithChatNPC <BondWith ChatNPCID>
 

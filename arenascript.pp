@@ -3712,6 +3712,57 @@ begin
 	GFCombatDisplay( GB );
 end;
 
+Procedure ProcessLoseRenown( GB: GameBoardPtr );
+	{ The PC has just done something to lose face. Reduce the RENOWN attribute }
+	{ by 25% of its total or 5 points, whichever is more severe. }
+var
+	PC: GearPtr;
+	Renown: Integer;
+begin
+	PC := LocatePilot( GG_LocatePC( GB ) );
+	if PC <> Nil then begin
+		Renown := NAttValue( PC^.NA , NAG_CHarDescription , NAS_Renowned );
+		if Renown > 23 then begin
+			AddReputation( PC , NAS_Renowned , -( Renown div 4 ) );
+		end else begin
+			AddReputation( PC , NAS_Renowned , -5 );
+		end;
+	end;
+end;
+
+Procedure ProcessBonding( var Event: String; GB: GameBoardPtr; Source: GearPtr );
+	{ The PC and the NPC are bonding over something. Maybe they'll become friends. }
+var
+	CID,CReact: LongInt;
+    PC,NPC: GearPtr;
+begin
+	{ Find out which NPC to speak with. }
+	CID := ScriptValue( Event , GB , Source );
+	PC := LocatePilot( GG_LocatePC( GB ) );
+    NPC := GG_LocateNPC( CID, GB, Source );
+
+	if (NPC <> Nil) and (PC <> Nil) and (GB <> Nil) and (NAttValue(NPC^.NA,NAG_Relationship,0) = 0) then begin
+        { Check the reaction score with this NPC. If appropriate, become more }
+        { than just friends... lancemates! }
+        CReact := ReactionScore( GB^.Scene, PC, NPC );
+        if ( Random(100) + 25 ) < CReact then begin
+            { This NPC will become an ally of some type. }
+        	if IsSexy( PC , NPC ) and ( Random( 200 ) < CReact ) then begin
+                SetNAtt(NPC^.NA,NAG_Relationship,0,NAV_Lover);
+                DialogMsg(ReplaceHash(MsgString('BONDING_LOVE'),SAttValue(NPC^.SA,'NAME')));
+            end else begin
+                SetNAtt(NPC^.NA,NAG_Relationship,0,NAV_ArchAlly);
+                DialogMsg(ReplaceHash(MsgString('BONDING_ALLY'),SAttValue(NPC^.SA,'NAME')));
+            end;
+        end else begin
+            { This NPC is not ready to become an ally. Add some like. }
+            if CReact < 0 then AddNAtt( PC^.NA , NAG_ReactionScore, 0, Random(10)+1 );
+            AddNAtt( PC^.NA , NAG_ReactionScore, 0, Random( 6 ) + 1 );
+        end;
+	end;
+end;
+
+
 Procedure CheckMechaEquipped( GB: GameBoardPtr );
 	{ A dynamic encounter is about to be entered. The PC is going to }
 	{ want a mecha for it, most likely. }
@@ -3759,6 +3810,7 @@ begin
 			{ If this is a gear-grabbing command, our work here is done. }
 
 		if cmd = 'EXIT' then ProcessExit( Event , GB , Source )
+		else if cmd = 'BONDWITH' then ProcessBonding( Event , GB , Source )
 		else if cmd = 'GADDNATT' then ProcessGAddNAtt( Event , GB , Source )
 		else if cmd = 'GSETNATT' then ProcessGSetNAtt( Event , GB , Source )
 		else if cmd = 'GADDSTAT' then ProcessGAddStat( Event , GB , Source )
@@ -3848,6 +3900,8 @@ begin
 		else if cmd = 'MAGICMAP' then ProcessMagicMap( GB )
 		else if cmd = 'GMENTAL' then ProcessGMental( GB )
 		else if cmd = 'GQUITLANCE' then ProcessGQuitLance( GB )
+		else if cmd = 'LOSERENOWN' then ProcessLoseRenown( GB )
+
 
 		else if cmd <> '' then begin
 					DialogMsg( 'ERROR: Unknown ASL command ' + cmd + ' in ' + GearName( Source ) );

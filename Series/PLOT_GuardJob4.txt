@@ -16,7 +16,7 @@ Plot 0
 	% the events below from activating in scenes other than the
 	% plot's combat...
 	% After combat, V2=2 if the player lost, or V2=3 if the player won.
-	NU1 <if= T1 0 if= V2 1 Reputation 6 -2             V= 2 2>
+	NU1 <if= T1 0 if= V2 1 LoseRenown                  V= 2 2>
 	NU2 <if= T2 0 if= V2 1 Reputation 1 2   XPV 50     V= 2 3>
 
 sub
@@ -28,7 +28,7 @@ sub
 	% V1 = Threat Value
 	% V2 = Message Randomizer
 	% V3 = Phase Indicator, PC gets only one pass through conversation
-	greeting <NewChat if= P2 3 else GoCheckLoss  AdvancePlot 0 AddReact E8 V= 2 120 V+ 2 d6 Say V2>
+	greeting <NewChat if= P2 3 else GoCheckLoss  AdvancePlot 0 AddReact E8 BondWith E1 NewChat V= 2 120 V+ 2 d6 Say V2>
 	GoCheckLoss <if= P2 2 else GoCheckMission  AdvancePlot 0 AddReact 1 Say 1>
 	GoCheckMission <ifG PCMeks 0 else GoNoMeks if= V3 0 else GoNothing V= 3 1 ifG PCRep 6 d60 else GoHasChance  AdvancePlot 0  Say 22>
 	GoHasChance <ifG React 50 else GoMaybeOK Say 10 AddChat 4 AddChat 5>

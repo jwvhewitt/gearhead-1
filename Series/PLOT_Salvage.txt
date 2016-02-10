@@ -10,7 +10,7 @@ Plot 0
 	GoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -5>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Print 1  Reputation 6  1  XPV 100>
 
 	Msg1 <All the monsters have been eliminated, and you head back to town.>

@@ -1,3 +1,8 @@
+- Added PLOT_SickMission.txt
+- Added BondWith ASL command (arenascript.pp)
+- All usable skills known by lancemates added to skills menu (pcaction.pp)
+- Status effects won't occur during quick time (arenacfe.pp)
+- Added LoseRenown ASL command from GH2 (arenascript.pp)
 - Added sprites for mushroom patch, video game, enemy building (STCdefault.txt)
 - Incorporated encumberance display patch
 - Incorporated selecttarget_nil_weapon and longint_movement patches

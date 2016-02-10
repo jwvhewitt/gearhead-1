@@ -62,7 +62,7 @@ Plot 0
 	% if the player was victorious or V2=2 is the player lost.
 	% Finally, if the player won, the calling story's faction victory
 	% count (by default now story variable 101) will be increased.
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -3>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6 1 XPV 50 S= 201 0 S+ 202 1 S+ 101 d3 N= 2 E3>
 
 sub

@@ -53,7 +53,7 @@ sub
 	greeting <NewChat if= P4 1 else GoNoRescue ifPersona S7 else GoNoS7 Say 1 CashPrize V4 MoveChar E5 E1 S+ 103 1 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 1>
 	GoNoS7 <Say 2 CashPrize V4 MoveChar E5 E1 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 1>
 	GoNoRescue <if= P1 2 else GoNoCapture V= 2 2 V+ 2 d2 Say V2 CashPrize V4 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 0>
-	GoNoCapture <ifG P2 0 else GoCheckMission V= 2 4 V+ 2 d2 Say V2 Reputation 6 -10 DeleteChar E4 DeleteChar E5 S= 201 0 N= 2 E2 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 0>
+	GoNoCapture <ifG P2 0 else GoCheckMission V= 2 4 V+ 2 d2 Say V2 LoseRenown DeleteChar E4 DeleteChar E5 S= 201 0 N= 2 E2 DeleteKeyItem E6 DeleteKeyItem E7 AdvancePlot 0>
 	GoCheckMission <if= V1 1 else GoFirstTime Say 7 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
 	GoFirstTime <V= 4 Reward Threat S2 100 200 V= 1 1 V= 2 8 V+ 2 d2 Say V2 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2 if# PCFac N1 V= 2 6 V+ 2 d2 AddChat V2>
 

@@ -20,7 +20,7 @@ plot 0
 	start <if= P3 1 else GoOldStart if= SceneID 1 Block Print 3 SavePos Dynamic 2 Threat S103 100 .nu1 .nu2 V= 2 1>
 	.nu1 <if= T1 0 Return>
 	.nu2 <if= T2 0 Salvage Return>
-	nu1 <if= T1 0 if= V2 1  V= 2 2  Reputation 6 -2 S= 101 1 N= 3 E2 if= P4 1 else GoDelete S= 105 1 AdvancePlot 0>
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown S= 101 1 N= 3 E2 if= P4 1 else GoDelete S= 105 1 AdvancePlot 0>
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1   S= 101 1 S+ 102 1 N= 3 E2 if= P4 1 else GoDelete S= 105 1 AdvancePlot 0>
 	GoDelete <S= 105 -1 AdvancePlot 0>
 

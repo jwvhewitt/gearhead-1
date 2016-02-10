@@ -55,7 +55,7 @@ sub
 		%                              +1 = Win, +2 = Fail
 		% V3 = Recovered computer file
 
-		NU1 <if= V2 10 else GoP_NU1 if= T1 0 Reputation 6 -d8 V= 2 11>
+		NU1 <if= V2 10 else GoP_NU1 if= T1 0 LoseRenown V= 2 11>
 		GoP_NU1 <if= V2 20 if= T1 0 Return if= P3 1 else GoP_Fail V= 2 21  Reputation 6 1>
 		GoP_Fail <V= 2 22>
 

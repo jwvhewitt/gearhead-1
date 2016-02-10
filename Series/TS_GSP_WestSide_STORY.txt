@@ -29,7 +29,7 @@ Story
 	.n3dies <ifPersona N2 else GoDelete>
 	GoDelete <EndStory>
 
-	NU1 <if= S3 1 if= T1 0 Reputation 6 -10 S= 3 2>
+	NU1 <if= S3 1 if= T1 0 LoseRenown S= 3 2>
 	NU2 <if= S3 1 if= T2 0 Reputation 6 1 S= 3 3 XPV 100>
 
 sub

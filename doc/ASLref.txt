@@ -48,6 +48,7 @@
 					subject to config file option
 	BLOCK			Erase trigger, prevent further events
 	BOMB			Blow up current scene
+    BONDWITH [CID]  The PC and NPC will bond, maybe becoming arch-allies
 	CASHPRIZE [value]	Give player money
 	COMPOSE [trigger label] [parameter] [cmd line identifier]
 			Create new script event
@@ -93,6 +94,7 @@
 	L= [idnum] [value]	Set local variable
 	L+ [idnum] [value]	Add local variable
 	LOADD [script line label]	Load a dynamic scene
+    LOSERENOWN      Thwacks the PC's renown down a level
 	MAGICMAP		Makes all tiles on current map visible
 	MDYNAMIC [Scale] [PC Encounter Level] [MDesc Label] [NU1 label] [NU2 label]
 			Create dynamic scene with monsters
