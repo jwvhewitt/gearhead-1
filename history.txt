@@ -1,3 +1,8 @@
+- PCs now start with random colors (randchar.pp)
+- Fixed SDL mode character generator 2nd usage crash (randchar.pp)
+- Added restaurant to Mauna (ADV_FederatedTerritories.txt)
+- Can sell mecha, mecha inventory at mechanic shops too (services.pp)
+- Added thin doors (sdlmap.pp)
 - Added PLOT_SickMission.txt
 - Added BondWith ASL command (arenascript.pp)
 - All usable skills known by lancemates added to skills menu (pcaction.pp)

@@ -1424,7 +1424,7 @@ begin
 		{ If the shopkeeper knows Basic Repair, allow Reload Chars. }
 		{ If the shopkeeper knows Mecha Repair, allow reload mecha. }
 		if ( ReloadCharsCost( GB , PC , NPC ) > 0 ) and ( NAttValue( NPC^.NA , NAG_Skill , 23 ) > 0 ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_ReloadCharsPrompt' ) + ' [$' + BStr( ReloadCharsCost( GB , PC , NPC ) ) + ']' , -4 );
-		if ( ReloadMechaCost( GB , PC , NPC ) > 0 ) and ( NAttValue( NPC^.NA , NAG_Skill , 15 ) > 0 ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_ReloadMeksPrompt' ) + ' [$' + BStr( ReloadMechaCost( GB , PC , NPC ) ) + ']' , -3 );
+		if ( ReloadMechaCost( GB , PC , NPC ) > 0 ) and ( NAttValue( NPC^.NA , NAG_Skill , NAS_MechaRepair ) > 0 ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_ReloadMeksPrompt' ) + ' [$' + BStr( ReloadMechaCost( GB , PC , NPC ) ) + ']' , -3 );
 
 		if AStringHasBString( Stuff, 'DELIVERY' ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_ExpressDelivery' ) , -8 );
 
@@ -1434,7 +1434,8 @@ begin
 
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellStuff' ) , -5 );
 
-		if AStringHasBString( Stuff, 'MECHA' ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_MechaService' ) , -2 );
+        { Allow selling mecha if this is a mecha shop or a mechanic. }
+		if AStringHasBString( Stuff, 'MECHA' ) or (NAttValue( NPC^.NA,NAG_Skill,NAS_MechaRepair) > 0) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_MechaService' ) , -2 );
 
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Inventory' ) , -6 );
 

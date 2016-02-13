@@ -7400,7 +7400,7 @@ Scene 44 0
 		Persona 4409
 		% Spa Manager
 		greeting <NewChat Say 1 AddChat 1>
-		result1 <EndChat ifG V1 ComTime else GoBuyTicket Say 2 Time 3600 PCMoraleDMG -10>
+		result1 <EndChat ifG V1 ComTime else GoBuyTicket Say 2 Time 3600 PCMoraleDMG -50>
 		GoBuyTicket <ifG PC$ 999 else GoNoMoney Cash+ -1000 V= 1 ComTime V+ 1 86400 Say 2 Time 3600 PCMoraleDmg -50>
 		GoNoMoney <Say 3>
 		Msg1 <Mauna has wonderful mineral hot springs. Our spa features naturally heated water from deep underground. A day pass costs $1000. Would you like to take a relaxing bath in our pools?>
@@ -7408,6 +7408,37 @@ Scene 44 0
 		Msg3 <I'm sorry, but you don't have enough money to buy a pass. Please come again later.>
 		Prompt1 <Yes I would!>
 
+		Persona 4410
+        % V1 = Have asked about the snacky cakes.
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		GoNoMoney <Say 4>
+		GoNotHungry <Say 5>
+		result1 <NewChat Say 2 AddChat 11 AddChat 12 AddChat 13 AddChat 4 if= v1 0 AddChat 14>
+		result2 <NewChat Say 3>
+		result4 <NewChat Say 3>
+		result11 <EndChat ifG PCHunger 10 else GoNotHungry ifG PC$ 99 else GoNoMoney Say 7 CASH+ -100 PCEat>
+		result12 <EndChat ifG PCHunger 10 else GoNotHungry ifG PC$ 199 else GoNoMoney Say 7 CASH+ -200 PCMoraleDmg -8 PCEat>
+		result13 <EndChat ifG PCHunger 10 else GoNotHungry ifG PC$ 1999 else GoNoMoney Say 9 CASH+ -2000 PCMoraleDmg -20 PCEat SkillXP NAS_Vitality d10 SkillXP NAS_Resistance d10>
+        result14 <NewChat Say 8 v= 1 1  AddChat 15 AddChat 16>
+        result15 <Goto result13>
+        result16 <Goto result1>
+		Msg1 <Welcome to Maison de Mauna. This is the only restaurant in the world that offers authentic pre-zero Imperator Zeta cuisine. Would you like to see a menu?>
+		Msg2 <You can get a processed meatlike burger for $100, macaroni mixed with cheesy flavor powder for $200, or a vintage shrink wrapped snack cake for $2000.>
+		Msg3 <Be seeing you again.>
+		Msg4 <How do you intend to pay for that?>
+		Msg5 <It would be a waste to prepare this food if you're not going to eat it. Come back later, when you're hungry.>
+		Msg7 <Here's your food. Enjoy!>
+        Msg8 <Absolutely! We discovered a warehouse full of them in the ruins, and thanks to lost preservative technology they're as delicious now as they were the day they were extruded.>
+        Msg9 <Here you go. They say that eating one of these cakes will help you live a long life yourself.>
+		Prompt1 <Alright.>
+		Prompt2 <Not now, sorry.>
+		Prompt4 <On second thought, I don't want anything.>
+		Prompt11 <I'll take the burger.>
+		Prompt12 <I'll take the macaroni.>
+		Prompt13 <I'll take the snack cake.>
+        Prompt14 <Is that cake really from prezero times?>
+        Prompt15 <I'll take one!>
+        Prompt16 <Maybe I'll have something else...>
 	end
 	inv
 		NPC Guardian
@@ -7454,6 +7485,12 @@ Scene 44 0
 		SetPersona 4409
 		SetTeam 2
 		home <Natural Spa>
+
+		NPC Cook
+		SetPersona 4410
+		SetTeam 2
+		home <Natural Spa>
+        CharDesc Cheerful Heroic
 	end
 
 Scene 45
@@ -7463,6 +7500,7 @@ Scene 45
 	NU1 <if= T1 0 Exit 44>
 	gapfill <-21>
 	start <Print 1>
+    5min <PCMoralDmg -1>
 	Msg1 <You enter Mauna Cavern. The air is hot with geothermal steam.>
 	CaveMap
 	BorderType 31

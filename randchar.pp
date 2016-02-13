@@ -873,7 +873,7 @@ begin
 	SkillPt := 50;
 	Cash := 35000;
 {$IFDEF SDLMODE}
-	SetSAtt( PC^.SA , 'SDL_COLORS <49 91 161 252 212 195 150 112 89>' );
+    SetSAtt( PC^.SA, 'SDL_COLORS <' + RandomColorString(CS_Clothing) + ' ' + RandomColorString(CS_Skin) + ' ' + RandomColorString(CS_Hair) + '>' );
 {$ENDIF}
 
 	{ First select gender, keeping in mind that the selection may be }
@@ -967,6 +967,10 @@ begin
 		DisposeGear( PC );
 
 	end;
+
+{$IFDEF SDLMODE}
+	RCPC := Nil;
+{$ENDIF}
 
 	{ Clear the screen, and return the PC. }
 	ClrScreen;

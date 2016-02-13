@@ -86,7 +86,7 @@ NPCgoPC <GrabNPC ? GSetNAtt NAG_EpisodeData NAS_Orders 5 GSetNAtt NAG_EpisodeDat
 UIDgoPC <GrabLocal ?  GSetNAtt NAG_EpisodeData NAS_Orders 5 GSetNAtt NAG_EpisodeData 3 PCUID>
 UIDSeekEdge <GrabLocal ?  GSetNAtt NAG_EpisodeData NAS_Orders 2 GSetNAtt NAG_EpisodeData 3 ?>
 PCMoraleDmg <GrabPCPilot GMoraleDMG ?>
-SkillXP <GrabPC GSkillXP ? ?>
+SkillXP <GrabPCPilot GSkillXP ? ?>
 GiveSTC <GNewPart ? GiveGG>
 PCEat <GrabPCPilot GSetNAtt NAG_Condition NAS_Hunger 0 Time 1800>
 RunAway <GrabNPC ? GRunAway>

@@ -53,7 +53,7 @@ inv
 	sdl_colors <130 143 114 116 100 13 0 230 0>
 	Clue15 <Mental ifG SkRoll 15 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
 	Clue23 <Mental ifG SkRoll 23 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
-	Clue29 <ifG PCSkillVal 38 0 else GoC29NoGood Mental ifG SkRoll 38 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
+	Clue29 <ifG PCSkillVal 38 0 else GoC29NoGood Mental ifG SkRoll 38 10 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
 	GoC29NoGood <Print 3>
 	GoFail <Print 2>
 	Clue37 <Print 4>

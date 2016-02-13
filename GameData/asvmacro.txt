@@ -127,3 +127,5 @@ NAG_StatusEffect <14>
 NAS_Poison <1>
 NAS_Stoned <4>
 NAS_Sickness <20>
+NAS_VITALITY <13>
+NAS_RESISTANCE <36>

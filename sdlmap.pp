@@ -199,6 +199,7 @@ var
 	hill_1,hill_2,hill_3: SensibleSpritePtr;
 	Off_Map_Model_Sprite: SensibleSpritePtr;
 	Mini_Map_Sprite: SensibleSpritePtr;
+    Door_Sprite: SensibleSpritePtr;
 
 	Thin_Wall_Sprites: Array [1..NumThinWalls] of SensibleSpritePtr;
 
@@ -731,6 +732,12 @@ begin
 							for t := Z to 1 do begin
 								AddInstantOverlay( X , Y , T , OVERLAY_Metaterrain , NAttValue( M^.NA , NAG_Display , NAS_PrimaryFrame ) , Meta_Terrain_Sprite );
 							end;
+                        end else if ( M^.S = GS_MetaDoor ) then begin
+                            { New for 2016- thin doors to go with the thin walls. Yay! }
+                            t := 0;
+                            if EffectiveWall( X + 1, Y ) then t := t + 1;
+                            if M^.stat[ STAT_Pass ] = 0 then t := t + 2;
+							AddInstantOverlay( X , Y , Z , OVERLAY_Metaterrain , t , Door_Sprite );
 						end else begin
 							AddInstantOverlay( X , Y , Z , OVERLAY_Metaterrain , NAttValue( M^.NA , NAG_Display , NAS_PrimaryFrame ) , Meta_Terrain_Sprite );
 						end;
@@ -1553,7 +1560,7 @@ initialization
 	Miss_Sprite := ConfirmSprite( Miss_Sprite_Name , '' , 64 , 64 );
 
 	Thin_Wall_Sprites[ ThinWall_Earth ] := ConfirmSprite( 'wall_earth.png' , '' , 64 , 96 );
-	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_mumetal.png' , '' , 64 , 96 );
+	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_unobtrusive.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Stone ] := ConfirmSprite( 'wall_stone.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Industrial ] := ConfirmSprite( 'wall_industrial.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_extra_b.png' , '' , 64 , 96 );
@@ -1564,6 +1571,8 @@ initialization
 	Hill_2 := ConfirmSprite( 'hill_2.png' , '' , 64 , 96 );
 	Hill_3 := ConfirmSprite( 'hill_3.png' , '' , 64 , 96 );
 	Off_Map_Model_Sprite := ConfirmSprite( 'off_map.png' , '' , 16 , 16 );
+
+    Door_Sprite := ConfirmSprite( 'terrain_door.png', '', 64, 64 );
 
 	Mini_Map_Sprite := ConfirmSprite( 'minimap.png' , '' , 3 , 3 );
 	if Use_Alpha_Blending then SDL_SetAlpha( Mini_Map_Sprite^.Img , SDL_SRCAlpha , Alpha_Level );
