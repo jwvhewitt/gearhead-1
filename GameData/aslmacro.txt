@@ -61,6 +61,7 @@ IFNPCOK <GrabNPC ? IfGOK>
 ifNPCinPlay <GrabNPC ?  IfGInPlay>
 IFM <GrabLocal ? IFGInPlay>
 IFITEMOK <GrabItem ? IfGOK>
+IFITEMEXISTS <GrabItem ? IfGExists>
 IFNPCSEXY <GrabNPC ? IfGSexy>
 IFFACTIONENEMY <GrabFaction ? ifGArchEnemy>
 IFNPCARCHENEMY <GrabNPC ? ifGArchEnemy>

@@ -81,7 +81,7 @@ sub
 	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
 	% The PC will be denied the mission if he's helped the enemy.
-	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRep 6 V+ 3 d30 V= 4 Reward Threat V3 100 350 Goto GoCheckEmail>
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRep 6 V+ 3 d20 V= 4 Reward Threat V3 100 350 Goto GoCheckEmail>
 
 	GoCheckEmail <if= P3 1 else GoCheckFriend Say 16 AddChat 7 AddChat 9>
 

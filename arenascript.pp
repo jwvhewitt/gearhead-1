@@ -1717,6 +1717,14 @@ begin
 	end else IfFailure( Event , Source );
 end;
 
+Procedure ProcessIfGExists( var Event: String; Source: GearPtr );
+	{ If the grabbed gear _is_, count as true. If it can't be found, count as false. }
+begin
+	if ( Grabbed_Gear <> Nil ) then begin
+		IfSuccess( Event );
+	end else IfFailure( Event , Source );
+end;
+
 Procedure ProcessIfGSexy( var Event: String; gb: GameBoardPtr; Source: GearPtr );
 	{ If the grabbed gear is sexy to the PC, count as true. If it is not, }
 	{ or if it can't be found, count as false. }
@@ -3835,6 +3843,7 @@ begin
 		    else if cmd = 'SAYANYTHING' then ProcessSayAnything()
 		    else if cmd = 'IFGINPLAY' then ProcessIfGInPlay( Event , Source )
 		    else if cmd = 'IFGOK' then ProcessIfGOK( Event , Source )
+		    else if cmd = 'IFGEXISTS' then ProcessIfGExists( Event , Source )
 		    else if cmd = 'IFGSEXY' then ProcessIfGSexy( Event , GB , Source )
 		    else if cmd = 'IFGARCHENEMY' then ProcessIfGArchEnemy( Event , GB , Source )
 		    else if cmd = 'IFGARCHALLY' then ProcessIfGArchAlly( Event , GB , Source )

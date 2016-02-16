@@ -84,7 +84,7 @@ sub
 	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	GoCheckFriend <ifG React 40 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
 	GoNoAutomatic <ifG React -d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
-	GoDenied <V= 1 -1 SayAnything>
+	GoDenied <V= 1 -1 Say 41>
 
 	GoAddComOps <V= 1 1 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddChat V2 Memo 107>
 
@@ -202,6 +202,8 @@ sub
 	Msg39 <Protect the truck at all costs. Once it's through the pass, get yourself out of there as well.>
 	Msg40 <Come back here once you've seen the truck to the main road, and I'll set you up with the pay I promised you.>
 
+    % Denied
+    Msg41 <Soon it'll be time for me to roll out. Hopefully our convoy will make it all the way to \SCENE E2 .>
 
 	% 101 :  Player accepted job, then left to get ready.
 	Msg101 <Ready to move out yet? We don't have all day, you know.>
