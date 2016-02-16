@@ -1,6 +1,7 @@
 Zoanoid 4
 Name <Fenris>
 Desig <TSD-1078>
+SDL_Sprite <zoa_fenris.png>
 desc <One of BioCorp's "Biometrics" line. The structure of this mecha is based partially upon fossils of Tyrranosaurus Rex.>
 
 Mod Head
