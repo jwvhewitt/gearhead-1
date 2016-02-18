@@ -227,14 +227,17 @@ Plot 2
 	% If the player goes to E1 and uses the crystal key, he will be
 	% able to enter the dungeon.
 
-	start <ifPersona E7 else GoWinMission ifItemOK E5 else GoEndMission if= V1 0 V= 1 1 Compose Key E5 .usekey ifFaction N2 else GoSetFaction>
+	start <ifPersona E7 else GoWinMission ifItemExists E5 else GoEndMission if= V1 0 V= 1 1 Compose Key E5 .usekey ifFaction N2 else GoSetFaction>
 	GoSetFaction <N= 2 E6>
 	.usekey <ifYesNo 1 2 3 SavePos MStaged .keyscene S103 .mdesc NPCLevel E7 S103 DynaNPC E7 3 PassVar 1 E3 PassVar 2 E7 SeekGate -1>
 	.keyscene <TS_XRAN_SCENE_MarsNeedsClones.txt>
 	.mdesc <Criminal Robot Synth Hunter-X>
 
+    % There are two ways this plot can end: The PC can kill scientist E7, or
+    % the PC can dispose of the dataslate. In the first case win the episode
+    % and in the second case lose the episode.
 	GoWinMission <S+ 102 1 N= 1 0 N= 3 E2 XREnemy NAV_XREFaction S= 101 1 S= 105 1 AdvancePlot 3>
-	GoEndMission <S= 101 1 AdvancePlot 0>
+	GoEndMission <S= 101 1 N= 3 E2 S= 105 -1 AdvancePlot 0>
 
 	Msg1 <This key contains a data map leading to a ruin outside of town. Do you want to go there?>
 	Msg2 <Yes please.>
