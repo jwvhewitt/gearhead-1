@@ -3731,9 +3731,9 @@ begin
 	if PC <> Nil then begin
 		Renown := NAttValue( PC^.NA , NAG_CHarDescription , NAS_Renowned );
 		if Renown > 23 then begin
-			AddReputation( PC , NAS_Renowned , -( Renown div 4 ) );
+			AddReputation( PC , -NAS_Renowned , -( Renown div 4 ) );
 		end else begin
-			AddReputation( PC , NAS_Renowned , -5 );
+			AddReputation( PC , -NAS_Renowned , -5 );
 		end;
 	end;
 end;

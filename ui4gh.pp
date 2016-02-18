@@ -33,21 +33,6 @@ type
 	end;
 
 const
-{$IFDEF SDLMODE}
-	RPK_UpRight = #$89;
-	RPK_Up = #$88;
-	RPK_UpLeft = #$87;
-	RPK_Left = #$84;
-	RPK_Right = #$86;
-	RPK_DownRight = #$81;
-	RPK_Down = #$82;
-	RPK_DownLeft = #$83;
-	RPK_MouseButton = #$90;
-	RPK_TimeEvent = #$91;
-	RPK_RightButton = #$92;
-
-	FrameDelay: Integer = 50;
-{$ELSE}
 	RPK_UpRight = '9';
 	RPK_Up = '8';
 	RPK_UpLeft = '7';
@@ -57,6 +42,12 @@ const
 	RPK_Down = '2';
 	RPK_DownLeft = '1';
 
+{$IFDEF SDLMODE}
+	RPK_MouseButton = #$90;
+	RPK_TimeEvent = #$91;
+	RPK_RightButton = #$92;
+	FrameDelay: Integer = 50;
+{$ELSE}
 	FrameDelay: Integer = 100;
 {$ENDIF}
 
@@ -108,7 +99,7 @@ const
 	ScreenColumns: Byte = 80;
 
 
-	NumMappedKeys = 47;
+	NumMappedKeys = 45;
 	KeyMap: Array [1..NumMappedKeys] of KeyMapDesc = (
 	(	CmdName: 'NormSpeed';
 		CmdDesc: 'Travel foreword at normal speed.';
@@ -234,14 +225,11 @@ const
 	(	CmdName: 'Attack';
 		CmdDesc: 'Perform an attack.';
 		KCode: 'a';	),
-	(	CmdName: 'SelectMecha';
-		CmdDesc: 'Choose the mecha that will be used by this PC in combat.';
-		KCode: 'M';	),
-
-	{ Commands 31 - 35 }
 	(	CmdName: 'UseScenery';
 		CmdDesc: 'Activate a stationary item, such as a door or a computer.';
 		KCode: 'u';	),
+
+	{ Commands 31 - 35 }
 	(	CmdName: 'Messages';
 		CmdDesc: 'Review all current adventure memos, email, and news.';
 		KCode: 'm';	),
@@ -254,14 +242,11 @@ const
 	(	CmdName: 'CharInfo';
 		CmdDesc: 'View detailed information about your character, access option menus.';
 		KCode: 'C';	),
-
-	{ Commands 36 - 40 }
-	(	CmdName: 'FirstAid';
-		CmdDesc: 'Use the first aid skill to restore health points.';
-		KCode: 'F';	),
 	(	CmdName: 'ApplySkill';
 		CmdDesc: 'Select and use a skill that the PC knows.';
 		KCode: 's';	),
+
+	{ Commands 36 - 40 }
 	(	CmdName: 'Eject';
 		CmdDesc: 'Eject from your mecha and abandon it on the field.';
 		KCode: 'E';	),
@@ -271,14 +256,14 @@ const
 	(	CmdName: 'History';
 		CmdDesc: 'Display past messages.';
 		KCode: 'V';	),
-
-	{ Commands 41 - 45 }
 	(	CmdName: 'FieldHQ';
 		CmdDesc: 'Examine and edit your personal wargear.';
 		KCode: 'H';	),
 	(	CmdName: 'Search';
 		CmdDesc: 'Check the area for enemies and secrets.';
 		KCode: 'S';	),
+
+	{ Commands 41 - 45 }
 	(	CmdName: 'Telephone';
 		CmdDesc: 'Place a telephone call to a local NPC.';
 		KCode: 'T';	),
@@ -288,8 +273,6 @@ const
 	(	CmdName: 'Reverse';
 		CmdDesc: 'Travel backward at normal speed.';
 		KCode: '-';	),
-
-	{ Commands 46 - 50 }
 	(	CmdName: 'SwitchTarget';
 		CmdDesc: 'Switch to next visible enemy when selecting a target.';
 		KCode: ';';	),
@@ -329,24 +312,22 @@ const
 	KMC_PartBrowser = 27;
 	KMC_LearnSkills = 28;
 	KMC_Attack = 29;
-	KMC_SelectMecha = 30;
-	KMC_UseProp = 31;
-	KMC_ViewMemo = 32;
-	KMC_SaveGame = 33;
-	KMC_Enter2 = 34;
-	KMC_CharInfo = 35;
-	KMC_FirstAid = 36;
-	KMC_ApplySkill = 37;
-	KMC_Eject = 38;
-	KMC_Rest = 39;
-	KMC_History = 40;
-	KMC_FieldHQ = 41;
-	KMC_Search = 42;
-	KMC_Telephone = 43;
-	KMC_SwitchBV = 44;
-	KMC_Reverse = 45;
-	KMC_SwitchTarget = 46;
-	KMC_RunToggle = 47;
+	KMC_UseProp = 30;
+	KMC_ViewMemo = 31;
+	KMC_SaveGame = 32;
+	KMC_Enter2 = 33;
+	KMC_CharInfo = 34;
+	KMC_ApplySkill = 35;
+	KMC_Eject = 36;
+	KMC_Rest = 37;
+	KMC_History = 38;
+	KMC_FieldHQ = 39;
+	KMC_Search = 40;
+	KMC_Telephone = 41;
+	KMC_SwitchBV = 42;
+	KMC_Reverse = 43;
+	KMC_SwitchTarget = 44;
+	KMC_RunToggle = 45;
 
 implementation
 
