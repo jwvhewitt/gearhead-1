@@ -13,6 +13,7 @@ LearnSkill_AcceptPenalty <Accept XP Penalty>
 LearnSkill_ForgetPrevious <Replace Previous Skill>
 CANCEL <   [CANCEL]>
 SERVICES_ExpressDelivery <Deliver Mecha>
+SERVICES_ShuttleService <Buy a Ticket>
 SERVICES_MovePrompt1 <It will cost $# to bring that here.>
 SERVICES_MovePrompt2 <If you want that transported to here, it's going to cost $#.>
 SERVICES_MovePrompt3 <Transporting that to here is going to cost $#.>

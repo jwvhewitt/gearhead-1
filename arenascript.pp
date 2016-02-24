@@ -1485,7 +1485,7 @@ begin
 		PC := PC^.Next;
 	end;
 
-	SaveStringList( FName + '.txt' , VList );
+	SaveStringList( Config_Directory + FName + '.txt' , VList );
 	MoreText( VList , 1 );
 	DisposeSAtt( VList );
 	GFCombatDisplay( GB );
@@ -2116,6 +2116,15 @@ begin
 	{ Pass all info on to the ExpressDelivery procedure. }
 	ExpressDelivery( GB , I_PC , I_NPC );
 end;
+
+Procedure ProcessShuttle( var Event: String; GB: GameBoardPtr; Source: GearPtr );
+	{ Retrieve the WARES line, then pass it all on to the OpenShop }
+	{ procedure. }
+begin
+	{ Pass all info on to the OPENSHOP procedure. }
+	OpenShuttle( GB , I_PC , I_NPC );
+end;
+
 
 Procedure ProcessAdvancePlot( var Event: String; GB: GameBoardPtr; Source: GearPtr );
 	{ This particular plot is over- mark it for deletion. }
@@ -3753,7 +3762,7 @@ begin
         { Check the reaction score with this NPC. If appropriate, become more }
         { than just friends... lancemates! }
         CReact := ReactionScore( GB^.Scene, PC, NPC );
-        if ( Random(100) + 25 ) < CReact then begin
+        if ( Random(50) + Random(50) + 45 ) < CReact then begin
             { This NPC will become an ally of some type. }
         	if IsSexy( PC , NPC ) and ( Random( 200 ) < CReact ) then begin
                 SetNAtt(NPC^.NA,NAG_Relationship,0,NAV_Lover);
@@ -3868,6 +3877,7 @@ begin
 		    else if cmd = 'SHOP' then ProcessShop( Event , GB , Source )
 		    else if cmd = 'SCHOOL' then ProcessSchool( Event , GB , Source )
 		    else if cmd = 'EXPRESSDELIVERY' then ProcessExpressDelivery( Event , GB , Source )
+		    else if cmd = 'SHUTTLESERVICE' then ProcessShuttle( Event , GB , Source )
 		    else if cmd = 'ADVANCEPLOT' then ProcessAdvancePlot( Event , GB , Source )
 		    else if cmd = 'ENDSTORY' then ProcessEndStory( GB , Source )
 		    else if cmd = 'PURGESTORY' then ProcessPurgeStory( GB , Source )

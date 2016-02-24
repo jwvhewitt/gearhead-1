@@ -31,6 +31,8 @@ procedure PurchaseGear( GB: GameBoardPtr; PC,NPC,Part: GearPtr );
 Procedure OpenShop( GB: GameBoardPtr; PC,NPC: GearPtr; Stuff: String );
 Procedure OpenSchool( GB: GameBoardPtr; PC,NPC: GearPtr; Stuff: String );
 Procedure ExpressDelivery( GB: GameBoardPtr; PC,NPC: GearPtr );
+Procedure ShuttleService( GB: GameBoardPtr; PC,NPC: GearPtr );
+Procedure OpenShuttle( GB: GameBoardPtr; PC,NPC: GearPtr );
 
 
 implementation
@@ -38,11 +40,11 @@ implementation
 {$IFDEF SDLMODE}
 uses ability,arenacfe,backpack,damage,gearutil,ghchars,ghmodule,ghparser,
      ghswag,ghweapon,interact,menugear,rpgdice,skilluse,texutil,sdlgfx,
-     sdlinfo,sdlmap,sdlmenus,ui4gh;
+     sdlinfo,sdlmap,sdlmenus,ui4gh,ghprop;
 {$ELSE}
 uses ability,arenacfe,backpack,damage,gearutil,ghchars,ghmodule,ghparser,
      ghswag,ghweapon,interact,menugear,rpgdice,skilluse,texutil,congfx,
-     coninfo,conmap,conmenus,context,ui4gh;
+     coninfo,conmap,conmenus,context,ui4gh,ghprop;
 {$ENDIF}
 
 Const
@@ -1737,6 +1739,181 @@ begin
 
 	until N = -1;
 end;
+
+Procedure ShuttleService( GB: GameBoardPtr; PC,NPC: GearPtr );
+	{ The PC will be able to travel to a number of different cities. }
+	function FindLocalGate( World: GearPtr; SceneID: Integer ): GearPtr;
+		{ This is a nice simple non-recursive list search, }
+		{ since the gate should be at root level. }
+	var
+		Part,TheGate: GearPtr;
+	begin
+		Part := World^.InvCom;
+		TheGate := Nil;
+		while ( Part <> Nil ) and ( TheGate = Nil ) do begin
+			if ( Part^.G = GG_MetaTerrain ) and ( Part^.Stat[ STAT_Destination ] = SceneID ) then begin
+				TheGate := Part;
+			end;
+			Part := Part^.Next;
+		end;
+		FindLocalGate := TheGate;
+	end;
+	Function WorldMapRange( World: GearPtr; X0,Y0,X1,Y1: Integer ): Integer;
+	begin
+		WorldMapRange := Range( X0 , Y0 , X1 , Y1 );
+	end;
+	Function TravelCost( World,Entrance: GearPtr; X0 , Y0: Integer ): LongInt;
+		{ Calculate the travel cost from the original location to the }
+		{ destination city. }
+	var
+		X1,Y1: Integer;
+	begin
+		if Entrance = Nil then begin
+			TravelCost := 50000;
+		end else begin
+			{ Determine the X,Y coords of the destination on the world map. }
+			{ If the map is a wrapping-type map, maybe modify for the shortest }
+			{ possible distance. }
+			X1 := NAttValue( Entrance^.NA , NAG_Location , NAS_X );
+			Y1 := NAttValue( Entrance^.NA , NAG_Location , NAS_Y );
+			TravelCost := Range( X1 , Y1 , X0 , Y0 ) * 5 + 25;
+		end;
+	end;
+const
+	MaxShuttleRange = 15;
+var
+	World,City,Fac,Entrance: GearPtr;
+	X0,Y0,X1,Y1,N,Cost: LongInt;
+	RPM: RPGMenuPtr;
+begin
+	SERV_GB := GB;
+	SERV_NPC := NPC;
+	SERV_PC := PC;
+
+	{ Create a shopping list of the available scenes. These must not be }
+	{ enemies of the current scene, must be located on the same world, }
+	{ must be within a certain range, and must have "DESTINATION" in their }
+	{ TYPE string attribute. }
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+	AttachMenuDesc( RPM , ZONE_InteractMsg );
+    { KLUDGE: Assume that the world map is Scene 1. This is bad, I know, but }
+    { given that the game is umpteen years old and no alternate campaigns have }
+    { been made for the engine, it should do just fine. Programmers of later }
+    { generations, I leave this problem to you. }
+	World := FindActualScene( GB , 1 );
+	Fac := SeekFaction( GB^.Scene , GetFactionID( GB^.Scene ) );
+
+	Entrance := FindLocalGate( World , GB^.Scene^.S );
+	if Entrance <> Nil then begin
+		X0 := NAttValue( Entrance^.NA , NAG_Location , NAS_X );
+		Y0 := NAttValue( Entrance^.NA , NAG_Location , NAS_Y );
+	end else begin
+		X0 := 1;
+		Y0 := 1;
+	end;
+
+	Entrance := World^.InvCom;
+    while Entrance <> Nil do begin
+        if ( Entrance^.G = GG_MetaTerrain ) and ( Entrance^.Stat[ STAT_Destination ] <> 0 ) then begin
+			X1 := NAttValue( Entrance^.NA , NAG_Location , NAS_X );
+			Y1 := NAttValue( Entrance^.NA , NAG_Location , NAS_Y );
+            City := FindActualScene( GB, Entrance^.Stat[ STAT_Destination ] );
+            if (City <> Nil) and ( City <> GB^.Scene ) and ( ( Fac = Nil ) or ( NAttValue( Fac^.NA , NAG_FactionScore , GetFactionID( City ) ) >= 0 ) ) then begin
+			{ Do the range check. }
+			    if AStringHasBString( SAttValue( City^.SA , 'TYPE' ) , 'DESTINATION' ) and (range(X0,y0,x1,y1) <= MaxShuttleRange) then begin
+				    AddRPGMenuItem( RPM , GearName( City ) + ' ($' + BStr( TravelCost( World, Entrance , X0 , Y0 ) ) + ')' , City^.S , SAttValue( City^.SA , 'DESC' ) );
+			    end;
+		    end;
+
+        end;
+        Entrance := Entrance^.Next;
+    end;
+
+	{ Sort the menu. }
+	RPMSortAlpha( RPM );
+	AlphaKeyMenu( RPM );
+
+	{ Add the cancel option. }
+	AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
+
+	repeat
+		{ Perform the menu selection. }
+		N := SelectMenu( RPM , @ServiceRedraw );
+
+		{ If a destination was selected, see if it's possible to go there, deduct the PC's }
+		{ money, etc. }
+		if N > -1 then begin
+			Entrance := FindLocalGate( World , N );
+			Cost := TravelCost( World , Entrance , X0 , Y0 );
+			if NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) >= Cost then begin
+				GB^.QuitTheGame := True;
+				GB^.ReturnCode := N;
+				AddNAtt( PC^.NA , NAG_Experience , NAS_Credits , -Cost );
+				QuickTime( GB , Cost * 120 );
+			end else begin
+				{ Not enough cash to buy... }
+				CHAT_Message := MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) );
+			end;
+
+		end;
+	until GB^.QuitTheGame or ( N = -1 );
+
+	DisposeRPGMenu( RPM );
+
+end;
+
+Procedure OpenShuttle( GB: GameBoardPtr; PC,NPC: GearPtr );
+	{ Allow express delivery and shuttle service. }
+var
+	RPM: RPGMenuPtr;
+	N: Integer;
+begin
+{$IFDEF SDLMODE}
+	SERV_GB := GB;
+	SERV_NPC := NPC;
+	SERV_PC := PC;
+	SERV_Info := PC;
+{$ELSE}
+	ClrZone( ZONE_Menu );
+{$ENDIF}
+
+	repeat
+		{ Start by allocating the menu. }
+		{ This menu will use the same dimensions as the interaction }
+		{ menu, since it branches from there. }
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+
+		AddRPGMenuItem( RPM , MsgString( 'SERVICES_ShuttleService' ) , 1 );
+		AddRPGMenuItem( RPM , MsgString( 'SERVICES_ExpressDelivery' ) , -8 );
+
+		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellStuff' ) , -5 );
+		AddRPGMenuItem( RPM , 'Exit Shop' , -1 );
+
+{$IFDEF SDLMODE}
+		N := SelectMenu( RPM , @ServiceRedraw );
+{$ELSE}
+		DisplayGearInfo( PC );
+		CMessage( '$' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
+		{ Get a menu selection. }
+		N := SelectMenu( RPM );
+{$ENDIF}
+
+		DisposeRPGMenu( RPM );
+
+		if N = -8 then begin
+			ExpressDelivery( GB , PC , NPC );
+		end else if N = 1 then begin
+			ShuttleService( GB , PC , NPC );
+            if gb^.QuitTheGame then N := -1;
+		end;
+
+	until N = -1;
+
+	{ Restore the display. }
+	DisplayGearInfo( NPC , GB );
+	DisplayGearInfo( PC , GB , ZONE_Menu );
+end;
+
 
 {$IFDEF SDLMODE}
 initialization

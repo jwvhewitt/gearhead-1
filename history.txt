@@ -1,3 +1,5 @@
+- Imported shuttle service from GH2 (services.pp)
+- Victory saves win file to config folder (arenascript.pp)
 - Trying to fix keypad doesn't work without numlock, needs testing (ui4gh.pp)
 - Removed redundant SelectMecha, FirstAid commands (ui4gh.pp,pcaction.pp)
 - PCs now start with random colors (randchar.pp)
