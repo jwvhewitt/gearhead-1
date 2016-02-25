@@ -1786,9 +1786,13 @@ var
 	X0,Y0,X1,Y1,N,Cost: LongInt;
 	RPM: RPGMenuPtr;
 begin
+{$IFDEF SDLMODE}
 	SERV_GB := GB;
 	SERV_NPC := NPC;
 	SERV_PC := PC;
+{$ELSE}
+	ClrZone( ZONE_Menu );
+{$ENDIF}
 
 	{ Create a shopping list of the available scenes. These must not be }
 	{ enemies of the current scene, must be located on the same world, }
@@ -1838,7 +1842,11 @@ begin
 
 	repeat
 		{ Perform the menu selection. }
+{$IFDEF SDLMODE}
 		N := SelectMenu( RPM , @ServiceRedraw );
+{$ELSE}
+		N := SelectMenu( RPM );
+{$ENDIF}
 
 		{ If a destination was selected, see if it's possible to go there, deduct the PC's }
 		{ money, etc. }
@@ -1852,7 +1860,11 @@ begin
 				QuickTime( GB , Cost * 120 );
 			end else begin
 				{ Not enough cash to buy... }
-				CHAT_Message := MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) );
+{$IFDEF SDLMODE}
+				Chat_Message := MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) );
+{$ELSE}
+				GameMsg( MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) ) , ZONE_InteractMsg , InfoHiLight );
+{$ENDIF}
 			end;
 
 		end;

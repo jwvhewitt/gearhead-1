@@ -1807,6 +1807,7 @@ Scene 11 0
 		SetTeam 3
 
 		NPC Shopkeeper
+        job <bus dispatcher>
 		SetPersona 1109
 		SetTeam 2
 		home <Stuckey's Truck Stop>
@@ -6602,9 +6603,9 @@ Scene 39 0
 			stat 5 -1
 
 			Sign
-			name <Intercity Bus Stop>
-			Destination 17
-			Msg3 <Once an hour the bus arrives here heading for Wujung. Would you like to wait for the bus?>
+			name <Road Sign>
+            use <Alert 3>
+			Msg3 <You stand before an ancient road sign. The original text has faded away, but over it someone has written "You have reached the end of the sidewalk. Turn back while you still can.">
 		end
 
 
@@ -7317,6 +7318,10 @@ Scene 44 0
 		FloorType 30
 		name <Town Hall>
 
+		room 5 5
+		FloorType 30
+		name <Tourist Center>
+
 		rect
 		width 3
 		height 3
@@ -7405,6 +7410,25 @@ Scene 44 0
         Prompt14 <Is that cake really from prezero times?>
         Prompt15 <I'll take one!>
         Prompt16 <Maybe I'll have something else...>
+
+		Persona 4411
+		% Mauna Bus Terminal
+		greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+		result1 <Say 2 ShuttleService EndChat Say 3>
+		result2 <NewChat Say 4>
+        result3 <Newchat Say 5 AddChat 4 AddChat 5>
+        result4 <Goto result1>
+        result5 <Goto result2>
+		Msg1 <Welcome to Mauna, the village in the clouds. How can I help you?>
+		Msg2 <No problem. Buses run to all major destinations every thirty minutes.>
+        Msg3 <Safe travels.>
+		Msg4 <If there's anything I can do to make your stay more enjoyable just let me know.>
+        Msg5 <You can visit the spa for a relaxing bath, or go hiking in the mountains. I wouldn't advise visiting the hot springs on your own, though- the caves are filled with monsters.>
+		Prompt1 <I need transportation.>
+		Prompt2 <I'm just passing through.>
+        Prompt3 <What is there to do around here?>
+        Prompt4 <Tell me about the bus schedule.>
+        Prompt5 <That's all for now.>
 	end
 	inv
 		NPC Guardian
@@ -7457,6 +7481,12 @@ Scene 44 0
 		SetTeam 2
 		home <Natural Spa>
         CharDesc Cheerful Heroic
+
+		NPC Shopkeeper
+        job <bus dispatcher>
+		SetPersona 4411
+		SetTeam 2
+		home <Tourist Center>
 	end
 
 Scene 45
