@@ -72,17 +72,17 @@ sub
 
 	Msg2 <Good luck out there. It's a big job.>
 	Msg2_1 <Here's all the information you'll need to make it to the base. Once there, you're on your own.>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <Here's the info. Good luck.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <With any luck there won't be a lot of guards on site... Yeah, like that's gonna happen...>
-	CMsg2_3 <ifNPCEasygoing Accept>
+	CMsg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <This place is guarded to the hilt. It'll take all your skills if you hope to get in and out again.>
-	CMsg2_4 <ifNPCPassionate Accept>
+	CMsg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <Nobody really knows what they're working on at the lab, but that just makes stealing it all the more exciting!>
-	CMsg2_5 <ifNPCCheerful Accept>
+	CMsg2_5 <ifChatNPCCheerful Accept>
 	Msg2_6 <There's a lot of guards so be careful. If you make it back alive, I certainly hope that whatever you find was worth the trouble...>
-	CMsg2_6 <ifNPCMelancholy Accept>
+	CMsg2_6 <ifChatNPCMelancholy Accept>
 	Msg2_7 <The guards might very well kill you. If so, I'll learn something about their defenses, for when I try to steal it myself...>
 	CMsg2_7 <ifG 10 React Accept>
 
@@ -91,17 +91,17 @@ sub
 
 	Msg4 <The army's been working on an experimental mecha system. I've found out where the test site is; if you can sneak in there, we can help ourselves to the newest in weapons technology.>
 	Msg4_1 <BioCorp has been working on something new. They aren't supposed to do weapon systems, but apparently they have been. I've discovered where the secret lab is. If you can sneak in there, you can sneak out with something very valuable.>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <There's a secret Kettel Industries testing lab where a new mecha is being developed. We have a good chance to steal whatever it is they're working on.>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <A lab near town is working on some mecha project for the Navy. If you can slip in there, you can steal the latest in weapons technology. Sounds like it should be an easy job.>
-	CMsg4_3 <ifNPCEasygoing Accept>
+	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <This is a real challenge... but you've proven that you're a skilled thief. An army base near town is home to an experimental new mecha. If you can slip past their guards, it could easily be yours.>
-	CMsg4_4 <ifNPCPassionate Accept>
+	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <Opportunities like this don't come by too often. RegEx corp is developing a new mecha weapon, and I've discovered where they're housing the prototypes! If you can sneak into their complex, all that new technology could be yours.>
-	CMsg4_5 <ifNPCCheerful Accept>
+	CMsg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <Kettel Industries has started a new mecha program. They've caused enough bloodshed with their terror weapons, selling them to any dead-zone tyrant who can meet the price. I say we steal the prototype, and put it to better use!>
-	CMsg4_6 <ifNPCMelancholy ifNPCHeroic Accept>
+	CMsg4_6 <ifChatNPCMelancholy ifChatNPCHeroic Accept>
 
 	Msg5 <Alright. Come back when you're ready and we can start the job then.>
 	Msg5_1 <You do whatever it is that you do. Better hurry, before anyone catches word of our plan.>

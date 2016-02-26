@@ -51,69 +51,69 @@ sub
 
 	Msg1 <So, you couldn't find what you were looking for? That's a shame... Maybe I'll have better luck myself.>
 	Msg1_2 <You didn't get anything? Shame.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <You couldn't find a thing? Maybe the folks who live there took everything with them on vacation...>
-	CMsg1_3 <ifNPCEasygoing Accept>
+	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <You didn't get anything from the house? You see, that's why you're the amateur and I'm the professional.>
-	CMsg1_4 <ifNPCPassionate Accept>
+	CMsg1_4 <ifChatNPCPassionate Accept>
 
 	Msg2 <You look like the sort who might be up for a bit of thievery. How'd you like to have a go at it?>
 	Msg2_1 <Hey, how'd you like to talk about some things? It seems to me that you're not the most honest person out there... and that's not a bad thing. How'd you like to practice your thieving skills?>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <If you're looking for crime, I've got some info for you.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <Hey, we all know there's nothing worse than having to work for your money. If you're willing to do a bit of robbery I have some info that may interest you.>
-	CMsg2_3 <ifNPCEasygoing Accept>
+	CMsg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <You look like the sort that enjoys a challenge... How'd you like to try your luck at burgulary?>
-	CMsg2_4 <ifNPCPassionate Accept>
+	CMsg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <There's no opportunity in this world for people like us, so we have to make our own... How'd you like to try a bit of larceny?>
-	CMsg2_5 <ifNPCMelancholy Accept>
+	CMsg2_5 <ifChatNPCMelancholy Accept>
 	Msg2_6 <This is your lucky day. I've got some info on a house just waiting to be robbed, if you're up to scout the place for me.>
-	CMsg2_6 <ifNPCCheerful Accept>
+	CMsg2_6 <ifChatNPCCheerful Accept>
 
 	Msg3 <That's your loss.>
 	Msg3_2 <Whatever.>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <It sure beats working for a living.>
-	CMsg3_3 <ifNPCEasygoing Accept>
+	CMsg3_3 <ifChatNPCEasygoing Accept>
 	Msg3_4 <So, you're saying you don't have the guts?>
-	CMsg3_4 <ifNPCPassionate Accept>
+	CMsg3_4 <ifChatNPCPassionate Accept>
 	Msg3_6 <Well, maybe later, then.>
-	CMsg3_6 <ifNPCCheerful Accept>
+	CMsg3_6 <ifChatNPCCheerful Accept>
 
 	Msg4 <I've got word on a mansion whose owner has left for the day. There's security, of course, but you should be able to get around that. I hear they've got some nice treasures inside.>
 	Msg4_1 <There's a mansion whose owner has left for the day. The only ones there are the security robots, and we both know how smart they are. You go in and grab what you can find; that way I find out about their defenses before going there myself.>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <There's a mansion that's been abandoned by its wealthy owner. Should be able to find some good loot there.>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <Some rich family has gone on vacation, leaving their home ripe for the picking. Should be easy to walk on in and grab whatever's been left lying around.>
-	CMsg4_3 <ifNPCEasygoing Accept>
+	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <There's a mansion whose owner is currently out of town. Should be some good loot in there. The security system is pretty tough, but you can look at it as a test of your skills.>
-	CMsg4_4 <ifNPCPassionate Accept>
+	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <An elderly widow has just passed away, leaving no heirs. Her mansion is full of valuable loot. No sense in letting that go to waste, is there?>
-	CMsg4_5 <ifNPCMelancholy Accept>
+	CMsg4_5 <ifChatNPCMelancholy Accept>
 	Msg4_6 <A rich family has gone on vacation to Gaos Spinner. I wish we could go with them, but as long as we're stuck planetside, we might as well help ourselves to the treasures left in their unoccupied house, right?>
-	CMsg4_6 <ifNPCCheerful Accept>
+	CMsg4_6 <ifChatNPCCheerful Accept>
 	Msg4_7 <You know, most of the world's wealth is concentrated in the hands of a few. I figure we can do something ourselves to help rectify this imbalance. There's a mansion whose owner is gone for a few days... We can rob him blind.>
-	CMsg4_7 <ifNPCPragmatic Accept>
+	CMsg4_7 <ifChatNPCPragmatic Accept>
 
 	Msg5 <\ELEMENT 1 in \SCENE EScene 1 wants your help to rob a mansion.>
 
 	Msg6 <Here's where you can find the place. You go scout it out, then tell me all about it, and I'll go collect anything you missed.>
 	Msg6_1 <Here's where you can find the place. After you've located all the guard points I'll go in myself and get everything you missed.>
-	CMsg6_1 <ifNPCSociable Accept>
+	CMsg6_1 <ifChatNPCSociable Accept>
 	Msg6_2 <Here's where you can find the mansion. Good luck.>
-	CMsg6_2 <ifNPCShy Accept>
+	CMsg6_2 <ifChatNPCShy Accept>
 	Msg6_3 <See what you can find in there. If you don't find anything, at least you can tell me where the guard stations are.>
-	CMsg6_3 <ifNPCEasygoing Accept>
+	CMsg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <The game is afoot...>
-	CMsg6_4 <ifNPCPassionate Accept>
+	CMsg6_4 <ifChatNPCPassionate Accept>
 	Msg6_5 <Those security guards are gonna shoot to kill. You better not let them see you.>
-	CMsg6_5 <ifNPCMelancholy Accept>
+	CMsg6_5 <ifChatNPCMelancholy Accept>
 	Msg6_6 <I'm certain there's something incredibly valuable hidden in there. Let me know what you find!>
-	CMsg6_6 <ifNPCCheerful Accept>
+	CMsg6_6 <ifChatNPCCheerful Accept>
 	Msg6_8 <May the god of thieves guard your steps...>
-	CMsg6_8 <ifNPCSpiritual Accept>
+	CMsg6_8 <ifChatNPCSpiritual Accept>
 
 	Msg7 <You do whatever it is that you need. I'll be waiting around here someplace.>
 	Msg7_1 <When you're finished getting ready come back here and we'll start.>

@@ -97,17 +97,17 @@ sub
 	GoNoStart <SayAnything>
 	Msg1 <You should know that \ELEMENT 5 hired a bounty hunter to kill you. Goes by the name of \ELEMENT 4 ; was in town a while back asking questions. Be careful, there may be an ambush waiting when you leave town...>
 	Msg1_1 <I heard that you've been fighting against \NARRATIVE 2 . Word on the street is that they've been watching you very carefully. \ELEMENT 4 was hired to kill you... be careful, okay?>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <You should know \NARRATIVE 2 wants you dead, and they've ordered \ELEMENT 4 to make that happen. Watch your back, there could be an ambush waiting for you at any time.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <According to the rumors, you might not have long to live... \NARRATIVE 2 has sent \ELEMENT 4 after you. I just thought you'd like to know.>
-	CMsg1_3 <ifNPCEasygoing Accept>
+	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <I have grave news... \NARRATIVE 2 has decided their battle with you must end, so they've ordered \ELEMENT 4 to kill you. They'll never give up, not until you're dead...>
-	CMsg1_4 <ifNPCPassionate Accept>
+	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <It's good to see you looking so healthy... people say you're the walking dead. I've learned that \NARRATIVE 2 ordered a hit against you and \ELEMENT 4 plans to collect. Keep your eyes open or you'll walk straight into an ambush.>
-	CMsg1_5 <ifNPCCheerful Accept>
+	CMsg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <You're walking dead... \NARRATIVE 2 ordered \ELEMENT 4 to kill you. Even if \OPR E4 fails it's only a matter of time before someone succeeds... Be careful, there could be an ambush waiting for you anywhere.>
-	CMsg1_6 <ifNPCMelancholy Accept>
+	CMsg1_6 <ifChatNPCMelancholy Accept>
 	Msg1_7 <I'm glad you made it here. There's a contract on your life, funded by \NARRATIVE 2 ... I heard it from my regular source. \ELEMENT 4 has been instructed to not return without your head. Be careful out there, alright?>
 	CMsg1_7 <ifG React 25 Accept>
 
@@ -115,31 +115,31 @@ sub
 	greeting <EndChat Say 1>
 	Msg1 <You have been a thorn in the side of \NARRATIVE 2 for long enough. So, I have been ordered to remove you, perminently...>
 	Msg1_1 <So we meet again. My masters have decided they can no longer tolerate your presence on this world. So, I have been sent to eliminate you.>
-	CMsg1_1 <if= P4 0 ifNPCSociable Accept>
+	CMsg1_1 <if= P4 0 ifChatNPCSociable Accept>
 	Msg1_2 <It's been decided that you must die.>
-	CMsg1_2 <if= P4 0 ifNPCShy Accept>
+	CMsg1_2 <if= P4 0 ifChatNPCShy Accept>
 	Msg1_3 <I hate to interrupt, but \NARRATIVE 2 has decided that you must die. You won't be leaving here alive.>
-	CMsg1_3 <if= P4 0 ifNPCEasygoing Accept>
+	CMsg1_3 <if= P4 0 ifChatNPCEasygoing Accept>
 	Msg1_4 <Hello once more, \PC ... My masters have told me that I no longer need to hold back. Today you will face the full extent of my power!>
-	CMsg1_4 <if= P4 0 ifNPCPassionate Accept>
+	CMsg1_4 <if= P4 0 ifChatNPCPassionate Accept>
 	Msg1_5 <Did you miss me? It's time for us to begin the dance once more. My masters in \NARRATIVE 2 have decided that you should die. It will be my pleasure to enact this order.>
-	CMsg1_5 <if= P4 0 ifNPCCheerful Accept>
+	CMsg1_5 <if= P4 0 ifChatNPCCheerful Accept>
 	Msg1_6 <Your worthless life has continued for far too long. Now, it is my task to end it.>
-	CMsg1_6 <if= P4 0 ifNPCMelancholy Accept>
+	CMsg1_6 <if= P4 0 ifChatNPCMelancholy Accept>
 	Msg1_7 <Hello \PC . I am \ELEMENT 4 ; \ELEMENT 5 hired me to kill you. Well, that's enough for introductions... now we must fight!!!>
 	CMsg1_7 <if= P4 1 Accept>
 	Msg1_11 <It's a pleasure to finally meet the famous \PC . You've given \NARRATIVE 2 a lot of trouble, I'm afraid... It's time that you were silenced perminantly.>
-	CMsg1_11 <if= P4 1 ifNPCSociable Accept>
+	CMsg1_11 <if= P4 1 ifChatNPCSociable Accept>
 	Msg1_12 <I've been sent by \NARRATIVE 2 ... they want you to die, now.>
-	CMsg1_12 <if= P4 1 ifNPCShy Accept>
+	CMsg1_12 <if= P4 1 ifChatNPCShy Accept>
 	Msg1_13 <Sorry to interrupt your day, but I've been sent by \NARRATIVE 2 to eliminate you. The name's \ELEMENT 4 .>
-	CMsg1_13 <if= P4 1 ifNPCEasygoing Accept>
+	CMsg1_13 <if= P4 1 ifChatNPCEasygoing Accept>
 	Msg1_14 <You have been declared an enemy of \NARRATIVE 2 ... And I've been sent to destroy you!>
-	CMsg1_14 <if= P4 1 ifNPCPassionate Accept>
+	CMsg1_14 <if= P4 1 ifChatNPCPassionate Accept>
 	Msg1_15 <Ah, \PC , it's a pleasure to finally meet. My name is \ELEMENT 4 and I will be killing you for \NARRATIVE 2 today.>
-	CMsg1_15 <if= P4 1 ifNPCCheerful Accept>
+	CMsg1_15 <if= P4 1 ifChatNPCCheerful Accept>
 	Msg1_16 <Your death approaches, \PC ... I have been hired by \NARRATIVE 2 to end your worthless life.>
-	CMsg1_16 <if= P4 1 ifNPCMelancholy Accept>
+	CMsg1_16 <if= P4 1 ifChatNPCMelancholy Accept>
 
 end
 inv

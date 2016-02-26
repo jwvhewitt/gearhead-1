@@ -48,73 +48,73 @@ sub
 
 	Msg1 <I'm sorry, but the place is a bit of a mess. We were burgalarized last night. May I help you?>
 	Msg1_1 <This is terrible! Our hospital has been burgalarized... The thieves broke down the door, and stole the computer containing our patient database. We have backups, but still this is pretty bad...>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <I'm quite busy; our hospital has been broken into. Is there anything I can help you with?>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <Hello. May I help you? Don't mind the mess; it's just that our hospital has been broken into.>
-	CMsg1_3 <ifNPCEasygoing Accept>
+	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <Yes, may I help you? I'm very busy... There's been a break-in, our computers were stolen, and I have to make sure that nothing else has gone missing...>
-	CMsg1_4 <ifNPCPassionate Accept>
+	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <Don't panic; yes, our hospital suffered a minor break-in last night, and there's stuff all over the floor, but I assure you everything will be right as rain by tomorrow.>
-	CMsg1_5 <ifNPCCheerful Accept>
+	CMsg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <Yes, what is it? As you can see I'm quite busy... We had a break-in last night, everything's all over the place...>
-	CMsg1_6 <ifNPCMelancholy Accept>
+	CMsg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg2 <Not really, but I remember they had a similar incident in Hogye just a short time ago. As far as I know their doctor went missing shortly thereafter.>
 	Msg2_1 <It was likely the same people who broke into the Hogye clinic. That happened just a little while ago. Doctor Kim, who works there, hasn't been seen since... \OPR 3 could have been kidnapped or killed.>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <They had a similar incident in Hogye a short time ago; I believe the doctor there was killed. It was probably the same people.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <If I remember correctly there was also a break-in at the Hogye clinic a few days ago. Their doctor also went missing, which makes me glad I wasn't working the night shift yesterday.>
-	CMsg2_3 <ifNPCEasygoing Accept>
+	CMsg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <Complete moral degenerates, that's who. The clinic in Hogye was also attacked recently. Their doctor went missing, no doubt a victim of the robbers...>
-	CMsg2_4 <ifNPCPassionate Accept>
+	CMsg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <I can't even understand why they'd break in, especially if they weren't going to steal our drugs... In Hogye they had a similar case recently. The doctor who works there went missing.>
-	CMsg2_5 <ifNPCCheerful Accept>
+	CMsg2_5 <ifChatNPCCheerful Accept>
 	Msg2_6 <Who knows? There are all kinds of criminals operating these days... Even in a small town like Hogye. Their clinic was burgularized a short time ago, and their doctor disappeared. He was probably killed by the robbers.>
-	CMsg2_6 <ifNPCMelancholy Accept>
+	CMsg2_6 <ifChatNPCMelancholy Accept>
 
 	Msg3 <I'll see what I can do for you. I hope you don't have any drug allergies, since I can't look up to check...>
 	Msg3_1 <Our facilities are largely undamaged; it was just the computers that got stolen. So I should be able to treat your injuries without any complications.>
-	CMsg3_1 <ifNPCSociable Accept>
+	CMsg3_1 <ifChatNPCSociable Accept>
 	Msg3_2 <Let me take a look at your injuries. I'll do as much as I can.>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <Alright. Tell me where it hurts.>
-	CMsg3_3 <ifNPCEasygoing Accept>
+	CMsg3_3 <ifChatNPCEasygoing Accept>
 	Msg3_4 <Of course! Let me examine your injuries.>
-	CMsg3_4 <ifNPCPassionate Accept>
+	CMsg3_4 <ifChatNPCPassionate Accept>
 	Msg3_5 <Sure, I can still do that. Tell me where it hurts and I'll make it all better.>
-	CMsg3_5 <ifNPCCheerful Accept>
+	CMsg3_5 <ifChatNPCCheerful Accept>
 	Msg3_6 <I'll see what I can do, but given the state of our facilities I can't make any promises.>
-	CMsg3_6 <ifNPCMelancholy Accept>
+	CMsg3_6 <ifChatNPCMelancholy Accept>
 
 	Msg4 <Keep eating those vegetables.>
 	Msg4_1 <Let me know if you experience any side effects. I'll see you again, the next time you get hurt.>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <Take care of yourself.>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <If you experience any further problems come back right away.>
-	CMsg4_3 <ifNPCEasygoing Accept>
+	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <Exercise and proper diet are the keys to good health, don't forget that!>
-	CMsg4_4 <ifNPCPassionate Accept>
+	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <That went well.>
-	CMsg4_5 <ifNPCCheerful Accept>
+	CMsg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <Try not to get hurt again.>
-	CMsg4_6 <ifNPCMelancholy Accept>
+	CMsg4_6 <ifChatNPCMelancholy Accept>
 
 	Msg5 <Well, somebody certainly should.>
 	Msg5_1 <You're from Hogye originally, aren't you? Yes, someone definitely ought to investigate this matter...>
-	CMsg5_1 <ifNPCSociable Accept>
+	CMsg5_1 <ifChatNPCSociable Accept>
 	Msg5_2 <Well, somebody should.>
-	CMsg5_2 <ifNPCShy Accept>
+	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <I've already told you as much as I know, personally.>
-	CMsg5_3 <ifNPCEasygoing Accept>
+	CMsg5_3 <ifChatNPCEasygoing Accept>
 	Msg5_4 <It's terrible that someone could attack a hospital, the center of medical care and charitable work, yet remain at large without punishment... Justice must be done!>
-	CMsg5_4 <ifNPCPassionate Accept>
+	CMsg5_4 <ifChatNPCPassionate Accept>
 	Msg5_5 <If you could get to the bottom of this, I'd certainly applaud your efforts!>
-	CMsg5_5 <ifNPCCheerful Accept>
+	CMsg5_5 <ifChatNPCCheerful Accept>
 	Msg5_6 <I doubt that you'd find out anything... Though if you're determined to try, then go ahead.>
-	CMsg5_6 <ifNPCMelancholy Accept>
+	CMsg5_6 <ifChatNPCMelancholy Accept>
 
 	Prompt1 <Any idea who did it?>
 	Prompt1_1 <Who would break into a hospital!?>

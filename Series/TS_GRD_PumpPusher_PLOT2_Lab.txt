@@ -31,31 +31,31 @@ sub
 
 	Msg1 <We've located the base of the Pump Pushers! Now, it's up to you to go in there and clear it out. Are you ready to start?>
 	Msg1_1 <>
-	CMSg1_1 <ifNPCSociable Accept>
+	CMSg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <>
-	CMSg1_2 <ifNPCShy Accept>
+	CMSg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <>
-	CMSg1_3 <ifNPCEasygoing Accept>
+	CMSg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <>
-	CMSg1_4 <ifNPCPassionate Accept>
+	CMSg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <>
-	CMSg1_5 <ifNPCCheerful Accept>
+	CMSg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <>
-	CMSg1_6 <ifNPCMelancholy Accept>
+	CMSg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg2 <If the criminals resist, you're authorized to use deadly force.>
 	Msg2_1 <>
-	CMSg2_1 <ifNPCSociable Accept>
+	CMSg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <>
-	CMSg2_2 <ifNPCShy Accept>
+	CMSg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <>
-	CMSg2_3 <ifNPCEasygoing Accept>
+	CMSg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <>
-	CMSg2_4 <ifNPCPassionate Accept>
+	CMSg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <>
-	CMSg2_5 <ifNPCCheerful Accept>
+	CMSg2_5 <ifChatNPCCheerful Accept>
 	Msg2_6 <>
-	CMSg2_6 <ifNPCMelancholy Accept>
+	CMSg2_6 <ifChatNPCMelancholy Accept>
 
 	Msg3 <Do whatever it is that you have to do, then come back here for the mission.>
 

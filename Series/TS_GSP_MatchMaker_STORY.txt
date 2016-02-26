@@ -27,7 +27,7 @@ sub
 	GoNothing <Say 2>
 
 	result1 <NewChat Say 4 AddChat 3 AddChat 4>
-	result2 <NewChat Reputation 5 -d6 ifNPCMelancholy else GoR2Fail AddReact 10 Say 6 AddChat 3 AddChat 4>
+	result2 <NewChat Reputation 5 -d6 ifChatNPCMelancholy else GoR2Fail AddReact 10 Say 6 AddChat 3 AddChat 4>
 	GoR2Fail <Say 5 EndStory>
 	result3 <NewChat S= 1 1 ifG SkRoll 37 15 else GoR3Fail Say 7 Memo 9>
 	GoR3Fail <Say 8>

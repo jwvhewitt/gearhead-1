@@ -69,101 +69,101 @@ sub
 	result7 <NewChat  Say 9>
 	Msg1 <I really think you ought to go see what \ELEMENT 4 has been doing in \ELEMENT 3 . I know the two of you never got along very well, but I have a feeling this could be very important for us all!>
 	Msg1_1 <Have you spoken with \ELEMENT 4 in \ELEMENT 3 yet? I have a feeling that something very bad is going on there... I know the two of you were never really friends, but could you at least do this for me?>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <You haven't spoken with \ELEMENT 4 yet? Let me know when you do.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <I think someone should go talk with \ELEMENT 4 in \ELEMENT 3 ... If you're free sometime, could you check up on \SPR E4 ?>
-	CMsg1_3 <ifNPCEasygoing Accept>
+	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <Why haven't you spoken to \ELEMENT 4 yet!? I asked you to do that a while ago...>
-	CMsg1_4 <ifNPCPassionate Accept>
+	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <I hope that \ELEMENT 4 is alright. I'd hate for something bad to happen to anyone I know, no matter what...>
-	CMsg1_5 <ifNPCCheerful Accept>
+	CMsg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <\ELEMENT 4 has started down a path of self destruction... I fear \OPR E4 may be beyond any help.>
-	CMsg1_6 <ifNPCMelancholy Accept>
+	CMsg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg2 <\PC ! I haevn't seen you in ages... not since graduation, I think. How have you been? I'm sorry that I didn't write to you all this time but it was a lot of work in the piloting academy, you know?>
 	Msg2_1 <\PC ! It's been ages since we've spoken! I was really hoping you'd show up today. Did you get my email? How've you been? Sorry that I haven't kept in touch better, but it was a lot of work in the piloting academy.>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <\PC , I was hoping you'd come here. Did you get my email? I know, I should have kept in touch better, but you know how it is...>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <\PC ! It's really been ages, hasn't it? I don't think we've been together like this since graduation. How have you been? We really should have kept in touch... that's probably my fault for not writing.>
-	CMsg2_3 <ifNPCEasygoing Accept>
+	CMsg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <\PC !!! Oh, I've missed you so much!!! How are you doing? I haven't seen you since graduation... It's been really busy in the piloting academy, I would have written but things have been so crazy the past few years.>
-	CMsg2_4 <ifNPCPassionate Accept>
+	CMsg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <It's good to see you, \PC ! I've been hoping you'd come over. We haven't met face to face since graduation, I think. I've been doing well at the piloting academy. Sorry I didn't write more often.>
-	CMsg2_5 <ifNPCCheerful Accept>
+	CMsg2_5 <ifChatNPCCheerful Accept>
 	Msg2_6 <Ah, \PC , I was a bit worried you wouldn't accept my invitation. It's been very busy for me at the piloting academy. I missed you, and all of our friends from school... I should have written, I know, I just let everyone slip away.>
-	CMsg2_6 <ifNPCMelancholy Accept>
+	CMsg2_6 <ifChatNPCMelancholy Accept>
 
 	Msg3 <I wish our meeting could be under happier circumstances, though. I've got a problem. Tell me... Do you remember \ELEMENT 4 ? We all went to school together. I kind of remember that the two of you didn't get along.>
 	Msg3_1 <There's a reason why I called you here. One of our schoolmates is in a lot of trouble. I think there's something really bad going on, and this is only the surface. Remember \ELEMENT 4 ? You two were rivals, weren't you?>
-	CMsg3_1 <ifNPCSociable Accept>
+	CMsg3_1 <ifChatNPCSociable Accept>
 	Msg3_2 <There's a reason why I asked you here today. Remember \ELEMENT 4 from school?>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <Well, I have a problem that I can't solve by myself. A friend of mine... one of our schoolmates... is in bad trouble. You wouldn't happen to remember \ELEMENT 4 , would you?>
-	CMsg3_3 <ifNPCEasygoing Accept>
+	CMsg3_3 <ifChatNPCEasygoing Accept>
 	Msg3_4 <As great as it is to see you today, I wish it could be under better circumstances. One of our ex-schoolmates needs help. Do you remember \ELEMENT 4 ?>
-	CMsg3_4 <ifNPCPassionate Accept>
+	CMsg3_4 <ifChatNPCPassionate Accept>
 	Msg3_5 <Unfortunately, I've got a problem. I'm certain that you can help me with it, though. Remember your old rival \ELEMENT 4 ?>
-	CMsg3_5 <ifNPCCheerful Accept>
+	CMsg3_5 <ifChatNPCCheerful Accept>
 	Msg3_6 <I have a very serious problem... or rather, one of our schoolmates does, and I've been entangled into it. Do you remember \ELEMENT 4 ? I seem to recall that you hated each other.>
-	CMsg3_6 <ifNPCMelancholy Accept>
+	CMsg3_6 <ifChatNPCMelancholy Accept>
 
 	Msg4 <I'm a bit embarassed but very happy to hear that. I missed you too. I called you here for a reason today, Tell me... Do you remember \ELEMENT 4 ? We all went to school together. I kind of remember that the two of you didn't get along.>
 	Msg4_1 <Then why didn't you write me back, either!? Ah well, each one of us is just as bad as the other... I missed you too, \PC , but I wish our first meeting in so many years could be under better circumstances. Tell me, do you remember \ELEMENT 4 ?>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <I'm glad to hear that. Unfortunately, this isn't just a social call... do you remember \ELEMENT 4 ?>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <Me too. Well, I did have a flimsy excuse for calling you here today... Do you remember \ELEMENT 4 ? We went to school together. I seem to recall that the two of you didn't get along very well.>
-	CMsg4_3 <ifNPCEasygoing Accept>
+	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <Not half as much as I missed you, I'll bet. I did have a rationale for calling you here. Do you remember \ELEMENT 4 from school? As I recall the two of you were rivals then.>
-	CMsg4_4 <ifNPCPassionate Accept>
+	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <I'm very happy to hear that! I missed you too. I hear you're a big adventurer now... Well, I'm hoping that you can help with something. Do you remember \ELEMENT 4 from our school days?>
-	CMsg4_5 <ifNPCCheerful Accept>
+	CMsg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <Really? I barely expected that you'd even remember me, let alone miss me... I missed you too. Um, I'm afraid that I have a problem... Tell me, do you remember \ELEMENT 4 ? We went to school together.>
-	CMsg4_6 <ifNPCMelancholy Accept>
+	CMsg4_6 <ifChatNPCMelancholy Accept>
 
 	Msg5 <You're right, we both should have. Anyway, there's a reason why I asked you here today. Tell me... Do you remember \ELEMENT 4 ? We all went to school together. I kind of remember that the two of you didn't get along.>
 	Msg5_1 <I'm just glad to be speaking with you now. Look, I need to tell you about something... Do you remember our ex-classmate \ELEMENT 4 ? Well, \OPR E4 's mixed up in something really bad.>
-	CMsg5_1 <ifNPCSociable Accept>
+	CMsg5_1 <ifChatNPCSociable Accept>
 	Msg5_2 <Point taken. In any case, I had a reason for calling you here. Do you remember the name \ELEMENT 4 ?>
-	CMsg5_2 <ifNPCShy Accept>
+	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <Well, there's no sense in talking about the past. I called you here for a reason... Do you remember our ex-classmate \ELEMENT 4 , by any chance?>
-	CMsg5_3 <ifNPCEasygoing Accept>
+	CMsg5_3 <ifChatNPCEasygoing Accept>
 	Msg5_4 <Thanks for trying to accept part of the blame, but that still doesn't excuse me. Actually, I called you here today because one of our ex-classmates is in trouble... Do you remember \ELEMENT 4 ?>
-	CMsg5_4 <ifNPCPassionate Accept>
+	CMsg5_4 <ifChatNPCPassionate Accept>
 	Msg5_5 <Well, that doesn't matter much anymore, now that we're both here together finally. I had a reason for calling you today... Do you remember \ELEMENT 4 ? The three of us went to school together.>
-	CMsg5_5 <ifNPCCheerful Accept>
+	CMsg5_5 <ifChatNPCCheerful Accept>
 	Msg5_6 <No, it's my fault, I wanted to write many times... but today, I have a reason for contacting you. Tell me, do you remember \ELEMENT 4 from our school days?>
-	CMsg5_6 <ifNPCMelancholy Accept>
+	CMsg5_6 <ifChatNPCMelancholy Accept>
 
 	Msg6 <I can't say I'm surprised. After graduation we both applied to the academy... but during training \OPR E4 began to change. Soon \OPR E4 dropped out. I kept contact with \SPR E4 for a while. I'm certain \OPR E4 got involved in something bad...>
 	Msg6_1 <That doesn't surprise me... not anymore. \ELEMENT 4 joined the academy the same time I did. A year later, something happened to \SPR E4 ... \OPR E4 stopped talking to just about everyone, then dropped out. I'm certain something very bad is going on.>
-	CMsg6_1 <ifNPCSociable Accept>
+	CMsg6_1 <ifChatNPCSociable Accept>
 	Msg6_2 <That sounds like \SPR E4 ... \OPR E4 has really changed since dropping out of the academy. I suspect that \OPR E4 's in some kind of trouble.>
-	CMsg6_2 <ifNPCShy Accept>
+	CMsg6_2 <ifChatNPCShy Accept>
 	Msg6_3 <Is that true!? Then \OPR E4 must be even worse off than I thought... A few years ago \OPR E4 dropped out of the academy. We kept in touch for a while, but there was like a dark shadow growing across \SPR E4 . I'm certain \OPR E4 's in trouble.>
-	CMsg6_3 <ifNPCEasygoing Accept>
+	CMsg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <I can't believe that! The \ELEMENT 4 I know could never... of course, \OPR E4 hasn't been \SPR E4 self for a while now. There's something very bad going on. I only wish I knew more...>
-	CMsg6_4 <ifNPCPassionate Accept>
+	CMsg6_4 <ifChatNPCPassionate Accept>
 	Msg6_5 <You're still alive, so I guess \OPR E4 couldn't have wanted to kill you very badly. Last year \OPR E4 dropped out of the academy and got involved in a bad crowd... I don't know exactly what they're up to, but I know it isn't good.>
-	CMsg6_5 <ifNPCCheerful Accept>
+	CMsg6_5 <ifChatNPCCheerful Accept>
 	Msg6_6 <In that case \OPR E4 may already be beyond our help. \ELEMENT 4 quit the academy a year ago... there was something going on, \OPR E4 got involved with some bad people. I don't know all the details but I can tell it's very serious.>
-	CMsg6_6 <ifNPCMelancholy Accept>
+	CMsg6_6 <ifChatNPCMelancholy Accept>
 
 	Msg7 <After graduation both \ELEMENT 4 and I applied to the academy... but during training \OPR E4 began to change. Soon \OPR E4 dropped out. I kept contact with \SPR E4 for a while. I'm certain \OPR E4 got involved in something bad...>
 	Msg7_1 <After graduating we both applied to the academy, but a short time later \ELEMENT 4 dropped out. Over the course of basic training \OPR E4 changed.  I kept contact with \SPR E4 for a while. I'm certain \OPR E4 got involved in something bad...>
-	CMsg7_1 <ifNPCSociable Accept>
+	CMsg7_1 <ifChatNPCSociable Accept>
 	Msg7_2 <\ELEMENT 4 went to the same piloting academy as me, but dropped out of the program suddenly and without explanation. My contact with \SPR E4 suggests that \OPR E4 got involved with some bad people.>
-	CMsg7_2 <ifNPCShy Accept>
+	CMsg7_2 <ifChatNPCShy Accept>
 	Msg7_3 <\ELEMENT 4 used to be a good person... that changed after we joined the piloting academy together. I think \OPR E4 was being influenced by someone else... I really don't know what happened...>
-	CMsg7_3 <ifNPCEasygoing Accept>
+	CMsg7_3 <ifChatNPCEasygoing Accept>
 	Msg7_4 <\ELEMENT 4 really changed after graduation. After we both joined the academy, \OPR E4 would sometimes disappear for days at a time. Later \OPR E4 dropped out, without reason or explanation.>
-	CMsg7_4 <ifNPCPassionate Accept>
+	CMsg7_4 <ifChatNPCPassionate Accept>
 	Msg7_5 <That's good. You might also remember that \OPR E4 and I both applied to the piloting academy... While there, \ELEMENT 4 changed horribly. It's like \OPR E4 joined a cult or something worse.>
-	CMsg7_5 <ifNPCCheerful Accept>
+	CMsg7_5 <ifChatNPCCheerful Accept>
 	Msg7_6 <I guess \ELEMENT 4 is a hard person to forget... Shortly after we both joined the academy, \OPR E4 cut off all ties to \PPR E4 old friends. It's like \OPR E4 joined a cult. I'm certain something terrible is brewing...>
-	CMsg7_6 <ifNPCMelancholy Accept>
+	CMsg7_6 <ifChatNPCMelancholy Accept>
 
 	Msg8 <I can't say I much care for the person \OPR E4 has become... but for the person \OPR E4 used to be, and for my sake, could you go to \ELEMENT 3 and check up on \SPR E4 ? I have this awful feeling that something terrible is about to happen.>
 	Msg8_1 <I would have thought you'd at least be curious as to why \OPR E4 's changed so much... Look, you're better at talking to people than me. Could you go to \ELEMENT 3 and check up on \SPR E4 ?>
@@ -181,17 +181,17 @@ sub
 
 	Msg9 <Go to \ELEMENT 3 and talk to \SPR E4 . You know, \OPR E4 used to really look up to you in our school days. That's why \OPR E4 decided to be a pilot. Please do this for me. I have this awful feeling that something terrible is about to happen.>
 	Msg9_1 <I recently got an email from \ELEMENT 4 ... \OPR E4 's in \ELEMENT 3 . If you could go there and talk with \SPR E4 , we could find out what's going on...>
-	CMsg9_1 <ifNPCSociable Accept>
+	CMsg9_1 <ifChatNPCSociable Accept>
 	Msg9_2 <I got an email from \SPR E4 recently. There's more going on than \OPR E4 's willing to say. If you go there and speak with \SPR E4 we could find out what's really behind all this.>
-	CMsg9_2 <ifNPCShy Accept>
+	CMsg9_2 <ifChatNPCShy Accept>
 	Msg9_3 <Nothing much, just go to \ELEMENT 3 and talk with \SPR E4 . Maybe we can find out what's been going on.>
-	CMsg9_3 <ifNPCEasygoing Accept>
+	CMsg9_3 <ifChatNPCEasygoing Accept>
 	Msg9_4 <I've become convinced that \OPR E4 is involved in some huge conspiracy. But, for the friend \OPR E4 once was, I hope \OPR E4 can still be saved... Go to \ELEMENT 3 and seek \SPR E4 out.>
-	CMsg9_4 <ifNPCPassionate Accept>
+	CMsg9_4 <ifChatNPCPassionate Accept>
 	Msg9_5 <I got an email from \SPR E4 ... It kind of sounded like a cry for help. I'd like you to go to \ELEMENT 3 and find out what's happened to \SPR E4 . I'm certain \OPR E4 can still be rescued. I hope so...>
-	CMsg9_5 <ifNPCCheerful Accept>
+	CMsg9_5 <ifChatNPCCheerful Accept>
 	Msg9_6 <I don't know... I don't know if anything can be done. But I got an email recently saying \OPR E4 'd be in \ELEMENT 4 . Maybe you could go talk with \SPR E4 ?>
-	CMsg9_6 <ifNPCMelancholy Accept>
+	CMsg9_6 <ifChatNPCMelancholy Accept>
 
 	Msg10 <\ELEMENT 2 in \ELEMENT 1 asked you to speak with \ELEMENT 4 in \ELEMENT 3 .>
 	Msg11 <Your school friend \ELEMENT 2 sent you to talk with \ELEMENT 4 .>
@@ -227,186 +227,186 @@ sub
 	GoR8Fail <Say 14>
 	Msg1 <Why are you here? That fool \ELEMENT 2 sent you, didn't \OPR E2 ? I told \SPR E2 that I didn't need \SPR E2 anymore... \ELEMENT 6 has turned me into a greater pilot than I ever dreamt possible!>
 	Msg1_1 <Ah, if it isn't my old friend \PC ... Well, you're too late to interfere in my mission for \ELEMENT 6 , since it's already been completed!>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <Greetings \PC . I hope you're not here to stop me... my mission for \ELEMENT 6 has already been completed.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <\PC , you must be here to continue our battle... Well, I'm afraid that I'll have to disappoint you; \ELEMENT 6 has business for me elsewhere.>
-	CMsg1_3 <ifNPCEasygoing Accept>
+	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <How did you find me!? You must be in league with that \ELEMENT 2 ... no matter, \ELEMENT 6 will deal with \SPR E2 soon enough. What do you want?>
-	CMsg1_4 <ifNPCPassionate Accept>
+	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <Ah, so \PC has come to play with me once again. I'm sorry but \ELEMENT 6 has other things for me to do.>
-	CMsg1_5 <ifNPCCheerful Accept>
+	CMsg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <You! I should have killed you when I had the chance... Why have you come here today? You cannot defeat me; \ELEMENT 6 has made me a greater warrior than ever dreamed possible!>
-	CMsg1_6 <ifNPCMelancholy Accept>
+	CMsg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg2 <Then you'll be disappointed I'm afraid. I have other things to take care of... My men will handle you by themselves.>
 	Msg2_1 <Destroy me? Oh, I think not. I've been taking GARU Serum... my abilities have been multiplied far beyond the levels of a mere human such as yourself. I would demonstrate this to you, but duty calls.>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <It will be you who dies instead. Men, destroy \PC .>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <No thanks, but as a parting gift I'll leave my men to fight you. If you survive maybe we'll meet again.>
-	CMsg2_3 <ifNPCEasygoing Accept>
+	CMsg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <It's beneath my dignity to accept a challenge from one such as you. Since taking GARU serum my abilities have increased a hundred fold. My men will prove more than sufficient to defeat you.>
-	CMsg2_4 <ifNPCPassionate Accept>
+	CMsg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <It's not me who's going to get destroyed today, \PC . I'm off but my men can easily defeat you on their own. Have fun with them.>
-	CMsg2_5 <ifNPCCheerful Accept>
+	CMsg2_5 <ifChatNPCCheerful Accept>
 	Msg2_6 <You may not live to regret your empty threat, \PC ... I don't have the luxury of killing you myself today, but I'm sure my men will be more than up to the task. Goodbye.>
-	CMsg2_6 <ifNPCMelancholy Accept>
+	CMsg2_6 <ifChatNPCMelancholy Accept>
 
 	Msg3 <Why? I had nothing! You were always better than me... \ELEMENT 2 always loved you more, no matter what I did... It was \ELEMENT 6 that showed how my dreams can be realized! They gave me the power to destroy you!>
 	Msg3_1 <It's too late to talk! You took the one thing that used to matter to me, in the person of \ELEMENT 2 ... but now I've found something else, now all I care about is power! And \ELEMENT 6 has given me more than you can ever dream of!>
-	CMsg3_1 <ifNPCSociable Accept>
+	CMsg3_1 <ifChatNPCSociable Accept>
 	Msg3_2 <You should know that I have no desire to talk. All I want is to kill you.>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <Then talk. Just keep in mind that no matter what you say, I'm still going to kill you.>
-	CMsg3_3 <ifNPCEasygoing Accept>
+	CMsg3_3 <ifChatNPCEasygoing Accept>
 	Msg3_4 <All my life I've tried to prove myself equal to you... Now, at last, thanks to \ELEMENT 6 I am stronger than you could ever dream! They gave me the power to destroy you!>
-	CMsg3_4 <ifNPCPassionate Accept>
+	CMsg3_4 <ifChatNPCPassionate Accept>
 	Msg3_5 <My, but you are the eternal optimist... Do you really think you can talk me out of destroying you, now that I've been given the power to do just that?>
-	CMsg3_5 <ifNPCCheerful Accept>
+	CMsg3_5 <ifChatNPCCheerful Accept>
 	Msg3_6 <There's nothing you could say. All of my dreams were crushed by you... \ELEMENT 2 would never be with me, as long as you lived... But \ELEMENT 6 has given me the power to take revenge!>
-	CMsg3_6 <ifNPCMelancholy Accept>
+	CMsg3_6 <ifChatNPCMelancholy Accept>
 
 	Msg4 <\ELEMENT 4 revealed that \OPR E4 was working for \ELEMENT 6 .>
 	Msg5 <You'll have to prove yourself worthy of my new talents first. I've been taking GARU serum... it's boosted my abilities to beyond human levels. My men should be able to kill you themselves. If not, then we'll meet again someday...>
 	Msg5_1 <I'd love to stay and chat with you some more, but I will shortly be needed elsewhere. If you're determined to fight then my men should prove more than capable of defeating you themselves.>
-	CMsg5_1 <ifNPCSociable Accept>
+	CMsg5_1 <ifChatNPCSociable Accept>
 	Msg5_2 <I've no time for this. My men will make short work of you. Goodbye, \PC .>
-	CMsg5_2 <ifNPCShy Accept>
+	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <Not today, I'm afraid. I'll have to apologize for leaving early... but my men should be more than sufficient to destroy you themselves.>
-	CMsg5_3 <ifNPCEasygoing Accept>
+	CMsg5_3 <ifChatNPCEasygoing Accept>
 	Msg5_4 <Do you really think you're capable of such a feat? I've been given GARU serum by \ELEMENT 6 . My abilities have advanced far beyond the limits of a mere human such as yourself. My men can finish you off themselves...>
-	CMsg5_4 <ifNPCPassionate Accept>
+	CMsg5_4 <ifChatNPCPassionate Accept>
 	Msg5_5 <As much as I'd love to stay and play with you, I'm afraid that I really must be off. My men will be able to defeat you themselves. Try to put up an entertaining fight.>
-	CMsg5_5 <ifNPCCheerful Accept>
+	CMsg5_5 <ifChatNPCCheerful Accept>
 	Msg5_6 <I'm afraid that I don't have time to stay and watch your death... important business calls me elsewhere. Goodbye.>
-	CMsg5_6 <ifNPCMelancholy Accept>
+	CMsg5_6 <ifChatNPCMelancholy Accept>
 
 	Msg6 <I've been taking GARU serum. My abilities have been pumped to beyond human levels... Now, I am far more powerful than you! I no longer have to feel the shame of being second best! When \ELEMENT 6 takes over, I will be a lord!>
 	Msg6_1 <They've given me GARU serum... it's boosted my abilities far beyond human levels! They told me that it's completely safe... When \ELEMENT 6 takes over, I will be a lord of the new Earth!>
-	CMsg6_1 <ifNPCSociable Accept>
+	CMsg6_1 <ifChatNPCSociable Accept>
 	Msg6_2 <You know, training, study, plus some experimental medical procedures... I am moving beyond all limits, transforming into a god!>
-	CMsg6_2 <ifNPCShy Accept>
+	CMsg6_2 <ifChatNPCShy Accept>
 	Msg6_3 <I've done nothing but seize the power which always should have been mine... \ELEMENT 6 has provided me with GARU serum. It's increased my abilities a hundred fold!>
-	CMsg6_3 <ifNPCEasygoing Accept>
+	CMsg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <Isn't it obvious? I am becoming a god! My benefactors have provided me with GARU serum, the soul of the dragon... I am evolving so quickly... When \ELEMENT 6 immanentizes the eschaton, I will be a lord of the New World Order!>
-	CMsg6_4 <ifNPCPassionate Accept>
+	CMsg6_4 <ifChatNPCPassionate Accept>
 	Msg6_5 <Isn't it wonderful? This is the effect of GARU serum... My body is rebuilding itself on a molecular level. I am becoming a god!>
-	CMsg6_5 <ifNPCCheerful Accept>
+	CMsg6_5 <ifChatNPCCheerful Accept>
 	Msg6_6 <In every battle... there are some sacrifices to be made. My masters in \ELEMENT 6 have provided me with GARU serum. My body is evolving, becoming something else, something better... I have so much power, you can't understand it...>
-	CMsg6_6 <ifNPCMelancholy Accept>
+	CMsg6_6 <ifChatNPCMelancholy Accept>
 
 	Msg7 <That could apply to both of us, couldn't it? Well, my masters have ordered me elsewhere. My men should be able to handle you by themselves. Goodbye, old friend... may your death be more painless than my life has been...>
 	Msg7_1 <It's well known that you have precious little humanity left yourself. Don't worry- when you die, I'll have my men recycle you. Goodbye, \PC ...>
-	CMsg7_1 <ifNPCSociable Accept>
+	CMsg7_1 <ifChatNPCSociable Accept>
 	Msg7_2 <That's a small price to pay for ultimate power. Goodbye, \PC ... my men will prove more than able to destroy you themselves.>
-	CMsg7_2 <ifNPCShy Accept>
+	CMsg7_2 <ifChatNPCShy Accept>
 	Msg7_3 <Eh, what did my humanity ever do for me? It's a small thing to trade in exchange for ultimate power.  My men should be able to handle you by themselves. Goodbye, old friend...>
-	CMsg7_3 <ifNPCEasygoing Accept>
+	CMsg7_3 <ifChatNPCEasygoing Accept>
 	Msg7_4 <That's right! I'm becoming something far better than a mere human! I would stay here to destroy you, as a demonstration of my godlike abilities, but I must be off... my men can handle you themselves.>
-	CMsg7_4 <ifNPCPassionate Accept>
+	CMsg7_4 <ifChatNPCPassionate Accept>
 	Msg7_5 <Why do you lie? I'm not losing anything, just gaining ultimate power! Goodbye, \PC ... my men should be more than capable of destroying you themselves.>
-	CMsg7_5 <ifNPCCheerful Accept>
+	CMsg7_5 <ifChatNPCCheerful Accept>
 	Msg7_6 <Perhaps I never had any in the first place... In any event it is a far greater thing I will become, than that pitiful creature I once was... Goodbye, \PC . I must be off, but will leave my men to destroy you.>
-	CMsg7_6 <ifNPCMelancholy Accept>
+	CMsg7_6 <ifChatNPCMelancholy Accept>
 
 	Msg8 <You can't speak of me that way! I'm powerful! No-one has the right to... but, it's too late. My choices have been made. There's no way to redemption for me any more, is there?>
 	Msg8_1 <You're right... soon I will no longer be able to show my face in public, cut off forever from the rest of humanity... But my choice has been made. Even if I wanted to change, there's no going back now, is there?>
-	CMsg8_1 <ifNPCSociable Accept>
+	CMsg8_1 <ifChatNPCSociable Accept>
 	Msg8_2 <What does it profit one to gain the world, if \OPR E4 loses \PPR E4 soul? But, no... it's too late for me to turn back. There's no other path for me to take.>
-	CMsg8_2 <ifNPCShy Accept>
+	CMsg8_2 <ifChatNPCShy Accept>
 	Msg8_3 <If I had any "humanity" I wouldn't have started this process in the first place, would I? But even that doesn't matter any more... The transformation has started and there's no way out for me.>
-	CMsg8_3 <ifNPCEasygoing Accept>
+	CMsg8_3 <ifChatNPCEasygoing Accept>
 	Msg8_4 <Don't talk about me as if I'm some kind of loser! I'm powerful now! More powerful than you, even! There's no going back from this point... is there?>
-	CMsg8_4 <ifNPCPassionate Accept>
+	CMsg8_4 <ifChatNPCPassionate Accept>
 	Msg8_5 <Can't make an omelette without breaking a few eggs. Even if I wanted to change, there's no other path before me, is there?>
-	CMsg8_5 <ifNPCCheerful Accept>
+	CMsg8_5 <ifChatNPCCheerful Accept>
 	Msg8_6 <If I have to destroy myself, then so be it... better to become a monster than to remain what I was before... there is no other choice for me, is there?>
-	CMsg8_6 <ifNPCMelancholy Accept>
+	CMsg8_6 <ifChatNPCMelancholy Accept>
 
 	Msg9 <You've never cared about anyone but yourself, for as long as you've been alive... \ELEMENT 6 has given me exactly what I need. When my men kill you, I'll laugh on your corpse. Goodbye old friend...>
 	Msg9_1 <I'm supposed to believe that you suddenly started caring about people just now? I've known you long enough to know that you care only about yourself. Goodbye, \PC .>
-	CMsg9_1 <ifNPCSociable Accept>
+	CMsg9_1 <ifChatNPCSociable Accept>
 	Msg9_2 <It's you who will need help, once my men are finished with you. Goodbye \PC .>
-	CMsg9_2 <ifNPCShy Accept>
+	CMsg9_2 <ifChatNPCShy Accept>
 	Msg9_3 <\PC , that crap might work on everyone else but I know you too well. You care about nothing but yourself, and after my men have killed you the world will be better for it. Goodbye.>
-	CMsg9_3 <ifNPCEasygoing Accept>
+	CMsg9_3 <ifChatNPCEasygoing Accept>
 	Msg9_4 <I need nothing from anyone, least of all help from an insect like you! I've suffered your insolence for long enough. Now, my men will make short work of you!>
-	CMsg9_4 <ifNPCPassionate Accept>
+	CMsg9_4 <ifChatNPCPassionate Accept>
 	Msg9_5 <Is that supposed to be funny? I don't need help... \ELEMENT 6 has given me everything I've ever wanted, especially the power to destroy you!>
-	CMsg9_5 <ifNPCCheerful Accept>
+	CMsg9_5 <ifChatNPCCheerful Accept>
 	Msg9_6 <There's no help for me, my destiny is sealed... Goodbye \PC . May your death be far less painful than my life has been.>
-	CMsg9_6 <ifNPCMelancholy Accept>
+	CMsg9_6 <ifChatNPCMelancholy Accept>
 
 	Msg10 <What kind of help can you offer me? I am no longer a mere human... there is no way back from where I am now. Can't you see that?>
 	Msg10_1 <What kind of help? My transformation has progressed too far... My lust for power has brought me to this place... there is no way back from where I am now. Can't you see that?>
-	CMsg10_1 <ifNPCSociable Accept>
+	CMsg10_1 <ifChatNPCSociable Accept>
 	Msg10_2 <Can't you see that there's no way you can help me? I'm too far gone...>
-	CMsg10_2 <ifNPCShy Accept>
+	CMsg10_2 <ifChatNPCShy Accept>
 	Msg10_3 <And what kind of help can you offer? If the power that \ELEMENT 6 has provided can't give me peace, then what can?>
-	CMsg10_3 <ifNPCEasygoing Accept>
+	CMsg10_3 <ifChatNPCEasygoing Accept>
 	Msg10_4 <You are speaking to a god, worm! There is nothing that can be done for the rage that fills me, except to give it voice in the service of \ELEMENT 6 !>
-	CMsg10_4 <ifNPCPassionate Accept>
+	CMsg10_4 <ifChatNPCPassionate Accept>
 	Msg10_5 <This power \ELEMENT 6 has given me has not brought me peace... but if even this cannot make me happy, what choice do I have?>
-	CMsg10_5 <ifNPCCheerful Accept>
+	CMsg10_5 <ifChatNPCCheerful Accept>
 	Msg10_6 <My transformation has done nothing to silence those demons in my head... my lifelong agony remains... Is there no other path but for me to express this fury against the world!?>
-	CMsg10_6 <ifNPCMelancholy Accept>
+	CMsg10_6 <ifChatNPCMelancholy Accept>
 
 	Msg11 <I'm so confused... I need time to think... Men, finish him off...>
 	Msg11_1 <I will think about what you have said... But for now, I must go. Men, destroy \PC ! Goodbye old friend...>
-	CMsg11_1 <ifNPCSociable Accept>
+	CMsg11_1 <ifChatNPCSociable Accept>
 	Msg11_2 <Enough talking! You're making me confused! I have to go...>
-	CMsg11_2 <ifNPCShy Accept>
+	CMsg11_2 <ifChatNPCShy Accept>
 	Msg11_3 <I don't know either, but I do know that you have little chance of surviving this battle... Goodbye \PC .>
-	CMsg11_3 <ifNPCEasygoing Accept>
+	CMsg11_3 <ifChatNPCEasygoing Accept>
 	Msg11_4 <You're confused and weak. I will never be like you... my men will finish you off...>
-	CMsg11_4 <ifNPCPassionate Accept>
+	CMsg11_4 <ifChatNPCPassionate Accept>
 	Msg11_5 <At least you're being honest. Up until this point I was actually starting to think you might have something useful to tell me... But no more. Now, my men will destroy you. It's a pity I can't stay around to watch.>
-	CMsg11_5 <ifNPCCheerful Accept>
+	CMsg11_5 <ifChatNPCCheerful Accept>
 	Msg11_6 <Then you're useless to me. I'm so confused... I must go; my men will finish you themselves...>
-	CMsg11_6 <ifNPCMelancholy Accept>
+	CMsg11_6 <ifChatNPCMelancholy Accept>
 
 	Msg12 <This must be the only thing you're not sure of... I must guess you don't want to speak the truth of your mind. Men, finish him off... I have business elsewhere...>
 	Msg12_1 <That's it? No long monologue about how everybody has a spot of goodness in their soul and all? If your intention was to delay my attack you really could have done a better job. If you were honestly trying to convince me, it was even worse...>
-	CMsg12_1 <ifNPCSociable Accept>
+	CMsg12_1 <ifChatNPCSociable Accept>
 	Msg12_2 <That's all you can come up with? Then it's clear to me now. Men, destroy \PC ... I must be going.>
-	CMsg12_2 <ifNPCShy Accept>
+	CMsg12_2 <ifChatNPCShy Accept>
 	Msg12_3 <An honest answer, but hardly convincing. I've wasted enough time here and must be going. My men will see to your execution...>
-	CMsg12_3 <ifNPCEasygoing Accept>
+	CMsg12_3 <ifChatNPCEasygoing Accept>
 	Msg12_4 <Pathetic. You can't even think of anything to say... Well, you've prolonged the inevitable for a while, but now it's time for you to die. Men, destroy this loser...>
-	CMsg12_4 <ifNPCPassionate Accept>
+	CMsg12_4 <ifChatNPCPassionate Accept>
 	Msg12_5 <I'd love to stay and chat some more... actually, no, I wouldn't. But I would like to stay and watch my men destroy you... sadly, I must be off. Urgent business awaits.>
-	CMsg12_5 <ifNPCCheerful Accept>
+	CMsg12_5 <ifChatNPCCheerful Accept>
 	Msg12_6 <I expected that you'd prove to be useless. Now, my men will finish you off. I must go...>
-	CMsg12_6 <ifNPCMelancholy Accept>
+	CMsg12_6 <ifChatNPCMelancholy Accept>
 
 	Msg13 <You really think that a beast like me can find salvation? You must be a true believer... My head is so confused... Men, finish him off. I have to go away.>
 	Msg13_1 <I can't believe that... I'd love to stay and chat some more, but you've already wasted enough of my time. I must be off... my men will handle you by themselves.>
-	CMsg13_1 <ifNPCSociable Accept>
+	CMsg13_1 <ifChatNPCSociable Accept>
 	Msg13_2 <I will think about what you've said. After my men kill you it will make a nice speech to remember you by. Goodbye, \PC .>
-	CMsg13_2 <ifNPCShy Accept>
+	CMsg13_2 <ifChatNPCShy Accept>
 	Msg13_3 <You've got a pretty strong belief in human nature. I'm afraid I can't share your convictions... I must be off, but my men will prove more than able to destroy you themselves...>
-	CMsg13_3 <ifNPCEasygoing Accept>
+	CMsg13_3 <ifChatNPCEasygoing Accept>
 	Msg13_4 <You're lying! I can't believe that... I have to go, but my men will destroy you!>
-	CMsg13_4 <ifNPCPassionate Accept>
+	CMsg13_4 <ifChatNPCPassionate Accept>
 	Msg13_5 <Ah, you're an optimist. I like that. But, right now I have to go... my men will have to destroy you by themselves.>
-	CMsg13_5 <ifNPCCheerful Accept>
+	CMsg13_5 <ifChatNPCCheerful Accept>
 	Msg13_6 <There is no hope for me. I feel so confused... I have to go, but my men will defeat you...>
-	CMsg13_6 <ifNPCMelancholy Accept>
+	CMsg13_6 <ifChatNPCMelancholy Accept>
 
 	Msg14 <There's uncertainty in your voice... I know that my destiny is already sealed, and it is to become the lord over this entire planet! Men, finish him off... I have business elsewhere...>
 	Msg14_1 <I can tell just by listening to you that you don't mean it. There's no passion or conviction in your voice. I guess you're just trying to postpone your own death... Well, the time is up. My troops will destroy you now.>
-	CMsg14_1 <ifNPCSociable Accept>
+	CMsg14_1 <ifChatNPCSociable Accept>
 	Msg14_2 <I have no more time for this. I'm going, but my men will be more than capable of defeating you themselves.>
-	CMsg14_2 <ifNPCShy Accept>
+	CMsg14_2 <ifChatNPCShy Accept>
 	Msg14_3 <Even if there was some way, it'd be far too much work. Why would I want to give up my position with the future rulers of the Earth? I have to go, but will leave my troops here to finish you off. Goodbye, \PC .>
-	CMsg14_3 <ifNPCEasygoing Accept>
+	CMsg14_3 <ifChatNPCEasygoing Accept>
 	Msg14_4 <You don't sound very certain of that. This has been nothing but a waste of time... I will go now, but leave my men to destroy you!>
-	CMsg14_4 <ifNPCPassionate Accept>
+	CMsg14_4 <ifChatNPCPassionate Accept>
 	Msg14_5 <You still don't get it... I don't want any help, I don't need any help... But in a minute, you're going to need some. I have to go but my men are more than capable of killing you themselves. Goodbye, \PC .>
-	CMsg14_5 <ifNPCCheerful Accept>
+	CMsg14_5 <ifChatNPCCheerful Accept>
 	Msg14_6 <I can tell from the sound of your voice that even you don't believe that. Goodbye, old friend... my men will make your death swift and painless, I'm sure...>
-	CMsg14_6 <ifNPCMelancholy Accept>
+	CMsg14_6 <ifChatNPCMelancholy Accept>
 
 	Prompt1 <Actually, I'm here to destroy you.>
 	pROMPt1_1 <I came here today to kill you.>
@@ -450,116 +450,116 @@ sub
 		result7 <Say 9 PCLover E2 NewChat>
 		Msg1 <So, did you speak with \ELEMENT 4 ? I was worried when I didn't hear back from you. I saw on the news there was a battle near \ELEMENT 3 , and some mecha escaped to \ELEMENT 5 . Were you two involved in that?>
 		Msg1_1 <I saw on the news there was a big mecha battle near \ELEMENT 3 ... The guardians caught some \ELEMENT 6 pilots trying to escape to \ELEMENT 5 . Did you and \ELEMENT 4 have anything to do with that? What happened? Tell me everything.>
-		CMsg1_1 <ifNPCSociable Accept>
+		CMsg1_1 <ifChatNPCSociable Accept>
 		Msg1_2 <I heard about your fight in \ELEMENT 3 . You might want to know that the survivors from that battle were spotted heading for \ELEMENT 5 . So, I take it \ELEMENT 4 was involved?>
-		CMsg1_2 <ifNPCShy Accept>
+		CMsg1_2 <ifChatNPCShy Accept>
 		Msg1_3 <I heard about your fight in \ELEMENT 3 . According to the net, those mecha you destroyed belonged to \ELEMENT 6 , and were operating out of \ELEMENT 5 . I couldn't find anything about \ELEMENT 4 but I'm assuming \OPR E4 was behind it.>
-		CMsg1_3 <ifNPCEasygoing Accept>
+		CMsg1_3 <ifChatNPCEasygoing Accept>
 		Msg1_4 <Are you okay? I heard you were ambushed by some \ELEMENT 6 meks! The vidnews said the survivors were caught trying to get to \ELEMENT 5 ... \ELEMENT 4 didn't have anything to do with this, did \OPR E4 ?>
-		CMsg1_4 <ifNPCPassionate Accept>
+		CMsg1_4 <ifChatNPCPassionate Accept>
 		Msg1_5 <I saw on the vidnews that you fought a team of \ELEMENT 6 mecha from \ELEMENT 5 ... It looked like you kicked a truckload of ass! \ELEMENT 4 wasn't behind that fight, was \OPR E4 ?>
-		CMsg1_5 <ifNPCCheerful Accept>
+		CMsg1_5 <ifChatNPCCheerful Accept>
 		Msg1_6 <I saw on the vid that you fought a team of \ELEMENT 6 mecha from \ELEMENT 5 ... It certainly looked like there were no survivors. \ELEMENT 4 wasn't behind that fight, was \OPR E4 ?>
-		CMsg1_6 <ifNPCMelancholy Accept>
+		CMsg1_6 <ifChatNPCMelancholy Accept>
 
 		Msg2 <I should've known something like that could happen. The world seems to be getting crazier every day... I feel like we're moving towards something big and really bad. Look, I've got something else to tell you... Want to hear?>
 		Msg2_1 <That bastard... How could \OPR E4 betray all \PPR E4 old friends like that? Um, \PC ? I have something to tell you... something I've waited years to say...>
-		CMsg2_1 <ifNPCSociable Accept>
+		CMsg2_1 <ifChatNPCSociable Accept>
 		Msg2_2 <I should have known. Sorry for getting you involved in this. Um, if you have a few minutes before moving on, there's something else... I've got something to tell you, that I've been holding onto for a long time...>
-		CMsg2_2 <ifNPCShy Accept>
+		CMsg2_2 <ifChatNPCShy Accept>
 		Msg2_3 <Yikes. I had no idea \OPR E4 'd do something like that... I wouldn't have asked you to go if I'd known. Look, there's something I want to tell you... I've wanted to tell you for a long time...>
-		CMsg2_3 <ifNPCEasygoing Accept>
+		CMsg2_3 <ifChatNPCEasygoing Accept>
 		Msg2_4 <If I ever see \ELEMENT 4 again, \OPR E4 will not live to regret harming to you. And I'm very sorry for getting you involved. Hey, before you go, I had another reason for calling you... There's something I've wanted to say a long time.>
-		CMsg2_4 <ifNPCPassionate Accept>
+		CMsg2_4 <ifChatNPCPassionate Accept>
 		Msg2_5 <No worries, I knew you could take \SPR E4 . While you're here, \PC , there was another reason why I contacted you... there's something I've wanted to say to you for a long long time...>
-		CMsg2_5 <ifNPCCheerful Accept>
+		CMsg2_5 <ifChatNPCCheerful Accept>
 		Msg2_6 <Don't tell me whether or not you killed \SPR E4 ... I don't want to know. \PC , there was another reason why you were the one I called about this problem... There's something I've needed to tell you, ever since we were in school...>
-		CMsg2_6 <ifNPCMelancholy Accept>
+		CMsg2_6 <ifChatNPCMelancholy Accept>
 
 		Msg3 <I get the feeling that I won't be hearing from \ELEMENT 4 ever again. Something big is getting ready to happen and I just know it isn't going to be good. Um, I have something I never told you before... if you want to listen...>
 		Msg3_1 <I can imagine what must have happened... Alright. Look, there was another reason why I called you here... \PC , I have something to tell you... this is something I should have said years ago.>
-		CMsg3_1 <ifNPCSociable Accept>
+		CMsg3_1 <ifChatNPCSociable Accept>
 		Msg3_2 <I see. Um, if you have a few spare minutes, there's something else... I've got something to tell you, that I've been holding onto for a long time...>
-		CMsg3_2 <ifNPCShy Accept>
+		CMsg3_2 <ifChatNPCShy Accept>
 		Msg3_3 <I probably don't. Guess I was being too soft-hearted on \ELEMENT 4 , huh? Um, if you've got the time, there's another reason why I called you... there's something I wanted to say.>
-		CMsg3_3 <ifNPCEasygoing Accept>
+		CMsg3_3 <ifChatNPCEasygoing Accept>
 		Msg3_4 <You'd be surprised... But, from looking in your eyes, I can tell that things didn't go well. Look, before anything else crazy happens, there's something I need to get off my chest... it's something I should have said to you years ago.>
-		CMsg3_4 <ifNPCPassionate Accept>
+		CMsg3_4 <ifChatNPCPassionate Accept>
 		Msg3_5 <Then I won't ask again. The world is going crazy... but before the sky falls, there's something I need to get off my chest. I should have told you this ages ago.>
-		CMsg3_5 <ifNPCCheerful Accept>
+		CMsg3_5 <ifChatNPCCheerful Accept>
 		Msg3_6 <Just by saying that you've told me everything I need to know. I don't know how these recent troubles will end, but it isn't going to be well... There's something I have to tell you... I should have told you long ago.>
-		CMsg3_6 <ifNPCMelancholy Accept>
+		CMsg3_6 <ifChatNPCMelancholy Accept>
 
 		Msg4 <Really? Still, I get the feeling that I won't hear from \ELEMENT 4 ever again... and some big things are soon going to happen. Before then I have something to tell you, if you want to hear it...>
 		Msg4_1 <Despite that assurance, I have a feeling that I won't ever be hearing from \ELEMENT 4 ever again. Thanks for your help. Before you leave, you should know there was another reason why I contacted you. I have to tell you something...>
-		CMsg4_1 <ifNPCSociable Accept>
+		CMsg4_1 <ifChatNPCSociable Accept>
 		Msg4_2 <That's good to hear. Look, before you leave again... there's something you should know.>
-		CMsg4_2 <ifNPCShy Accept>
+		CMsg4_2 <ifChatNPCShy Accept>
 		Msg4_3 <That wasn't so hard. Hey, before you go, there was something else I wanted to talk about... There's something I've needed to get off my chest for a long time.>
-		CMsg4_3 <ifNPCEasygoing Accept>
+		CMsg4_3 <ifChatNPCEasygoing Accept>
 		Msg4_4 <See? There's a reason why I believe in you. You're simply the best. Before you leave, there's something I absolutely have to tell you... I've needed to say this ever since we graduated but never had a chance...>
-		CMsg4_4 <ifNPCPassionate Accept>
+		CMsg4_4 <ifChatNPCPassionate Accept>
 		Msg4_5 <I knew you were the right one to call! But, your skill as a cavalier wasn't the only thing on my mind when I contacted you... there's something I've wanted to tell you for a long time.>
-		CMsg4_5 <ifNPCCheerful Accept>
+		CMsg4_5 <ifChatNPCCheerful Accept>
 		Msg4_6 <Nothing ever works out "all for the best", but I'm glad things didn't end as badly as they could have. Um, if you have a bit of time before you have to go, there's something I've wanted to speak with you about.>
-		CMsg4_6 <ifNPCMelancholy Accept>
+		CMsg4_6 <ifChatNPCMelancholy Accept>
 
 		Msg5 <You're probably right. It was nice seeing you again.>
 		Msg5_1 <You're probably right... The world is changing, it's foolish to try hanging on to the past. Still I'm very glad that we could see each other again.>
-		CMsg5_1 <ifNPCSociable Accept>
+		CMsg5_1 <ifChatNPCSociable Accept>
 		Msg5_2 <Yeah, I understand...>
-		CMsg5_2 <ifNPCShy Accept>
+		CMsg5_2 <ifChatNPCShy Accept>
 		Msg5_3 <Okay, it wasn't very important, anyhow...>
-		CMsg5_3 <ifNPCEasygoing Accept>
+		CMsg5_3 <ifChatNPCEasygoing Accept>
 		Msg5_4 <I know, I know, but it can be so hard to let go of certain things...>
-		CMsg5_4 <ifNPCPassionate Accept>
+		CMsg5_4 <ifChatNPCPassionate Accept>
 		Msg5_5 <That's good advice... I'll try to remember it. It was very nice seeing you again.>
-		CMsg5_5 <ifNPCCheerful Accept>
+		CMsg5_5 <ifChatNPCCheerful Accept>
 		Msg5_6 <Okay. I didn't think you'd be interested...>
-		CMsg5_6 <ifNPCMelancholy Accept>
+		CMsg5_6 <ifChatNPCMelancholy Accept>
 
 		Msg6 <All these years... Ever since our school days together, really... I've cared very deeply for you. I always wanted to be near you. That's why I decided to be a pilot... I don't guess there's any way my feelings could be returned...>
 		Msg6_1 <I wrote you a thousand letters explaining my feelings to you, but deleted them all. I think I love you... I've felt this way ever since we met the first time all those years ago. You must not feel the same way, or your would have noticed.>
-		CMsg6_1 <ifNPCSociable Accept>
+		CMsg6_1 <ifChatNPCSociable Accept>
 		Msg6_2 <I'm no good with words. You know that. But... I care very deeply for you, \PC . I always have.>
-		CMsg6_2 <ifNPCShy Accept>
+		CMsg6_2 <ifChatNPCShy Accept>
 		Msg6_3 <Back in school I thought you were really cute. I still do, really... I was kind of hoping that by calling you here maybe something could start between us. That's silly, I guess.>
-		CMsg6_3 <ifNPCEasygoing Accept>
+		CMsg6_3 <ifChatNPCEasygoing Accept>
 		Msg6_4 <I love you, \PC ! I always have! How could you not have known... I know there's no way my feelings could ever be returned, but I thought you should know...>
-		CMsg6_4 <ifNPCPassionate Accept>
+		CMsg6_4 <ifChatNPCPassionate Accept>
 		Msg6_5 <Back in school I used to have such a big crush on you. I still do, I guess. I used to imagine that maybe we could get together sometime but that's just a dream.>
-		CMsg6_5 <ifNPCCheerful Accept>
+		CMsg6_5 <ifChatNPCCheerful Accept>
 		Msg6_6 <I know you could never return these feelings, \PC , but... I care very much about you. I always have, really...>
-		CMsg6_6 <ifNPCMelancholy Accept>
+		CMsg6_6 <ifChatNPCMelancholy Accept>
 
 		Msg7 <\ELEMENT 2 confessed \PPR E2 feelings for you.>
 		Msg8 <I know. I knew before you told me... but I wanted to let you know how I feel. I'm still very glad that we could see each other again, and I hope that you'll come by to talk every once in a while.>
 		Msg8_1 <Please don't tell anyone else what I just said, I'd die of embarassment.>
-		CMsg8_1 <ifNPCSociable Accept>
+		CMsg8_1 <ifChatNPCSociable Accept>
 		Msg8_2 <I see. Well, I'll see you later, \PC .>
-		CMsg8_2 <ifNPCShy Accept>
+		CMsg8_2 <ifChatNPCShy Accept>
 		Msg8_3 <That's all right. I just wanted to let you know. Be seeing you around, \PC .>
-		CMsg8_3 <ifNPCEasygoing Accept>
+		CMsg8_3 <ifChatNPCEasygoing Accept>
 		Msg8_4 <What a fool I've been... I'm sorry for telling you that... I hope you can forgive me...>
-		CMsg8_4 <ifNPCPassionate Accept>
+		CMsg8_4 <ifChatNPCPassionate Accept>
 		Msg8_5 <I'm a bit disappointed that you don't feel the same way I do... but I'll be happy to just be friends, OK? Don't be a stranger. I'll see you later, \PC .>
-		CMsg8_5 <ifNPCCheerful Accept>
+		CMsg8_5 <ifChatNPCCheerful Accept>
 		Msg8_6 <I expected that you would feel that way... that's why I never told you. Goodbye, \PC ... maybe we can meet again some day.>
-		CMsg8_6 <ifNPCMelancholy Accept>
+		CMsg8_6 <ifChatNPCMelancholy Accept>
 
 		Msg9 <Really? I should have told you that years ago! You've made me very happy! Um, if you're not doing anything, maybe we could spend some time together?>
 		Msg9_1 <You don't know how hard it was to keep my feelings a secret all these years! I should have told you back in school... If you're not doing anything, maybe we could get together sometime?>
-		CMsg9_1 <ifNPCSociable Accept>
+		CMsg9_1 <ifChatNPCSociable Accept>
 		Msg9_2 <I'm glad that you feel the same. I'd like to spend more time with you, if you'd like the same...>
-		CMsg9_2 <ifNPCShy Accept>
+		CMsg9_2 <ifChatNPCShy Accept>
 		Msg9_3 <I'd like to spend some more time with you, if that's alright. We can go adventure together. Or just hang out. I really don't care, I'd just like to be with you.>
-		CMsg9_3 <ifNPCEasygoing Accept>
+		CMsg9_3 <ifChatNPCEasygoing Accept>
 		Msg9_4 <In that case... take me with you! Something bad is happening in the world and I want the chance to fight it! Together, we can stand against \ELEMENT 6 . I know we can!>
-		CMsg9_4 <ifNPCPassionate Accept>
+		CMsg9_4 <ifChatNPCPassionate Accept>
 		Msg9_5 <In that case, maybe we can spend time together someday? I'd like to join you on an adventure. It sounds exciting!>
-		CMsg9_5 <ifNPCCheerful Accept>
+		CMsg9_5 <ifChatNPCCheerful Accept>
 		Msg9_6 <Wow, that's a surprise... I never expected you to return my feelings! I feel strangely happy all of a sudden...>
-		CMsg9_6 <ifNPCMelancholy Accept>
+		CMsg9_6 <ifChatNPCMelancholy Accept>
 
 		Prompt1 <\ELEMENT 4 attacked me.>
 		Prompt1_1 <I was attacked by \ELEMENT 4 .>
@@ -588,76 +588,76 @@ sub
 		result3 <NewChat Say 5>
 		Msg1 <You were right. I was following a dark path... I don't want to work for \ELEMENT 6 anymore.>
 		Msg1_1 <You were right... I am heading down a dark path... I feel like I am going crazy... I don't want this anymore. I don't want anything.>
-		CMsg1_1 <ifNPCSociable Accept>
+		CMsg1_1 <ifChatNPCSociable Accept>
 		Msg1_2 <I thought it over. You're right.>
-		CMsg1_2 <ifNPCShy Accept>
+		CMsg1_2 <ifChatNPCShy Accept>
 		Msg1_3 <So this is what a nervous breakdown feels like. You were right, \PC , about everything... and I was so wrong. I can't work for \ELEMENT 6 anymore. I'm broken.>
-		CMsg1_3 <ifNPCEasygoing Accept>
+		CMsg1_3 <ifChatNPCEasygoing Accept>
 		Msg1_4 <It's not easy for me to admit that you could be right about anything... but I fear you were. I've decided to leave \ELEMENT 6 ... I will find my own path.>
-		CMsg1_4 <ifNPCPassionate Accept>
+		CMsg1_4 <ifChatNPCPassionate Accept>
 		Msg1_5 <I think you could be right... there may still be hope for a demon like me. I was heading for self-destruction, \PC , but you refused to give up on me... I'm just so sorry for all the harm I've caused...>
-		CMsg1_5 <ifNPCCheerful Accept>
+		CMsg1_5 <ifChatNPCCheerful Accept>
 		Msg1_6 <\PC ... your words affected me. I think I may be crazy... or that I was crazy before... but I just can't go on like this. Screw \ELEMENT 6 ... from now on I choose my own path.>
-		CMsg1_6 <ifNPCMelancholy Accept>
+		CMsg1_6 <ifChatNPCMelancholy Accept>
 		Msg1_7 <For a long time, I was a servant of the worst evil... I was blinded by jealousy, by ambition... I did some very horrible things. You refused to give up on me, and for that I thank you.>
-		CMSg1_7 <ifNPCHeroic Accept>
+		CMSg1_7 <ifChatNPCHeroic Accept>
 
 		Msg2 <You convinced \ELEMENT 4 to quit \ELEMENT 6 .>
 		Msg3 <I think I've needed help for a long time... You've shown me something I had almost forgotten. I will never be the same as I was, but I can try to start a new life.>
 		Msg3_1 <I can't accept any help from you, I've already taken too many things... I know that I won't have a lot of time left once \ELEMENT 6 discovers I've left them. What I can do is tell you what they've been planning...>
-		CMsg3_1 <ifNPCSociable Accept>
+		CMsg3_1 <ifChatNPCSociable Accept>
 		Msg3_2 <I will. To think of all the things I've done for \ELEMENT 6 ... it's more than I can bear.>
-		CMsg3_2 <ifNPCShy Accept>
+		CMsg3_2 <ifChatNPCShy Accept>
 		Msg3_3 <Yeah, if I thought I was going to make it any longer than a week after \ELEMENT 6 finds out I've betrayed them, I'd check myself into therapy right away. Even if it means my death I can no longer take part in their evil plans...>
-		CMsg3_3 <ifNPCEasygoing Accept>
+		CMsg3_3 <ifChatNPCEasygoing Accept>
 		Msg3_4 <Are you implying that I've lost my mind? I think you could be right about that, as well... \ELEMENT 6 has to be stopped. I wasn't strong enough to resist their promises...>
-		CMsg3_4 <ifNPCPassionate Accept>
+		CMsg3_4 <ifChatNPCPassionate Accept>
 		Msg3_5 <You really think there could be redemption for someone who's done the things I have? You must be an optimist. I'm not certain of that... but I do know that I cannot remain with \ELEMENT 6 .>
-		CMsg3_5 <ifNPCCheerful Accept>
+		CMsg3_5 <ifChatNPCCheerful Accept>
 		Msg3_6 <No. Either \ELEMENT 6 will find me and kill me for betraying them, or one of the many enemies I made while in their service will find me and do the same.>
-		CMsg3_6 <ifNPCMelancholy Accept>
+		CMsg3_6 <ifChatNPCMelancholy Accept>
 
 		Msg4 <I've decided to quit \ELEMENT 6 ... I can never go back to the way things were, but I can make the most of that time I have left... I feel that without the GARU serum my body is dying... at least I will die a person, not a monster.>
 		Msg4_1 <It's \ELEMENT 6 that needs to be punished... If I can give the rest of my life any meaning, it will be through telling the world exactly what they're planning.>
-		CMsg4_1 <ifNPCSociable Accept>
+		CMsg4_1 <ifChatNPCSociable Accept>
 		Msg4_2 <Don't waste your energy. It's \ELEMENT 6 that you should be concerned about.>
-		CMsg4_2 <ifNPCShy Accept>
+		CMsg4_2 <ifChatNPCShy Accept>
 		Msg4_3 <You're probably right. For all the evil things I've done, I no longer deserve to live... but let me tell you this, as bad as I am, \ELEMENT 6 is a hundred times worse.>
-		CMsg4_3 <ifNPCEasygoing Accept>
+		CMsg4_3 <ifChatNPCEasygoing Accept>
 		Msg4_4 <All I wanted was to be strong, but \ELEMENT 6 saw my weakness... I acted as their puppet for far too long. Nothing remains but the empty shell of a monster that used to be a human being.>
-		CMsg4_4 <ifNPCPassionate Accept>
+		CMsg4_4 <ifChatNPCPassionate Accept>
 		Msg4_5 <I'll try to avoid that fate for as long as I can, thanks... \ELEMENT 6 knew exactly how to mold me, to make me their puppet. My part in their evil plan will be replaced quite quickly, I'm certain.>
-		CMsg4_5 <ifNPCCheerful Accept>
+		CMsg4_5 <ifChatNPCCheerful Accept>
 		Msg4_6 <Oh, that's going to happen soon enough... Either \ELEMENT 6 will hunt me down for betraying them, or one of the many enemies I've made while in their service will find me first. My only hope now is that I die a human being, not a monster.>
-		CMsg4_6 <ifNPCMelancholy Accept>
+		CMsg4_6 <ifChatNPCMelancholy Accept>
 
 		Msg5 <Control. They want to control everything. And I was so willing to get it for them, so long as they fed my delusions... You were always stronger than me, \PC . It may be up to the people like you to protect this world from them.>
 		Msg5_1 <They want the Earth. They've acquired a secret weapon to use against the Federation... But from what I know, I'm not certain they'll be able to control it. We could have the Night of Fire all over again...>
-		CMsg5_1 <ifNPCSociable Accept>
+		CMsg5_1 <ifChatNPCSociable Accept>
 		Msg5_2 <I never asked. All I wanted was power... their motivations didn't matter to me.>
-		CMsg5_2 <ifNPCShy Accept>
+		CMsg5_2 <ifChatNPCShy Accept>
 		Msg5_3 <World domination. They've located an ancient prezero superweapon, and are planning to use it against the Federation. The one good thing is that they don't have all the parts to activate it yet... there's still time to stop them.>
-		CMsg5_3 <ifNPCEasygoing Accept>
+		CMsg5_3 <ifChatNPCEasygoing Accept>
 		Msg5_4 <They're bringing about the second apocalypse. Destroy everything, then remake the world in their own image... They're planning to use a doomsday weapon from the age of superpowers. I only hope there's still enough time to stop them.>
-		CMsg5_4 <ifNPCPassionate Accept>
+		CMsg5_4 <ifChatNPCPassionate Accept>
 		Msg5_5 <You know, the usual... world domination mostly. They've got a secret weapon hidden somewhere in the territories. I'm not sure on all the details, I think it may use prezero tech... Anyhow, once they finish it, it'll be bad news.>
-		CMsg5_5 <ifNPCCheerful Accept>
+		CMsg5_5 <ifChatNPCCheerful Accept>
 		Msg5_6 <Power and destruction. They seek to control the Earth, but if they aren't stopped I fear they'll only succeed in destroying it. It's the Age of Superpowers all over again.>
-		CMsg5_6 <ifNPCMelancholy Accept>
+		CMsg5_6 <ifChatNPCMelancholy Accept>
 
 		Msg10 <I've decided to quit \ELEMENT 6 ... but I still can't forgive you for what you've done. I'll be seeing you around, \PC ...>
 		Msg10_1 <You'll be pleased to know that your words did, in fact, affect me. I've decided to leave \ELEMENT 6 ... Don't think this makes us friends. I still haven't forgiven you... I never will, until you die...>
-		CMsg10_1 <ifNPCSociable Accept>
+		CMsg10_1 <ifChatNPCSociable Accept>
 		Msg10_2 <I'm leaving \ELEMENT 6 . I can't take any more of this madness... But I'll still be killing you. See you around, old friend...>
-		CMsg10_2 <ifNPCShy Accept>
+		CMsg10_2 <ifChatNPCShy Accept>
 		Msg10_3 <You should know, I've decided to quit \ELEMENT 6 . Some of the things you said made a lot of sense... Mind you, this changes nothing between the two of us. Next time we meet you'll have to fight for your life. Goodbye \PC .>
-		CMsg10_3 <ifNPCEasygoing Accept>
+		CMsg10_3 <ifChatNPCEasygoing Accept>
 		Msg10_4 <I can't go on with this... I refuse to let \ELEMENT 6 transform me into a monster! I'm good enough to destroy you even without enhancement... Next time we meet, I'll finally have my revenge!>
-		CMsg10_4 <ifNPCPassionate Accept>
+		CMsg10_4 <ifChatNPCPassionate Accept>
 		Msg10_5 <The stress from working with \ELEMENT 6 was just too much, so I decided to quit... now I can devote myself full time to my true passion, getting revenge against you. Next time we meet I'll definitely end your life. Goodbye \PC .>
-		CMsg10_5 <ifNPCCheerful Accept>
+		CMsg10_5 <ifChatNPCCheerful Accept>
 		Msg10_6 <I can take no more of this madness. I've decided to leave \ELEMENT 6 . Don't think this means our fight is over- if anything, it's only just beginning...>
-		CMsg10_6 <ifNPCMelancholy Accept>
+		CMsg10_6 <ifChatNPCMelancholy Accept>
 
 		Prompt1 <It's alright. You can get help.>
 		Prompt1_1 <You need help, \ELEMENT 4 ...>
@@ -685,45 +685,45 @@ sub
 		result2 <NewChat Say 3 Reputation 3 -d10 AdvancePlot 0>
 		Msg1 <So, did you speak with \ELEMENT 4 ? What's \OPR E4 gotten into?>
 		Msg1_1 <Hey, \PC . Have you been to speak with \ELEMENT 4 yet? I heard there was some kind of mecha battle outside of \ELEMENT 3 and was worried that you might have been involved.>
-		CMsg1_1 <ifNPCSociable Accept>
+		CMsg1_1 <ifChatNPCSociable Accept>
 		Msg1_2 <Did you speak with \ELEMENT 4 yet?>
-		CMsg1_2 <ifNPCShy Accept>
+		CMsg1_2 <ifChatNPCShy Accept>
 		Msg1_3 <Have you had a chance to find out what \ELEMENT 4 's been doing yet?>
-		CMsg1_3 <ifNPCEasygoing Accept>
+		CMsg1_3 <ifChatNPCEasygoing Accept>
 		Msg1_4 <I heard there was a mecha fight in \ELEMENT 3 , and had a bad feeling you were involved in it. Did you speak with \ELEMENT 4 !?>
-		CMsg1_4 <ifNPCPassionate Accept>
+		CMsg1_4 <ifChatNPCPassionate Accept>
 		Msg1_5 <Welcome back. So, did you talk to \ELEMENT 4 ?>
-		CMsg1_5 <ifNPCCheerful Accept>
+		CMsg1_5 <ifChatNPCCheerful Accept>
 		Msg1_6 <It's been a while since you left... I was starting to get worried. Did you speak with \ELEMENT 4 yet?>
-		CMsg1_6 <ifNPCMelancholy Accept>
+		CMsg1_6 <ifChatNPCMelancholy Accept>
 
 		Msg2 <So it's as I feared... \OPR E4 may well be beyond redemption. You know, I used to have strong feelings for both of you, while we were in school. I think I need to be alone for a while.>
 		Msg2_1 <I know there must be a good reason behind \ELEMENT 4 's actions... I can't believe \OPR E4 'd do these things otherwise... I won't give up on \SPR E4 !>
-		CMsg2_1 <ifNPCSociable Accept>
+		CMsg2_1 <ifChatNPCSociable Accept>
 		Msg2_2 <Well, at least you tried. It appears \OPR E4 is beyond our help now.>
-		CMsg2_2 <ifNPCShy Accept>
+		CMsg2_2 <ifChatNPCShy Accept>
 		Msg2_3 <What happened to us? Years ago we were all friends, now \ELEMENT 4 is trying to kill you... What's happening to the world?>
-		CMsg2_3 <ifNPCEasygoing Accept>
+		CMsg2_3 <ifChatNPCEasygoing Accept>
 		Msg2_4 <This shouldn't be happening... We were friends once, dammit! Doesn't that mean anything anymore? What's happening to the world?>
-		CMsg2_4 <ifNPCPassionate Accept>
+		CMsg2_4 <ifChatNPCPassionate Accept>
 		Msg2_5 <I take it from your presence here that you won the fight, then? No? That's too bad...>
-		CMsg2_5 <ifNPCCheerful Accept>
+		CMsg2_5 <ifChatNPCCheerful Accept>
 		Msg2_6 <This is too horrible... When we were in high school, I used to look up to both you and \ELEMENT 4 ... now you're trying to kill one another... I need some time alone, I think, to sort out my feelings...>
-		CMsg2_6 <ifNPCMelancholy Accept>
+		CMsg2_6 <ifChatNPCMelancholy Accept>
 
 		Msg3 <You don't have to say; I can tell what happened from your eyes. You know, I used to have strong feelings for both you and \SPR E4 , while we were in school. I think I need to be alone for a while.>
 		Msg3_1 <It must have been pretty bad, then...>
-		CMsg3_1 <ifNPCSociable Accept>
+		CMsg3_1 <ifChatNPCSociable Accept>
 		Msg3_2 <Then it would appear there's nothing else we can do.>
-		CMsg3_2 <ifNPCShy Accept>
+		CMsg3_2 <ifChatNPCShy Accept>
 		Msg3_3 <This is getting way more serious than I'd like...>
-		CMsg3_3 <ifNPCEasygoing Accept>
+		CMsg3_3 <ifChatNPCEasygoing Accept>
 		Msg3_4 <I can't believe what's happening to \ELEMENT 4 ... \OPR E4 was the brightest among us, once. If someone like \SPR E4 can fall so low I'm afraid for the future of our world.>
-		CMsg3_4 <ifNPCPassionate Accept>
+		CMsg3_4 <ifChatNPCPassionate Accept>
 		Msg3_5 <That can't be good...>
-		CMsg3_5 <ifNPCCheerful Accept>
+		CMsg3_5 <ifChatNPCCheerful Accept>
 		Msg3_6 <In that case, don't tell me any more... I can't bear to think of my dear school friends at each other's throats... What happened to us?>
-		CMsg3_6 <ifNPCMelancholy Accept>
+		CMsg3_6 <ifChatNPCMelancholy Accept>
 
 		Prompt1 <Yes; \OPR E4 attacked me.>
 		Prompt1_1 <\ELEMENT 4 attacked me.>

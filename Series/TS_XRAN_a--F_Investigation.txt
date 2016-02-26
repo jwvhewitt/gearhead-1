@@ -49,34 +49,34 @@ sub
 	Msg151 <You were falsely implicated in the death of your parents.>
 	Msg102 <Ever hear the name \NARRATIVE 1 before? According to the files, he's the one who staged the hit on your parents. The Guardian's office in \ELEMENT 3 has started an investigation of their own. You may want to head there.>
 	Msg102_1 <Now that we have the data core, we should be able to connect all the big figures of the criminal underworld. \NARRATIVE 1 is the name of the person who murdered your parents; our surveillance indicates that \OPR N1 's hiding in \ELEMENT 3 .>
-	CMsg102_1 <ifNPCSociable Accept>
+	CMsg102_1 <ifChatNPCSociable Accept>
 	Msg102_2 <The assassin who killed your parents was \NARRATIVE 1 . The office in \ELEMENT 3 has been investigating \SPR N1 already; you may want to head there.>
-	CMsg102_2 <ifNPCShy Accept>
+	CMsg102_2 <ifChatNPCShy Accept>
 	Msg102_3 <That went well. We've learned that it was \NARRATIVE 1 who murdered your parents, though we don't yet know why or on whose orders. It's thought that \OPR N1 's currently hiding out in \ELEMENT 3 . The guardians are now looking for \SPR N1 .>
-	CMsg102_3 <ifNPCEasygoing Accept>
+	CMsg102_3 <ifChatNPCEasygoing Accept>
 	Msg102_4 <Their operation has been shut down perminantly! We've learned from the data core that \NARRATIVE 1 is the one who murdered your parents. It's thought that \OPR N1 's currently operating out of \ELEMENT 3 .>
-	CMsg102_4 <ifNPCPassionate Accept>
+	CMsg102_4 <ifChatNPCPassionate Accept>
 	Msg102_5 <The information from that database will piece together a lot of crimes. We've already confirmed that \NARRATIVE 1 is the one who killed your parents. The guardians in \ELEMENT 3 will be following up on this investigation.>
-	CMsg102_5 <ifNPCCheerful Accept>
+	CMsg102_5 <ifChatNPCCheerful Accept>
 	Msg102_6 <There wasn't as much in the database as we'd hoped. We did confirm that your parents were killed by \NARRATIVE 1 ... though the financing and reasons behind the killing remain elusive. The guardians in \ELEMENT 3 are investigating.>
-	CMsg102_6 <ifNPCMelancholy Accept>
+	CMsg102_6 <ifChatNPCMelancholy Accept>
 	Msg102_7 <Our suspicions have been confirmed... \NARRATIVE 1 is the person who carried out the murder of your parents. It's quite likely that \OPR N1 was hired by someone else. The guardian office in \ELEMENT 3 is doing their own investigation.>
 	CMsg102_7 <if= XRE NAV_XRECharacter Accept>
 
 	Msg152 <You discovered that \NARRATIVE 1 killed your parents.>
 	Msg103 <The hit against your parents seems to have been financed by \NARRATIVE 2 . I'll need more evidence before charges can be placed. The Guardian's office in \ELEMENT 3 has started an investigation of their own. You may want to head there.>
 	Msg103_1 <It was \NARRATIVE 2 that ordered the murder of your parents, we have more than enough evidence to prove that now. The guardian office in \ELEMENT 3 will be conducting a further investigation. If you want to follow the case you can go there.>
-	CMsg103_1 <ifNPCSociable Accept>
+	CMsg103_1 <ifChatNPCSociable Accept>
 	Msg103_2 <We've determined that \NARRATIVE 2 arranged for your parents to be killed. The guardian's office in \ELEMENT 3 will continue the investigation.>
-	CMsg103_2 <ifNPCShy Accept>
+	CMsg103_2 <ifChatNPCShy Accept>
 	Msg103_3 <From our initial exploration of the captured data core, it seems like \NARRATIVE 2 ordered the hit against your parents. The killer, whose identity we haven't confirmed yet, was working out of \ELEMENT 3 .>
-	CMsg103_3 <ifNPCEasygoing Accept>
+	CMsg103_3 <ifChatNPCEasygoing Accept>
 	Msg103_4 <We've examined the data. It was \NARRATIVE 2 that killed your parents! I'd say this counts as an act of war against the Federation... The Guardian's office in \ELEMENT 3 will be continuing the investigation.>
-	CMsg103_4 <ifNPCPassionate Accept>
+	CMsg103_4 <ifChatNPCPassionate Accept>
 	Msg103_5 <The computers we found contain lots of useful data... We've dealt a serious blow to organized crime in the Federation! It appears \NARRATIVE 2 ordered the hit on your parents. Our office in \ELEMENT 3 will continue to investigate.>
-	CMsg103_5 <ifNPCCheerful Accept>
+	CMsg103_5 <ifChatNPCCheerful Accept>
 	Msg103_6 <We've struck one small blow against organized crime, but I fear they'll recover far too quickly. It seems that \NARRATIVE 2 arranged the death of your parents. Our office in \ELEMENT 3 is doing an investigation of their own.>
-	CMsg103_6 <ifNPCMelancholy Accept>
+	CMsg103_6 <ifChatNPCMelancholy Accept>
 
 	Msg153 <You discovered that \NARRATIVE 2 arranged for your parents to be killed.>
 
@@ -97,142 +97,142 @@ sub
 
 	Msg1 <The mission was a failure, and now that the killers know we're after them we'll never recover that data.>
 	Msg1_1 <You didn't manage to defeat the guards... even worse, now the killers know we've been observing them. They'll move to another base, and probably wipe the data core just for good measure. There's nothing else we can do at this point.>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <You failed to defeat their guards... We won't get another chance. You blew it.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <Our forensics team didn't get a look at the data core. The assassins will move camp and it could take months to find them again, if ever. I guess you could say our mission was an unqualified failure.>
-	CMsg1_3 <ifNPCEasygoing Accept>
+	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <You failed... And now that the assassin gang know we're onto them, we won't get another chance to recover their data core.>
-	CMsg1_4 <ifNPCPassionate Accept>
+	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <Well, at least you made it back alive... the mission was a complete failure though. The killers will move their base camp, and if they haven't already wiped the data core they will soon. We'll have to find another lead.>
-	CMsg1_5 <ifNPCCheerful Accept>
+	CMsg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <The mission was a complete failure... The assassins will move their base elsewhere, and if they haven't wiped the data core yet they will soon.>
-	CMsg1_6 <ifNPCMelancholy Accept>
+	CMsg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg3 <The mission to assault the deadzone encampment and retrieve the evidence from their database is ready to go. Are you ready?>
 	Msg3_1 <I've been waiting for you to get back. We're all ready to start the mission. Your job will be to disable the guards, after which our ground troops can secure the data core. Are you ready?>
-	CMsg3_1 <ifNPCSociable Accept>
+	CMsg3_1 <ifChatNPCSociable Accept>
 	Msg3_2 <Are you ready to start the mission yet?>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <We can start the operation any time you're ready.>
-	CMsg3_3 <ifNPCEasygoing Accept>
+	CMsg3_3 <ifChatNPCEasygoing Accept>
 	Msg3_4 <We should start the operation quickly, before the killers have a chance to move their base... Are you ready yet?>
-	CMsg3_4 <ifNPCPassionate Accept>
+	CMsg3_4 <ifChatNPCPassionate Accept>
 	Msg3_5 <Once we recover the data core from the assassin's base, we should have lots of information on the criminal networks of the Federated Territories. Are you ready to start the mission yet?>
-	CMsg3_5 <ifNPCCheerful Accept>
+	CMsg3_5 <ifChatNPCCheerful Accept>
 	Msg3_6 <Those killers have claimed enough innocent lives... it's time we learned who they're working for, and why. Are you ready to start?>
-	CMsg3_6 <ifNPCMelancholy Accept>
+	CMsg3_6 <ifChatNPCMelancholy Accept>
 
 	Msg4 <Hello. I wanted to speak with you, with regard to the death of your parents... We believe that they were murdered. At the moment we are attempting to obtain evidence which could confirm that.>
 	Msg4_1 <Hello, \PC . I'm sure this is a difficult time for you... I've been helping to investigate your parent's death. Right now things look suspicious but we'll need more evidence before we can charge anyone in the case.>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <Ah, \PC . I have been investigating the death of your parents. It is believed they were murdered... More information is needed before I can say for certain.>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <I wanted to speak with you. I've been investigating the death of your parents. All I can say is that they may or may not have been murdered... I'm going to need more evidence before I can say for certain.>
-	CMsg4_3 <ifNPCEasygoing Accept>
+	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <\PC , I have something shocking to tell you... I fear that your parents were murdered! The guardians don't yet have enough evidence to confirm this but I'm working on the case myself.>
-	CMsg4_4 <ifNPCPassionate Accept>
+	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <Hello, \PC . I'm sorry but I need to ask you some questions about your parents. We've been investigating their deaths, and it looks like they could have been murdered... though we're going to need more evidence before we can say for sure.>
-	CMsg4_5 <ifNPCCheerful Accept>
+	CMsg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <I've been investigating the death of your parents. There have been several other recent deaths which follow the same basic patter. I fear they may have been the victims of an assassin gang, but more evidence is needed before we can be certain.>
-	CMsg4_6 <ifNPCMelancholy Accept>
+	CMsg4_6 <ifChatNPCMelancholy Accept>
 
 	Msg5 <Come back here once you've eliminated the guardian mecha. Our forensic cryptologists will then be able to scour their computer systems for the contract.>
 	Msg5_1 <Take out all of the guardian mecha... Our forensics team has delicate equipment that can't be endangered by a mecha firefight. Once the area is secure we can take the data core and sweep for additional evidence.>
-	CMsg5_1 <ifNPCSociable Accept>
+	CMsg5_1 <ifChatNPCSociable Accept>
 	Msg5_2 <Eliminate the guardian mecha. Then, our lab boys can do their job.>
-	CMsg5_2 <ifNPCShy Accept>
+	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <Just take care of the mecha, we'll take care of securing the evidence.>
-	CMsg5_3 <ifNPCEasygoing Accept>
+	CMsg5_3 <ifChatNPCEasygoing Accept>
 	Msg5_4 <Destroy all of their sentries. We can't afford for the mobile lab or the data core to be damaged in a firefight.>
-	CMsg5_4 <ifNPCPassionate Accept>
+	CMsg5_4 <ifChatNPCPassionate Accept>
 	Msg5_5 <Eliminate the guardian mecha. Once we've captured the data core we'll be able to answer a whole lot of questions, about this case and many others.>
-	CMsg5_5 <ifNPCCheerful Accept>
+	CMsg5_5 <ifChatNPCCheerful Accept>
 	Msg5_6 <Destroy the guards, and make sure that nothing goes wrong. We only have one chance at this and if you mess up we'll never get another one.>
-	CMsg5_6 <ifNPCMelancholy Accept>
+	CMsg5_6 <ifChatNPCMelancholy Accept>
 
 	Msg6 <Make sure your equipment is in perfect working order, then we can start the mission.>
 	Msg6_1 <You'll want to make sure that your gear is in top shape before we head out. Otherwise you might not be able to complete the mission, and as I think I mentioned we're only going to have one shot at this.>
-	CMsg6_1 <ifNPCSociable Accept>
+	CMsg6_1 <ifChatNPCSociable Accept>
 	Msg6_2 <Come back when you're ready to start.>
-	CMsg6_2 <ifNPCShy Accept>
+	CMsg6_2 <ifChatNPCShy Accept>
 	Msg6_3 <Sure, just come back when you're ready to head out.>
-	CMsg6_3 <ifNPCEasygoing Accept>
+	CMsg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <This is going to be a difficult battle... Make sure you're ready before we start.>
-	CMsg6_4 <ifNPCPassionate Accept>
+	CMsg6_4 <ifChatNPCPassionate Accept>
 	Msg6_6 <We'll only have one chance here, so you better be ready when we begin.>
-	CMsg6_6 <ifNPCMelancholy Accept>
+	CMsg6_6 <ifChatNPCMelancholy Accept>
 
 	Msg7 <The guards have about \VAL Threat S103 150 points worth of mecha guarding their computer center. If you don't eliminate them all and capture the base, they're just going to move camp and we may never find them again.>
 	Msg7_1 <As near as our surveillance can tell, there's always \VAL Threat S103 150 points worth of mecha guarding the base. You'll have to take down all of that before our lab truck can even get close.>
-	CMsg7_1 <ifNPCSociable Accept>
+	CMsg7_1 <ifChatNPCSociable Accept>
 	Msg7_2 <It's believed they have \VAL Threat S103 150 tactical threat points worth of mecha.>
-	CMsg7_2 <ifNPCShy Accept>
+	CMsg7_2 <ifChatNPCShy Accept>
 	Msg7_3 <They have around \VAL Threat S103 150 points of mecha. All of that has to be destroyed so that we can capture the base, and the computers inside.>
-	CMsg7_3 <ifNPCEasygoing Accept>
+	CMsg7_3 <ifChatNPCEasygoing Accept>
 	Msg7_4 <At all times, \VAL Threat S103 150 threat points worth of military grade hardware are guarding the base. All of this must be destroyed so that we can move in.>
-	CMsg7_4 <ifNPCPassionate Accept>
+	CMsg7_4 <ifChatNPCPassionate Accept>
 	Msg7_5 <So long as our intel is right, they've only got \VAL Threat S103 145 points worth of mecha guarding their base. It should be no trouble to get through.>
-	CMsg7_5 <ifNPCCheerful Accept>
+	CMsg7_5 <ifChatNPCCheerful Accept>
 	Msg7_6 <Their base is defended by \VAL Threat S103 165 points worth of hardware, and their pilots are all combat veterans. It's likey to be a difficult fight and you're going to have to take them all out in one go.>
-	CMsg7_6 <ifNPCMelancholy Accept>
+	CMsg7_6 <ifChatNPCMelancholy Accept>
 
 	Msg8 <Well, to prove that, I'm going to need some data. You're an adventurer, right? Evidence suggests there was a contract on your parents lives. I could use your help to recover the details.>
 	Msg8_1 <You're a cavalier, right? I heard about your adventures. Maybe you can help me gather the proof we'll need that it was, in fact, murder.>
-	CMsg8_1 <ifNPCSociable Accept>
+	CMsg8_1 <ifChatNPCSociable Accept>
 	Msg8_2 <In order to prove that we'll need data. Maybe you can help me to get that.>
-	CMsg8_2 <ifNPCShy Accept>
+	CMsg8_2 <ifChatNPCShy Accept>
 	Msg8_3 <If you want to get involved, I could use some assistance. In order to prove that it was murder we're going to need some data. You can help me to get that.>
-	CMsg8_3 <ifNPCEasygoing Accept>
+	CMsg8_3 <ifChatNPCEasygoing Accept>
 	Msg8_4 <You know that and I know that, but in order for it to stand up in court we're going to need some data. If you're interested in the truth you might be able to help me. You're a cavalier, right?>
-	CMsg8_4 <ifNPCPassionate Accept>
+	CMsg8_4 <ifChatNPCPassionate Accept>
 	Msg8_5 <We don't know that for sure... but, yeah, I think you're right. You're a mecha pilot, aren't you? That could come in handy. Evidence suggests there was a contract on your parents lives. I could use your help to recover the details.>
-	CMsg8_5 <ifNPCCheerful Accept>
+	CMsg8_5 <ifChatNPCCheerful Accept>
 	Msg8_6 <It's one thing to know that, and quite another to prove it. I have an offer for you... revenge against those who killed your parents, and help for us to find out who hired them.>
-	CMsg8_6 <ifNPCMelancholy Accept>
+	CMsg8_6 <ifChatNPCMelancholy Accept>
 
 	Msg9 <\ELEMENT 2 in \SCENE EScene 2 wants you to help investigate the death of your parents.>
 	Msg10 <A contract on their lives, specifically, and the identity of whoever paid their killers. This information likely resides in an underworld data center in the dead zone, but I'm going to need a pilot to help recover it.>
 	Msg10_1 <We need something tying their deaths to the other murders in this case file. There's probably sufficient evidence in an underworld data center that we've been watching, but getting inside is going to be tough. I could use your help.>
-	CMsg10_1 <ifNPCSociable Accept>
+	CMsg10_1 <ifChatNPCSociable Accept>
 	Msg10_2 <What I really want is the identity of whoever ordered these killings. You're a pilot, right? Maybe you can help me to get that.>
-	CMsg10_2 <ifNPCShy Accept>
+	CMsg10_2 <ifChatNPCShy Accept>
 	Msg10_3 <I need something connecting the death of your parents to these other murders... And I think I know where I can find that, if you're willing to help me.>
-	CMsg10_3 <ifNPCEasygoing Accept>
+	CMsg10_3 <ifChatNPCEasygoing Accept>
 	Msg10_4 <We need information about who financed the murder, and why... The thugs who carried it out are small fry. I want the head of the person who's really behind this. If you're willing to help me, I think I know where we can get this information.>
-	CMsg10_4 <ifNPCPassionate Accept>
+	CMsg10_4 <ifChatNPCPassionate Accept>
 	Msg10_5 <There's a mafia computer center in the dead-zone that probably holds all the information we need. You're an adventurer, right? If you're half decent as a mecha pilot I could use your help.>
-	CMsg10_5 <ifNPCCheerful Accept>
+	CMsg10_5 <ifChatNPCCheerful Accept>
 	Msg10_6 <Finding enough evidence might be very difficuly, but I do have a singe lead... There's a mafia datacenter hidden in the dead-zone. If we could get access to their machines we might be able to learn something. I could use your help with this.>
-	CMsg10_6 <ifNPCMelancholy Accept>
+	CMsg10_6 <ifChatNPCMelancholy Accept>
 
 	Msg11 <The data bank where we can find the contract is out in the dead zone, protected by ravager mecha. I need you to disable the guards so our lab boys can recover the evidence. You better do well the first time, since we only get one chance.>
 	Msg11_1 <We'll have to capture the mafia computer base and analyze what's there. Your job will be to disable the bandit mecha that guard it, so our forensics team can move in. If we fail they'll move camp and we won't get a second chance.>
-	CMsg11_1 <ifNPCSociable Accept>
+	CMsg11_1 <ifChatNPCSociable Accept>
 	Msg11_2 <The assassin cell maintains a data center in the dead zone. Your job is to disable their mecha. If we don't capture it on the first try we aren't going to get another chance.>
-	CMsg11_2 <ifNPCShy Accept>
+	CMsg11_2 <ifChatNPCShy Accept>
 	Msg11_3 <Here's the deal: it's believed that the assassins have a computer base in the dead zone. We know where that is, but we need to disable the mecha guards before our fornsics team can move in. That's your job.>
-	CMsg11_3 <ifNPCEasygoing Accept>
+	CMsg11_3 <ifChatNPCEasygoing Accept>
 	Msg11_4 <Our intel department has located a mafia data center hidden in the dead-zone. Your job will be to destroy the bandits guarding it, so our crypto-forensics team can move in. Better do this right the first time otherwise they'll just move shop.>
-	CMsg11_4 <ifNPCPassionate Accept>
+	CMsg11_4 <ifChatNPCPassionate Accept>
 	Msg11_5 <We had a lucky break, and discovered the exact location of an underworld data center. I want you to engage the ravagers who are guarding it... Once their mecha are out of the way our forensics team can move in.>
-	CMsg11_5 <ifNPCCheerful Accept>
+	CMsg11_5 <ifChatNPCCheerful Accept>
 	Msg11_6 <This will be a risky mission. We have to capture a major criminal installation in the dead-zone. If we don't do this quickly, they'll just move it and we'll never find them again. Your task is to eliminate their mecha. It could be dangerous.>
-	CMsg11_6 <ifNPCMelancholy Accept>
+	CMsg11_6 <ifChatNPCMelancholy Accept>
 
 	Msg12 <We don't have enough manpower to go around. Without outside assistance, this investigation might be left for weeks... The evidence could be destroyed by then. Of course you're under no obligation to help but things would be quicker if you did.>
 	Msg12_1 <Perhaps I heard wrong about you. I thought you were an adventurer? This is a chance to find the people who killed your family, and you're refusing it? What will people say about that...?>
-	CMsg12_1 <ifNPCSociable ifG PCRep 6 0 Accept>
+	CMsg12_1 <ifChatNPCSociable ifG PCRep 6 0 Accept>
 	Msg12_2 <If I had all the manpower I needed I wouldn't be asking for help. If you're concerned about solving this case, then helping me yourself will make things go faster.>
-	CMsg12_2 <ifNPCShy Accept>
+	CMsg12_2 <ifChatNPCShy Accept>
 	Msg12_3 <Well, if you want this investigation to languish until the brass gets around to approving my mecha requisition, you don't have to help. Of course that could be months from now...>
-	CMsg12_3 <ifNPCEasygoing Accept>
+	CMsg12_3 <ifChatNPCEasygoing Accept>
 	Msg12_4 <Your parents are dead, and you don't care enough to do anything about it!? I thought you would have jumped at the opportunity to help...>
-	CMsg12_4 <ifNPCPassionate Accept>
+	CMsg12_4 <ifChatNPCPassionate Accept>
 	Msg12_5 <The big problem is that we don't have enough manpower or equipment to go around. We especially don't have enough mecha... Personally, I blame "Section Two" for losing too many robots in the line of duty.>
-	CMsg12_5 <ifNPCCheerful Accept>
+	CMsg12_5 <ifChatNPCCheerful Accept>
 	Msg12_6 <I expected you to appreciate my offer... This is, after all, a chance to get revenge against those who killed your parents.>
-	CMsg12_6 <ifNPCMelancholy Accept>
+	CMsg12_6 <ifChatNPCMelancholy Accept>
 
 
 	Prompt1 <Let's go!>
