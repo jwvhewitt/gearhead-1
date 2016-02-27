@@ -1,3 +1,4 @@
+1.200	February 27 2016
 - Refactored "ifNPC[trait]" macros, fixing some plot emails (aslmacro.txt)
 - Mauna, Tokto no longer hidden in SDL mode (TS_MAP_World.txt)
 - Imported shuttle service from GH2 (services.pp)
