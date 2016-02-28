@@ -82,6 +82,7 @@ Function RepairSkillNeeded( Part: GearPtr ): Integer;
 Function PitFix( Part,Fixer: GearPtr ): Integer;
 
 procedure ExpandCharacter( PC: GearPtr );
+procedure ResizeCharacter( PC: GearPtr );
 
 Function MappingRange( Mek: GearPtr; Scale: Integer ): Integer;
 Procedure AddMoraleDMG( PC: GearPtr; M: Integer );
@@ -539,6 +540,7 @@ var
 		M^.S := N;
 		M^.V := MasterSize( M );
 		InitGear( M );
+		M^.Stat[STAT_Resizable] := 1;
 	end;
 begin
 	if PC^.SubCom = Nil then begin
@@ -570,6 +572,24 @@ begin
 		SetSAtt( M^.SA , 'NAME <' + SATtValue( ABILITY_MESSAGES , 'EXPAND_RightLeg' ) + '>' );
 		InsertLimb( GS_Leg );
 		SetSAtt( M^.SA , 'NAME <' + SATtValue( ABILITY_MESSAGES , 'EXPAND_LeftLeg' ) + '>' );
+	end;
+end;
+
+Procedure ResizeCharacter ( PC: GearPtr );
+	{ Adjust the size of the limbs of a human character to }
+        { reflect an altered body stat.}
+var
+	Module : GearPtr;
+begin
+	if PC^.G = GG_Character then begin
+		Module := PC^.SubCom;
+		While Module <> Nil do begin
+			if (Module^.G = GG_Module) 
+                            and (Module^.Stat[STAT_Resizable] = 1)
+			then
+			    Module^.V := MasterSize (PC);
+			Module := Module^.Next;
+		end;
 	end;
 end;
 

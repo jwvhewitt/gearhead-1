@@ -7,15 +7,14 @@ In addition, the CRT mods fix the cursor-off routines to use sequences
 understood by XTerm, PuTTY and old versions of Linux, instead of sequences
 specific to Linux.
 
-These mods are specific to FPC version 2.0.4 on unix.
+These mods are specific to FPC version 3.0.0 on unix.
 
 To use it:
 
 1.  Obtain the files:
-     fpc/rtl/unix/crt.pp
-     fpc/rtl/inc/crth.inc
-     fpc/rtl/inc/textrec.inc
-from the FreePascal sources.  Copy them all into the the main gearhead
+     fpc-3.0.0/packages/rtl-console/src/unix/crt.pp
+     fpc-3.0.0/packages/rtl-console/src/inc/crth.inc
+from the FreePascal sources.  Copy them into the the main gearhead
 directory, alongside the existing *.pp files.
 
 2. Apply the patch "crt.pp.diff" in this directory.

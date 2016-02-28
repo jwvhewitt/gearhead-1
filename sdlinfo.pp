@@ -70,6 +70,7 @@ var
 	Interact_Sprite,Module_Sprite,Backdrop_Sprite: SensibleSpritePtr;
 	Altimeter_Sprite,Speedometer_Sprite: SensibleSpritePtr;
 	StatusFX_Sprite,OtherFX_Sprite: SensibleSpritePtr;
+    Master_Portrait_List: SAttPtr;
 
 Function JobAgeGenderDesc( NPC: GearPtr ): String;
 	{ Return the Job, Age, and Gender of the provided character in }
@@ -709,7 +710,7 @@ begin
 	{ Check the standard place first. If no portrait is defined, }
 	{ grab one from the IMAGE/ directory. }
 	it := SAttValue( NPC^.SA , 'SDL_PORTRAIT' );
-	if it = '' then begin
+	if (it = '') or not StringInList( it, Master_Portrait_List ) then begin
 		{ Create a portrait list based upon the character's gender. }
 		if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
 			PList := CreateFileList( Graphics_Directory + 'por_m_*.*' );
@@ -1097,5 +1098,11 @@ initialization
 	Speedometer_Sprite := ConfirmSprite( Speedometer_Sprite_Name , '' , 26 , 65 );
 	StatusFX_Sprite := ConfirmSprite( StatusFX_Sprite_Name , '' , 10 , 12 );
 	OtherFX_Sprite := ConfirmSprite( OtherFX_Sprite_Name , '' , 10 , 12 );
+
+	Master_Portrait_List := CreateFileList( Graphics_Directory + 'por_*.*' );
+
+finalization
+    DisposeSAtt( Master_Portrait_List );
+
 
 end.

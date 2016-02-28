@@ -1410,6 +1410,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 					Inc( PC^.Stat[ N ] );
 					AddNAtt( PC^.NA , NAG_Experience , NAS_SpentXP , XP );
 					AddNAtt( PC^.NA , NAG_StatImprovementLevel , N , 1 );
+					ResizeCharacter( PC );
 				end;
 
 			end;

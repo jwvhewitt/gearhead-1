@@ -7,7 +7,7 @@ DJ_OUTOFACTION <# is removed to a safe location.>
 ATA_NOTREADY <# isn't ready to be fired right now.>
 INSTALL_NOTACTIVE <You can't install anything while the engine is running.>
 EXTRACT_NOTACTIVE <You can't remove anything while the engine is running.>
-TRANSFER_NOTHERE <This isn't a safe place to be trading items.>
+TRANSFER_UNSAFE <Because this is an unsafe area, you may only transfer to a nearby lancemate.>
 LearnSkill_Warning <Learning this skill will result in an XP penalty. Are you sure you want to do that?>
 LearnSkill_AcceptPenalty <Accept XP Penalty>
 LearnSkill_ForgetPrevious <Replace Previous Skill>

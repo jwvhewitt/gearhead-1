@@ -47,6 +47,7 @@ Const
 	GS_Storage = 8;
 
 	STAT_Armor = 1;
+	STAT_Resizable = 2;
 
 	{ This array tells which modules are usable by which forms. }
 	{ Some systems ( movers, sensors, cockpits ) will function no matter where they are mounted. }

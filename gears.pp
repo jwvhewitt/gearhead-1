@@ -236,6 +236,7 @@ Function CreateFileList( const P: String ): SAttPtr;
 
 Function NumHeadMatches( const head_in: String; LList: SAttPtr ): Integer;
 Function FindHeadMatch( const head_in: String; LList: SAttPtr; N: Integer ): SAttPtr;
+Function StringInList( const string_to_match: String; LList: SAttPtr ): Boolean;
 
 Function CreateNAtt(var LList: NAttPtr): NAttPtr;
 Procedure DisposeNAtt(var LList: NAttPtr);
@@ -649,6 +650,20 @@ begin
 		LList := LList^.Next;
 	end;
 	FindHeadMatch := HM;
+end;
+
+Function StringInList( const string_to_match: String; LList: SAttPtr ): Boolean;
+    { Check this list to see if it includes string_to_match. If it does, }
+    { return True. Otherwise return False. }
+var
+    foundit: Boolean;
+begin
+    foundit := False;
+    while ( LList <> Nil ) and not foundit do begin
+        if LList^.Info = string_to_match then foundit := True;
+        LList := LList^.Next;
+    end;
+    StringInList := foundit;
 end;
 
 Function CreateNAtt(var LList: NAttPtr): NAttPtr;

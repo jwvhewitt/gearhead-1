@@ -1633,7 +1633,10 @@ begin
 	Slot := ScriptValue( event , GB , scene );
 	Value := ScriptValue( event , GB , scene );
 
-	if Grabbed_Gear <> Nil then Grabbed_Gear^.Stat[ Slot ] := Value;
+	if Grabbed_Gear <> Nil then begin
+		Grabbed_Gear^.Stat[ Slot ] := Value;
+		ResizeCharacter(Grabbed_Gear);
+	end;
 end;
 
 Procedure ProcessGAddStat( var Event: String; GB: GameBoardPtr; Scene: GearPtr );
@@ -1646,7 +1649,10 @@ begin
 	Slot := ScriptValue( event , GB , scene );
 	Value := ScriptValue( event , GB , scene );
 
-	if Grabbed_Gear <> Nil then Grabbed_Gear^.Stat[ Slot ] := Grabbed_Gear^.Stat[ Slot ] + Value;
+	if Grabbed_Gear <> Nil then begin
+		Grabbed_Gear^.Stat[ Slot ] := Grabbed_Gear^.Stat[ Slot ] + Value;
+		ResizeCharacter(Grabbed_Gear);
+	end;
 end;
 
 Procedure ProcessGSetSAtt( var Event: String; Source: GearPtr );

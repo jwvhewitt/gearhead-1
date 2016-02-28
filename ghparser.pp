@@ -95,6 +95,8 @@ begin
 		if NPC^.Stat[T] < 1 then NPC^.Stat[T] := 1;
 	end;
 
+	{ Make sure the body parts match the Body stat }
+	ResizeCharacter( NPC );
 end;
 
 Procedure SelectCombatEquipment( NPC,EquipList: GearPtr; EPV: LongInt );
