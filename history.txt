@@ -1,3 +1,6 @@
+- Fixed GuardFight1, GuardFight2 memos
+- Fixed Deep Lobster sashimi bug (WMONdefault.txt)
+- Cosplay loads mecha sprites correctly (cosplay.pas)
 - Can transfer items in combat if nearby (Michael Deutschmann patch)
 - Updated xterm-boxdrawing (Michael Deutschmann patch)
 - Character limbs resized as Body stat changes (Michael Deutschmann patch)

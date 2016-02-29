@@ -4,6 +4,11 @@ Plot 0
 	% 1 -> Time Limit Timer
 	% 2 -> Combat Indicator
 
+    % Feb 29 2016 Note: This plot is old and weirdly written. Maybe it
+    %  should be replaced with a new personal combat plot?
+    %  I'm pretty sure it predates the "memo" command, since it didn't use
+    %  memos until I just added them.
+
 	element1 <Character Guardian>
 	% Element 2 -> Difficulcy Level
 
@@ -117,8 +122,9 @@ sub
 	Plot 1
 		% The player lost the battle.
 		% Time limit - this plot will fade after a short time.
-		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 3500>
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 3500 memo 1>
 		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+        msg1 <You should report to \PERSONA E1 about the mission.>
 	sub
 		Persona 1
 		% The exact message given by the NPC will vary depending on
@@ -139,8 +145,9 @@ sub
 	Plot 2
 		% The player won the battle.
 		% Time limit - this plot will fade after a short time.
-		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500 memo 1>
 		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+        msg1 <You should report to \PERSONA E1 for your pay.>
 	sub
 		Persona 1
 		greeting <NewChat AdvancePlot 0 AddReact 1 if= E2 10 Else GoLvl9 CashPrize 10000 Goto GoSaySomething>
