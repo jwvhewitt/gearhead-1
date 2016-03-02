@@ -4,7 +4,7 @@
 - Can sell mecha, mecha inventory at mechanic shops too (services.pp)
 - Added thin doors (sdlmap.pp)
 - Added PLOT_SickMission.txt
-- Added BondWith ASL command (arenascript.pp)
+- Added BondWith, ifGExists ASL commands (arenascript.pp)
 - All usable skills known by lancemates added to skills menu (pcaction.pp)
 - Status effects won't occur during quick time (arenacfe.pp)
 - Added LoseRenown ASL command from GH2 (arenascript.pp)

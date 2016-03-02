@@ -10,6 +10,7 @@ Plot 0
 	%  V1 = Time Limit
 	%  V2 = Combat Indicator, if V2=1 combat has been entered
 	%  V3 = Email sent indicator.
+    %  V4 = Salvage Indicator
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E1 is killed.
@@ -24,6 +25,7 @@ Plot 0
 	% if the player was victorious or V2=2 is the player lost.
 	nu1 <if= T1 0 if= V2 1  if= L3 0 else GoPCWon V= 2 2  LoseRenown>
 	GoPCWon <V= 2 3  Reputation 6  1  XPV 50>
+    nu2 <if= T2 0 if= v2 1 if= v4 0 V= 4 1 Salvage>
 
 	% Email check. The NPC might send the PC email about this mission.
 	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 V= 3 1 Email d5>
@@ -57,7 +59,7 @@ sub
 	%  V3 = Threat value of enemy mecha
 	%  V4 = Reward offered to PC for the mission
 
-	greeting <NewChat if= P2 3 else GoCheckLoss Say d5 AddReact d5 CashPrize V4 AdvancePlot 0>
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 AddReact d5 CashPrize V4 AdvancePlot 0>
 	GoCheckLoss <if= P2 2 else GoCheckMission V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
 	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
@@ -107,10 +109,10 @@ sub
 
 	% 01 - 05 :  Player has won the battle and is being paid.
 	Msg1 <You did it. Good job.>
-	Msg2 <With their leader shamed, the rest of the bandits have split up just as predicted. Here's your pay.>
-	Msg3 <Their leader will never show his face around these parts again. Here's the pay you earned. Good job.>
-	Msg4 <They thought their leader was invincible... well, you showed them they were wrong. Here's a reward for helping to protect \SCENE EScene 1 .>
-	Msg5 <He thought he was undefeatable... I'm glad that you proved him wrong. Here's your pay for ridding \SCENE EScene 1 of the bandits.>
+	Msg1_2 <With their leader shamed, the rest of the bandits have split up just as predicted. Here's your pay.>
+	Msg1_3 <Their leader will never show his face around these parts again. Here's the pay you earned. Good job.>
+	Msg1_4 <They thought their leader was invincible... well, you showed them they were wrong. Here's a reward for helping to protect \SCENE EScene 1 .>
+	Msg1_5 <He thought he was undefeatable... I'm glad that you proved him wrong. Here's your pay for ridding \SCENE EScene 1 of the bandits.>
 
 	% 06 - 10 :  Player has lost the battle.
 	Msg6 <You lost... maybe their leader really is invincible?>
@@ -141,11 +143,11 @@ sub
 	Msg25 <All we need is to demoralize them and they'll move on. If the leader was defeated in combat, the other bandits would lose their respect for him, and the gang would break up. It's worth $ \VAL V4 if you can do that.>
 
 	% 26 - 30 :  Combat is starting
-	Msg26 <Good luck out there. I'll identify which mecha belongs to the leader. Shoot him down; you can ignore the others if you want.>
-	Msg27 <I better warn you, there's a whole lot of them out there. Just aim straight for the leader... humiliating him in battle is the most important thing.>
-	Msg28 <The leader's mecha will be identified when you reach the field; don't let him defeat you.>
-	Msg29 <Good luck. Strike quickly, then make a clean getaway.>
-	Msg30 <Do battle for \SCENE ESCene 1 !>
+	Msg26 <Good luck out there. I'll identify which mecha belongs to the leader. Shoot him down; you can ignore the others if you want. Or defeat them all and you can keep the salvage too.>
+	Msg27 <I better warn you, there's a whole lot of them out there. Just aim straight for the leader... humiliating him in battle is the most important thing. Though if you can defeat them all the salvage is yours.>
+	Msg28 <The leader's mecha will be identified when you reach the field; don't let him defeat you. Beat the lot of them and I'll throw in the salvage.>
+	Msg29 <Good luck. Strike quickly, then make a clean getaway. Or if you think you can take them defeat the whole gang and you can keep the salvage.>
+	Msg30 <Do battle for \SCENE ESCene 1 ! Defeat them all and you can keep the salvage.>
 
 	% 31 - 35 :  Describe enemy point value
 	Msg31 <The gang has around \VAL V3 points worth of mecha. Your best bet is to ignore most of them, and just concentrate on taking down the boss!>
