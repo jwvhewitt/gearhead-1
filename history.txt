@@ -1,3 +1,4 @@
+- Fixed bug when story ends during a conversation (arenascript.pp)
 - Added InfoTier stat for modules (ghmodule.pp,sdlinfo.pp,coninfo.pp)
 - Fixed GuardFight1, GuardFight2 memos
 - Fixed Deep Lobster sashimi bug (WMONdefault.txt)

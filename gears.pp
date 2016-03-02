@@ -1262,7 +1262,11 @@ end;
 
 initialization
 	{ Make sure we have the required data directories. }
+{$IFDEF WINDOWS}
+    Config_Directory := GetUserDir() + OS_Dir_Separator + 'gharena' + OS_Dir_Separator;
+{$ELSE}
     Config_Directory := GetAppConfigDir(False);
+{$ENDIF}
 	Config_File := Config_Directory + 'gharena.cfg';
 
 	Save_Game_DirName := 'SaveGame';

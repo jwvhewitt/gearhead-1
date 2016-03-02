@@ -121,7 +121,8 @@ var
 	ASRD_InfoGear: GearPtr;
 	ASRD_GameBoard: GameBoardPtr;
 	ASRD_MemoMessage: String;
-    I_Persona: GearPtr;
+
+    NeedGC: Boolean;
 
 
 Procedure ArenaScriptReDraw;
@@ -2150,7 +2151,7 @@ begin
 		Source := PlotMaster( Source );
 		if ( Source <> Nil ) and ( Source^.G = GG_Plot ) then begin
             AdvancePlot( GB , Source^.Parent , Source , N );
-            if ( I_Persona <> Nil ) and ( I_Persona^.Parent = Source ) then I_Persona := Nil;
+            NeedGC := True;
         end;
 	end;
 end;
@@ -2198,7 +2199,7 @@ begin
 
 		{ Mark the story for deletion. }
 		Source^.G := GG_AbsolutelyNothing;
-        if ( I_Persona <> Nil ) and ( I_Persona^.Parent = Source ) then I_Persona := Nil;
+        NeedGC := True;
 	end;
 end;
 
@@ -4091,7 +4092,6 @@ begin
 	I_PC := PC;
 	I_NPC := NPC;
 	I_Rumors := CreateRumorList( GB , PC , NPC );
-    I_Persona := Interact;
 {$IFDEF SDLMODE}
 	ASRD_GameBoard := GB;
 {$ENDIF}
@@ -4170,7 +4170,7 @@ begin
 
 		end;
 
-	until ( N = -1 ) or ( IntMenu^.NumItem < 1 ) or ( I_Endurance < 1 ) or ( I_NPC = Nil ) or (I_Persona = Nil);
+	until ( N = -1 ) or ( IntMenu^.NumItem < 1 ) or ( I_Endurance < 1 ) or ( I_NPC = Nil );
 
 	{ If the menu is empty, pause for a minute. Or at least a keypress. }
 	if IntMenu^.NumItem < 1 then begin
@@ -4193,10 +4193,10 @@ begin
 	{ Check - If this persona gear is the child of a gear whose type }
 	{ is GG_ABSOLUTELYNOTHING, chances are that it used to be a plot }
 	{ but it's been advanced by the conversation. Delete it. }
-	if I_Persona <> Nil then begin
+	{if Interact <> Nil then begin
 		Interact := FindRoot( Interact );
 		PruneNothings( Interact );
-	end;
+	end;}
 
 	{ Set the ReTalk value. }
 	{ Base retalk time is 1500 ticks; may be raised or lowered depending }
@@ -4211,9 +4211,10 @@ begin
 	DisposeRPGMenu( IntMenu );
 	DisposeSAtt( I_Rumors );
 
+    I_NPC := Nil;
+
 	{ Restore the display. }
 	ClrZone( ZONE_InteractTotal );
-    I_Persona := Nil;
 end;
 
 Procedure ForceInteract( GB: GameBoardPtr; CID: LongInt );
@@ -4280,12 +4281,28 @@ begin
 			P2 := Plot^.Next;
 
 			{ Remove the plot, if it's been advanced. }
-			if Plot^.G = GG_AbsolutelyNothing then RemoveGear( Plot^.Parent^.InvCom , Plot );
+			{if Plot^.G = GG_AbsolutelyNothing then RemoveGear( Plot^.Parent^.InvCom , Plot );}
 		end;
 		Plot := P2;
 	end;
 	CheckTriggerAlongPath := it;
 end;
+
+Procedure DoScriptGC( GB: GameBoardPtr );
+    { Get rid of any ABSOLUTELYNOTHINGS that may be hanging about. }
+var
+    Adv: GearPtr;
+begin
+    if NeedGC then begin
+        Adv := GG_LocateAdventure( GB, Nil );
+        if Adv <> Nil then begin
+            PruneNothings( Adv^.SubCom );
+            PruneNothings( Adv^.InvCom );
+            NeedGC := False;
+        end;
+    end;
+end;
+
 
 Procedure HandleTriggers( GB: GameBoardPtr );
 	{ Go through the list of triggers, enacting events if any are }
@@ -4352,8 +4369,11 @@ begin
 			DisposeSAtt( TList );
 
 		end;
+        DoScriptGC( GB );
 	end;
 end;
+
+
 
 initialization
 	SCRIPT_DynamicEncounter := Nil;
@@ -4363,7 +4383,10 @@ initialization
 
 	lancemate_tactics_persona := LoadFile( 'lmtactics.txt' , Data_Directory );
 
-    I_Persona := Nil;
+    I_NPC := Nil;
+
+    NeedGC := False;
+
 
 finalization
 	if SCRIPT_DynamicEncounter <> Nil then begin
