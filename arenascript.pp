@@ -121,6 +121,7 @@ var
 	ASRD_InfoGear: GearPtr;
 	ASRD_GameBoard: GameBoardPtr;
 	ASRD_MemoMessage: String;
+    I_Persona: GearPtr;
 
 
 Procedure ArenaScriptReDraw;
@@ -2147,7 +2148,10 @@ begin
 		{ It's possible that our SOURCE is a PERSONA rather than }
 		{ a PLOT, so if SOURCE isn't a PLOT move to its parent. }
 		Source := PlotMaster( Source );
-		if ( Source <> Nil ) and ( Source^.G = GG_Plot ) then AdvancePlot( GB , Source^.Parent , Source , N );
+		if ( Source <> Nil ) and ( Source^.G = GG_Plot ) then begin
+            AdvancePlot( GB , Source^.Parent , Source , N );
+            if ( I_Persona <> Nil ) and ( I_Persona^.Parent = Source ) then I_Persona := Nil;
+        end;
 	end;
 end;
 
@@ -2194,6 +2198,7 @@ begin
 
 		{ Mark the story for deletion. }
 		Source^.G := GG_AbsolutelyNothing;
+        if ( I_Persona <> Nil ) and ( I_Persona^.Parent = Source ) then I_Persona := Nil;
 	end;
 end;
 
@@ -4071,6 +4076,7 @@ var
 	N,FreeRumors: Integer;
 	RTT: LongInt;		{ ReTalk Time }
 	T: String;
+    IntRoot: GearPtr;
 begin
 	{ Start by allocating the menu. }
 	IntMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
@@ -4085,6 +4091,7 @@ begin
 	I_PC := PC;
 	I_NPC := NPC;
 	I_Rumors := CreateRumorList( GB , PC , NPC );
+    I_Persona := Interact;
 {$IFDEF SDLMODE}
 	ASRD_GameBoard := GB;
 {$ENDIF}
@@ -4163,7 +4170,7 @@ begin
 
 		end;
 
-	until ( N = -1 ) or ( IntMenu^.NumItem < 1 ) or ( I_Endurance < 1 ) or ( I_NPC = Nil );
+	until ( N = -1 ) or ( IntMenu^.NumItem < 1 ) or ( I_Endurance < 1 ) or ( I_NPC = Nil ) or (I_Persona = Nil);
 
 	{ If the menu is empty, pause for a minute. Or at least a keypress. }
 	if IntMenu^.NumItem < 1 then begin
@@ -4186,7 +4193,7 @@ begin
 	{ Check - If this persona gear is the child of a gear whose type }
 	{ is GG_ABSOLUTELYNOTHING, chances are that it used to be a plot }
 	{ but it's been advanced by the conversation. Delete it. }
-	if Interact <> Nil then begin
+	if I_Persona <> Nil then begin
 		Interact := FindRoot( Interact );
 		PruneNothings( Interact );
 	end;
@@ -4206,6 +4213,7 @@ begin
 
 	{ Restore the display. }
 	ClrZone( ZONE_InteractTotal );
+    I_Persona := Nil;
 end;
 
 Procedure ForceInteract( GB: GameBoardPtr; CID: LongInt );
@@ -4354,6 +4362,8 @@ initialization
 	Value_Macros := LoadStringList( Value_Macro_File );
 
 	lancemate_tactics_persona := LoadFile( 'lmtactics.txt' , Data_Directory );
+
+    I_Persona := Nil;
 
 finalization
 	if SCRIPT_DynamicEncounter <> Nil then begin
