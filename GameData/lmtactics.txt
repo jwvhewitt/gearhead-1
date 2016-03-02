@@ -15,90 +15,90 @@ result3 <NewChat Say 2 SetLMTactics 0 0>
 
 Msg1 <Hey, \PC . What can I help you with?>
 Msg1_1 <>
-CMsg1_1 <ifNPCHeroic Accept>
+CMsg1_1 <ifChatNPCHeroic Accept>
 Msg1_2 <Yes, what is it that you want?>
-CMsg1_2 <ifNPCVillainous Accept>
+CMsg1_2 <ifChatNPCVillainous Accept>
 Msg1_3 <What do you want me to do?>
-CMsg1_3 <ifNPCLawful Accept>
+CMsg1_3 <ifChatNPCLawful Accept>
 Msg1_4 <>
-CMsg1_4 <ifNPCChaotic Accept>
+CMsg1_4 <ifChatNPCChaotic Accept>
 Msg1_5 <Hey \PC . It's been great sharing these adventures with you.>
-CMsg1_5 <ifNPCSociable ifG React 40 Accept>
+CMsg1_5 <ifChatNPCSociable ifG React 40 Accept>
 Msg1_6 <Yes?>
-CMsg1_6 <ifNPCShy Accept>
+CMsg1_6 <ifChatNPCShy Accept>
 Msg1_7 <>
-CMsg1_7 <ifNPCEasygoing Accept>
+CMsg1_7 <ifChatNPCEasygoing Accept>
 Msg1_8 <>
-CMsg1_8 <ifNPCPassionate Accept>
+CMsg1_8 <ifChatNPCPassionate Accept>
 Msg1_9 <>
-CMsg1_9 <ifNPCCheerful Accept>
+CMsg1_9 <ifChatNPCCheerful Accept>
 Msg1_10 <I suppose you're going to tell me that you want me to leave the group...>
-CMsg1_10 <ifNPCMelancholy Accept>
+CMsg1_10 <ifChatNPCMelancholy Accept>
 Msg1_11 <It might be a good idea if, at some point, the two of us discussed strategy.>
-CMsg1_11 <ifNPCPragmatic Accept>
+CMsg1_11 <ifChatNPCPragmatic Accept>
 Msg1_12 <>
-CMsg1_12 <ifNPCSpiritual Accept>
+CMsg1_12 <ifChatNPCSpiritual Accept>
 
 Msg2 <I'll do that.>
 Msg2_1 <If that's for the best, then so be it.>
-CMsg2_1 <ifNPCHeroic Accept>
+CMsg2_1 <ifChatNPCHeroic Accept>
 Msg2_2 <Just as you say, oh fearless leader.>
-CMsg2_2 <ifNPCVillainous Accept>
+CMsg2_2 <ifChatNPCVillainous Accept>
 Msg2_3 <I promise that I'll do my best.>
-CMsg2_3 <ifNPCLawful Accept>
+CMsg2_3 <ifChatNPCLawful Accept>
 Msg2_4 <Eh, I don't much like that order...>
-CMsg2_4 <ifNPCChaotic Accept>
+CMsg2_4 <ifChatNPCChaotic Accept>
 Msg2_104 <I'll do as you say... for now.>
-CMsg2_104 <ifNPCChaotic Accept>
+CMsg2_104 <ifChatNPCChaotic Accept>
 Msg2_5 <Alright, I'll do my best as part of the team.>
-CMsg2_5 <ifNPCSociable Accept>
+CMsg2_5 <ifChatNPCSociable Accept>
 Msg2_6 <Alright.>
-CMsg2_6 <ifNPCShy Accept>
+CMsg2_6 <ifChatNPCShy Accept>
 Msg2_7 <Sure, whatever.>
-CMsg2_7 <ifNPCEasygoing Accept>
+CMsg2_7 <ifChatNPCEasygoing Accept>
 Msg2_8 <I hear and do obey!>
-CMsg2_8 <ifNPCPassionate Accept>
+CMsg2_8 <ifChatNPCPassionate Accept>
 Msg2_108 <That seems to me like a very bad idea... but I will do as you say.>
-CMsg2_108 <ifNPCPassionate Accept>
+CMsg2_108 <ifChatNPCPassionate Accept>
 Msg2_208 <Isn't that what I've been doing already!?>
-CMsg2_208 <ifNPCPassionate Accept>
+CMsg2_208 <ifChatNPCPassionate Accept>
 Msg2_9 <Sounds good. I'll do that.>
-CMsg2_9 <ifNPCCheerful Accept>
+CMsg2_9 <ifChatNPCCheerful Accept>
 Msg2_10 <I'll try not to let you down.>
-CMsg2_10 <ifNPCMelancholy Accept>
+CMsg2_10 <ifChatNPCMelancholy Accept>
 Msg2_110 <Might not that get us all killed? Okay, I'll do it...>
-CMsg2_110 <ifNPCMelancholy Accept>
+CMsg2_110 <ifChatNPCMelancholy Accept>
 Msg2_11 <Good thinking. I'll do that.>
-CMsg2_11 <ifNPCPragmatic Accept>
+CMsg2_11 <ifChatNPCPragmatic Accept>
 Msg2_12 <By the heaven's will.>
-CMsg2_12 <ifNPCSpiritual Accept>
+CMsg2_12 <ifChatNPCSpiritual Accept>
 
 
 Msg3 <Hey, \PC . What can I help you with?>
 Msg3_1 <>
-CMsg3_1 <ifNPCHeroic Accept>
+CMsg3_1 <ifChatNPCHeroic Accept>
 Msg3_2 <>
-CMsg3_2 <ifNPCVillainous Accept>
+CMsg3_2 <ifChatNPCVillainous Accept>
 Msg3_3 <>
-CMsg3_3 <ifNPCLawful Accept>
+CMsg3_3 <ifChatNPCLawful Accept>
 Msg3_4 <>
-CMsg3_4 <ifNPCChaotic Accept>
+CMsg3_4 <ifChatNPCChaotic Accept>
 Msg3_5 <>
-CMsg3_5 <ifNPCSociable Accept>
+CMsg3_5 <ifChatNPCSociable Accept>
 Msg3_6 <>
-CMsg3_6 <ifNPCShy Accept>
+CMsg3_6 <ifChatNPCShy Accept>
 Msg3_7 <>
-CMsg3_7 <ifNPCEasygoing Accept>
+CMsg3_7 <ifChatNPCEasygoing Accept>
 Msg3_8 <>
-CMsg3_8 <ifNPCPassionate Accept>
+CMsg3_8 <ifChatNPCPassionate Accept>
 Msg3_9 <>
-CMsg3_9 <ifNPCCheerful Accept>
+CMsg3_9 <ifChatNPCCheerful Accept>
 Msg3_10 <>
-CMsg3_10 <ifNPCMelancholy Accept>
+CMsg3_10 <ifChatNPCMelancholy Accept>
 Msg3_11 <>
-CMsg3_11 <ifNPCPragmatic Accept>
+CMsg3_11 <ifChatNPCPragmatic Accept>
 Msg3_12 <>
-CMsg3_12 <ifNPCSpiritual Accept>
+CMsg3_12 <ifChatNPCSpiritual Accept>
 
 Prompt1 <Stay in the back in combat.>
 

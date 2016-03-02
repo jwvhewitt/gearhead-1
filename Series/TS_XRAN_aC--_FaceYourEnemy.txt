@@ -74,94 +74,94 @@ sub
 
 	Msg1 <Don't think that you've won today. You've merely prolonged the inevitable. Come face me aqain in \ELEMENT 3 ... next time, it is I who will be victorious!>
 	Msg1_1 <You think you've got the better of me, but you haven't... As long as I live I will continue to hunt you down wherever you may be! Let's have a rematch in \ELEMENT 3 ... next time, it's I who will win!>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <Sleep with one eye open, \PC . I'll see you again in \ELEMENT 3 .>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <Ah, so it seems you got lucky today. That luck will run out eventually. Meet me in \ELEMENT 3 for a rematch... This time I won't hold back!>
-	CMsg1_3 <ifNPCCheerful Accept>
+	CMsg1_3 <ifChatNPCCheerful Accept>
 	Msg1_4 <You merely delay the inevitable march of death, \PC ... Let's meet again in \ELEMENT 3 and finish this.>
-	CMsg1_4 <ifNPCMelancholy Accept>
+	CMsg1_4 <ifChatNPCMelancholy Accept>
 	Msg1_5 <So this time you win. Very well... next time I will, and you can expect no mercy. Meet me in \ELEMENT 3 for a rematch if you're brave enough.>
-	CMsg1_5 <ifNPCEasygoing Accept>
+	CMsg1_5 <ifChatNPCEasygoing Accept>
 	Msg1_6 <Your powers are formidible... But you are nothing to me, and I will crush you in time! I demand a rematch, in \ELEMENT 3 ! Meet me if you dare!>
-	CMsg1_6 <ifNPCPassionate Accept>
+	CMsg1_6 <ifChatNPCPassionate Accept>
 	Msg1_7 <An honorable duel, \PC ... You have bested me today. I demand a rematch... what say, in \ELEMENT 3 ? I know you won't be able to resist...>
-	CMsg1_7 <ifNPCLawful Accept>
+	CMsg1_7 <ifChatNPCLawful Accept>
 	Msg2 <You defeated \ELEMENT 2 outside of \ELEMENT 1 .>
 
 	Msg5 <You are lucky to have escaped us today. That luck will soon run out, I assure you. Until the next time we meet...>
 	Msg5_1 <Now that you've been humiliated, I hope you will tell everyone what an incredible pilot \ELEMENT 2 is. I'm sure you'll come back to challenge me again but I assure you it will be equally pointless.>
-	CMsg5_1 <ifNPCSociable ifPCOK Accept>
+	CMsg5_1 <ifChatNPCSociable ifPCOK Accept>
 	Msg5_2 <You lose.>
-	CMsg5_2 <ifNPCShy Accept>
+	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <I win! I will have to toast a drink to your crushing defeat, \PC .>
-	CMsg5_3 <ifNPCCheerful Accept>
+	CMsg5_3 <ifChatNPCCheerful Accept>
 	Msg5_4 <How unfortunate, it was my intention to kill you today... When I see you again, I will do just that.>
-	CMsg5_4 <ifNPCMelancholy IfPCOK Accept>
+	CMsg5_4 <ifChatNPCMelancholy IfPCOK Accept>
 	Msg5_5 <So, this time I win... but you have escaped from the field of battle. I could hunt you down but it's not worth getting worked up over such small things. Until the next time we meet...>
-	CMsg5_5 <ifNPCEasygoing IfPCOK Accept>
+	CMsg5_5 <ifChatNPCEasygoing IfPCOK Accept>
 	Msg5_6 <You are no match for me, wangtta. Next time I see you I'll end your worthless life.>
-	CMsg5_6 <ifNPCPassionate Accept>
+	CMsg5_6 <ifChatNPCPassionate Accept>
 	Msg5_7 <You fought honorably, but your skills have been found wanting. Next time I will deliver the killing blow.>
-	CMsg5_7 <ifNPCLawful Accept>
+	CMsg5_7 <ifChatNPCLawful Accept>
 
 	Msg6 <You were defeated by \ELEMENT 2 outside of \ELEMENT 1 .>
 	Msg7 <I've been waiting for you to show yourself. Now, we will battle!>
 	Msg7_1 <It's so good that you've decided to join us. I've prepared a small party for you... Now, it's time for you to go down!>
-	CMsg7_1 <ifNPCSociable Accept>
+	CMsg7_1 <ifChatNPCSociable Accept>
 	Msg7_2 <I've been waiting. It's time for you to die.>
-	CMsg7_2 <ifNPCShy Accept>
+	CMsg7_2 <ifChatNPCShy Accept>
 	Msg7_3 <This is going to be such fun... Prepare for battle, \PC . I am here to finish you.>
-	CMsg7_3 <ifNPCCheerful Accept>
+	CMsg7_3 <ifChatNPCCheerful Accept>
 	Msg7_4 <Death is waiting for you, \PC , and I am her messenger. You can try to run but I will only find you again.>
-	CMsg7_4 <ifNPCMelancholy Accept>
+	CMsg7_4 <ifChatNPCMelancholy Accept>
 	Msg7_5 <What luck! Imagine finding you here... why, \PC , you're making the job of killing you trivially easy. Not that I'm complaining, mind you... Let's get this over with.>
-	CMsg7_5 <ifNPCEasygoing Accept>
+	CMsg7_5 <ifChatNPCEasygoing Accept>
 	Msg7_6 <Prepare yourself! We are about to do battle, a battle which only one of us can walk away from!>
-	CMsg7_6 <ifNPCPassionate Accept>
+	CMsg7_6 <ifChatNPCPassionate Accept>
 	Msg7_7 <\PC , you are hereby challenged to a duel, to take place right here and right now. If you dishonor me by refusing I will have no choice but to kill you.>
-	CMsg7_7 <ifNPCLawful Accept>
+	CMsg7_7 <ifChatNPCLawful Accept>
 	Msg7_8 <I'll bet you weren't expecting this! Welcome to my ambush, \PC .>
-	CMsg7_8 <ifNPCChaotic Accept>
+	CMsg7_8 <ifChatNPCChaotic Accept>
 	Msg7_9 <Welcome, \PC ... I've made arrangements for you to join your parents.>
 	CMsg7_9 <if= XRB NAV_XRBFamilyDied Accept>
 
 
 	Msg8 <You're going down...>
 	Msg8_1 <Don't worry. After you're dead I'll be sure to tell everyone that you fought valliantly.>
-	CMsg8_1 <ifNPCSociable Accept>
+	CMsg8_1 <ifChatNPCSociable Accept>
 	Msg8_2 <Let's begin.>
-	CMsg8_2 <ifNPCShy Accept>
+	CMsg8_2 <ifChatNPCShy Accept>
 	Msg8_3 <Let's see if it's true that you fight like a cow!>
-	CMsg8_3 <ifNPCCheerful Accept>
+	CMsg8_3 <ifChatNPCCheerful Accept>
 	Msg8_4 <You will die in pain...>
-	CMsg8_4 <ifNPCMelancholy Accept>
+	CMsg8_4 <ifChatNPCMelancholy Accept>
 	Msg8_5 <I won't even have to break a sweat to defeat you.>
-	CMsg8_5 <ifNPCEasygoing Accept>
+	CMsg8_5 <ifChatNPCEasygoing Accept>
 	Msg8_6 <I hope you prove to be an adequate test of my skills. Otherwise, this entire fight will just be boring.>
-	CMsg8_6 <ifNPCPassionate Accept>
+	CMsg8_6 <ifChatNPCPassionate Accept>
 	Msg8_7 <May the better pilot win...>
-	CMsg8_7 <ifNPCLawful Accept>
+	CMsg8_7 <ifChatNPCLawful Accept>
 	Msg8_8 <No rules, no holds barred... only one survivor.>
-	CMsg8_8 <ifNPCChaotic Accept>
+	CMsg8_8 <ifChatNPCChaotic Accept>
 	Msg8_13 <You could've been on the winning side, \PC , but you decided to betray us...>
 	CMsg8_13 <if= XRB NAV_XRBExMember Accept>
 
 	Msg9 <I am a force you should not take so lightly!!!>
 	Msg9_3 <Ah, it's good to see that I will be facing someone with at least a modicun of wit.>
-	CMsg9_3 <ifNPCCheerful Accept>
+	CMsg9_3 <ifChatNPCCheerful Accept>
 	Msg9_4 <If you fight as well as you insult, this should be an easy fight for me...>
-	CMsg9_4 <ifNPCMelancholy Accept>
+	CMsg9_4 <ifChatNPCMelancholy Accept>
 
 	Msg10 <Imagine seeing you here. So long as we are both in town there is no reason why we should not be civil. Once we leave here, though, we will be enemies again.>
 	Msg10_2 <Eh, you!? Look, we're in town. We can't start anything here.>
-	CMsg10_2 <ifNPCShy Accept>
+	CMsg10_2 <ifChatNPCShy Accept>
 	Msg10_4 <Just what I need, to ruin my day off... What do you want, \PC !?>
-	CMsg10_4 <ifNPCMelancholy Accept>
+	CMsg10_4 <ifChatNPCMelancholy Accept>
 	Msg10_7 <I certainly hope that you're not looking for trouble. The guards around here wouldn't react kindly if you started a fight... Surely we're civilized enough to wait until later to begin our duel.>
-	CMsg10_7 <ifNPCLawful Accept>
+	CMsg10_7 <ifChatNPCLawful Accept>
 	Msg10_8 <Well, if it isn't \PC . Count yourself lucky that we're in town, otherwise I'd snuff out your worthless life in an instant.>
-	CMsg10_8 <ifNPCChaotic Accept>
+	CMsg10_8 <ifChatNPCChaotic Accept>
 	Msg10_10 <Hello \PC . It's a shame what happened to your parents. I wouldn't worry; you'll be joining them soon enough...>
 	CMsg10_10 <if= XRB NAV_XRBFamilyDied Accept>
 	Msg10_11 <When you were a member of \NARRATIVE 2 , I used to look up to you. Now I see what a failure you've become... If we weren't in town right now, I'd send you to your grave.>
@@ -174,11 +174,11 @@ sub
 
 	Msg15 <You haven't figured that out on your own yet? You must be stupider than you look. Perhaps they are wrong... perhaps you're not as much of a danger as they say.>
 	Msg15_1 <I'd love to explain everything to you but my masters have asked that I not get personally involved with the quarry.>
-	CMsg15_1 <ifNPCSociable Accept>
+	CMsg15_1 <ifChatNPCSociable Accept>
 	Msg15_2 <Don't ask questions you don't really want answered.>
-	CMsg15_2 <ifNPCShy Accept>
+	CMsg15_2 <ifChatNPCShy Accept>
 	Msg15_8 <Ah, but that would be telling... You can't expect me to hand you everything on a silver platter, can you?>
-	CMsg15_8 <ifNPCChaotic Accept>
+	CMsg15_8 <ifChatNPCChaotic Accept>
 	Msg15_9 <You honestly can't remember a thing? If I could trust in that, it would be merciful to let you live... but if your memories ever return, you could be a danger to the project. So you must be eliminated.>
 	CMsg15_9 <if= XRM NAV_XRMAmnesia Accept>
 	Msg15_10 <You are the continuation of a remarkable bloodline, \PC ; a bloodline that must be eliminated if we are to immanentize the eschaton. Nothing more need be said.>
@@ -192,29 +192,29 @@ sub
 
 	Msg16 <In the middle of \ELEMENT 1 ? You must be daft. Aside from the obvious problems of bystanders and the Guardians, there's also my reputation to think about.>
 	Msg16_1 <That's not going to happen. There's too many bystanders, and guards who would probably interfere. Plus, what would people say about me if I behaved like a common rougheon? No, when we fight, it will be at a time and place of my choosing.>
-	CMsg16_1 <ifNPCSociable Accept>
+	CMsg16_1 <ifChatNPCSociable Accept>
 	Msg16_2 <No. This is no place for a fight. We will continue this discussion later.>
-	CMsg16_2 <ifNPCShy Accept>
+	CMsg16_2 <ifChatNPCShy Accept>
 	Msg16_3 <Are you completely bonkers? Start a fight in the middle of \ELEMENT 1 ? Look, we'll fight later, but not here.>
-	CMsg16_3 <ifNPCCheerful Accept>
+	CMsg16_3 <ifChatNPCCheerful Accept>
 	Msg16_4 <This isn't the place for that, idiot. Too many people around to interfere. No, we will not fight here, but rest assured that your death approaches...>
-	CMsg16_4 <ifNPCMelancholy Accept>
+	CMsg16_4 <ifChatNPCMelancholy Accept>
 	Msg16_5 <I don't want to fight you now. I've got other things to do. If you want, I promise that I'll come back to fight you later...>
-	CMsg16_5 <ifNPCEasygoing Accept>
+	CMsg16_5 <ifChatNPCEasygoing Accept>
 	Msg16_6 <It's taking every bit of self control I have to not run you through where you stand. But, there are things that just aren't done... I will kill you later, when we are both beyond the walls of civilization.>
-	CMsg16_6 <ifNPCPassionate Accept>
+	CMsg16_6 <ifChatNPCPassionate Accept>
 	Msg16_7 <Fight here in the middle of town? Are you a barbarian? That's not something a civilized warrior would even consider. There are too many bystanders who could get hurt...>
-	CMsg16_7 <ifNPCLawful Accept>
+	CMsg16_7 <ifChatNPCLawful Accept>
 	Msg16_8 <Eh, I'd rather not. I'll be seeing you again, sometime when I hold the advantage...>
-	CMsg16_8 <ifNPCChaotic Accept>
+	CMsg16_8 <ifChatNPCChaotic Accept>
 
 	Msg17 <Then why did you speak with me? If you have nothing to say, then don't disturb me.>
 	Msg17_2 <Then go away.>
-	CMsg17_2 <ifNPCShy Accept>
+	CMsg17_2 <ifChatNPCShy Accept>
 	Msg17_3 <Ah, so that's why you're the one who came up to me. I understand now. Idiot.>
-	CMsg17_3 <ifNPCCheerful Accept>
+	CMsg17_3 <ifChatNPCCheerful Accept>
 	Msg17_4 <Excuse me, you're the one who started this conversation. Idiot.>
-	CMsg17_4 <ifNPCMelancholy Accept>
+	CMsg17_4 <ifChatNPCMelancholy Accept>
 	Msg17_9 <You have nothing to say, but maybe you're hoping that I do... You are hunting for any small clue to the secret of your past. Well, perhaps I will tell you who you are, right before I end your life...>
 	CMsg17_9 <if= XRM NAV_XRMAmnesia Accept>
 

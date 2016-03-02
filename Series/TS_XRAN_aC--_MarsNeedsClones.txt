@@ -42,69 +42,69 @@ sub
 	result3 <EndChat Say 4 Reputation 3 -d10 Goto GoStartFight>
 	Msg1 <So \PC , I've found you at last. It's time for us to settle matters once and for all, right here and right now.>
 	Msg1_1 <My old enemy \PC ... This battle between us has destroyed the better part of my soul. Now it is time for us to end it, once and for all.>
-	CMsg1_1 <ifNPCHeroic Accept>
+	CMsg1_1 <ifChatNPCHeroic Accept>
 	Msg1_2 <We meet again, for the last time. Prepare to die.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <My old enemy \PC ... You have been a good opponent, though all our battles, but that time must now come to an end. The secret I know must go to the grave with me. Prepare to defend yourself, or die at my hand.>
-	CMsg1_3 <ifNPCSociable Accept>
+	CMsg1_3 <ifChatNPCSociable Accept>
 	Msg1_4 <What wonderful news! \ELEMENT 1 is to be the site of our final, greatest battle! Let us begin...>
-	CMsg1_4 <ifNPCCheerful Accept>
+	CMsg1_4 <ifChatNPCCheerful Accept>
 	Msg1_5 <This charade has continued for long enough. It's time for this to end... one of us will die today...>
-	CMsg1_5 <ifNPCMelancholy Accept>
+	CMsg1_5 <ifChatNPCMelancholy Accept>
 	Msg1_6 <All things come to an end, \PC ... It's time to settle matters between us once and for all, right here and right now.>
-	CMsg1_6 <ifNPCEasygoing Accept>
+	CMsg1_6 <ifChatNPCEasygoing Accept>
 	Msg1_7 <You have escaped me before, but today I bring you death!!!>
-	CMsg1_7 <ifNPCPassionate Accept>
+	CMsg1_7 <ifChatNPCPassionate Accept>
 	Msg1_8 <Ah, \PC ... You think you have everything all figured out... If you knew what I've seen, you wouldn't be so certain. It's time to end all this fighting we've done... to the death!>
 	CMsg1_8 <if= XRM NAV_XRMResolved Accept>
 
 	Msg2 <That's the spirit! Killing you would be boring if you didn't bother to fight back!>
 	Msg2_1 <I'll try to make sure your end is painless...>
-	CMsg2_1 <ifNPCHeroic Accept>
+	CMsg2_1 <ifChatNPCHeroic Accept>
 	Msg2_2 <Let us begin.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <Whichever one of us wins, they'll tell of our great skill unto the end of the world... which by my calculation isn't too far off.>
-	CMsg2_3 <ifNPCSociable Accept>
+	CMsg2_3 <ifChatNPCSociable Accept>
 	Msg2_4 <Try to keep this interesting. It would be no good for our final duel to be boring.>
-	CMsg2_4 <ifNPCCheerful Accept>
+	CMsg2_4 <ifChatNPCCheerful Accept>
 	Msg2_5 <May the streets run red...>
-	CMsg2_5 <ifNPCMelancholy Accept>
+	CMsg2_5 <ifChatNPCMelancholy Accept>
 	Msg2_6 <We might as well begin right away...>
-	CMsg2_6 <ifNPCEasygoing Accept>
+	CMsg2_6 <ifChatNPCEasygoing Accept>
 	Msg2_7 <I will kill you!!!>
-	CMsg2_7 <ifNPCPassionate Accept>
+	CMsg2_7 <ifChatNPCPassionate Accept>
 
 	Msg3 <Oh, what a noble sentiment... Not that it matters to me anymore. They can all be replaced. We can all be replaced.>
 	Msg3_1 <Look upon it as an act of mercy. I have seen the horror that is to be unleashed... It must not be so...>
-	CMsg3_1 <ifNPCHeroic Accept>
+	CMsg3_1 <ifChatNPCHeroic Accept>
 	Msg3_2 <That is of no concern anymore.>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <You don't understand what's going to happen...>
-	CMsg3_3 <ifNPCSociable Accept>
+	CMsg3_3 <ifChatNPCSociable Accept>
 	Msg3_4 <Oh, that's funny... You're a real comedian! Whether they die now or in a few weeks time makes no difference at all!>
-	CMsg3_4 <ifNPCCheerful Accept>
+	CMsg3_4 <ifChatNPCCheerful Accept>
 	Msg3_5 <In a few days we're all going to be dead anyhow, after the tyrant is reawakened...>
-	CMsg3_5 <ifNPCMelancholy Accept>
+	CMsg3_5 <ifChatNPCMelancholy Accept>
 	Msg3_6 <We could move the fight to somewhere more appropriate... but I don't have the patience for it. Prepare to defend yourself!>
-	CMsg3_6 <ifNPCEasygoing Accept>
+	CMsg3_6 <ifChatNPCEasygoing Accept>
 	Msg3_7 <Anyone who dies today should thank us, for they will be spared the rebirth of the Lord of Terror!>
-	CMsg3_7 <ifNPCPassionate Accept>
+	CMsg3_7 <ifChatNPCPassionate Accept>
 
 	Msg4 <I have been wondering that very same thing myself... so now, it is time to end our game. Either you will die or I will die, and I can't even manage to care which...>
 	Msg4_1 <I am less than half the human being I once was... perhaps no longer a human being at all...>
-	CMsg4_1 <ifNPCHeroic Accept>
+	CMsg4_1 <ifChatNPCHeroic Accept>
 	Msg4_2 <Enough chatter. Let's begin.>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <Your denials wound me, \PC ... Let's see if I can return the favor with my blade!>
-	CMsg4_3 <ifNPCSociable Accept>
+	CMsg4_3 <ifChatNPCSociable Accept>
 	Msg4_4 <Ah, how I will miss your wit when you're lying on the ground in several pieces. Let us begin.>
-	CMsg4_4 <ifNPCCheerful ifG PCRep 5 0 Accept>
+	CMsg4_4 <ifChatNPCCheerful ifG PCRep 5 0 Accept>
 	Msg4_5 <Truth be told I never did care for your wisecracks. I won't much miss them when you're gone. Let's begin this fight.>
-	CMsg4_5 <ifNPCMelancholy ifG PCRep 5 0 Accept>
+	CMsg4_5 <ifChatNPCMelancholy ifG PCRep 5 0 Accept>
 	Msg4_6 <Who am I... a very good question, one I hope to answer myself one day...>
-	CMsg4_6 <ifNPCEasygoing Accept>
+	CMsg4_6 <ifChatNPCEasygoing Accept>
 	Msg4_7 <I am your nemesis, the dark messenger of death... I am a shadow of a more brilliant light and nothing more...>
-	CMsg4_7 <ifNPCPassionate Accept>
+	CMsg4_7 <ifChatNPCPassionate Accept>
 
 	Msg5 <If you have something to say to me, tell me to my face.>
 	Msg5_1 <I'm not home right now.>
@@ -119,7 +119,7 @@ sub
 	GoE3Dead <EndChat Say 101 N= 3 E2 FreezeItem E5 FreezeChar E7 FreezeChar E3 AdvancePlot 1>
 	Msg101 <You haven't won yet... I can still defeat you...>
 	Msg101_1 <If you meet my ghost on the road... kill \spr E3 ...>
-	CMsg101_1 <ifNPCHeroic Accept>
+	CMsg101_1 <ifChatNPCHeroic Accept>
 
 Plot 1
 	% The second fight... The PC will meet the NPC again, this
@@ -148,35 +148,35 @@ sub
 	GoStartFight <EndChat SoloAttack E3>
 	Msg1 <\PC , I was informed that you'd try to interfere with our operations here in \ELEMENT 2 . I've been authorized to stop you by whatever means are nessecary. What's the matter... you look like you've seen a ghost?>
 	Msg1_1 <My old enemy \PC ... I don't want to fight you in public like this, but the Eschaton Project would be jeopardized if I allowed you to live. Don't look so shocked, prepare to defend yourself!>
-	CMsg1_1 <ifNPCHeroic Accept>
+	CMsg1_1 <ifChatNPCHeroic Accept>
 	Msg1_2 <I was informed that you'd be investigating our project in \ELEMENT 2 . Your adventure ends here.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <It's good to finally meet you, \PC . I've heard that you've interfered with many of our plans. The \ELEMENT 2 is too important to let you near it... so now you are going to die.>
-	CMsg1_3 <ifNPCSociable Accept>
+	CMsg1_3 <ifChatNPCSociable Accept>
 	Msg1_4 <Ah, \PC ... So you survived the handiwork of our associates. Well, you won't live long enough to see what we have planned for \ELEMENT 2 . It really is going to be a better world when we're finished with it.>
-	CMsg1_4 <ifNPCCheerful Accept>
+	CMsg1_4 <ifChatNPCCheerful Accept>
 	Msg1_5 <What does it take to kill you? They said that you defeated our second most powerful operative... second only to me, of course. Now I'll end your life before you have a chance to look around \ELEMENT 2 .>
-	CMsg1_5 <ifNPCMelancholy Accept>
+	CMsg1_5 <ifChatNPCMelancholy Accept>
 	Msg1_6 <We've been expecting you in \ELEMENT 2 . It's much easier to wait for my quarry than chase it all over the place... Now, I'm going to have to kill you.>
-	CMsg1_6 <ifNPCEasygoing Accept>
+	CMsg1_6 <ifChatNPCEasygoing Accept>
 	Msg1_7 <I've been waiting for the chance to test my skills against you! They say you've already defeated one of our top agents... I can't allow you to get close to our \ELEMENT 2 operations. Now you die!>
-	CMsg1_7 <ifNPCPassionate Accept>
+	CMsg1_7 <ifChatNPCPassionate Accept>
 
 	Msg2 <Let's do this!>
 	Msg2_1 <Try not to hurt any of the civilians, they have no part in our battle...>
-	CMsg2_1 <ifNPCHeroic Accept>
+	CMsg2_1 <ifChatNPCHeroic Accept>
 	Msg2_2 <Let's go.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <I'm going to be famous as the person who killed \PC !>
-	CMsg2_3 <ifNPCSociable ifG PCRep 6 25 Accept>
+	CMsg2_3 <ifChatNPCSociable ifG PCRep 6 25 Accept>
 	Msg2_4 <Try to keep up with me, it'll make a better show for the onlookers.>
-	CMsg2_4 <ifNPCCheerful Accept>
+	CMsg2_4 <ifChatNPCCheerful Accept>
 	Msg2_5 <Is there anyone who will weep at your death? Or shall we just dump you in an unmarked grave?>
-	CMsg2_5 <ifNPCMelancholy Accept>
+	CMsg2_5 <ifChatNPCMelancholy Accept>
 	Msg2_6 <It must be nice to believe that you stand a chance against me... Of course, I know that you don't.>
-	CMsg2_6 <ifNPCEasygoing Accept>
+	CMsg2_6 <ifChatNPCEasygoing Accept>
 	Msg2_7 <As you die, know that you've been slain by a superior foe.>
-	CMsg2_7 <ifNPCPassionate Accept>
+	CMsg2_7 <ifChatNPCPassionate Accept>
 
 	Msg5 <If you have something to say to me, tell me to my face.>
 	Msg5_1 <I'm not home right now.>
@@ -193,32 +193,32 @@ sub
 	result1 <NewChat Say 3>
 	Msg1 <I have some strange news for you about \ELEMENT 3 . I know the two of you fought here recently, and he apparently died... But the guardian office in \ELEMENT 2 claims \OPR E3 's been there all this time!>
 	Msg1_2 <You just fought \ELEMENT 3 , right? Well, according to the Guardian liason in \ELEMENT 2 , \OPR E3 's been there all along.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <This is strange. I heard about your fight with \ELEMENT 3 , and how \OPR E3 supposedly died. Well, the Guardians in \ELEMENT 2 say they've been staking out \PPR E3 position over there. It certainly seems like \OPR E3 's in two places at once.>
-	CMsg1_3 <ifNPCSociable Accept>
+	CMsg1_3 <ifChatNPCSociable Accept>
 	Msg1_4 <>
-	CMsg1_4 <ifNPCCheerful Accept>
+	CMsg1_4 <ifChatNPCCheerful Accept>
 	Msg1_5 <>
-	CMsg1_5 <ifNPCMelancholy Accept>
+	CMsg1_5 <ifChatNPCMelancholy Accept>
 	Msg1_6 <>
-	CMsg1_6 <ifNPCEasygoing Accept>
+	CMsg1_6 <ifChatNPCEasygoing Accept>
 	Msg1_7 <>
-	CMsg1_7 <ifNPCPassionate Accept>
+	CMsg1_7 <ifChatNPCPassionate Accept>
 
 	Msg2 <\ELEMENT 3 has been sighted in \ELEMENT 2 .>
 	Msg3 <\ELEMENT 3 is wanted for a list of crimes as long as a phone book. We've been keeping tabs on \PPR E3 whereabouts for some time now.>
 	Msg3_2 <It's Guardian business. We have our reasons.>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <Haven't you been paying attention? \ELEMENT 3 has a rap sheet a mile long. There's murder, arson, grand theft... It's our job to keep track of criminals like that.>
-	CMsg3_3 <ifNPCSociable Accept>
+	CMsg3_3 <ifChatNPCSociable Accept>
 	Msg3_4 <Eh, everybody needs a hobby.>
-	CMsg3_4 <ifNPCCheerful Accept>
+	CMsg3_4 <ifChatNPCCheerful Accept>
 	Msg3_5 <\ELEMENT 3 killed my fiance. I will bring \SPR E3 to justice if it's the last thing I do.>
-	CMsg3_5 <ifNPCMelancholy Accept>
+	CMsg3_5 <ifChatNPCMelancholy Accept>
 	Msg3_6 <>
-	CMsg3_6 <ifNPCEasygoing Accept>
+	CMsg3_6 <ifChatNPCEasygoing Accept>
 	Msg3_7 <\ELEMENT 3 has been involved in some horrifying crimes... I've dedicated myself to bring \SPR E3 to justice. I cannot rest until it is done!>
-	CMsg3_7 <ifNPCPassionate Accept>
+	CMsg3_7 <ifChatNPCPassionate Accept>
 
 	Prompt1 <Why do you care about \ELEMENT 3 ?>
 	Prompt1_1 <Is there anything else you can tell me?>

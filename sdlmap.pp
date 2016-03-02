@@ -120,7 +120,7 @@ const
 	Terrain_Image: Array [1..NumTerr] of SmallInt = (
 		 1, 2, 3, 4, 5,  6, 7, 8, 9,10,
 		11,12,-5,14,-3, 16,17,18,19,20,
-		21,22,23,24,25, 26,27,28,-2,30,
+		21,22,23,24,25, 26,27,28,-ThinWall_RustySteel,30,
 		-1,32,33,34,-4, 36,37,38,39,40,
 		41,42
 	);
@@ -1560,7 +1560,7 @@ initialization
 	Miss_Sprite := ConfirmSprite( Miss_Sprite_Name , '' , 64 , 64 );
 
 	Thin_Wall_Sprites[ ThinWall_Earth ] := ConfirmSprite( 'wall_earth.png' , '' , 64 , 96 );
-	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_unobtrusive.png' , '' , 64 , 96 );
+	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_rustysteel.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Stone ] := ConfirmSprite( 'wall_stone.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Industrial ] := ConfirmSprite( 'wall_industrial.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_extra_b.png' , '' , 64 , 96 );

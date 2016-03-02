@@ -9,20 +9,33 @@ begin
 	ClearExtendedBorder( ZONE_Menu );
 end;
 
-Procedure BrowseByType( FPat: String; ColorMode: Integer );
+Procedure BrowseByType( FPat: String; width,height,frames,ColorMode: Integer );
 	{ Browse the images by file pattern and color mode. }
 var
 	FileMenu: RPGMenuPtr;
 	SpriteName: String;
 begin
 	FileMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-	BuildFileMenu( FileMenu , Graphics_Directory + FPat );
+    if FPat = '' then begin
+        { We want all the mecha. All of them!!! }
+        BuildFileMenu( FileMenu , Graphics_Directory + 'aer_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'ara_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'btr_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'gca_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'ger_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'ghu_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'hov_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'orn_*.png' );
+        BuildFileMenu( FileMenu , Graphics_Directory + 'zoa_*.png' );
+
+    end else BuildFileMenu( FileMenu , Graphics_Directory + FPat );
 	RPMSortAlpha( FileMenu );
+    AddRPGMenuItem( FileMenu, MsgString( 'EXIT' ), -1 );
 	SpriteName := '';
 
 	repeat
 		SpriteName := SelectFile( FileMenu , @RedrawOpening );
-		if SpriteName <> '' then SelectColorPalette( ColorMode, SpriteName, '200 0 0 200 200 0 0 200 0', 211, 308, 0, @ClrScreen );
+		if SpriteName <> '' then SelectColorPalette( ColorMode, SpriteName, '200 0 0 200 200 0 0 200 0', width, height, frames, @ClrScreen );
 	until SpriteName = '';
 
 	DisposeRPGMenu( FileMenu );
@@ -43,10 +56,10 @@ begin
 	repeat
 		N := SelectMenu( FileMenu , @RedrawOpening );
 		case N of
-			1: BrowseByType( 'por_*.png' , colormenu_mode_character );
-			2: BrowseByType( 'item_*.png' , colormenu_mode_mecha );
-			3: BrowseByType( 'monster_*.png' , colormenu_mode_allcolors );
-			4: BrowseByType( '*.png' , colormenu_mode_allcolors );
+			1: BrowseByType( 'por_*.png' , 100, 150, 0, colormenu_mode_character );
+			2: BrowseByType( '' , 64, 64, 8, colormenu_mode_mecha );
+			3: BrowseByType( 'monster_*.png' , 64, 64, 8, colormenu_mode_allcolors );
+			4: BrowseByType( '*.png' , 211, 308, 0, colormenu_mode_allcolors );
 		end;
 
 	until N = -1;

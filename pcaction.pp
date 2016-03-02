@@ -1410,6 +1410,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 					Inc( PC^.Stat[ N ] );
 					AddNAtt( PC^.NA , NAG_Experience , NAS_SpentXP , XP );
 					AddNAtt( PC^.NA , NAG_StatImprovementLevel , N , 1 );
+					ResizeCharacter( PC );
 				end;
 
 			end;
@@ -3122,7 +3123,9 @@ var
 	Mobile: Boolean;
 	P: Point;
 begin
-	{ Record where the mek currently is. }
+	{ The original comment said "Record where the mek currently is". }
+    { But this is obviously checking to see if the mecha is mobile. }
+    { Twentysomething Joe, what were you thinking? - Fortysomething Joe }
 	Mobile := BaseMoveRate( Mek ) > 0;
 
 	if ( NAttValue( Mek^.NA , NAG_Location , NAS_SmartAction ) <> 0 ) and Mobile then begin
@@ -3233,17 +3236,12 @@ begin
 			end else if KP = KeyMap[ KMC_LearnSkills ].KCode then begin
 				DoTraining( Camp^.GB , Mek );
 
-			end else if KP = KeyMap[ KMC_SelectMecha ].KCode then begin
-				DoSelectPCMek( Camp^.GB , Mek );
-
 			end else if KP = KeyMap[ KMC_SaveGame ].KCode then begin
 				PCSaveCampaign( Camp , Mek , True );
 
 			end else if KP = KeyMap[ KMC_CharInfo ].KCode then begin
 				PCViewChar( Camp^.GB , Mek );
 
-			end else if KP = KeyMap[ KMC_FirstAid ].KCode then begin
-				DoFirstAid( Camp^.GB , Mek );
 			end else if KP = KeyMap[ KMC_ApplySkill ].KCode then begin
 				PCActivateSkill( Camp^.GB , Mek );
 

@@ -73,60 +73,60 @@ sub
 
 	Msg201 <You're much better than I expected. We could use you in \ELEMENT 3 . You may even be as good as your father. He used to be one of our agents, until that one time... There was no way we could let him survive, you understand.>
 	Msg201_1 <I see shades of your father in your fighting style. He used to work for us, you realize... one of our better agents, until his conscience got the better of him. We could use your talents in \ELEMENT 3 .>
-	CMsg201_1 <ifNPCSociable Accept>
+	CMsg201_1 <ifChatNPCSociable Accept>
 	Msg201_2 <So you're nearly as good as your father. He was one of our agents, until he had to eliminate him. Maybe you will join us as well. We could use your talents in \ELEMENT 3 .>
-	CMsg201_2 <ifNPCShy Accept>
+	CMsg201_2 <ifChatNPCShy Accept>
 	Msg201_3 <Aha, I knew that you'd be as capable as your father before you. Did I mention? Before he outlived his usefulness he was an agent of ours. You may be too, if you can pass the next test in \ELEMENT 3 .>
-	CMsg201_3 <ifNPCCheerful Accept>
+	CMsg201_3 <ifChatNPCCheerful Accept>
 	Msg201_4 <So, you're as efficient and ruthless a killer as your father before you. This is excellent. It fits so perfectly into our plan for \ELEMENT 3 ... and like your father, you too will work for us.>
-	CMsg201_4 <ifNPCMelancholy Accept>
+	CMsg201_4 <ifChatNPCMelancholy Accept>
 	Msg201_5 <Ah, you've earned the right to hear the big secret: Your father used to work for \NARRATIVE 2 . Like him, you've proven yourself to be a great pilot. This fits well into our plans for \ELEMENT 3 .>
-	CMsg201_5 <ifNPCEasygoing Accept>
+	CMsg201_5 <ifChatNPCEasygoing Accept>
 	Msg201_6 <Impressive. Your father would have been pleased with the results. Did I mention that he used to be one of us? Of course, once the masters could no longer trust him, he had to be eliminated. You are ready for the next test in \ELEMENT 3 .>
-	CMsg201_6 <ifNPCPassionate Accept>
+	CMsg201_6 <ifChatNPCPassionate Accept>
 
 	Msg202 <\ELEMENT 2 said your father once worked for \NARRATIVE 2 .>
 	Msg203 <As I said, he was one of our best operatives. Very good at keeping secrets. The command thinks you might be an adequate replacement for him. In time, you may be given a choice... Join us, or die like your parents.>
 	Msg203_1 <Don't deny what must now seem obvious. Your father was a good agent... very good at keeping secrets. It is believed that you might replace him. I certainly hope that you'll join of your own free will, but there are other ways as well.>
-	CMsg203_1 <ifNPCSociable Accept>
+	CMsg203_1 <ifChatNPCSociable Accept>
 	Msg203_2 <Believe what you will, only know that \NARRATIVE 2 is considering you for a replacement.>
-	CMsg203_2 <ifNPCShy Accept>
+	CMsg203_2 <ifChatNPCShy Accept>
 	Msg203_3 <You'll be much happier if you simply accept the truth... and join us on the winning side of history. But I can see that you need more persuasion. Have no fears, you will come to serve us in the end...>
-	CMsg203_3 <ifNPCCheerful Accept>
+	CMsg203_3 <ifChatNPCCheerful Accept>
 	Msg203_4 <The truth must sting horribly. I leave you now with this one additional fact: \NARRATIVE 2 wants you on our side. Whether you come of your own free will or through other methods is of little concern. In the end, you will serve us...>
-	CMsg203_4 <ifNPCMelancholy Accept>
+	CMsg203_4 <ifChatNPCMelancholy Accept>
 	Msg203_5 <Believe me about that- I served alongside him. I was the one who ended his life, after he betrayed us... You don't want to end up like that. Serve \NARRATIVE 2 . I'll see you later, and I'll bring some additional persuasion.>
-	CMsg203_5 <ifNPCEasygoing Accept>
+	CMsg203_5 <ifChatNPCEasygoing Accept>
 	Msg203_6 <It's the truth! I served alongside your father, and he was a great warrior up until the moment he betrayed us... Join us, take his place in \NARRATIVE 2 , and you'll be on the winning side of history. I'll leave you to think about this for a while.>
-	CMsg203_6 <ifNPCPassionate Accept>
+	CMsg203_6 <ifChatNPCPassionate Accept>
 
 	Msg204 <Me? I want nothing... but my employers may think you're ready to replace your father in our organization. If they make that decision, you will be given a choice... join us and serve our will, or join your family in the next world.>
 	Msg204_1 <You will serve us, in our mission to immanentize the eschaton. It would be preferable if you were to do this of your own free will. If you choose not to, there are other means at our disposal.>
-	CMsg204_1 <ifNPCSociable Accept>
+	CMsg204_1 <ifChatNPCSociable Accept>
 	Msg204_2 <I want nothing. My masters want a replacement for your father. They're thinking about choosing you.>
-	CMsg204_2 <ifNPCShy Accept>
+	CMsg204_2 <ifChatNPCShy Accept>
 	Msg204_3 <Think of this as a job offer. My masters need someone to replace your father. You would make a good candidate... and the immanentization of the eschaton is near at hand.>
-	CMsg204_3 <ifNPCCheerful Accept>
+	CMsg204_3 <ifChatNPCCheerful Accept>
 	Msg204_4 <You will replace your father in \NARRATIVE 2 , and serve us faithfully, or be utterly destroyed like your parents before you.>
-	CMsg204_4 <ifNPCMelancholy Accept>
+	CMsg204_4 <ifChatNPCMelancholy Accept>
 	Msg204_5 <I want you to think about this: \NARRATIVE 2 needs someone to replace your father, and they are considering you. I'll be in contact again.>
-	CMsg204_5 <ifNPCEasygoing Accept>
+	CMsg204_5 <ifChatNPCEasygoing Accept>
 	Msg204_6 <I want you to give up your pretensions and join us. Forget your father... he was weak, that's why he had to die... But \NARRATIVE 2 needs new blood. Think about it... I will be in contact again soon.>
-	CMsg204_6 <ifNPCPassionate Accept>
+	CMsg204_6 <ifChatNPCPassionate Accept>
 
 	Msg205 <You still don't understand. Your father brought his death upon himself for failing to carry out his orders. Someday you will understand, and you will join us... or I will kill you as easily as I killed your parents.>
 	Msg205_1 <Don't say things that you'll regret later. I was supposed to offer you a position with \NARRATIVE 2 , but it seems that more persuasion is needed first.>
-	CMsg205_1 <ifNPCSociable Accept>
+	CMsg205_1 <ifChatNPCSociable Accept>
 	Msg205_2 <You can try. In time, you too will join \NARRATIVE 2 .>
-	CMsg205_2 <ifNPCShy Accept>
+	CMsg205_2 <ifChatNPCShy Accept>
 	Msg205_3 <I very much doubt that, \PC . You'll come to see the rightness of our position in time. And then, you'll be one of us.>
-	CMsg205_3 <ifNPCCheerful Accept>
+	CMsg205_3 <ifChatNPCCheerful Accept>
 	Msg205_4 <Struggle all you want, only know that it's inevitable... One way or the other, you will serve \NARRATIVE 2 in the end.>
-	CMsg205_4 <ifNPCMelancholy Accept>
+	CMsg205_4 <ifChatNPCMelancholy Accept>
 	Msg205_5 <Now that's just not very nice... Here I was, about to offer you a job with \NARRATIVE 2 , and you have to go say something unfriendly like that... It seems that you're going to need a bit more persuasion.>
-	CMsg205_5 <ifNPCEasygoing Accept>
+	CMsg205_5 <ifChatNPCEasygoing Accept>
 	Msg205_6 <Don't try to rebel against your destiny. In one way or another you will serve our purposes.>
-	CMsg205_6 <ifNPCPassionate Accept>
+	CMsg205_6 <ifChatNPCPassionate Accept>
 
 	Prompt201 <You're lying!>
 	Prompt201_1 <I can't believe you!>
@@ -138,17 +138,17 @@ sub
 	GoCheckLoss <if= P2 2 else GoFirstTime Say 101 AdvancePlot 0>
 	Msg101 <As I expected, you are weak. I don't expect that \NARRATIVE 2 will have any further interest in you.>
 	Msg101_1 <From your reputation, I honestly expected to see more of a fight. You are worthless and weak.>
-	CMsg101_1 <ifNPCSociable Accept>
+	CMsg101_1 <ifChatNPCSociable Accept>
 	Msg101_2 <It is settled. You are of no consequence to \NARRATIVE 2 .>
-	CMsg101_2 <ifNPCShy Accept>
+	CMsg101_2 <ifChatNPCShy Accept>
 	Msg101_3 <It was entertaining to watch you get slaughtered, but now I have more pressing matters to attend to. Goodbye, \PC .>
-	CMsg101_3 <ifNPCCheerful Accept>
+	CMsg101_3 <ifChatNPCCheerful Accept>
 	Msg101_4 <You are too weak to be of any interest to \NARRATIVE 2 .>
-	CMsg101_4 <ifNPCMelancholy Accept>
+	CMsg101_4 <ifChatNPCMelancholy Accept>
 	Msg101_5 <You are not a bad pilot, but thoroughly mediocre. If you were to improve your skills you might even be dangerous... and at that time, you would have to be eliminated.>
-	CMsg101_5 <ifNPCEasygoing Accept>
+	CMsg101_5 <ifChatNPCEasygoing Accept>
 	Msg101_6 <So that's all the great \PC is capable of!?>
-	CMsg101_6 <ifNPCPassionate Accept>
+	CMsg101_6 <ifChatNPCPassionate Accept>
 
 	GoFirstTime <if= V1 0 else GoAnything V= 1 1 Say 1 History 3 XREnemy NAV_XREFaction AddChat 1 AddChat 2 AddChat 3>
 	GoAnything <SayAnything>
@@ -157,31 +157,31 @@ sub
 	result3 <Reputation 4 d8 goto result2>
 	Msg1 <Greetings, \PC . We meet again. My employers think it's time you learned the truth... I am working for \NARRATIVE 2 , and they have a small test for you.>
 	Msg1_1 <Glad to see our intel on you was correct, \PC . I was sent here today by \NARRATIVE 2 to inform you of some unpleasant truths, and to give you a small test.>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <Hello \PC . It's time you learn the truth about your parent's death. I have been operating under the direction of \NARRATIVE 2 . They sent me here today with a test for you.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <Oh, I have a fun game for you today, \PC . You want to know about who killed your parents? I admit, I had some hand in that, but the orders came from \NARRATIVE 2 . Want to learn more? Then you have to pass my test.>
-	CMsg1_3 <ifNPCCheerful Accept>
+	CMsg1_3 <ifChatNPCCheerful Accept>
 	Msg1_4 <Greetings \PC ... No, I'm not here to attack you, my purpose is far more cruel. I guess you already know that I'm the one who killed your parents. What you don't know is that \NARRATIVE 2 orchestrated it. Pass my test, and you'll learn more.>
-	CMsg1_4 <ifNPCMelancholy Accept>
+	CMsg1_4 <ifChatNPCMelancholy Accept>
 	Msg1_5 <I'm afraid I have some uncomfortable facts about your father's death, \PC . You already know I was involved in that... What you don't know is that \NARRATIVE 2 ordered the hit. They've sent me here today to tell you that, and to test you...>
-	CMsg1_5 <ifNPCEasygoing Accept>
+	CMsg1_5 <ifChatNPCEasygoing Accept>
 	Msg1_6 <Don't look so shocked, \PC ... I'm not here to kill you. Not yet, anyhow... My masters, \NARRATIVE 2 , have decided it's time you were let in on a few of our secrets. They've sent me here today with a little test for you.>
-	CMsg1_6 <ifNPCPassionate Accept>
+	CMsg1_6 <ifChatNPCPassionate Accept>
 
 	Msg2 <My employers are very interested in your combat abilities. You will see the team I have chosen for you to battle... you will defeat them, or be defeated by them. We will see how great you truly are.>
 	Msg2_1 <The masters of \NARRATIVE 2 are very interested in your combat skills. We've planned a little test for you. Let's see how well you fare against some of our top pilots... if you survive, I can tell you more.>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <We have arranged a test by fire. If you survive this ambush that I've planned, I'll have a good idea how tough you really are.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <Keep a positive attitude, you should feel honored that \NARRATIVE 2 thinks you're important enough to arrange this sort of test. You're about to be attacked by our top pilots. Survive, and I have some information you'll want to hear.>
-	CMsg2_3 <ifNPCCheerful Accept>
+	CMsg2_3 <ifChatNPCCheerful Accept>
 	Msg2_4 <Death is the truest measure of a warrior. You are about to be attacked... If you survive the encounter, then we'll know how advanced your combat skills are.>
-	CMsg2_4 <ifNPCMelancholy Accept>
+	CMsg2_4 <ifChatNPCMelancholy Accept>
 	Msg2_5 <It's pretty easy. I've assembled a team of crack pilots... They're about to lay a beating on you. Either you defeat them, or get defeated by them. It's that simple.>
-	CMsg2_5 <ifNPCEasygoing Accept>
+	CMsg2_5 <ifChatNPCEasygoing Accept>
 	Msg2_6 <I have some information that you'll want to know, and \NARRATIVE 2 wants to know something about you. If you're skilled enough to defeat a team of our crack pilots I'll explain why your family had to die.>
-	CMsg2_6 <ifNPCPassionate Accept>
+	CMsg2_6 <ifChatNPCPassionate Accept>
 	Msg3 <\ELEMENT 2 revealed that \OPR E2 was taking orders from \NARRATIVE 2 .>
 
 	Prompt1 <Tell \NARRATIVE 2 to shove it.>

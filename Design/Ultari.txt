@@ -46,6 +46,7 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Right Track>
+    MidTier
 	sub
 		Tracks 6
 	end
@@ -54,6 +55,7 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Left Track>
+    MidTier
 	sub
 		Tracks 6
 	end
@@ -105,6 +107,7 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Right Track>
+    MidTier
 	sub
 		Tracks 6
 	end
@@ -113,6 +116,7 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Left Track>
+    MidTier
 	sub
 		Tracks 6
 	end
@@ -168,6 +172,7 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Right Track>
+    MidTier
 	sub
 		Tracks 6
 	end
@@ -176,6 +181,7 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Left Track>
+    MidTier
 	sub
 		Tracks 6
 	end

@@ -31,13 +31,23 @@ For the ASCII version, just type:
 
     fpc gharena
 
-If everything you need has already been installed, that should be it.
+Ignore the notes and warnings. If everything you need has already been
+installed, that should be it.
 
-Windows Notes: You need to download the binaries for SDL 1.2, SDL_TTF for
+Windows Notes:
+- You need to download the 32 bit binaries for SDL 1.2, SDL_TTF for
 SDL 1.2, and SDL_IMAGE for SDL 1.2. Put the .dll files in the same folder
-as gharena.exe.
+as gharena.exe. You should download the 32 bit versions since it seems that
+FPC compiles to a 32 bit target on Windows by default, and these will run on a
+64 bit system just fine. There's probably some way to get a 64 bit executable;
+if you figure it out, let me know.
+- To open a terminal in a Windows folder, press shift and right click in the
+folder window. The option to open a terminal should be there. Alternatively,
+install Git for Windows and open a Git Bash shell by right clicking without
+shift.
 
-Linux Notes: You need the packages libsdl1.2, libsdl1.2-dev, libsdl-image1.2,
+Linux Notes:
+- You need the packages libsdl1.2, libsdl1.2-dev, libsdl-image1.2,
 libsdl-image1.2dev, libsdl-ttf2.0-0, and libsdl-ttf2.0-0dev.
 
 ****************************

@@ -65,7 +65,8 @@ sub
 
 Scene 2 0
 	name <Hogye>
-	type <Target Town Village>
+	type <Target Town Village Destination>
+    desc <Hogye is a small village in the mountains north of Snake Lake. It is home to the Mecha Sporch arena.>
 	wildmap
 	GAPFILL <-4 -9 -4 -4>
 	SetFaction 11
@@ -359,21 +360,15 @@ Scene 2 0
 
 		Persona 201
 		% Hogye Bus Terminal
-		greeting <NewChat Say 1 AddChat 1 AddChat 4>
-		result1 <NewChat Say 2 AddChat 2 ifG PC$ 49 AddChat 3>
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		result1 <Say 2 ShuttleService EndChat Say 3>
 		result2 <NewChat Say 4>
-		result3 <EndChat Say 3 Time 1800 Cash+ -50 Exit 1 SeekGate 10>
-		result4 <EndChat Say 5 ExpressDelivery Say 6>
-		Msg1 <This is Hogye Bus Terminal. From here you can take a bus to Snake Lake, and from there you can get buses to most cities.>
-		Msg2 <The ride from here to Snake Lake is about a half hour, and costs $50. Do you want to go?>
-		Msg3 <Here's your ticket. The bus will drop you off on the outskirts of Snake Lake; from there it's a short walk to downtown.>
-		Msg4 <If you have a vehicle of your own, it's just a short trip.>
-		Msg5 <Certainly. We can ship items from all over the Federated Territories.>
-		Msg6 <Have a nice day.>
-		Prompt1 <I'd like to go to Snake Lake.>
+		Msg1 <This is Hogye Bus Terminal. From here you can take a bus to nearby cities, or get packages delivered from just about anywhere.>
+		Msg2 <The newly expanded bus service makes getting around the territories more convenient.>
+        Msg3 <I'll see you around.>
+		Msg4 <If you have a mecha it's easy to drive most places, but look out for bandits.>
+		Prompt1 <I'd like that.>
 		Prompt2 <No thanks.>
-		Prompt3 <I'll have one ticket, please.>
-		Prompt4 <I need to have some things delivered.>
 
 		Persona 202
 		greeting <NewChat Say 1 AddChat 1 AddChat 2>
@@ -487,7 +482,7 @@ Scene 2 0
 		NPC Shopkeeper
 		SetTeam 2
 		SetPersona 201
-		job <Ticket vendor>
+		job <bus dispatcher>
 		home <Bus Terminal>
 
 		NPC Cook
@@ -1078,7 +1073,8 @@ Scene 9 0
 
 Scene 10 0
 	name <Downtown Snake Lake>
-	type <City Town Target URB_STORY>
+    desc <Snake Lake is the capital of the Federated Territories of Earth. It is a sprawling metropolis whose neighborhoods range from the gleaming towers of the corporate zone to the crime-infested warrens of the spaceport.>
+	type <City Town Target URB_STORY Destination>
 	SetFaction 11
 
 	CityMap
@@ -1320,30 +1316,15 @@ Scene 10 0
 
 
 		Persona 1012
-		% V1 = Destination
-		% V2 = Fare
-		% V3 = Time
-		greeting <NewChat Say 1 AddChat 1 AddChat 4 AddChat 5 AddChat 6>
-		result1 <NewChat V= 1 2 V= 2 50 V= 3 1800 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		result1 <Say 2 ShuttleService EndChat Say 3>
 		result2 <NewChat Say 4>
-		result3 <EndChat if= SCeneFaction V1 11 else GoR3NoBus Say 3 Time V3 Cash+ -V2 Exit 1 SeekGate V1>
-		GoR3NoBus <Say 5>
-		result4 <NewChat V= 1 17 V= 2 75 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result5 <NewChat V= 1 16 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result6 <EndChat Say 6 EXPRESSDELIVERY Say 7>
-		Msg1 <This is Snake Lake Bus Terminal. We have buses traveling to Namok, Wujung, and Hogye.>
-		Msg2 <The ride from here to \SCENE V1 costs $ \VAL V2 . Do you want to go?>
-		Msg3 <Here's your ticket. The bus will drop you off on the outskirts of town.>
-		Msg4 <Have a nice day.>
-		Msg5 <Oh... all buses on the \SCENE V1 line have been cancelled for today.>
-		Msg6 <Certainly. Our trucks move all kinds of goods, from nearly any place in the Federated Territories and beyond. The price depends on the weight of the package.>
-		Msg7 <Please come again.>
-		Prompt1 <I'd like to go to Hogye.>
+		Msg1 <This is Snake Lake Bus Terminal. Would you like a ticket? Or maybe you need something delivered?>
+		Msg2 <Getting around wasn't so easy in the old days, let me tell you.>
+        Msg3 <Safe journeys.>
+		Msg4 <Please come again.>
+		Prompt1 <I could use that.>
 		Prompt2 <No thanks.>
-		Prompt3 <I'll have one ticket, please.>
-		Prompt4 <I'd like to go to Wujung.>
-		Prompt5 <I'd like to go to Namok.>
-		Prompt6 <I need a mecha moved, please.>
 
 		Persona 1013
 		% Hot dog salesperson...
@@ -1495,7 +1476,7 @@ Scene 10 0
 		SetTeam 2
 		SetPersona 1012
 		home <Bus Terminal>
-		job <Ticket Vendor>
+		job <bus dispatcher>
 
 		NPC Cook
 		SetTeam 2
@@ -1537,7 +1518,8 @@ Scene 10 0
 
 Scene 11 0
 	name <Gyori>
-	type <Town Target URB_STORY LANCEMATE_HERE>
+    desc <Gyori is an industrial town controlled by Kettel Industries. Most of the factories are placed underground in the ruins of the city that once sat here. It is home to the Warhammer Arena.>
+	type <Town Target URB_STORY LANCEMATE_HERE DESTINATION>
 	SetFaction 11
 
 	CityMap
@@ -1733,6 +1715,17 @@ Scene 11 0
 		Prompt3 <Sounds good. I'll take it.>
 		Prompt4 <That doesn't sound appetizing...>
 
+		Persona 1109
+		% Gyori Bus Terminal
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		result1 <Say 2 ShuttleService EndChat Say 3>
+		result2 <NewChat Say 4>
+		Msg1 <Looking for a bus to go someplace exciting? How about getting packages delivered to bring the excitement to here? Whatever you need, the truck stop has you covered.>
+		Msg2 <We've got trucks and buses going all day and all night.>
+        Msg3 <Pleasant journeys.>
+		Msg4 <Enjoy your stay in Gyori.>
+		Prompt1 <I need transportation.>
+		Prompt2 <Sorry, but I don't need anything.>
 
 	end
 	inv
@@ -1813,6 +1806,11 @@ Scene 11 0
 		SetPersona 1108
 		SetTeam 3
 
+		NPC Shopkeeper
+        job <bus dispatcher>
+		SetPersona 1109
+		SetTeam 2
+		home <Stuckey's Truck Stop>
 	end
 
 Scene 12 0
@@ -2029,7 +2027,8 @@ Scene 12 0
 
 Scene 13 0
 	name <Ipshil>
-	type <Town Target URB_STORY LANCEMATE_HERE>
+    desc <Ipshil is a small port town. Traditionally it has been a haven for pirates and renegades.>
+	type <Town Target URB_STORY LANCEMATE_HERE  DESTINATION>
 	special <ShowAll>
 	SetFaction 11
 
@@ -2290,28 +2289,15 @@ Scene 13 0
 		Prompt4 <Maybe some other time...>
 
 		Persona 1309
-		% V1 = Destination
-		% V2 = Fare
-		% V3 = Time
-		greeting <NewChat Say 1 AddChat 1 AddChat 4 AddChat 6>
-		result1 <NewChat V= 1 10 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		result1 <Say 2 ShuttleService EndChat Say 3>
 		result2 <NewChat Say 4>
-		result3 <EndChat if= SCeneFaction V1 11 else GoR3NoBus Say 3 Time V3 Cash+ -V2 Exit 1 SeekGate V1>
-		GoR3NoBus <Say 5>
-		result4 <NewChat V= 1 17 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result6 <EndChat Say 6 EXPRESSDELIVERY Say 7>
-		Msg1 <This is Ipshil Bus Terminal. We have buses traveling to Wujung and Snake Lake.>
-		Msg2 <The ride from here to \SCENE V1 costs $ \VAL V2 . Do you want to go?>
-		Msg3 <Here's your ticket. The bus will drop you off near downtown.>
-		Msg4 <Have a nice trip.>
-		Msg5 <Oh... all buses on the \SCENE V1 line have been cancelled for today.>
-		Msg6 <Certainly. Our trucks move all kinds of goods, from nearly any place in the Federated Territories and beyond. The price depends on the weight of the package.>
-		Msg7 <Please come again.>
-		Prompt1 <I'd like to go to Snake Lake.>
-		Prompt2 <No thanks.>
-		Prompt3 <I'll have one ticket, please.>
-		Prompt4 <I'd like to go to Wujung.>
-		Prompt6 <I need some things shipped here.>
+		Msg1 <This is Ipshil Bus Terminal. You want a ticket or something?>
+		Msg2 <Then don't just stand there, tell me what you need. Do I look like a mind reader?>
+        Msg3 <Remember here when you get where you're going.>
+		Msg4 <That's what they all say.>
+		Prompt1 <Actually, I do.>
+		Prompt2 <Not right now.>
 
 	end
 	inv
@@ -2415,7 +2401,7 @@ Scene 13 0
 		home <Deli Noodles>
 
 		NPC Shopkeeper
-		job <Ticket Vendor>
+		job <bus dispatcher>
 		SetPersona 1309
 		SetTeam 2
 		home <Ipshil Bus Terminal>
@@ -2979,7 +2965,8 @@ Scene 15 0
 
 Scene 16 0
 	name <Namok>
-	type <City Town Target URB_STORY>
+    desc <Namok is a prosperous island city. It is home to the Colosseum Arena and the headquarters of the Solar Navy.>
+	type <City Town Target URB_STORY  DESTINATION>
 	special <ShowAll>
 
 	CityMap
@@ -3221,27 +3208,15 @@ Scene 16 0
 		prompt2 <I'm doing fine.>
 
 		Persona 1619
-		% V1 = Destination
-		% V2 = Fare
-		% V3 = Time
-		greeting <NewChat Say 1 AddChat 1 AddChat 4 AddChat 5>
-		result1 <NewChat V= 1 10 V= 2 100 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result2 <NewChat Say 4>
-		result3 <EndChat if= SCeneFaction V1 11 else GoR3NoBus Say 3 Time V3 Cash+ -V2 Exit 1 SeekGate V1>
-		GoR3NoBus <Say 5>
-		result4 <NewChat V= 1 11 V= 2 85 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result5 <EndChat Say 6 ExpressDelivery Say 4>
-		Msg1 <This is Namok Bus Terminal. From here you can take a bus to Snake Lake or Gyori.>
-		Msg2 <The ride from here to \SCENE V1 costs $ \VAL V2 . Do you want to go?>
-		Msg3 <Here's your ticket. The bus will drop you off on the outskirts of town; from there it's a short walk to the city center.>
-		Msg4 <Have a nice adventure.>
-		Msg5 <Oh... all buses on the \SCENE V1 line have been cancelled for today.>
-		Msg6 <That's not a problem. What is it that you need to have shipped?>
-		Prompt1 <I'd like to go to Snake Lake.>
-		Prompt2 <No thanks.>
-		Prompt3 <I'll have one ticket, please.>
-		Prompt4 <I'd like to go to Gyori.>
-		Prompt5 <I need a package delivered.>
+		% Namok Bus Terminal
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		result1 <Say 2 ShuttleService EndChat Say 3>
+		result2 <NewChat Say 3>
+		Msg1 <This is Namok Bus Terminal. Would you like to go somewhere, or are you planning to have things delivered?>
+		Msg2 <With the new intercity buses, the mainland has never been closer.>
+        Msg3 <Have a nice adventure!>
+		Prompt1 <Let me tell you what I need.>
+		Prompt2 <Nothing today, thanks.>
 
 		Persona 1601
 		greeting <NewChat ifFactionEnemy 1 else GoSomething SayAnything>
@@ -3396,7 +3371,7 @@ Scene 16 0
 		SetPersona 1619
 		SettEAM 2
 		home <Bus Terminal>
-		job <Ticket Vendor>
+		job <Bus Dispatcher>
 
 		NPC Guardian
 		SetPersona 1620
@@ -3433,7 +3408,8 @@ Scene 16 0
 
 Scene 17 0
 	name <Wujung>
-	type <Target City Town URB_STORY LANCEMATE_HERE>
+    desc <Wujung is an old fortress-city. From here the Federation Defense Force patrols the edge of the deadzone.>
+	type <Target City Town URB_STORY LANCEMATE_HERE DESTINATION>
 
 	CityMap
 	special <ShowAll>
@@ -3572,31 +3548,16 @@ Scene 17 0
 		prompt1 <I'm injured.>
 
 		Persona 1720
-		% V1 = Destination
-		% V2 = Fare
-		% V3 = Time
-		greeting <NewChat Say 1 AddChat 1 AddChat 4 AddChat 5 AddChat 6 AddChat 7>
-		result1 <NewChat V= 1 10 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
+		% Wujung Bus Terminal
+		greeting <NewChat Say 1 AddChat 1 AddChat 2>
+		result1 <Say 2 ShuttleService EndChat Say 3>
 		result2 <NewChat Say 4>
-		result3 <EndChat if= SCeneFaction V1 11 else GoR3NoBus Say 3 Time V3 Cash+ -V2 Exit 1 SeekGate V1>
-		GoR3NoBus <Say 5>
-		result4 <NewChat V= 1 44 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result5 <NewChat V= 1 13 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result6 <NewChat V= 1 39 V= 2 80 V= 3 3600 Say 2 AddChat 2 ifG PC$ V2 AddChat 3>
-		result7 <EndChat Say 6 ExpressDelivery Say 4>
-		Msg1 <This is Wujung Bus Terminal. From here you can take a bus to Snake Lake, Last Hope, Ipshil or Mauna.>
-		Msg2 <The ride from here to \SCENE V1 costs $ \VAL V2 . Do you want to go?>
-		Msg3 <Here's your ticket. The bus will drop you off on the edge of town.>
-		Msg4 <Have a nice day.>
-		Msg5 <Oh... all buses on the \SCENE V1 line have been cancelled for today.>
-		Msg6 <We can do that here. What is it you need?>
-		Prompt1 <I'd like to go to Snake Lake.>
-		Prompt2 <No thanks.>
-		Prompt3 <I'll have one ticket, please.>
-		Prompt4 <I'd like to go to Mauna.>
-		Prompt5 <I'd like to go to Ipshil.>
-		Prompt6 <I'd like to go to Last Hope.>
-		Prompt7 <Really, I need something delivered.>
+		Msg1 <Welcome to Wujung Bus Terminal. We offer shuttle service to nearby cities and global package delivery.>
+		Msg2 <The newly expanded bus service makes getting around the territories more convenient.>
+        Msg3 <Have a nice day.>
+		Msg4 <Be careful out there.>
+		Prompt1 <I need your services.>
+		Prompt2 <Just passing through, thanks.>
 
 		Persona 1701
 		greeting <NewChat ifFactionEnemy 2 else GoSomething SayAnything>
@@ -3760,7 +3721,7 @@ Scene 17 0
 		SetPersona 1720
 		SetTeam 2
 		home <Bus Terminal>
-		job <Ticket Vendor>
+		job <bus dispatcher>
 
 		NPC Guardian
 		SetPersona 1721
@@ -6561,7 +6522,8 @@ Scene 38 0
 
 Scene 39 0
 	name <Last Hope>
-	type <Target Town Village URB_STORY>
+    desc <Last Hope is a deadzone village that has only recently joined the Federation. Biocorp maintains a research lab here.>
+	type <Target Town Village URB_STORY DESTINATION>
 	special <ShowAll>
 	citymap
 	SetFaction 11
@@ -6641,9 +6603,9 @@ Scene 39 0
 			stat 5 -1
 
 			Sign
-			name <Intercity Bus Stop>
-			Destination 17
-			Msg3 <Once an hour the bus arrives here heading for Wujung. Would you like to wait for the bus?>
+			name <Road Sign>
+            use <Alert 3>
+			Msg3 <You stand before an ancient road sign. The original text has faded away, but over it someone has written "You have reached the end of the sidewalk. Turn back while you still can.">
 		end
 
 
@@ -6676,15 +6638,19 @@ Scene 39 0
 		Prompt1 <I need to get my stuff repaired.>
 
 		Persona 3903
-		greeting <NewChat Say 1 AddChat 1 AddChat 2>
-		result1 <NewChat Say 2 AddChat 2>
-		result2 <EndChat Say 3 ExpressDelivery SAY 4>
+		% Last Hope Bus Terminal
+		greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+		result1 <Say 2 ShuttleService EndChat Say 3>
+		result2 <NewChat Say 4>
+        result3 <NewChat Say 5 AddChat 1 AddChat 2>
 		Msg1 <This village is where the highway ends. From here we send trucks out into the dead zone. It's dangerous work, but the fortresses there will pay top dollar for manufactured goods and fresh produce.>
-		Msg2 <Hwang-Sa Temple is a short distance southwest of here. IronWind Fortress is far to the south.>
-		Msg3 <This is about the farthest out that you'll be able to get things delivered. If you're planning to explore the wastes, you should know that you're going to be on your own.>
+		Msg2 <This is about the farthest out that you'll be able to get things delivered. If you're planning to explore the wastes, you should know that you're going to be on your own.>
+        Msg3 <See you again.>
 		Msg4 <Good luck.>
-		Prompt1 <What cities are there in the wastes?>
-		Prompt2 <I need something delivered.>
+		Msg5 <Hwang-Sa Temple is a short distance southwest of here. IronWind Fortress is far to the south. Markheim is a bit north. There are some small villages on the edge of the green zone, but nothing worth visiting.>
+		Prompt1 <I need a ticket.>
+		Prompt2 <That's all for now.>
+        Prompt3 <What cities are there in the wastes?>
 
 		Persona 3905
 		greeting <NewChat Say 1 AddChat 1>
@@ -6758,7 +6724,7 @@ Scene 39 0
 		SetPersona 3902
 
 		NPC Mecha Pilot
-		job <Truck Dispatcher>
+		job <Bus Dispatcher>
 		home <Busgang Transit>
 		SetTeam 2
 		SetPersona 3903
@@ -7267,7 +7233,8 @@ Scene 43 0
 
 Scene 44 0
 	name <Mauna>
-	type <Target Town Village Resort URB_STORY>
+    desc <Mauna is a quaint resort town nestled in the mountains. It is famous for its hot springs and traditional cuisine.>
+	type <Target Town Village Resort URB_STORY DESTINATION>
 	wildmap
 	gapfill <-1 -8 -8 -4 -4 -4 -9>
 	SetFaction 11
@@ -7350,6 +7317,10 @@ Scene 44 0
 		room 5 5
 		FloorType 30
 		name <Town Hall>
+
+		room 5 5
+		FloorType 30
+		name <Tourist Center>
 
 		rect
 		width 3
@@ -7439,6 +7410,25 @@ Scene 44 0
         Prompt14 <Is that cake really from prezero times?>
         Prompt15 <I'll take one!>
         Prompt16 <Maybe I'll have something else...>
+
+		Persona 4411
+		% Mauna Bus Terminal
+		greeting <NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
+		result1 <Say 2 ShuttleService EndChat Say 3>
+		result2 <NewChat Say 4>
+        result3 <Newchat Say 5 AddChat 4 AddChat 5>
+        result4 <Goto result1>
+        result5 <Goto result2>
+		Msg1 <Welcome to Mauna, the village in the clouds. How can I help you?>
+		Msg2 <No problem. Buses run to all major destinations every thirty minutes.>
+        Msg3 <Safe travels.>
+		Msg4 <If there's anything I can do to make your stay more enjoyable just let me know.>
+        Msg5 <You can visit the spa for a relaxing bath, or go hiking in the mountains. I wouldn't advise visiting the hot springs on your own, though- the caves are filled with monsters.>
+		Prompt1 <I need transportation.>
+		Prompt2 <I'm just passing through.>
+        Prompt3 <What is there to do around here?>
+        Prompt4 <Tell me about the bus schedule.>
+        Prompt5 <That's all for now.>
 	end
 	inv
 		NPC Guardian
@@ -7491,6 +7481,12 @@ Scene 44 0
 		SetTeam 2
 		home <Natural Spa>
         CharDesc Cheerful Heroic
+
+		NPC Shopkeeper
+        job <bus dispatcher>
+		SetPersona 4411
+		SetTeam 2
+		home <Tourist Center>
 	end
 
 Scene 45

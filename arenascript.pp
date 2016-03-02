@@ -122,6 +122,8 @@ var
 	ASRD_GameBoard: GameBoardPtr;
 	ASRD_MemoMessage: String;
 
+    NeedGC: Boolean;
+
 
 Procedure ArenaScriptReDraw;
 	{ Redraw the combat screen for some menu usage. }
@@ -1485,7 +1487,7 @@ begin
 		PC := PC^.Next;
 	end;
 
-	SaveStringList( FName + '.txt' , VList );
+	SaveStringList( Config_Directory + FName + '.txt' , VList );
 	MoreText( VList , 1 );
 	DisposeSAtt( VList );
 	GFCombatDisplay( GB );
@@ -1633,7 +1635,10 @@ begin
 	Slot := ScriptValue( event , GB , scene );
 	Value := ScriptValue( event , GB , scene );
 
-	if Grabbed_Gear <> Nil then Grabbed_Gear^.Stat[ Slot ] := Value;
+	if Grabbed_Gear <> Nil then begin
+		Grabbed_Gear^.Stat[ Slot ] := Value;
+		ResizeCharacter(Grabbed_Gear);
+	end;
 end;
 
 Procedure ProcessGAddStat( var Event: String; GB: GameBoardPtr; Scene: GearPtr );
@@ -1646,7 +1651,10 @@ begin
 	Slot := ScriptValue( event , GB , scene );
 	Value := ScriptValue( event , GB , scene );
 
-	if Grabbed_Gear <> Nil then Grabbed_Gear^.Stat[ Slot ] := Grabbed_Gear^.Stat[ Slot ] + Value;
+	if Grabbed_Gear <> Nil then begin
+		Grabbed_Gear^.Stat[ Slot ] := Grabbed_Gear^.Stat[ Slot ] + Value;
+		ResizeCharacter(Grabbed_Gear);
+	end;
 end;
 
 Procedure ProcessGSetSAtt( var Event: String; Source: GearPtr );
@@ -2117,6 +2125,15 @@ begin
 	ExpressDelivery( GB , I_PC , I_NPC );
 end;
 
+Procedure ProcessShuttle( var Event: String; GB: GameBoardPtr; Source: GearPtr );
+	{ Retrieve the WARES line, then pass it all on to the OpenShop }
+	{ procedure. }
+begin
+	{ Pass all info on to the OPENSHOP procedure. }
+	OpenShuttle( GB , I_PC , I_NPC );
+end;
+
+
 Procedure ProcessAdvancePlot( var Event: String; GB: GameBoardPtr; Source: GearPtr );
 	{ This particular plot is over- mark it for deletion. }
 	{ First, though, check to see if there are any subcomponents that }
@@ -2132,7 +2149,10 @@ begin
 		{ It's possible that our SOURCE is a PERSONA rather than }
 		{ a PLOT, so if SOURCE isn't a PLOT move to its parent. }
 		Source := PlotMaster( Source );
-		if ( Source <> Nil ) and ( Source^.G = GG_Plot ) then AdvancePlot( GB , Source^.Parent , Source , N );
+		if ( Source <> Nil ) and ( Source^.G = GG_Plot ) then begin
+            AdvancePlot( GB , Source^.Parent , Source , N );
+            NeedGC := True;
+        end;
 	end;
 end;
 
@@ -2179,6 +2199,7 @@ begin
 
 		{ Mark the story for deletion. }
 		Source^.G := GG_AbsolutelyNothing;
+        NeedGC := True;
 	end;
 end;
 
@@ -3731,9 +3752,9 @@ begin
 	if PC <> Nil then begin
 		Renown := NAttValue( PC^.NA , NAG_CHarDescription , NAS_Renowned );
 		if Renown > 23 then begin
-			AddReputation( PC , NAS_Renowned , -( Renown div 4 ) );
+			AddReputation( PC , -NAS_Renowned , -( Renown div 4 ) );
 		end else begin
-			AddReputation( PC , NAS_Renowned , -5 );
+			AddReputation( PC , -NAS_Renowned , -5 );
 		end;
 	end;
 end;
@@ -3753,7 +3774,7 @@ begin
         { Check the reaction score with this NPC. If appropriate, become more }
         { than just friends... lancemates! }
         CReact := ReactionScore( GB^.Scene, PC, NPC );
-        if ( Random(100) + 25 ) < CReact then begin
+        if ( Random(50) + Random(50) + 45 ) < CReact then begin
             { This NPC will become an ally of some type. }
         	if IsSexy( PC , NPC ) and ( Random( 200 ) < CReact ) then begin
                 SetNAtt(NPC^.NA,NAG_Relationship,0,NAV_Lover);
@@ -3868,6 +3889,7 @@ begin
 		    else if cmd = 'SHOP' then ProcessShop( Event , GB , Source )
 		    else if cmd = 'SCHOOL' then ProcessSchool( Event , GB , Source )
 		    else if cmd = 'EXPRESSDELIVERY' then ProcessExpressDelivery( Event , GB , Source )
+		    else if cmd = 'SHUTTLESERVICE' then ProcessShuttle( Event , GB , Source )
 		    else if cmd = 'ADVANCEPLOT' then ProcessAdvancePlot( Event , GB , Source )
 		    else if cmd = 'ENDSTORY' then ProcessEndStory( GB , Source )
 		    else if cmd = 'PURGESTORY' then ProcessPurgeStory( GB , Source )
@@ -4055,6 +4077,7 @@ var
 	N,FreeRumors: Integer;
 	RTT: LongInt;		{ ReTalk Time }
 	T: String;
+    IntRoot: GearPtr;
 begin
 	{ Start by allocating the menu. }
 	IntMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
@@ -4170,10 +4193,10 @@ begin
 	{ Check - If this persona gear is the child of a gear whose type }
 	{ is GG_ABSOLUTELYNOTHING, chances are that it used to be a plot }
 	{ but it's been advanced by the conversation. Delete it. }
-	if Interact <> Nil then begin
+	{if Interact <> Nil then begin
 		Interact := FindRoot( Interact );
 		PruneNothings( Interact );
-	end;
+	end;}
 
 	{ Set the ReTalk value. }
 	{ Base retalk time is 1500 ticks; may be raised or lowered depending }
@@ -4187,6 +4210,8 @@ begin
 	{ Get rid of the menu. }
 	DisposeRPGMenu( IntMenu );
 	DisposeSAtt( I_Rumors );
+
+    I_NPC := Nil;
 
 	{ Restore the display. }
 	ClrZone( ZONE_InteractTotal );
@@ -4256,12 +4281,28 @@ begin
 			P2 := Plot^.Next;
 
 			{ Remove the plot, if it's been advanced. }
-			if Plot^.G = GG_AbsolutelyNothing then RemoveGear( Plot^.Parent^.InvCom , Plot );
+			{if Plot^.G = GG_AbsolutelyNothing then RemoveGear( Plot^.Parent^.InvCom , Plot );}
 		end;
 		Plot := P2;
 	end;
 	CheckTriggerAlongPath := it;
 end;
+
+Procedure DoScriptGC( GB: GameBoardPtr );
+    { Get rid of any ABSOLUTELYNOTHINGS that may be hanging about. }
+var
+    Adv: GearPtr;
+begin
+    if NeedGC then begin
+        Adv := GG_LocateAdventure( GB, Nil );
+        if Adv <> Nil then begin
+            PruneNothings( Adv^.SubCom );
+            PruneNothings( Adv^.InvCom );
+            NeedGC := False;
+        end;
+    end;
+end;
+
 
 Procedure HandleTriggers( GB: GameBoardPtr );
 	{ Go through the list of triggers, enacting events if any are }
@@ -4328,8 +4369,11 @@ begin
 			DisposeSAtt( TList );
 
 		end;
+        DoScriptGC( GB );
 	end;
 end;
+
+
 
 initialization
 	SCRIPT_DynamicEncounter := Nil;
@@ -4338,6 +4382,11 @@ initialization
 	Value_Macros := LoadStringList( Value_Macro_File );
 
 	lancemate_tactics_persona := LoadFile( 'lmtactics.txt' , Data_Directory );
+
+    I_NPC := Nil;
+
+    NeedGC := False;
+
 
 finalization
 	if SCRIPT_DynamicEncounter <> Nil then begin

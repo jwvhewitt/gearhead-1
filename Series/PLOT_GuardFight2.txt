@@ -2,6 +2,12 @@ plot 1
 	% The player will be offered a bounty for an escaped murderer.
 	name <PLOT: GuardFight2>
 
+    % Feb 29 2016 Note: This plot is old and weirdly written. Maybe it
+    %  should be replaced with a new personal combat plot?
+    %  I'm pretty sure it predates the "memo" command, since it didn't use
+    %  memos until I just added them.
+
+
 	% VARIABLES USED
 	% 1 -> Time Limit Timer
 	% 2 -> Combat Indicator
@@ -85,7 +91,7 @@ sub
 	FrzNU1 <if= T1 0 Return>
 	FrzNU2 <if= T2 0 Return>
 
-	Result8 <Say 16 P+ 1 45000 NewChat>
+	Result8 <Say 16 memo 20 P+ 1 45000 NewChat>
 
 	Result9 <AdvancePlot 0 Reputation 1 -1 Reputation 2 -3 AddReact -3 Say 17 NewChat>
 
@@ -109,6 +115,7 @@ sub
 	Msg17 <You've got other responsibilities I guess, but I would've appreciated it if you told me earlier that you weren't interested in the job.>
 	Msg18 <Here's a readout showing where the fugitives should be camped. Be careful, I wouldn't want for you to become their next victim.>
 	Msg19 <The killers are still at large. Are you ready to go after them yet?>
+    Msg20 <\ELEMENT 1 offered you a combat mission against wanted murderers.>
 
 	Msg125 <Your target is a gang of murderous sociopaths calling themselves "Slaves to the Dark God". They're into kidnapping, torture, cannibalism, and lord only knows what else. They're very dangerous. Go eliminate these sick bastards from the earth.>
 	Msg124 <Your target is a cult leader who turned to murder and extortion when milking his followers failed to provide enough money to support his lifestyle. They've got a well protected camp just outside of town. The reward is $25000.>
@@ -151,8 +158,9 @@ sub
 	Plot 1
 		% The player lost the battle.
 		% Time limit - this plot will fade after a short time.
-		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500 memo 1>
 		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+        msg1 <You should report to \PERSONA E1 about your mission.>
 	sub
 		Persona 1
 		greeting <NewChat AdvancePlot 0 Say 1>
@@ -162,8 +170,9 @@ sub
 	Plot 2
 		% The player won the battle.
 		% Time limit - this plot will fade after a short time.
-		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 57500>
+		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 57500 memo 1>
 		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
+        msg1 <You should report to \PERSONA E1 for your pay.>
 	sub
 		Persona 1
 		greeting <NewChat AdvancePlot 0 AddReact 5 if= E2 25 Else GoLvl24 CashPrize 40000 Goto GoSaySomething>

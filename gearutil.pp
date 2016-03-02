@@ -409,6 +409,8 @@ begin
 		else it := 'Platonic Form';
 	end;
 
+    if Part^.g = GG_AbsolutelyNothing then it := '~!' + it;
+
 	GearName := it;
 end;
 

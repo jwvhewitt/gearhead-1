@@ -53,13 +53,13 @@ sub
 
 	Msg1 <Hey \PC ! I've been looking around for you... I heard something that you ought to know. There's someone trying to kill you!>
 	Msg1_1 <I hear a lot of rumors. I heard one that might interest you... Apparently, there's someone trying to kill you.>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <I have a message for you. There's someone trying to kill you.>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_5 <I'm glad I found you! There's something you should know... there's a contract on your life!>
-	CMsg1_5 <ifNPCCheerful Accept>
+	CMsg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <Hey, \PC , I've got some news for you... There's a contract on your life. Someone wants to see you dead.>
-	CMsg1_6 <ifNPCMelancholy Accept>
+	CMsg1_6 <ifChatNPCMelancholy Accept>
 	Msg1_7 <You're \PC , right? I heard something the other day that you really ought to know... there's a contract out on your life. Someone's trying to kill you.>
 	CMsg1_7 <ifG 50 React Accept>
 	Msg1_8 <Hey, \PC . I don't like you much but I wouldn't be a very good person if I didn't tell you what I heard. There's a price on your head. Someone's trying to kill you.>
@@ -67,43 +67,43 @@ sub
 
 	Msg4 <I was at the shop fixing up my mecha when I overheard some zoners talking about their next hit... you. The contract's being funded by \NARRATIVE 2 . That's all I know, but \ELEMENT 4 was also there, and may be able to tell you more.>
 	Msg4_1 <I was getting my mecha repaired in the deadzone- don't ask why. Anyhow I overheard some bandits talking. They were hired to kill you by \NARRATIVE 2 . \ELEMENT 4 was there as well and might be able to provide more information.>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <It's \NARRATIVE 2 behind the contract. \ELEMENT 4 has better underworld connections than I do... \OPR E4 could tell you more.>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <From what I've heard it's \NARRATIVE 2 behind the contract. I don't know that much about it myself... My friend \ELEMENT 4 has some underworld contacts and may be able to tell you more, if you're interested.>
-	CMsg4_3 <ifNPCEasygoing Accept>
+	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <It's \NARRATIVE 2 behind it. You want to live long enough to find out why? You're going to need some help. Look, go talk with \ELEMENT 4 .>
-	CMsg4_4 <ifNPCPassionate Accept>
+	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <It's your old enemies \NARRATIVE 2 of course. Lucky for you I heard some zoners talking about it at the repair shop... I don't know much about these things, but I know who does. Go see \ELEMENT 4 . Don't worry; \OPR E4 can be trusted.>
-	CMsg4_5 <ifNPCCheerful Accept>
+	CMsg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <Sometimes I visit pirate netsites... You know, just keeping an eye on the dark side of human nature. There was a bounty offer from \NARRATIVE 2 for anyone who could kill you. If you want to find out more, \ELEMENT 4 's the person to see.>
-	CMsg4_6 <ifNPCMelancholy Accept>
+	CMsg4_6 <ifChatNPCMelancholy Accept>
 	Msg4_7 <I was hanging out in kind of a seedy place... you know the sort. Anyhow, some guy came up to me and offered me the contract to take you out. Said he was working for \NARRATIVE 2 . \ELEMENT 4 was also there and may be able to tell you more.>
-	CMsg4_7 <ifNPCChaotic Accept>
+	CMsg4_7 <ifChatNPCChaotic Accept>
 
 	Msg5 <I overheard some bandits at the repair shop talking about their next big hit... Every gangster in the dead zone is apparently gunning for your hide now. \ELEMENT 4 was also there with me, and may be able to tell you more details.>
 	Msg5_1 <While getting repairs I overheard some zoners talking about the hit. I don't know what you did to piss \NARRATIVE 2 off, but they really want you dead... \ELEMENT 4 was there at the same time. Maybe \OPR E4 can tell you more.>
-	CMsg5_1 <ifNPCSociable Accept>
+	CMsg5_1 <ifChatNPCSociable Accept>
 	Msg5_2 <I don't know any way to help you, but I know someone who might. \ELEMENT 4 has some underworld connections. Believe me, you can trust \SPR E4 .>
-	CMsg5_2 <ifNPCShy Accept>
+	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <What you need is someone with underworld connections, to help get to the bottom of things. My buddy \ELEMENT 4 may be just the person.>
-	CMsg5_3 <ifNPCEasygoing Accept>
+	CMsg5_3 <ifChatNPCEasygoing Accept>
 	Msg5_4 <Don't blame me, I'm only trying to help! Look, we heard some bandits talking about it at the garage. I doubt you have much to worry about from them, but there's others on the way. \ELEMENT 4 could probably tell you more than I can.>
-	CMsg5_4 <ifNPCPassionate Accept>
+	CMsg5_4 <ifChatNPCPassionate Accept>
 	Msg5_5 <Forewarned is forearmed, I say. As long as you already know who hired these killers you might as well find out where they're coming from... I think my friend \ELEMENT 4 could help you there.>
-	CMsg5_5 <ifNPCCheerful Accept>
+	CMsg5_5 <ifChatNPCCheerful Accept>
 	Msg5_6 <Unfortunately that's all I know. I overheard some bandits talking about it at the machine shop. I do know who might be able to tell you more... you should talk with \ELEMENT 4 .>
-	CMsg5_6 <ifNPCMelancholy Accept>
+	CMsg5_6 <ifChatNPCMelancholy Accept>
 
 	Msg6 <\ELEMENT 4 is in \SCENE EScene 4 right now.>
 	Msg6_1 <The last time I was talking to \SPR E4 \OPR E4 was in \SCENE EScene 4 . That's the best place to start looking.>
-	CMsg6_1 <ifNPCSociable Accept>
+	CMsg6_1 <ifChatNPCSociable Accept>
 	Msg6_2 <You can find \SPR E4 in \SCENE EScene 4 .>
-	CMsg6_2 <ifNPCShy Accept>
+	CMsg6_2 <ifChatNPCShy Accept>
 	Msg6_3 <I believe \OPR E4 lives in \SCENE EScene 4 , but I could be wrong.>
-	CMsg6_3 <ifNPCEasygoing Accept>
+	CMsg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <\ELEMENT 4 lives in \SCENE EScene 4 ... You should hurry.>
-	CMsg6_4 <ifNPCPassionate Accept>
+	CMsg6_4 <ifChatNPCPassionate Accept>
 
 	Prompt1 <Are you sure!? Who?>
 	Prompt1_1 <Who'd want to kill me?>
@@ -184,90 +184,90 @@ sub
 		%    Should mention that next episode will happen in \ELEMENT 3
 		Msg1 <That did it. You should have no problem from those killers from now on... At least, not until \NARRATIVE 2 regroups. I heard that some of the bandits were seen fleeing for \ELEMENT 3 .>
 		Msg1_1 <A major part of the crime network has been destroyed, thanks to you. You should be safe for a while at least. I heard that some of the gang members were seen fleeing to \ELEMENT 3 . It won't take \NARRATIVE 2 long to regroup.>
-		CMsg1_1 <ifNPCSociable Accept>
+		CMsg1_1 <ifChatNPCSociable Accept>
 		Msg1_2 <The gang has been dispersed, though \NARRATIVE 2 won't give up that easily. Some of their mecha were seen heading for \ELEMENT 3 .>
-		CMsg1_2 <ifNPCShy Accept>
+		CMsg1_2 <ifChatNPCShy Accept>
 		Msg1_3 <That should get \NARRATIVE 2 off your back for a while. Some of the gang's mecha were seen fleeing to \ELEMENT 3 ... I don't know what they're doing, but you're probably going to find out.>
-		CMsg1_3 <ifNPCEasygoing Accept>
+		CMsg1_3 <ifChatNPCEasygoing Accept>
 		Msg1_4 <Justice has been done. The murder gang has been dispersed to the four winds... I heard some survivors fled towards \ELEMENT 3 . This is a major blow to \NARRATIVE 2 !>
-		CMsg1_4 <ifNPCPassionate Accept>
+		CMsg1_4 <ifChatNPCPassionate Accept>
 		Msg1_5 <You did it! Those killers won't be bothering you ever again... Of course, your probably just made \NARRATIVE 2 angrier. I heard that some mecha were seen fleeing in the direction of \ELEMENT 3 . They're probably going to regroup from there.>
-		CMsg1_5 <ifNPCCheerful Accept>
+		CMsg1_5 <ifChatNPCCheerful Accept>
 		Msg1_6 <The gang has been destroyed... that should buy you a little time, at least. I heard some \NARRATIVE 2 mecha were spotted in \ELEMENT 3 . It might be a good idea for you to avoid that place for a while.>
-		CMsg1_6 <ifNPCMelancholy Accept>
+		CMsg1_6 <ifChatNPCMelancholy Accept>
 
 		% 2 : Player lost mission previously, now time to try again
 		Msg2 <Would you like to try your luck against those bandits again? I can show you where the base is, but you'll have to take them out yourself.>
 		Msg2_1 <The murder gang holds a contract on your life placed by \NARRATIVE 2 . The last time you fought, they defeated you. I can show you where to find them again, if you're ready for a rematch.>
-		CMsg2_1 <ifNPCSociable Accept>
+		CMsg2_1 <ifChatNPCSociable Accept>
 		Msg2_2 <Ready to try again?>
-		CMsg2_2 <ifNPCShy Accept>
+		CMsg2_2 <ifChatNPCShy Accept>
 		Msg2_3 <How'd you like to try your luck against the bandits again?>
-		CMsg2_3 <ifNPCEasygoing Accept>
+		CMsg2_3 <ifChatNPCEasygoing Accept>
 		Msg2_4 <Last time the murder gang was just too powerful for you... think you've got what it takes to face them now?>
-		CMsg2_4 <ifNPCPassionate Accept>
+		CMsg2_4 <ifChatNPCPassionate Accept>
 		Msg2_5 <I'm sure you'll do much better now than you did the last time you fought the murder gang. Want to try?>
-		CMsg2_5 <ifNPCCheerful Accept>
+		CMsg2_5 <ifChatNPCCheerful Accept>
 		Msg2_6 <Those bandits really thumped you the last time. Do you think you're ready to face them again?>
-		CMsg2_6 <ifNPCMelancholy Accept>
+		CMsg2_6 <ifChatNPCMelancholy Accept>
 
 		% 3 : Player has lost mission, must wait until tomorrow to try again
 		Msg3 <They creamed you out there... But, you're still breathing, so they won't be collecting their bounty yet. Come back tomorrow and we can try again.>
 		Msg3_1 <The murder gang defeated you... but at least nobody's going to collect on that bounty yet. Go get some rest. We can try another assault tomorrow.>
-		CMsg3_1 <ifNPCSociable Accept>
+		CMsg3_1 <ifChatNPCSociable Accept>
 		Msg3_2 <You lost. We'll try again tomorrow.>
-		CMsg3_2 <ifNPCShy Accept>
+		CMsg3_2 <ifChatNPCShy Accept>
 		Msg3_3 <Having a bit of a bad day, aren't you? Let's do this again tomorrow.>
-		CMsg3_3 <ifNPCEasygoing Accept>
+		CMsg3_3 <ifChatNPCEasygoing Accept>
 		Msg3_4 <They were too powerful... You're going to have to improve if you hope to defeat them. Come back tomorrow and let's do this again.>
-		CMsg3_4 <ifNPCPassionate Accept>
+		CMsg3_4 <ifChatNPCPassionate Accept>
 		Msg3_5 <Well, at least they didn't succeed at killing you! We can mount another offensive tomorrow... until then, you better get patched up.>
-		CMsg3_5 <ifNPCCheerful Accept>
+		CMsg3_5 <ifChatNPCCheerful Accept>
 		Msg3_6 <You're lucky to still be breathing. Next time they might not fail. Come back tomorrow and we'll try this again.>
-		CMsg3_6 <ifNPCMelancholy Accept>
+		CMsg3_6 <ifChatNPCMelancholy Accept>
 		Msg3_7 <You made it back... what a shame. Well, we can try another attack tomorrow.>
 		CMsg3_7 <ifG 0 React Accept>
 
 		% 4 : Player has accepted mission, has returned from repair
 		Msg4 <Are you still interested in seeing the bandit base? I can lead you there now, if you want.>
 		Msg4_1 <I can lead you to the murder gang that's hosting the contract on your life. Defeat them and you'll at least delay the plans of \NARRATIVE 2 . We can go now, if you like.>
-		CMsg4_1 <ifNPCSociable Accept>
+		CMsg4_1 <ifChatNPCSociable Accept>
 		Msg4_2 <Ready to start?>
-		CMsg4_2 <ifNPCShy Accept>
+		CMsg4_2 <ifChatNPCShy Accept>
 		Msg4_3 <Want to see where those bandits are yet? I'm not doing anything.>
-		CMsg4_3 <ifNPCEasygoing Accept>
+		CMsg4_3 <ifChatNPCEasygoing Accept>
 		Msg4_4 <Are you all ready? This is gonna be a tough battle.>
-		CMsg4_4 <ifNPCPassionate Accept>
+		CMsg4_4 <ifChatNPCPassionate Accept>
 
 		% 5 : Combat is starting
 		Msg5 <Good luck. Come talk with me after you're finished and let me know how it went.>
 		Msg5_1 <I'll be waiting to hear about how it went. Good luck.>
-		CMsg5_1 <ifNPCSociable Accept>
+		CMsg5_1 <ifChatNPCSociable Accept>
 		Msg5_2 <Good luck.>
-		CMsg5_2 <ifNPCShy Accept>
+		CMsg5_2 <ifChatNPCShy Accept>
 		Msg5_3 <Hopefully this will all go smoothly. Let me know how it works out.>
-		CMsg5_3 <ifNPCEasygoing Accept>
+		CMsg5_3 <ifChatNPCEasygoing Accept>
 		Msg5_4 <You'll be fighting for your life out there... Better give them hell!>
-		CMsg5_4 <ifNPCPassionate Accept>
+		CMsg5_4 <ifChatNPCPassionate Accept>
 		Msg5_5 <I'm certain you'll be able to defeat them. Good luck!>
-		CMsg5_5 <ifNPCCheerful Accept>
+		CMsg5_5 <ifChatNPCCheerful Accept>
 		Msg5_6 <Be careful. If you get killed, all you'll have done is save those bandits the trouble of finding you.>
-		CMsg5_6 <ifNPCMelancholy Accept>
+		CMsg5_6 <ifChatNPCMelancholy Accept>
 
 		% 6 : NPC explains what the PC should do in this mission, and why
 		Msg6 <Hi \PC . I thought you'd be coming to see me. There's a lot of word on the underground right now about that contract on your head... Every criminal yahoo with a mecha is gearing up to try and get it.>
 		Msg6_1 <Hello \PC ; I've heard about your troubles. There's been a lot of talk in the underground about that price on your head. Just about every two-bit criminal in the FedTer is gearing up to take you out.>
-		CMsg6_1 <ifNPCSociable Accept>
+		CMsg6_1 <ifChatNPCSociable Accept>
 		Msg6_2 <Hello \PC . You've come to see me about the contract on your head, right?>
-		CMsg6_2 <ifNPCShy Accept>
+		CMsg6_2 <ifChatNPCShy Accept>
 		Msg6_3 <Are you still alive? I heard that \NARRATIVE 2 placed a gigantic price on your head. I guess you're here to ask me about that, huh?>
-		CMsg6_3 <ifNPCEasygoing Accept>
+		CMsg6_3 <ifChatNPCEasygoing Accept>
 		Msg6_4 <Hey \PC . I knew you'd make it here eventually. Word on the underground is that \NARRATIVE 2 has a massive price on your head.>
-		CMsg6_4 <ifNPCPassionate Accept>
+		CMsg6_4 <ifChatNPCPassionate Accept>
 		Msg6_5 <It looks like \NARRATIVE 2 isn't getting their money's worth out of that contract on your head. Still, with every wannabe hitman in the FedTer aiming for you, it won't be long before they hit the jackpot.>
-		CMsg6_5 <ifNPCCheerful Accept>
+		CMsg6_5 <ifChatNPCCheerful Accept>
 		Msg6_6 <Good to see you're still alive. According to the talk on the street, you should be dead for ages. Every yahoo with a mecha is lining up to collect the contract \NARRATIVE 2 has on your head.>
-		CMsg6_6 <ifNPCMelancholy Accept>
+		CMsg6_6 <ifChatNPCMelancholy Accept>
 
 		% 7 : PC needs some time to get ready
 		Msg7 <Make sure that you're ready, because they sure as hell are.>
@@ -276,37 +276,37 @@ sub
 		% 8 : How many points? Use "\VAL V3 " for that
 		Msg8 <I think they'll have around \VAL V3 points worth of mecha. Think you can handle all that?>
 		Msg8_1 <What am I, some kind of statistician!? If I had to make an educated guess, I'd say they have \VAL V3 threat points worth of mecha.>
-		CMsg8_1 <ifNPCPassionate Accept>
+		CMsg8_1 <ifChatNPCPassionate Accept>
 
 		% 9 : Response to Prompt4
 		Msg9 <As a matter of fact, I know something. The contract was paid for by \NARRATIVE 2 but is being hosted by an action merchant in the dead-zone. Destroy his gang, and the economic incentive to kill you disappears too.>
 		Msg9_1 <I know the identity of the action merchant who's hosting the contract. You see, \NARRATIVE 2 doesn't handle this directly, they contract out to a murder gang. If you stop them you effectively stop the contract.>
-		CMsg9_1 <ifNPCSociable Accept>
+		CMsg9_1 <ifChatNPCSociable Accept>
 		Msg9_2 <That depends. I know who's hosting the contract, if you'd like to put that particular action merchant out of business.>
-		CMsg9_2 <ifNPCShy Accept>
+		CMsg9_2 <ifChatNPCShy Accept>
 		Msg9_3 <I wouldn't waste your time if I didn't. \NARRATIVE 2 contracted out this hit to an action merchant in the dead-zone. Defeat his gang and the whole machination should fall apart.>
-		CMsg9_3 <ifNPCEasygoing Accept>
+		CMsg9_3 <ifChatNPCEasygoing Accept>
 		Msg9_4 <Don't underestimate me. I know that the contract placed by \NARRATIVE 2 is being administered by a murder gang in the dead-zone; if you destroy the gang, the economic incentive to kill you disappears as well.>
-		CMsg9_4 <ifNPCPassionate Accept>
+		CMsg9_4 <ifChatNPCPassionate Accept>
 		Msg9_5 <It's your lucky day. You should know that \NARRATIVE 2 doesn't handle this kind of thing itself; they contracted out to a dead-zone murder gang. All you have to do now is defeat them.>
-		CMsg9_5 <ifNPCCheerful Accept>
+		CMsg9_5 <ifChatNPCCheerful Accept>
 		Msg9_6 <I can tell you, but I can't guarantee that you'll want to hear it. The contract placed by \NARRATIVE 2 is being hosted by a murder gang in the dead-zone. The only way to end it is to put them out of business, and that won't be easy.>
-		CMsg9_6 <ifNPCMelancholy Accept>
+		CMsg9_6 <ifChatNPCMelancholy Accept>
 
 		% 10 : Response to Prompt5
 		Msg10 <You can take a lot of them, I'm sure, but they'll just keep coming until you're dead... I know something you can do about it, though. Destroy the gang that's handling the contract and the wannabe hitmen should dissipate.>
 		Msg10_1 <I heard you were pretty cocky... But I don't think you can take them all. Fortunately you don't have to. The hit's been contracted out to a dead-zone murder gang. Defeat them and you'll be safe for a while.>
-		CMsg10_1 <ifNPCSociable Accept>
+		CMsg10_1 <ifChatNPCSociable Accept>
 		Msg10_2 <That may be, but there's a better suggestion. What you need to do is take the fight to the murder gang that's holding the contract.>
-		CMsg10_2 <ifNPCShy Accept>
+		CMsg10_2 <ifChatNPCShy Accept>
 		Msg10_3 <Honestly, in some of these cases just sitting back and doing nothing really isn't the best solution. Not when you can take the fight to the murder gang holding the contract, and wipe them off the face of the Earth...>
-		CMsg10_3 <ifNPCEasygoing Accept>
+		CMsg10_3 <ifChatNPCEasygoing Accept>
 		Msg10_4 <Pretty confident of your own abilities, aren't you? Admirable though that may be, you can't count on them giving up anytime soon. However, if you were to destroy the murder gang hosting the contract, that could buy you some time...>
-		CMsg10_4 <ifNPCPassionate Accept>
+		CMsg10_4 <ifChatNPCPassionate Accept>
 		Msg10_5 <You're an optimist. I like that. In any case, there's a better solution... I happen to know that the contract on your life is being administered by a dead-zone murder gang. Destroy the gang and the contract disappears, at least for a while.>
-		CMsg10_5 <ifNPCCheerful Accept>
+		CMsg10_5 <ifChatNPCCheerful Accept>
 		Msg10_6 <Hubris comes before a fall. Look, there is one thing you can do to save your life... The contract's being held by an action merchant in the dead-zone. Defeat his gang and the economic incentive to kill you disappears too.>
-		CMsg10_6 <ifNPCMelancholy Accept>
+		CMsg10_6 <ifChatNPCMelancholy Accept>
 
 		% 11 : Memo
 		Msg11 <\ELEMENT 4 in \SCENE EScene 4 knows where to find the killers pursuing you.>
@@ -315,17 +315,17 @@ sub
 
 		Msg13 <As a matter of fact I do, and out of the kindness of my heart I'll even tell you for free. You wanna go kick some ass now, or do you need to freshen up first?>
 		Msg13_1 <Yes, I do... But if you want to go there, I should warn you that it will be pretty dangerous. The murder gang will protect their assets well. Would you like me to show you now, or will you come back later?>
-		CMsg13_1 <ifNPCSociable Accept>
+		CMsg13_1 <ifChatNPCSociable Accept>
 		Msg13_2 <Of course. Do you want to visit them now, or will you be back later?>
-		CMsg13_2 <ifNPCShy Accept>
+		CMsg13_2 <ifChatNPCShy Accept>
 		Msg13_3 <What kind of use would I be if I didn't? I won't even charge you for the info... Would you like me to show you now, or do you need to freshen up?>
-		CMsg13_3 <ifNPCEasygoing Accept>
+		CMsg13_3 <ifChatNPCEasygoing Accept>
 		Msg13_4 <I do, and I'll lead you straight to them. I've got my own reasons for wanting to see these jerks scragged. Want to get on it right away?>
-		CMsg13_4 <ifNPCPassionate Accept>
+		CMsg13_4 <ifChatNPCPassionate Accept>
 		Msg13_5 <Fortunately I do. I can show you where they are, if you'd like. Think of it as my community service.>
-		CMsg13_5 <ifNPCCheerful Accept>
+		CMsg13_5 <ifChatNPCCheerful Accept>
 		Msg13_6 <I do, but if you're planning to go there you might wish that I didn't... The place is heavily guarded. Want me to show you right now?>
-		CMsg13_6 <ifNPCMelancholy Accept>
+		CMsg13_6 <ifChatNPCMelancholy Accept>
 		Msg13_7 <Yes I do, and since you're such a good friend I won't even charge you for the information. Do you need to freshen up or are you ready to go there now?>
 		CMsg13_7 <ifG React 35 Accept>
 

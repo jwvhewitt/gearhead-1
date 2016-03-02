@@ -47,70 +47,70 @@ sub
 	Msg1_1 <I love searching through abandoned buildings. Time causes all things to rust and decay... It's interesting to see how a once-new home can fall to bits over the years. Sometimes I even find valuable things.>
 	CMsg1_1 <ifG 0 NPCRep E3 5 Accept>
 	Msg1_11 <I hope someday to discover something valuable while exploring the ruins... Usually, though, all I turn up is junk. Lately I've been searching through some abandoned buildings near town. It's a bit dangerous, but will prepare me for later.>
-	CMsg1_11 <ifNPCSociable Accept>
+	CMsg1_11 <ifChatNPCSociable Accept>
 	Msg1_12 <Yes, I've been exploring abandoned buildings. No, I haven't found anything valuable... yet.>
-	CMsg1_12 <ifNPCShy Accept>
+	CMsg1_12 <ifChatNPCShy Accept>
 	Msg1_13 <I'd like to mount an expedition to the PreZero ruins of the Trans-Siberian Megafortress... but as that's far away and dangerous, I content myself with exploring abandoned buildings around town.>
-	CMsg1_13 <ifNPCEasygoing Accept>
+	CMsg1_13 <ifChatNPCEasygoing Accept>
 	Msg1_14 <I'm never content to just read about things in books... I want to be the first to make exciting discoveries! That's why I've been exploring abandoned buildings near town. It's preparation for an expedition to the ruins.>
-	CMsg1_14 <ifNPCPassionate Accept>
+	CMsg1_14 <ifChatNPCPassionate Accept>
 	Msg1_15 <You can find all kinds of interesting things if you search hard enough. I enjoy going into abandoned places to see what's been left behind.>
-	CMsg1_15 <ifNPCCheerful Accept>
+	CMsg1_15 <ifChatNPCCheerful Accept>
 	Msg1_16 <Archaeology is a fascinating subject. I hope someday to research an actual prezero habitation... For right now, I'll have to be content with whatever ruins I can find near town.>
-	CMsg1_16 <ifNPCPragmatic Accept>
+	CMsg1_16 <ifChatNPCPragmatic Accept>
 	Msg1_17 <There are ancient mystical secrets to be found in the forgotten places... lost technology, crystal skulls, and other miraculous things. I often enjoy meditating in the ruins near town.>
-	CMsg1_17 <ifNPCSpiritual Accept>
+	CMsg1_17 <ifChatNPCSpiritual Accept>
 
 	Msg2 <Then you should know that outside of town is an old apartment complex. You can find it as you enter the city. I found a couple of good things there but I'm certain there's even more left to be discovered.>
 	Msg2_1 <You too? We should swap stories later. Well, the place I've been exploring lately is an old apartment complex. It's easy to find on the way into town. I'm sure there are interesting things on the upper floors.>
 	CMsg2_1 <ifG NPCRep E3 3 0 Accept>
 	Msg2_12 <Is that so? Well, if you look around, I'm certain you'll find something interesting.>
-	CMsg2_12 <ifNPCShy Accept>
+	CMsg2_12 <ifChatNPCShy Accept>
 	Msg2_13 <There's an abandoned apartment complex on the way into town. I started searching it, but I doubt there's anything of intellectual value there. If you're just interested in loot you might be able to find something on the upper floor, though.>
-	CMsg2_13 <ifNPCEasygoing Accept>
+	CMsg2_13 <ifChatNPCEasygoing Accept>
 	Msg2_14 <There's an old apartment complex on the road to town. Something bad happened there many years ago... I'm hoping my studies can shed light on the tragedy.>
-	CMsg2_14 <ifNPCPassionate Accept>
+	CMsg2_14 <ifChatNPCPassionate Accept>
 	Msg2_15 <There's a great abandoned building near here. As you're coming into town from the highway you go right past it. It's not very old so there won't be anything valuable there, but it is a fun place to look around.>
-	CMsg2_15 <ifNPCCheerful Accept>
+	CMsg2_15 <ifChatNPCCheerful Accept>
 	Msg2_16 <Here, let me show you the data I've acquired. There's an old apartment building on the outskirts of town. It looks like something bad happened there, but so far I haven't been able to determine what.>
-	CMsg2_16 <ifNPCPragmatic Accept>
+	CMsg2_16 <ifChatNPCPragmatic Accept>
 	Msg2_17 <There is a derelect building on the way into town. It contains nothing that I desire, but maybe it is here you can find the answers you seek?>
-	CMsg2_17 <ifNPCSpiritual Accept>
+	CMsg2_17 <ifChatNPCSpiritual Accept>
 
 
 	Msg3 <\ELEMENT 3 said there's an abandoned building outside of \ELEMENT 1 .>
 	Msg4 <As a matter of fact I have. Just recently I came across an old book... I can let you have it for the low price of $ \VAL V1 , if you're into that sort of thing.>
 	Msg4_11 <Well, I found this old diary in the abandoned building I'm exploring. It's interesting reading but nothing of intellectual note. If you want, I can let you have it for $ \VAL V1 .>
-	CMsg4_11 <ifNPCSociable Accept>
+	CMsg4_11 <ifChatNPCSociable Accept>
 	Msg4_12 <I found some old books. If you want one, I can sell it for $ \VAL V1 .>
-	CMsg4_12 <ifNPCShy Accept>
+	CMsg4_12 <ifChatNPCShy Accept>
 	Msg4_13 <I've found plenty of stuff... most of it worthless, unfortunately. I have a book that was acquired from my latest expedition. If you're interested, I can give it to you for $ \VAL V1 .>
-	CMsg4_13 <ifNPCEasygoing Accept>
+	CMsg4_13 <ifChatNPCEasygoing Accept>
 	Msg4_14 <Have I ever! Yes, I have so many artifacts I don't know what to do with them. My latest find is an old handwritten manuscript. If you were interested in owning it, I could give it to you for a mere $ \VAL V1 .>
-	CMsg4_14 <ifNPCPassionate Accept>
+	CMsg4_14 <ifChatNPCPassionate Accept>
 	Msg4_15 <Why, are you interested in artifacts? That's great! I have an old handwritten manuscript that can be yours for the low price of $ \VAL V1 . How about it?>
-	CMsg4_15 <ifNPCCheerful Accept>
+	CMsg4_15 <ifChatNPCCheerful Accept>
 	Msg4_16 <Just an old book... I've OCR'd the data already. If you want to look at the original, I can let you have it for $ \VAL V1 .>
-	CMsg4_16 <ifNPCPragmatic Accept>
+	CMsg4_16 <ifChatNPCPragmatic Accept>
 	Msg4_17 <I've discovered an old book. I haven't read it yet... I feel it was private. If you'd like to fund my expeditions, I can sell it to you for $ \VAL V1 .>
-	CMsg4_17 <ifNPCSpiritual Accept>
+	CMsg4_17 <ifChatNPCSpiritual Accept>
 
 	Msg5 <\ELEMENT 3 in \ELEMENT 1 offered to sell you a book for $ \VAL V1 .>
 	Msg6 <Here you go. It seems to be a diary or something. If you're interested in the past, I'm certain that this can help your studies.>
 	Msg6_11 <The juicy parts come near the end. I'm certain that if you investigate this book thoroughly you'll find something of interest.>
-	CMsg6_11 <ifNPCSociable Accept>
+	CMsg6_11 <ifChatNPCSociable Accept>
 	Msg6_12 <Here's the book.>
-	CMsg6_12 <ifNPCShy Accept>
+	CMsg6_12 <ifChatNPCShy Accept>
 	Msg6_13 <Thanks. I hope that book is worth the price.>
-	CMsg6_13 <ifNPCEasygoing Accept>
+	CMsg6_13 <ifChatNPCEasygoing Accept>
 	Msg6_14 <Thanks. I'm certain you'll find that the book was well worth the price.>
-	CMsg6_14 <ifNPCPassionate Accept>
+	CMsg6_14 <ifChatNPCPassionate Accept>
 	Msg6_15 <It's been a pleasure doing business with you.>
-	CMsg6_15 <ifNPCCheerful Accept>
+	CMsg6_15 <ifChatNPCCheerful Accept>
 	Msg6_16 <Here it is. If you thoroughly investigate the text I'm sure you can learn something that I've missed.>
-	CMsg6_16 <ifNPCPragmatic Accept>
+	CMsg6_16 <ifChatNPCPragmatic Accept>
 	Msg6_17 <May this book bring you the enlightenment you seek.>
-	CMsg6_17 <ifNPCSpiritual Accept>
+	CMsg6_17 <ifChatNPCSpiritual Accept>
 
 	Msg7 <Any money I receive will go into funding my next expedition.>
 

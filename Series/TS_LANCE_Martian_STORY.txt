@@ -23,7 +23,7 @@ Story
 	% Failing to aid the princess results in the end of this story.
 	GoRefuse <EndStory>
 	GoStartCombat <SavePos Dynamic 2 Threat S1 120 .nu1 .nu2 S= 2 1 DynaNPC N2 -1 ComposeD START .encstart PassVar 1 N2>
-	.nu1 <if= T1 0 if= L3 0 L= 3 1 Reputation 1 -8 Return>
+	.nu1 <if= T1 0 if= L3 0 L= 3 1 LoseRenown Return>
 	.nu2 <if= T2 0 if= L3 0 L= 3 1 XPV 100 Reputation 6 1 Reputation 1 1 Return>
 	nu1 <if= T1 0 if= S3 0 S= 2 0>
 	nu2 <if= T2 0 if= S2 1 if= S3 0 S= 3 1 S= 1 1 History 4 ifG SkRoll 11 15 else GoNU2NoSee Print 5>

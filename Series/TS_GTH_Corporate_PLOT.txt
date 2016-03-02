@@ -85,115 +85,115 @@ sub
 	% *********************
 	Msg1 <So, did you recover the files we need?>
 	Msg1_1 <You've been gone for a while. I know the complex is well guarded, but I had no idea how much so... Did you find the information that we require, or has the mission been a failure?>
-	CMsg1_1 <ifNPCSociable Accept>
+	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <Find anything?>
-	CMsg1_2 <ifNPCShy Accept>
+	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <It would be great if one of our own teams could get a look inside the \ELEMENT 2 complex. Did you find anything worth mentioning?>
-	CMsg1_3 <ifNPCCheerful Accept>
+	CMsg1_3 <ifChatNPCCheerful Accept>
 	Msg1_4 <Such an extravagant complex that \ELEMENT 2 has built... It must mean something bad. What have you found?>
-	CMsg1_4 <ifNPCMelancholy Accept>
+	CMsg1_4 <ifChatNPCMelancholy Accept>
 	Msg1_5 <Back already? I was just taking a nap. So, did you find something?>
-	CMsg1_5 <ifNPCEasygoing Accept>
+	CMsg1_5 <ifChatNPCEasygoing Accept>
 	Msg1_6 <We have only one chance to destroy \ELEMENT 2 , and this is it... Did you get something worthwhile?>
-	CMsg1_6 <ifNPCPassionate Accept>
+	CMsg1_6 <ifChatNPCPassionate Accept>
 
 	Msg2 <Excellent. Here is your money.>
 	Msg2_1 <Very good. With this knowledge we'll know exactly what \ELEMENT 2 is doing... and we'll be ready with our own products!>
-	CMsg2_1 <ifNPCSociable Accept>
+	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <You've done well. Now keep this a secret, just between us.>
-	CMsg2_2 <ifNPCShy Accept>
+	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <I knew you'd come through for me. Here's the money you've earned.>
-	CMsg2_3 <ifNPCCheerful Accept>
+	CMsg2_3 <ifChatNPCCheerful Accept>
 	Msg2_4 <Hm, I was afraid at first that you wouldn't recover anything. Here's your pay.>
-	CMsg2_4 <ifNPCMelancholy Accept>
+	CMsg2_4 <ifChatNPCMelancholy Accept>
 	Msg2_5 <Good work. Here's the money I offered you for it... I'll let you know the next time I need any covert ops done.>
-	CMsg2_5 <ifNPCEasygoing Accept>
+	CMsg2_5 <ifChatNPCEasygoing Accept>
 	Msg2_6 <You did it! This will spell the downfall of \ELEMENT 2 ... here's your pay.>
-	CMsg2_6 <ifNPCPassionate Accept>
+	CMsg2_6 <ifChatNPCPassionate Accept>
 
 	Msg3 <That's a pity... Well, I'm certain that our company can defeat \ELEMENT 2 , none the less...>
 	Msg3_1 <>
-	CMsg3_1 <ifNPCSociable Accept>
+	CMsg3_1 <ifChatNPCSociable Accept>
 	Msg3_2 <>
-	CMsg3_2 <ifNPCShy Accept>
+	CMsg3_2 <ifChatNPCShy Accept>
 	Msg3_3 <>
-	CMsg3_3 <ifNPCCheerful Accept>
+	CMsg3_3 <ifChatNPCCheerful Accept>
 	Msg3_4 <>
-	CMsg3_4 <ifNPCMelancholy Accept>
+	CMsg3_4 <ifChatNPCMelancholy Accept>
 	Msg3_5 <>
-	CMsg3_5 <ifNPCEasygoing Accept>
+	CMsg3_5 <ifChatNPCEasygoing Accept>
 	Msg3_6 <>
-	CMsg3_6 <ifNPCPassionate Accept>
+	CMsg3_6 <ifChatNPCPassionate Accept>
 
 	Msg4 <You are a true thief... Well, so long as the information has been denied to \ELEMENT 2 , this has not been a total loss for us.>
 	Msg4_1 <>
-	CMsg4_1 <ifNPCSociable Accept>
+	CMsg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <>
-	CMsg4_2 <ifNPCShy Accept>
+	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <>
-	CMsg4_3 <ifNPCCheerful Accept>
+	CMsg4_3 <ifChatNPCCheerful Accept>
 	Msg4_4 <>
-	CMsg4_4 <ifNPCMelancholy Accept>
+	CMsg4_4 <ifChatNPCMelancholy Accept>
 	Msg4_5 <>
-	CMsg4_5 <ifNPCEasygoing Accept>
+	CMsg4_5 <ifChatNPCEasygoing Accept>
 	Msg4_6 <>
-	CMsg4_6 <ifNPCPassionate Accept>
+	CMsg4_6 <ifChatNPCPassionate Accept>
 
 	Msg11 <So, you must have received my message... I have a bit of underhanded business that needs looking to, and it would be best if it were done by someone who would not sully the company name.>
 	Msg11_1 <>
-	CMsg11_1 <ifNPCSociable Accept>
+	CMsg11_1 <ifChatNPCSociable Accept>
 	Msg11_2 <>
-	CMsg11_2 <ifNPCShy Accept>
+	CMsg11_2 <ifChatNPCShy Accept>
 	Msg11_3 <>
-	CMsg11_3 <ifNPCCheerful Accept>
+	CMsg11_3 <ifChatNPCCheerful Accept>
 	Msg11_4 <>
-	CMsg11_4 <ifNPCMelancholy Accept>
+	CMsg11_4 <ifChatNPCMelancholy Accept>
 	Msg11_5 <>
-	CMsg11_5 <ifNPCEasygoing Accept>
+	CMsg11_5 <ifChatNPCEasygoing Accept>
 	Msg11_6 <>
-	CMsg11_6 <ifNPCPassionate Accept>
+	CMsg11_6 <ifChatNPCPassionate Accept>
 
 	Msg16 <I have a business offer for you. As you may know, \ELEMENT 2 is developing a new product. Of course we would like this project to fail. That's where you come in.>
 	Msg16_1 <>
-	CMsg16_1 <ifNPCSociable Accept>
+	CMsg16_1 <ifChatNPCSociable Accept>
 	Msg16_2 <>
-	CMsg16_2 <ifNPCShy Accept>
+	CMsg16_2 <ifChatNPCShy Accept>
 	Msg16_3 <>
-	CMsg16_3 <ifNPCCheerful Accept>
+	CMsg16_3 <ifChatNPCCheerful Accept>
 	Msg16_4 <>
-	CMsg16_4 <ifNPCMelancholy Accept>
+	CMsg16_4 <ifChatNPCMelancholy Accept>
 	Msg16_5 <>
-	CMsg16_5 <ifNPCEasygoing Accept>
+	CMsg16_5 <ifChatNPCEasygoing Accept>
 	Msg16_6 <>
-	CMsg16_6 <ifNPCPassionate Accept>
+	CMsg16_6 <ifChatNPCPassionate Accept>
 
 	Msg21 <We know the facility where the new product is being developed. Your job will be to sneak in and steal whatever information you can find. I can give you $ \VAL P4 if you return with anything useful.>
 	Msg21_1 <>
-	CMsg21_1 <ifNPCSociable Accept>
+	CMsg21_1 <ifChatNPCSociable Accept>
 	Msg21_2 <>
-	CMsg21_2 <ifNPCShy Accept>
+	CMsg21_2 <ifChatNPCShy Accept>
 	Msg21_3 <>
-	CMsg21_3 <ifNPCCheerful Accept>
+	CMsg21_3 <ifChatNPCCheerful Accept>
 	Msg21_4 <>
-	CMsg21_4 <ifNPCMelancholy Accept>
+	CMsg21_4 <ifChatNPCMelancholy Accept>
 	Msg21_5 <>
-	CMsg21_5 <ifNPCEasygoing Accept>
+	CMsg21_5 <ifChatNPCEasygoing Accept>
 	Msg21_6 <>
-	CMsg21_6 <ifNPCPassionate Accept>
+	CMsg21_6 <ifChatNPCPassionate Accept>
 
 	Msg26 <Good luck. Return here with the data and I'll pay you for it.>
 	Msg26_1 <>
-	CMsg26_1 <ifNPCSociable Accept>
+	CMsg26_1 <ifChatNPCSociable Accept>
 	Msg26_2 <>
-	CMsg26_2 <ifNPCShy Accept>
+	CMsg26_2 <ifChatNPCShy Accept>
 	Msg26_3 <>
-	CMsg26_3 <ifNPCCheerful Accept>
+	CMsg26_3 <ifChatNPCCheerful Accept>
 	Msg26_4 <>
-	CMsg26_4 <ifNPCMelancholy Accept>
+	CMsg26_4 <ifChatNPCMelancholy Accept>
 	Msg26_5 <>
-	CMsg26_5 <ifNPCEasygoing Accept>
+	CMsg26_5 <ifChatNPCEasygoing Accept>
 	Msg26_6 <>
-	CMsg26_6 <ifNPCPassionate Accept>
+	CMsg26_6 <ifChatNPCPassionate Accept>
 
 	Msg101 <Are you ready to start the mission yet?>
 	Msg102 <I'm working on some company business... secret company business.>

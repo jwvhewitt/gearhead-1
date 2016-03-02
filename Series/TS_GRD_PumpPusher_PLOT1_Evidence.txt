@@ -62,32 +62,32 @@ sub
 	%  01 :  PC has won the mission.
 	Msg1 <Good work, \RANK . The lab boys will search through that filing cabinet you found and see what they can determine.>
 	Msg1_1 <You did a really good job, \RANK \PC . That filing cabinet you discovered is sure to contain information that will lead us to the drug lab.>
-	CMSg1_1 <ifNPCSociable Accept>
+	CMSg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <You did well out there. When the forensics team gets something, I'll let you know.>
-	CMSg1_2 <ifNPCShy Accept>
+	CMSg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <Piece of cake. The lab team will go through that filing cabinet; I'll let you know what they find.>
-	CMSg1_3 <ifNPCEasygoing Accept>
+	CMSg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <You did it! That filing cabinet must contain vital information about the drug ring... Maybe even the location of their lab!>
-	CMSg1_4 <ifNPCPassionate Accept>
+	CMSg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <Good job, \PC . With the information recovered from that filing cabinet we'll be able to track down the Pump lab no problem.>
-	CMSg1_5 <ifNPCCheerful Accept>
+	CMSg1_5 <ifChatNPCCheerful Accept>
 	Msg1_6 <The mission was a success, but I fear that our time may be running out. It is very important that we shut down their production lab quickly.>
-	CMSg1_6 <ifNPCMelancholy Accept>
+	CMSg1_6 <ifChatNPCMelancholy Accept>
 
 	%  02 :  PC has lost the mission.
 	Msg2 <You didn't find anything? The case is going to be hamstrung until we find a new lead...>
 	Msg2_1 <The mission was a failure. We'll have to keep looking for a new lead... There's no way we can allow these poison merchants to keep operating.>
-	CMSg2_1 <ifNPCSociable Accept>
+	CMSg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <You lost.>
-	CMSg2_2 <ifNPCShy Accept>
+	CMSg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <You didn't find anything? The intelligence must have been wrong... But that leaves us without any good leads in the case.>
-	CMSg2_3 <ifNPCEasygoing Accept>
+	CMSg2_3 <ifChatNPCEasygoing Accept>
 	Msg2_4 <You couldn't find anything!? What happened, were the local gangs too tough for you?>
-	CMSg2_4 <ifNPCPassionate Accept>
+	CMSg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <No evidence was recovered from the scene... We'll have to try harder next time.>
-	CMSg2_5 <ifNPCCheerful Accept>
+	CMSg2_5 <ifChatNPCCheerful Accept>
 	Msg2_6 <No evidence was recovered... It may well be that we'll never find their lab now...>
-	CMSg2_6 <ifNPCMelancholy Accept>
+	CMSg2_6 <ifChatNPCMelancholy Accept>
 
 	%  03 :  The item somehow got destroyed...
 	Msg3 <The evidence was accidentally destroyed during your investigation. Tough luck.>
@@ -95,17 +95,17 @@ sub
 	%  04 :  Mission description.
 	Msg4 <We need to find some clues, to figure out where the "Pump Pushers" have their base of operations. A dealer has been operating out of one of the edgezone slums... Go there and see what you can find.>
 	Msg4_1 <The "Pump Pushers" have been selling their deadly drug throughout the Federated Territories. We've got a lead that they have operatives in the edgezone slum. Your job will be to go there and see what evidence you can find.>
-	CMSg4_1 <ifNPCSociable Accept>
+	CMSg4_1 <ifChatNPCSociable Accept>
 	Msg4_2 <I want you to go to this slum and search for evidence linked to the "Pump Pushers". Be careful, the local street gangs are dangerous.>
-	CMSg4_2 <ifNPCShy Accept>
+	CMSg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <Right now we need information. Once we find out where their production lab is, we can raid and destroy it. I want you to search this area for a drug dealer's hideout. If you find any evidence, report back to me.>
-	CMSg4_3 <ifNPCEasygoing Accept>
+	CMSg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <Our clues so far have indicated that a pump dealer is working in the edgezone. Your task is to storm his lair and bring back any evidence that you find. If his men try to stop you, kill them.>
-	CMSg4_4 <ifNPCPassionate Accept>
+	CMSg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <We had a lucky break in the case... It's been found that one of the local drug dealers has connections to the "Pump Pushers". Your job is to raid his hideout and search for information. If you find anything, come report to me.>
-	CMSg4_5 <ifNPCCheerful Accept>
+	CMSg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <It's believed that a local dealer has connections to the "Pump Pushers". I want you to search the edgezone for his hideout, and see if you can find any evidence there. I'm afraid it's going to be like looking for a needle in a haystack.>
-	CMSg4_6 <ifNPCMelancholy Accept>
+	CMSg4_6 <ifChatNPCMelancholy Accept>
 
 	%  05 :  PC has come back after getting ready
 	Msg5 <All ready to go search for clues yet?>
@@ -114,32 +114,32 @@ sub
 	%  06 :  PC will not be offered the mission
 	Msg6 <I'm very busy with guardian business today.>
 	Msg6_1 <I've been investigating the "Pump Pusher" drug cartel. I really hope that we can find their headquarters... Sorry, this investigation is for Guardians only. If any information was leaked it could damage the case.>
-	CMSg6_1 <ifNPCSociable Accept>
+	CMSg6_1 <ifChatNPCSociable Accept>
 	Msg6_2 <Hm? Oh, please come back later.>
-	CMSg6_2 <ifNPCShy Accept>
+	CMSg6_2 <ifChatNPCShy Accept>
 	Msg6_3 <Police work isn't all glamorous you know. Er, actually it isn't glamorous at all.>
-	CMSg6_3 <ifNPCEasygoing Accept>
+	CMSg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <I'm gonna be the one who brings the "Pump Pushers" to justice!>
-	CMSg6_4 <ifNPCPassionate Accept>
+	CMSg6_4 <ifChatNPCPassionate Accept>
 	Msg6_5 <It's only a matter of time before the heads of the "Pump Pusher" gang are arrested.>
-	CMSg6_5 <ifNPCCheerful Accept>
+	CMSg6_5 <ifChatNPCCheerful Accept>
 	Msg6_6 <I won't be able to sleep at night until the "Pump Pushers" are brought to justice...>
-	CMSg6_6 <ifNPCMelancholy Accept>
+	CMSg6_6 <ifChatNPCMelancholy Accept>
 
 	%  07 :  PC will be offered the mission here.
 	Msg7 <Hello, \PC . I guess you heard that I've been investigating the "Pump Pushers". I could use some help with the field work, if you're up for a mission.>
 	Msg7_1 <Good to see you, \PC . I've been hoping you'd show up. I guess you've heard already about the "Pump Pushers"... I need you to do a bit of investigation work for me; how about it?>
-	CMSg7_1 <ifNPCSociable Accept>
+	CMSg7_1 <ifChatNPCSociable Accept>
 	Msg7_2 <Hello \RANK . The "Pump Pushers" are operating in town. I need you to investigate.>
-	CMSg7_2 <ifNPCShy Accept>
+	CMSg7_2 <ifChatNPCShy Accept>
 	Msg7_3 <Hey there, \RANK \PC . If you're not busy I have some investigation work that needs doing.>
-	CMSg7_3 <ifNPCEasygoing Accept>
+	CMSg7_3 <ifChatNPCEasygoing Accept>
 	Msg7_4 <Ah, \RANK \PC , you've made it. Our fair city has been the latest target of the nefarious "Pump Pushers". I have an investigation job that you can help with.>
-	CMSg7_4 <ifNPCPassionate Accept>
+	CMSg7_4 <ifChatNPCPassionate Accept>
 	Msg7_5 <You picked a good time to show up. I've got an investigation mission that I need a field agent for... We're going after the "Pump Pushers".>
-	CMSg7_5 <ifNPCCheerful Accept>
+	CMSg7_5 <ifChatNPCCheerful Accept>
 	Msg7_6 <\PC , I need your help to investigate the "Pump Pushers". We must act quickly before more people die.>
-	CMSg7_6 <ifNPCMelancholy Accept>
+	CMSg7_6 <ifChatNPCMelancholy Accept>
 
 	%  08 :  The PC refused the mission.
 	Msg8 <That's too bad. I'll carry on by myself, then.>
@@ -150,17 +150,17 @@ sub
 	%  10 :  Combat is starting.
 	Msg10 <Come back here when you've found something that looks like it might be important. Then, I can send the lab truck over and they'll comb the area.>
 	Msg10_1 <If you find anything that looks like it might be important, come back here and let me know about it. Even if you can't figure it out yourself our lab boys will scour the area for clues, and they'll find something.>
-	CMSg10_1 <ifNPCSociable Accept>
+	CMSg10_1 <ifChatNPCSociable Accept>
 	Msg10_2 <Once you've found something, return here at once. Our forensics team will do the rest.>
-	CMSg10_2 <ifNPCShy Accept>
+	CMSg10_2 <ifChatNPCShy Accept>
 	Msg10_3 <Be careful of the street gangs in the edgezone... some of them are pretty trigger-happy.>
-	CMSg10_3 <ifNPCEasygoing Accept>
+	CMSg10_3 <ifChatNPCEasygoing Accept>
 	Msg10_4 <Search every building until you've found something. There must be evidence...>
-	CMSg10_4 <ifNPCPassionate Accept>
+	CMSg10_4 <ifChatNPCPassionate Accept>
 	Msg10_5 <Good luck. I'm sure you'll have no problem finding some evidence.>
-	CMSg10_5 <ifNPCCheerful Accept>
+	CMSg10_5 <ifChatNPCCheerful Accept>
 	Msg10_6 <Stay alive. We've already lost too many good guardians trying to fight this cartel...>
-	CMSg10_6 <ifNPCMelancholy Accept>
+	CMSg10_6 <ifChatNPCMelancholy Accept>
 
 	%  11 :  The PC needs some time to get ready.
 	Msg11 <Alright. You go do that.>

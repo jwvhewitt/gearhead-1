@@ -47,6 +47,8 @@ Const
 	GS_Storage = 8;
 
 	STAT_Armor = 1;
+	STAT_Resizable = 2; { if =1, part resizes on BODY change. }
+    STAT_InfoTier = 3;  { if in range 1..3, sets part's location in module display }
 
 	{ This array tells which modules are usable by which forms. }
 	{ Some systems ( movers, sensors, cockpits ) will function no matter where they are mounted. }
@@ -269,7 +271,10 @@ begin
 	end else begin
 		if Part^.Stat[1] > 10 then Part^.Stat[1] := 10;
 	end;
-	for t := 2 to NumGearStats do Part^.Stat[ T ] := 0;
+    { Stat 3 - InfoTier }
+    if Part^.Stat[ STAT_InfoTier ] < 0 then Part^.Stat[ STAT_InfoTier ] := 0
+    else if Part^.Stat[ STAT_InfoTier ] > 3 then Part^.Stat[ STAT_InfoTier ] := 3;
+	for t := 4 to NumGearStats do Part^.Stat[ T ] := 0;
 end;
 
 Function IsLegalModuleInv( Slot, Equip: GearPtr ): Boolean;

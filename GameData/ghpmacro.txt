@@ -40,6 +40,9 @@ Flight        <Gear 6 4 ?3>
 ArcJet        <Gear 6 5 ?3>
 Overcharger   <Gear 6 6 ?3>
 Armor         <Stat 1 ?0>
+HighTier      <Stat 3 1>
+MidTier       <Stat 3 2>
+LowTier       <Stat 3 3>
 Shield        <Gear 10 0 ?2>
 EShield       <Gear 10 1 ?2>
 StatModifier  <Gear 19 1 ?40>

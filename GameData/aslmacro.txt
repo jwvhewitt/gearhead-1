@@ -100,18 +100,42 @@ MENTAL <GrabPCPilot GMental>
 OneVictimRecovered <GrabCurrentScene GAddNAtt NAG_Narrative NAS_VictimsRecovered 1>
 SetNPCRep <GrabNPC ? GSetNAtt NAG_CharDescription - ? ?>
 NPCQuitLance <GrabNPC ? GQuitLance>
-ifNPCHeroic <GrabChatNPC ifG GNAtt NAG_CharDescription -1  0>
-ifNPCVillainous <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -1>
-ifNPCLawful <GrabChatNPC ifG GNAtt NAG_CharDescription -2  0>
-ifNPCChaotic <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -2>
-ifNPCSociable <GrabChatNPC ifG GNAtt NAG_CharDescription -3  0>
-ifNPCShy <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -3>
-ifNPCEasygoing <GrabChatNPC ifG GNAtt NAG_CharDescription -4  0>
-ifNPCPassionate <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -4>
-ifNPCCheerful <GrabChatNPC ifG GNAtt NAG_CharDescription -5  0>
-ifNPCMelancholy <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -5>
-ifNPCPragmatic <GrabChatNPC ifG GNAtt NAG_CharDescription -7  0>
-ifNPCSpiritual <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -7>
+ifChatNPCHeroic <GrabChatNPC ifG GNAtt NAG_CharDescription -1  0>
+ifChatNPCVillainous <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -1>
+ifChatNPCLawful <GrabChatNPC ifG GNAtt NAG_CharDescription -2  0>
+ifChatNPCChaotic <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -2>
+ifChatNPCSociable <GrabChatNPC ifG GNAtt NAG_CharDescription -3  0>
+ifChatNPCShy <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -3>
+ifChatNPCEasygoing <GrabChatNPC ifG GNAtt NAG_CharDescription -4  0>
+ifChatNPCPassionate <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -4>
+ifChatNPCCheerful <GrabChatNPC ifG GNAtt NAG_CharDescription -5  0>
+ifChatNPCMelancholy <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -5>
+ifChatNPCPragmatic <GrabChatNPC ifG GNAtt NAG_CharDescription -7  0>
+ifChatNPCSpiritual <GrabChatNPC ifG 0  GNAtt NAG_CharDescription -7>
+ifNPCHeroic <GrabNPC ? ifG GNAtt NAG_CharDescription -1  0>
+ifNPCVillainous <GrabNPC ? ifG 0  GNAtt NAG_CharDescription -1>
+ifNPCLawful <GrabNPC ? ifG GNAtt NAG_CharDescription -2  0>
+ifNPCChaotic <GrabNPC ? ifG 0  GNAtt NAG_CharDescription -2>
+ifNPCSociable <GrabNPC ? ifG GNAtt NAG_CharDescription -3  0>
+ifNPCShy <GrabNPC ? ifG 0  GNAtt NAG_CharDescription -3>
+ifNPCEasygoing <GrabNPC ? ifG GNAtt NAG_CharDescription -4  0>
+ifNPCPassionate <GrabNPC ? ifG 0  GNAtt NAG_CharDescription -4>
+ifNPCCheerful <GrabNPC ? ifG GNAtt NAG_CharDescription -5  0>
+ifNPCMelancholy <GrabNPC ? ifG 0  GNAtt NAG_CharDescription -5>
+ifNPCPragmatic <GrabNPC ? ifG GNAtt NAG_CharDescription -7  0>
+ifNPCSpiritual <GrabNPC ? ifG 0  GNAtt NAG_CharDescription -7>
+ifPCHeroic <GrabPCPilot ifG GNAtt NAG_CharDescription -1  0>
+ifPCVillainous <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -1>
+ifPCLawful <GrabPCPilot ifG GNAtt NAG_CharDescription -2  0>
+ifPCChaotic <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -2>
+ifPCSociable <GrabPCPilot ifG GNAtt NAG_CharDescription -3  0>
+ifPCShy <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -3>
+ifPCEasygoing <GrabPCPilot ifG GNAtt NAG_CharDescription -4  0>
+ifPCPassionate <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -4>
+ifPCCheerful <GrabPCPilot ifG GNAtt NAG_CharDescription -5  0>
+ifPCMelancholy <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -5>
+ifPCPragmatic <GrabPCPilot ifG GNAtt NAG_CharDescription -7  0>
+ifPCSpiritual <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -7>
 FacAlliance <GrabFaction ? GSetNAtt 8 ? 10>
 SetLMTactics <GrabChatNPC GSetOptMax ? GSetOptMin ?>
 GSetOptMax <GSetNAtt NAG_Personal NAS_OptMax ?>

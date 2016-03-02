@@ -187,7 +187,7 @@ const
 
 
 var
-	Game_Screen, Actual_Screen: PSDL_Surface;
+	Game_Screen: PSDL_Surface;
 	Mouse_Pointer: PSDL_Surface;
 	Game_Font,Info_Font: PTTF_Font;
 	Game_Sprites,Cursor_Sprite: SensibleSpritePtr;
@@ -293,15 +293,12 @@ begin
 	MyDest.X := Mouse_X;
 	MyDest.Y := Mouse_Y;
 
-	SDL_FillRect( actual_screen , Nil , SDL_MapRGB( Game_Screen^.Format , 0 , 0 , 0 ) );	
-	SDL_BlitSurface( game_Screen , Nil , actual_Screen , Nil );
-
 	{ If a mouse pointer is defined, draw it. }
 	if Mouse_Pointer <> Nil then begin
-		SDL_BlitSurface( Mouse_Pointer , Nil , actual_Screen , @MyDest );
+		SDL_BlitSurface( Mouse_Pointer , Nil , Game_Screen , @MyDest );
 	end;
 
-	SDL_Flip( actual_Screen );
+	SDL_Flip( game_Screen );
 end;
 
 Function ScaleColorValue( V , I: Integer ): Byte;
@@ -1294,18 +1291,15 @@ initialization
 	SDL_Init( SDL_INIT_VIDEO or SDL_INIT_AUDIO );
 
 	if DoFullScreen then begin
-		Actual_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_FULLSCREEN or SDL_DoubleBuf );
+		Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_FULLSCREEN or SDL_DoubleBuf );
 		Mouse_Pointer := IMG_Load( Graphics_Directory + 'cosplay_pointer.png' );
 		SDL_SetColorKey( Mouse_Pointer , SDL_SRCCOLORKEY or SDL_RLEACCEL , SDL_MapRGB( Mouse_Pointer^.Format , 0 , 0, 255 ) );
 	end else begin
-		Actual_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_DoubleBuf );
+		Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_DoubleBuf );
 		Mouse_Pointer := Nil;
 	end;
 
-{	Game_Screen := SDL_CreateRGBSurface( SDL_HWSURFACE , ScreenWidth , ScreenHeight , 16 , 0 , 0 , 0 , 0 );}
-	Game_Screen := SDL_ConvertSurface( Actual_Screen , Actual_Screen^.Format , SDL_HWSURFACE );
-
-        SDL_EnableUNICODE( 1 );
+    SDL_EnableUNICODE( 1 );
 	SDL_EnableKeyRepeat( GH_REPEAT_DELAY , GH_REPEAT_INTERVAL );
 
 
@@ -1346,7 +1340,6 @@ finalization
 	if Mouse_Pointer <> Nil then SDL_FreeSurface( Mouse_Pointer );
 
 	SDL_FreeSurface( Game_Screen );
-	SDL_FreeSurface( Actual_Screen );
 	SDL_Quit;
 
 	DisposeSAtt( Text_Messages );

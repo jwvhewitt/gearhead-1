@@ -269,50 +269,67 @@ var
 	MM,N,X0: Integer;
 	MD: GearPtr;
 	Flayed, Gutted : Boolean;
-	Procedure AddPartsToDiagram( GS: Integer );
-		{ Add parts to the status diagram whose gear S value }
-		{ is equal to the provided number. }
+    Procedure AddThisPart( MD: GearPtr );
 	var
 		X: Integer;
 		FG, BG: Byte;
+
+    begin
+			FG := HitsColor( MD );
+			BG := ArmorDamageColor( MD );
+			
+			if (FG = DarkGray) And (BG <> Black)
+			    then FG := Black;
+
+			if Flayed Or (Gutted And (MD^.S = GS_Body)) 
+			then begin
+			    if Gutted
+			    then FG := White
+			    else FG := LightMagenta;
+			    BG := Red;
+			end;
+
+			TextColor(FG);
+			TextBackground(BG);
+
+			if Odd( N ) then X := X0 - ( N div 2 ) - 1
+			else X := X0 + ( N div 2 );
+			Inc( N );
+			GotoXY( X , CY );
+			Case MD^.S of
+				GS_Head:	write('o');
+				GS_Turret:	write('=');
+				GS_Storage:	write('x');
+				GS_Body:	begin
+						write('B');
+						end;
+				GS_Arm:		write('+');
+				GS_Wing:	write('W');
+				GS_Tail:	write('t');
+				GS_Leg:		write('l');
+			end;
+
+    end;
+	Procedure AddPartsOfType( GS: Integer );
+		{ Add parts to the status diagram whose gear S value }
+		{ is equal to the provided number and haven't overridden their tier. }
 	begin
 		MD := Mek^.SubCom;
 		while ( MD <> Nil ) do begin
-			if ( MD^.G = GG_Module ) and ( MD^.S = GS ) then begin
-
-				FG := HitsColor( MD );
-				BG := ArmorDamageColor( MD );
-				
-				if (FG = DarkGray) And (BG <> Black)
-				    then FG := Black;
-
-				if Flayed Or (Gutted And (GS = GS_Body)) 
-				then begin
-				    if Gutted
-				    then FG := White
-				    else FG := LightMagenta;
-				    BG := Red;
-				end;
-
-				TextColor(FG);
-				TextBackground(BG);
-
-				if Odd( N ) then X := X0 - ( N div 2 ) - 1
-				else X := X0 + ( N div 2 );
-				Inc( N );
-				GotoXY( X , CY );
-				Case GS of
-					GS_Head:	write('o');
-					GS_Turret:	write('=');
-					GS_Storage:	write('x');
-					GS_Body:	begin
-							write('B');
-							end;
-					GS_Arm:		write('+');
-					GS_Wing:	write('W');
-					GS_Tail:	write('t');
-					GS_Leg:		write('l');
-				end;
+			if ( MD^.G = GG_Module ) and ( MD^.S = GS ) and ( MD^.Stat[ STAT_InfoTier ] = 0 ) then begin
+                AddThisPart( MD );
+			end;
+			MD := MD^.Next;
+		end;
+	end;
+	Procedure AddPartsOfTier( Tier: Integer );
+		{ Add parts to the status diagram whose InfoTier value }
+		{ is equal to the provided number. }
+	begin
+		MD := Mek^.SubCom;
+		while ( MD <> Nil ) do begin
+			if ( MD^.G = GG_Module ) and ( MD^.Stat[ STAT_InfoTier ] = Tier ) then begin
+                AddThisPart( MD );
 			end;
 			MD := MD^.Next;
 		end;
@@ -337,24 +354,27 @@ begin
 	MM := CY;	{ Save the CY value, since we want to print info }
 			{ on these same three lines. }
 	N := 0;
-	AddPartsToDiagram( GS_Head );
-	AddPartsToDiagram( GS_Turret );
+	AddPartsOfType( GS_Head );
+	AddPartsOfType( GS_Turret );
 	if N < 1 then N := 1;	{ Want storage to either side of body. }
-	AddPartsToDiagram( GS_Storage );
+	AddPartsOfType( GS_Storage );
+    AddPartsOfTier( 1 );
 	AI_NextLine;
 
 	{ Line Two - Torso, Arms, Wings }
 	N := 0;
-	AddPartsToDiagram( GS_Body );
-	AddPartsToDiagram( GS_Arm );
-	AddPartsToDiagram( GS_Wing );
+	AddPartsOfType( GS_Body );
+	AddPartsOfType( GS_Arm );
+	AddPartsOfType( GS_Wing );
+    AddPartsOfTier( 2 );
 	AI_NextLine;
 
 	{ Line Three - Tail, Legs }
 	N := 0;
-	AddPartsToDiagram( GS_Tail );
+	AddPartsOfType( GS_Tail );
 	if N < 1 then N := 1;	{ Want legs to either side of body; tail in middle. }
-	AddPartsToDiagram( GS_Leg );
+	AddPartsOfType( GS_Leg );
+    AddPartsOfTier( 3 );
 	AI_NextLine;
 
 	{ Restore background color to black. }

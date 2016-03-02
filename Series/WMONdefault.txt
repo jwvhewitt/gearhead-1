@@ -2705,7 +2705,7 @@ type <Bug Water Sea Cave>
 clue14 <ifSelfOK else GoPelt>
 GoPelt <if= V1 0 else GoDone Mental Gut V= 1 SkRoll 14 ifG V1 25 else GoCheckSushi Print 4 GiveSTC .shielddesc>
 .shielddesc <LOBSTERSHIELD>
-GoCheckSushi <ifG V1 9 else GoFail else GoFail Print 1 GiveSTC .stcdesc>
+GoCheckSushi <ifG V1 9 else GoFail Print 1 GiveSTC .stcdesc>
 .stcdesc <FOOD-4>
 GoFail <Print 2>
 GoDone <Print 3>

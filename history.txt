@@ -1,3 +1,21 @@
+- Fixed bug when story ends during a conversation (arenascript.pp)
+- Added InfoTier stat for modules (ghmodule.pp,sdlinfo.pp,coninfo.pp)
+- Fixed GuardFight1, GuardFight2 memos
+- Fixed Deep Lobster sashimi bug (WMONdefault.txt)
+- Cosplay loads mecha sprites correctly (cosplay.pas)
+- Can transfer items in combat if nearby (Michael Deutschmann patch)
+- Updated xterm-boxdrawing (Michael Deutschmann patch)
+- Character limbs resized as Body stat changes (Michael Deutschmann patch)
+- New portrait loaded if old portrait not found (sdlinfo.pp)
+- Updated the version string to 1.200 (gharena.pas) ^^;
+
+1.200	February 27 2016
+- Refactored "ifNPC[trait]" macros, fixing some plot emails (aslmacro.txt)
+- Mauna, Tokto no longer hidden in SDL mode (TS_MAP_World.txt)
+- Imported shuttle service from GH2 (services.pp)
+- Victory saves win file to config folder (arenascript.pp)
+- Trying to fix keypad doesn't work without numlock, needs testing (ui4gh.pp)
+- Removed redundant SelectMecha, FirstAid commands (ui4gh.pp,pcaction.pp)
 - PCs now start with random colors (randchar.pp)
 - Fixed SDL mode character generator 2nd usage crash (randchar.pp)
 - Added restaurant to Mauna (ADV_FederatedTerritories.txt)

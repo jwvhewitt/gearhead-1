@@ -132,6 +132,9 @@
 	SETPLAYERFACTION [faction ID]
 	SETSCENEFACTION [scene ID] [faction ID]
 	SHOP [wares identifier]
+    SHUTTLESERVICE  Opens the intercity bus service
+        ***IMPORTANT*** Assumes world=Scene1, only works in scenes directly
+         enterable from world map (for ex, won't work from Namok Spaceport)
 	STAGED [Label] [Point Value]	Load dynamic scene from disk
 	STARTSTORY [script line label] <ELSE [label]>	Load a story
 	STOCKD [UPV]		Stock dynamic encounter with enemies
