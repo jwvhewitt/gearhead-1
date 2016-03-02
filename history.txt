@@ -1,3 +1,4 @@
+- Added InfoTier stat for modules (ghmodule.pp,sdlinfo.pp,coninfo.pp)
 - Fixed GuardFight1, GuardFight2 memos
 - Fixed Deep Lobster sashimi bug (WMONdefault.txt)
 - Cosplay loads mecha sprites correctly (cosplay.pas)

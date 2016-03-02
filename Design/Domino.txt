@@ -35,6 +35,7 @@ Mod Turret
 	Name <Right Sponson>
 	Size 2
 	Armor 3
+    MidTier
 	sub
 		STC PAR-2
 
@@ -46,6 +47,7 @@ Mod Turret
 	Name <Left Sponson>
 	Size 2
 	Armor 3
+    MidTier
 	sub
 		STC PAR-2
 

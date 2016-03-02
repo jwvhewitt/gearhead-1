@@ -269,9 +269,8 @@ var
 	N: Integer;	{ Module number on the current line. }
 	MyDest: TSDL_Rect;
 	MM,A,B: Integer;
-	MD: GearPtr;
 
-	Function PartStructImage( GS, CuD, MxD: Integer ): Integer;
+	Function PartStructImage( MD: GearPtr; CuD, MxD: Integer ): Integer;
 		{ Given module type GS, with current damage score CuD and maximum damage }
 		{ score MxD, return the correct image to use for it in the diagram. }
 	begin
@@ -282,7 +281,7 @@ var
 		end;
 	end;
 
-	Function PartArmorImage( GS, CuD, MxD: Integer ): Integer;
+	Function PartArmorImage( MD: GearPtr; CuD, MxD: Integer ): Integer;
 		{ Given module type GS, with current armor score CuD and maximum armor }
 		{ score MxD, return the correct image to use for it in the diagram. }
 	begin
@@ -292,33 +291,53 @@ var
 			PartArmorImage := ( MD^.S * 9 ) + 71 - ( CuD * 8 div MxD );
 		end;
 	end;
-
-	Procedure AddPartsToDiagram( GS: Integer );
-		{ Add parts to the status diagram whose gear S value }
-		{ is equal to the provided number. }
+    Procedure DrawThisPart( MD: GearPtr );
+        { Display part MD. }
 	var
-		CuD,MxD,Armor,Structure: Integer;	{ Armor & Structural damage values. }
+		CuD,MxD: Integer;	{ Armor & Structural damage values. }
+    begin
+		{ First, determine the spot at which to display the image. }
+		if Odd( N ) then MyDest.X := X0 - ( N div 2 ) * 12 - 12
+		else MyDest.X := X0 + ( N div 2 ) * 12;
+		Inc( N );
+
+		{ Display the structure. }
+		MxD := GearMaxDamage( MD );
+		CuD := GearCurrentDamage( MD );
+		DrawSprite( Module_Sprite , MyDest , PartStructImage( MD , CuD , MxD ) );
+
+		{ Display the armor. }
+		MxD := MaxTArmor( MD );
+		CuD := CurrentTArmor( MD );
+		if MxD <> 0 then begin
+			DrawSprite( Module_Sprite , MyDest , PartArmorImage( MD , CuD , MxD ) );
+
+		end;
+    end;
+	Procedure AddPartsOfType( GS: Integer );
+		{ Add parts to the status diagram whose gear S value }
+		{ is equal to the provided number and haven't overridden their tier. }
+    var
+        MD: GearPtr;
 	begin
 		MD := Mek^.SubCom;
 		while ( MD <> Nil ) do begin
-			if ( MD^.G = GG_Module ) and ( MD^.S = GS ) then begin
-				{ First, determine the spot at which to display the image. }
-				if Odd( N ) then MyDest.X := X0 - ( N div 2 ) * 12 - 12
-				else MyDest.X := X0 + ( N div 2 ) * 12;
-				Inc( N );
-
-				{ Display the structure. }
-				MxD := GearMaxDamage( MD );
-				CuD := GearCurrentDamage( MD );
-				DrawSprite( Module_Sprite , MyDest , PartStructImage( MD^.S , CuD , MxD ) );
-
-				{ Display the armor. }
-				MxD := MaxTArmor( MD );
-				CuD := CurrentTArmor( MD );
-				if MxD <> 0 then begin
-					DrawSprite( Module_Sprite , MyDest , PartArmorImage( MD^.S , CuD , MxD ) );
-
-				end;
+			if ( MD^.G = GG_Module ) and ( MD^.S = GS ) and ( MD^.Stat[ STAT_InfoTier ] = 0 ) then begin
+                DrawThisPart( MD );
+			end;
+			MD := MD^.Next;
+		end;
+	end;
+	Procedure AddPartsOfTier( Tier: Integer );
+		{ Add parts to the status diagram whose InfoTier value }
+		{ is equal to the provided number. }
+    var
+        MD: GearPtr;
+	begin
+		MD := Mek^.SubCom;
+		while ( MD <> Nil ) do begin
+			if ( MD^.G = GG_Module ) and ( MD^.Stat[ STAT_InfoTier ] = Tier ) then begin
+                DrawThisPart( MD );
 			end;
 			MD := MD^.Next;
 		end;
@@ -330,24 +349,27 @@ begin
 	X0 := CZone.X + ( CZone.W div 2 ) - 7;
 
 	N := 0;
-	AddPartsToDiagram( GS_Head );
-	AddPartsToDiagram( GS_Turret );
+	AddPartsOfType( GS_Head );
+	AddPartsOfType( GS_Turret );
 	if N < 1 then N := 1;	{ Want pods to either side of body; head and/or turret in middle. }
-	AddPartsToDiagram( GS_Storage );
+	AddPartsOfType( GS_Storage );
+    AddPartsOfTier( 1 );
 
 	{ Line Two - Torso, Arms, Wings }
 	N := 0;
 	MyDest.Y := MyDest.Y + 17;
-	AddPartsToDiagram( GS_Body );
-	AddPartsToDiagram( GS_Arm );
-	AddPartsToDiagram( GS_Wing );
+	AddPartsOfType( GS_Body );
+	AddPartsOfType( GS_Arm );
+	AddPartsOfType( GS_Wing );
+    AddPartsOfTier( 2 );
 
 	{ Line Three - Tail, Legs }
 	N := 0;
 	MyDest.Y := MyDest.Y + 17;
-	AddPartsToDiagram( GS_Tail );
+	AddPartsOfType( GS_Tail );
 	if N < 1 then N := 1;	{ Want legs to either side of body; tail in middle. }
-	AddPartsToDiagram( GS_Leg );
+	AddPartsOfType( GS_Leg );
+    AddPartsOfTier( 3 );
 	AI_NextLine;
 end;
 

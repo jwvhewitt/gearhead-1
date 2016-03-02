@@ -63,6 +63,7 @@ Mod Body
 Mod Storage
 	Name <Right Missile Pod>
 	Armor 10
+    MidTier
 	sub
 		MLauncher 2
 		Name <Plasma Missiles>
@@ -77,6 +78,7 @@ Mod Storage
 Mod Storage
 	Name <Left Missile Pod>
 	Armor 10
+    MidTier
 	sub
 		MLauncher 2
 		Name <Plasma Missiles>
@@ -91,6 +93,7 @@ Mod Storage
 Mod Storage
 	Size 3
 	Armor 10
+    LowTier
 	Name <Right Front Thruster>
 	sub
 		HoverJet 6
@@ -99,6 +102,7 @@ Mod Storage
 Mod Storage
 	Size 3
 	Armor 10
+    LowTier
 	Name <Left Front Thruster>
 	sub
 		HoverJet 6
@@ -107,6 +111,7 @@ Mod Storage
 Mod Storage
 	Size 3
 	Armor 10
+    LowTier
 	Name <Right Rear Thruster>
 	sub
 		HoverJet 6
@@ -115,6 +120,7 @@ Mod Storage
 Mod Storage
 	Size 3
 	Armor 10
+    LowTier
 	Name <Left Rear Thruster>
 	sub
 		HoverJet 6

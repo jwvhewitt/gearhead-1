@@ -78,7 +78,8 @@ sub
 	% completed the mission or not.
 	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AddReact d4 AdvancePlot 0>
 	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
-	GoCheckJob <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
+	GoCheckJob <if= P3 1 else GoCheckOfferAlready  Say 101 Goto GoAddComOps>
+    GoCheckOfferAlready <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
 	% The PC will be denied the mission if he's helped the enemy.
 	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied ifG PCRep 6 30 else GoDenied Goto GoInitialize>

@@ -17,6 +17,7 @@ Mod Turret
 	Size 2
 	Armor 5
 	Mass -3
+    LowTier
 	sub
 		BeamGun 4
 		Name <Gatling Laser>
