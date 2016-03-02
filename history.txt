@@ -1,3 +1,5 @@
+1.201	March 3 2016
+- Moved save folder to user directory in Windows (gears.pp)
 - Fixed bug when story ends during a conversation (arenascript.pp)
 - Added InfoTier stat for modules (ghmodule.pp,sdlinfo.pp,coninfo.pp)
 - Fixed GuardFight1, GuardFight2 memos
@@ -7,7 +9,7 @@
 - Updated xterm-boxdrawing (Michael Deutschmann patch)
 - Character limbs resized as Body stat changes (Michael Deutschmann patch)
 - New portrait loaded if old portrait not found (sdlinfo.pp)
-- Updated the version string to 1.200 (gharena.pas) ^^;
+- Updated the version string to 1.201 (gharena.pas) ^^;
 
 1.200	February 27 2016
 - Refactored "ifNPC[trait]" macros, fixing some plot emails (aslmacro.txt)
