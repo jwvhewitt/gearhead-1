@@ -677,6 +677,9 @@ begin
 					a := RPK_RightButton;
 				end;
 
+            end else if event.type_ = SDL_VIDEORESIZE then begin
+                Game_Screen := SDL_SetVideoMode(event.resize.w, event.resize.h, 0, SDL_HWSURFACE or SDL_DoubleBuf or SDL_RESIZABLE );
+
 			end;
 
 		end else begin
@@ -1295,7 +1298,7 @@ initialization
 		Mouse_Pointer := IMG_Load( Graphics_Directory + 'cosplay_pointer.png' );
 		SDL_SetColorKey( Mouse_Pointer , SDL_SRCCOLORKEY or SDL_RLEACCEL , SDL_MapRGB( Mouse_Pointer^.Format , 0 , 0, 255 ) );
 	end else begin
-		Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_DoubleBuf );
+		Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_DoubleBuf or SDL_RESIZABLE );
 		Mouse_Pointer := Nil;
 	end;
 
