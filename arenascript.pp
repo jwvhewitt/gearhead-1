@@ -117,12 +117,12 @@ const
 
 var
 	script_macros,value_macros: SAttPtr;
+    NeedGC: Boolean;
 {$IFDEF SDLMODE}
 	ASRD_InfoGear: GearPtr;
 	ASRD_GameBoard: GameBoardPtr;
 	ASRD_MemoMessage: String;
 
-    NeedGC: Boolean;
 
 
 Procedure ArenaScriptReDraw;
