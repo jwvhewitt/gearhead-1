@@ -1256,7 +1256,7 @@ begin
 		repeat
 			RedrawOpening;
 			DisplayGearInfo( Part );
-			NFCMessage( msg , ZONE_Menu , InfoGreen );
+			CMessage( msg , ZONE_Menu , InfoGreen );
 			GHFlip;
 			A := RPGKey;
 		until ( A = ' ' ) or ( A = #27 ) or ( A = RPK_MouseButton );
@@ -1266,7 +1266,7 @@ begin
 		repeat
 			RedrawOpening;
 			DisplayGearInfo( Part );
-			NFCMessage( msg , ZONE_Menu , InfoGreen );
+			CMessage( msg , ZONE_Menu , InfoGreen );
 			GHFlip;
 			A := RPGKey;
 		until ( A = ' ' ) or ( A = #27 ) or ( A = RPK_MouseButton );

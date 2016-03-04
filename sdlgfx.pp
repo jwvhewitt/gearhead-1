@@ -221,15 +221,12 @@ Procedure ClrScreen;
 Procedure QuickText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 Procedure QuickTinyText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 Procedure CMessage( const msg: String; Z: TSDL_Rect; var C: TSDL_Color );
-Procedure NFCMessage( const msg: String; Z: TSDL_Rect; var C: TSDL_Color );
 Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
-Procedure NFGameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
 
 Function DirKey( ReDrawer: RedrawProcedureType ): Integer;
 Procedure EndOfGameMoreKey;
 Function TextLength( F: PTTF_Font; const msg: String ): LongInt;
 
-Procedure InsertDialogLine( const TheLine: String );
 Procedure RedrawConsole;
 Procedure DialogMSG(msg: string); {can't const}
 
@@ -669,8 +666,7 @@ begin
 				end;
 
 			end else if ( event.type_ = SDL_MOUSEButtonDown ) then begin
-				{ Return a mousebutton event, and call GHFlip to set the mouse position }
-				{ variables. }
+				{ Return a mousebutton event. }
 				if event.button.button = SDL_BUTTON_LEFT then begin
 					a := RPK_MouseButton;
 				end else if event.button.button = SDL_BUTTON_RIGHT then begin
@@ -879,48 +875,9 @@ begin
 		SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
 		SDL_FreeSurface( MyText );
 		SDL_SetClipRect( Game_Screen , Nil );
-		GHFlip;
 	end;
 end;
 
-Procedure NFNCCMessage( const msg: String; Z: TSDL_Rect; var C: TSDL_Color );
-	{ Print a message to the screen, centered in the requested rect. }
-	{ Clear the specified zone before doing so. }
-var
-	MyText: PSDL_Surface;
-	MyDest: TSDL_Rect;
-begin
-	MyText := PrettyPrint( msg , Z.W , C , True );
-	if MyText <> Nil then begin
-		{ Set the mask, since we want it to be printed directly onto the background. }
-		SDL_SetColorKey( MyText , SDL_SRCCOLORKEY or SDL_RLEACCEL , SDL_MapRGB( MyText^.Format , 0 , 0, 0 ) );
-		MyDest := Z;
-		MyDest.Y := MyDest.Y + ( Z.H - MyText^.H ) div 2;
-		SDL_SetClipRect( Game_Screen , @Z );
-		SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
-		SDL_FreeSurface( MyText );
-		SDL_SetClipRect( Game_Screen , Nil );
-	end;
-end;
-
-Procedure NFCMessage( const msg: String; Z: TSDL_Rect; var C: TSDL_Color );
-	{ Print a message to the screen, centered in the requested rect. }
-	{ Clear the specified zone before doing so. }
-var
-	MyText: PSDL_Surface;
-	MyDest: TSDL_Rect;
-begin
-	ClrZone( Z );
-	MyText := PrettyPrint( msg , Z.W , C , True );
-	if MyText <> Nil then begin
-		MyDest := Z;
-		MyDest.Y := MyDest.Y + ( Z.H - MyText^.H ) div 2;
-		SDL_SetClipRect( Game_Screen , @Z );
-		SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
-		SDL_FreeSurface( MyText );
-		SDL_SetClipRect( Game_Screen , Nil );
-	end;
-end;
 
 Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
 	{ Print a line-justified message in the requested screen zone. }
@@ -935,24 +892,9 @@ begin
 		SDL_BlitSurface( MyText , Nil , Game_Screen , @Z );
 		SDL_FreeSurface( MyText );
 		SDL_SetClipRect( Game_Screen , Nil );
-		GHFlip;
 	end;
 end;
 
-Procedure NFGameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
-	{ As above, but no pageflip. }
-var
-	MyText: PSDL_Surface;
-begin
-	ClrZone( Z );
-	MyText := PrettyPrint( msg , Z.W , C , True );
-	if MyText <> Nil then begin
-		SDL_SetClipRect( Game_Screen , @Z );
-		SDL_BlitSurface( MyText , Nil , Game_Screen , @Z );
-		SDL_FreeSurface( MyText );
-		SDL_SetClipRect( Game_Screen , Nil );
-	end;
-end;
 
 Function DirKey( ReDrawer: RedrawProcedureType ): Integer;
 	{ Get a direction selection from the user. If a standard direction }
@@ -1001,62 +943,53 @@ begin
 	until ( A = ' ' ) or ( A = #27 ) or ( A = #8 );
 end;
 
-Procedure InsertDialogLine( const TheLine: String );
-	{ Insert a line of text into the dialog message area. }
+Procedure RedrawConsole;
+	{ Redraw the console. Yay! }
 var
-	PLine: PChar;
-	MySource,MyDest: TSDL_Rect;
-	S_Temp: PSDL_Surface;	
+	SL: SAttPtr;
+	MyDest: TSDL_Rect;
+	NumLines,LineNum: Integer;
 begin
 	{Clear the message area, and set clipping bounds.}
+	{InfoBox( ZONE_Dialog );}
+    ZONE_Dialog.y := Game_Screen^.h - ZONE_Dialog.h - 10;
 	SDL_SetClipRect( Game_Screen , @ZONE_Dialog );
 
-	{ Scroll the current console messages up. }
-	S_Temp := SDL_CreateRGBSurface( SDL_SWSURFACE , ZONE_Dialog.w , ZONE_Dialog.H , 16 , 0 , 0 , 0 , 0 );
-	MySource := ZONE_Dialog;
 	MyDest := ZONE_Dialog;
-	MyDest.Y := MyDest.Y - TTF_FontLineSkip( game_font );
-	SDL_BlitSurface( Game_Screen, @MySource, S_Temp, Nil );
-	ClrZone( ZONE_Dialog );
-	SDL_BlitSurface( S_Temp, Nil, Game_Screen, @MyDest );
-	SDL_FreeSurface( S_Temp );
+	NumLines := ( ZONE_Dialog.H div TTF_FontLineSkip( game_font ) ) + 1;
+	LineNum := NumLines;
+	SL := RetrieveSAtt( Console_History , NumSAtts( Console_History ) - NumLines + 1 );
+	if SL = Nil then begin
+		SL := Console_History;
+		LineNum := NumSAtts( Console_History );
+	end;
 
-	{ Display the line in the bottom space. }
-	MyDest := ZONE_Dialog;
-	MyDest.Y := MyDest.Y + MyDest.H - TTF_FontLineSkip( game_font );
-	pline := QuickPCopy( TheLine );
-	S_Temp := TTF_RenderText_Solid( game_font , pline , InfoGreen );
-	Dispose( pline );
-	SDL_BlitSurface( S_Temp , Nil , Game_Screen , @MyDest );
-	SDL_FreeSurface( S_Temp );
+	while LineNum > 0 do begin
+		{ Set the coords for this line. }
+		MyDest.X := ZONE_Dialog.X;
+		MyDest.Y := ZONE_Dialog.Y + ZONE_Dialog.H - LineNum * TTF_FontLineSkip( game_font );
+
+		{ Output the line. }
+		QuickText( SL^.Info , MyDest , InfoGreen );
+
+		Dec( LineNum );
+		SL := SL^.Next;
+	end;
 
 	{ Restore the clip zone to the full screen. }
 	SDL_SetClipRect( Game_Screen , Nil );
 end;
 
-Procedure RedrawConsole;
-	{ Redraw the console. Yay! }
-var
-	SL: SAttPtr;
-begin
-	SL := RetrieveSAtt( Console_History , NumSAtts( Console_History ) - ( ZONE_Dialog.H div TTF_FontLineSkip( game_font ) ));
-	if SL = Nil then SL := Console_History;
-	while SL <> Nil do begin
-		InsertDialogLine( SL^.Info );
-		SL := SL^.Next;
-	end;
-end;
-
-{can't const}
-Procedure DialogMSG(msg: string);
+Procedure DialogMSG( msg: string );
 	{ Print a message in the scrolling dialog box, }
 	{ then store the line in Console_History. }
+	{ Don't worry about screen output since the console will be redrawn the next time }
+	{ the screen updates. }
 var
 	NextWord: String;
 	THELine: String;	{The line under construction.}
 	SA: SAttPtr;
 begin
-	{ CLean up the message a bit. }
 	{ CLean up the message a bit. }
 	DeleteWhiteSpace( msg );
 	if msg = '' then Exit;
@@ -1070,11 +1003,8 @@ begin
 	while TheLine <> '' do begin
 		GetNextLine( TheLine , msg , NextWord , ZONE_Dialog.w );
 
-		{ Output the line. }
+		{ If appropriate, save the line. }
 		if TheLine <> '' then begin
-			InsertDialogLine( TheLine );
-
-			{ If appropriate, save the line. }
 			if NumSAtts( Console_History ) >= Console_History_Length then begin
 				SA := Console_History;
 				RemoveSAtt( Console_History , SA );
@@ -1086,9 +1016,8 @@ begin
 		{ Prepare for the next iteration. }
 		TheLine := NextWord;
 	end; { while TheLine <> '' }
-
-	GHFlip;
 end;
+
 
 Procedure ClearExtendedBorder( Dest: TSDL_Rect );
 	{ Draw the inner box for border displays. }
@@ -1120,8 +1049,8 @@ begin
 		SDL_FillRect( game_screen , @ZONE_TextInputBigBox , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
 		SDL_FillRect( game_screen , @ZONE_TextInputSmallBox , SDL_MapRGB( Game_Screen^.Format , StdBlack.R , StdBlack.G , StdBlack.B ) );
 
-		NFNCCMessage( Prompt , ZONE_TextInputPrompt , StdWhite );
-		NFCMessage( it , ZONE_TextInput , InfoGreen );
+		CMessage( Prompt , ZONE_TextInputPrompt , StdWhite );
+		CMessage( it , ZONE_TextInput , InfoGreen );
 		MyDest.Y := ZONE_TextInput.Y + 2;
 		MyDest.X := ZONE_TextInput.X + ( ZONE_TextInput.W div 2 ) + ( TextLength( Game_Font , it ) div 2 );
 		DrawSprite( Cursor_Sprite , MyDest , ( Animation_Phase div 2 ) mod 4 );

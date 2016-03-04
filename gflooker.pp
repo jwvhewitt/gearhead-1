@@ -125,11 +125,7 @@ begin
 	msg := msg + #13 + ' [' + KeyMap[ KMC_SwitchTarget ].KCode + '] Switch Target';
 
 	{ Print instructions. }
-{$IFDEF SDLMODE}
-	NFGameMSG( msg , ZONE_Menu2 , NeutralGrey );
-{$ELSE}
 	GameMSG( msg , ZONE_Menu2 , NeutralGrey );
-{$ENDIF}
 
 	QuickWeaponInfo( LOOKER_Weapon );
 end;
@@ -138,9 +134,9 @@ end;
 Procedure GFLRedraw;
 	{ menu redrawer for this unit. }
 begin
-	if LOOKER_GB <> Nil then BasicCombatDisplay( LOOKER_GB );
+	if LOOKER_GB <> Nil then SDLCombatDisplay( LOOKER_GB );
 	if LOOKER_Weapon <> Nil then WeaponDisplay;
-	NFCMessage( LOOKER_Desc , ZONE_Clock , InfoHilight );
+	CMessage( LOOKER_Desc , ZONE_Clock , InfoHilight );
 end;
 {$ENDIF}
 
@@ -218,13 +214,13 @@ begin
 			if GB^.Scene <> Nil then msg := SAttValue( GB^.Scene^.SA , 'LOOKER' + BStr( X ) + '%' + BStr( Y ) );
 			if msg = '' then msg := TerrMan[GB^.map[X,Y].Terr].Name;
 {$IFDEF SDLMODE}
-			NFCMessage( msg , ZONE_Info , TerrainGreen );
+			CMessage( msg , ZONE_Info , TerrainGreen );
 {$ELSE}
 			CMessage( msg , ZONE_Info , TerrainGreen );
 {$ENDIF}
 		end else begin
 {$IFDEF SDLMODE}
-			NFCMessage( 'UNKNOWN' , ZONE_Info , TerrainGreen );
+			CMessage( 'UNKNOWN' , ZONE_Info , TerrainGreen );
 {$ELSE}
 			CMessage( 'UNKNOWN' , ZONE_Info , TerrainGreen );
 {$ENDIF}
@@ -330,23 +326,19 @@ begin
 
 	{ Start going here. }
 	repeat
-{$IFDEF SDLMODE}
-		LOOKER_GB := GB;
-		GFLRedraw;
-{$ENDIF}
 		{ Display info on the selected tile. }
 		DisplayTileInfo( GB , X , Y );
 
 		if ( LOOKER_Origin <> Nil ) and OnTheMap( LOOKER_Origin ) then begin
 			if LOOKER_Gear = Nil then begin
 {$IFDEF SDLMODE}
-				NFCMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
+				CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
 {$ELSE}
 				CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
 {$ENDIF}
 			end else begin
 {$IFDEF SDLMODE}
-				NFCMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
+				CMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
 {$ELSE}
 				CMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
 {$ENDIF}
@@ -354,7 +346,9 @@ begin
 		end;
 
 		{ Display info on the selected weapon. }
+        {$IFNDEF SDLMODE}
 		if LOOKER_Weapon <> Nil then WeaponDisplay;
+        {$ENDIF}
 
 		{ Indicate origin and target squares. }
 {$IFDEF SDLMODE}
@@ -417,6 +411,11 @@ begin
 {$IFDEF SDLMODE}
 		end else if A = #8 then begin
 			A := #27;
+
+        end else if A = RPK_TimeEvent then begin
+    		LOOKER_GB := GB;
+    		GFLRedraw;
+            ghflip();
 {$ENDIF}
 
 		end;
@@ -426,7 +425,9 @@ begin
 	{ Restore the display. }
 	RedrawTile( gb, X , Y );
 	if LOOKER_Origin <> Nil then RedrawTile( gb, LOOKER_Origin );
+    {$IFNDEF SDLMODE}
 	UpdateCombatDisplay( GB );
+    {$ENDIF}
 
 	{ Store the values in the global variables. }
 	LOOKER_X := X;

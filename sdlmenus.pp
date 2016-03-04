@@ -336,7 +336,7 @@ Procedure RPMRefreshDesc(RPM: RPGMenuPtr);
 begin
 	{Check to make sure that this menu has a description box, first off.}
 	if RPM^.Desc_Zone.W > 0 then begin
-		NFCMessage( RPMLocateByPosition(RPM,RPM^.selectitem)^.desc , RPM^.Desc_Zone , RPM^.dtexcolor );
+		CMessage( RPMLocateByPosition(RPM,RPM^.selectitem)^.desc , RPM^.Desc_Zone , RPM^.dtexcolor );
 	end;
 end;
 
@@ -515,9 +515,6 @@ begin
 	{Start the loop. Remain in this loop until either the player makes a selection}
 	{or cancels the menu using the ESC key.}
 	repeat
-		DisplayMenu(RPM,ReDrawer);
-		GhFlip;
-
 		{Read the input from the keyboard.}
 		getit := RPGKey;
 
@@ -528,6 +525,9 @@ begin
 			RPK_Down: RPMDownKey( RPM , True );
 			RPK_TimeEvent:
 				begin
+		            DisplayMenu(RPM,ReDrawer);
+            		GhFlip;
+
 					{ If the mouse pointer is around }
 					{ the menu, we may have to do something. }
 					if Mouse_Active and ( Mouse_X >= RPM^.Menu_Zone.X ) and ( Mouse_X <= ( RPM^.Menu_Zone.X + RPM^.Menu_Zone.W ) ) and (( Mouse_X <> OldMouseX ) or ( Mouse_Y <> OldMouseY )) then begin

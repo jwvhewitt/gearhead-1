@@ -208,7 +208,9 @@ begin
 	{ To start with, do a vision check for everyone, }
 	{ then set up the display. }
 	UniversalVisionCheck( Camp^.GB );
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( Camp^.GB );
+    {$ENDIF}
 
 	{ Get rid of the old AI pathfinding maps. }
 	ClearHotMaps;
@@ -239,7 +241,9 @@ begin
 
 		CheckMeks( Camp );
 
+        {$IFNDEF SDLMODE}
 		UpdateCombatDisplay( Camp^.GB );
+        {$ENDIF}
 	{end main combat loop.}
 	end;
 
@@ -277,9 +281,6 @@ begin
 		ETA := NAttValue( M^.NA , NAG_Action , NAS_MoveETA );
 		if ETA <= Camp^.GB^.ComTime then begin
 			ProcessMovement( Camp^.GB , M );
-{$IFDEF SDLMODE}
-			if OnTheScreen( M ) and ( NAttValue( M^.NA , NAG_Location , NAS_Team ) <> NAV_DefPlayerTeam ) and MekVisible( Camp^.GB , M ) then GFCombatDisplay( Camp^.GB );
-{$ENDIF}
 		end;
 
 		{ Check for input. }
@@ -325,7 +326,9 @@ begin
 	{ To start with, do a vision check for everyone, }
 	{ then set up the display. }
 	UniversalVisionCheck( Camp^.GB );
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( Camp^.GB );
+    {$ENDIF}
 
 	{ Get rid of the old AI pathfinding maps. }
 	ClearHotMaps;
@@ -380,7 +383,9 @@ begin
 		HandleTriggers( Camp^.GB );
 
 		{ Update the display. }
+        {$IFNDEF SDLMODE}
 		UpdateCombatDisplay( Camp^.GB );
+        {$ENDIF}
 
 		{ Update clouds every round. }
 		for team := 1 to ( TacticsRoundLength div 30 ) do BrownianMotion( Camp^.GB );

@@ -128,17 +128,17 @@ var
 Procedure ArenaScriptReDraw;
 	{ Redraw the combat screen for some menu usage. }
 begin
-	if ASRD_GameBoard <> Nil then QuickCombatDisplay( ASRD_GameBoard );
+	if ASRD_GameBoard <> Nil then SDLCombatDisplay( ASRD_GameBoard );
 	DisplayGearInfo( ASRD_InfoGear , ASRD_GameBoard );
 end;
 
 Procedure MemoPageReDraw;
 	{ Redraw the combat screen for some menu usage. }
 begin
-	if ASRD_GameBoard <> Nil then QuickCombatDisplay( ASRD_GameBoard );
+	if ASRD_GameBoard <> Nil then SDLCombatDisplay( ASRD_GameBoard );
 	DisplayGearInfo( ASRD_InfoGear , ASRD_GameBoard );
 	SetupMemoDisplay;
-	NFGameMsg( ASRD_MemoMessage , ZONE_MemoText , InfoGreen );
+	GameMsg( ASRD_MemoMessage , ZONE_MemoText , InfoGreen );
 end;
 {$ENDIF}
 
@@ -295,7 +295,9 @@ begin
 	DisposeRPGMenu( RPM );
 
 	{ Do cleanup before branching. }
+    {$IFNDEF SDLMODE}
 	DisplayMap( GB );
+    {$ENDIF}
 
 	YesNoMenu := N <> -1;
 end;
@@ -1300,7 +1302,9 @@ begin
 	msg := getTheMessage( 'msg', id , GB , Scene );
 	if msg <> '' then begin
 		YesNoMenu( GB , msg , '' , '' );
+        {$IFNDEF SDLMODE}
 		GFCombatDisplay( GB );
+        {$ENDIF}
 	end;
 end;
 
@@ -1490,7 +1494,9 @@ begin
 	SaveStringList( Config_Directory + FName + '.txt' , VList );
 	MoreText( VList , 1 );
 	DisposeSAtt( VList );
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
+    {$ENDIF}
 end;
 
 Procedure ProcessNews( var Event: String; GB: GameBoardPtr; Scene: GearPtr );
@@ -1554,7 +1560,7 @@ begin
 	msg := getTheMessage( 'msg' , id , GB , Source );
 	if msg <> '' then begin
 {$IFDEF SDLMODE}
-		NFGameMsg( msg , ZONE_InteractMsg , InfoHiLight );
+		GameMsg( msg , ZONE_InteractMsg , InfoHiLight );
 		CHAT_Message := msg;
 {$ELSE}
 		GameMsg( msg , ZONE_InteractMsg , InfoHiLight );
@@ -3491,6 +3497,7 @@ begin
 			DisposeSAtt( txt );
 
 			{ Restore the display. }
+            {$IFNDEF SDLMODE}
 			if IntMenu <> Nil then begin
 				SetupInteractDisplay( TeamColor( GB , I_NPC ) );
 				DisplayGearInfo( I_NPC , GB );
@@ -3500,6 +3507,7 @@ begin
 				GFCombatDisplay( GB );
 
 			end;
+            {$ENDIF}
 		end;
 	end;
 
@@ -3517,7 +3525,9 @@ begin
 	BrowseMemoType( GB , Key );
 
 	{ Finally, update the display. }
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
+    {$ENDIF}
 end; { ProcessMoreMemo }
 
 Procedure ProcessSeekGate( var Event: String; GB: GameBoardPtr; Source: GearPtr );
@@ -3738,7 +3748,9 @@ begin
 			GB^.Map[ X , Y ].Visible := True;
 		end;
 	end;
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
+    {$ENDIF}
 end;
 
 Procedure ProcessLoseRenown( GB: GameBoardPtr );
@@ -4035,13 +4047,13 @@ end;
 Procedure InteractRedraw;
 	{ Redraw the screen for whatever interaction is going to go on. }
 begin
-	QuickCombatDisplay( ASRD_GameBoard );
+	SDLCombatDisplay( ASRD_GameBoard );
 	SetupInteractDisplay( TeamColor( ASRD_GameBoard , I_NPC ) );
 	if I_NPC <> Nil then begin
 		DisplayInteractStatus( ASRD_GameBoard , I_NPC , CHAT_React , I_Endurance );
 		DisplayGearInfo( I_NPC , ASRD_GameBoard );
 	end;
-	NFGameMsg( CHAT_Message , ZONE_InteractMsg , InfoHiLight );
+	GameMsg( CHAT_Message , ZONE_InteractMsg , InfoHiLight );
 end;
 {$ENDIF}
 
@@ -4237,7 +4249,9 @@ begin
 		{ Hand everything to the interaction procedure. }
 		HandleInteract( GB , PC , NPC , Interact );
 	end;
+    {$IFNDEF SDLMODE}
 	DisplayMap( GB );
+    {$ENDIF}
 end;
 
 Function TriggerGearScript( GB: GameBoardPtr; Source: GearPtr; var Trigger: String ): Boolean;
