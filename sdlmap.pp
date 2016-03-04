@@ -380,6 +380,10 @@ var
 	MyDest: TSDL_Rect;
 begin
 	{ Set the clip area. }
+    ZONE_Map.X := 0;
+    ZONE_Map.Y := 0;
+    ZONE_Map.W := Game_Screen^.W;
+    ZONE_Map.H := Game_Screen^.H;
 	ClrZone( ZONE_Map );
 	SDL_SetClipRect( Game_Screen , @ZONE_Map );
 
@@ -1150,7 +1154,12 @@ begin
 
 		{ Delay the animations, if appropriate. }
 		if DelayThisFrame then begin
-			SDLCombatDisplay( GB );
+	        SetupCombatDisplay;
+	        RenderMap();
+	        CMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
+
+	        { Update the console. }
+	        RedrawConsole;
 			GHFlip;
 			if ( FrameDelay > 0 ) then SDL_Delay(FrameDelay);
 		end;

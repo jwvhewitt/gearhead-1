@@ -110,6 +110,12 @@ begin
 		EMek := Emek^.Next;
 	end;
 
+    {$IFDEF SDLMODE}
+    {Refresh the display first.}
+    SDLCombatDisplay( GB );
+    ghflip();
+    {$ENDIF}
+
 	{ Actually do the attack. }
 	DoAttack(GB,Weapon,Nil,X,Y,Z,AtOp,0);
 
@@ -142,6 +148,12 @@ begin
 		end;
 		EMek := Emek^.Next;
 	end;
+
+    {$IFDEF SDLMODE}
+    {Refresh the display first.}
+    SDLCombatDisplay( GB );
+    ghflip();
+    {$ENDIF}
 
 	{ Actually do the attack. }
 	DoAttack(GB,Weapon,Target,0,0,0,AtOp,0);

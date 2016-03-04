@@ -638,6 +638,7 @@ var
 	a: String;
 	event : TSDL_Event;
 	m2: PChar;
+    width,height: Integer;
 begin
 	a := '';
 	repeat
@@ -674,7 +675,11 @@ begin
 				end;
 
             end else if event.type_ = SDL_VIDEORESIZE then begin
-                Game_Screen := SDL_SetVideoMode(event.resize.w, event.resize.h, 0, SDL_HWSURFACE or SDL_DoubleBuf or SDL_RESIZABLE );
+                width := event.resize.w;
+                if width < 800 then width := 800;
+                height := event.resize.h;
+                if height < 600 then height := 600;
+                Game_Screen := SDL_SetVideoMode(width, height, 0, SDL_HWSURFACE or SDL_DoubleBuf or SDL_RESIZABLE );
 
 			end;
 

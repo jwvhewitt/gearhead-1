@@ -327,23 +327,19 @@ begin
 	{ Start going here. }
 	repeat
 		{ Display info on the selected tile. }
+        {$IFNDEF SDLMODE}
 		DisplayTileInfo( GB , X , Y );
+        {$ENDIF}
 
+{$IFNDEF SDLMODE}
 		if ( LOOKER_Origin <> Nil ) and OnTheMap( LOOKER_Origin ) then begin
 			if LOOKER_Gear = Nil then begin
-{$IFDEF SDLMODE}
 				CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
-{$ELSE}
-				CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
-{$ENDIF}
 			end else begin
-{$IFDEF SDLMODE}
 				CMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
-{$ELSE}
-				CMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
-{$ENDIF}
 			end;
 		end;
+{$ENDIF}
 
 		{ Display info on the selected weapon. }
         {$IFNDEF SDLMODE}
@@ -415,6 +411,14 @@ begin
         end else if A = RPK_TimeEvent then begin
     		LOOKER_GB := GB;
     		GFLRedraw;
+    		DisplayTileInfo( GB , X , Y );
+		    if ( LOOKER_Origin <> Nil ) and OnTheMap( LOOKER_Origin ) then begin
+			    if LOOKER_Gear = Nil then begin
+				    CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
+			    end else begin
+				    CMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
+			    end;
+		    end;
             ghflip();
 {$ENDIF}
 

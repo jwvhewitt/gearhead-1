@@ -1,3 +1,7 @@
+- Switch weapon should now reliably switch weapon (menugear.pp)
+- Fixed some SDL handling weirdness throughout program
+- SDL window now resizeable (sdlgfx.pp)
+
 1.201	March 3 2016
 - Moved save folder to user directory in Windows (gears.pp)
 - Fixed bug when story ends during a conversation (arenascript.pp)

@@ -333,8 +333,10 @@ begin
 
 	{ Return either the next weapon or the first weapon, }
 	{ depending upon what we found. }
-	if NextWep = Nil then FindNextWeapon := Weapon
-	else FindNextWeapon := NextWep;
+	if NextWep = Nil then begin
+		if FirstWep = Nil then FindNextWeapon := Weapon
+		else FindNextWeapon := FirstWep;
+	end else FindNextWeapon := NextWep;
 end; { FindNextWeapon }
 
 Function FindGearIndex( Master , FindThis: GearPtr ): Integer;
