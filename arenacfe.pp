@@ -98,12 +98,6 @@ Procedure AttackerFrontEnd( GB: GameBoardPtr; Attacker,Weapon: GearPtr; X,Y,Z,At
 var
 	EMek: GearPtr;	{ Enemy Meks }
 begin
-	{ In SDL mode, do an update of the map before doing the attack, so that }
-	{ every model will appear in its correct position. }
-	{$IFDEF SDLMODE}
-	DisplayMap( GB );
-	{$ENDIF}
-
 	{ Firing weapons automatically gives away one's position. }
 	{ THIS CODE SHOULD BE MOVED INTO THE EFFECTS.PP PROCEDURE!!! }
 	{ It's only still here since 0.601 is a bugfix release. Let's see }
@@ -116,6 +110,12 @@ begin
 		EMek := Emek^.Next;
 	end;
 
+    {$IFDEF SDLMODE}
+    {Refresh the display first.}
+    SDLCombatDisplay( GB );
+    ghflip();
+    {$ENDIF}
+
 	{ Actually do the attack. }
 	DoAttack(GB,Weapon,Nil,X,Y,Z,AtOp,0);
 
@@ -123,7 +123,9 @@ begin
 	Display_Effect_History( GB );
 
 	{ AT the end, redisplay the map. }
+    {$IFNDEF SDLMODE}
 	DisplayMap( GB );
+    {$ENDIF}
 end;
 
 Procedure AttackerFrontEnd( GB: GameBoardPtr; Attacker,Weapon,Target: GearPtr; AtOp: Integer );
@@ -135,12 +137,6 @@ var
 begin
 	DisplayGearInfo( Target , gb );
 
-	{ In SDL mode, do an update of the map before doing the attack, so that }
-	{ every model will appear in its correct position. }
-	{$IFDEF SDLMODE}
-	DisplayMap( GB );
-	{$ENDIF}
-
 	{ Firing weapons automatically gives away one's position. }
 	{ THIS CODE SHOULD BE MOVED INTO THE EFFECTS.PP PROCEDURE!!! }
 	{ It's only still here since 0.601 is a bugfix release. Let's see }
@@ -153,6 +149,12 @@ begin
 		EMek := Emek^.Next;
 	end;
 
+    {$IFDEF SDLMODE}
+    {Refresh the display first.}
+    SDLCombatDisplay( GB );
+    ghflip();
+    {$ENDIF}
+
 	{ Actually do the attack. }
 	DoAttack(GB,Weapon,Target,0,0,0,AtOp,0);
 
@@ -161,7 +163,9 @@ begin
 	DisplayGearInfo( Target , GB );
 
 	{ AT the end, redisplay the map. }
+    {$IFNDEF SDLMODE}
 	DisplayMap( GB );
+    {$ENDIF}
 end;
 
 Procedure EffectFrontEnd( GB: GameBoardPtr; Target: GearPtr; FX_String,FX_Desc: String );
@@ -178,12 +182,6 @@ Procedure RandomExplosion( GB: GameBoardPtr );
 var
 	X,Y: Integer;
 begin
-	{ In SDL mode, do an update of the map before doing the attack, so that }
-	{ every model will appear in its correct position. }
-	{$IFDEF SDLMODE}
-	DisplayMap( GB );
-	{$ENDIF}
-
 	X := Random( XMax ) + 1;
 	Y := Random( YMax ) + 1;
 	Explosion( GB , X , Y , 5 , 8 );
@@ -468,7 +466,9 @@ begin
 		Dec( Time );
 		AdvanceGameClock( GB, False );
 	end;
+    {$IFNDEF SDLMODE}
 	UpdateCombatDisplay( GB );
+    {$ENDIF}
 end;
 
 

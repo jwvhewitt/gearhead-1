@@ -123,15 +123,15 @@ end;
 Procedure ServiceRedraw;
 	{ Redraw the screen for whatever service is going to go on. }
 begin
-	QuickCombatDisplay( SERV_GB );
+	SDLCombatDisplay( SERV_GB );
 	SetupInteractDisplay( TeamColor( SERV_GB , SERV_NPC ) );
 	DisplayInteractStatus( SERV_GB , SERV_NPC , CHAT_React , CHAT_Endurance );
 	if SERV_Info <> Nil then begin
 		DisplayGearInfo( SERV_Info , SERV_GB );
-		NFCMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu , MenuItem );
+		CMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu , MenuItem );
 	end;
-	NFCMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
-	NFGameMsg( CHAT_Message , ZONE_InteractMsg , InfoHiLight );
+	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
+	GameMsg( CHAT_Message , ZONE_InteractMsg , InfoHiLight );
 end;
 {$ENDIF}
 

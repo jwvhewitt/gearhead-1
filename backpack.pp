@@ -86,7 +86,7 @@ var
 Procedure PlainRedraw;
 	{ Miscellaneous menu redraw procedure. }
 begin
-	if InfoGB <> Nil then QuickCombatDisplay( InfoGB );
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
 end;
 
@@ -94,22 +94,22 @@ Procedure MiscProcRedraw;
 	{ Miscellaneous menu redraw procedure. The Eqp display will be shown; }
 	{ the INV display won't be. }
 begin
-	if InfoGB <> Nil then QuickCombatDisplay( InfoGB );
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
 	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
 	if EqpRPM <> Nil then begin
 		DisplayMenu( EqpRPM , Nil );
-		NFGameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu , MenuItem );
+		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu , MenuItem );
 	end;
 end;
 
 Procedure RobotPartRedraw;
 	{ Redraw procedure for the robot part selector. }
 begin
-	if InfoGB <> Nil then QuickCombatDisplay( InfoGB );
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
 	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
-	NFGameMsg( MsgString( 'SELECT_ROBOT_PARTS' ) , ZONE_EqpMenu , MenuItem );
+	GameMsg( MsgString( 'SELECT_ROBOT_PARTS' ) , ZONE_EqpMenu , MenuItem );
 end;
 
 Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
@@ -378,7 +378,7 @@ end;
 {$IFDEF SDLMODE}
 	Procedure GetItemRedraw;
 	begin
-		QuickCombatDisplay( InfoGB );
+		SDLCombatDisplay( InfoGB );
 		DisplayGearInfo( InfoGear , InfoGB );
 	end;
 {$ENDIF}
@@ -1121,7 +1121,9 @@ begin
 
 		{ ...and also exits the backpack. }
 		ForceQuit := True;
+        {$IFNDEF SDLMODE}
 		GFCombatDisplay( GB );
+        {$ENDIF}
 
 		{ Finally, trigger the script. }
 		TriggerGearScript( GB , Item , T );
@@ -1196,7 +1198,9 @@ begin
 		{ Invoke the item's effect, if any. }
 		effect := SAttValue( Item^.SA , 'EFFECT' );
 		if effect <> '' then begin
+            {$IFNDEF SDLMODE}
 			GFCombatDisplay( GB );
+            {$ENDIF}
 			EffectFrontEnd( GB , TruePC , effect , '' );
 		end;
 
@@ -1329,11 +1333,11 @@ end;
 Procedure EqpRedraw;
 	{ Show Inventory, select Equipment. }
 begin
-	QuickCombatDisplay( InfoGB );
+	SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
 	DisplayGearInfo( InfoGear , InfoGB );
 	DisplayMenu( InvRPM , Nil );
-	NFGameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu , MenuItem );
+	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu , MenuItem );
 end;
 {$ENDIF}
 
@@ -1421,9 +1425,9 @@ end;
 	Procedure MPERedraw;
 		{ Show Inventory, select Equipment. }
 	begin
-		QuickCombatDisplay( InfoGB );
+		SDLCombatDisplay( InfoGB );
 		DrawBPBorder;
-		NFGameMsg( FullGearName( INFOGear ) + ' '  + MechaDescription( InfoGear) , ZONE_EqpMenu , InfoGreen );
+		GameMsg( FullGearName( INFOGear ) + ' '  + MechaDescription( InfoGear) , ZONE_EqpMenu , InfoGreen );
 		DisplayGearInfo( InfoGear );
 	end;
 {$ENDIF}
@@ -1517,7 +1521,7 @@ end;
 {$IFDEF SDLMODE}
 	Procedure FHQRedraw;
 	begin
-		if InfoGB <> Nil then QuickCombatDisplay( InfoGB );
+		if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 		DisplayGearInfo( InfoGear );
 	end;
 {$ENDIF}
@@ -1652,8 +1656,9 @@ begin
 	until N < 0;
 {$IFDEF SDLMODE}
 	CleanSpriteList;
-{$ENDIF}
+{$ELSE}
 	GFCombatDisplay( GB );
+{$ENDIF}
 end;
 
 

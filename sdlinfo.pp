@@ -639,7 +639,7 @@ begin
 	AI_Dest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
 	AI_Dest.W := AI_Dest.W - 20;
 	AI_Dest.H := AI_Dest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
-	NFGameMsg( ExtendedDescription( Part ) , AI_Dest , NeutralGrey );
+	GameMsg( ExtendedDescription( Part ) , AI_Dest , NeutralGrey );
 end;
 
 Procedure SetInfoZone( var Z: TSDL_Rect; var BorColor: TSDL_Color );
@@ -875,7 +875,7 @@ begin
 	if Part = Nil then exit;
 
 	{ Display the weapon description. }
-	NFCMessage( GearName( Part ) + ' ' + WeaponDescription( Part ) , ZONE_Menu1 , InfoGreen );
+	CMessage( GearName( Part ) + ' ' + WeaponDescription( Part ) , ZONE_Menu1 , InfoGreen );
 end;
 
 Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr );
@@ -1006,7 +1006,7 @@ begin
 	MyDest.Y := MyDest.Y + 1;
 	MyDest.W := MyDest.W - 2;
 	MyDest.H := MyDest.H - 2;
-	NFGameMsg( SAttValue( PC^.SA , 'BIO1' ) , MyDest , InfoGreen );
+	GameMsg( SAttValue( PC^.SA , 'BIO1' ) , MyDest , InfoGreen );
 end;
 
 Procedure InjuryViewer( PC: GearPtr );

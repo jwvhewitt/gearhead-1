@@ -55,9 +55,9 @@ Procedure RandCharRedraw;
 begin
 	DrawCharGenBorder;
 	if RCPC <> Nil then CharacterDisplay( RCPC , Nil );
-	NFGameMsg( RCDescMessage , ZONE_CharGenDesc , InfoGreen );
-	NFCMessage( RCPromptMessage , ZONE_CharGenPrompt , InfoGreen );
-	if RCCaption <> '' then NFCMessage( RCCaption , ZONE_CharGenCaption , InfoGreen );
+	GameMsg( RCDescMessage , ZONE_CharGenDesc , InfoGreen );
+	CMessage( RCPromptMessage , ZONE_CharGenPrompt , InfoGreen );
+	if RCCaption <> '' then CMessage( RCCaption , ZONE_CharGenCaption , InfoGreen );
 end;
 {$ENDIF}
 

@@ -60,14 +60,14 @@ var
 Procedure PCActionRedraw;
 	{ Redraw the map and the PC's info. }
 begin
-	QuickCombatDisplay( PCACTIONRD_GB );
+	SDLCombatDisplay( PCACTIONRD_GB );
 	DisplayGearInfo( PCACTIONRD_PC , PCACTIONRD_GB );
 end;
 
 Procedure PCSRedraw;
 	{ Redraw the map and the PC's info. }
 begin
-	QuickCombatDisplay( PCACTIONRD_GB );
+	SDLCombatDisplay( PCACTIONRD_GB );
 	DisplayGearInfo( PCACTIONRD_PC , PCACTIONRD_GB );
 	SetupMemoDisplay;
 end;
@@ -449,7 +449,9 @@ begin
 		{ If all we have is the memo browser, might as well just go there. }
 		BrowseMemoType( GB , 'MEMO' );
 	end;
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
+    {$ENDIF}
 end;
 
 Function InterfaceType( GB: GameBoardPtr; Mek: GearPtr ): Integer;
@@ -499,9 +501,10 @@ begin
 					DialogMsg( 'You strike up a conversation with ' + GearName( NPC ) + '.' );
 
 					HandleInteract( GB , PC , NPC , Persona );
+                    {$IFNDEF SDLMODE}
 					GFCombatDisplay( gb );
 					DisplayGearInfo( PC , GB );
-
+                    {$ENDIF}
 				end else begin
 					DialogMsg( GearName( NPC ) + ' doesn''t want to talk right now.' );
 
@@ -553,9 +556,11 @@ begin
 			end else begin
 				DialogMsg( ReplaceHash( MsgString( 'PHONE_NotFound' ) , Name ) );
 			end;
+        {$IFNDEF SDLMODE}
 			GFCombatDisplay( gb );
 		end else begin
 			GFCombatDisplay( gb );
+        {$ENDIF}
 		end;
 	end else begin
 		DialogMsg( MsgString( 'PHONE_NoPhone' ) );
@@ -770,9 +775,7 @@ begin
 	PC := LocatePilot( PC );
 	DialogMsg( MsgString( 'BUILD_ROBOT_START' ) );
 	Ingredients := SelectRobotParts( GB , PC );
-{$IFDEF SDLMODE}
-	BasicCombatDisplay( GB );
-{$ELSE}
+{$IFNDEF SDLMODE}
 	DisplayMap( GB );
 {$ENDIF}
 
@@ -1201,7 +1204,7 @@ begin
 	SetupCombatDisplay;
 	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB );
 	RedrawConsole;
-	NFCMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1 , InfoHilight );
+	CMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1 , InfoHilight );
 end;
 
 Procedure NewSkillRedraw;
@@ -1210,7 +1213,7 @@ begin
 	SetupCombatDisplay;
 	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB );
 	RedrawConsole;
-	NFCMessage( BStr( NumberOfSkills( PCACTIONRD_PC ) ) + '/' + BStr( NumberOfSkillSlots( PCACTIONRD_PC ) ) , ZONE_Menu1 , InfoHilight );
+	CMessage( BStr( NumberOfSkills( PCACTIONRD_PC ) ) + '/' + BStr( NumberOfSkillSlots( PCACTIONRD_PC ) ) , ZONE_Menu1 , InfoHilight );
 end;
 {$ENDIF}
 
@@ -1737,8 +1740,10 @@ Procedure PCBackpackMenu( GB: GameBoardPtr; PC: GearPtr; StartWithInv: Boolean )
 	{ call that procedure, then redraw the map afterwards. }
 begin
 	BackpackMenu( GB , PC , StartWithInv );
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
 	DisplayGearInfo( PC , GB );
+    {$ENDIF}
 end;
 
 Procedure PCFieldHQ( GB: GameBoardPtr; PC: GearPtr );
@@ -1746,8 +1751,10 @@ Procedure PCFieldHQ( GB: GameBoardPtr; PC: GearPtr );
 	{ call that procedure, then redraw the map afterwards. }
 begin
 	FieldHQ( GB , PC );
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
 	DisplayGearInfo( PC , GB );
+    {$ENDIF}
 end;
 
 Procedure SetPlayOptions( GB: GameBoardPtr; Mek: GearPtr );
@@ -1924,7 +1931,9 @@ begin
 	CleanSpriteList;
 {$ENDIF}
 	DisposeRPGMenu( RPM );
+    {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
+    {$ENDIF}
 end;
 
 Procedure WaitOnRecharge( GB: GameBoardPtr; Mek: GearPtr );
@@ -2444,7 +2453,9 @@ begin
 	if txt <> Nil then begin
 		MoreText( txt , 1 );
 		DisposeSAtt( txt );
+        {$IFNDEF SDLMODE}
 		GFCombatDisplay( GB );
+        {$ENDIF}
 	end;
 end;
 
@@ -3004,10 +3015,14 @@ begin
 	event := GetStringFromUser( 'DEBUG CODE 45123' );
 {$ENDIF}
 	if event <> '' then begin
+        {$IFNDEF SDLMODE}
 		GFCombatDisplay( GB );
+        {$ENDIF}
 		InvokeEvent( event , GB , GB^.Scene , event );
+    {$IFNDEF SDLMODE}
 	end else begin
 		GFCombatDisplay( GB );
+    {$ENDIF}
 	end;
 end;
 
@@ -3131,20 +3146,26 @@ begin
 	if ( NAttValue( Mek^.NA , NAG_Location , NAS_SmartAction ) <> 0 ) and Mobile then begin
 		{ The player is smartbumping. Call the appropriate procedure. }
 		RLSmartAction( Camp^.GB , Mek );
+        {$IFDEF SDLMODE}
+        SDLCombatDisplay( Camp^.GB );
+		{ Indicate the mek to get the action for. }
+		DisplayGearInfo( Mek , Camp^.gb );
+        ghflip();
+        {$ENDIF}
 
 	end else begin
 		GotMove := False;
 
 		{ Start the input loop. }
 		while (NAttValue( Mek^.NA , NAG_Action , NAS_CallTime) <= Camp^.GB^.ComTime) and (not GotMove) and (not Camp^.GB^.QuitTheGame) and GearActive( Mek ) do begin
-			{ Indicate the mek to get the action for. }
-			DisplayGearInfo( Mek , Camp^.gb );
 {$IFDEF SDLMODE}
 			P := MouseMapPos;
 			if OnTheMap( P.X , P.Y ) and Mouse_Active then MouseAtTile( Camp^.GB , P.X , P.Y );
 
 			IndicateTile( Camp^.GB , Mek , True );
 {$ELSE}
+			{ Indicate the mek to get the action for. }
+			DisplayGearInfo( Mek , Camp^.gb );
 			IndicateTile( Camp^.GB , Mek );
 {$ENDIF}
 			ClrZone( ZONE_Menu );
@@ -3274,6 +3295,11 @@ begin
 				PCLeftButton( Camp^.GB , Mek );
 			end else if ( KP = RPK_RightButton ) and Mouse_Active then begin
 				GameOptionMenu( Mek , Camp^.GB );
+            end else if KP = RPK_TimeEvent then begin
+                SDLCombatDisplay( Camp^.GB );
+    			{ Indicate the mek to get the action for. }
+    			DisplayGearInfo( Mek , Camp^.gb );
+                ghflip();
 {$ENDIF}
 
 			end else if KP = 'P' then begin

@@ -44,9 +44,6 @@ Function NeedsRecentering( X,Y: Integer ): Boolean;
 
 Function TeamColorString( GB: GameBoardPtr; M: GearPtr ): String;
 
-procedure RenderMap;
-procedure DisplayMap( gb: GameBoardPtr );
-
 Procedure RedrawTile( gb: GameBoardPtr; X,Y: Integer );
 procedure RedrawTile( gb: GameBoardPtr; Mek: GearPtr );
 
@@ -63,10 +60,7 @@ Procedure DeployMek( GB: GameBoardPtr; Mek,Pilot: GearPtr; Team: Integer );
 Function LocateMekByUID( GB: GameBoardPtr; UID: Integer ): GearPtr;
 
 Function TimeString( ComTime: LongInt ): String;
-Procedure UpdateCombatDisplay( GB: GameBoardPtr );
-Procedure BasicCombatDisplay( GB: GameBoardPtr );
-Procedure QuickCombatDisplay( GB: GameBoardPtr );
-Procedure GFCombatDisplay( GB: GameBoardPtr );
+Procedure SDLCombatDisplay( GB: GameBoardPtr );
 
 Procedure FocusOnMek( GB: GameBoardPtr; Mek: GearPtr );
 
@@ -386,6 +380,10 @@ var
 	MyDest: TSDL_Rect;
 begin
 	{ Set the clip area. }
+    ZONE_Map.X := 0;
+    ZONE_Map.Y := 0;
+    ZONE_Map.W := Game_Screen^.W;
+    ZONE_Map.H := Game_Screen^.H;
 	ClrZone( ZONE_Map );
 	SDL_SetClipRect( Game_Screen , @ZONE_Map );
 
@@ -753,13 +751,6 @@ begin
 	RenderMap;
 end;
 
-procedure DisplayMap( gb: GameBoardPtr );
-	{ As above, but add a pageflip. }
-begin
-	NFDisplayMap( GB );
-	GHFlip;
-end;
-
 Procedure RedrawTile( gb: GameBoardPtr; X,Y: Integer );
 	{ Just call the above procedure with a Hilight value of FASLE. }
 var
@@ -793,7 +784,6 @@ begin
 
 	if Primary then begin
 		RecenterDisplay( X , Y );
-		DisplayMap( GB );
 	end;
 end;
 
@@ -1003,13 +993,7 @@ begin
 	TimeString := msg;
 end;
 
-Procedure UpdateCombatDisplay( GB: GameBoardPtr );
-	{ Just update the screen; don't redraw everything. }
-begin
-	NFCMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
-end;
-
-Procedure BasicCombatDisplay( GB: GameBoardPtr );
+Procedure SDLCombatDisplay( GB: GameBoardPtr );
 	{ Do each of the standard GearFitr display elements. }
 var
 	pmsg: PChar;
@@ -1017,33 +1001,10 @@ var
 begin
 	SetupCombatDisplay;
 	NFDisplayMap( GB );
-	UpdateCombatDisplay( GB );
+	CMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
 
 	{ Update the console. }
 	RedrawConsole;
-end;
-
-Procedure QuickCombatDisplay( GB: GameBoardPtr );
-	{ Do each of the standard GearFitr display elements, but don't refresh }
-	{ the map overlays. }
-var
-	SL: SAttPtr;
-	pmsg: PChar;
-	MyImage: PSDL_Surface;
-begin
-	SetupCombatDisplay;
-	RenderMap;
-	UpdateCombatDisplay( GB );
-
-	{ Update the console. }
-	RedrawConsole;
-end;
-
-Procedure GFCombatDisplay( GB: GameBoardPtr );
-	{ As above, plus a pageflip. }
-begin
-	BasicCombatDisplay( GB );
-	GHFlip;
 end;
 
 Procedure FocusOnMek( GB: GameBoardPtr; Mek: GearPtr );
@@ -1054,7 +1015,6 @@ begin
 	if ( Mek <> Nil ) and ( GB <> Nil ) then begin
 		P := GearCurrentLocation( Mek );
 		RecenterDisplay( P.X , P.Y );
-		DisplayMap( gb );
 	end;
 end;
 
@@ -1194,14 +1154,18 @@ begin
 
 		{ Delay the animations, if appropriate. }
 		if DelayThisFrame then begin
-			QuickCombatDisplay( GB );
+	        SetupCombatDisplay;
+	        RenderMap();
+	        CMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
+
+	        { Update the console. }
+	        RedrawConsole;
 			GHFlip;
 			if ( FrameDelay > 0 ) then SDL_Delay(FrameDelay);
 		end;
 	end;
 
 	ClearOverlayLayer( OVERLAY_Image );
-	DisplayMap( GB );
 end;
 
 Function DisplayEffectAnimations( GB: GameBoardPtr; N: Integer ): Boolean;
@@ -1252,10 +1216,6 @@ var
 	SL: SAttPtr;
 begin
 	MoreText( Console_History , MoreHighFirstLine( Console_History ) );
-	GFCombatDisplay( GB );
-
-	{ Restore the console display. }
-
 end;
 
 Procedure WriteCampaign( Camp: CampaignPtr; var F: Text );
