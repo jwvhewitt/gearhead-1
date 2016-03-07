@@ -51,7 +51,7 @@ sub
 	Msg4 <You have been promoted to \FacRank E1 V1 . Here's a cash bonus to reward your loyal service.>
 	Msg5 <You have been promoted to \FacRank E1 V1 . As a reward, here is the latest alpha-grade mecha from Kettel Industries, the Jos.>
 	Msg6 <You have been promoted to \FacRank E1 V1 . Here, this is an advanced neural booster unit. All of the top executives have had one installed. You can't expect to advance far in the company relying just upon your human brain, can you?>
-	Msg7 <You have been promoted to \FacRank E1 V1 . Here's a mecha worthy of your station, the Harpy.>
+	Msg7 <You have been promoted to \FacRank E1 V1 . Here's a mecha worthy of your station, the Maanji.>
 	Msg8 <You have been promoted to \FacRank E1 V1 . This is our most advanced cybernetics kit.>
 	Msg9 <Here is a cash reward for your continued loyal service to \ELEMENT 1 .>
 	Msg10 <You have been promoted to \FacRank E1 V1 . Here is a small cash reward in recognition of your service.>

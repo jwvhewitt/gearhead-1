@@ -879,6 +879,10 @@ begin
 	{ Once everything is deployed, save the campaign. }
 	if DoAutoSave then PCSaveCampaign( Camp , GG_LocatePC( Camp^.GB ) , False );
 
+    {$IFDEF SDLMODE}
+    InitMapDisplay( Camp^.GB, GG_LocatePC( Camp^.GB ) );
+    {$ENDIF}
+
 	if UseTacticsMode and ( Camp^.gb^.Scale = 2 ) then begin
 		N := TacticsMain( Camp );
 	end else begin
@@ -889,6 +893,11 @@ begin
 
 	{ Save the final ComTime in the Campaign. }
 	Camp^.ComTime := Camp^.GB^.ComTime;
+
+    {$IFDEF SDLMODE}
+    FinalizeMapDisplay();
+    {$ENDIF}
+
 
 	{ If SCENE is a part of Camp\Source, the map needs to be saved. }
 	{ Otherwise dispose of the map and the scene together. }

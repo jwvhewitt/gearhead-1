@@ -1262,11 +1262,15 @@ end;
 
 initialization
 	{ Make sure we have the required data directories. }
-{$IFDEF WINDOWS}
-    Config_Directory := GetUserDir() + OS_Dir_Separator + 'gharena' + OS_Dir_Separator;
-{$ELSE}
-    Config_Directory := GetAppConfigDir(False);
-{$ENDIF}
+    if paramcount() > 0 then begin
+        Config_Directory := IncludeTrailingPathDelimiter( paramstr(1) );
+    end else begin
+    {$IFDEF WINDOWS}
+        Config_Directory := GetUserDir() + OS_Dir_Separator + 'gharena' + OS_Dir_Separator;
+    {$ELSE}
+        Config_Directory := GetAppConfigDir(False);
+    {$ENDIF}
+    end;
 	Config_File := Config_Directory + 'gharena.cfg';
 
 	Save_Game_DirName := 'SaveGame';

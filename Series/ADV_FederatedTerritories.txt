@@ -3129,7 +3129,7 @@ Scene 16 0
 		Msg8 <Here are the keys. Take good care of her.>
 		prompt1 <I'm looking for a mecha.>
 		prompt2 <How can I help you?>
-		prompt3 <I'm too busy to do favors for old men.>
+		prompt3 <I'm too busy to do favors for old fogies.>
 		prompt4 <I'd be glad to!>
 
 		Persona 1609

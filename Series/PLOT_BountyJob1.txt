@@ -74,17 +74,18 @@ sub
 	%  V2 = Message Randomizer
 	%  V3 = Threat value of enemy mecha
 	%  V4 = Reward offered to PC for the mission
+    %  V5 = Initialization counter
 	% At startup, first check to see whether the PC has already
 	% completed the mission or not.
-	Greeting <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AddReact d4 AdvancePlot 0>
+	Greeting <if= V5 0 else GoOldGreetingRefactoringASLIsPain V= 5 1 V= 2 PCRep 6 V+ 2 d8 V+ 2 -d8 V= 3 Threat V2 120 V= 4 Reward V3 150 Goto GoOldGreetingRefactoringASLIsPain>
+	GoOldGreetingRefactoringASLIsPain <NewChat if= P2 3 else GoCheckLoss Say d5 CashPrize V4 AddReact d4 AdvancePlot 0>
 	GoCheckLoss <if= P2 2 else GoCheckJob V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
-	GoCheckJob <if= P3 1 else GoCheckOfferAlready  Say 101 Goto GoAddComOps>
+	GoCheckJob <if= P3 1 else GoCheckOfferAlready  Say 11 AddChat 20 Goto GoAddComOps>
     GoCheckOfferAlready <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
 	% The PC will be denied the mission if he's helped the enemy.
-	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied ifG PCRep 6 30 else GoDenied Goto GoInitialize>
-	GoInitialize <V= 1 -1 V= 2 PCRep 6 V+ 2 d8 V+ 2 -d8 V= 3 Threat V2 120 V= 4 Reward V3 150 Goto GoCheckFaction>
-	GoCheckFaction <if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied ifG PCRep 6 30 else GoDenied Goto GoCheckFaction>
+	GoCheckFaction <V= 1 -1 if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	GoCheckFriend <ifG React 30 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
 	GoNoAutomatic <ifG React -d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 AddChat V2>
@@ -108,7 +109,7 @@ sub
 	result6 <Goto result5>
 
 	% The PC accepts the job offer.
-	result7 <NewChat V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	result7 <NewChat Say 11 Goto GoAddComOps>
 	result8 <Goto result7>
 
 	% The PC refuses the job offer.
@@ -136,6 +137,9 @@ sub
 	result18 <Goto result17>
 	result19 <Goto result17>
 
+    % PC got email, but is rejecting job.
+    result20 <NewChat Say 108 V= 1 -1 AdvancePlot 0>
+
 
 	% *********************
 	% *** MESSAGE BLOCK ***
@@ -155,14 +159,14 @@ sub
 	Msg9 <That couldn't possibly have gone any worse... oh, well. At least it wasn't me risking my ass out there.>
 	Msg10 <Maybe you should take a piloting course...>
 
-	% 11 - 15 :  Description of mission.
+	% 11 :  Description of mission.
 	%  use "$ \VAL V4 " to insert the pay for the mission,
 	%  and don't forget to mention that the PC also gets salvage.
 	Msg11 <Here's the deal. A bandit has agreed to inform against his boss, but can't leave his gang or they'll kill him. So, we have to capture him by disabling the rest of the bandits. Pay is $ \VAL V4 if you can manage that.>
-	Msg12 <This is a bit complicated. The guardians need a bandit to inform against his bosses, but the bandit won't agree to lose face by cooperating. So, we're going to capture him. Pay for the job is $ \VAL V4 .>
-	Msg13 <A certain bandit is needed for questioning by the guardians. In order to make him surrender, you'll have to take out his gang. Pay is $ \VAL V4 if the bandit can be captured with his mecha intact.>
-	Msg14 <The guardians are looking for a certain bandit. There's a good indication that he'll surrender if he can be confronted alone, so your job is to disable the rest of his gang. This job pays $ \VAL V4 .>
-	Msg15 <There's a bandit who's wanted for questioning in relation to a robbery. The guardians want him taken alive, so your job is to force him to surrender. It should be easy enough if you disable the rest of his gang. Pay for this job is $ \VAL V4 .>
+	Msg11_1 <This is a bit complicated. The guardians need a bandit to inform against his bosses, but the bandit won't agree to lose face by cooperating. So, we're going to capture him. Pay for the job is $ \VAL V4 .>
+	Msg11_2 <A certain bandit is needed for questioning by the guardians. In order to make him surrender, you'll have to take out his gang. Pay is $ \VAL V4 if the bandit can be captured with his mecha intact.>
+	Msg11_3 <The guardians are looking for a certain bandit. There's a good indication that he'll surrender if he can be confronted alone, so your job is to disable the rest of his gang. This job pays $ \VAL V4 .>
+	Msg11_4 <There's a bandit who's wanted for questioning in relation to a robbery. The guardians want him taken alive, so your job is to force him to surrender. It should be easy enough if you disable the rest of his gang. Pay for this job is $ \VAL V4 .>
 
 	% 16 - 20 :  Player is asked if he is looking for a job.
 	Msg16 <Hey, are you looking for a job? I've just got a contract for a wanted criminal but it's a mecha mission.>
@@ -217,6 +221,8 @@ sub
 	msg106 <Like them or not, they're a steady employer.>
 	% 107 :  Memo
 	msg107 <\ELEMENT 2 in \SCENE EScene 2 offered you a bounty hunting mission.>
+    % 108 :  PC rejects mission.
+    msg108 <Fair enough. I'm sure I can find someone else for this one.>
 
 	% 01 - 02 :  Ready to start the mission
 	Prompt1 <All ready to start.>
@@ -253,6 +259,8 @@ sub
 	Prompt18 <I don't much care for cops.>
 	Prompt19 <I wouldn't do a mission for the police.>
 
+    Prompt20 <Sorry, I'm too busy for this right now.>
+    Prompt20_1 <Sorry, I can't help you.>
 
 end
 

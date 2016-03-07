@@ -60,65 +60,9 @@ const
 	BorderBlue: TSDL_Color =	( r:  0; g:101; b:151 );
 	BrightYellow: TSDL_Color =	( r:255; g:201; b:  0 );
 
-{$IFDEF MINI}
-	ScreenWidth = 640;
-	ScreenHeight = 480;
-	BigFontSize = 10;
-	SmallFontSize = 8;
-	Right_Column_Width = 180;
-	Dialog_Area_Height = 90;
-
-	ZONE_Map: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - Right_Column_Width - 30 ; h: ScreenHeight - Dialog_Area_Height - 20 );
-	ZONE_Clock: TSDL_Rect = ( x: ScreenWidth - Right_Column_Width - 10 ; y:ScreenHeight - Dialog_Area_Height - 30; w:Right_Column_Width; h:20 );
-	ZONE_Info: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:10; w:Right_Column_Width; h:150 );
-	ZONE_Menu: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:170; w:Right_Column_Width; h:ScreenHeight - 220 - Dialog_Area_Height );
-	ZONE_Menu1: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:170; w:Right_Column_Width; h:130 );
-	ZONE_Menu2: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:310; w:Right_Column_Width; h:ScreenHeight - 350 - Dialog_Area_Height );
-	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: ScreenWidth - 20 ; h:Dialog_Area_Height-10 );
-
-	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
-	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
-
-	ZONE_CharGenMenu: TSDL_Rect = ( x:ScreenWidth - Right_Column_Width - 10; y:190; w:Right_Column_Width; h:ScreenHeight-230 );
-	ZONE_CharGenCaption: TSDL_Rect = ( x:ScreenWidth - Right_Column_Width - 10; y:ScreenHeight-30; w:Right_Column_Width; h:20 );
-	ZONE_CharGenDesc: TSDL_Rect = ( x:10; y:ScreenHeight - Dialog_Area_Height; w:ScreenWidth - Right_Column_Width - 30; h:Dialog_Area_Height-10 );
-	ZONE_CharGenPrompt: TSDL_Rect = ( x:ScreenWidth - Right_Column_Width - 10; y:10; w:Right_Column_Width; h:170 );
-
-	ZONE_InteractStatus: TSDL_Rect = ( x: 25; y:48; w:295; h:30 );
-	ZONE_InteractMsg: TSDL_Rect = ( x: 25; y:118; w:295; h: 90 );
-	ZONE_InteractPhoto: TSDL_Rect = ( x: 325; y: 60; w: 100; h: 150 );
-	ZONE_InteractInfo: TSDL_Rect = ( x:25; y: 83; w: 295; h: 30 );
-	ZONE_InteractMenu: TSDL_Rect = ( x: 25; y:218; w:400; h: 115 );
-	ZONE_InteractTotal: TSDL_Rect = ( x: 20; y: 43; w: 410; h: 295 );
-
-	ZONE_TextInputPrompt: TSDL_Rect = ( x:40; y:165; w:320; h:30 );
-	ZONE_TextInput: TSDL_Rect = ( x:40; y:205; w:320; h:30 );
-	ZONE_TextInputBigBox: TSDL_Rect = ( x:30; y:155; w:340; h:95 );
-	ZONE_TextInputSmallBox: TSDL_Rect = ( x:35; y:200; w:330; h:40 );
-
-	ZONE_EqpMenu: TSDL_Rect = ( x:50; y:50; w:280; h:60 );
-	ZONE_InvMenu: TSDL_Rect = ( x:50; y:155; w:280; h:205 );
-	ZONE_SuperBP: TSDL_Rect = (x: 40; Y:40; W: 300; H: 285);
-
-	ZONE_Biography: TSDL_Rect = ( x:20; y:340; w:460; h:60 );
-
-	ZONE_YesNoTotal: TSDL_Rect = ( x:100; y:115; w:ScreenWidth - Right_Column_Width - 210; h:280 );
-	ZONE_YesNoPrompt: TSDL_Rect = ( x:110; y:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
-	ZONE_YesNoMenu: TSDL_Rect = ( x:110; y:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
-
-	ZONE_UsagePrompt: TSDL_Rect = ( x:500; y:190; w:130; h:170 );
-	ZONE_UsageMenu: TSDL_Rect = ( x:50; y:155; w:380; h:245 );
-
-	ZONE_MoreText: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - 20 ; h: ScreenHeight - 50 );
-	ZONE_MorePrompt: TSDL_Rect = ( x:10; y: ScreenHeight - 40 ; w:ScreenWidth - 20; h:30 );
-
-	ZONE_MemoText: TSDL_Rect = ( x:110; y:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
-	ZONE_MemoMenu: TSDL_Rect = ( x:110; y:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
-
-{$ELSE}
 	ScreenWidth = 800;
 	ScreenHeight = 600;
-	BigFontSize = 14;
+	BigFontSize = 13;
 	SmallFontSize = 11;
 	Right_Column_Width = 220;
 	Dialog_Area_Height = 110;
@@ -169,7 +113,6 @@ const
 
 	ZONE_MemoText: TSDL_Rect = ( x:110; y:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
 	ZONE_MemoMenu: TSDL_Rect = ( x:110; y:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
-{$ENDIF}
 
 	Console_History_Length = 240;
 
@@ -236,6 +179,7 @@ Function MoreHighFirstLine( LList: SAttPtr ): Integer;
 Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 
 Procedure ClearExtendedBorder( Dest: TSDL_Rect );
+Procedure InfoBox( Dest: TSDL_Rect );
 
 Procedure DrawBPBorder;
 Procedure DrawCharGenBorder;
@@ -253,6 +197,10 @@ implementation
 const
 	WindowName: PChar = 'GearHead Arena SDL Version';
 	IconName: PChar = 'GearHead';
+
+var
+	Infobox_Border,Infobox_Backdrop: SensibleSpritePtr;
+
 
 Function RandomColorString( ColorSet: Integer ): String;
 	{ Select a random color string belonging to the provided color set. }
@@ -844,6 +792,9 @@ var
 begin
 	pline := QuickPCopy( msg );
 	MyText := TTF_RenderText_Solid( game_font , pline , Color );
+{$IFDEF LINUX}
+	if MyText <> Nil then SDL_SetColorKey( MyText , SDL_SRCCOLORKEY , SDL_MapRGB( MyText^.Format , 0 , 0, 0 ) );
+{$ENDIF}
 	Dispose( pline );
 	SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
 	SDL_FreeSurface( MyText );
@@ -956,7 +907,7 @@ var
 	NumLines,LineNum: Integer;
 begin
 	{Clear the message area, and set clipping bounds.}
-	{InfoBox( ZONE_Dialog );}
+	InfoBox( ZONE_Dialog );
     ZONE_Dialog.y := Game_Screen^.h - ZONE_Dialog.h - 10;
 	SDL_SetClipRect( Game_Screen , @ZONE_Dialog );
 
@@ -1033,6 +984,68 @@ begin
 	Dest.H := Dest.H + 2;
 	SDL_FillRect( game_screen , @Dest , SDL_MapRGB( Game_Screen^.Format , 0 , 0 , 0 ) );
 end;
+
+Procedure InfoBox( Dest: TSDL_Rect );
+	{ Do a box for drawing something else inside of. }
+const
+	tex_width = 16;
+	border_width = tex_width div 2;
+	half_dat = border_width div 2;
+var
+	X0,Y0,W32,H32,X,Y: Integer;
+begin
+	{ Step one: Determine the size of our box. Both dimensions should be }
+	{ a multiple of 32. }
+	{ W32 and H32 will store the number of 16-pixel columns/rows. }
+	W32 := ( Dest.W + border_width ) div tex_width + 1;
+	H32 := ( Dest.H + border_width ) div tex_width + 1;
+
+	{ X0 and Y0 will store the upper left corner of the box. }
+	X0 := Dest.X - ( ( ( w32 * tex_width ) - Dest.W ) div 2 );
+	Y0 := Dest.Y - ( ( ( h32 * tex_width ) - Dest.H ) div 2 );
+
+	{ Draw the backdrop. }
+	for X := 0 to ( W32 - 1 ) do begin
+		Dest.X := X0 + X * tex_width;
+		for Y := 0 to ( H32 - 1 ) do begin
+			Dest.Y := Y0 + Y * tex_width;
+			DrawSprite( Infobox_Backdrop , Dest , 0 );
+		end;
+	end;
+
+	{ Draw the border. }
+	Dest.X := X0 - half_dat;
+	Dest.Y := Y0 - half_dat;
+	DrawSprite( Infobox_Border , Dest , 0 );
+
+	Dest.X := X0 - half_dat;
+	Dest.Y := Y0 + H32 * tex_width - half_dat;
+	DrawSprite( Infobox_Border , Dest , 4 );
+
+	Dest.X := X0 + W32 * tex_width - half_dat;
+	Dest.Y := Y0 - half_dat;
+	DrawSprite( Infobox_Border , Dest , 3 );
+
+	Dest.X := X0 + W32 * tex_width - half_dat;
+	Dest.Y := Y0 + H32 * tex_width - half_dat;
+	DrawSprite( Infobox_Border , Dest , 5 );
+
+	for X := 1 to ( W32 * 2 - 1 ) do begin
+		Dest.X := X0 + X * border_width - half_dat;
+		Dest.Y := Y0 - half_dat;
+		DrawSprite( Infobox_Border , Dest , 1 );
+		Dest.Y := Y0 + H32 * tex_width - half_dat;
+		DrawSprite( Infobox_Border , Dest , 1 );
+	end;
+	for Y := 1 to ( H32 * 2 - 1 ) do begin
+		Dest.Y := Y0 + Y * border_width - half_dat;
+		Dest.X := X0 - half_dat;
+		DrawSprite( Infobox_Border , Dest , 2 );
+		Dest.X := X0 + W32 * tex_width - half_dat;
+		DrawSprite( Infobox_Border , Dest , 2 );
+	end;
+end;
+
 
 Function GetStringFromUser(const Prompt: String; ReDrawer: RedrawProcedureType ): String;
 	{ Does what it says. }
@@ -1257,6 +1270,9 @@ initialization
 	Last_Clock_Update := 0;
 
 	MasterColorList := LoadStringList( Data_Directory + 'sdl_colors.txt' );
+
+	Infobox_Border := ConfirmSprite( 'sys_boxborder.png' , '', 8 , 8 );
+	Infobox_Backdrop := ConfirmSprite( 'sys_boxbackdrop.png' , '', 16 , 16 );
 
 
 {	MIX_OpenAudio( MIX_DEFAULT_FREQUENCY , MIX_DEFAULT_FORMAT , MIX_CHANNELS , 4096 );

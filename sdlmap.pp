@@ -81,6 +81,9 @@ Function MouseMapPos: Point;
 
 Procedure BeginTurn( GB: GameBoardPtr; M: GearPtr );
 
+Procedure InitMapDisplay( GB: GameBoardPtr; PC: GearPtr );
+Procedure FinalizeMapDisplay;
+
 implementation
 
 uses texutil,menugear,ghchars;
@@ -200,6 +203,8 @@ var
 	Opening_Last_Anim_Phase: Uint32;
 	Opening_X,Opening_Y: Integer;
 	Opening_Phase,Opening_Count: Integer;
+
+    ComDisplay_PC: GearPtr;
 
 Procedure ClearOverlayLayer( L: Integer );
 	{ Clear sprite descriptions from the provided overlay layer. }
@@ -999,7 +1004,6 @@ var
 	pmsg: PChar;
 	MyImage: PSDL_Surface;
 begin
-	SetupCombatDisplay;
 	NFDisplayMap( GB );
 	CMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
 
@@ -1436,8 +1440,6 @@ var
 	P: Point;
 	Normally_Use_Alpha: Boolean;
 begin
-	SetupCombatDisplay;
-
 	if Opening_Last_Anim_Phase <> Animation_Phase then begin
 		Opening_Last_Anim_Phase := Animation_Phase;
 		Inc( Opening_Count );
@@ -1506,6 +1508,18 @@ begin
 	CMessage( 'Begin ' + PilotName( M ) + ' turn' , ZONE_MemoText , InfoHilight );
 	GHFlip;
 	EndOfGameMoreKey;
+end;
+
+Procedure InitMapDisplay( GB: GameBoardPtr; PC: GearPtr );
+    { Do anything that needs to be done to prepare this map to be displayed. }
+begin
+    ComDisplay_PC := PC;
+end;
+
+Procedure FinalizeMapDisplay;
+    { Do anything that needs to be done after we're finished looking at this map. }
+begin
+    ComDisplay_PC := Nil;
 end;
 
 initialization

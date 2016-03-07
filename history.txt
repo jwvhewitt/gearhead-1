@@ -1,3 +1,5 @@
+- Added InfoBox from GearHead2.1 (sdlgfx.pp)
+- Fixed BountyJob bugs (PLOT_BountyJob1.txt)
 - Switch weapon should now reliably switch weapon (menugear.pp)
 - Fixed some SDL handling weirdness throughout program
 - SDL window now resizeable (sdlgfx.pp)
