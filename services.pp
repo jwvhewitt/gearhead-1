@@ -27,7 +27,17 @@ interface
 
 uses gears,locale;
 
-procedure PurchaseGear( GB: GameBoardPtr; PC,NPC,Part: GearPtr );
+const
+	num_standard_schemes = 5;
+	standard_lot_colors: Array [0..num_standard_schemes-1] of string = (
+	'152 172 183 199 188 162 200   0 200', 	{ Coral, Gull Grey, Purple }
+	' 80  80  85 130 144 114 200 200   0',	{ Dark Grey, Battleship Grey, Yellow }
+	' 66 121 179 210 215  80 205  25   0',	{ Default player colors }
+	'201 205 229  49  91 161   0 200   0',	{ Aero Blue, Azure, Green }
+	'240 240 240 208  34  51  50  50 150'	{ White, Red Goes Fasta, Blue }
+	);
+Function Random_Mecha_Colors: String;
+Procedure PurchaseGear( GB: GameBoardPtr; PC,NPC,Part: GearPtr );
 Procedure OpenShop( GB: GameBoardPtr; PC,NPC: GearPtr; Stuff: String );
 Procedure OpenSchool( GB: GameBoardPtr; PC,NPC: GearPtr; Stuff: String );
 Procedure ExpressDelivery( GB: GameBoardPtr; PC,NPC: GearPtr );
@@ -766,6 +776,20 @@ begin
 	end;
 end;
 
+Function Random_Mecha_Colors: String;
+	{ Return some random colors for this mecha. }
+begin
+{$IFDEF SDLMODE}
+	if Random( 3 ) = 1 then begin
+		random_mecha_colors := standard_lot_colors[ random( num_standard_schemes ) ];
+	end else begin
+		random_mecha_colors := RandomColorString( CS_PrimaryMecha ) + ' ' + RandomColorString( CS_SecondaryMecha ) + ' ' + RandomColorString( CS_Detailing );
+	end;
+{$ELSE}
+	random_mecha_colors := standard_lot_colors[ random( num_standard_schemes ) ];
+{$ENDIF}
+end;
+
 Procedure AddSomeMeks( var Wares: GearPtr );
 	{ WARES is the inventory list of a shop. Let's add ~10 mecha files }
 	{ to the list. }
@@ -831,6 +855,23 @@ end;
 
 Function CreateWaresList( GB: GameBoardPtr; NPC: GearPtr; Stuff: String ): GearPtr;
 	{ Fabricate the list of items this NPC has for sale. }
+	Procedure InitShopItem( I: GearPtr );
+		{ Certain items may need some initialization. }
+	var
+		mecha_colors: String;
+	begin
+		if I^.G = GG_Mecha then begin
+			{ To start with, determine this merchant's lot color. This is the color all }
+			{ the mecha in the sales lot are painted. Check to see if he has a color stored. }
+			{ Otherwise pick a color scheme at random and save it. }
+			mecha_colors := SAttValue( NPC^.SA , 'mecha_colors' );
+			if mecha_colors = '' then begin
+				mecha_colors := Random_Mecha_Colors;
+				SetSAtt( NPC^.SA , 'mecha_colors <' + mecha_colors + '>' );
+			end;
+			SetSAtt( I^.SA , 'sdl_colors <' + mecha_colors + '>' );
+		end;
+	end;
 var
 	Wares,I,I2: GearPtr;	{ List of items for sale. }
 	F: Text;
@@ -876,7 +917,12 @@ begin
 
 		{ If this isn't a good item for this shop, remove it. }
 		{ Otherwise increment the item counter. }
-		if NotGoodWares( I , NPC , Stuff ) then RemoveGear( Wares , I );
+		if NotGoodWares( I , NPC , Stuff ) then begin
+			RemoveGear( Wares , I );
+		end else begin
+		{A bit of overkill as the current InitShopItem only touch mechas}
+			InitShopItem( I );
+		end;
 
 		I := I2;
 	end;
