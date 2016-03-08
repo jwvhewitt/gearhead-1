@@ -99,7 +99,7 @@ begin
 	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
 	if EqpRPM <> Nil then begin
 		DisplayMenu( EqpRPM , Nil );
-		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu , MenuItem );
+		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Dialog , MenuItem );
 	end;
 end;
 
@@ -109,7 +109,7 @@ begin
 	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
 	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
-	GameMsg( MsgString( 'SELECT_ROBOT_PARTS' ) , ZONE_EqpMenu , MenuItem );
+	GameMsg( MsgString( 'SELECT_ROBOT_PARTS' ) , ZONE_EqpMenu.GetRect() , MenuItem );
 end;
 
 Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
@@ -1337,7 +1337,7 @@ begin
 	DrawBPBorder;
 	DisplayGearInfo( InfoGear , InfoGB );
 	DisplayMenu( InvRPM , Nil );
-	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu , MenuItem );
+	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu.GetRect() , MenuItem );
 end;
 {$ENDIF}
 
@@ -1427,7 +1427,7 @@ end;
 	begin
 		SDLCombatDisplay( InfoGB );
 		DrawBPBorder;
-		GameMsg( FullGearName( INFOGear ) + ' '  + MechaDescription( InfoGear) , ZONE_EqpMenu , InfoGreen );
+		GameMsg( FullGearName( INFOGear ) + ' '  + MechaDescription( InfoGear) , ZONE_EqpMenu.GetRect() , InfoGreen );
 		DisplayGearInfo( InfoGear );
 	end;
 {$ENDIF}

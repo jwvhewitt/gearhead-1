@@ -58,7 +58,7 @@ type
 	RPGMenu = Record
 		active: boolean;
 		itemcolor,selcolor,dtexcolor: TSDL_Color;
-		Menu_Zone,Desc_Zone: TSDL_Rect;
+		Menu_Zone,Desc_Zone: DynamicRect;
 		mode: Byte;
 		topitem,selectitem,numitem: integer; {fields holding info about the status of the menu.}
 		FirstItem: RPGMenuItemPtr;
@@ -75,8 +75,8 @@ Procedure ClearMenu( RPM: RPGMenuPtr );
 Procedure RemoveRPGMenuItem(RPM: RPGMenuPtr; var LMember: RPGMenuItemPtr);
 
 Procedure AddRPGMenuKey(RPM: RPGMenuPtr; k: Char; value: Integer);
-Function CreateRPGMenu(icolor,scolor: TSDL_Color; Z: TSDL_Rect): RPGMenuPtr;
-Procedure AttachMenuDesc( RPM: RPGMenuPtr; Z: TSDL_Rect );
+Function CreateRPGMenu(icolor,scolor: TSDL_Color; Z: DynamicRect): RPGMenuPtr;
+Procedure AttachMenuDesc( RPM: RPGMenuPtr; Z: DynamicRect );
 
 Procedure DisposeRPGMenu(var RPM: RPGMenuPtr);
 Procedure DisplayMenu( RPM: RPGMenuPtr; ReDrawer: RedrawProcedureType );
@@ -232,7 +232,7 @@ begin
 	RPM^.FirstKey := it;
 end;
 
-Function CreateRPGMenu(icolor,scolor: TSDL_Color; Z: TSDL_Rect): RPGMenuPtr;
+Function CreateRPGMenu(icolor,scolor: TSDL_Color; Z: DynamicRect): RPGMenuPtr;
 	{This function creates a new RPGMenu record, and returns the address.}
 var
 	it: ^RPGMenu;			{Here's a pointer for the menu we're making.}
@@ -267,7 +267,7 @@ begin
 	CreateRPGMenu := it;
 end;
 
-Procedure AttachMenuDesc( RPM: RPGMenuPtr; Z: TSDL_Rect );
+Procedure AttachMenuDesc( RPM: RPGMenuPtr; Z: DynamicRect );
 	{ Set the area for description items to zone Z. }
 begin
 	RPM^.Desc_Zone := Z;
@@ -336,7 +336,7 @@ Procedure RPMRefreshDesc(RPM: RPGMenuPtr);
 begin
 	{Check to make sure that this menu has a description box, first off.}
 	if RPM^.Desc_Zone.W > 0 then begin
-		CMessage( RPMLocateByPosition(RPM,RPM^.selectitem)^.desc , RPM^.Desc_Zone , RPM^.dtexcolor );
+		CMessage( RPMLocateByPosition(RPM,RPM^.selectitem)^.desc , RPM^.Desc_Zone.GetRect() , RPM^.dtexcolor );
 	end;
 end;
 
@@ -350,7 +350,7 @@ var
 	NextColor: PSDL_Color;
 	Item_Image: PSDL_Surface;
 	Item_PText: PChar;
-	MyDest: TSDL_Rect;
+	MyRect,MyDest: TSDL_Rect;
 	Y,DY: Integer;
 begin
 	{Error check- make sure the menu has items in it.}
@@ -359,11 +359,8 @@ begin
 	{ If a redraw procedure has been specified, call it. }
 	if ReDrawer <> Nil then ReDrawer;
 
-{$IFNDEF PLUSGL}
-	ClrZone( RPM^.Menu_Zone );
-{$ENDIF}
-
-	SDL_SetClipRect( Game_Screen , @RPM^.Menu_Zone );
+    MyRect := RPM^.Menu_Zone.GetRect();
+	SDL_SetClipRect( Game_Screen , @MyRect );
 
 	{Calculate the height of the menu.}
 	height := MenuHeight( rpm );
@@ -371,8 +368,8 @@ begin
 	{Locate the top of the menu.}
 	topitem := RPMLocateByPosition(RPM,RPM^.topitem);
 
-	MyDest.X := RPM^.Menu_Zone.X;
-	Y := RPM^.Menu_Zone.Y;
+	MyDest.X := MyRect.X;
+	Y := MyRect.Y;
 	DY := TTF_FontLineSkip( game_font );
 	MyDest.W := RPM^.Menu_Zone.W;
 
@@ -498,6 +495,7 @@ var
 	OldMouseX, OldMouseY: Integer; { TUNGINOBI: I got sick of the mouse cursor getting }
                           { in the way of the keyboard, so this will only }
                           { change the menu item if the mouse has moved. }
+    MyRect: TSDL_Rect;
 begin
 	{The menu is now active!}
 	RPM^.Active := True;
@@ -511,6 +509,8 @@ begin
 
 	{Initialize UK}
 	UK := False;
+
+    MyRect := RPM^.Menu_Zone.GetRect();
 
 	{Start the loop. Remain in this loop until either the player makes a selection}
 	{or cancels the menu using the ESC key.}
@@ -530,13 +530,13 @@ begin
 
 					{ If the mouse pointer is around }
 					{ the menu, we may have to do something. }
-					if Mouse_Active and ( Mouse_X >= RPM^.Menu_Zone.X ) and ( Mouse_X <= ( RPM^.Menu_Zone.X + RPM^.Menu_Zone.W ) ) and (( Mouse_X <> OldMouseX ) or ( Mouse_Y <> OldMouseY )) then begin
-						if ( Mouse_Y < ( RPM^.Menu_Zone.Y ) ) then begin
+					if Mouse_Active and ( Mouse_X >= MyRect.X ) and ( Mouse_X <= ( MyRect.X + MyRect.W ) ) and (( Mouse_X <> OldMouseX ) or ( Mouse_Y <> OldMouseY )) then begin
+						if ( Mouse_Y < ( MyRect.Y ) ) then begin
 							if ( RPM^.SelectItem > 1 ) then RPMUpKey( RPM , False );
-						end else if ( Mouse_Y > ( RPM^.Menu_Zone.Y + RPM^.Menu_Zone.H ) ) then begin
+						end else if ( Mouse_Y > ( MyRect.Y + MyRect.H ) ) then begin
 							if ( (RPM^.selectitem - RPM^.topitem) < MenuHeight( RPM ) ) and ( RPM^.selectitem < RPM^.numitem ) then RPMDownKey( RPM , False );
 						end else begin
-							I := ( Mouse_Y - RPM^.Menu_Zone.Y ) div TTF_FontLineSkip( game_font );
+							I := ( Mouse_Y - MyRect.Y ) div TTF_FontLineSkip( game_font );
 							SetItemByPosition( RPM , RPM^.TopItem + I );
 							{ Upon setting an item directly, freeze the mouse. }
 							OldMouseX := Mouse_X;
@@ -549,7 +549,7 @@ begin
 					{ If the mouse hit happened inside }
 					{ the menu area, it was a selection. }
 					{ Otherwise it was a cancel. }
-					if ( Mouse_X >= RPM^.Menu_Zone.X ) and ( Mouse_X <= ( RPM^.Menu_Zone.X + RPM^.Menu_Zone.W )) and ( Mouse_Y >= RPM^.Menu_Zone.Y ) and ( Mouse_Y <= ( RPM^.Menu_Zone.Y + RPM^.Menu_Zone.H )) then begin
+					if ( Mouse_X >= MyRect.X ) and ( Mouse_X <= ( MyRect.X + MyRect.W )) and ( Mouse_Y >= MyRect.Y ) and ( Mouse_Y <= ( MyRect.Y + MyRect.H )) then begin
 						getit := ' ';
 					end else begin
 						if RPM^.Mode <> RPMNoCancel then getit := #27

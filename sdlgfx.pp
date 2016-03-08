@@ -36,6 +36,11 @@ Type
 
 	RedrawProcedureType = Procedure;
 
+    DynamicRect = Object
+        dx,dy,w,h: Integer;
+        function GetRect: TSDL_Rect;
+    end;
+
 
 const
 	Avocado: TSDL_Color =		( r:136; g:141; b:101 );
@@ -75,28 +80,32 @@ const
 	ZONE_Map: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - Right_Column_Width - 30 ; h: ScreenHeight - Dialog_Area_Height - 20 );
 	ZONE_Clock: TSDL_Rect = ( x: ScreenWidth - Right_Column_Width - 10 ; y:ScreenHeight - Dialog_Area_Height - 30; w:Right_Column_Width; h:20 );
 	ZONE_Info: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:10; w:Right_Column_Width; h:150 );
-	ZONE_Menu: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:170; w:Right_Column_Width; h:ScreenHeight - 220 - Dialog_Area_Height );
-	ZONE_Menu1: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:170; w:Right_Column_Width; h:130 );
-	ZONE_Menu2: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:310; w:Right_Column_Width; h:ScreenHeight - 350 - Dialog_Area_Height );
 {$IFDEF ULTIMATE}
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: Right_Column_Width ; h:Dialog_Area_Height-10 );
 {$ELSE}
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: ScreenWidth - 20 ; h:Dialog_Area_Height-10 );
 {$ENDIF}
 
+    ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100 );
+	ZONE_Menu: DynamicRect = ( dx: 0; dy:0; w:Right_Column_Width; h:200 );
+	ZONE_Menu1: DynamicRect = ( dx: 0; dy:-50; w:Right_Column_Width; h:100 );
+	ZONE_Menu2: DynamicRect = ( dx: 0; dy:50; w:Right_Column_Width; h:100 );
+
+
 	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
 	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
 
-	ZONE_CharGenMenu: TSDL_Rect = ( x:ScreenWidth - Right_Column_Width - 10; y:190; w:Right_Column_Width; h:ScreenHeight-230 );
-	ZONE_CharGenCaption: TSDL_Rect = ( x:ScreenWidth - Right_Column_Width - 10; y:ScreenHeight-30; w:Right_Column_Width; h:20 );
-	ZONE_CharGenDesc: TSDL_Rect = ( x:10; y:ScreenHeight - Dialog_Area_Height; w:ScreenWidth - Right_Column_Width - 30; h:Dialog_Area_Height-10 );
-	ZONE_CharGenPrompt: TSDL_Rect = ( x:ScreenWidth - Right_Column_Width - 10; y:10; w:Right_Column_Width; h:170 );
+    ZONE_CharGenChar: DynamicRect = ( dx:-368; dy:-210; w: 500 ; h: 420 );
+	ZONE_CharGenMenu: DynamicRect = ( dx:148; dy:-50; w:220; h:230 );
+	ZONE_CharGenCaption: DynamicRect = ( dx:148; dy:190; w:220; h:20 );
+	ZONE_CharGenDesc: DynamicRect = ( dx:148; dy:-210; w:220; h:150 );
+	ZONE_CharGenPrompt: DynamicRect = ( dx:-100; dy:-245; w:300; h:20 );
 
 	ZONE_InteractStatus: TSDL_Rect = ( x: 35; y:58; w:395; h:40 );
-	ZONE_InteractMsg: TSDL_Rect = ( x: 35; y:148; w:395; h: 110 );
+	ZONE_InteractMsg: DynamicRect = ( dx: 0; dy:0; w:395; h: 110 );
+	ZONE_InteractMenu: DynamicRect = ( dx: 0; dy:0; w:500; h: 120 );
 	ZONE_InteractPhoto: TSDL_Rect = ( x: 435; y: 80; w: 100; h: 150 );
 	ZONE_InteractInfo: TSDL_Rect = ( x:35; y: 103; w: 395; h: 40 );
-	ZONE_InteractMenu: TSDL_Rect = ( x: 35; y:263; w:500; h: 120 );
 	ZONE_InteractTotal: TSDL_Rect = ( x: 30; y: 53; w: 510; h: 335 );
 
 	ZONE_TextInputPrompt: TSDL_Rect = ( x:40; y:165; w:420; h:30 );
@@ -104,24 +113,24 @@ const
 	ZONE_TextInputBigBox: TSDL_Rect = ( x:30; y:155; w:440; h:90 );
 	ZONE_TextInputSmallBox: TSDL_Rect = ( x:35; y:200; w:430; h:40 );
 
-	ZONE_EqpMenu: TSDL_Rect = ( x:50; y:50; w:380; h:100 );
-	ZONE_InvMenu: TSDL_Rect = ( x:50; y:155; w:380; h:245 );
-	ZONE_SuperBP: TSDL_Rect = (x: 40; Y:40; W: 400; H: 375);
+	ZONE_EqpMenu: DynamicRect = ( dx:0; dy:-100; w:380; h:100 );
+	ZONE_InvMenu: DynamicRect = ( dx:0; dy:5; w:380; h:245 );
+	ZONE_SuperBP: DynamicRect = (dx:0; dY:0; W: 400; H: 375);
 
 	ZONE_Biography: TSDL_Rect = ( x:20; y:340; w:460; h:60 );
 
-	ZONE_YesNoTotal: TSDL_Rect = ( x:100; y:115; w:ScreenWidth - Right_Column_Width - 210; h:280 );
-	ZONE_YesNoPrompt: TSDL_Rect = ( x:110; y:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
-	ZONE_YesNoMenu: TSDL_Rect = ( x:110; y:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
+	ZONE_YesNoTotal: DynamicRect = ( dx:100; dy:115; w:ScreenWidth - Right_Column_Width - 210; h:280 );
+	ZONE_YesNoPrompt: DynamicRect = ( dx:110; dy:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
+	ZONE_YesNoMenu: DynamicRect = ( dx:110; dy:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
 
-	ZONE_UsagePrompt: TSDL_Rect = ( x:500; y:190; w:130; h:170 );
-	ZONE_UsageMenu: TSDL_Rect = ( x:50; y:155; w:380; h:245 );
+	ZONE_UsagePrompt: DynamicRect = ( dx:500; dy:190; w:130; h:170 );
+	ZONE_UsageMenu: DynamicRect = ( dx:50; dy:155; w:380; h:245 );
 
 	ZONE_MoreText: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - 20 ; h: ScreenHeight - 50 );
 	ZONE_MorePrompt: TSDL_Rect = ( x:10; y: ScreenHeight - 40 ; w:ScreenWidth - 20; h:30 );
 
-	ZONE_MemoText: TSDL_Rect = ( x:110; y:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
-	ZONE_MemoMenu: TSDL_Rect = ( x:110; y:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
+	ZONE_MemoText: DynamicRect = ( dx:0; dy:0; w:ScreenWidth - Right_Column_Width - 230; h:200 );
+	ZONE_MemoMenu: DynamicRect = ( dx:0; dy:0; w:ScreenWidth - Right_Column_Width - 230; h:50 );
 
 	Console_History_Length = 240;
 
@@ -215,6 +224,19 @@ const
 var
 	Infobox_Border,Infobox_Backdrop: SensibleSpritePtr;
 
+
+Function DynamicRect.GetRect: TSDL_Rect;
+    { Return the TSDL_Rect described by this DynamicRect, given the current }
+    { screen size. }
+var
+    MyRect: TSDL_Rect;
+begin
+    MyRect.W := Self.W;
+    MyRect.H := Self.H;
+    MyRect.X := Game_Screen^.W div 2 + Self.DX;
+    MyRect.Y := Game_Screen^.H div 2 + Self.DY;
+    GetRect := MyRect;
+end;
 
 Function RandomColorString( ColorSet: Integer ): String;
 	{ Select a random color string belonging to the provided color set. }
@@ -1213,11 +1235,14 @@ end;
 
 Procedure DrawBPBorder;
 	{ Draw borders for the backpack display. }
+var
+    MyRect: TSDL_Rect;
 begin
-	ClearExtendedBorder( ZONE_SuperBP );
-	SDL_FillRect( game_screen , @ZONE_SuperBP , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
-	ClearExtendedBorder( ZONE_EqpMenu );
-	ClearExtendedBorder( ZONE_InvMenu );
+	ClearExtendedBorder( ZONE_SuperBP.getRect() );
+    MyRect := ZONE_SuperBP.GetRect();
+	SDL_FillRect( game_screen , @MyRect , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
+	ClearExtendedBorder( ZONE_EqpMenu.GetRect() );
+	ClearExtendedBorder( ZONE_InvMenu.GetRect() );
 end;
 
 
@@ -1225,11 +1250,11 @@ Procedure DrawCharGenBorder;
 	{ Draw borders for the character generator. }
 begin
 	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
-	ClearExtendedBorder( ZONE_Map );
-	ClearExtendedBorder( ZONE_CharGenMenu );
-	ClearExtendedBorder( ZONE_CharGenDesc );
-	ClearExtendedBorder( ZONE_CharGenPrompt );
-	ClearExtendedBorder( ZONE_CharGenCaption );
+	InfoBox( ZONE_CharGenChar.GetRect() );
+	InfoBox( ZONE_CharGenMenu.GetRect() );
+	InfoBox( ZONE_CharGenDesc.GetRect() );
+	ClearExtendedBorder( ZONE_CharGenPrompt.GetRect() );
+	ClearExtendedBorder( ZONE_CharGenCaption.GetRect() );
 end;
 
 Procedure SetupCombatDisplay;
@@ -1238,7 +1263,7 @@ begin
 	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
 	ClearExtendedBorder( ZONE_Map );
 	ClearExtendedBorder( ZONE_Info );
-	ClearExtendedBorder( ZONE_Menu );
+{	ClearExtendedBorder( ZONE_Menu );}
 	ClearExtendedBorder( ZONE_Dialog );
 	ClearExtendedBorder( ZONE_Clock );
 end;
@@ -1253,20 +1278,17 @@ end;
 Procedure SetupYesNoDisplay;
 	{ Draw an outline around the YesNoMenu display area. }
 begin
-	ClearExtendedBorder( ZONE_YesNoTotal );
+	ClearExtendedBorder( ZONE_YesNoTotal.GetRect() );
 	SDL_FillRect( game_screen , @ZONE_YesNoTotal , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
-	ClearExtendedBorder( ZONE_YesNoPrompt );
-	ClearExtendedBorder( ZONE_YesNoMenu );
+	ClearExtendedBorder( ZONE_YesNoPrompt.GetRect() );
+	ClearExtendedBorder( ZONE_YesNoMenu.GetRect() );
 end;
 
 Procedure SetupMemoDisplay;
 	{ Draw an outline around the memo display. Fortunately, that's the same region as the }
 	{ YesNo display. }
 begin
-	ClearExtendedBorder( ZONE_YesNoTotal );
-	SDL_FillRect( game_screen , @ZONE_YesNoTotal , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
-	ClearExtendedBorder( ZONE_MemoText );
-	ClearExtendedBorder( ZONE_MemoMenu );
+	InfoBox( ZONE_YesNoTotal.GetRect() );
 end;
 
 Procedure SetupInteractDisplay( TeamColor: TSDL_Color );
@@ -1275,8 +1297,8 @@ begin
 	ClearExtendedBorder( ZONE_InteractTotal );
 	SDL_FillRect( game_screen , @ZONE_InteractTotal , SDL_MapRGB( Game_Screen^.Format , TeamColor.R , TeamColor.G , TeamColor.B ) );
 	ClearExtendedBorder( ZONE_InteractStatus );
-	ClearExtendedBorder( ZONE_InteractMsg );
-	ClearExtendedBorder( ZONE_InteractMenu );
+{	ClearExtendedBorder( ZONE_InteractMsg );}
+{	ClearExtendedBorder( ZONE_InteractMenu );}
 	ClearExtendedBorder( ZONE_InteractPhoto );
 	ClearExtendedBorder( ZONE_InteractInfo );
 end;
@@ -1420,11 +1442,6 @@ begin
 
 	ZONE_Info.X := MyRect.X;
 	ZONE_Info.Y := MyRect.Y;
-    ZONE_Menu.X := Game_Screen^.W div 2 - Right_Column_Width div 2;
-    ZONE_Menu.Y := 100;
-    ZONE_Menu.H := 120;
-    ZONE_Menu1.X := MyRect.X;
-    ZONE_Menu2.X := MyRect.X;
 
     AddVerticalDivider( ZONE_Dialog.x - 8 );
 

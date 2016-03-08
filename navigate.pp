@@ -25,20 +25,28 @@ unit navigate;
 
 interface
 
+{$IFDEF SDLMODE}
+uses gears,locale,sdlgfx;
+{$ELSE}
 uses gears,locale;
+{$ENDIF}
 
 Const
 	Max_Number_Of_Plots = 40;
 	Plots_Per_Generation = 5;
 
 Procedure Navigator( Camp: CampaignPtr; Scene: GearPtr; var PCForces: GearPtr );
+{$IFDEF SDLMODE}
+Procedure RestoreCampaign( Redrawer: RedrawProcedureType );
+{$ELSE}
 Procedure RestoreCampaign;
+{$ENDIF}
 
 implementation
 
 {$IFDEF SDLMODE}
 uses arenaplay,arenascript,damage,interact,gearutil,
-     ghchars,ghweapon,movement,randchar,ui4gh,sdlgfx,sdlmap,sdlmenus;
+     ghchars,ghweapon,movement,randchar,ui4gh,sdlmap,sdlmenus;
 {$ELSE}
 uses arenaplay,arenascript,damage,interact,gearutil,
      ghchars,ghweapon,movement,randchar,ui4gh,congfx,conmap,conmenus,context;
@@ -139,7 +147,11 @@ begin
 end;
 {$ENDIF}
 
+{$IFDEF SDLMODE}
+Procedure RestoreCampaign( Redrawer: RedrawProcedureType );
+{$ELSE}
 Procedure RestoreCampaign;
+{$ENDIF}
 	{ Select a previously saved unit from the menu. If no unit is }
 	{ found, jump to the CreateNewUnit procedure above. }
 var
@@ -151,7 +163,11 @@ var
 	DoSave: Boolean;
 begin
 	{ Create a menu listing all the units in the SaveGame directory. }
+{$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_TitleScreenMenu );
+{$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+{$ENDIF}
 	BuildFileMenu( RPM , Save_Campaign_Base + Default_Search_Pattern );
 
 	PC := Nil;
@@ -161,7 +177,7 @@ begin
 		RPMSortAlpha( RPM );
 		DialogMSG('Select campaign file to load.');
 {$IFDEF SDLMODE}
-		rpgname := SelectFile( RPM , @RCRedraw );
+		rpgname := SelectFile( RPM , Redrawer );
 {$ELSE}
 		rpgname := SelectFile( RPM );
 {$ENDIF}

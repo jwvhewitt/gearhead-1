@@ -345,8 +345,8 @@ end;
 Procedure RecenterDisplay( X , Y: Integer );
 	{ Change the display so that point X,Y will be on screen. }
 begin
-	OriginX := ( ZONE_Map.w div 2 ) - RelativeX( X , Y );
-	OriginY := ( ZONE_Map.h div 2 ) - RelativeY( X , Y );
+	OriginX := ( ZONE_Map.w div 2 ) - RelativeX( X , Y ) - 32;
+	OriginY := ( ZONE_Map.h div 2 ) - RelativeY( X , Y ) - 64;
 end;
 
 Function NeedsRecentering( X,Y: Integer ): Boolean;
@@ -1453,6 +1453,10 @@ var
 	P: Point;
 	Normally_Use_Alpha: Boolean;
 begin
+    { To start with, recenter the menu zone. }
+    {ZONE_TitleScreenMenu.x := Game_Screen^.w div 2 - ZONE_TitleScreenMenu.w div 2;
+    ZONE_TitleScreenMenu.y := Game_Screen^.h div 2 - ZONE_TitleScreenMenu.h div 2;}
+
 	if Opening_Last_Anim_Phase <> Animation_Phase then begin
 		Opening_Last_Anim_Phase := Animation_Phase;
 		Inc( Opening_Count );
@@ -1478,6 +1482,9 @@ begin
 	Use_Alpha_Blending := False;
 	RenderMap;
 	Use_Alpha_Blending := Normally_Use_Alpha;
+
+    InfoBox( ZONE_TitleScreenMenu.GetRect() );
+
 end;
 
 Function ScreenToMap( X,Y: Integer ): Point;
@@ -1518,7 +1525,7 @@ var
 	A: Char;
 begin
 	SetupMemoDisplay;
-	CMessage( 'Begin ' + PilotName( M ) + ' turn' , ZONE_MemoText , InfoHilight );
+	CMessage( 'Begin ' + PilotName( M ) + ' turn' , ZONE_MemoText.GetRect() , InfoHilight );
 	GHFlip;
 	EndOfGameMoreKey;
 end;

@@ -54,10 +54,10 @@ Procedure RandCharRedraw;
 	{ Redraw the screen for SDL. }
 begin
 	DrawCharGenBorder;
-	if RCPC <> Nil then CharacterDisplay( RCPC , Nil );
-	GameMsg( RCDescMessage , ZONE_CharGenDesc , InfoGreen );
-	CMessage( RCPromptMessage , ZONE_CharGenPrompt , InfoGreen );
-	if RCCaption <> '' then CMessage( RCCaption , ZONE_CharGenCaption , InfoGreen );
+	if RCPC <> Nil then CharacterDisplay( RCPC , Nil, ZONE_CharGenChar );
+	GameMsg( RCDescMessage , ZONE_CharGenDesc.GetRect() , InfoGreen );
+	CMessage( RCPromptMessage , ZONE_CharGenPrompt.GetRect() , InfoGreen );
+	if RCCaption <> '' then CMessage( RCCaption , ZONE_CharGenCaption.GetRect() , InfoGreen );
 end;
 {$ENDIF}
 
@@ -142,9 +142,10 @@ begin
 {$ENDIF}
 	DisposeRPGMenu( RPM );
 
-
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_CharGenPrompt );
 	ClrZone( ZONE_CharGenDesc );
+{$ENDIF}
 
 	SelectGender := G;
 end;
@@ -285,7 +286,9 @@ begin
 	ApplyParentalBonus( M );
 
 	SetSAtt( PC^.SA , 'BIO1 <' + Bio1 + '>' );
+{$IFNDEF SDLMODE}
 	CharacterDisplay( PC , Nil );
+{$ENDIF}
 
 	DisposeRPGMenu( RPM );
 	DisposeSATt( JobList );
@@ -893,7 +896,9 @@ begin
 	if M = MODE_Regular then begin
 		N := SelectAge;
 		SetNAtt( PC^.NA , NAG_CharDescription , NAS_DAge , N );
+{$IFNDEF SDLMODE}
 		CharacterDisplay( PC , Nil );
+{$ENDIF}
 	end else begin
 		N := Random( 10 ) - Random( 5 );
 		SetNAtt( PC^.NA , NAG_CharDescription , NAS_DAge , N );
@@ -911,12 +916,16 @@ begin
 	end else begin
 		GenerateFamilyHistory( PC , Cash , False );
 	end;
+{$IFNDEF SDLMODE}
 	CharacterDisplay( PC , Nil );
+{$ENDIF}
 
 	{ Allocate stat points. }
 	if M = MODE_Regular then begin
 		AllocateStatPoints( PC , StatPt );
+{$IFNDEF SDLMODE}
 		CharacterDisplay( PC , Nil );
+{$ENDIF}
 	end else begin
 		EasyStatPoints( PC , StatPt );
 	end;
@@ -924,7 +933,9 @@ begin
 	{ Select a job. }
 	if M = MODE_Regular then begin
 		SelectJob( PC , Cash );
+{$IFNDEF SDLMODE}
 		CharacterDisplay( PC , Nil );
+{$ENDIF}
 	end else begin
 		RandomJob( PC , Cash );
 	end;
@@ -932,7 +943,9 @@ begin
 	{ Allocate skill points. }
 	if M = MODE_Regular then begin
 		AllocateSkillPoints( PC , SkillPt );
+{$IFNDEF SDLMODE}
 		CharacterDisplay( PC , Nil );
+{$ENDIF}
 	end else begin
 		RandomSkillPoints( PC , SkillPt );
 	end;
@@ -940,14 +953,18 @@ begin
 	{ Set personality traits. }
 	if M = MODE_Regular then begin
 		SetTraits( PC );
+{$IFNDEF SDLMODE}
 		CharacterDisplay( PC , Nil );
+{$ENDIF}
 	end;
 
 	{ Store cash. }
 	if Cash < 1 then Cash := 1;
 	Cash := Cash + Random( 100 );
 	AddNAtt( PC^.NA , NAG_Experience , NAS_Credits , Cash );
+{$IFNDEF SDLMODE}
 	CharacterDisplay( PC , Nil );
+{$ENDIF}
 
 	{ Select a name. }
 	{ If no name is entered, this cancels character creation. }
@@ -961,8 +978,9 @@ begin
 {$ENDIF}
 	if  Name <> '' then begin
 		SetSAtt( PC^.SA , 'name <'+name+'>');
+{$IFNDEF SDLMODE}
 		CharacterDisplay( PC , Nil );
-
+{$ENDIF}
 	end else begin
 		DisposeGear( PC );
 

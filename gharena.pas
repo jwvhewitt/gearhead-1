@@ -42,7 +42,11 @@ var
 	RPM: RPGMenuPtr;
 	N: Integer;
 begin
+{$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_TitleScreenMenu );
+{$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+{$ENDIF}
 	AddRPGMenuItem( RPM , 'Start RPG Campaign' , 4 );
 	AddRPGMenuItem( RPM , 'Load RPG Campaign' , 5 );
 {$IFNDEF SDLMODE}
@@ -76,7 +80,11 @@ begin
 			2:	LoadUnit;
 			3:	GenerateNewPC;
 			4:	StartRPGCampaign;
+{$IFDEF SDLMODE}
+			5:	RestoreCampaign( @RedrawOpening );
+{$ELSE}
 			5:	RestoreCampaign;
+{$ENDIF}
 {$IFNDEF SDLMODE}
 			6:	EditMap;
 {$ENDIF}

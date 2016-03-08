@@ -125,7 +125,9 @@ begin
 	msg := msg + #13 + ' [' + KeyMap[ KMC_SwitchTarget ].KCode + '] Switch Target';
 
 	{ Print instructions. }
+    {$IFNDEF SDLMODE}
 	GameMSG( msg , ZONE_Menu2 , NeutralGrey );
+    {$ENDIF}
 
 	QuickWeaponInfo( LOOKER_Weapon );
 end;
@@ -149,7 +151,7 @@ var
 	Mek: GearPtr;
 	msg,PName: String;
 begin
-	TMM := CreateRPGMenu( menuitem , menuselect , ZONE_Info );
+	TMM := CreateRPGMenu( menuitem , menuselect , ZONE_Menu );
 
 	N := NumVisibleGears( GB , X , Y );
 

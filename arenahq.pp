@@ -98,8 +98,9 @@ var
 	N: Integer;
 	msg: String;
 begin
+{$IFNDEF SDLMODE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_HQPilots );
-
+{$ENDIF}
 	{ Add an entry for each pilot. }
 	P := U^.SubCom;
 	N := 1;
@@ -124,8 +125,9 @@ var
 	N: Integer;
 	msg: String;
 begin
+{$IFNDEF SDLMODE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_HQMecha );
-
+{$ENDIF}
 	{ Add an entry for each mek. }
 	P := U^.InvCom;
 	N := 1;
@@ -197,11 +199,11 @@ begin
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 	AddRPGMenuItem( YNMenu , 'Buy ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
 	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
-	CMessage( 'COST: ' + BStr( Cost ) , ZONE_Menu1 , InfoHilight );
 
 {$IFDEF SDLMODE}
 	if SelectMenu( YNMenu , Nil ) = 1 then begin
 {$ELSE}
+	CMessage( 'COST: ' + BStr( Cost ) , ZONE_Menu1 , InfoHilight );
 	if SelectMenu( YNMenu ) = 1 then begin
 {$ENDIF}
 		if NAttValue( U^.NA , NAG_Experience , NAS_Credits ) >= Cost then begin
@@ -250,11 +252,11 @@ begin
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 	AddRPGMenuItem( YNMenu , 'Sell ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
 	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
-	CMessage( 'VALUE: ' + BStr( Cost ) , ZONE_Menu1 , InfoHilight );
 
 {$IFDEF SDLMODE}
 	if SelectMenu( YNMenu , Nil ) = 1 then begin
 {$ELSE}
+	CMessage( 'VALUE: ' + BStr( Cost ) , ZONE_Menu1 , InfoHilight );
 	if SelectMenu( YNMenu ) = 1 then begin
 {$ENDIF}
 		{ Increase the buyer's cash by the price of the gear. }
@@ -562,8 +564,10 @@ procedure ExamineUnitMecha( U: GearPtr );
 		PMenu: RPGMenuPtr;
 		N: Integer;
 	begin
+{$IFNDEF SDLMODE}
 		CMessage( 'SELECT CHARACTER' , ZONE_Menu1 , InfoHilight );
 		DialogMSG( 'Select a pilot for ' + GearName( M ) + '.' );
+{$ENDIF}
 		PMenu := CreateHQPilotMenu( U );
 		if PMenu^.NumItem > 0 then begin
 {$IFDEF SDLMODE}
@@ -597,8 +601,8 @@ begin
 	if MekMenu^.NumItem > 0 then begin
 		MN := 1;
 		repeat
-			CMessage( 'SELECT  MECHA  TO  EXAMINE' , ZONE_Menu1 , MenuSelect );
 {$IFNDEF SDLMODE}
+			CMessage( 'SELECT  MECHA  TO  EXAMINE' , ZONE_Menu1 , MenuSelect );
 			DrawZoneBorder( ZONE_Menu2 , PlayerBlue );
 {$ENDIF}
 
@@ -615,19 +619,20 @@ begin
 				{ Find out what mek the player selected, }
 				{ and display its info. }
 				Mek := RetrieveGearSib( U^.InvCom , MN );
+{$IFNDEF SDLMODE}
 				DisplayGearInfo( Mek );
 
 				{ Restore the display. }
 				UpdateHQDisplay( U );
-
+{$ENDIF}
 				{ Bring up the options menu. }
 				SetItemByValue( OpMenu , 1 );
 				repeat
-					ClrZone( ZONE_Menu1 );
-					CMessage( GearName( Mek ) , ZONE_Menu1 , InfoHilight );
 {$IFDEF SDLMODE}
 					N := SelectMenu( OpMenu , Nil );
 {$ELSE}
+					ClrZone( ZONE_Menu1 );
+					CMessage( GearName( Mek ) , ZONE_Menu1 , InfoHilight );
 					N := SelectMenu( OpMenu );
 {$ENDIF}
 					if N = 1 then GetPilotForMek( Mek )
@@ -666,8 +671,10 @@ procedure ExamineUnitPilots( U: GearPtr );
 		MekMenu: RPGMenuPtr;
 		N: Integer;
 	begin
+{$IFNDEF SDLMODE}
 		CMessage( 'SELECT MECHA' , ZONE_Menu1 , InfoHilight );
 		DialogMSG( 'Select a mecha for ' + GearName( P ) + '.' );
+{$ENDIF}
 		MekMenu := CreateHQMechaMenu( U );
 		if MekMenu^.NumItem > 0 then begin
 {$IFDEF SDLMODE}
@@ -701,9 +708,10 @@ procedure ExamineUnitPilots( U: GearPtr );
 		msg: String;
 	begin
 		msg := SAttValue( PC^.SA , 'Bio1' );
+{$IFNDEF SDLMODE}
 		CMessage( 'BIOGRAPHY' , ZONE_Menu1 , InfoHilight );
 		GameMsg( msg , ZONE_Menu2 , InfoGreen );
-
+{$ENDIF}
 		{ Wait for a keypress before exiting. }
 		RPGKey;
 	end;
@@ -725,8 +733,8 @@ begin
 	if PCMenu^.NumItem > 0 then begin
 		PN := 1;
 		repeat
-			CMessage( 'SELECT  CHARACTER  TO  EXAMINE' , ZONE_Menu1 , MenuSelect );
 {$IFNDEF SDLMODE}
+			CMessage( 'SELECT  CHARACTER  TO  EXAMINE' , ZONE_Menu1 , MenuSelect );
 			DrawZoneBorder( ZONE_Menu2 , PlayerBlue );
 {$ENDIF}
 
@@ -743,19 +751,21 @@ begin
 				{ Find out what PC the player selected, }
 				{ and display its info. }
 				PC := RetrieveGearSib( U^.SubCom , PN );
+{$IFNDEF SDLMODE}
 				DisplayGearInfo( PC );
 
 				{ Restore the display. }
 				UpdateHQDisplay( U );
 				ClrZone( ZONE_Menu1 );
+{$ENDIF}
 
 				{ Bring up the options menu. }
 				SetItemByValue( OpMenu , 3 );
 				repeat
-					CMessage( GearName( PC ) , ZONE_Menu1 , InfoHilight );
 {$IFDEF SDLMODE}
 					N := SelectMenu( OpMenu , Nil );
 {$ELSE}
+					CMessage( GearName( PC ) , ZONE_Menu1 , InfoHilight );
 					N := SelectMenu( OpMenu );
 {$ENDIF}
 					Case N of
@@ -813,7 +823,9 @@ var
 begin
 	{ Create the difficulcy selector menu. }
 	ECM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
+{$IFNDEF SDLMODE}
 	CMessage( 'SELECT DIFFICULCY LEVEL' , ZONE_Menu1 , InfoGreen );
+{$ENDIF}
 	AddRPGMenuItem( ECM , 'Easy' , 1 );
 	AddRPGMenuItem( ECM , 'Regular' , 3 );
 	AddRPGMenuItem( ECM , 'Hard' , 6 );
@@ -826,13 +838,17 @@ begin
 	Diff := SelectMenu( ECM );
 {$ENDIF}
 	DisposeRPGMenu( ECM );
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_Menu1 );
+{$ENDIF}
 
 	{ If the selection was not cancelled, continue with the procedure. }
 	if Diff = -1 then exit;
 
 	{ Select the list of mechas to use on this mission. }
+{$IFNDEF SDLMODE}
 	CMessage( 'SELECT MECHA' , ZONE_Menu1 , InfoGreen );
+{$ENDIF}
 	MList := Nil;
 	repeat
 		{ Create the mecha menu. This has to be re-created with }
@@ -1208,7 +1224,11 @@ begin
 	PC := Nil;
 
 	{ Create a menu listing all the units in the SaveGame directory. }
+{$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_TitleScreenMenu );
+{$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+{$ENDIF}
 	BuildFileMenu( RPM , Save_Character_Base + Default_Search_Pattern );
 
 	if RPM^.NumItem > 0 then begin
@@ -1256,7 +1276,7 @@ begin
 		repeat
 			RedrawOpening;
 			DisplayGearInfo( Part );
-			CMessage( msg , ZONE_Menu , InfoGreen );
+			CMessage( msg , ZONE_Menu.GetRect() , InfoGreen );
 			GHFlip;
 			A := RPGKey;
 		until ( A = ' ' ) or ( A = #27 ) or ( A = RPK_MouseButton );
@@ -1266,7 +1286,7 @@ begin
 		repeat
 			RedrawOpening;
 			DisplayGearInfo( Part );
-			CMessage( msg , ZONE_Menu , InfoGreen );
+			CMessage( msg , ZONE_Menu.GetRect() , InfoGreen );
 			GHFlip;
 			A := RPGKey;
 		until ( A = ' ' ) or ( A = #27 ) or ( A = RPK_MouseButton );

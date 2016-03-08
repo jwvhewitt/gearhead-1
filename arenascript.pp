@@ -37,7 +37,7 @@ unit arenascript;
 interface
 
 {$IFDEF SDLMODE}
-uses gears,locale,sdlmenus,sdl;
+uses gears,locale,sdlmenus,sdl,sdlgfx;
 {$ELSE}
 uses gears,locale,conmenus;
 {$ENDIF}
@@ -73,7 +73,7 @@ var
 
 
 {$IFDEF SDLMODE}
-Procedure MechaSelectionMenu( GB: GameBoardPtr; LList,PC: GearPtr; Z: TSDL_Rect );
+Procedure MechaSelectionMenu( GB: GameBoardPtr; LList,PC: GearPtr; Z: DynamicRect );
 {$ELSE}
 Procedure MechaSelectionMenu( LList,PC: GearPtr; Z: Integer );
 {$ENDIF}
@@ -102,7 +102,7 @@ implementation
 {$IFDEF SDLMODE}
 uses action,arenacfe,ability,damage,gearutil,ghchars,ghparser,ghmodule,
      ghprop,ghweapon,grabgear,interact,menugear,playwright,rpgdice,
-     services,texutil,ui4gh,wmonster,sdlgfx,sdlinfo,sdlmap,backpack;
+     services,texutil,ui4gh,wmonster,sdlinfo,sdlmap,backpack;
 {$ELSE}
 uses action,arenacfe,ability,damage,gearutil,ghchars,ghparser,ghmodule,
      ghprop,ghweapon,grabgear,interact,menugear,playwright,rpgdice,backpack,
@@ -138,12 +138,12 @@ begin
 	if ASRD_GameBoard <> Nil then SDLCombatDisplay( ASRD_GameBoard );
 	DisplayGearInfo( ASRD_InfoGear , ASRD_GameBoard );
 	SetupMemoDisplay;
-	GameMsg( ASRD_MemoMessage , ZONE_MemoText , InfoGreen );
+	GameMsg( ASRD_MemoMessage , ZONE_MemoText.GetRect() , InfoGreen );
 end;
 {$ENDIF}
 
 {$IFDEF SDLMODE}
-Procedure MechaSelectionMenu( GB: GameBoardPtr; LList,PC: GearPtr; Z: TSDL_Rect );
+Procedure MechaSelectionMenu( GB: GameBoardPtr; LList,PC: GearPtr; Z: DynamicRect );
 {$ELSE}
 Procedure MechaSelectionMenu( LList,PC: GearPtr; Z: Integer );
 {$ENDIF}
@@ -1560,7 +1560,6 @@ begin
 	msg := getTheMessage( 'msg' , id , GB , Source );
 	if msg <> '' then begin
 {$IFDEF SDLMODE}
-		GameMsg( msg , ZONE_InteractMsg , InfoHiLight );
 		CHAT_Message := msg;
 {$ELSE}
 		GameMsg( msg , ZONE_InteractMsg , InfoHiLight );
@@ -3821,8 +3820,8 @@ begin
 		if ( Mek = Nil ) and ( NumPCMeks( GB ) > 0 ) then begin
 {$IFNDEF SDLMODE}
 			DrawZoneBorder( ZONE_YesNoTotal , BorderBlue );
-{$ENDIF}
 			GameMSG( MsgString( 'ARENASCRIPT_CheckMechaEquipped' ) , ZONE_UsagePrompt , InfoGreen );
+{$ENDIF}
 {$IFDEF SDLMODE}
 			MechaSelectionMenu( GB , GB^.Meks , PC , ZONE_UsageMenu );
 {$ELSE}
@@ -4053,7 +4052,7 @@ begin
 		DisplayInteractStatus( ASRD_GameBoard , I_NPC , CHAT_React , I_Endurance );
 		DisplayGearInfo( I_NPC , ASRD_GameBoard );
 	end;
-	GameMsg( CHAT_Message , ZONE_InteractMsg , InfoHiLight );
+	GameMsg( CHAT_Message , ZONE_InteractMsg.GetRect() , InfoHiLight );
 end;
 {$ENDIF}
 

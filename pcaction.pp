@@ -1078,7 +1078,9 @@ begin
 
 	{ Make the skill menu. }
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+{$IFNDEF SDLMODE}
 	AttachMenuDesc( RPM , ZONE_Info );
+{$ENDIF}
 	RPM^.DTexColor := InfoGreen;
 
 	{ Add all usable skills to the list, as long as the PC knows them. }
@@ -1185,35 +1187,23 @@ begin
 	if PrintMsg then Dialogmsg( MsgString( 'SAVEGAME_OK' ) );
 end;
 
-Procedure DoSelectPCMek( GB: GameBoardPtr; PC: GearPtr );
-	{ Select one of the team 1 mecha for the player to use. }
-begin
-	CMessage( MsgString( 'SELECTMECHA_PROMPT' ) , ZONE_Menu1 , InfoHilight );
-{$IFDEF SDLMODE}
-	MechaSelectionMenu( GB , GB^.Meks ,PC , ZONE_Menu2 );
-{$ELSE}
-	MechaSelectionMenu( GB^.Meks ,PC , ZONE_Menu2 );
-	ClrZone( ZONE_Menu );
-{$ENDIF}
-end;
-
 {$IFDEF SDLMODE}
 Procedure TrainingRedraw;
 	{ Redraw the training screen. }
 begin
 	SetupCombatDisplay;
-	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB );
+	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharGenChar );
 	RedrawConsole;
-	CMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1 , InfoHilight );
+	CMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1.GetRect() , InfoHilight );
 end;
 
 Procedure NewSkillRedraw;
 	{ Redraw the training screen. }
 begin
 	SetupCombatDisplay;
-	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB );
+	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharGenChar );
 	RedrawConsole;
-	CMessage( BStr( NumberOfSkills( PCACTIONRD_PC ) ) + '/' + BStr( NumberOfSkillSlots( PCACTIONRD_PC ) ) , ZONE_Menu1 , InfoHilight );
+	CMessage( BStr( NumberOfSkills( PCACTIONRD_PC ) ) + '/' + BStr( NumberOfSkillSlots( PCACTIONRD_PC ) ) , ZONE_Menu1.GetRect() , InfoHilight );
 end;
 {$ENDIF}
 
@@ -1246,7 +1236,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 
 			SkMenu^.dtexcolor := InfoGreen;
 {$IFDEF SDLMODE}
-			AttachMenuDesc( SkMenu , ZONE_Info );
+			AttachMenuDesc( SkMenu , ZONE_Menu1 );
 {$ELSE}
 			AttachMenuDesc( SkMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1463,7 +1453,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 
 {$IFDEF SDLMODE}
-		AttachMenuDesc( SkMenu , ZONE_Info );
+		AttachMenuDesc( SkMenu , ZONE_Menu1 );
 {$ELSE}
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( SkMenu , ZONE_SubInfo );
@@ -1497,7 +1487,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 				if NumberOfSkills( PC ) >= NumberOfSkillSlots( PC ) then begin
 					SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 {$IFDEF SDLMODE}
-					AttachMenuDesc( SkMenu , ZONE_Info );
+					AttachMenuDesc( SkMenu , ZONE_Menu1 );
 {$ELSE}
 					DrawExtBorder( ZONE_SubInfo , BorderBlue );
 					AttachMenuDesc( SkMenu , ZONE_SubInfo );
@@ -1551,7 +1541,7 @@ end;
 		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 
 {$IFDEF SDLMODE}
-		AttachMenuDesc( TMenu , ZONE_Info );
+		AttachMenuDesc( TMenu , ZONE_Menu1 );
 {$ELSE}
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( TMenu , ZONE_SubInfo );
@@ -1565,9 +1555,9 @@ end;
 		end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Cancel' , -1 );
-
+        {$IFNDEF SDLMODE}
 		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
-
+        {$ENDIF}
 		repeat
 {$IFDEF SDLMODE}
 			N := SelectMenu( TMenu , @TrainingRedraw );
@@ -1596,7 +1586,9 @@ end;
 			end;
 		until N = -1;
 
+        {$IFNDEF SDLMODE}
 		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
+        {$ENDIF}
 		DisposeRPGMenu( TMenu );
 	end;
 
@@ -1614,7 +1606,7 @@ end;
 		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 
 {$IFDEF SDLMODE}
-		AttachMenuDesc( TMenu , ZONE_Info );
+		AttachMenuDesc( TMenu , ZONE_Menu1 );
 {$ELSE}
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( TMenu , ZONE_SubInfo );
@@ -1629,11 +1621,10 @@ end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Exit' , -1 );
 
-		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
-
 {$IFDEF SDLMODE}
 		N := SelectMenu( TMenu , @TrainingRedraw );
 {$ELSE}
+		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
 		N := SelectMenu( TMenu );
 {$ENDIF}
 		DisposeRPGMenu( TMenu );
@@ -1654,7 +1645,7 @@ end;
 		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 
 {$IFDEF SDLMODE}
-		AttachMenuDesc( TMenu , ZONE_Info );
+		AttachMenuDesc( TMenu , ZONE_Menu1 );
 {$ELSE}
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( TMenu , ZONE_SubInfo );
@@ -1671,11 +1662,11 @@ end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Exit' , -1 );
 
-		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
 
 {$IFDEF SDLMODE}
 		SelectMenu( TMenu , @TrainingRedraw );
 {$ELSE}
+		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
 		SelectMenu( TMenu );
 {$ENDIF}
 		DisposeRPGMenu( TMenu );
@@ -2311,7 +2302,9 @@ begin
 		WaitOnRecharge( GB , Mek );
 	end;
 
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_Menu );
+{$ENDIF}
 end;
 
 Procedure DoEjection( GB: GameBoardPtr; Mek: GearPtr );
@@ -2440,7 +2433,9 @@ begin
 {$ENDIF}
 
 	DisposeRPGMenu( RPM );
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_Menu );
+{$ENDIF}
 end;
 
 Procedure BrowseTextFile( GB: GameBoardPtr; FName: String );
@@ -2941,8 +2936,8 @@ begin
 		IndicateTile( GB , Mek , True );
 {$ELSE}
 		IndicateTile( GB , Mek );
-{$ENDIF}
 		ClrZone( ZONE_Menu );
+{$ENDIF}
 
 		{ Input the action. }
 {$IFDEF SDLMODE}
@@ -3171,8 +3166,8 @@ begin
 			{ Indicate the mek to get the action for. }
 			DisplayGearInfo( Mek , Camp^.gb );
 			IndicateTile( Camp^.GB , Mek );
-{$ENDIF}
 			ClrZone( ZONE_Menu );
+{$ENDIF}
 
 			{ Input the action. }
 			KP := RPGKey;

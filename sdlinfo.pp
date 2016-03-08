@@ -34,12 +34,12 @@ Function JobAgeGenderDesc( NPC: GearPtr ): String;
 Procedure LocationInfo( Part: GearPtr; gb: GameBoardPtr );
 Procedure DisplayGearInfo( Part: GearPtr );
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr );
-Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: TSDL_Rect );
+Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
 Procedure DisplayBriefInfo( Part: GearPtr; GB: GameBoardPtr );
 
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
 Procedure QuickWeaponInfo( Part: GearPtr );
-Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr );
+Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr; DZone: DynamicRect );
 Procedure InjuryViewer( PC: GearPtr );
 
 Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
@@ -722,18 +722,21 @@ begin
 end;
 
 
-Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: TSDL_Rect );
+Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
 	{ Show some stats for whatever sort of thing PART is. }
+var
+    MyRect: TSDL_Rect;
 begin
 	{ All this procedure does is call the ArenaInfo unit procedure }
 	{ with the dimensions of the provided Zone. }
-	GearInfo( Part , Z , TeamColor( GB , Part ) , GB );
+    MyRect := Z.GetRect();
+	GearInfo( Part , MyRect , TeamColor( GB , Part ) , GB );
 end;
 
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr );
 	{ Show some stats for whatever sort of thing PART is. }
 begin
-	DisplayGearInfo( Part , GB , ZONE_Info );
+	GearInfo( Part, ZONE_Info, TeamColor( GB, Part ) , GB );
 end;
 
 Function PortraitName( NPC: GearPtr ): String;
@@ -898,11 +901,11 @@ begin
 	if Part = Nil then exit;
 
 	{ Display the weapon description. }
-	CMessage( GearName( Part ) + ' ' + WeaponDescription( Part ) , ZONE_Menu1 , InfoGreen );
+	CMessage( GearName( Part ) + ' ' + WeaponDescription( Part ) , ZONE_Menu1.GetRect() , InfoGreen );
 end;
 
-Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr );
-	{ Display the important stats for this PC in the map zone. }
+Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr; DZone: DynamicRect );
+	{ Display the important stats for this PC in the specified zone. }
 var
 	msg,job: String;
 	T,R,FID: Integer;
@@ -910,7 +913,7 @@ var
 	C: TSDL_Color;
 	X0,X1,Y0: Integer;
 	Mek: GearPtr;
-	MyDest: TSDL_Rect;
+	MyZone,MyDest: TSDL_Rect;
 	SS: SensibleSpritePtr;
 begin
 	{ Begin with one massive error check... }
@@ -918,7 +921,8 @@ begin
 	if PC^.G <> GG_Character then PC := LocatePilot( PC );
 	if PC = Nil then Exit;
 
-	SetInfoZone( ZONE_Map , PlayerBlue );
+    MyZone := DZone.GetRect();
+	SetInfoZone( MyZone , PlayerBlue );
 
 	AI_Title( GearName( PC ) , NeutralGrey );
 	AI_Title( JobAgeGenderDesc( PC ) , InfoGreen );
@@ -928,7 +932,7 @@ begin
 	Y0 := CDest.Y;
 
 	MyDest.Y := CDest.Y;
-	X0 := ZONE_Map.X + ( ZONE_Map.W div 3 );
+	X0 := MyZone.X + ( MyZone.W div 3 );
 
 	for t := 1 to NumGearStats do begin
 		{ Find the adjusted stat value for this stat. }
@@ -944,7 +948,7 @@ begin
 		else C := InfoGreen;
 
 		{ Do the output. }
-		MyDest.X := ZONE_Map.X + 10;
+		MyDest.X := MyZone.X + 10;
 		QuickText( StatName[ T ] , MyDest , NeutralGrey );
 		msg := BStr( S );
 		MyDest.X := X0 - 30 - TextLength( Game_Font , msg );
@@ -955,8 +959,8 @@ begin
 
 	{ Set column measurements for the next column. }
 	MyDest.Y := Y0;
-	X0 := ZONE_Map.X + ( ZONE_Map.W div 3 );
-	X1 := ZONE_Map.X + ( ZONE_Map.W * 2 div 3 ) - 10;
+	X0 := MyZone.X + ( MyZone.W div 3 );
+	X1 := MyZone.X + ( MyZone.W * 2 div 3 ) - 10;
 
 	MyDest.X := X0;
 	QuickText( MsgString( 'INFO_XP' ) , MyDest , NeutralGrey );
@@ -1011,7 +1015,7 @@ begin
 	end;
 
 	{ Show the character portrait. }
-	MyDest.X := ZONE_Map.X + ( ZONE_Map.W * 5 div 6 ) - 50;
+	MyDest.X := MyZone.X + ( MyZone.W * 5 div 6 ) - 50;
 	MyDest.Y := Y0;
 	DrawSprite( Backdrop_Sprite , MyDest , 0 );
 	SS := ConfirmSprite( PortraitName( PC ) , SAttValue( PC^.SA , 'SDL_COLORS' ) , 100 , 150 );
@@ -1019,8 +1023,8 @@ begin
 
 
 	{ Print the biography. }
-	MyDest.X := ZONE_Map.X + 49;
-	MyDest.W := ZONE_Map.W - 98;
+	MyDest.X := MyZone.X + 49;
+	MyDest.W := MyZone.W - 98;
 	MyDest.Y := Y0 + TTF_FontLineSkip( Game_Font ) * 10;
 	MyDest.H := 150;
 	SDL_FillRect( game_screen , @MyDest , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );

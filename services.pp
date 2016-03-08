@@ -138,10 +138,10 @@ begin
 	DisplayInteractStatus( SERV_GB , SERV_NPC , CHAT_React , CHAT_Endurance );
 	if SERV_Info <> Nil then begin
 		DisplayGearInfo( SERV_Info , SERV_GB );
-		CMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu , MenuItem );
+		CMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu.GetRect() , MenuItem );
 	end;
 	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
-	GameMsg( CHAT_Message , ZONE_InteractMsg , InfoHiLight );
+	GameMsg( CHAT_Message , ZONE_InteractMsg.GetRect() , InfoHiLight );
 end;
 {$ENDIF}
 
@@ -511,10 +511,18 @@ begin
 	{ If the NPC likes the PC well enough, the service will be free. }
 	if ( Random( 90 ) + 10 ) < R then begin
 		{ The NPC will do the PC a favor, and do this one for free. }
+{$IFDEF SDLMODE}
+        CHAT_Message := SAttValue( TEXT_MESSAGES , 'SERVICES_RAFree' );
+{$ELSE}
 		GameMsg( SAttValue( TEXT_MESSAGES , 'SERVICES_RAFree' ) , ZONE_InteractMsg , InfoHiLight );
+{$ENDIF}
 		Cost := 0;
 	end else if ( Cash < Cost ) and ( R > 10 ) then begin
+{$IFDEF SDLMODE}
+        CHAT_Message := SAttValue( TEXT_MESSAGES , 'SERVICES_RACantPay' );
+{$ELSE}
 		GameMsg( SAttValue( TEXT_MESSAGES , 'SERVICES_RACantPay' ) , ZONE_InteractMsg , InfoHiLight );
+{$ENDIF}
 		AddNAtt( PC^.NA , NAG_ReactionScore , NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) , -Random( 5 ) );
 		Cost := 0;
 	end;
@@ -528,7 +536,11 @@ begin
 		GameMsg( SAttValue( TEXT_MESSAGES , 'SERVICES_RADoRA' + BStr( Random( NumRepairSayings ) + 1 ) ) , ZONE_InteractMsg , InfoHiLight );
 {$ENDIF}
 	end else begin
+{$IFDEF SDLMODE}
+        CHAT_Message := SAttValue( TEXT_MESSAGES , 'SERVICES_RALousyBum' );
+{$ELSE}
 		GameMsg( SAttValue( TEXT_MESSAGES , 'SERVICES_RALousyBum' ) , ZONE_InteractMsg , InfoHiLight );
+{$ENDIF}
 	end;
 end;
 
