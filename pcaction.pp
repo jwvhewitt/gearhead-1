@@ -3149,7 +3149,11 @@ begin
         {$IFDEF SDLMODE}
         SDLCombatDisplay( Camp^.GB );
 		{ Indicate the mek to get the action for. }
+        {$IFDEF WIZARD}
+		DisplayBriefInfo( Mek , Camp^.gb );
+        {$ELSE WIZARD}
 		DisplayGearInfo( Mek , Camp^.gb );
+        {$ENDIF WIZARD}
         ghflip();
         {$ENDIF}
 
@@ -3298,7 +3302,11 @@ begin
             end else if KP = RPK_TimeEvent then begin
                 SDLCombatDisplay( Camp^.GB );
     			{ Indicate the mek to get the action for. }
-    			DisplayGearInfo( Mek , Camp^.gb );
+                {$IFDEF WIZARD}
+		        DisplayBriefInfo( Mek , Camp^.gb );
+                {$ELSE WIZARD}
+		        DisplayGearInfo( Mek , Camp^.gb );
+                {$ENDIF WIZARD}
                 ghflip();
 {$ENDIF}
 

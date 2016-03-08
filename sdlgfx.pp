@@ -53,8 +53,13 @@ const
 	EnemyRed: TSDL_Color =		( r:230; g:  0; b:  0 );
 	NeutralGrey: TSDL_Color =	( r:150; g:150; b:150 );
 	DarkGrey: TSDL_Color =		( r:100; g:100; b:100 );
+{$IFDEF WIZARD}
+	InfoGreen: TSDL_Color =		( r:  0; g:230; b: 40 );
+	InfoHiLight: TSDL_Color =	( r: 50; g:255; b:120 );
+{$ELSE}
 	InfoGreen: TSDL_Color =		( r:  0; g:141; b:  0 );
 	InfoHiLight: TSDL_Color =	( r:  0; g:210; b:  0 );
+{$ENDIF}
 	TextboxGrey: TSDL_Color =	( r:130; g:120; b:125 );
 	NeutralBrown: TSDL_Color =	( r:240; g:201; b: 20 );
 	BorderBlue: TSDL_Color =	( r:  0; g:101; b:151 );
@@ -73,7 +78,11 @@ const
 	ZONE_Menu: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:170; w:Right_Column_Width; h:ScreenHeight - 220 - Dialog_Area_Height );
 	ZONE_Menu1: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:170; w:Right_Column_Width; h:130 );
 	ZONE_Menu2: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:310; w:Right_Column_Width; h:ScreenHeight - 350 - Dialog_Area_Height );
+{$IFDEF ULTIMATE}
+	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: Right_Column_Width ; h:Dialog_Area_Height-10 );
+{$ELSE}
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: ScreenWidth - 20 ; h:Dialog_Area_Height-10 );
+{$ENDIF}
 
 	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
 	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
@@ -179,7 +188,7 @@ Function MoreHighFirstLine( LList: SAttPtr ): Integer;
 Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 
 Procedure ClearExtendedBorder( Dest: TSDL_Rect );
-Procedure InfoBox( Dest: TSDL_Rect );
+Procedure InfoBox( MyBox: TSDL_Rect );
 
 Procedure DrawBPBorder;
 Procedure DrawCharGenBorder;
@@ -190,7 +199,12 @@ Procedure SetupYesNoDisplay;
 Procedure SetupInteractDisplay( TeamColor: TSDL_Color );
 Procedure SetupMemoDisplay;
 
-
+{$IFDEF ULTIMATE}
+Procedure SetupUltimateDisplay(menus: Integer);
+{$ENDIF}
+{$IFDEF WIZARD}
+Procedure SetupWizardDisplay();
+{$ENDIF}
 
 implementation
 
@@ -750,7 +764,8 @@ begin
 	{ Create a bitmap for the message. }
 	if SList <> Nil then begin
 		{ Create a big bitmap to hold everything. }
-		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( game_font ) * NumSAtts( SList ) , 16 , 0 , 0 , 0 , 0 );
+{		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( game_font ) * NumSAtts( SList ) , 16 , 0 , 0 , 0 , 0 );
+}		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( game_font ) * NumSAtts( SList ) , 32 , $FF000000 , $00FF0000 , $0000FF00 , $000000FF );
 		MyDest.X := 0;
 		MyDest.Y := 0;
 
@@ -759,6 +774,10 @@ begin
 		while SA <> Nil do begin
 			pline := QuickPCopy( SA^.Info );
 			S_Temp := TTF_RenderText_Solid( game_font , pline , fg );
+{$IFDEF LINUX}
+			SDL_SetColorKey( S_Temp , SDL_SRCCOLORKEY , SDL_MapRGB( S_Temp^.Format , 0 , 0, 0 ) );
+{$ENDIF}
+
 			Dispose( pline );
 
 			{ We may or may not be required to do centering of the text. }
@@ -822,7 +841,6 @@ var
 	MyText: PSDL_Surface;
 	MyDest: TSDL_Rect;
 begin
-	ClrZone( Z );
 	MyText := PrettyPrint( msg , Z.W , C , True );
 	if MyText <> Nil then begin
 		MyDest := Z;
@@ -906,9 +924,13 @@ var
 	MyDest: TSDL_Rect;
 	NumLines,LineNum: Integer;
 begin
+{$IFNDEF ULTIMATE}
+{$IFNDEF WIZARD}
 	{Clear the message area, and set clipping bounds.}
-	InfoBox( ZONE_Dialog );
     ZONE_Dialog.y := Game_Screen^.h - ZONE_Dialog.h - 10;
+	InfoBox( ZONE_Dialog );
+{$ENDIF}
+{$ENDIF}
 	SDL_SetClipRect( Game_Screen , @ZONE_Dialog );
 
 	MyDest := ZONE_Dialog;
@@ -935,6 +957,7 @@ begin
 	{ Restore the clip zone to the full screen. }
 	SDL_SetClipRect( Game_Screen , Nil );
 end;
+
 
 Procedure DialogMSG( msg: string );
 	{ Print a message in the scrolling dialog box, }
@@ -985,65 +1008,88 @@ begin
 	SDL_FillRect( game_screen , @Dest , SDL_MapRGB( Game_Screen^.Format , 0 , 0 , 0 ) );
 end;
 
-Procedure InfoBox( Dest: TSDL_Rect );
+Function GrowRect( MyRect: TSDL_Rect; GrowX,GrowY: Integer ): TSDL_Rect;
+    { Expand this rect by the requested amount, remaining centered on the }
+    { original rect. }
+begin
+    MyRect.x := MyRect.x - GrowX;
+    MyRect.y := MyRect.y - GrowY;
+    MyRect.w := MyRect.w + 2 * GrowX;
+    MyRect.h := MyRect.h + 2 * GrowY;
+    GrowRect := MyRect;
+end;
+
+Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame: Integer );
+    { Fill this area of the screen perfectly with the provided sprite. }
+var
+    MyDest: TSDL_Rect;
+    X,Y,GridW,GridH: Integer;
+begin
+	GridW := MyRect.W div MySprite^.W + 1;
+	GridH := MyRect.H div MySprite^.H + 1;
+	SDL_SetClipRect( Game_Screen , @MyRect );
+
+	{ Draw the backdrop. }
+	for X := 0 to GridW do begin
+		MyDest.X := MyRect.X + X * MySprite^.W;
+		for Y := 0 to GridH do begin
+			MyDest.Y := MyRect.Y + Y * MySprite^.H;
+			DrawSprite( MySprite , MyDest , MyFrame );
+		end;
+	end;
+
+	SDL_SetClipRect( Game_Screen , Nil );
+end;
+
+Procedure InfoBox( MyBox: TSDL_Rect );
 	{ Do a box for drawing something else inside of. }
 const
 	tex_width = 16;
 	border_width = tex_width div 2;
 	half_dat = border_width div 2;
 var
+    MyFill,Dest: TSDL_Rect;
 	X0,Y0,W32,H32,X,Y: Integer;
 begin
-	{ Step one: Determine the size of our box. Both dimensions should be }
-	{ a multiple of 32. }
-	{ W32 and H32 will store the number of 16-pixel columns/rows. }
-	W32 := ( Dest.W + border_width ) div tex_width + 1;
-	H32 := ( Dest.H + border_width ) div tex_width + 1;
+    { Fill the middle of the box with the backdrop. }
+    MyFill := GrowRect( MyBox, 4, 4 );
+    FillRectWithSprite( MyFill, Infobox_Backdrop, 0 );
 
-	{ X0 and Y0 will store the upper left corner of the box. }
-	X0 := Dest.X - ( ( ( w32 * tex_width ) - Dest.W ) div 2 );
-	Y0 := Dest.Y - ( ( ( h32 * tex_width ) - Dest.H ) div 2 );
+    { Expand the rect to its full dimensions, and draw the outline. }
+    MyFill := GrowRect( MyBox, 8, 8 );
+	DrawSprite( Infobox_Border , MyFill , 0 );
 
-	{ Draw the backdrop. }
-	for X := 0 to ( W32 - 1 ) do begin
-		Dest.X := X0 + X * tex_width;
-		for Y := 0 to ( H32 - 1 ) do begin
-			Dest.Y := Y0 + Y * tex_width;
-			DrawSprite( Infobox_Backdrop , Dest , 0 );
-		end;
-	end;
-
-	{ Draw the border. }
-	Dest.X := X0 - half_dat;
-	Dest.Y := Y0 - half_dat;
-	DrawSprite( Infobox_Border , Dest , 0 );
-
-	Dest.X := X0 - half_dat;
-	Dest.Y := Y0 + H32 * tex_width - half_dat;
+    Dest.X := MyFill.X;
+	Dest.Y := MyFill.Y + MyFill.H - 8;
 	DrawSprite( Infobox_Border , Dest , 4 );
 
-	Dest.X := X0 + W32 * tex_width - half_dat;
-	Dest.Y := Y0 - half_dat;
+    Dest.X := MyFill.X + MyFill.W - 8;
+	Dest.Y := MyFill.Y;
 	DrawSprite( Infobox_Border , Dest , 3 );
 
-	Dest.X := X0 + W32 * tex_width - half_dat;
-	Dest.Y := Y0 + H32 * tex_width - half_dat;
+    Dest.X := MyFill.X + MyFill.W - 8;
+	Dest.Y := MyFill.Y + MyFill.H - 8;
 	DrawSprite( Infobox_Border , Dest , 5 );
 
-	for X := 1 to ( W32 * 2 - 1 ) do begin
-		Dest.X := X0 + X * border_width - half_dat;
-		Dest.Y := Y0 - half_dat;
+    MyFill := GrowRect( MyBox, 0, 8 );
+	SDL_SetClipRect( Game_Screen , @MyFill );
+	for X := 0 to ( MyFill.W div 8 + 1 ) do begin
+		Dest.X := MyFill.X + X * 8;
+		Dest.Y := MyFill.Y;
 		DrawSprite( Infobox_Border , Dest , 1 );
-		Dest.Y := Y0 + H32 * tex_width - half_dat;
+		Dest.Y := MyFill.Y + MyFill.H - 8;
 		DrawSprite( Infobox_Border , Dest , 1 );
 	end;
-	for Y := 1 to ( H32 * 2 - 1 ) do begin
-		Dest.Y := Y0 + Y * border_width - half_dat;
-		Dest.X := X0 - half_dat;
+    MyFill := GrowRect( MyBox, 8, 0 );
+	SDL_SetClipRect( Game_Screen , @MyFill );
+	for Y := 0 to ( MyFill.H div 8 + 1 ) do begin
+		Dest.Y := MyFill.Y + Y * 8;
+		Dest.X := MyFill.X;
 		DrawSprite( Infobox_Border , Dest , 2 );
-		Dest.X := X0 + W32 * tex_width - half_dat;
+		Dest.X := MyFill.X + MyFill.W - 8;
 		DrawSprite( Infobox_Border , Dest , 2 );
 	end;
+	SDL_SetClipRect( Game_Screen , Nil );
 end;
 
 
@@ -1235,6 +1281,170 @@ begin
 	ClearExtendedBorder( ZONE_InteractInfo );
 end;
 
+{$IFDEF ULTIMATE}
+Procedure SetupUltimateDisplay(menus: Integer);
+    { This procedure will set the Ultimate display decorations and resize all }
+    { the relevant game zones. Yay? }
+var
+    MyRect: TSDL_Rect;
+    Procedure AddDivider( Y: Integer );
+        { Add a divider to the Ultimate sidebar. }
+    var
+        Dest: TSDL_Rect;
+        X: Integer;
+    begin
+        Dest.X := MyRect.X-8;
+        Dest.Y := Y;
+        DrawSprite( Infobox_Border, Dest, 6 );
+        Dest.X := MyRect.X + MyRect.W;
+        DrawSprite( Infobox_Border, Dest, 7 );
+
+        Dest := GrowRect( MyRect, 0, 8 );
+	    SDL_SetClipRect( Game_Screen , @Dest );
+	    Dest.Y := Y;
+	    for X := 0 to ( MyRect.W div 8 + 1 ) do begin
+		    Dest.X := MyRect.X + X * 8;
+		    DrawSprite( Infobox_Border , Dest , 1 );
+	    end;
+	    SDL_SetClipRect( Game_Screen , Nil );
+    end;
+begin
+    ClrScreen();
+    MyRect.X := Game_Screen^.w - Right_Column_Width - 8;
+    MyRect.Y := 8;
+    MyRect.w := Right_Column_Width;
+    MyRect.h := Game_Screen^.h - 16;
+    InfoBox( MyRect );
+
+    ZONE_Dialog.x := MyRect.X;
+    ZONE_Dialog.w := Right_Column_Width;
+
+    ZONE_Map.X := 0;
+    ZONE_Map.Y := 0;
+    ZONE_Map.W := Game_Screen^.W - Right_Column_Width - 16;
+    ZONE_Map.H := Game_Screen^.H;
+
+    ZONE_Clock.x := MyRect.X;
+    ZONE_Clock.y := Game_Screen^.h - 28;
+
+	ZONE_Info.X := MyRect.X;
+    ZONE_Menu.X := MyRect.X;
+    ZONE_Menu1.X := MyRect.X;
+    ZONE_Menu2.X := MyRect.X;
+
+    AddDivider( 160 );
+    AddDivider( Game_Screen^.H - 36 );
+
+    if menus > 0 then begin
+        AddDivider( ZONE_Menu.Y + ZONE_Menu.H );
+        ZONE_Dialog.y := ZONE_Menu.Y + ZONE_Menu.H + 8;
+        if menus > 1 then begin
+            AddDivider( ZONE_Menu1.Y + ZONE_Menu1.H );
+        end;
+    end else begin
+        ZONE_Dialog.y := 168;
+    end;
+    ZONE_Dialog.h := Game_Screen^.H - ZONE_Dialog.y - 36;
+
+end;
+{$ENDIF}
+
+{$IFDEF WIZARD}
+Procedure SetupWizardDisplay();
+    { This procedure will set the Ultimate display decorations and resize all }
+    { the relevant game zones. Yay? }
+var
+    MyRect: TSDL_Rect;
+    Procedure AddHorizontalDivider( Y: Integer );
+        { Add a divider to the Wizard UI. }
+    var
+        Dest: TSDL_Rect;
+        X: Integer;
+    begin
+        Dest.X := MyRect.X-8;
+        Dest.Y := Y;
+        DrawSprite( Infobox_Border, Dest, 6 );
+        Dest.X := MyRect.X + MyRect.W;
+        DrawSprite( Infobox_Border, Dest, 7 );
+
+        Dest := GrowRect( MyRect, 0, 8 );
+	    SDL_SetClipRect( Game_Screen , @Dest );
+	    Dest.Y := Y;
+	    for X := 0 to ( MyRect.W div 8 + 1 ) do begin
+		    Dest.X := MyRect.X + X * 8;
+		    DrawSprite( Infobox_Border , Dest , 1 );
+	    end;
+	    SDL_SetClipRect( Game_Screen , Nil );
+    end;
+    Procedure AddVerticalDivider( X: Integer );
+        { Add a divider to the Wizard UI. }
+    var
+        Dest: TSDL_Rect;
+        Y: Integer;
+    begin
+        Dest.X := X;
+        Dest.Y := MyRect.Y-8;
+        DrawSprite( Infobox_Border, Dest, 8 );
+        Dest.Y := MyRect.Y + MyRect.H;
+        DrawSprite( Infobox_Border, Dest, 9 );
+
+        Dest := GrowRect( MyRect, 8, 0 );
+	    SDL_SetClipRect( Game_Screen , @Dest );
+	    Dest.X := X;
+	    for Y := 0 to ( MyRect.H div 8 + 1 ) do begin
+		    Dest.Y := MyRect.Y + Y * 8;
+		    DrawSprite( Infobox_Border , Dest , 2 );
+	    end;
+	    SDL_SetClipRect( Game_Screen , Nil );
+    end;
+begin
+    MyRect.X := Game_Screen^.w div 2 - 390;
+    MyRect.Y := Game_Screen^.h - Dialog_Area_Height - 10;
+    MyRect.w := 780;
+    MyRect.h := Dialog_Area_Height;
+
+    InfoBox( MyRect );
+
+    ZONE_Dialog.x := MyRect.X + Right_Column_Width + 8;
+    ZONE_Dialog.y := MyRect.Y;
+    ZONE_Dialog.w := MyRect.W - Right_Column_Width - 8;
+    ZONE_Dialog.h := Dialog_Area_Height;
+
+    ZONE_Map.X := 0;
+    ZONE_Map.Y := 0;
+    ZONE_Map.W := Game_Screen^.W;
+    ZONE_Map.H := Game_Screen^.H;
+
+    ZONE_Clock.x := MyRect.X;
+    ZONE_Clock.y := Game_Screen^.h - 28;
+
+	ZONE_Info.X := MyRect.X;
+	ZONE_Info.Y := MyRect.Y;
+    ZONE_Menu.X := Game_Screen^.W div 2 - Right_Column_Width div 2;
+    ZONE_Menu.Y := 100;
+    ZONE_Menu.H := 120;
+    ZONE_Menu1.X := MyRect.X;
+    ZONE_Menu2.X := MyRect.X;
+
+    AddVerticalDivider( ZONE_Dialog.x - 8 );
+
+{    AddDivider( 160 );
+    AddDivider( Game_Screen^.H - 36 );
+
+    if menus > 0 then begin
+        AddDivider( ZONE_Menu.Y + ZONE_Menu.H );
+        ZONE_Dialog.y := ZONE_Menu.Y + ZONE_Menu.H + 8;
+        if menus > 1 then begin
+            AddDivider( ZONE_Menu1.Y + ZONE_Menu1.H );
+        end;
+    end else begin
+        ZONE_Dialog.y := 168;
+    end;
+    ZONE_Dialog.h := Game_Screen^.H - ZONE_Dialog.y - 36;
+}
+end;
+{$ENDIF}
+
 
 initialization
 
@@ -1274,6 +1484,9 @@ initialization
 	Infobox_Border := ConfirmSprite( 'sys_boxborder.png' , '', 8 , 8 );
 	Infobox_Backdrop := ConfirmSprite( 'sys_boxbackdrop.png' , '', 16 , 16 );
 
+    {$IFDEF WIZARD}
+	SDL_SetAlpha( Infobox_Backdrop^.Img , SDL_SRCAlpha , 192 );
+    {$ENDIF}
 
 {	MIX_OpenAudio( MIX_DEFAULT_FREQUENCY , MIX_DEFAULT_FORMAT , MIX_CHANNELS , 4096 );
 	Music_List := LoadStringList( 'music.cfg' );

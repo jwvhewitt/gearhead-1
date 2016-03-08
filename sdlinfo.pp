@@ -35,6 +35,7 @@ Procedure LocationInfo( Part: GearPtr; gb: GameBoardPtr );
 Procedure DisplayGearInfo( Part: GearPtr );
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr );
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: TSDL_Rect );
+Procedure DisplayBriefInfo( Part: GearPtr; GB: GameBoardPtr );
 
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
 Procedure QuickWeaponInfo( Part: GearPtr );
@@ -471,7 +472,7 @@ begin
 	end;
 end;
 
-Procedure MekStatDisplay( Mek: GearPtr; GB: GameBoardPtr );
+Procedure MekStatDisplay( Mek: GearPtr; GB: GameBoardPtr; LongForm: Boolean );
 	{ Display the stats for MEK. }
 	{ MEK absolutely must be a valid mecha; otherwise }
 	{ there's gonna be a strange display. }
@@ -520,31 +521,32 @@ begin
 		AI_NextLine;
 	end;
 
-	AI_SmallTitle( MassString( Mek ) + ' ' + FormName[Mek^.S] + '  PV:' + BStr( GearValue( Mek ) ) , NeutralGrey );
+    if Longform then begin
+	    AI_SmallTitle( MassString( Mek ) + ' ' + FormName[Mek^.S] + '  PV:' + BStr( GearValue( Mek ) ) , NeutralGrey );
 
-	{ Movement information. }
-	MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
-	if MM > 0 then begin
-		msg := MoveModeName[ MM ];
-		msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
-	end else msg := 'Immobile';
-	AI_SmallTitle( msg , NeutralGrey );
+	    { Movement information. }
+	    MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
+	    if MM > 0 then begin
+		    msg := MoveModeName[ MM ];
+		    msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
+	    end else msg := 'Immobile';
+	    AI_SmallTitle( msg , NeutralGrey );
 
-	{ Encumbrance information. }
+	    { Encumbrance information. }
 
-	{ Get the current mass of carried equipment. }
-	CurM := EquipmentMass( Mek );
+	    { Get the current mass of carried equipment. }
+	    CurM := EquipmentMass( Mek );
 
-	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
-	MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
+	    { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	    MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
 
-	AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , NeutralGrey );
-	AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
-
+	    AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , NeutralGrey );
+	    AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+    end;
 	DisplayStatusFX( Mek );
 end;
 
-Procedure CharacterInfo( Part: GearPtr; GB: GameBoardPtr );
+Procedure CharacterInfo( Part: GearPtr; GB: GameBoardPtr; LongForm: Boolean );
 	{ This gear is a character. Print a list of stats and skills. }
 var
 	T,TT,Width,S,CurM,MaxM: Integer;
@@ -569,36 +571,37 @@ begin
 	AI_NextLine;
 	AI_NextLine;
 
+    if Longform then begin
 
-	{ Determine the spacing for the character's stats. }
-	Width := CZone.W div 4;
+	    { Determine the spacing for the character's stats. }
+	    Width := CZone.W div 4;
 
-	{ Show the character's stats. }
-	for t := 1 to ( NumGearStats div 4 ) do begin
-		for tt := 1 to 4 do begin
-			AI_PrintFromRight( StatName[ T * 4 + TT - 4 ][1] + StatName[ T * 4 + TT - 4 ][2] + ':' , ( TT-1 ) * Width + 1 , NeutralGrey );
+	    { Show the character's stats. }
+	    for t := 1 to ( NumGearStats div 4 ) do begin
+		    for tt := 1 to 4 do begin
+			    AI_PrintFromRight( StatName[ T * 4 + TT - 4 ][1] + StatName[ T * 4 + TT - 4 ][2] + ':' , ( TT-1 ) * Width + 1 , NeutralGrey );
 
-			{ Determine the stat value. This may be higher or lower than natural... }
-			S := CStat( Part , T * 4 + TT - 4 );
-			if S > Part^.Stat[ T * 4 + TT - 4 ] then C := StatusPerfect
-			else if S < Part^.Stat[ T * 4 + TT - 4 ] then C := StatusBad
-			else C := StatusOK;
-			AI_PrintFromLeft( BStr( S ) , TT * Width -5 , C );
-		end;
-		AI_NextLine;
-	end;
+			    { Determine the stat value. This may be higher or lower than natural... }
+			    S := CStat( Part , T * 4 + TT - 4 );
+			    if S > Part^.Stat[ T * 4 + TT - 4 ] then C := StatusPerfect
+			    else if S < Part^.Stat[ T * 4 + TT - 4 ] then C := StatusBad
+			    else C := StatusOK;
+			    AI_PrintFromLeft( BStr( S ) , TT * Width -5 , C );
+		    end;
+		    AI_NextLine;
+	    end;
 
-	{ Encumbrance information. }
+	    { Encumbrance information. }
 
-	{ Get the current mass of carried equipment. }
-	CurM := EquipmentMass( Part );
+	    { Get the current mass of carried equipment. }
+	    CurM := EquipmentMass( Part );
 
-	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
-	MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+	    { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	    MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
 
-	AI_PrintFromRight( 'Enc:' , 1 , NeutralGrey );
-	AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , 36 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
-
+	    AI_PrintFromRight( 'Enc:' , 1 , NeutralGrey );
+	    AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , 36 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+    end;
 	DisplayStatusFX( Part );
 end;
 
@@ -683,8 +686,8 @@ begin
 
 	{ Depending upon PART's type, branch to an appropriate procedure. }
 	case Part^.G of
-		GG_Mecha:	MekStatDisplay( Part , GB );
-		GG_Character:	CharacterInfo( Part , GB );
+		GG_Mecha:	MekStatDisplay( Part , GB, True );
+		GG_Character:	CharacterInfo( Part , GB, True );
 		GG_RepairFuel:	RepairFuelInfo( Part );
 	else MiscInfo( Part );
 	end;
@@ -698,6 +701,26 @@ begin
 	{ with the dimensions of the Info Zone. }
 	GearInfo( Part, ZONE_Info, NeutralGrey , Nil );
 end;
+
+Procedure DisplayBriefInfo( Part: GearPtr; GB: GameBoardPtr );
+	{ Show some stats for whatever sort of thing PART is. }
+begin
+	{ All this procedure does is call the ArenaInfo unit procedure }
+	{ with the dimensions of the Info Zone. }
+	CZone := ZONE_Info;
+	CDest := ZONE_Info;
+
+	{ Error check }
+	{ Note that we want the area cleared, even in case of an error. }
+	if Part = Nil then exit;
+
+	{ Depending upon PART's type, branch to an appropriate procedure. }
+	case Part^.G of
+		GG_Mecha:	MekStatDisplay( Part , GB, False );
+		GG_Character:	CharacterInfo( Part , GB, False );
+	end;
+end;
+
 
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: TSDL_Rect );
 	{ Show some stats for whatever sort of thing PART is. }
