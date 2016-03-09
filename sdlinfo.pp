@@ -831,7 +831,8 @@ var
 	T,RStep: Integer;
 	SS: SensibleSpritePtr;
 begin
-	SetInfoZone( ZONE_InteractStatus , NeutralBrown );
+    MyDest := ZONE_InteractStatus.GetRect();
+	SetInfoZone( MyDest , NeutralBrown );
 
 	CHAT_React := React;
 	CHAT_Endurance := Endurance;
@@ -841,8 +842,8 @@ begin
 	AI_Title( JobAgeGenderDesc( NPC ) , InfoGreen );
 
 	{ Prepare to draw the reaction indicators. }
-	ClrZone( ZONE_InteractInfo );
-	MyDest := ZONE_InteractInfo;
+	{ClrZone( ZONE_InteractInfo.GetRect() );}
+	MyDest := ZONE_InteractInfo.GetRect();
 	MyDest.Y := MyDest.Y + ( MyDest.H - 32 ) div 4;
 	MyDest.X := MyDest.X + ( MyDest.H - 32 ) div 4;
 	for t := 0 to 3 do begin
@@ -870,7 +871,7 @@ begin
 		DrawSprite( INTERACT_SPRITE , MyDest , 10 );
 	end;
 
-	MyDest := ZONE_InteractInfo;
+	MyDest := ZONE_InteractInfo.GetRect();
 	MyDest.Y := MyDest.Y + MyDest.H div 2 + ( MyDest.H - 32 ) div 4;
 	MyDest.X := MyDest.X + ( MyDest.H - 32 ) div 4;
 	for t := 4 to 7 do begin
@@ -890,9 +891,9 @@ begin
 	end;
 
 	{ Draw the portrait. }
-	DrawSprite( Backdrop_Sprite , ZONE_InteractPhoto , 0 );
+	DrawSprite( Backdrop_Sprite , ZONE_InteractPhoto.GetRect() , 0 );
 	SS := ConfirmSprite( PortraitName( NPC ) , TeamColorString( GB , NPC ) , 100 , 150 );
-	DrawSprite( SS , ZONE_InteractPhoto , 0 );
+	DrawSprite( SS , ZONE_InteractPhoto.GetRect() , 0 );
 end;
 
 Procedure QuickWeaponInfo( Part: GearPtr );

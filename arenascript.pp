@@ -4050,7 +4050,7 @@ begin
 	SetupInteractDisplay( TeamColor( ASRD_GameBoard , I_NPC ) );
 	if I_NPC <> Nil then begin
 		DisplayInteractStatus( ASRD_GameBoard , I_NPC , CHAT_React , I_Endurance );
-		DisplayGearInfo( I_NPC , ASRD_GameBoard );
+		{DisplayGearInfo( I_NPC , ASRD_GameBoard );}
 	end;
 	GameMsg( CHAT_Message , ZONE_InteractMsg.GetRect() , InfoHiLight );
 end;
@@ -4225,7 +4225,9 @@ begin
     I_NPC := Nil;
 
 	{ Restore the display. }
+    {$IFNDEF SDLMODE}
 	ClrZone( ZONE_InteractTotal );
+    {$ENDIF}
 end;
 
 Procedure ForceInteract( GB: GameBoardPtr; CID: LongInt );

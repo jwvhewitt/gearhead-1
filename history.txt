@@ -1,3 +1,5 @@
+- Cancelling job selection menu gives new PC random job (randchar.pp)
+- Character generator interface should be more consistent (randchar.pp)
 - Added InfoBox from GearHead2.1 (sdlgfx.pp)
 - Fixed BountyJob bugs (PLOT_BountyJob1.txt)
 - Switch weapon should now reliably switch weapon (menugear.pp)

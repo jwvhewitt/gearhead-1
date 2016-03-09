@@ -48,7 +48,7 @@ uses gearutil,ghchars,texutil,ui4gh,congfx,coninfo,conmenus,context;
 {$IFDEF SDLMODE}
 var
 	RCPC: GearPtr;
-	RCPromptMessage,RCDescMessage,RCCaption: String;
+	RCPromptMessage,RCDescMessage,RCCaption,RCHintMessage: String;
 
 Procedure RandCharRedraw;
 	{ Redraw the screen for SDL. }
@@ -58,6 +58,10 @@ begin
 	GameMsg( RCDescMessage , ZONE_CharGenDesc.GetRect() , InfoGreen );
 	CMessage( RCPromptMessage , ZONE_CharGenPrompt.GetRect() , InfoGreen );
 	if RCCaption <> '' then CMessage( RCCaption , ZONE_CharGenCaption.GetRect() , InfoGreen );
+    if RCHintMessage <> '' then begin
+    	InfoBox( ZONE_CharGenHint.GetRect() );
+        CMessage( RCHintMessage , ZONE_CharGenHint.GetRect() , InfoGreen );
+    end;
 end;
 {$ENDIF}
 
@@ -285,8 +289,8 @@ begin
 	ApplyParentalBonus( F );
 	ApplyParentalBonus( M );
 
-	SetSAtt( PC^.SA , 'BIO1 <' + Bio1 + '>' );
 {$IFNDEF SDLMODE}
+	SetSAtt( PC^.SA , 'BIO1 <' + Bio1 + '>' );
 	CharacterDisplay( PC , Nil );
 {$ENDIF}
 
@@ -331,8 +335,9 @@ begin
 {$ENDIF}
 	RPM^.Mode := RPMNoCleanup;
 {$IFDEF SDLMODE}
-	RCDescMessage := MsgString( 'RANDCHAR_ASPDesc' );
-	RCPromptMessage := '';
+	RCDescMessage := '';
+	RCPromptMessage := MsgString( 'RANDCHAR_ASPPrompt' );
+    RCHintMessage := MsgString( 'RANDCHAR_LeftRightHint' );
 {$ELSE}
 	GameMsg( MsgString( 'RANDCHAR_ASPDesc' ) , ZONE_CharGenDesc , InfoGreen );
 	DrawExtBorder( ZONE_SkillGenDesc , BorderBlue );
@@ -362,10 +367,10 @@ begin
 
 	repeat
 {$IFDEF SDLMODE}
-		RCCaption := MsgString( 'RANDCHAR_ASPPrompt' ) + BStr( StatPt );
+		RCCaption := MsgString( 'RANDCHAR_ASPCaption' ) + BStr( StatPt );
 		T := SelectMenu( RPM , @RandCharRedraw );
 {$ELSE}
-		CMessage( MsgString( 'RANDCHAR_ASPPrompt' ) + BStr( StatPt ) , ZONE_CharGenPrompt , InfoHilight );
+		CMessage( MsgString( 'RANDCHAR_ASPCaption' ) + BStr( StatPt ) , ZONE_CharGenPrompt , InfoHilight );
 		T := SelectMenu( RPM );
 {$ENDIF}
 
@@ -415,6 +420,8 @@ begin
 	{ Clear the menu area. }
 {$IFNDEF SDLMODE}
 	ClrZone( ZONE_CharGenMenu );
+{$ELSE}
+    RCHintMessage := '';
 {$ENDIF}
 end;
 
@@ -434,48 +441,115 @@ begin
 	if StatPt > 0 then RollStats( PC , StatPt );
 end;
 
+Function JobCashBonus( JobFX: String ): LongInt;
+    { Return the amount of bonus cash this job provides. }
+var
+    Skill,N: Integer;
+begin
+	N := 0;
+
+	{ Count how many skills there are. }
+	while JobFX <> '' do begin
+		Skill := ExtractValue( JobFX );
+		if ( Skill > 0 ) and ( Skill <= NumSkill ) then begin
+			Inc( N );
+		end;
+	end;
+
+	{ The fewer skills the PC has, the more cash he'll get. }
+	if N < 5 then begin
+        JobCashBonus := ( 5 - N ) * 20000;
+    end else begin
+        JobCashBonus := 0;
+    end;
+end;
+
 Procedure ApplyJobBonus( PC: GearPtr; var Cash: LongInt; JobString: String );
 	{ Apply the bonuses gained from this job to the PC record. }
 var
-	Skill,N: Integer;
+	Skill: Integer;
 	FX,Name: String;
 begin
 	{ Apply skill bonuses. }
 	FX := RetrieveAString( JobString );
 	Name := RetrieveAPreamble( JobString );
-
-	N := 0;
+    Cash := Cash + JobCashBonus( FX );
 
 	{ The PC gets a +1 to each job skill. }
 	while FX <> '' do begin
 		Skill := ExtractValue( FX );
 		if ( Skill > 0 ) and ( Skill <= NumSkill ) then begin
 			AddNAtt( PC^.NA , NAG_Skill , SKill , 1 );
-			Inc( N );
 		end;
 	end;
-
-	{ The fewer skills the PC has, the more cash he'll get. }
-	if N < 5 then Cash := Cash + ( 5 - N ) * 20000;
 
 	{ Record the player's job. }
 	SetSAtt( PC^.SA , 'JOB <' + Name + '>' );
 end;
 
+Procedure RandomJob( PC: GearPtr; var Cash: LongInt );
+	{ Select a job from the standard job list, then give out skill points }
+	{ and take away cash. }
+var
+	JobList,Job: SAttPtr;
+begin
+	JobList := LoadStringList( Jobs_File );
+
+	Job := SelectRandomSAtt( JobList );
+
+	ApplyJobBonus( PC , Cash , Job^.Info );
+
+	DisposeSAtt( JobList );
+end;
+
 Procedure SelectJob( PC: GearPtr; var Cash: LongInt );
 	{ Select a job from the standard job list, then give out skill points }
 	{ and take away cash. }
+	Function JobDescription( Job: String ): String;
+		{ Return a description for this job: This will be its category }
+		{ and its list of skills. }
+	var
+		fx,msg: String;
+		Skill,N: Integer;
+        Cash: LongInt;
+	begin
+    	FX := RetrieveAString( Job );
+	    msg := RetrieveAPreamble( Job ) + ': ';
+        Cash := JobCashBonus( FX );
+
+		{ Add the skills. }
+		N := 0;
+        while FX <> '' do begin
+    		Skill := ExtractValue( FX );
+
+    		if ( Skill > 0 ) and ( Skill <= NumSkill ) then begin
+				if N > 0 then msg := msg + ', ';
+				msg := msg + SkillMan[ Skill ].name + '+1';
+				inc( N );
+			end;
+		end;
+
+        if Cash > 0 then begin
+            if n > 0 then msg := msg + ', ';
+            msg := msg + '+$' + BStr( Cash );
+        end;
+		JobDescription := msg;
+	end;
+
 var
 	RPM: RPGMenuPtr;
 	JobList,Job: SAttPtr;
 	N: Integer;
 begin
-	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharGenMenu );
 {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharGenMenu );
+	AttachMenuDesc( RPM , ZONE_CharGenDesc );
 	RCPromptMessage := MsgString( 'RANDCHAR_JobPrompt' );
-	RCDescMessage := MsgString( 'RANDCHAR_JobDesc' );
+	RCDescMessage := '';
 	RCCaption := '';
 {$ELSE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_SkillGenMenu );
+	AttachMenuDesc( RPM , ZONE_SkillGenDesc );
 	CMessage( MsgString( 'RANDCHAR_JobPrompt' ) , ZONE_CharGenPrompt , InfoHilight );
 	GameMsg( MsgString( 'RANDCHAR_JobDesc' ) , ZONE_CharGenDesc , InfoGreen );
 {$ENDIF}
@@ -486,7 +560,7 @@ begin
 	N := 1;
 	Job := JobList;
 	while Job <> Nil do begin
-		AddRPGMenuItem( RPM , RetrieveAPreamble( Job^.Info ) , N );
+		AddRPGMenuItem( RPM , RetrieveAPreamble( Job^.Info ) , N, JobDescription( Job^.Info ) );
 		Inc( N );
 		Job := Job^.Next;
 	end;
@@ -507,27 +581,13 @@ begin
 		end;	
 
 		ApplyJobBonus( PC , Cash , Job^.Info );
+    end else begin
+        RandomJob( PC, Cash );
 	end;
 
 	DisposeRPGMenu( RPM );
 	DisposeSAtt( JobList );
 end;
-
-Procedure RandomJob( PC: GearPtr; var Cash: LongInt );
-	{ Select a job from the standard job list, then give out skill points }
-	{ and take away cash. }
-var
-	JobList,Job: SAttPtr;
-begin
-	JobList := LoadStringList( Jobs_File );
-
-	Job := SelectRandomSAtt( JobList );
-
-	ApplyJobBonus( PC , Cash , Job^.Info );
-
-	DisposeSAtt( JobList );
-end;
-
 
 Procedure AllocateSkillPoints( PC: GearPtr; SkillPt: Integer );
 	{ Distribute the listed number of points out to the PC. }
@@ -573,9 +633,9 @@ begin
 	RPM^.Mode := RPMNoCleanup;
 
 {$IFDEF SDLMODE}
-	RCDescMessage := MsgString( 'RANDCHAR_SkillDesc' );
-	RCPromptMessage := '';
-	RCCaption := '';
+	RCDescMessage := '';
+	RCPromptMessage := MsgString( 'RANDCHAR_SkillPrompt' );
+    RCHintMessage := MsgString( 'RANDCHAR_LeftRightHint' );
 {$ELSE}
 	GameMsg( MsgString( 'RANDCHAR_SkillDesc' ) , ZONE_CharGenDesc , InfoGreen );
 	DrawExtBorder( ZONE_SkillGenDesc , BorderBlue );
@@ -605,13 +665,13 @@ begin
 
 	repeat
 {$IFDEF SDLMODE}
-		RCCaption := MsgString( 'RANDCHAR_ASPPrompt' ) + BStr( SkillPt );
+		RCCaption := MsgString( 'RANDCHAR_ASPCaption' ) + BStr( SkillPt );
 		T := SelectMenu( RPM , @RandCharRedraw );
 {$ELSE}
 		if TooManySkillsPenalty( PC , NumPickedSkills ) > 0 then begin
-			CMessage( MsgString( 'RANDCHAR_ASPPrompt' ) + BStr( SkillPt ) , ZONE_CharGenPrompt , EnemyRed );
+			CMessage( MsgString( 'RANDCHAR_ASPCaption' ) + BStr( SkillPt ) , ZONE_CharGenPrompt , EnemyRed );
 		end else begin
-			CMessage( MsgString( 'RANDCHAR_ASPPrompt' ) + BStr( SkillPt ) , ZONE_CharGenPrompt , InfoHilight );
+			CMessage( MsgString( 'RANDCHAR_ASPCaption' ) + BStr( SkillPt ) , ZONE_CharGenPrompt , InfoHilight );
 		end;
 		T := SelectMenu( RPM );
 {$ENDIF}
@@ -667,6 +727,8 @@ begin
 	{ Clear the menu area. }
 {$IFNDEF SDLMODE}
 	ClrZone( ZONE_CharGenMenu );
+{$ELSE}
+    RCHintMessage := '';
 {$ENDIF}
 end;
 
@@ -775,8 +837,8 @@ begin
 	Traits := 3;
 	repeat
 {$IFDEF SDLMODE}
-		RCPromptMessage := MsgString( 'RANDCHAR_STPrompt' ) + BStr( Traits );
-		RCCaption := '';
+		RCPromptMessage := MsgString( 'RANDCHAR_STPrompt' );
+        RCCaption := MsgString( 'RANDCHAR_STCaption' ) + BStr( Traits );
 		N := SelectMenu( RPM , @RandCharRedraw );
 {$ELSE}
 		CMessage( MsgString( 'RANDCHAR_STPrompt' ) + BStr( Traits ) , ZONE_CharGenPrompt , InfoHilight );
@@ -829,7 +891,7 @@ begin
 	RCDescMessage := '';
 	RCPromptMessage := MsgString( 'RANDCHAR_PicturePrompt' );
 	RCCaption := '';
-	P := 1;
+	P := Random( NumSAtts( PList ) ) + 1;
 
 	repeat
 		CleanSpriteList;
@@ -876,6 +938,7 @@ begin
 	SkillPt := 50;
 	Cash := 35000;
 {$IFDEF SDLMODE}
+    SetSAtt( PC^.SA, 'SDL_PORTRAIT <por_x_silhouette.png>' );
     SetSAtt( PC^.SA, 'SDL_COLORS <' + RandomColorString(CS_Clothing) + ' ' + RandomColorString(CS_Skin) + ' ' + RandomColorString(CS_Hair) + '>' );
 {$ENDIF}
 
@@ -971,7 +1034,7 @@ begin
 {$IFDEF SDLMODE}
 	{ In SDLMode, before selecting a name, finalize the portrait. }
 	SelectSprite( PC );
-
+    RCPromptMessage := '';
 	name := GetStringFromUser( MsgString( 'RANDCHAR_GetName' ) , @RandCharRedraw );
 {$ELSE}
 	name := GetStringFromUser( MsgString( 'RANDCHAR_GetName' ) );

@@ -342,11 +342,15 @@ RANDCHAR_F2 <.>
 RANDCHAR_M1 <Your mother was a >
 RANDCHAR_M2 <.>
 RANDCHAR_WCF <You come from a middle class family.>
-RANDCHAR_ASPPrompt <Points: >
+RANDCHAR_ASPCaption <Points: >
+RANDCHAR_ASPPrompt <Allocate Stat Points>
 RANDCHAR_ASPDesc <Allocate stat points. Move up and down to choose a stat, then right and left to increase or decrease it. Select [DONE] to finish. Any remaining points will be spent randomly.>
 RANDCHAR_SkillDesc <Purchase skill levels. Move up and down to choose a skill, then right and left to increase or decrease it. Select [DONE] when you are finished.>
+RANDCHAR_SkillPrompt <Allocate Skill Points>
+RANDCHAR_LeftRightHint <press left to decrease, right to increase>
 RANDCHAR_ASPDone <   [DONE]>
-RANDCHAR_STPrompt <Traits: >
+RANDCHAR_STPrompt <Select Personality Traits>
+RANDCHAR_STCaption <Traits: >
 RANDCHAR_STDesc <Select up to three personality traits to describe your character. These traits will affect the way NPCs interact with you. If you do not wish to select any traits, choose [CANCEL].>
 RANDCHAR_STCancel <   [CANCEL]>
 RANDCHAR_GetName <Enter a name for this character>

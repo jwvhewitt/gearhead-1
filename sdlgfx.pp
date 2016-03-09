@@ -87,6 +87,27 @@ const
 {$ENDIF}
 
     ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100 );
+
+    ZONE_CharGenChar: DynamicRect = ( dx:-368; dy:-210; w: 500 ; h: 420 );
+	ZONE_CharGenMenu: DynamicRect = ( dx:148; dy:-50; w:220; h:230 );
+	ZONE_CharGenCaption: DynamicRect = ( dx:148; dy:190; w:220; h:20 );
+	ZONE_CharGenDesc: DynamicRect = ( dx:148; dy:-210; w:220; h:150 );
+	ZONE_CharGenPrompt: DynamicRect = ( dx:-150; dy:-245; w:300; h:20 );
+	ZONE_CharGenHint: DynamicRect = ( dx:-160; dy:225; w:320; h:20 );
+
+	ZONE_TextInputPrompt: DynamicRect = ( dx:-210; dy:-35; w:420; h:30 );
+	ZONE_TextInput: DynamicRect = ( dx:-210; dy:5; w:420; h:30 );
+	ZONE_TextInputBigBox: DynamicRect = ( dx:-220; dy:-45; w:440; h:90 );
+
+	ZONE_InteractStatus: DynamicRect = ( dx:-250; dy: -210; w: 395; h: 40 );
+	ZONE_InteractMsg: DynamicRect = ( dx: -250; dy:-120; w:395; h: 110 );
+	ZONE_InteractMenu: DynamicRect = ( dx: -250; dy:-5; w:500; h: 120 );
+	ZONE_InteractPhoto: DynamicRect = ( dx: 150; dy: -185; w: 100; h: 150 );
+	ZONE_InteractInfo: DynamicRect = ( dx: -250; dy:-165; w:395; h:40 );
+	ZONE_InteractTotal: DynamicRect = ( dx: -255; dy: -215; w: 510; h: 335 );
+
+    { The line of conversion- zones above this have been validated for WIZARD. }
+
 	ZONE_Menu: DynamicRect = ( dx: 0; dy:0; w:Right_Column_Width; h:200 );
 	ZONE_Menu1: DynamicRect = ( dx: 0; dy:-50; w:Right_Column_Width; h:100 );
 	ZONE_Menu2: DynamicRect = ( dx: 0; dy:50; w:Right_Column_Width; h:100 );
@@ -95,29 +116,9 @@ const
 	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
 	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
 
-    ZONE_CharGenChar: DynamicRect = ( dx:-368; dy:-210; w: 500 ; h: 420 );
-	ZONE_CharGenMenu: DynamicRect = ( dx:148; dy:-50; w:220; h:230 );
-	ZONE_CharGenCaption: DynamicRect = ( dx:148; dy:190; w:220; h:20 );
-	ZONE_CharGenDesc: DynamicRect = ( dx:148; dy:-210; w:220; h:150 );
-	ZONE_CharGenPrompt: DynamicRect = ( dx:-100; dy:-245; w:300; h:20 );
-
-	ZONE_InteractStatus: TSDL_Rect = ( x: 35; y:58; w:395; h:40 );
-	ZONE_InteractMsg: DynamicRect = ( dx: 0; dy:0; w:395; h: 110 );
-	ZONE_InteractMenu: DynamicRect = ( dx: 0; dy:0; w:500; h: 120 );
-	ZONE_InteractPhoto: TSDL_Rect = ( x: 435; y: 80; w: 100; h: 150 );
-	ZONE_InteractInfo: TSDL_Rect = ( x:35; y: 103; w: 395; h: 40 );
-	ZONE_InteractTotal: TSDL_Rect = ( x: 30; y: 53; w: 510; h: 335 );
-
-	ZONE_TextInputPrompt: TSDL_Rect = ( x:40; y:165; w:420; h:30 );
-	ZONE_TextInput: TSDL_Rect = ( x:40; y:205; w:420; h:30 );
-	ZONE_TextInputBigBox: TSDL_Rect = ( x:30; y:155; w:440; h:90 );
-	ZONE_TextInputSmallBox: TSDL_Rect = ( x:35; y:200; w:430; h:40 );
-
 	ZONE_EqpMenu: DynamicRect = ( dx:0; dy:-100; w:380; h:100 );
 	ZONE_InvMenu: DynamicRect = ( dx:0; dy:5; w:380; h:245 );
 	ZONE_SuperBP: DynamicRect = (dx:0; dY:0; W: 400; H: 375);
-
-	ZONE_Biography: TSDL_Rect = ( x:20; y:340; w:460; h:60 );
 
 	ZONE_YesNoTotal: DynamicRect = ( dx:100; dy:115; w:ScreenWidth - Right_Column_Width - 210; h:280 );
 	ZONE_YesNoPrompt: DynamicRect = ( dx:110; dy:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
@@ -1123,22 +1124,25 @@ const
 var
 	A: Char;
 	it: String;
-	MyDest: TSDL_Rect;
+	MyBigBox,MyInputBox,MyDest: TSDL_Rect;
 begin
 	{ Initialize string. }
 	it := '';
 
 	repeat
+        MyBigBox := ZONE_TextInputBigBox.GetRect();
+        MyInputBox := ZONE_TextInput.GetRect();
+
 		{ Set up the display. }
 		if ReDrawer <> Nil then ReDrawer;
-		ClearExtendedBorder( ZONE_TextInputBigBox );
-		SDL_FillRect( game_screen , @ZONE_TextInputBigBox , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
-		SDL_FillRect( game_screen , @ZONE_TextInputSmallBox , SDL_MapRGB( Game_Screen^.Format , StdBlack.R , StdBlack.G , StdBlack.B ) );
+		ClearExtendedBorder( MyBigBox );
+		SDL_FillRect( game_screen , @MyBigBox , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
+		SDL_FillRect( game_screen , @MyInputBox , SDL_MapRGB( Game_Screen^.Format , StdBlack.R , StdBlack.G , StdBlack.B ) );
 
-		CMessage( Prompt , ZONE_TextInputPrompt , StdWhite );
-		CMessage( it , ZONE_TextInput , InfoGreen );
-		MyDest.Y := ZONE_TextInput.Y + 2;
-		MyDest.X := ZONE_TextInput.X + ( ZONE_TextInput.W div 2 ) + ( TextLength( Game_Font , it ) div 2 );
+		CMessage( Prompt , ZONE_TextInputPrompt.GetRect() , StdWhite );
+		CMessage( it , MyInputBox , InfoGreen );
+		MyDest.Y := MyInputBox.Y + 2;
+		MyDest.X := MyInputBox.X + ( MyInputBox.W div 2 ) + ( TextLength( Game_Font , it ) div 2 );
 		DrawSprite( Cursor_Sprite , MyDest , ( Animation_Phase div 2 ) mod 4 );
 
 		GHFlip;
@@ -1249,23 +1253,23 @@ end;
 Procedure DrawCharGenBorder;
 	{ Draw borders for the character generator. }
 begin
-	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
+	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , 47 , 64 , 91 ) );
 	InfoBox( ZONE_CharGenChar.GetRect() );
 	InfoBox( ZONE_CharGenMenu.GetRect() );
 	InfoBox( ZONE_CharGenDesc.GetRect() );
-	ClearExtendedBorder( ZONE_CharGenPrompt.GetRect() );
-	ClearExtendedBorder( ZONE_CharGenCaption.GetRect() );
+	InfoBox( ZONE_CharGenPrompt.GetRect() );
+	InfoBox( ZONE_CharGenCaption.GetRect() );
 end;
 
 Procedure SetupCombatDisplay;
 	{ Draw the combat background. }
 begin
-	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
+{	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
 	ClearExtendedBorder( ZONE_Map );
 	ClearExtendedBorder( ZONE_Info );
-{	ClearExtendedBorder( ZONE_Menu );}
+	ClearExtendedBorder( ZONE_Menu );
 	ClearExtendedBorder( ZONE_Dialog );
-	ClearExtendedBorder( ZONE_Clock );
+	ClearExtendedBorder( ZONE_Clock );}
 end;
 
 Procedure SetupHQDisplay;
@@ -1293,14 +1297,17 @@ end;
 
 Procedure SetupInteractDisplay( TeamColor: TSDL_Color );
 	{ Draw the display for the interaction interface. }
+var
+    MyDest: TSDL_Rect;
 begin
-	ClearExtendedBorder( ZONE_InteractTotal );
-	SDL_FillRect( game_screen , @ZONE_InteractTotal , SDL_MapRGB( Game_Screen^.Format , TeamColor.R , TeamColor.G , TeamColor.B ) );
-	ClearExtendedBorder( ZONE_InteractStatus );
-{	ClearExtendedBorder( ZONE_InteractMsg );}
-{	ClearExtendedBorder( ZONE_InteractMenu );}
-	ClearExtendedBorder( ZONE_InteractPhoto );
-	ClearExtendedBorder( ZONE_InteractInfo );
+    MyDest := ZONE_InteractTotal.GetRect();
+	ClearExtendedBorder( MyDest );
+	SDL_FillRect( game_screen , @MyDest , SDL_MapRGB( Game_Screen^.Format , TeamColor.R , TeamColor.G , TeamColor.B ) );
+	ClearExtendedBorder( ZONE_InteractStatus.GetRect() );
+	ClearExtendedBorder( ZONE_InteractMsg.GetRect() );
+	ClearExtendedBorder( ZONE_InteractMenu.GetRect() );
+	ClearExtendedBorder( ZONE_InteractPhoto.GetRect() );
+	ClearExtendedBorder( ZONE_InteractInfo.GetRect() );
 end;
 
 {$IFDEF ULTIMATE}
