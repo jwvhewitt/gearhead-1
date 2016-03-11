@@ -38,8 +38,6 @@ var
 	LOOKER_Gear: GearPtr;		{ Last mecha accessed. }
 	LOOKER_LastGearSelected: GearPtr;	{ Last enemy selected with select next enemy key. }
 
-Function WeaponBVSetting( Weapon: GearPtr ): Integer;
-
 Function LookAround( GB: GameBoardPtr; Mek: GearPtr ): Boolean;
 Function SelectTarget( GB: GameBoardPtr; Mek: GearPtr; var Wpn: GearPtr; var CallShot: boolean; var RapidFire: Integer ): Boolean;
 
@@ -61,32 +59,6 @@ var
 	LOOKER_GB: GameBoardPtr;
 	LOOKER_Desc: String;
 {$ENDIF}
-
-Function WeaponBVSetting( Weapon: GearPtr ): Integer;
-	{ Return the BV Setting used by this weapon. It should be }
-	{ one of either Off, 1/2, 1/4, or Max. }
-var
-	BV: Integer;
-begin
-	if Weapon = Nil then Exit( BV_Off );
-
-	BV := NAttValue( Weapon^.NA , NAG_Prefrences , NAS_DefAtOp );
-	if BV = 0 then begin
-		if Weapon^.G <> GG_Weapon then begin
-			BV := BV_Off;
-		end else if ( Weapon^.S = GS_Ballistic ) then begin
-			BV := DefBallisticBV;
-		end else if Weapon^.S = GS_BeamGun then begin
-			BV := DefBeamGunBV;
-		end else if Weapon^.S = GS_Missile then begin
-			BV := DefMissileBV;
-		end else begin
-			BV := BV_Off;
-		end;
-	end;
-
-	WeaponBVSetting := BV;
-end;
 
 Procedure DoSwitchBV;
 	{ Switch the burst value used for LOOKER_Weapon, then store the }

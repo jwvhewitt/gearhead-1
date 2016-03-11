@@ -37,10 +37,14 @@ Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr );
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
 Procedure DisplayBriefInfo( Part: GearPtr; GB: GameBoardPtr );
 
+Procedure LongformGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
+
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
 Procedure QuickWeaponInfo( Part: GearPtr );
 Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr; DZone: DynamicRect );
 Procedure InjuryViewer( PC: GearPtr );
+
+Procedure DrawBackpackHeader( PC: GearPtr );
 
 Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
 
@@ -645,7 +649,7 @@ begin
 	GameMsg( ExtendedDescription( Part ) , AI_Dest , NeutralGrey );
 end;
 
-Procedure SetInfoZone( var Z: TSDL_Rect; var BorColor: TSDL_Color );
+Procedure SetInfoZone( var Z: TSDL_Rect );
 	{ Copy the provided coordinates into this unit's global }
 	{ variables, then draw a nice little border and clear the }
 	{ selected area. }
@@ -653,7 +657,7 @@ begin
 	{ Copy the dimensions provided into this unit's global variables. }
 	CZone := Z;
 	CDest := Z;
-	ClrZone( Z );
+	{ClrZone( Z );}
 end;
 
 Procedure RepairFuelInfo( Part: GearPtr );
@@ -678,7 +682,7 @@ Procedure GearInfo( Part: GearPtr; var Z: TSDL_Rect; BorColor: TSDL_Color; GB: G
 	{ Display some information for this gear inside the screen area }
 	{ X1,Y1,X2,Y2. }
 begin
-	SetInfoZone( Z,BorColor );
+	SetInfoZone( Z );
 
 	{ Error check }
 	{ Note that we want the area cleared, even in case of an error. }
@@ -832,7 +836,7 @@ var
 	SS: SensibleSpritePtr;
 begin
     MyDest := ZONE_InteractStatus.GetRect();
-	SetInfoZone( MyDest , NeutralBrown );
+	SetInfoZone( MyDest );
 
 	CHAT_React := React;
 	CHAT_Endurance := Endurance;
@@ -923,7 +927,7 @@ begin
 	if PC = Nil then Exit;
 
     MyZone := DZone.GetRect();
-	SetInfoZone( MyZone , PlayerBlue );
+	SetInfoZone( MyZone );
 
 	AI_Title( GearName( PC ) , NeutralGrey );
 	AI_Title( JobAgeGenderDesc( PC ) , InfoGreen );
@@ -1067,7 +1071,7 @@ Procedure InjuryViewer( PC: GearPtr );
 		if PC^.G <> GG_Character then PC := LocatePilot( PC );
 		if PC = Nil then Exit;
 
-		SetInfoZone( ZONE_Map , PlayerBlue );
+		SetInfoZone( ZONE_Map );
 
 		AI_Title( MsgString( 'INFO_InjuriesTitle' ) , StdWhite );
 
@@ -1131,6 +1135,70 @@ begin
 		GHFlip;
 		A := RPGKey;
 	until ( A = ' ' ) or ( A = #27 ) or ( A = #8 );
+end;
+
+Procedure LongformGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
+
+var
+    MyDest,AI_Dest: TSDL_Rect;
+    msg: String;
+    n: Integer;
+begin
+    MyDest := Z.GetRect();
+	SetInfoZone( MyDest );
+
+	{ Show the part's name. }
+	AI_Title( GearName(Part) , NeutralGrey );
+
+	{ Display the part's armor rating. }
+	N := GearCurrentArmor( Part );
+	if N > 0 then msg := '[' + BStr( N )
+	else msg := '[-';
+	msg := msg + '] ';
+	AI_PrintFromRight( msg , 1 , ArmorColor( Part ) );
+
+	{ Display the part's damage rating. }
+	N := GearCurrentDamage( Part );
+	if N > 0 then msg := BStr( N )
+	else msg := '-';
+	AI_PrintFromRight( msg + ' DP' , CZone.W div 2 , HitsColor( Part ) );
+
+	N := ( GearMass( Part ) + 1 ) div 2;
+	if N > 0 then AI_PrintFromLeft( MassString( Part ) , CZone.W - 1 , NeutralGrey );
+
+	if Part^.G < 0 then begin
+		AI_NextLine;
+		AI_PrintFromRight( Bstr( Part^.G ) + ',' + BStr( Part^.S ) + ',' + BStr( Part^.V ) , CZone.W div 2 , StdWhite );
+	end;
+
+	AI_Dest := CZone;
+	AI_Dest.X := AI_Dest.X + 10;
+	AI_Dest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
+	AI_Dest.W := AI_Dest.W - 20;
+	AI_Dest.H := AI_Dest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
+	GameMsg( ExtendedDescription( Part ) , AI_Dest , NeutralGrey );
+
+end;
+
+Procedure DrawBackpackHeader( PC: GearPtr );
+
+var
+    MyDest: TSDL_Rect;
+    CurM,MaxM: Integer;
+begin
+    MyDest := ZONE_BPHeader.GetRect();
+	SetInfoZone( MyDest );
+	AI_Title( GearName(PC) , NeutralGrey );
+
+    { Get the current mass of carried equipment. }
+    CurM := EquipmentMass( PC );
+
+    { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+    MaxM := ( GearEncumberance( PC ) * 2 ) - 1;
+
+    AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , NeutralGrey );
+    AI_PrintFromRight( MakeMassString( CurM, PC^.Scale ) + '/' + MakeMassString( MaxM, PC^.Scale ) , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+
 end;
 
 Procedure MapEditInfo( Pen,Palette,X,Y: Integer );

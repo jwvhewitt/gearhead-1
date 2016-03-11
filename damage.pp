@@ -53,6 +53,8 @@ Const
 		'EYES','SPINE','MUSCULATURE','SKELETON','HEART'
 	);
 
+Function WeaponBVSetting( Weapon: GearPtr ): Integer;
+
 Function WeaponDC( Attacker: GearPtr ; AtOp: Integer ): Integer;
 
 
@@ -100,7 +102,7 @@ Procedure ApplyCyberware( PC,Cyber: GearPtr );
 implementation
 
 uses gearutil,ghchars,ghguard,ghmecha,ghmodule,ghmovers,ghsensor,
-     ghsupport,ghswag,ghweapon,texutil;
+     ghsupport,ghswag,ghweapon,texutil,ui4gh;
 
 const
 	MVSensorPenalty = 1;
@@ -109,6 +111,33 @@ const
 
 var
 	Damage_Strings: SAttPtr;
+
+Function WeaponBVSetting( Weapon: GearPtr ): Integer;
+	{ Return the BV Setting used by this weapon. It should be }
+	{ one of either Off, 1/2, 1/4, or Max. }
+var
+	BV: Integer;
+begin
+	if Weapon = Nil then Exit( BV_Off );
+
+	BV := NAttValue( Weapon^.NA , NAG_Prefrences , NAS_DefAtOp );
+	if BV = 0 then begin
+		if Weapon^.G <> GG_Weapon then begin
+			BV := BV_Off;
+		end else if ( Weapon^.S = GS_Ballistic ) then begin
+			BV := DefBallisticBV;
+		end else if Weapon^.S = GS_BeamGun then begin
+			BV := DefBeamGunBV;
+		end else if Weapon^.S = GS_Missile then begin
+			BV := DefMissileBV;
+		end else begin
+			BV := BV_Off;
+		end;
+	end;
+
+	WeaponBVSetting := BV;
+end;
+
 
 Function WeaponDC( Attacker: GearPtr ; AtOp: Integer ): Integer;
 	{ Calculate the amount of damage that this gear can do when used }

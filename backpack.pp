@@ -79,6 +79,11 @@ var
 	EqpRPM,InvRPM: RPGMenuPtr;
 {$IFDEF SDLMODE}
 	InfoGear: GearPtr;	{ Gear to appear in the INFO menu. }
+
+	BP_Source: GearPtr;	{ Gear to appear in the INFO menu. }
+	BP_SeekSibs: Boolean;	{ TRUE if the menu lists sibling gears; FALSE if it lists child gears. }
+	BP_ActiveMenu: RPGMenuPtr;	{ The active menu. Used to determine the gear to show info about. }
+
 	InfoGB: GameBoardPtr;
 	MPB_Redraw: RedrawProcedureType;
 	MPB_Gear: GearPtr;
@@ -90,16 +95,61 @@ begin
 	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
 end;
 
+Procedure EqpRedraw;
+	{ Show Inventory, select Equipment. }
+var
+    N: Integer;
+    Part: GearPtr;
+begin
+	SDLCombatDisplay( InfoGB );
+	DrawBPBorder;
+	DisplayMenu( InvRPM , Nil );
+    DrawBackpackHeader( InfoGear );
+	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		N := CurrentMenuItemValue( BP_ActiveMenu );
+		if N > 0 then begin
+			if BP_SeekSibs then Part := RetrieveGearSib( BP_Source , N )
+			else Part := LocateGearByNumber( BP_Source , N );
+			if Part <> Nil then begin
+            	LongformGearInfo( Part , InfoGB, ZONE_BPInfo );
+			end;
+		end;
+	end;
+end;
+
+Procedure InvRedraw;
+	{ Show Inventory, select Equipment. }
+var
+    N: Integer;
+    Part: GearPtr;
+begin
+	SDLCombatDisplay( InfoGB );
+	DrawBPBorder;
+	DisplayMenu( EqpRPM , Nil );
+    DrawBackpackHeader( InfoGear );
+	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		N := CurrentMenuItemValue( BP_ActiveMenu );
+		if N > 0 then begin
+			if BP_SeekSibs then Part := RetrieveGearSib( BP_Source , N )
+			else Part := LocateGearByNumber( BP_Source , N );
+			if Part <> Nil then begin
+            	LongformGearInfo( Part , InfoGB, ZONE_BPInfo );
+			end;
+		end;
+	end;
+end;
 Procedure MiscProcRedraw;
 	{ Miscellaneous menu redraw procedure. The Eqp display will be shown; }
 	{ the INV display won't be. }
 begin
 	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
-	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
+	if InfoGear <> Nil then 	LongformGearInfo( InfoGear , InfoGB, ZONE_BPInfo );
 	if EqpRPM <> Nil then begin
 		DisplayMenu( EqpRPM , Nil );
-		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Dialog , MenuItem );
+		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
 	end;
 end;
 
@@ -487,7 +537,9 @@ begin
 	InvRPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
 	InvRPM^.Mode := RPMNoCleanup;
 	BuildInventoryMenu( InvRPM , PC );
+    {$IFNDEF SDLMODE}
 	AttachMenuDesc( InvRPM , ZONE_Menu2 );
+    {$ENDIF}
 	RPMSortAlpha( InvRPM );
 
 	{ If the menu is empty, add a message saying so. }
@@ -504,7 +556,9 @@ begin
 	if EqpRPM <> Nil then DisposeRPGMenu( EqpRPM );
 	EqpRPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_EqpMenu );
 	EqpRPM^.Mode := RPMNoCleanup;
+    {$IFNDEF SDLMODE}
 	AttachMenuDesc( EqpRPM , ZONE_Menu2 );
+    {$ENDIF}
 	BuildEquipmentMenu( EqpRPM , PC );
 
 	{ If the menu is empty, add a message saying so. }
@@ -1307,7 +1361,10 @@ begin
 {$IFDEF SDLMODE}
 		InfoGear := M;
 		InfoGB := GB;
-		N := SelectMenu( INVRPM , @MiscProcRedraw);
+        BP_ActiveMenu := InvRPM;
+		BP_SeekSibs := False;
+        BP_Source := M;
+		N := SelectMenu( INVRPM , @InvRedraw);
 {$ELSE}
 		N := SelectMenu( InvRPM );
 {$ENDIF}
@@ -1318,7 +1375,9 @@ begin
 			ThisItemWasSelected( GB , LList , PC , M , LocateGearByNumber( M , N ) );
 			{ Restore the display. }
 			UpdateBackpack( M );
+            {$IFNDEF SDLMODE}
 			DisplayGearInfo( M );
+            {$ENDIF}
 		end;
 	until ( N < 0 ) or ForceQuit;
 
@@ -1329,18 +1388,6 @@ begin
 	DoInvMenu := N=-1;
 end;
 
-{$IFDEF SDLMODE}
-Procedure EqpRedraw;
-	{ Show Inventory, select Equipment. }
-begin
-	SDLCombatDisplay( InfoGB );
-	DrawBPBorder;
-	DisplayGearInfo( InfoGear , InfoGB );
-	DisplayMenu( InvRPM , Nil );
-	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_Menu.GetRect() , MenuItem );
-end;
-{$ENDIF}
-
 Function DoEqpMenu( GB: GameBoardPtr; var LList: GearPtr; PC,M: GearPtr ): Boolean;
 	{ Return TRUE if the user selected Quit. }
 var
@@ -1350,6 +1397,9 @@ begin
 {$IFDEF SDLMODE}
 		InfoGear := M;
 		InfoGB := GB;
+        BP_ActiveMenu := EqpRPM;
+		BP_SeekSibs := False;
+        BP_Source := M;
 		N := SelectMenu( EqpRPM , @EqpRedraw);
 {$ELSE}
 		N := SelectMenu( EqpRPM );
@@ -1361,7 +1411,9 @@ begin
 			ThisItemWasSelected( GB , LList , PC , M , LocateGearByNumber( M , N ) );
 			{ Restore the display. }
 			UpdateBackpack( M );
+            {$IFNDEF SDLMODE}
 			DisplayGearInfo( M );
+            {$ENDIF}
 		end;
 	until ( N < 0 ) or ForceQuit;
 
@@ -1382,7 +1434,9 @@ var
 	QuitBP: Boolean;
 begin
 	{ Set up the display. }
+    {$IFNDEF SDLMODE}
 	DrawBPBorder;
+    {$ENDIF}
 	ForceQuit := False;
 
 	{ Initialize menus to NIL, then create them. }

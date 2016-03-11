@@ -84,6 +84,7 @@ Function RPMLocateByPosition(RPM: RPGMenuPtr; i: integer): RPGMenuItemPtr;
 Function SelectMenu( RPM: RPGMenuPtr; ReDrawer: RedrawProcedureType ): integer;
 Procedure RPMSortAlpha(RPM: RPGMenuPtr);
 
+Function CurrentMenuItemValue( RPM: RPGMenuPtr ): longint;
 Function SetItemByValue( RPM: RPGMenuPtr ; V: Integer ): RPGMenuItemPtr;
 Procedure SetItemByPosition( RPM: RPGMenuPtr ; N: Integer );
 
@@ -657,6 +658,20 @@ begin
 		end;
 	end;
 	RPM^.firstitem := Sorted;
+end;
+
+Function CurrentMenuItemValue( RPM: RPGMenuPtr ): longint;
+	{ Determine the value of the current menu item, and return it. }
+	{ Return 0 if the item is not found. }
+var
+	Item: RPGMenuItemPtr;
+begin
+	item := RPMLocateByPosition( RPM , RPM^.SelectItem );
+	if item = Nil then begin
+		CurrentMenuItemValue := 0;
+	end else begin
+		CurrentMenuItemValue := item^.value;
+	end;
 end;
 
 Function SetItemByValue( RPM: RPGMenuPtr ; V: Integer ): RPGMenuItemPtr;

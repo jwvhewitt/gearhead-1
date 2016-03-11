@@ -106,6 +106,13 @@ const
 	ZONE_InteractInfo: DynamicRect = ( dx: -250; dy:-165; w:395; h:40 );
 	ZONE_InteractTotal: DynamicRect = ( dx: -255; dy: -215; w: 510; h: 335 );
 
+	ZONE_BPTotal: DynamicRect = (dx:-270; dY:-215; W: 540; H: 330);
+    ZONE_BPHeader: DynamicRect = (dx:-265; dY:-210; W: 300; H: 40);
+	ZONE_EqpMenu: DynamicRect = ( dx:-265; dy:-165; w:300; h:80 );
+	ZONE_InvMenu: DynamicRect = ( dx:-265; dy:-80; w:300; h:145 );
+	ZONE_BPInstructions: DynamicRect = (dx:-265; dY:70; W: 300; H: 40);
+	ZONE_BPInfo: DynamicRect = (dx:45; dY:-210; W: 220; H: 320);
+
     { The line of conversion- zones above this have been validated for WIZARD. }
 
 	ZONE_Menu: DynamicRect = ( dx: 0; dy:0; w:Right_Column_Width; h:200 );
@@ -116,9 +123,6 @@ const
 	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
 	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
 
-	ZONE_EqpMenu: DynamicRect = ( dx:0; dy:-100; w:380; h:100 );
-	ZONE_InvMenu: DynamicRect = ( dx:0; dy:5; w:380; h:245 );
-	ZONE_SuperBP: DynamicRect = (dx:0; dY:0; W: 400; H: 375);
 
 	ZONE_YesNoTotal: DynamicRect = ( dx:100; dy:115; w:ScreenWidth - Right_Column_Width - 210; h:280 );
 	ZONE_YesNoPrompt: DynamicRect = ( dx:110; dy:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
@@ -1242,11 +1246,15 @@ Procedure DrawBPBorder;
 var
     MyRect: TSDL_Rect;
 begin
-	ClearExtendedBorder( ZONE_SuperBP.getRect() );
-    MyRect := ZONE_SuperBP.GetRect();
+    MyRect := ZONE_BPTotal.GetRect();
+	ClearExtendedBorder( MyRect );
 	SDL_FillRect( game_screen , @MyRect , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
 	ClearExtendedBorder( ZONE_EqpMenu.GetRect() );
 	ClearExtendedBorder( ZONE_InvMenu.GetRect() );
+	ClearExtendedBorder( ZONE_BPHeader.GetRect() );
+	ClearExtendedBorder( ZONE_BPInstructions.GetRect() );
+	ClearExtendedBorder( ZONE_BPInfo.GetRect() );
+    FillRectWithSprite( ZONE_BPInfo.GetRect(), Infobox_Backdrop, 0 );
 end;
 
 
