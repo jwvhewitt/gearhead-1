@@ -73,6 +73,7 @@ function SeekGearByName( LList: GearPtr; Name: String ): GearPtr;
 function SeekGearByDesig( LList: GearPtr; Name: String ): GearPtr;
 function SeekGearByIDTag( LList: GearPtr; G,S,V: LongInt ): GearPtr;
 function SeekGearByG( LList: GearPtr; G: Integer ): GearPtr;
+function SeekSubsByG( LList: GearPtr; G: Integer ): GearPtr;
 function MaxIDTag( LList: GearPtr; G,S: Integer ): LongInt;
 
 function CStat( PC: GearPtr; Stat: Integer ): Integer;
@@ -1341,6 +1342,21 @@ begin
 		LList := LList^.Next;
 	end;
 	SeekGearByG := it;
+end;
+
+function SeekSubsByG( LList: GearPtr; G: Integer ): GearPtr;
+	{ As above, but only check subcoms. }
+	{ If no such gear is found, return NIL. }
+var
+	it: GearPtr;
+begin
+	it := Nil;
+	while ( LList <> Nil ) and ( it = Nil ) do begin
+		if LList^.G = G then it := LList;
+		if ( it = Nil ) then it := SeekGearByG( LList^.SubCom , G );
+		LList := LList^.Next;
+	end;
+	SeekSubsByG := it;
 end;
 
 function MaxIDTag( LList: GearPtr; G,S: Integer ): LongInt;
