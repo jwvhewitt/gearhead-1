@@ -1,4 +1,5 @@
 %%% GEARHEAD TEXT MESSAGES %%%
+AMMO-EMPTY <EMPTY>
 RUN_ON <You start to run.>
 RUN_OFF <You start to walk.>
 DJ_MECHARECOVERED <# is recovered from the battlefield.>
@@ -12,6 +13,7 @@ LearnSkill_Warning <Learning this skill will result in an XP penalty. Are you su
 LearnSkill_AcceptPenalty <Accept XP Penalty>
 LearnSkill_ForgetPrevious <Replace Previous Skill>
 CANCEL <   [CANCEL]>
+SERVICES_Exit <Exit Shop>
 SERVICES_ExpressDelivery <Deliver Mecha>
 SERVICES_ShuttleService <Buy a Ticket>
 SERVICES_MovePrompt1 <It will cost $# to bring that here.>
@@ -97,6 +99,9 @@ BUYREPLY1 <Enjoy your purchase.>
 BUYREPLY2 <May it serve you well.>
 BUYREPLY3 <Here you go.>
 BUYREPLY4 <It's been a pleasure doing business with you.>
+BUYUPGRADE <Now I can afford some new stock.>
+BUY_YOUHAVEBOUGHT <You have purchased #.>
+BUY_CANTAFFORD <You don't have enough money to buy #.>
 BUYCANCEL1 <Maybe there's something else that you'd like.>
 BUYCANCEL2 <Have a look around, you may find something that suits you better.>
 BUYCANCEL3 <You don't like it? That's fine, I have more...>
@@ -117,6 +122,7 @@ SELLCANCEL1 <Oh, well. Maybe next time.>
 SELLCANCEL2 <Do you have anything else for me to look at?>
 SELLCANCEL3 <You won't find a better price anywhere else.>
 SELLCANCEL4 <Let's move on to something else.>
+SELL_YOUHAVESOLD <You have sold # for $#.>
 YouFind$ <You find $#.>
 PHONE_NotFound <No person named # can be found in the local dialing area.>
 PHONE_Prompt <You get out your telephone.>
@@ -297,6 +303,7 @@ SERVICES_AmmoName < Clip>
 SERVICES_Exit <   [EXIT]>
 SERVICES_Sell <Sell >
 SERVICES_BrowseParts <Examine Parts>
+SERVICES_BuyClips <Buy Spare Clips>
 SERVICES_MechaService <View Mecha>
 SERVICES_SellStuff <Sell Items>
 SERVICES_ReloadChars <All your weapons have been reloaded.>
@@ -369,6 +376,7 @@ BACKPACK_EngageSafety <Engage Safety Switch>
 BACKPACK_DisengageSafety <Disengage Safety Switch>
 BACKPACK_Directions <Press [/] to switch between the Inventory and Equipment menus.>
 BACKPACK_LoadAmmo <Load Ammunition>
+BACKPACK_EjectAmmo <Eject Ammunition>
 BACKPACK_ExitTIWS <   [EXIT]>
 BACKPACK_DropItem <Drop Item>
 BACKPACK_TradeItem <Transfer Item>

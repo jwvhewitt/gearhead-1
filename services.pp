@@ -137,13 +137,114 @@ begin
 	SetupInteractDisplay( TeamColor( SERV_GB , SERV_NPC ) );
 	DisplayInteractStatus( SERV_GB , SERV_NPC , CHAT_React , CHAT_Endurance );
 	if SERV_Info <> Nil then begin
-		{DisplayGearInfo( SERV_Info , SERV_GB );}
+		DisplayGearInfo( SERV_Info , SERV_GB );
 		CMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu.GetRect() , MenuItem );
 	end;
 	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
 	GameMsg( CHAT_Message , ZONE_InteractMsg.GetRect() , InfoHiLight );
 end;
 {$ENDIF}
+
+procedure BuyAmmoClips( GB: GameBoardPtr; PC,NPC,Weapon: GearPtr );
+	{ Allow spare clips to be purchased for this weapon. }
+var
+	AmmoList: GearPtr;
+	Procedure AddAmmoToList( Proto: GearPtr );
+		{ Create a clone of this ammunition and add it to the list. }
+	var
+		A,ATmp,AVar,VarList: GearPtr;
+	begin
+		A := CloneGear( Proto );
+		AppendGear( AmmoList , A );
+	end;
+	Procedure LookForAmmo( LList: GearPtr );
+		{ Search along this linked list looking for ammo. If you find }
+		{ any, copy it and add it to the list. Then, add any ammo varieties }
+		{ allowed by the shopkeeper's skill level and tolerance. }
+	begin
+		while LList <> Nil do begin
+			if LList^.G = GG_Ammo then begin
+				AddAmmoToList( LList );
+			end;
+
+			LookForAmmo( LList^.SubCom );
+			LList := LList^.Next;
+		end;
+	end;
+var
+	ShopMenu: RPGMenuPtr;
+	Ammo: GearPtr;
+	N: Integer;
+	Cost: LongInt;
+begin
+	{ Step One: Create the list of ammo. }
+	AmmoList := Nil;
+	LookForAmmo( Weapon^.SubCom );
+
+	{ Step Two: Create the shopping menu. }
+	ShopMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+
+	N := 1;
+	Ammo := AmmoList;
+	while Ammo <> Nil do begin
+		AddRPGMenuItem( ShopMenu , GearName( Ammo ) + ' ($' + BStr( PurchasePrice( PC , NPC , Ammo ) ) + ')' , N );
+
+		Inc( N );
+		Ammo := Ammo^.Next;
+	end;
+	RPMSortAlpha( ShopMenu );
+	AlphaKeyMenu( ShopMenu );
+	AddRPGMenuItem( ShopMenu , MsgString( 'EXIT' ) , -1 );
+
+	{ Step Three: Keep shopping until the PC selects exit. }
+	repeat
+		SERV_Info := AmmoList;
+{$IFDEF SDLMODE}
+		N := SelectMenu( ShopMenu , @ServiceRedraw );
+{$ELSE}
+		N := SelectMenu( ShopMenu );
+{$ENDIF}
+
+		if N > 0 then begin
+			Ammo := RetrieveGearSib( AmmoList , N );
+			Cost := PurchasePrice( PC , NPC , Ammo );
+
+			if NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) >= Cost then begin
+				{ Copy the gear, then stick it in inventory. }
+				Ammo := CloneGear( Ammo );
+
+				GivePartToPC( GB , Ammo , PC );
+
+				{ Reduce the buyer's cash by the cost of the gear. }
+				AddNAtt( PC^.NA , NAG_Experience , NAS_Credits , -Cost );
+
+{$IFDEF SDLMODE}
+				CHAT_Message := MsgString( 'BUYREPLY' + BStr( Random( 4 ) + 1 ) );
+{$ELSE}
+				GameMsg( MsgString( 'BUYREPLY' + BStr( Random( 4 ) + 1 ) ) , ZONE_InteractMsg , InfoHilight );
+{$ENDIF}
+				DialogMSG( ReplaceHash( MsgString( 'BUY_YOUHAVEBOUGHT' ) , GearName( Ammo ) ) );
+
+				{ Give some XP to the PC's SHOPPING skill. }
+				ShoppingXP( PC , Ammo );
+			end else begin
+				{ Not enough cash to buy... }
+				DialogMSG( ReplaceHash( MsgString( 'BUY_CANTAFFORD' ) , GearName( Ammo ) ) );
+{$IFDEF SDLMODE}
+				Chat_Message := MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) );
+{$ELSE}
+				GameMsg( MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) ) , ZONE_InteractMsg , InfoHiLight );
+{$ENDIF}
+
+			end;
+		end;
+
+	until N = -1;
+
+	{ Upon exiting, dispose of the ammo list. }
+	DisposeRPGMenu( ShopMenu );
+	DisposeGear( AmmoList );
+end;
 
 procedure PurchaseGear( GB: GameBoardPtr; PC,NPC,Part: GearPtr );
 	{ The unit may or may not want to buy PART. }
@@ -161,6 +262,7 @@ begin
 	AddRPGMenuItem( YNMenu , 'Buy ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
 	if ( Part^.G = GG_Mecha ) then 	AddRPGMenuItem( YNMenu , 'View Tech Stats' , 3 );
 	if ( Part^.SubCom <> Nil ) or ( Part^.InvCom <> Nil ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BrowseParts' ) , 2 );
+	if ( SeekSubsByG( Part^.SubCom , GG_Ammo ) <> Nil ) and ( Part^.Scale = 0 ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BuyClips' ) , 4 );
 	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
 
 	msg := MSgString( 'BuyPROMPT' + Bstr( Random( 4 ) + 1 ) );
@@ -198,13 +300,14 @@ begin
 {$ELSE}
 				GameMsg( MsgString( 'BUYREPLY' + BStr( Random( 4 ) + 1 ) ) , ZONE_InteractMsg , InfoHilight );
 {$ENDIF}
-				DialogMSG( 'You have purchased ' + GearName( Part ) + '.' );
+
+				DialogMSG( ReplaceHash( MsgString( 'BUY_YOUHAVEBOUGHT' ) , GearName( Part ) ) );
 
 				{ Give some XP to the PC's SHOPPING skill. }
 				ShoppingXP( PC , Part );
 			end else begin
 				{ Not enough cash to buy... }
-				DialogMSG( 'You don''t have enough money to buy ' + GearName( Part ) + '.' );
+				DialogMSG( ReplaceHash( MsgString( 'BUY_CANTAFFORD' ) , GearName( Part ) ) );
 {$IFDEF SDLMODE}
 				CHAT_Message := MsgString( 'BUYNOCASH' + BStr( Random( 4 ) + 1 ) );
 {$ELSE}
@@ -225,6 +328,10 @@ begin
 			EndOfGameMoreKey;
 {$ENDIF}
 			N := 2;
+		end else if N = 4 then begin
+
+			BuyAmmoClips( GB, PC, NPC, Part )
+
 		end else if N = -1 then begin
 {$IFDEF SDLMODE}
 			CHAT_Message := MsgString( 'BUYCANCEL' + BStr( Random( 4 ) + 1 ) );
@@ -336,7 +443,11 @@ begin
 {$ELSE}
 		GameMsg( MSgString( 'SELLREPLY' + Bstr( Random( 4 ) + 1 ) ) , ZONE_InteractMsg , InfoHilight );
 {$ENDIF}
-		DialogMSG( 'You have sold ' + GearName( Part ) + ' for $' + BStr( Cost ) + '.' );
+
+		msg := MSgString( 'SELL_YOUHAVESOLD' );
+		msg := ReplaceHash( msg , GearName( Part ) );
+		msg := ReplaceHash( msg , BStr( Cost ) );
+		DialogMSG( msg );
 
 		{ Give some XP to the PC's SHOPPING skill. }
 		ShoppingXP( PC , Part );
@@ -558,6 +669,13 @@ begin
 			if it < 1 then it := 1;
 		end;
 	end;
+
+	if it > 0 then begin
+		{ Reduce the reload cost by a factor of 5- apparently, magazines are really expensive. }
+		it := it div 5;
+		if it < 1 then it := 1;
+	end;
+
 	ReloadMagazineCost := it;
 end;
 
@@ -1115,9 +1233,7 @@ var
 begin
 	{ Find the mecha. }
 	Mek := RetrieveGearSib( GB^.Meks , MekNum );
-    {$IFNDEF SDLMODE}
 	DisplayGearInfo( Mek );
-    {$ENDIF}
 
 	repeat
 		{ Create the menu. }
@@ -1545,10 +1661,8 @@ begin
 	until N = -1;
 
 	{ Restore the display. }
-    {$IFNDEF SDLMODE}
 	DisplayGearInfo( NPC , GB );
 	DisplayGearInfo( PC , GB , ZONE_Menu );
-    {$ENDIF}
 
 	DisposeGear( Wares );
 end;
@@ -1984,10 +2098,8 @@ begin
 	until N = -1;
 
 	{ Restore the display. }
-    {$IFNDEF SDLMODE}
 	DisplayGearInfo( NPC , GB );
 	DisplayGearInfo( PC , GB , ZONE_Menu );
-    {$ENDIF}
 end;
 
 
