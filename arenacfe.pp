@@ -135,7 +135,9 @@ Procedure AttackerFrontEnd( GB: GameBoardPtr; Attacker,Weapon,Target: GearPtr; A
 var
 	EMek: GearPtr;	{ Enemy Meks }
 begin
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( Target , gb );
+    {$ENDIF}
 
 	{ Firing weapons automatically gives away one's position. }
 	{ THIS CODE SHOULD BE MOVED INTO THE EFFECTS.PP PROCEDURE!!! }
@@ -160,7 +162,9 @@ begin
 
 	{ Report the effect of the attack. }
 	Display_Effect_History( GB );
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( Target , GB );
+    {$ENDIF}
 
 	{ AT the end, redisplay the map. }
     {$IFNDEF SDLMODE}

@@ -1,3 +1,5 @@
+- Training menu has been reworked (pcaction.pp)
+- Pressing left or right in backpack will cycle lancemates (backpack.pp)
 - Backpack menu for SDL mode reworked (backpack.pp)
 - Cancelling job selection menu gives new PC random job (randchar.pp)
 - Character generator interface should be more consistent (randchar.pp)

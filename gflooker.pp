@@ -20,11 +20,10 @@ unit gflooker;
 	along with this library; if not, write to the Free Software Foundation,
 	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 }
-
-	{ SDL rendering strategy: }
-	{ - Call GFLRedraw first }
-	{ - Place needed messages & menus on the screen }
-	{ - Indicate the origin and target tiles last; this will also do a flip }
+    { As far as I remember, this unit is called "gflooker" because the original }
+    { version of this program was going to be an arena battle game called }
+    { GearFight. That didn't last long before I jumped into making it a fully }
+    { featured RPG instead. }
 
 interface
 
@@ -99,7 +98,11 @@ begin
 	msg := msg + #13 + ' [' + KeyMap[ KMC_SwitchTarget ].KCode + '] Switch Target';
 
 	{ Print instructions. }
-    {$IFNDEF SDLMODE}
+    {$IFDEF SDLMODE}
+    InfoBox( ZONE_Menu1.GetRect() );
+    InfoBox( ZONE_Menu2.GetRect() );
+	GameMSG( msg , ZONE_Menu2.GetRect() , NeutralGrey );
+    {$ELSE}
 	GameMSG( msg , ZONE_Menu2 , NeutralGrey );
     {$ENDIF}
 
@@ -112,7 +115,9 @@ Procedure GFLRedraw;
 begin
 	if LOOKER_GB <> Nil then SDLCombatDisplay( LOOKER_GB );
 	if LOOKER_Weapon <> Nil then WeaponDisplay;
-	CMessage( LOOKER_Desc , ZONE_Clock , InfoHilight );
+    InfoBox( ZONE_TargetDistance.GetRect() );
+	CMessage( LOOKER_Desc , ZONE_TargetDistance.GetRect() , InfoHilight );
+    InfoBox( ZONE_TargetInfo.GetRect() );
 end;
 {$ENDIF}
 
@@ -125,7 +130,11 @@ var
 	Mek: GearPtr;
 	msg,PName: String;
 begin
+    {$IFDEF SDLMODE}
+	TMM := CreateRPGMenu( menuitem , menuselect , ZONE_TargetInfo );
+    {$ELSE}
 	TMM := CreateRPGMenu( menuitem , menuselect , ZONE_Menu );
+    {$ENDIF}
 
 	N := NumVisibleGears( GB , X , Y );
 
@@ -181,7 +190,11 @@ begin
 	{ Display info for target square. }
 	N := NumVisibleGears( GB , X , Y );
 	if not OnTheMap( X , Y ) then begin
+{$IFDEF SDLMODE}
+		GameMSG( 'Off The Map' , ZONE_TargetInfo.GetRect() , StdWhite );
+{$ELSE}
 		GameMSG( 'Off The Map' , ZONE_Info , StdWhite );
+{$ENDIF}
 		LOOKER_Gear := Nil;
 
 	end else if ( N = 0 ) and ShowEmpty then begin
@@ -190,13 +203,13 @@ begin
 			if GB^.Scene <> Nil then msg := SAttValue( GB^.Scene^.SA , 'LOOKER' + BStr( X ) + '%' + BStr( Y ) );
 			if msg = '' then msg := TerrMan[GB^.map[X,Y].Terr].Name;
 {$IFDEF SDLMODE}
-			CMessage( msg , ZONE_Info , TerrainGreen );
+			CMessage( msg , ZONE_TargetInfo.GetRect() , InfoGreen );
 {$ELSE}
 			CMessage( msg , ZONE_Info , TerrainGreen );
 {$ENDIF}
 		end else begin
 {$IFDEF SDLMODE}
-			CMessage( 'UNKNOWN' , ZONE_Info , TerrainGreen );
+			CMessage( 'UNKNOWN' , ZONE_TargetInfo.GetRect() , InfoGreen );
 {$ELSE}
 			CMessage( 'UNKNOWN' , ZONE_Info , TerrainGreen );
 {$ENDIF}
@@ -206,13 +219,23 @@ begin
 
 	end else if N = 1 then begin
 		Mek := FindVisibleGear( GB , X , Y , 1 );
-		DisplayGearInfo( Mek , gb );
+{$IFDEF SDLMODE}
+        { If we aren't showing empty tiles, this is getting called from outside }
+        { of gflooker, so draw the infobox border. }
+        if not ShowEMpty then InfoBox( ZONE_TargetInfo.GetRect() );
+		DisplayTargetInfo( Mek , gb, ZONE_TargetInfo );
+{$ELSE}
+		DisplayGearInfo( Mek , gb, ZONE_Info );
+{$ENDIF}
 		LOOKER_Gear := Mek;
 
 	end else if N > 1 then begin
 		TMM := CreateTileMechaMenu( GB , X , Y , True );
 {$IFDEF SDLMODE}
-		DisplayMenu( TMM , @GFLRedraw );
+        { If we aren't showing empty tiles, this is getting called from outside }
+        { of gflooker, so draw the infobox border. }
+        if not ShowEMpty then InfoBox( ZONE_TargetInfo.GetRect() );
+		DisplayMenu( TMM , Nil );
 {$ELSE}
 		DisplayMenu( TMM );
 {$ENDIF}
@@ -386,15 +409,15 @@ begin
 
         end else if A = RPK_TimeEvent then begin
     		LOOKER_GB := GB;
-    		GFLRedraw;
-    		DisplayTileInfo( GB , X , Y, True );
 		    if ( LOOKER_Origin <> Nil ) and OnTheMap( LOOKER_Origin ) then begin
 			    if LOOKER_Gear = Nil then begin
-				    CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
+				    LOOKER_Desc := 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb ));
 			    end else begin
-				    CMessage( 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb )) , ZONE_Clock , InfoGreen );
+				    LOOKER_Desc := 'Range: ' + BStr( ScaleRange( Range(gb,LOOKER_Origin,LOOKER_Gear) , GB^.Scale )) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , LOOKER_Gear , gb ));
 			    end;
 		    end;
+    		GFLRedraw;
+    		DisplayTileInfo( GB , X , Y, True );
             ghflip();
 {$ENDIF}
 

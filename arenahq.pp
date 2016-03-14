@@ -346,7 +346,9 @@ begin
 
 	Roll := RecurseFix( U , Mek );
 
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( Mek );
+    {$ENDIF}
 
 	C1 := NAttValue( U^.NA , NAG_Experience , NAS_Credits );
 	if C1 < C0 then begin
@@ -407,12 +409,12 @@ begin
 			{ is in fact a valid, singular character. }
 			if ( PC <> Nil ) then begin
 				{ Display the character's stats. }
-				DisplayGearInfo( PC );
 
 				{ Ask the player what to do with this character. }
 {$IFDEF SDLMODE}
 				if SelectMenu( YNMenu , Nil ) = 1 then begin
 {$ELSE}
+				DisplayGearInfo( PC );
 				if SelectMenu( YNMenu ) = 1 then begin
 {$ENDIF}
 					{ Add the character to the unit. }
@@ -534,7 +536,9 @@ begin
 
 				{ Check to make sure that Mek isn't Nil. }
 				if Mek <> Nil then begin
+                    {$IFNDEF SDLMODE}
 					DisplayGearInfo( Mek );
+                    {$ENDIF}
 
 					PurchaseGear( U , Mek );
 
@@ -1275,7 +1279,6 @@ begin
 	if ( msg <> '' ) or ( Part^.G <> GG_Mecha ) then begin
 		repeat
 			RedrawOpening;
-			DisplayGearInfo( Part );
 			CMessage( msg , ZONE_Menu.GetRect() , InfoGreen );
 			GHFlip;
 			A := RPGKey;
@@ -1285,7 +1288,6 @@ begin
 	if Part^.G = GG_Mecha then begin
 		repeat
 			RedrawOpening;
-			DisplayGearInfo( Part );
 			CMessage( msg , ZONE_Menu.GetRect() , InfoGreen );
 			GHFlip;
 			A := RPGKey;

@@ -25,7 +25,7 @@ unit backpack;
 interface
 
 {$IFDEF SDLMODE}
-uses gears,locale,sdlgfx;
+uses gears,locale,sdlgfx,ui4gh;
 {$ELSE}
 uses gears,locale;
 {$ENDIF}
@@ -37,6 +37,11 @@ const
 Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
 Procedure SelectSprite( M: GearPtr; Redrawer: RedrawProcedureType );
 {$ENDIF}
+
+Function LanceMateMenuName( M: GearPtr ): String;
+Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+
 
 Procedure GivePartToPC( GB: GameBoardPtr; Part, PC: GearPtr );
 
@@ -93,7 +98,7 @@ Procedure PlainRedraw;
 	{ Miscellaneous menu redraw procedure. }
 begin
 	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
-	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
+	{if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );}
 end;
 
 Procedure EqpRedraw;
@@ -175,7 +180,7 @@ Procedure RobotPartRedraw;
 begin
 	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
-	if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );
+	{if InfoGear <> Nil then DisplayGearInfo( InfoGear , InfoGB );}
 	GameMsg( MsgString( 'SELECT_ROBOT_PARTS' ) , ZONE_EqpMenu.GetRect() , MenuItem );
 end;
 
@@ -223,6 +228,82 @@ begin
 end;
 
 {$ENDIF}
+
+
+Function LanceMateMenuName( M: GearPtr ): String;
+var
+	msg,pilot: string;
+begin
+	msg := FullGearName( M );
+
+	if M^.G = GG_Mecha then begin
+		pilot := SAttValue( M^.SA , 'PILOT' );
+		if pilot <> '' then msg := msg + ' (' + pilot + ')';
+	end;
+
+	LanceMateMenuName := msg;
+end;
+
+Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+    { Locate the next player character on the gameboard. }
+    Function IsPC( PC: GearPtr ): Boolean;
+        { Return True if this is a PC, or False otherwise. }
+    begin
+        IsPC := IsMasterGear( PC ) and GearActive(PC) and ((NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_LancemateTeam));
+    end;
+var
+    PC,NextPC,FirstPC: GearPtr;
+    FoundStart: Boolean;
+begin
+    NextPC := Nil;
+    FirstPC := Nil;
+    FoundStart := CurrentPC = Nil;
+
+    PC := GB^.Meks;
+    while ( PC <> Nil ) and ( NextPC = Nil ) do begin
+        if IsPC(PC) then begin
+            if FirstPC = Nil then FirstPC := PC;
+            if FoundStart and (NextPC = Nil) then NextPC := PC;
+            if PC = CurrentPC then FoundStart := True;
+        end;
+        PC := PC^.Next;
+    end;
+	if NextPC = Nil then begin
+		if FirstPC = Nil then FindNextPC := CurrentPC
+		else FindNextPC := FirstPC;
+	end else FindNextPC := NextPC;
+end;
+
+Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+    { Locate the previous player character on the gameboard. }
+    Function IsPC( PC: GearPtr ): Boolean;
+        { Return True if this is a PC, or False otherwise. }
+    begin
+        IsPC := IsMasterGear( PC ) and GearActive(PC) and ((NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_LancemateTeam));
+    end;
+var
+    PC,PrevPC,LastPC: GearPtr;
+    FoundStart: Boolean;
+begin
+    PrevPC := Nil;
+    LastPC := Nil;
+    FoundStart := CurrentPC = Nil;
+
+    PC := GB^.Meks;
+    while ( PC <> Nil ) and not FoundStart do begin
+        if IsPC(PC) then begin
+            PrevPC := LastPC;
+            if PC <> CurrentPC then LastPC := PC
+            else if PrevPC <> Nil then FoundStart := True;
+        end;
+        PC := PC^.Next;
+    end;
+	if not FoundStart then begin
+		if LastPC = Nil then FindPrevPC := CurrentPC
+		else FindPrevPC := LastPC;
+	end else FindPrevPC := PrevPC;
+end;
+
 
 Function SelectRobotParts( GB: GameBoardPtr; PC: GearPtr ): GearPtr;
 	{ Select up to 10 parts to build a robot with. }
@@ -446,7 +527,7 @@ end;
 	Procedure GetItemRedraw;
 	begin
 		SDLCombatDisplay( InfoGB );
-		DisplayGearInfo( InfoGear , InfoGB );
+		{DisplayGearInfo( InfoGear , InfoGB );}
 	end;
 {$ENDIF}
 
@@ -565,6 +646,13 @@ begin
 
 	{ Add the menu keys. }
 	AddRPGMenuKey(InvRPM,'/',-2);
+{$IFDEF SDLMODE}
+	AddRPGMenuKey( InvRPM , RPK_Right ,  -3 );
+	AddRPGMenuKey( InvRPM , RPK_Left , -4 );
+{$ELSE}
+	AddRPGMenuKey( InvRPM , KeyMap[ KMC_East ].KCode , -3 );
+	AddRPGMenuKey( InvRPM , KeyMap[ KMC_West ].KCode , -4 );
+{$ENDIF}
 end;
 
 Procedure CreateEqpMenu( PC: GearPtr );
@@ -583,6 +671,13 @@ begin
 
 	{ Add the menu keys. }
 	AddRPGMenuKey(EqpRPM,'/',-2);
+{$IFDEF SDLMODE}
+	AddRPGMenuKey( EqpRPM , RPK_Right ,  -3 );
+	AddRPGMenuKey( EqpRPM , RPK_Left , -4 );
+{$ELSE}
+	AddRPGMenuKey( EqpRPM , KeyMap[ KMC_East ].KCode , -3 );
+	AddRPGMenuKey( EqpRPM , KeyMap[ KMC_West ].KCode , -4 );
+{$ENDIF}
 end;
 
 Procedure UpdateBackpack( PC: GearPtr );
@@ -1377,7 +1472,7 @@ begin
 	DisposeRPGMenu( TIWS_Menu );
 end;
 
-Function DoInvMenu( GB: GameBoardPtr; var LList: GearPtr; PC,M: GearPtr ): Boolean;
+Function DoInvMenu( GB: GameBoardPtr; var LList: GearPtr; var PC,M: GearPtr ): Boolean;
 	{ Return TRUE if the user selected Quit. }
 var
 	N: Integer;
@@ -1403,6 +1498,22 @@ begin
             {$IFNDEF SDLMODE}
 			DisplayGearInfo( M );
             {$ENDIF}
+        end else if N = -3 then begin
+            M := FindNextPC( GB, M );
+            N := 0;
+			{ Restore the display. }
+			UpdateBackpack( M );
+            {$IFNDEF SDLMODE}
+			DisplayGearInfo( M );
+            {$ENDIF}
+        end else if N = -4 then begin
+            M := FindPrevPC( GB, M );
+            N := 0;
+			{ Restore the display. }
+			UpdateBackpack( M );
+            {$IFNDEF SDLMODE}
+			DisplayGearInfo( M );
+            {$ENDIF}
 		end;
 	until ( N < 0 ) or ForceQuit;
 
@@ -1413,7 +1524,7 @@ begin
 	DoInvMenu := N=-1;
 end;
 
-Function DoEqpMenu( GB: GameBoardPtr; var LList: GearPtr; PC,M: GearPtr ): Boolean;
+Function DoEqpMenu( GB: GameBoardPtr; var LList: GearPtr; var PC,M: GearPtr ): Boolean;
 	{ Return TRUE if the user selected Quit. }
 var
 	N: Integer;
@@ -1434,6 +1545,22 @@ begin
 		{ procedure. }
 		if N > 0 then begin
 			ThisItemWasSelected( GB , LList , PC , M , LocateGearByNumber( M , N ) );
+			{ Restore the display. }
+			UpdateBackpack( M );
+            {$IFNDEF SDLMODE}
+			DisplayGearInfo( M );
+            {$ENDIF}
+        end else if N = -3 then begin
+            M := FindNextPC( GB, M );
+            N := 0;
+			{ Restore the display. }
+			UpdateBackpack( M );
+            {$IFNDEF SDLMODE}
+			DisplayGearInfo( M );
+            {$ENDIF}
+        end else if N = -4 then begin
+            M := FindPrevPC( GB, M );
+            N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
             {$IFNDEF SDLMODE}
@@ -1507,7 +1634,7 @@ end;
 		SDLCombatDisplay( InfoGB );
 		DrawBPBorder;
 		GameMsg( FullGearName( INFOGear ) + ' '  + MechaDescription( InfoGear) , ZONE_EqpMenu.GetRect() , InfoGreen );
-		DisplayGearInfo( InfoGear );
+		{DisplayGearInfo( InfoGear );}
 	end;
 {$ENDIF}
 
@@ -1530,8 +1657,8 @@ begin
 
 {$IFNDEF SDLMODE}
 		GameMsg( FullGearName( Mek ) + ' '  + MechaDescription( Mek ) , ZONE_EqpMenu , InfoGreen );
-{$ENDIF}
 		DisplayGearInfo( Mek );
+{$ENDIF}
 {$IFDEF SDLMODE}
 		InfoGear := Mek;
 		InfoGB := GB;
@@ -1554,7 +1681,7 @@ Procedure PartBrowserRedraw;
 	{ Redraw the screen for the part browser. }
 begin
 	if MPB_Redraw <> Nil then MPB_Redraw;
-	if MPB_Gear <> Nil then DisplayGearInfo( MPB_Gear );
+	{if MPB_Gear <> Nil then DisplayGearInfo( MPB_Gear );}
 end;
 
 Procedure MechaPartBrowser( Mek: GearPtr; RDP: RedrawProcedureType );
@@ -1601,7 +1728,7 @@ end;
 	Procedure FHQRedraw;
 	begin
 		if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
-		DisplayGearInfo( InfoGear );
+		{DisplayGearInfo( InfoGear );}
 	end;
 {$ENDIF}
 
@@ -1614,7 +1741,9 @@ var
 	N,Team: Integer;
 begin
 	{ Show the item's stats. }
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( Item );
+    {$ENDIF}
 
 	{ Create the menu. }
 	RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_Menu );
@@ -1678,7 +1807,9 @@ var
 begin
 	repeat
 		{ Show the mecha's stats. }
+        {$IFNDEF SDLMODE}
 		DisplayGearInfo( M );
+        {$ENDIF}
 
 		{ Create the FHQ menu. }
 		RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_Menu );

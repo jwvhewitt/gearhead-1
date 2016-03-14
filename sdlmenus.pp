@@ -388,6 +388,10 @@ begin
 		Item_PText := QuickPCopy( a^.msg );
 		Item_Image := TTF_RenderText_Solid( game_font , Item_PText , NextColor^ );
 		Dispose( Item_PText );
+        {$IFDEF LINUX}
+	    if Item_Image <> Nil then SDL_SetColorKey( Item_Image , SDL_SRCCOLORKEY , SDL_MapRGB( Item_Image^.Format , 0 , 0, 0 ) );
+        {$ENDIF}
+
 		SDL_BlitSurface( Item_Image , Nil , Game_Screen , @MyDest );
 		SDL_FreeSurface( Item_Image );
 

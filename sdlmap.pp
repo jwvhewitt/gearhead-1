@@ -1020,7 +1020,7 @@ begin
 	RedrawConsole;
 
     { Show the PC info. }
-    if ComDisplay_PC <> Nil then DisplayBriefInfo( ComDisplay_PC, GB );
+    if ComDisplay_PC <> Nil then DisplayPCInfo( ComDisplay_PC, GB );
 end;
 
 Procedure FocusOnMek( GB: GameBoardPtr; Mek: GearPtr );
@@ -1170,12 +1170,11 @@ begin
 
 		{ Delay the animations, if appropriate. }
 		if DelayThisFrame then begin
-	        SetupCombatDisplay;
 	        RenderMap();
+            SetupWizardDisplay();
 	        CMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
-
-	        { Update the console. }
 	        RedrawConsole;
+            if ComDisplay_PC <> Nil then DisplayPCInfo( ComDisplay_PC, GB );
 			GHFlip;
 			if ( FrameDelay > 0 ) then SDL_Delay(FrameDelay);
 		end;

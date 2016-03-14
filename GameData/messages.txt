@@ -575,4 +575,8 @@ PICKPOCKET_CASH <You steal $#.>
 PICKPOCKET_CASH+ITEM <You steal $# and a #.>
 BONDING_LOVE <You get the feeling that # is attracted to you.>
 BONDING_ALLY <You get the feeling that you can count on #.>
+FREEXP <FREE XP: #>
+TALENTS <TALENTS>
+CYBERWARE <CYBERWARE>
+SKILL_SLOTS_LEFT <# skill slots used>
 

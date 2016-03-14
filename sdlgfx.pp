@@ -37,34 +37,24 @@ Type
 	RedrawProcedureType = Procedure;
 
     DynamicRect = Object
-        dx,dy,w,h: Integer;
+        dx,dy,w,h,anchor: Integer;
         function GetRect: TSDL_Rect;
     end;
 
 
 const
-	Avocado: TSDL_Color =		( r:136; g:141; b:101 );
-	Bacardi: TSDL_Color =		( r:121; g:105; b:137 );
-	Jade: TSDL_Color =		( r: 66; g:121; b:119 );
-	BrightJade: TSDL_Color =	( r:100; g:200; b:180 );
-
 	StdBlack: TSDL_Color =		( r:  0; g:  0; b:  0 );
 	StdWhite: TSDL_Color =		( r:255; g:255; b:255 );
-	MenuItem: TSDL_Color =		( r: 66; g:121; b:119 );
-	MenuSelect: TSDL_Color =	( r:100; g:200; b:180 );
-	TerrainGreen: TSDL_Color =	( r:100; g:210; b:  0 );
+	MenuItem: TSDL_Color =		( r:90; g:156; b:179 );
+	MenuSelect: TSDL_Color =	( r:128; g:255; b:230 );
 	PlayerBlue: TSDL_Color =	( r:  0; g:141; b:211 );
 	AllyPurple: TSDL_Color =	( r:236; g:  0; b:211 );
 	EnemyRed: TSDL_Color =		( r:230; g:  0; b:  0 );
 	NeutralGrey: TSDL_Color =	( r:150; g:150; b:150 );
 	DarkGrey: TSDL_Color =		( r:100; g:100; b:100 );
-{$IFDEF WIZARD}
-	InfoGreen: TSDL_Color =		( r:  0; g:230; b: 40 );
-	InfoHiLight: TSDL_Color =	( r: 50; g:255; b:120 );
-{$ELSE}
-	InfoGreen: TSDL_Color =		( r:  0; g:141; b:  0 );
-	InfoHiLight: TSDL_Color =	( r:  0; g:210; b:  0 );
-{$ENDIF}
+	InfoGreen: TSDL_Color =		( r: 50; g:200; b:  0 );
+	InfoHiLight: TSDL_Color =	( r:100; g:250; b:  0 );
+
 	TextboxGrey: TSDL_Color =	( r:130; g:120; b:125 );
 	NeutralBrown: TSDL_Color =	( r:240; g:201; b: 20 );
 	BorderBlue: TSDL_Color =	( r:  0; g:101; b:151 );
@@ -77,65 +67,86 @@ const
 	Right_Column_Width = 220;
 	Dialog_Area_Height = 110;
 
+    ANC_upperleft = 0;
+    ANC_upper = 1;
+    ANC_upperright = 2;
+    ANC_left = 3;
+    ANC_middle = 4;
+    ANC_right = 5;
+    ANC_lowerleft = 6;
+    ANC_lower = 7;
+    ANC_lowerright = 8;
+
 	ZONE_Map: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - Right_Column_Width - 30 ; h: ScreenHeight - Dialog_Area_Height - 20 );
 	ZONE_Clock: TSDL_Rect = ( x: ScreenWidth - Right_Column_Width - 10 ; y:ScreenHeight - Dialog_Area_Height - 30; w:Right_Column_Width; h:20 );
 	ZONE_Info: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:10; w:Right_Column_Width; h:150 );
+	ZONE_PCInfo: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:10; w:Right_Column_Width; h:150 );
 {$IFDEF ULTIMATE}
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: Right_Column_Width ; h:Dialog_Area_Height-10 );
 {$ELSE}
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: ScreenWidth - 20 ; h:Dialog_Area_Height-10 );
 {$ENDIF}
 
-    ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100 );
+    ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100; anchor: ANC_middle );
 
-    ZONE_CharGenChar: DynamicRect = ( dx:-368; dy:-210; w: 500 ; h: 420 );
-	ZONE_CharGenMenu: DynamicRect = ( dx:148; dy:-50; w:220; h:230 );
-	ZONE_CharGenCaption: DynamicRect = ( dx:148; dy:190; w:220; h:20 );
-	ZONE_CharGenDesc: DynamicRect = ( dx:148; dy:-210; w:220; h:150 );
-	ZONE_CharGenPrompt: DynamicRect = ( dx:-150; dy:-245; w:300; h:20 );
-	ZONE_CharGenHint: DynamicRect = ( dx:-160; dy:225; w:320; h:20 );
+	ZONE_TargetInfo: DynamicRect = ( dx:  -Right_Column_Width -10 ; dy:10; w:Right_Column_Width; h:150; anchor: ANC_upperright );
+    ZONE_TargetDistance: DynamicRect = ( dx:  -Right_Column_Width -10 ; dy:176; w:Right_Column_Width; h:20; anchor: ANC_upperright );
 
-	ZONE_TextInputPrompt: DynamicRect = ( dx:-210; dy:-35; w:420; h:30 );
-	ZONE_TextInput: DynamicRect = ( dx:-210; dy:5; w:420; h:30 );
-	ZONE_TextInputBigBox: DynamicRect = ( dx:-220; dy:-45; w:440; h:90 );
+    ZONE_CharGenChar: DynamicRect = ( dx:-368; dy:-210; w: 500 ; h: 420; anchor: ANC_middle );
+	ZONE_CharGenMenu: DynamicRect = ( dx:148; dy:-50; w:220; h:230; anchor: ANC_middle );
+	ZONE_CharGenCaption: DynamicRect = ( dx:148; dy:190; w:220; h:20; anchor: ANC_middle );
+	ZONE_CharGenDesc: DynamicRect = ( dx:148; dy:-210; w:220; h:150; anchor: ANC_middle );
+	ZONE_CharGenPrompt: DynamicRect = ( dx:-150; dy:-245; w:300; h:20; anchor: ANC_middle );
+	ZONE_CharGenHint: DynamicRect = ( dx:-160; dy:225; w:320; h:20; anchor: ANC_middle );
 
-	ZONE_InteractStatus: DynamicRect = ( dx:-250; dy: -210; w: 395; h: 40 );
-	ZONE_InteractMsg: DynamicRect = ( dx: -250; dy:-120; w:395; h: 110 );
-	ZONE_InteractMenu: DynamicRect = ( dx: -250; dy:-5; w:500; h: 120 );
-	ZONE_InteractPhoto: DynamicRect = ( dx: 150; dy: -185; w: 100; h: 150 );
-	ZONE_InteractInfo: DynamicRect = ( dx: -250; dy:-165; w:395; h:40 );
-	ZONE_InteractTotal: DynamicRect = ( dx: -255; dy: -215; w: 510; h: 335 );
+    ZONE_CharViewChar: DynamicRect = ( dx:-368; dy:-260; w: 500 ; h: 420; anchor: ANC_middle );
+	ZONE_CharViewMenu: DynamicRect = ( dx:148; dy:-100; w:220; h:230; anchor: ANC_middle );
+	ZONE_CharViewCaption: DynamicRect = ( dx:148; dy:140; w:220; h:20; anchor: ANC_middle );
+	ZONE_CharViewDesc: DynamicRect = ( dx:148; dy:-260; w:220; h:150; anchor: ANC_middle );
 
-	ZONE_BPTotal: DynamicRect = (dx:-270; dY:-215; W: 540; H: 330);
-    ZONE_BPHeader: DynamicRect = (dx:-265; dY:-210; W: 300; H: 40);
-	ZONE_EqpMenu: DynamicRect = ( dx:-265; dy:-165; w:300; h:80 );
-	ZONE_InvMenu: DynamicRect = ( dx:-265; dy:-80; w:300; h:145 );
-	ZONE_BPInstructions: DynamicRect = (dx:-265; dY:70; W: 300; H: 40);
-	ZONE_BPInfo: DynamicRect = (dx:45; dY:-210; W: 220; H: 320);
+
+	ZONE_TextInputPrompt: DynamicRect = ( dx:-210; dy:-35; w:420; h:30; anchor: ANC_middle );
+	ZONE_TextInput: DynamicRect = ( dx:-210; dy:5; w:420; h:30; anchor: ANC_middle );
+	ZONE_TextInputBigBox: DynamicRect = ( dx:-220; dy:-45; w:440; h:90; anchor: ANC_middle );
+
+	ZONE_InteractStatus: DynamicRect = ( dx:-250; dy: -210; w: 395; h: 40; anchor: ANC_middle );
+	ZONE_InteractMsg: DynamicRect = ( dx: -250; dy:-120; w:395; h: 110; anchor: ANC_middle );
+	ZONE_InteractMenu: DynamicRect = ( dx: -250; dy:-5; w:500; h: 120; anchor: ANC_middle );
+	ZONE_InteractPhoto: DynamicRect = ( dx: 150; dy: -185; w: 100; h: 150; anchor: ANC_middle );
+	ZONE_InteractInfo: DynamicRect = ( dx: -250; dy:-165; w:395; h:40; anchor: ANC_middle );
+	ZONE_InteractTotal: DynamicRect = ( dx: -255; dy: -215; w: 510; h: 335; anchor: ANC_middle );
+
+	ZONE_BPTotal: DynamicRect = (dx:-270; dY:-215; W: 540; H: 330; anchor: ANC_middle);
+    ZONE_BPHeader: DynamicRect = (dx:-265; dY:-210; W: 300; H: 40; anchor: ANC_middle);
+	ZONE_EqpMenu: DynamicRect = ( dx:-265; dy:-165; w:300; h:80; anchor: ANC_middle );
+	ZONE_InvMenu: DynamicRect = ( dx:-265; dy:-80; w:300; h:145; anchor: ANC_middle );
+	ZONE_BPInstructions: DynamicRect = (dx:-265; dY:70; W: 300; H: 40; anchor: ANC_middle);
+	ZONE_BPInfo: DynamicRect = (dx:45; dY:-210; W: 220; H: 320; anchor: ANC_middle);
+
+	ZONE_Menu: DynamicRect = ( dx: 10; dy:10; w:Right_Column_Width; h:205; anchor: ANC_upperleft );
+	ZONE_Menu1: DynamicRect = ( dx: 10; dy:10; w:Right_Column_Width; h:100; anchor: ANC_upperleft );
+	ZONE_Menu2: DynamicRect = ( dx: 10; dy:126; w:Right_Column_Width; h:80; anchor: ANC_upperleft );
+
+	ZONE_MemoText: DynamicRect = ( dx:-175; dy:-150; w:350; h:200; anchor: ANC_middle );
+	ZONE_MemoMenu: DynamicRect = ( dx:-175; dy:55; w:350; h:50; anchor: ANC_middle );
+    ZONE_MemoTotal: DynamicRect = ( dx:-180; dy:-155; w:360; h:265; anchor: ANC_middle );
 
     { The line of conversion- zones above this have been validated for WIZARD. }
-
-	ZONE_Menu: DynamicRect = ( dx: 0; dy:0; w:Right_Column_Width; h:200 );
-	ZONE_Menu1: DynamicRect = ( dx: 0; dy:-50; w:Right_Column_Width; h:100 );
-	ZONE_Menu2: DynamicRect = ( dx: 0; dy:50; w:Right_Column_Width; h:100 );
 
 
 	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
 	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
 
 
-	ZONE_YesNoTotal: DynamicRect = ( dx:100; dy:115; w:ScreenWidth - Right_Column_Width - 210; h:280 );
-	ZONE_YesNoPrompt: DynamicRect = ( dx:110; dy:125; w:ScreenWidth - Right_Column_Width - 230; h:200 );
-	ZONE_YesNoMenu: DynamicRect = ( dx:110; dy:335; w:ScreenWidth - Right_Column_Width - 230; h:50 );
+	ZONE_YesNoTotal: DynamicRect = ( dx:100; dy:115; w:ScreenWidth - Right_Column_Width - 210; h:280; anchor: ANC_middle );
+	ZONE_YesNoPrompt: DynamicRect = ( dx:110; dy:125; w:ScreenWidth - Right_Column_Width - 230; h:200; anchor: ANC_middle );
+	ZONE_YesNoMenu: DynamicRect = ( dx:110; dy:335; w:ScreenWidth - Right_Column_Width - 230; h:50; anchor: ANC_middle );
 
-	ZONE_UsagePrompt: DynamicRect = ( dx:500; dy:190; w:130; h:170 );
-	ZONE_UsageMenu: DynamicRect = ( dx:50; dy:155; w:380; h:245 );
+	ZONE_UsagePrompt: DynamicRect = ( dx:500; dy:190; w:130; h:170; anchor: ANC_middle );
+	ZONE_UsageMenu: DynamicRect = ( dx:50; dy:155; w:380; h:245; anchor: ANC_middle );
 
 	ZONE_MoreText: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - 20 ; h: ScreenHeight - 50 );
 	ZONE_MorePrompt: TSDL_Rect = ( x:10; y: ScreenHeight - 40 ; w:ScreenWidth - 20; h:30 );
-
-	ZONE_MemoText: DynamicRect = ( dx:0; dy:0; w:ScreenWidth - Right_Column_Width - 230; h:200 );
-	ZONE_MemoMenu: DynamicRect = ( dx:0; dy:0; w:ScreenWidth - Right_Column_Width - 230; h:50 );
 
 	Console_History_Length = 240;
 
@@ -149,7 +160,6 @@ const
 	CS_PrimaryMecha = 4;
 	CS_SecondaryMecha = 5;
 	CS_Detailing = 6;
-
 
 
 var
@@ -229,7 +239,6 @@ const
 var
 	Infobox_Border,Infobox_Backdrop: SensibleSpritePtr;
 
-
 Function DynamicRect.GetRect: TSDL_Rect;
     { Return the TSDL_Rect described by this DynamicRect, given the current }
     { screen size. }
@@ -238,8 +247,8 @@ var
 begin
     MyRect.W := Self.W;
     MyRect.H := Self.H;
-    MyRect.X := Game_Screen^.W div 2 + Self.DX;
-    MyRect.Y := Game_Screen^.H div 2 + Self.DY;
+    MyRect.X := Game_Screen^.W * (self.anchor mod 3) div 2 + Self.DX;
+    MyRect.Y := Game_Screen^.H * (self.anchor div 3) div 2 + Self.DY;
     GetRect := MyRect;
 end;
 
@@ -1300,7 +1309,7 @@ Procedure SetupMemoDisplay;
 	{ Draw an outline around the memo display. Fortunately, that's the same region as the }
 	{ YesNo display. }
 begin
-	InfoBox( ZONE_YesNoTotal.GetRect() );
+	InfoBox( ZONE_MemoTotal.GetRect() );
 end;
 
 Procedure SetupInteractDisplay( TeamColor: TSDL_Color );
@@ -1455,8 +1464,8 @@ begin
     ZONE_Clock.x := MyRect.X;
     ZONE_Clock.y := Game_Screen^.h - 28;
 
-	ZONE_Info.X := MyRect.X;
-	ZONE_Info.Y := MyRect.Y;
+	ZONE_PCInfo.X := MyRect.X;
+	ZONE_PCInfo.Y := MyRect.Y;
 
     AddVerticalDivider( ZONE_Dialog.x - 8 );
 
@@ -1517,7 +1526,7 @@ initialization
 	Infobox_Backdrop := ConfirmSprite( 'sys_boxbackdrop.png' , '', 16 , 16 );
 
     {$IFDEF WIZARD}
-	SDL_SetAlpha( Infobox_Backdrop^.Img , SDL_SRCAlpha , 192 );
+	SDL_SetAlpha( Infobox_Backdrop^.Img , SDL_SRCAlpha , 224 );
     {$ENDIF}
 
 {	MIX_OpenAudio( MIX_DEFAULT_FREQUENCY , MIX_DEFAULT_FORMAT , MIX_CHANNELS , 4096 );

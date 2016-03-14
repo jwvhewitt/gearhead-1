@@ -129,14 +129,12 @@ Procedure ArenaScriptReDraw;
 	{ Redraw the combat screen for some menu usage. }
 begin
 	if ASRD_GameBoard <> Nil then SDLCombatDisplay( ASRD_GameBoard );
-	DisplayGearInfo( ASRD_InfoGear , ASRD_GameBoard );
 end;
 
 Procedure MemoPageReDraw;
 	{ Redraw the combat screen for some menu usage. }
 begin
 	if ASRD_GameBoard <> Nil then SDLCombatDisplay( ASRD_GameBoard );
-	DisplayGearInfo( ASRD_InfoGear , ASRD_GameBoard );
 	SetupMemoDisplay;
 	GameMsg( ASRD_MemoMessage , ZONE_MemoText.GetRect() , InfoGreen );
 end;
@@ -4096,8 +4094,10 @@ begin
 	{ Set up the display. }
 	SetupInteractDisplay( TeamColor( GB , NPC ) );
 
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( NPC , GB );
 	DisplayGearInfo( PC , GB , ZONE_Menu );
+    {$ENDIF}
 
 	{ Initialize interaction variables. }
 	I_PC := PC;

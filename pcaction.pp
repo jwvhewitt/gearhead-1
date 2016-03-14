@@ -28,6 +28,8 @@ uses gears,locale;
 
 Procedure PCSaveCampaign( Camp: CampaignPtr; PC: gearPtr; PrintMsg: Boolean );
 Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
+Procedure FieldHQ( GB: GameBoardPtr; PC: GearPtr );
+
 Procedure GetPlayerInput( Mek: GearPtr; Camp: CampaignPtr );
 
 
@@ -57,19 +59,49 @@ const
 var
 	PCACTIONRD_PC: GearPtr;
 	PCACTIONRD_GB: GameBoardPtr;
+    CHARVIEW_CAPTION: String;
+
 Procedure PCActionRedraw;
 	{ Redraw the map and the PC's info. }
 begin
 	SDLCombatDisplay( PCACTIONRD_GB );
-	DisplayGearInfo( PCACTIONRD_PC , PCACTIONRD_GB );
+end;
+
+Procedure MenuControlRedraw;
+	{ Redraw the map and the PC's info. }
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+    InfoBox( ZONE_Menu.GetRect() );
 end;
 
 Procedure PCSRedraw;
 	{ Redraw the map and the PC's info. }
 begin
 	SDLCombatDisplay( PCACTIONRD_GB );
-	DisplayGearInfo( PCACTIONRD_PC , PCACTIONRD_GB );
 	SetupMemoDisplay;
+end;
+
+Procedure TrainingRedraw;
+	{ Redraw the training screen. }
+begin
+	SetupCombatDisplay;
+	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharGenChar );
+	RedrawConsole;
+	CMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1.GetRect() , InfoHilight );
+end;
+
+Procedure CharViewRedraw;
+    { Redraw for the character browser. }
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+	InfoBox( ZONE_CharViewChar.GetRect() );
+	InfoBox( ZONE_CharViewMenu.GetRect() );
+	InfoBox( ZONE_CharViewDesc.GetRect() );
+	if PCACTIONRD_PC <> Nil then CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharViewChar );
+    if CHARVIEW_CAPTION <> '' then begin
+    	InfoBox( ZONE_CharViewCaption.GetRect() );
+        CMessage( CHARVIEW_CAPTION , ZONE_CharViewCaption.GetRect() , InfoGreen );
+    end;
 end;
 {$ENDIF}
 
@@ -232,38 +264,178 @@ begin
 	InsertInvCom( PC , NPC );
 end;
 
-Procedure FHQ_ThisLancemateWasSelected( GB: GameBoardPtr; PC,NPC: GearPtr );
+Procedure SetPlayOptions( GB: GameBoardPtr; Mek: GearPtr );
+	{ Allow the player to set control type, default burst value settings, }
+	{ and whatever other stuff you think is appropriate. }
+var
+	RPM: RPGMenuPtr;
+	N: Integer;
+begin
+	{ The menu needs to be re-created with each iteration, since the }
+	{ data in it needs to be updated. }
+{$IFNDEF SDLMODE}
+	CMessage( 'Set game prefrences' , ZONE_Menu1 , NeutralGrey );
+{$ENDIF}
+	N := 1;
+	repeat
+{$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+{$ELSE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
+{$ENDIF}
+		AddRPGMenuItem( RPM , 'Mecha Control: '+ControlTypeName[ControlMethod] , 1 );
+		AddRPGMenuItem( RPM , 'Chara Control: '+ControlTypeName[CharacterMethod] , 5 );
+		AddRPGMenuItem( RPM , 'Explore Control: '+ControlTypeName[WorldMapMethod] , 6 );
+		AddRPGMenuItem( RPM , 'Ballistic Wpn BV: '+BVTypeName[DefBallisticBV] , 2 );
+		AddRPGMenuItem( RPM , 'Energy Wpn BV: '+BVTypeName[DefBeamGunBV] , 3 );
+		AddRPGMenuItem( RPM , 'Missile BV: '+BVTypeName[DefMissileBV] , 4 );
+{$IFDEF SDLMODE}
+		if Use_Alpha_Blending then begin
+			AddRPGMenuItem( RPM , 'Disable Transparency' , 7 );
+		end else begin
+			AddRPGMenuItem( RPM , 'Enable Transparency' , 7 );
+		end;
+		if Display_Mini_Map then begin
+			AddRPGMenuItem( RPM , 'Disable Mini-Map' , 8 );
+		end else begin
+			AddRPGMenuItem( RPM , 'Enable Mini-Map' , 8 );
+		end;
+		if Names_Above_Heads then begin
+			AddRPGMenuItem( RPM , 'Disable Name Display' , 9 );
+		end else begin
+			AddRPGMenuItem( RPM , 'Enable Name Display' , 9 );
+		end;
+{$ENDIF}
+		AddRPGMenuItem( RPM , '  Exit Prefrences' , -1 );
+		SetItemByValue( RPM , N );
+{$IFDEF SDLMODE}
+		N := SelectMenu( RPM , @MenuControlRedraw );
+{$ELSE}
+		N := SelectMenu( RPM );
+{$ENDIF}
+		DisposeRPGMenu( RPM );
+
+		if N = 1 then begin
+			if ControlMethod = MenuBasedInput then ControlMethod := RLBasedInput
+			else ControlMethod := MenuBasedInput;
+			WaitAMinute( GB , Mek , 1 );
+		end else if N = 5 then begin
+			if CharacterMethod = MenuBasedInput then CharacterMethod := RLBasedInput
+			else CharacterMethod := MenuBasedInput;
+			WaitAMinute( GB , Mek , 1 );
+		end else if N = 6 then begin
+			if WorldMapMethod = MenuBasedInput then WorldMapMethod := RLBasedInput
+			else WorldMapMethod := MenuBasedInput;
+			WaitAMinute( GB , Mek , 1 );
+		end else if N = 2 then begin
+			if DefBallisticBV = BV_Off then DefBallisticBV := BV_Max
+			else DefBallisticBV := BV_Off;
+		end else if N = 3 then begin
+			if DefBeamGunBV = BV_Off then DefBeamGunBV := BV_Max
+			else DefBeamGunBV := BV_Off;
+
+		end else if N = 4 then begin
+			DefMissileBV := DefMissileBV + 1;
+			if DefMissileBV > BV_Max then DefMissileBV := BV_Off;
+
+		end else if N = 7 then begin
+			{ Toggle the Alpha_Blending boolean. }
+			Use_Alpha_Blending := Not Use_Alpha_Blending;
+
+		end else if N = 8 then begin
+			{ Toggle the Mini-Map. }
+			Display_Mini_Map := Not Display_Mini_Map;
+
+		end else if N = 9 then begin
+			Names_Above_Heads := Not Names_Above_Heads;
+
+		end;
+
+	until N = -1;
+end;
+
+Procedure BrowsePersonalHistory( GB: GameBoardPtr; PC: GearPtr );
+	{ As the PC advances throughout the campaign, she will likely }
+	{ accumulate a number of history messages. This procedure will }
+	{ allow those messages to be browsed. }
+var
+	HList,SA: SAttPtr;
+	Adv: GearPtr;
+begin
+	HList := Nil;
+	Adv := FindRoot( GB^.Scene );
+	if Adv <> Nil then begin
+		SA := Adv^.SA;
+		while SA <> Nil do begin
+			if UpCase( Copy( SA^.Info , 1 , 7 ) ) = 'HISTORY' then begin
+				StoreSAtt( HList , RetrieveAString( SA^.Info ) );
+			end;
+			SA := SA^.Next;
+
+		end;
+
+		if HList <> Nil then begin
+			MoreText( HList , 1 );
+			DisposeSAtt( HList );
+            {$IFNDEF SDLMODE}
+			DisplayGearInfo( PC , GB );
+            {$ENDIF}
+		end;
+	end;
+end;
+
+
+Procedure FHQ_ThisLancemateWasSelected( GB: GameBoardPtr; PC,NPC: GearPtr; AllowFHQ: Boolean );
 	{ NPC was selected by the lancemate browser. Allow the PC to train, }
 	{ equip, or dismiss this character. }
 var
 	RPM: RPGMenuPtr;
 	N: Integer;
 begin
-	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-	if IsSafeArea( GB ) or OnTheMap( NPC ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Equip' ) , 1 );
-	AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Train' ) , 2 );
-
-	if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) <> 0 ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_SelectMecha' ) , 4 );
-	if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) or ( UpCase( SAttValue( NPC^.SA , 'JOB' ) ) = 'ROBOT' ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Rename' ) , 5 );
-	if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) and ( NAttValue( NPC^.NA , NAG_Location , NAS_Team ) <> NAV_LancemateTeam ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Rejoin' ) , 6 );
-	if ( GB <> Nil ) and ( GB^.Scene <> Nil ) and IsSubCom( GB^.Scene ) and IsSAfeArea( GB ) and OnTheMap( NPC ) and ( NAttValue( NPC^.NA , NAG_Location , NAS_Team ) = NAV_LancemateTeam ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Dismiss' ) , 3 );
-	if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) and ( UpCase( SAttValue( NPC^.SA , 'JOB' ) ) = 'ROBOT' ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Disassemble' ) , 7 );
-
-	AddRPGMenuItem( RPM , MsgString( 'FHQ_PartEditor' ) , 8 );
-
-	AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
-
 	repeat
+        { Create the menu. }
+        {$IFDEF SDLMODE}
+	    RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+        {$ELSE}
+	    RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+        {$ENDIF}
+	    if IsSafeArea( GB ) or OnTheMap( NPC ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Equip' ) , 1 );
+	    AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Train' ) , 2 );
+        if NAttValue( NPC^.NA, NAG_Location, NAS_Team ) = NAV_DefPlayerTeam then begin
+	        AddRPGMenuItem( RPM , MsgString( 'FHQ_SelectMecha' ) , 4 );
+        	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_Injuries' ) , 9 );
+	        if AllowFHQ then AddRPGMenuItem( RPM , MsgString( 'PCVIEW_FieldHQ' ) , 10 );
+	        AddRPGMenuItem( RPM , MsgString( 'PCVIEW_SetOptions' ) , 11 );
+	        AddRPGMenuItem( RPM , MsgString( 'HELP_PersonalHistory' ) , 12 );
+            {$IFDEF SDLMODE}
+	        AddRPGMenuItem( RPM , MsgString( 'PCVIEW_SetColor' ) , 13 );
+	        if NPC^.G = GG_Character then AddRPGMenuItem( RPM , MsgString( 'PCVIEW_SetSprite' ) , 14 );
+            {$ENDIF}
+        end else begin
+    	    if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) <> 0 ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_SelectMecha' ) , 4 );
+	        if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) or ( UpCase( SAttValue( NPC^.SA , 'JOB' ) ) = 'ROBOT' ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Rename' ) , 5 );
+	        if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) and ( NAttValue( NPC^.NA , NAG_Location , NAS_Team ) <> NAV_LancemateTeam ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Rejoin' ) , 6 );
+	        if ( GB <> Nil ) and ( GB^.Scene <> Nil ) and IsSubCom( GB^.Scene ) and IsSAfeArea( GB ) and OnTheMap( NPC ) and ( NAttValue( NPC^.NA , NAG_Location , NAS_Team ) = NAV_LancemateTeam ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Dismiss' ) , 3 );
+	        if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) and ( UpCase( SAttValue( NPC^.SA , 'JOB' ) ) = 'ROBOT' ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Disassemble' ) , 7 );
+        end;
+	    AddRPGMenuItem( RPM , MsgString( 'FHQ_PartEditor' ) , 8 );
+
+	    AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
+
+
 {$IFDEF SDLMODE}
 		PCACTIONRD_PC := NPC;
-		n := SelectMenu( RPM , @PCActionRedraw );
+        PCACTIONRD_GB := GB;
+        CHARVIEW_CAPTION := '';
+		n := SelectMenu( RPM , @CharViewRedraw );
 {$ELSE}
 		DisplayGearInfo( NPC , GB );
 		n := SelectMenu( RPM );
 {$ENDIF}
 		case N of
 			1: 	LancemateBackpack( GB , PC , NPC );
-			2: 	if NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) <> 0 then DoTraining( GB , NPC )
+			2: 	if PC = NPC then DoTraining( GB , NPC )
+                else if NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) <> 0 then DoTraining( GB , NPC )
 				else AutoTraining( GB , NPC );
 			3: 	begin
 				RemoveLancemate( GB , NPC );
@@ -283,27 +455,26 @@ begin
 {$ELSE}
 				MechaPartBrowser( NPC );
 {$ENDIF}
+
+			9:	begin
+				InjuryViewer( NPC );
+				RPGKey;
+				end;
+			10:	FieldHQ( GB , NPC );
+			11:	SetPlayOptions( GB , NPC );
+			12:	BrowsePersonalHistory( GB , NPC );
+{$IFDEF SDLMODE}
+			13:	SelectColors( NPC , @TrainingRedraw );
+			14:	SelectSprite( NPC , @TrainingRedraw );
+{$ENDIF}
 		end;
+    	DisposeRPGMenu( RPM );
 	until N = -1;
-	DisposeRPGMenu( RPM );
 end;
 
 Procedure FieldHQ( GB: GameBoardPtr; PC: GearPtr );
 	{ View the PC's lancemates. This menu should allow the PC to view, equip, }
 	{ train and dismiss these characters. }
-	Function LanceMateMenuName( M: GearPtr ): String;
-	var
-		msg,pilot: string;
-	begin
-		msg := FullGearName( M );
-
-		if M^.G = GG_Mecha then begin
-			pilot := SAttValue( M^.SA , 'PILOT' );
-			if pilot <> '' then msg := msg + ' (' + pilot + ')';
-		end;
-
-		LanceMateMenuName := msg;
-	end;
 var
 	RPM: RPGMenuPtr;
 	N: Integer;
@@ -339,7 +510,7 @@ begin
 		if N > 0 Then begin
 			M := RetrieveGearSib( GB^.Meks , N );
 			if M^.G = GG_Character then begin
-				FHQ_ThisLancemateWasSelected( GB , PC , M );
+				FHQ_ThisLancemateWasSelected( GB , PC , M, False );
 			end else begin
 				FHQ_ThisWargearWasSelected( GB , GB^.Meks , PC , M );
 			end;
@@ -594,7 +765,7 @@ begin
 
 	{ Select an item. }
 {$IFDEF SDLMODE}
-	N := SelectMenu( RPM , @PCActionRedraw );
+	N := SelectMenu( RPM , @MenuControlRedraw );
 {$ELSE}
 	N := SelectMenu( RPM );
 {$ENDIF}
@@ -735,7 +906,9 @@ begin
 	end;
 	if Target <> Nil then begin
 		DoFieldRepair( GB , PC , FindRoot( Target ) , Skill );
+        {$IFNDEF SDLMODE}
 		DisplayGearInfo( PC , GB );
+        {$ENDIF}
 	end else begin
 		if not ActivatePropAtSpot( GB , PC , P.X , P.Y , 'CLUE' + BStr( Skill ) ) then DialogMsg( MsgString( 'PCREPAIR_NoDamageDone' ) );
 	end;
@@ -1102,7 +1275,7 @@ begin
 	DialogMSg( MsgString( 'PCAS_Prompt' ) );
 
 {$IFDEF SDLMODE}
-	N := SelectMenu( RPM , @PCActionRedraw );
+	N := SelectMenu( RPM , @MenuControlRedraw );
 {$ELSE}
 	N := SelectMenu( RPM );
 {$ENDIF}
@@ -1145,7 +1318,7 @@ begin
 		RPMSortAlpha( RPM );
 		DialogMSG('Select plot file to load.');
 {$IFDEF SDLMODE}
-		pname := SelectFile( RPM , @PCActionRedraw );
+		pname := SelectFile( RPM , @MenuControlRedraw );
 {$ELSE}
 		pname := SelectFile( RPM );
 {$ENDIF}
@@ -1187,25 +1360,6 @@ begin
 	if PrintMsg then Dialogmsg( MsgString( 'SAVEGAME_OK' ) );
 end;
 
-{$IFDEF SDLMODE}
-Procedure TrainingRedraw;
-	{ Redraw the training screen. }
-begin
-	SetupCombatDisplay;
-	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharGenChar );
-	RedrawConsole;
-	CMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1.GetRect() , InfoHilight );
-end;
-
-Procedure NewSkillRedraw;
-	{ Redraw the training screen. }
-begin
-	SetupCombatDisplay;
-	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharGenChar );
-	RedrawConsole;
-	CMessage( BStr( NumberOfSkills( PCACTIONRD_PC ) ) + '/' + BStr( NumberOfSkillSlots( PCACTIONRD_PC ) ) , ZONE_Menu1.GetRect() , InfoHilight );
-end;
-{$ENDIF}
 
 Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 	{ The player wants to spend some of this character's }
@@ -1231,12 +1385,16 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP );
 
 			{ Create the skill menu. }
+{$IFDEF SDLMODE}
+			SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+{$ELSE}
 			SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
+{$ENDIF}
 			Sk := PC^.NA;
 
 			SkMenu^.dtexcolor := InfoGreen;
 {$IFDEF SDLMODE}
-			AttachMenuDesc( SkMenu , ZONE_Menu1 );
+			AttachMenuDesc( SkMenu , ZONE_CharViewDesc );
 {$ELSE}
 			AttachMenuDesc( SkMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1258,9 +1416,12 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			SkMenu^.TopItem := TI;
 
 {$IFDEF SDLMODE}
-			N := SelectMenu( SkMenu , @TrainingRedraw );
+            PCACTIONRD_GB := GB;
+            PCACTIONRD_PC := PC;
+            CHARVIEW_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
+			N := SelectMenu( SkMenu , @CharViewRedraw );
 {$ELSE}
-			CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
+			CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )) , ZONE_Menu1 , InfoHilight );
 			N := SelectMenu( SkMenu );
 {$ENDIF}
 
@@ -1352,20 +1513,27 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 {$ENDIF}
 		repeat
+            {$IFNDEF SDLMODE}
 			DisplayGearInfo( PC );
+            {$ENDIF}
 
 			{ The number of free XP is the total XP minus the spent XP. }
 			FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP );
 
 			{ Create the skill menu. }
+            {$IFDEF SDLMODE}
+			StMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+        	AttachMenuDesc( StMenu , ZONE_CharViewDesc );
+            {$ELSE}
 			StMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
+            {$ENDIF}
 
 			for t := 1 to NumGearStats do begin
 				if StatCanBeAdvanced( T ) then begin
 					{ Find out how many times this stat has been }
 					{ improved thus far. }
 					CIV := NAttValue( PC^.NA , NAG_StatImprovementLevel , T );
-					AddRPGMenuItem( StMenu , StatName[ T ] + '   (' + BStr( StatImprovementCost( CIV ) ) + ' XP)' , T );
+					AddRPGMenuItem( StMenu , StatName[ T ] + '   (' + BStr( StatImprovementCost( CIV ) ) + ' XP)' , T, MsgString( 'STAT_' + BStr( T ) ) );
 				end;
 			end;
 
@@ -1376,9 +1544,12 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			StMenu^.TopItem := TI;
 
 {$IFDEF SDLMODE}
-			N := SelectMenu( StMenu , @TrainingRedraw );
+            PCACTIONRD_GB := GB;
+            PCACTIONRD_PC := PC;
+            CHARVIEW_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
+			N := SelectMenu( StMenu , @CharViewRedraw );
 {$ELSE}
-			CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
+			CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )), ZONE_Menu1 , InfoHilight );
 			N := SelectMenu( StMenu );
 {$ENDIF}
 
@@ -1450,11 +1621,12 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		{ Create the skill menu. }
 		{ We only want this menu to contain skills the PC does }
 		{ not currently know. }
-		SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 
 {$IFDEF SDLMODE}
-		AttachMenuDesc( SkMenu , ZONE_Menu1 );
+		SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+		AttachMenuDesc( SkMenu , ZONE_CharViewDesc );
 {$ELSE}
+		SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( SkMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1469,9 +1641,12 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 		AddRPGMenuItem( SkMenu , '  Cancel' , -1 );
 
 {$IFDEF SDLMODE}
-		N := SelectMenu( SkMenu , @NewSkillRedraw );
+        PCACTIONRD_GB := GB;
+        PCACTIONRD_PC := PC;
+        CHARVIEW_CAPTION := ReplaceHash( MsgString('SKILL_SLOTS_LEFT'), BStr( NumberOfSkills( PC ) ) + '/' + BStr( NumberOfSkillSlots( PC ) ) );
+		N := SelectMenu( SkMenu , @CharViewRedraw );
 {$ELSE}
-		CMessage( BStr( NumberOfSkills( PC ) ) + '/' + BStr( NumberOfSkillSlots( PC ) ) , ZONE_Menu1 , InfoHilight );
+		CMessage( ReplaceHash( MsgString('SKILL_SLOTS_LEFT'), BStr( NumberOfSkills( PC ) ) + '/' + BStr( NumberOfSkillSlots( PC ) ) ), ZONE_Menu1 , InfoHilight );
 		N := SelectMenu( SkMenu );
 {$ENDIF}
 		DisposeRPGMenu( SkMenu );
@@ -1485,10 +1660,11 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			end else begin
 				{ Improve the skill, pay the XP. }
 				if NumberOfSkills( PC ) >= NumberOfSkillSlots( PC ) then begin
-					SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 {$IFDEF SDLMODE}
-					AttachMenuDesc( SkMenu , ZONE_Menu1 );
+					SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+					AttachMenuDesc( SkMenu , ZONE_CharViewDesc );
 {$ELSE}
+					SkMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 					DrawExtBorder( ZONE_SubInfo , BorderBlue );
 					AttachMenuDesc( SkMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1498,7 +1674,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 					AddRPGMenuItem( SkMenu , MsgString( 'Cancel' ) , -1 , MsgString( 'LearnSkill_Warning' ) );
 
 {$IFDEF SDLMODE}
-					N2 := SelectMenu( SkMenu , @NewSkillRedraw );
+					N2 := SelectMenu( SkMenu , @CharViewRedraw );
 {$ELSE}
 					N2 := SelectMenu( SkMenu );
 {$ENDIF}
@@ -1523,7 +1699,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 				end;
 			end;
 		end;
-end;
+    end;
 
 	Procedure GetNewTalent( PC: GearPtr );
 		{ The PC is going to purchase a new talent. }
@@ -1538,11 +1714,12 @@ end;
 		{ Create the skill menu. }
 		{ We only want this menu to contain skills the PC does }
 		{ not currently know. }
-		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 
 {$IFDEF SDLMODE}
-		AttachMenuDesc( TMenu , ZONE_Menu1 );
+		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+		AttachMenuDesc( TMenu , ZONE_CharViewDesc );
 {$ELSE}
+		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( TMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1556,14 +1733,17 @@ end;
 		RPMSortAlpha( TMenu );
 		AddRPGMenuItem( TMenu , '  Cancel' , -1 );
         {$IFNDEF SDLMODE}
-		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
+		CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )) , ZONE_Menu1 , InfoHilight );
         {$ENDIF}
 		repeat
-{$IFDEF SDLMODE}
-			N := SelectMenu( TMenu , @TrainingRedraw );
-{$ELSE}
+            {$IFDEF SDLMODE}
+            PCACTIONRD_GB := GB;
+            PCACTIONRD_PC := PC;
+            CHARVIEW_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
+			N := SelectMenu( TMenu , @CharViewRedraw );
+            {$ELSE}
 			N := SelectMenu( TMenu );
-{$ENDIF}
+            {$ENDIF}
 
 			if N > 0 then begin
 				{ If the PC has enough free XP, this skill will be improved. }
@@ -1603,11 +1783,11 @@ end;
 		FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP );
 
 		{ Create the skill menu. }
-		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-
 {$IFDEF SDLMODE}
-		AttachMenuDesc( TMenu , ZONE_Menu1 );
+		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+		AttachMenuDesc( TMenu , ZONE_CharViewDesc );
 {$ELSE}
+		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( TMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1622,9 +1802,12 @@ end;
 		AddRPGMenuItem( TMenu , '  Exit' , -1 );
 
 {$IFDEF SDLMODE}
-		N := SelectMenu( TMenu , @TrainingRedraw );
+        PCACTIONRD_GB := GB;
+        PCACTIONRD_PC := PC;
+        CHARVIEW_CAPTION := MsgString('TALENTS');
+		N := SelectMenu( TMenu , @CharViewRedraw );
 {$ELSE}
-		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
+		CMessage( MsgString('TALENTS'), ZONE_Menu1 , InfoHilight );
 		N := SelectMenu( TMenu );
 {$ENDIF}
 		DisposeRPGMenu( TMenu );
@@ -1642,11 +1825,11 @@ end;
 		FXP := NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP );
 
 		{ Create the cyber menu. }
-		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-
 {$IFDEF SDLMODE}
-		AttachMenuDesc( TMenu , ZONE_Menu1 );
+		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+		AttachMenuDesc( TMenu , ZONE_CharViewDesc );
 {$ELSE}
+		TMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 		DrawExtBorder( ZONE_SubInfo , BorderBlue );
 		AttachMenuDesc( TMenu , ZONE_SubInfo );
 {$ENDIF}
@@ -1664,9 +1847,12 @@ end;
 
 
 {$IFDEF SDLMODE}
-		SelectMenu( TMenu , @TrainingRedraw );
+        PCACTIONRD_GB := GB;
+        PCACTIONRD_PC := PC;
+        CHARVIEW_CAPTION := MsgString('CYBERWARE');
+		SelectMenu( TMenu , @CharViewRedraw );
 {$ELSE}
-		CMessage( 'FREE XP: ' + BStr( FXP ) , ZONE_Menu1 , InfoHilight );
+		CMessage( MsgString('CYBERWARE'), ZONE_Menu1 , InfoHilight );
 		SelectMenu( TMenu );
 {$ENDIF}
 		DisposeRPGMenu( TMenu );
@@ -1680,14 +1866,12 @@ begin
 	if PC^.G <> GG_Character then PC := LocatePilot( PC );
 	if PC = Nil then Exit;
 
-{$IFDEF SDLMODE}
-	PCACTIONRD_PC := PC;
-	PCACTIONRD_GB := GB;
-{$ENDIF}
-
-
 	repeat
+        {$IFDEF SDLMODE}
+		DTMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
+        {$ELSE}
 		DTMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
+        {$ENDIF}
 		AddRPGMenuItem( DTMenu , MsgString( 'TRAINING_ImproveSkill' ) , 1 );
 		AddRPGMenuItem( DTMenu , MsgString( 'TRAINING_NewSkill' ) , 2 );
 		AddRPGMenuItem( DTMenu , MsgString( 'TRAINING_ReviewCyberware' ) , 6 );
@@ -1700,10 +1884,13 @@ begin
 		end;
 		AddRPGMenuItem( DTMenu ,  MsgString( 'Exit' ) , -1 );
 {$IFDEF SDLMODE}
-		N := SelectMenu( DTMenu , @TrainingRedraw );
+    	PCACTIONRD_PC := PC;
+    	PCACTIONRD_GB := GB;
+        CHARVIEW_CAPTION := '';
+		N := SelectMenu( DTMenu , @CharViewRedraw );
 {$ELSE}
 		DisplayGearInfo( PC );
-		CMessage( 'FREE XP: ' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1 , InfoHilight );
+		CMessage( ReplaceHash( MsgString('FREEXP'), BStr( NAttValue( PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PC^.NA , NAG_Experience , NAS_SpentXP ) )) , ZONE_Menu1 , InfoHilight );
 		N := SelectMenu( DTMenu );
 {$ENDIF}
 		DisposeRPGMenu( DTMenu );
@@ -1748,184 +1935,7 @@ begin
     {$ENDIF}
 end;
 
-Procedure SetPlayOptions( GB: GameBoardPtr; Mek: GearPtr );
-	{ Allow the player to set control type, default burst value settings, }
-	{ and whatever other stuff you think is appropriate. }
-var
-	RPM: RPGMenuPtr;
-	N: Integer;
-begin
-	{ The menu needs to be re-created with each iteration, since the }
-	{ data in it needs to be updated. }
-{$IFNDEF SDLMODE}
-	CMessage( 'Set game prefrences' , ZONE_Menu1 , NeutralGrey );
-{$ENDIF}
-	N := 1;
-	repeat
-{$IFDEF SDLMODE}
-		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-{$ELSE}
-		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-{$ENDIF}
-		AddRPGMenuItem( RPM , 'Mecha Control: '+ControlTypeName[ControlMethod] , 1 );
-		AddRPGMenuItem( RPM , 'Chara Control: '+ControlTypeName[CharacterMethod] , 5 );
-		AddRPGMenuItem( RPM , 'Explore Control: '+ControlTypeName[WorldMapMethod] , 6 );
-		AddRPGMenuItem( RPM , 'Ballistic Wpn BV: '+BVTypeName[DefBallisticBV] , 2 );
-		AddRPGMenuItem( RPM , 'Energy Wpn BV: '+BVTypeName[DefBeamGunBV] , 3 );
-		AddRPGMenuItem( RPM , 'Missile BV: '+BVTypeName[DefMissileBV] , 4 );
-{$IFDEF SDLMODE}
-		if Use_Alpha_Blending then begin
-			AddRPGMenuItem( RPM , 'Disable Transparency' , 7 );
-		end else begin
-			AddRPGMenuItem( RPM , 'Enable Transparency' , 7 );
-		end;
-		if Display_Mini_Map then begin
-			AddRPGMenuItem( RPM , 'Disable Mini-Map' , 8 );
-		end else begin
-			AddRPGMenuItem( RPM , 'Enable Mini-Map' , 8 );
-		end;
-		if Names_Above_Heads then begin
-			AddRPGMenuItem( RPM , 'Disable Name Display' , 9 );
-		end else begin
-			AddRPGMenuItem( RPM , 'Enable Name Display' , 9 );
-		end;
-{$ENDIF}
-		AddRPGMenuItem( RPM , '  Exit Prefrences' , -1 );
-		SetItemByValue( RPM , N );
-{$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @PCActionRedraw );
-{$ELSE}
-		N := SelectMenu( RPM );
-{$ENDIF}
-		DisposeRPGMenu( RPM );
 
-		if N = 1 then begin
-			if ControlMethod = MenuBasedInput then ControlMethod := RLBasedInput
-			else ControlMethod := MenuBasedInput;
-			WaitAMinute( GB , Mek , 1 );
-		end else if N = 5 then begin
-			if CharacterMethod = MenuBasedInput then CharacterMethod := RLBasedInput
-			else CharacterMethod := MenuBasedInput;
-			WaitAMinute( GB , Mek , 1 );
-		end else if N = 6 then begin
-			if WorldMapMethod = MenuBasedInput then WorldMapMethod := RLBasedInput
-			else WorldMapMethod := MenuBasedInput;
-			WaitAMinute( GB , Mek , 1 );
-		end else if N = 2 then begin
-			if DefBallisticBV = BV_Off then DefBallisticBV := BV_Max
-			else DefBallisticBV := BV_Off;
-		end else if N = 3 then begin
-			if DefBeamGunBV = BV_Off then DefBeamGunBV := BV_Max
-			else DefBeamGunBV := BV_Off;
-
-		end else if N = 4 then begin
-			DefMissileBV := DefMissileBV + 1;
-			if DefMissileBV > BV_Max then DefMissileBV := BV_Off;
-
-		end else if N = 7 then begin
-			{ Toggle the Alpha_Blending boolean. }
-			Use_Alpha_Blending := Not Use_Alpha_Blending;
-
-		end else if N = 8 then begin
-			{ Toggle the Mini-Map. }
-			Display_Mini_Map := Not Display_Mini_Map;
-
-		end else if N = 9 then begin
-			Names_Above_Heads := Not Names_Above_Heads;
-
-		end;
-
-	until N = -1;
-end;
-
-Procedure BrowsePersonalHistory( GB: GameBoardPtr; PC: GearPtr );
-	{ As the PC advances throughout the campaign, she will likely }
-	{ accumulate a number of history messages. This procedure will }
-	{ allow those messages to be browsed. }
-var
-	HList,SA: SAttPtr;
-	Adv: GearPtr;
-begin
-	HList := Nil;
-	Adv := FindRoot( GB^.Scene );
-	if Adv <> Nil then begin
-		SA := Adv^.SA;
-		while SA <> Nil do begin
-			if UpCase( Copy( SA^.Info , 1 , 7 ) ) = 'HISTORY' then begin
-				StoreSAtt( HList , RetrieveAString( SA^.Info ) );
-			end;
-			SA := SA^.Next;
-
-		end;
-
-		if HList <> Nil then begin
-			MoreText( HList , 1 );
-			DisposeSAtt( HList );
-			DisplayGearInfo( PC , GB );
-		end;
-	end;
-end;
-
-Procedure PCViewChar( GB: GameBoardPtr; PC: GearPtr );
-	{ This procedure is supposed to allow the PC to see his/her }
-	{ stats, edit mecha, access the training and option screens, }
-	{ and otherwise provide a nice all-in-one command for a }
-	{ bunch of different play options. }
-var
-	RPM: RPGMenuPtr;
-	N: Integer;
-begin
-
-	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_BackPack' ) , 1 );
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_Injuries' ) , 3 );
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_Training' ) , 2 );
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_FieldHQ' ) , 4 );
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_SetOptions' ) , 5 );
-	AddRPGMenuItem( RPM , MsgString( 'HELP_PersonalHistory' ) , 6 );
-{$IFDEF SDLMODE}
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_SetColor' ) , 7 );
-	if PC^.G = GG_Character then AddRPGMenuItem( RPM , MsgString( 'PCVIEW_SetSprite' ) , 8 );
-{$ENDIF}
-	AddRPGMenuItem( RPM , MsgString( 'PCVIEW_Exit' ) , -1 );
-
-
-	repeat
-{$IFDEF SDLMODE}
-		PCACTIONRD_PC := PC;
-		N := SelectMenu( RPM , @TrainingRedraw );
-{$ELSE}
-		CharacterDisplay( PC , GB );
-		N := SelectMenu( RPM );
-{$ENDIF}
-
-		case N of
-			1:	BackPackMenu( GB , PC , True );
-			2:	DoTraining( GB , PC );
-			3:	begin
-				InjuryViewer( PC );
-				RPGKey;
-				end;
-			4:	FieldHQ( GB , PC );
-			5:	SetPlayOptions( GB , PC );
-			6:	BrowsePersonalHistory( GB , PC );
-{$IFDEF SDLMODE}
-			7:	SelectColors( PC , @TrainingRedraw );
-			8:	SelectSprite( PC , @TrainingRedraw );
-{$ENDIF}
-
-		end;
-	until N = -1;
-
-{$IFDEF SDLMODE}
-	CleanSpriteList;
-{$ENDIF}
-	DisposeRPGMenu( RPM );
-    {$IFNDEF SDLMODE}
-	GFCombatDisplay( GB );
-    {$ENDIF}
-end;
 
 Procedure WaitOnRecharge( GB: GameBoardPtr; Mek: GearPtr );
 	{ Set the mek's CALLTIME to whenever the next weapon is supposed to }
@@ -2142,7 +2152,9 @@ begin
 
 		end else if RangeArcCheck( GB , Mek , Weapon , LOOKER_Gear ) then begin
 			{ Call the Attack procedure with the info we've gained. }
+            {$IFNDEF SDLMODE}
 			DisplayGearInfo( LOOKER_Gear , gb );
+            {$ENDIF}
 
 			{ If a called shot was requested, create the menu here. }
 			{ Note that called shots cannot be made using burst firing. }
@@ -2151,7 +2163,7 @@ begin
 				WPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 				BuildGearMenu( WPM , LOOKER_Gear , GG_Module );
 {$IFDEF SDLMODE}
-				N := SelectMenu( WPM , @PCActionRedraw );
+				N := SelectMenu( WPM , @MenuControlRedraw );
 {$ELSE}
 				N := SelectMenu( WPM );
 {$ENDIF}
@@ -2179,7 +2191,7 @@ begin
 					WPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 					BuildGearMenu( WPM , LOOKER_Gear , GG_Module );
 {$IFDEF SDLMODE}
-					N := SelectMenu( WPM , @PCActionRedraw );
+					N := SelectMenu( WPM , @MenuControlRedraw );
 {$ELSE}
 					N := SelectMenu( WPM );
 {$ENDIF}
@@ -2273,7 +2285,7 @@ begin
 		{ Need to clear the entire menu zone, just to make sure the }
 		{ display looks right. }
 {$IFDEF SDLMODE}
-		N := SelectMenu( WPM , @PCActionRedraw );
+		N := SelectMenu( WPM , @MenuControlRedraw );
 {$ELSE}
 		ClrZone( ZONE_Menu );
 		N := SelectMenu( WPM );
@@ -2328,7 +2340,7 @@ begin
 	SetItemByPosition( RPM , 2 );
 
 {$IFDEF SDLMODE}
-	if SelectMenu( RPM , @PCActionRedraw ) <> -1 then begin
+	if SelectMenu( RPM , @MenuControlRedraw ) <> -1 then begin
 {$ELSE}
 	if SelectMenu( RPM ) <> -1 then begin
 {$ENDIF}
@@ -2809,7 +2821,7 @@ begin
 
 	repeat
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @PCActionRedraw );
+		N := SelectMenu( RPM , @MenuControlRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -2818,7 +2830,7 @@ begin
 		else if N = 3 then PCGetItem( GB , Mek )
 		else if N = 4 then PCEnter( GB , Mek )
 		else if N = 5 then PCActivateSkill( GB , Mek )
-		else if N = 6 then PCViewChar( GB , Mek )
+		else if N = 6 then FHQ_ThisLancemateWasSelected( GB,LocatePilot(Mek),LocatePilot(Mek), True )
 		else if N = -6 then DoEjection( GB , Mek )
 		else if N = -2 then GB^.QuitTheGame := True;
 	until ( N < 0 ) or ( NAttValue( Mek^.NA , NAG_Action , NAS_CallTime ) > GB^.ComTime );
@@ -2843,7 +2855,7 @@ begin
 
 	repeat
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @PCActionRedraw );
+		N := SelectMenu( RPM , @MenuControlRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -2931,17 +2943,17 @@ begin
 	while (NAttValue( Mek^.NA , NAG_Action , NAS_CallTime) <= GB^.ComTime ) and (not GB^.QuitTheGame) and GearActive( Mek ) do begin
 		{ Indicate the mek to get the action for, }
 		{ and prepare the display. }
-		DisplayGearInfo( Mek , gb );
 {$IFDEF SDLMODE}
 		IndicateTile( GB , Mek , True );
 {$ELSE}
+		DisplayGearInfo( Mek , gb );
 		IndicateTile( GB , Mek );
 		ClrZone( ZONE_Menu );
 {$ENDIF}
 
 		{ Input the action. }
 {$IFDEF SDLMODE}
-		S := SelectMenu( RPM , @PCActionRedraw );
+		S := SelectMenu( RPM , @MenuControlRedraw );
 {$ELSE}
 		S := SelectMenu( RPM );
 {$ENDIF}
@@ -3249,7 +3261,7 @@ begin
 				PCSaveCampaign( Camp , Mek , True );
 
 			end else if KP = KeyMap[ KMC_CharInfo ].KCode then begin
-				PCViewChar( Camp^.GB , Mek );
+				FHQ_ThisLancemateWasSelected( Camp^.GB,LocatePilot(Mek),LocatePilot(Mek), True );
 
 			end else if KP = KeyMap[ KMC_ApplySkill ].KCode then begin
 				PCActivateSkill( Camp^.GB , Mek );
@@ -3294,7 +3306,7 @@ begin
 			    if OnTheMap( P.X , P.Y ) and Mouse_Active then begin
                     DisplayTileInfo(Camp^.GB, P.X, P.Y, False );
                 end;
-    			{ Indicate the mek to get the action for. }
+    			{ Everybody do the flip. }
                 ghflip();
 {$ENDIF}
 
