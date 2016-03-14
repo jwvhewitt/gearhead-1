@@ -3143,12 +3143,6 @@ begin
 		RLSmartAction( Camp^.GB , Mek );
         {$IFDEF SDLMODE}
         SDLCombatDisplay( Camp^.GB );
-		{ Indicate the mek to get the action for. }
-        {$IFDEF WIZARD}
-		DisplayBriefInfo( Mek , Camp^.gb );
-        {$ELSE WIZARD}
-		DisplayGearInfo( Mek , Camp^.gb );
-        {$ENDIF WIZARD}
         ghflip();
         {$ENDIF}
 
@@ -3157,12 +3151,7 @@ begin
 
 		{ Start the input loop. }
 		while (NAttValue( Mek^.NA , NAG_Action , NAS_CallTime) <= Camp^.GB^.ComTime) and (not GotMove) and (not Camp^.GB^.QuitTheGame) and GearActive( Mek ) do begin
-{$IFDEF SDLMODE}
-			P := MouseMapPos;
-			if OnTheMap( P.X , P.Y ) and Mouse_Active then MouseAtTile( Camp^.GB , P.X , P.Y );
-
-			IndicateTile( Camp^.GB , Mek , True );
-{$ELSE}
+{$IFNDEF SDLMODE}
 			{ Indicate the mek to get the action for. }
 			DisplayGearInfo( Mek , Camp^.gb );
 			IndicateTile( Camp^.GB , Mek );
@@ -3295,13 +3284,17 @@ begin
 			end else if ( KP = RPK_RightButton ) and Mouse_Active then begin
 				GameOptionMenu( Mek , Camp^.GB );
             end else if KP = RPK_TimeEvent then begin
+			    IndicateTile( Camp^.GB , Mek , True );
+
+			    P := MouseMapPos;
+			    if OnTheMap( P.X , P.Y ) and Mouse_Active then begin
+                    MouseAtTile( Camp^.GB , P.X , P.Y );
+                end;
                 SDLCombatDisplay( Camp^.GB );
+			    if OnTheMap( P.X , P.Y ) and Mouse_Active then begin
+                    DisplayTileInfo(Camp^.GB, P.X, P.Y, False );
+                end;
     			{ Indicate the mek to get the action for. }
-                {$IFDEF WIZARD}
-		        DisplayBriefInfo( Mek , Camp^.gb );
-                {$ELSE WIZARD}
-		        DisplayGearInfo( Mek , Camp^.gb );
-                {$ENDIF WIZARD}
                 ghflip();
 {$ENDIF}
 

@@ -1,3 +1,4 @@
+- Backpack menu for SDL mode reworked (backpack.pp)
 - Cancelling job selection menu gives new PC random job (randchar.pp)
 - Character generator interface should be more consistent (randchar.pp)
 - Added InfoBox from GearHead2.1 (sdlgfx.pp)

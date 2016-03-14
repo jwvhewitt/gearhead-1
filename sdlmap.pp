@@ -86,7 +86,7 @@ Procedure FinalizeMapDisplay;
 
 implementation
 
-uses texutil,menugear,ghchars;
+uses texutil,menugear,ghchars,sdlinfo;
 
 Type
 	Overlay_Description = Record
@@ -818,6 +818,7 @@ begin
 	if OnTheMap( X , Y ) then begin
 		Overlay_MAP[ X , Y , 0 , OVERLAY_IMAGE ].Sprite := Targeting_Srpite;
 		Overlay_MAP[ X , Y , 0 , OVERLAY_IMAGE ].F := 1;
+
 	end;
 end;
 
@@ -1017,6 +1018,9 @@ begin
 
 	{ Update the console. }
 	RedrawConsole;
+
+    { Show the PC info. }
+    if ComDisplay_PC <> Nil then DisplayBriefInfo( ComDisplay_PC, GB );
 end;
 
 Procedure FocusOnMek( GB: GameBoardPtr; Mek: GearPtr );

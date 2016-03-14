@@ -31,7 +31,6 @@ var
 
 Function JobAgeGenderDesc( NPC: GearPtr ): String;
 
-Procedure LocationInfo( Part: GearPtr; gb: GameBoardPtr );
 Procedure DisplayGearInfo( Part: GearPtr );
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr );
 Procedure DisplayGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
@@ -1181,7 +1180,8 @@ begin
 end;
 
 Procedure DrawBackpackHeader( PC: GearPtr );
-
+    { Add a header to the backpack display showing the PC's name and }
+    { encumberance status. }
 var
     MyDest: TSDL_Rect;
     CurM,MaxM: Integer;

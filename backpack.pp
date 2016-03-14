@@ -80,7 +80,8 @@ var
 {$IFDEF SDLMODE}
 	InfoGear: GearPtr;	{ Gear to appear in the INFO menu. }
 
-	BP_Source: GearPtr;	{ Gear to appear in the INFO menu. }
+	BP_Source: GearPtr;	{ Gear whose inventory is being examined. }
+    BP_Focus: GearPtr;  { Gear which is being focused on for FocusOnOneItemRedraw }
 	BP_SeekSibs: Boolean;	{ TRUE if the menu lists sibling gears; FALSE if it lists child gears. }
 	BP_ActiveMenu: RPGMenuPtr;	{ The active menu. Used to determine the gear to show info about. }
 
@@ -104,7 +105,7 @@ begin
 	SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
 	DisplayMenu( InvRPM , Nil );
-    DrawBackpackHeader( InfoGear );
+    DrawBackpackHeader( BP_Source );
 	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
 	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
 		N := CurrentMenuItemValue( BP_ActiveMenu );
@@ -119,7 +120,7 @@ begin
 end;
 
 Procedure InvRedraw;
-	{ Show Inventory, select Equipment. }
+	{ Show Equipment, select Inventory. }
 var
     N: Integer;
     Part: GearPtr;
@@ -127,7 +128,7 @@ begin
 	SDLCombatDisplay( InfoGB );
 	DrawBPBorder;
 	DisplayMenu( EqpRPM , Nil );
-    DrawBackpackHeader( InfoGear );
+    DrawBackpackHeader( BP_Source );
 	GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
 	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
 		N := CurrentMenuItemValue( BP_ActiveMenu );
@@ -140,7 +141,23 @@ begin
 		end;
 	end;
 end;
-Procedure MiscProcRedraw;
+
+Procedure FocusOnOneItemRedraw;
+	{ Miscellaneous menu redraw procedure. The Eqp display will be shown; }
+	{ the INV display won't be. }
+begin
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
+	DrawBPBorder;
+	LongformGearInfo( BP_Focus , InfoGB, ZONE_BPInfo );
+    DrawBackpackHeader( BP_Source );
+	if EqpRPM <> Nil then begin
+		DisplayMenu( EqpRPM , Nil );
+		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
+	end;
+end;
+
+
+Procedure TradeItemRedraw;
 	{ Miscellaneous menu redraw procedure. The Eqp display will be shown; }
 	{ the INV display won't be. }
 begin
@@ -748,7 +765,9 @@ begin
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
-	N := SelectMenu( EI_Menu , @MiscProcRedraw);
+    BP_Source := PC;
+    BP_Focus := Item;
+	N := SelectMenu( EI_Menu , @FocusOnOneItemRedraw);
 {$ELSE}
 	N := SelectMenu( EI_Menu );
 {$ENDIF}
@@ -849,7 +868,9 @@ begin
 	{ Select a slot for the item to go into. }
 	DialogMsg( GearName( Item ) + ' cmx:' + BStr( ComponentComplexity( Item ) ) + '. ' + MsgSTring( 'BACKPACK_InstallInfo' ) );
 {$IFDEF SDLMODE}
-	N := SelectMenu( EI_Menu , @MiscProcRedraw);
+    BP_Source := PC;
+    BP_Focus := Item;
+	N := SelectMenu( EI_Menu , @FocusOnOneItemRedraw);
 {$ELSE}
 	N := SelectMenu( EI_Menu );
 {$ENDIF}
@@ -919,7 +940,9 @@ begin
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
-	N := SelectMenu( IA_Menu , @MiscProcRedraw);
+    BP_Source := PC;
+    BP_Focus := Item;
+	N := SelectMenu( IA_Menu , @FocusOnOneItemRedraw);
 {$ELSE}
 	N := SelectMenu( IA_Menu );
 {$ENDIF}
@@ -1023,7 +1046,7 @@ begin
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
-	N := SelectMenu( TI_Menu , @MiscProcRedraw);
+	N := SelectMenu( TI_Menu , @TradeItemRedraw);
 {$ELSE}
 	N := SelectMenu( TI_Menu );
 {$ENDIF}
@@ -1212,9 +1235,10 @@ begin
 	AddRPGMenuItem( SkMenu , MsgSTring( 'BACKPACK_CancelSkillUse' ) , -1 );
 
 {$IFDEF SDLMODE}
-	InfoGear := TruePC;
 	InfoGB := GB;
-	T := SelectMenu( SkMenu , @MiscProcRedraw);
+    BP_Source := TruePC;
+    BP_Focus := Item;
+	T := SelectMenu( SkMenu , @FocusOnOneItemRedraw);
 {$ELSE}
 	T := SelectMenu( SkMenu );
 {$ENDIF}
@@ -1321,12 +1345,13 @@ begin
 	AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_ExitTIWS' ) , -1 );
 
 	repeat
-		DisplayGearInfo( Item );
 {$IFDEF SDLMODE}
-		InfoGear := Item;
+		BP_Focus := Item;
+        BP_Source := PC;
 		InfoGB := GB;
-		N := SelectMenu( TIWS_Menu , @MiscProcRedraw );
+		N := SelectMenu( TIWS_Menu , @FocusOnOneItemRedraw );
 {$ELSE}
+		DisplayGearInfo( Item );
 		N := SelectMenu( TIWS_Menu );
 {$ENDIF}
 		if N > 100 then begin

@@ -38,6 +38,8 @@ var
 	LOOKER_Gear: GearPtr;		{ Last mecha accessed. }
 	LOOKER_LastGearSelected: GearPtr;	{ Last enemy selected with select next enemy key. }
 
+Procedure DisplayTileInfo( GB: GameBoardPtr; X,Y: Integer; ShowEmpty: Boolean );
+
 Function LookAround( GB: GameBoardPtr; Mek: GearPtr ): Boolean;
 Function SelectTarget( GB: GameBoardPtr; Mek: GearPtr; var Wpn: GearPtr; var CallShot: boolean; var RapidFire: Integer ): Boolean;
 
@@ -166,7 +168,7 @@ begin
 	CreateTileMechaMenu := TMM;
 end;
 
-Procedure DisplayTileInfo( GB: GameBoardPtr; X,Y: Integer);
+Procedure DisplayTileInfo( GB: GameBoardPtr; X,Y: Integer; ShowEmpty: Boolean );
 	{ Display info on the contents of location X,Y. }
 	{ If the tile is empty, give a description of the terrain. }
 	{ Otherwise provide a sumamry for whatever gears are there. }
@@ -182,7 +184,7 @@ begin
 		GameMSG( 'Off The Map' , ZONE_Info , StdWhite );
 		LOOKER_Gear := Nil;
 
-	end else if N = 0 then begin
+	end else if ( N = 0 ) and ShowEmpty then begin
 		if GB^.Map[X,Y].Visible then begin
 			msg := '';
 			if GB^.Scene <> Nil then msg := SAttValue( GB^.Scene^.SA , 'LOOKER' + BStr( X ) + '%' + BStr( Y ) );
@@ -302,7 +304,7 @@ begin
 	repeat
 		{ Display info on the selected tile. }
         {$IFNDEF SDLMODE}
-		DisplayTileInfo( GB , X , Y );
+		DisplayTileInfo( GB , X , Y, True );
         {$ENDIF}
 
 {$IFNDEF SDLMODE}
@@ -385,7 +387,7 @@ begin
         end else if A = RPK_TimeEvent then begin
     		LOOKER_GB := GB;
     		GFLRedraw;
-    		DisplayTileInfo( GB , X , Y );
+    		DisplayTileInfo( GB , X , Y, True );
 		    if ( LOOKER_Origin <> Nil ) and OnTheMap( LOOKER_Origin ) then begin
 			    if LOOKER_Gear = Nil then begin
 				    CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );
