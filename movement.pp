@@ -140,10 +140,12 @@ Function MoveLegal( Mek: GEarPtr; MoveMode,MoveAction: Integer; COmTime: LongInt
 Function MoveLegal( Mek: GEarPtr; MoveAction: Integer; COmTime: LongInt ): Boolean;
 
 Function HasAtLeastOneValidMovemode( Mek: GearPtr ): Boolean;
+function MoveDesc( Master: GearPtr; mm: Integer ): String;
+
 
 implementation
 
-uses damage,gearutil,ghchars,ghmodule,ghsupport;
+uses damage,gearutil,ghchars,ghmodule,ghsupport,texutil;
 
 const
 	ZoaWalkBonus = 20;	{ Bonus to walking movement for Zoanoid mecha. }
@@ -571,6 +573,23 @@ begin
 	end else begin
 		Speedometer := AdjustedMoveRate( Master , MM , Order );
 	end;
+end;
+
+function MoveDesc( Master: GearPtr; mm: Integer ): String;
+    { Return a text description of the model's move speed. }
+var
+    mspeed: Integer;
+begin
+    mspeed := AdjustedMoveRate( Master , MM , NAV_NormSpeed );
+    if mspeed > 0 then begin
+        if ( mm = MM_Fly ) and ( JumpTime( Master ) > 0 ) then begin
+            MoveDesc := 'Jump: '+BStr(JumpTime( Master ))+'s';
+        end else begin
+            MoveDesc := MoveModeName[MM]+': '+BStr(mspeed);
+        end;
+    end else begin
+        MoveDesc :=  MoveModeName[MM]+': NA';
+    end;
 end;
 
 procedure GearUP( Mek: GearPtr );

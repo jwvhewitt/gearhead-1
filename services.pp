@@ -137,7 +137,7 @@ begin
 	SetupInteractDisplay( TeamColor( SERV_GB , SERV_NPC ) );
 	DisplayInteractStatus( SERV_GB , SERV_NPC , CHAT_React , CHAT_Endurance );
 	if SERV_Info <> Nil then begin
-		DisplayGearInfo( SERV_Info , SERV_GB );
+{		DisplayGearInfo( SERV_Info , SERV_GB );}
 		CMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu.GetRect() , MenuItem );
 	end;
 	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
@@ -1233,7 +1233,9 @@ var
 begin
 	{ Find the mecha. }
 	Mek := RetrieveGearSib( GB^.Meks , MekNum );
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( Mek );
+    {$ENDIF}
 
 	repeat
 		{ Create the menu. }
@@ -1661,8 +1663,10 @@ begin
 	until N = -1;
 
 	{ Restore the display. }
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( NPC , GB );
 	DisplayGearInfo( PC , GB , ZONE_Menu );
+    {$ENDIF}
 
 	DisposeGear( Wares );
 end;
@@ -2098,8 +2102,10 @@ begin
 	until N = -1;
 
 	{ Restore the display. }
+    {$IFNDEF SDLMODE}
 	DisplayGearInfo( NPC , GB );
 	DisplayGearInfo( PC , GB , ZONE_Menu );
+    {$ENDIF}
 end;
 
 

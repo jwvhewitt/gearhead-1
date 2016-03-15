@@ -116,12 +116,12 @@ const
 	ZONE_InteractInfo: DynamicRect = ( dx: -250; dy:-165; w:395; h:40; anchor: ANC_middle );
 	ZONE_InteractTotal: DynamicRect = ( dx: -255; dy: -215; w: 510; h: 335; anchor: ANC_middle );
 
-	ZONE_BPTotal: DynamicRect = (dx:-270; dY:-215; W: 540; H: 330; anchor: ANC_middle);
-    ZONE_BPHeader: DynamicRect = (dx:-265; dY:-210; W: 300; H: 40; anchor: ANC_middle);
-	ZONE_EqpMenu: DynamicRect = ( dx:-265; dy:-165; w:300; h:80; anchor: ANC_middle );
-	ZONE_InvMenu: DynamicRect = ( dx:-265; dy:-80; w:300; h:145; anchor: ANC_middle );
-	ZONE_BPInstructions: DynamicRect = (dx:-265; dY:70; W: 300; H: 40; anchor: ANC_middle);
-	ZONE_BPInfo: DynamicRect = (dx:45; dY:-210; W: 220; H: 320; anchor: ANC_middle);
+	ZONE_BPTotal: DynamicRect = (dx:-300; dY:-215; W: 570; H: 330; anchor: ANC_middle);
+    ZONE_BPHeader: DynamicRect = (dx:-295; dY:-210; W: 300; H: 40; anchor: ANC_middle);
+	ZONE_EqpMenu: DynamicRect = ( dx:-295; dy:-165; w:300; h:80; anchor: ANC_middle );
+	ZONE_InvMenu: DynamicRect = ( dx:-295; dy:-80; w:300; h:145; anchor: ANC_middle );
+	ZONE_BPInstructions: DynamicRect = (dx:-295; dY:70; W: 300; H: 40; anchor: ANC_middle);
+	ZONE_BPInfo: DynamicRect = (dx:15; dY:-210; W: 250; H: 320; anchor: ANC_middle);
 
 	ZONE_Menu: DynamicRect = ( dx: 10; dy:10; w:Right_Column_Width; h:205; anchor: ANC_upperleft );
 	ZONE_Menu1: DynamicRect = ( dx: 10; dy:10; w:Right_Column_Width; h:100; anchor: ANC_upperleft );
@@ -130,6 +130,12 @@ const
 	ZONE_MemoText: DynamicRect = ( dx:-175; dy:-150; w:350; h:200; anchor: ANC_middle );
 	ZONE_MemoMenu: DynamicRect = ( dx:-175; dy:55; w:350; h:50; anchor: ANC_middle );
     ZONE_MemoTotal: DynamicRect = ( dx:-180; dy:-155; w:360; h:265; anchor: ANC_middle );
+
+    ZONE_CenterMenu: DynamicRect = ( dx:-120; dy:-155; w:240; h:210; anchor: ANC_middle );
+
+    ZONE_FHQTitle: DynamicRect = ( dx:-165; dy:-255; w:300; h:20; anchor: ANC_middle ); 
+    ZONE_FHQMenu: DynamicRect = ( dx:-280; dy:-210; w:292; h:320; anchor: ANC_middle );
+	ZONE_FHQInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 320; anchor: ANC_middle);
 
     { The line of conversion- zones above this have been validated for WIZARD. }
 

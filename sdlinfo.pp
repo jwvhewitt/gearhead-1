@@ -1139,19 +1139,13 @@ begin
 	until ( A = ' ' ) or ( A = #27 ) or ( A = #8 );
 end;
 
-Procedure LongformGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
-
+Procedure LFGI_ForItems( Part: GearPtr; gb: GameBoardPtr );
+    { Longform info for whatever the heck this is. }
 var
-    MyDest,AI_Dest: TSDL_Rect;
+    AI_Dest: TSDL_Rect;
     msg: String;
     n: Integer;
 begin
-    MyDest := Z.GetRect();
-	SetInfoZone( MyDest );
-
-	{ Show the part's name. }
-	AI_Title( GearName(Part) , InfoHilight );
-
 	{ Display the part's armor rating. }
 	N := GearCurrentArmor( Part );
 	if N > 0 then msg := '[' + BStr( N )
@@ -1179,7 +1173,70 @@ begin
 	AI_Dest.W := AI_Dest.W - 20;
 	AI_Dest.H := AI_Dest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
 	GameMsg( ExtendedDescription( Part ) , AI_Dest , InfoGreen );
+end;
 
+Procedure LFGI_ForMecha( Part: GearPtr; gb: GameBoardPtr );
+    { Longform info for whatever the heck this is. }
+var
+    MyDest: TSDL_Rect;
+    msg: String;
+    n,mm,mspeed: Integer;
+    SS: SensibleSpritePtr;
+begin
+    msg := TeamColorString( GB , Part );
+    CDest.X := CZone.X;
+	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , msg , 160 , 160 );
+	if SS <> Nil then DrawSprite( SS , CDest , 0 );
+    CDest.X := CDest.X + 173;
+    SS := ConfirmSprite( GearSpriteName(Nil,Part) , msg , 64 , 64 );
+	if SS <> Nil then DrawSprite( SS , CDest , Animation_Phase div 5 mod 8 );
+    n := CDest.Y;
+    CDest.X := CDest.X + 164;
+    CDest.Y := CDest.Y + 70;
+	AI_PrintFromRight( 'MV:' + SgnStr(MechaManeuver(Part)) , 164, InfoGreen );
+	AI_NextLine;
+	AI_PrintFromRight( 'TR:' + SgnStr(MechaTargeting(Part)) , 164, InfoGreen );
+	AI_NextLine;
+	AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Part)) , 164, InfoGreen );
+	AI_NextLine;
+
+    for mm := 1 to NumMoveMode do begin
+        mspeed := AdjustedMoveRate( Part , MM , NAV_NormSpeed );
+        if mspeed > 0 then begin
+        	AI_PrintFromRight( MoveDesc(Part,MM), 164, InfoGreen );
+        	AI_NextLine;
+        end;
+    end;
+
+    CDest.Y := n + 164;
+
+	AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] , InfoHilight );
+
+	MyDest := CZone;
+	MyDest.X := MyDest.X + 10;
+	MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
+	MyDest.W := MyDest.W - 20;
+	MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
+	GameMsg( SAttValue( Part^.SA, 'DESC' ) , MyDest , InfoGreen );
+end;
+
+
+Procedure LongformGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
+    { Display the longform info for this part. }
+var
+    MyDest: TSDL_Rect;
+    msg: String;
+    n: Integer;
+begin
+    MyDest := Z.GetRect();
+	SetInfoZone( MyDest );
+
+	{ Show the part's name. }
+	AI_Title( GearName(Part) , InfoHilight );
+
+    if Part^.G = GG_Mecha then begin
+        LFGI_ForMecha( Part, gb );
+    end else LFGI_ForItems( Part, gb );
 end;
 
 Procedure DrawBackpackHeader( PC: GearPtr );

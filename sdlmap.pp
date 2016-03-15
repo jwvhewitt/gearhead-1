@@ -42,6 +42,9 @@ Function OnTheScreen( X , Y: Integer ): Boolean;
 Function OnTheScreen( Mek: GearPtr ): Boolean;
 Function NeedsRecentering( X,Y: Integer ): Boolean;
 
+Function GearSpriteName( GB: GameBoardPtr; M: GearPtr ): String;
+
+
 Function TeamColorString( GB: GameBoardPtr; M: GearPtr ): String;
 
 Procedure RedrawTile( gb: GameBoardPtr; X,Y: Integer );
@@ -498,7 +501,7 @@ var
 	FList: SAttPtr;
 begin
 	{ If this model is an out-of-scale character, return the mini-sprite. }
-	if ( M^.G = GG_Character ) and ( M^.Scale < GB^.Scale ) then Exit( mini_sprite );
+	if ( M^.G = GG_Character ) and (GB <> Nil) and ( M^.Scale < GB^.Scale ) then Exit( mini_sprite );
 
 	it := SAttValue( M^.SA , 'SDL_SPRITE' );
 	if it = '' then begin

@@ -89,6 +89,7 @@ var
     BP_Focus: GearPtr;  { Gear which is being focused on for FocusOnOneItemRedraw }
 	BP_SeekSibs: Boolean;	{ TRUE if the menu lists sibling gears; FALSE if it lists child gears. }
 	BP_ActiveMenu: RPGMenuPtr;	{ The active menu. Used to determine the gear to show info about. }
+    BPRD_Caption: String;
 
 	InfoGB: GameBoardPtr;
 	MPB_Redraw: RedrawProcedureType;
@@ -160,6 +161,22 @@ begin
 		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
 	end;
 end;
+
+Procedure FHQWargearRedraw;
+	{ Do a redraw for the Field HQ. }
+var
+	Part: GearPtr;
+begin
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
+    if BPRD_CAPTION <> '' then begin
+    	InfoBox( ZONE_FHQTitle.GetRect() );
+        CMessage( BPRD_CAPTION , ZONE_FHQTitle.GetRect() , InfoHilight );
+    end;
+    InfoBox( ZONE_FHQMenu.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+	LongformGearInfo( InfoGear , InfoGB, ZONE_FHQInfo );
+end;
+
 
 
 Procedure TradeItemRedraw;

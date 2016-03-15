@@ -57,9 +57,10 @@ const
 
 {$IFDEF SDLMODE}
 var
-	PCACTIONRD_PC: GearPtr;
+	PCACTIONRD_PC,PCACTIONRD_Source: GearPtr;
 	PCACTIONRD_GB: GameBoardPtr;
-    CHARVIEW_CAPTION: String;
+    PCACTIONRD_CAPTION: String;
+    PCACTIONRD_Menu: RPGMenuPtr;
 
 Procedure PCActionRedraw;
 	{ Redraw the map and the PC's info. }
@@ -74,20 +75,19 @@ begin
     InfoBox( ZONE_Menu.GetRect() );
 end;
 
+Procedure CenterMenuRedraw;
+	{ Redraw the map and the PC's info. }
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+    InfoBox( ZONE_CenterMenu.GetRect() );
+end;
+
+
 Procedure PCSRedraw;
 	{ Redraw the map and the PC's info. }
 begin
 	SDLCombatDisplay( PCACTIONRD_GB );
 	SetupMemoDisplay;
-end;
-
-Procedure TrainingRedraw;
-	{ Redraw the training screen. }
-begin
-	SetupCombatDisplay;
-	CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharGenChar );
-	RedrawConsole;
-	CMessage( 'FREE XP: ' + BStr( NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_TotalXP ) - NAttValue( PCACTIONRD_PC^.NA , NAG_Experience , NAS_SpentXP ) ) , ZONE_Menu1.GetRect() , InfoHilight );
 end;
 
 Procedure CharViewRedraw;
@@ -98,11 +98,33 @@ begin
 	InfoBox( ZONE_CharViewMenu.GetRect() );
 	InfoBox( ZONE_CharViewDesc.GetRect() );
 	if PCACTIONRD_PC <> Nil then CharacterDisplay( PCACTIONRD_PC , PCACTIONRD_GB, ZONE_CharViewChar );
-    if CHARVIEW_CAPTION <> '' then begin
+    if PCACTIONRD_CAPTION <> '' then begin
     	InfoBox( ZONE_CharViewCaption.GetRect() );
-        CMessage( CHARVIEW_CAPTION , ZONE_CharViewCaption.GetRect() , InfoGreen );
+        CMessage( PCACTIONRD_CAPTION , ZONE_CharViewCaption.GetRect() , InfoGreen );
     end;
 end;
+
+Procedure FieldHQRedraw;
+	{ Do a redraw for the Field HQ. }
+var
+	Part: GearPtr;
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+    if PCACTIONRD_CAPTION <> '' then begin
+    	InfoBox( ZONE_FHQTitle.GetRect() );
+        CMessage( PCACTIONRD_CAPTION , ZONE_FHQTitle.GetRect() , InfoHilight );
+    end;
+    InfoBox( ZONE_FHQMenu.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+
+	if ( PCACTIONRD_Menu <> Nil ) and ( PCACTIONRD_Source <> Nil ) then begin
+		Part := RetrieveGearSib( PCACTIONRD_Source , CurrentMenuItemValue( PCACTIONRD_Menu ) );
+		if Part <> Nil then begin
+        	LongformGearInfo( Part , PCACTIONRD_GB, ZONE_FHQInfo );
+		end;
+	end;
+end;
+
 {$ENDIF}
 
 
@@ -279,7 +301,7 @@ begin
 	N := 1;
 	repeat
 {$IFDEF SDLMODE}
-		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CenterMenu );
 {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 {$ENDIF}
@@ -309,7 +331,7 @@ begin
 		AddRPGMenuItem( RPM , '  Exit Prefrences' , -1 );
 		SetItemByValue( RPM , N );
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @MenuControlRedraw );
+		N := SelectMenu( RPM , @CenterMenuRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -426,7 +448,7 @@ begin
 {$IFDEF SDLMODE}
 		PCACTIONRD_PC := NPC;
         PCACTIONRD_GB := GB;
-        CHARVIEW_CAPTION := '';
+        PCACTIONRD_CAPTION := '';
 		n := SelectMenu( RPM , @CharViewRedraw );
 {$ELSE}
 		DisplayGearInfo( NPC , GB );
@@ -464,8 +486,8 @@ begin
 			11:	SetPlayOptions( GB , NPC );
 			12:	BrowsePersonalHistory( GB , NPC );
 {$IFDEF SDLMODE}
-			13:	SelectColors( NPC , @TrainingRedraw );
-			14:	SelectSprite( NPC , @TrainingRedraw );
+			13:	SelectColors( NPC , @PCActionRedraw );
+			14:	SelectSprite( NPC , @CharViewRedraw );
 {$ENDIF}
 		end;
     	DisposeRPGMenu( RPM );
@@ -482,7 +504,11 @@ var
 begin
 	repeat
 		{ Create the menu. }
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+        {$ENDIF}
 		M := GB^.Meks;
 		N := 1;
 		while M <> Nil do begin
@@ -501,7 +527,12 @@ begin
 
 		{ Get a selection from the menu. }
 {$IFDEF SDLMODE}
-		n := SelectMenu( RPM , @PCActionRedraw );
+        PCACTIONRD_GB := GB;
+        PCACTIONRD_Source := GB^.Meks;
+        PCACTIONRD_PC := PC;
+        PCACTIONRD_Menu := RPM;
+        PCACTIONRD_Caption := MsgString('FIELDHQ_TITLE');
+		n := SelectMenu( RPM , @FieldHQRedraw );
 {$ELSE}
 		n := SelectMenu( RPM );
 {$ENDIF}
@@ -1418,7 +1449,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 {$IFDEF SDLMODE}
             PCACTIONRD_GB := GB;
             PCACTIONRD_PC := PC;
-            CHARVIEW_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
+            PCACTIONRD_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
 			N := SelectMenu( SkMenu , @CharViewRedraw );
 {$ELSE}
 			CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )) , ZONE_Menu1 , InfoHilight );
@@ -1546,7 +1577,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 {$IFDEF SDLMODE}
             PCACTIONRD_GB := GB;
             PCACTIONRD_PC := PC;
-            CHARVIEW_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
+            PCACTIONRD_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
 			N := SelectMenu( StMenu , @CharViewRedraw );
 {$ELSE}
 			CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )), ZONE_Menu1 , InfoHilight );
@@ -1643,7 +1674,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
         PCACTIONRD_PC := PC;
-        CHARVIEW_CAPTION := ReplaceHash( MsgString('SKILL_SLOTS_LEFT'), BStr( NumberOfSkills( PC ) ) + '/' + BStr( NumberOfSkillSlots( PC ) ) );
+        PCACTIONRD_CAPTION := ReplaceHash( MsgString('SKILL_SLOTS_LEFT'), BStr( NumberOfSkills( PC ) ) + '/' + BStr( NumberOfSkillSlots( PC ) ) );
 		N := SelectMenu( SkMenu , @CharViewRedraw );
 {$ELSE}
 		CMessage( ReplaceHash( MsgString('SKILL_SLOTS_LEFT'), BStr( NumberOfSkills( PC ) ) + '/' + BStr( NumberOfSkillSlots( PC ) ) ), ZONE_Menu1 , InfoHilight );
@@ -1739,7 +1770,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
             {$IFDEF SDLMODE}
             PCACTIONRD_GB := GB;
             PCACTIONRD_PC := PC;
-            CHARVIEW_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
+            PCACTIONRD_CAPTION := ReplaceHash( MSgString('FREEXP'),BStr( FXP ));
 			N := SelectMenu( TMenu , @CharViewRedraw );
             {$ELSE}
 			N := SelectMenu( TMenu );
@@ -1804,7 +1835,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
         PCACTIONRD_PC := PC;
-        CHARVIEW_CAPTION := MsgString('TALENTS');
+        PCACTIONRD_CAPTION := MsgString('TALENTS');
 		N := SelectMenu( TMenu , @CharViewRedraw );
 {$ELSE}
 		CMessage( MsgString('TALENTS'), ZONE_Menu1 , InfoHilight );
@@ -1849,7 +1880,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
         PCACTIONRD_PC := PC;
-        CHARVIEW_CAPTION := MsgString('CYBERWARE');
+        PCACTIONRD_CAPTION := MsgString('CYBERWARE');
 		SelectMenu( TMenu , @CharViewRedraw );
 {$ELSE}
 		CMessage( MsgString('CYBERWARE'), ZONE_Menu1 , InfoHilight );
@@ -1886,7 +1917,7 @@ begin
 {$IFDEF SDLMODE}
     	PCACTIONRD_PC := PC;
     	PCACTIONRD_GB := GB;
-        CHARVIEW_CAPTION := '';
+        PCACTIONRD_CAPTION := '';
 		N := SelectMenu( DTMenu , @CharViewRedraw );
 {$ELSE}
 		DisplayGearInfo( PC );
