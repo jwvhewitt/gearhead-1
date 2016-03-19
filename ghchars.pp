@@ -336,8 +336,13 @@ Const
 
 	);
 
+    NAS_Awareness = 11;
+    NAS_Initiative = 12;
     NAS_Vitality = 13;
     NAS_MechaRepair = 15;
+    NAS_ElectronicWarfare = 17;
+    NAS_SpotWeakness = 18;
+    NAS_Stealth = 25;
 	NAS_WeightLifting = 33;
 	NAS_Performance = 35;
 	NAS_Resistance = 36;

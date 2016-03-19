@@ -72,7 +72,7 @@ implementation
 {$IFDEF SDLMODE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
-     sdlinfo,sdlmap,sdlmenus,ghweapon,colormenu;
+     sdlinfo,sdlmap,sdlmenus,ghweapon,colormenu,sdl;
 {$ELSE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
@@ -93,7 +93,6 @@ var
 
 	InfoGB: GameBoardPtr;
 	MPB_Redraw: RedrawProcedureType;
-	MPB_Gear: GearPtr;
 
 Procedure PlainRedraw;
 	{ Miscellaneous menu redraw procedure. }
@@ -164,8 +163,6 @@ end;
 
 Procedure FHQWargearRedraw;
 	{ Do a redraw for the Field HQ. }
-var
-	Part: GearPtr;
 begin
 	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
     if BPRD_CAPTION <> '' then begin
@@ -207,7 +204,6 @@ Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
 var
     mysprite,startpal,mypal: String;
 begin
-{$IFDEF SDLMODE}
     startpal := SAttValue( m^.SA, 'SDL_COLORS' );
 	if M^.G = GG_Character then begin
         mypal := SelectColorPalette( colormenu_mode_character, SAttValue( m^.SA, 'SDL_PORTRAIT' ), startpal, 100, 150, 0, Redrawer );
@@ -215,7 +211,6 @@ begin
         mypal := SelectColorPalette( colormenu_mode_mecha, SAttValue( m^.SA, 'SDL_SPRITE' ), startpal, 64, 64, 8, Redrawer );
     end;
     SetSAtt( M^.SA, 'SDL_COLORS <' + mypal + '>' );
-{$ENDIF}
 end;
 
 
@@ -243,6 +238,13 @@ begin
 
 	DisposeRPGMenu( RPM );
 end;
+
+Procedure FHQRedraw;
+begin
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
+	{DisplayGearInfo( InfoGear );}
+end;
+
 
 {$ENDIF}
 
@@ -1184,6 +1186,35 @@ begin
 	DialogMsg( ReplaceHash( MsgString( 'FHQ_AssociatePM' ) , GearName( PC ) ) );
 end;
 
+{$IFDEF SDLMODE}
+Procedure SelectPilotForMechaRedraw;
+	{ Do a redraw for the Field HQ. }
+var
+	Part: GearPtr;
+    N: Integer;
+begin
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
+    if BPRD_CAPTION <> '' then begin
+    	InfoBox( ZONE_FHQTitle.GetRect() );
+        CMessage( BPRD_CAPTION , ZONE_FHQTitle.GetRect() , InfoHilight );
+    end;
+    InfoBox( ZONE_FHQMenu1.GetRect() );
+    InfoBox( ZONE_FHQMenu2.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+    MechaInfoForSelectingAPilot( BP_Focus, InfoGB, ZONE_FHQMenu1 );
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		N := CurrentMenuItemValue( BP_ActiveMenu );
+		if N > 0 then begin
+			Part := RetrieveGearSib( BP_Source , N );
+			if Part <> Nil then begin
+            	LongformGearInfo( Part , InfoGB, ZONE_FHQInfo );
+			end;
+		end;
+	end;
+end;
+{$ENDIF}
+
+
 Procedure FHQ_SelectPilotForMecha( GB: GameBoardPtr; Mek: GearPtr );
 	{ Select a pilot for the mecha in question. }
 	{ Pilots must be characters- they must either belong to the default }
@@ -1196,7 +1227,11 @@ var
 	M: GearPtr;
 begin
 	{ Create the menu. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu2 );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+    {$ENDIF}
 	M := GB^.Meks;
 	N := 1;
 	while M <> Nil do begin
@@ -1215,7 +1250,13 @@ begin
 
 	{ Get a selection from the menu. }
 {$IFDEF SDLMODE}
-	n := SelectMenu( RPM , @PlainRedraw );
+	BP_Focus := Mek;
+    BP_Source := GB^.Meks;
+	INFOGB := GB;
+    BPRD_CAPTION := ReplaceHash( MsgString('FIELDHQ_SELECTPILOTFORMECHA'), GearName(Mek) );
+    BP_ActiveMenu := RPM;
+
+	n := SelectMenu( RPM , @SelectPilotForMechaRedraw );
 {$ELSE}
 	n := SelectMenu( RPM );
 {$ENDIF}
@@ -1226,6 +1267,34 @@ begin
 		FHQ_AssociatePilotMek( M , Mek , GB^.Meks );
 	end;
 end;
+
+{$IFDEF SDLMODE}
+Procedure SelectMechaForPilotRedraw;
+	{ Do a redraw for the Field HQ. }
+var
+	Part: GearPtr;
+    N: Integer;
+begin
+	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
+    if BPRD_CAPTION <> '' then begin
+    	InfoBox( ZONE_FHQTitle.GetRect() );
+        CMessage( BPRD_CAPTION , ZONE_FHQTitle.GetRect() , InfoHilight );
+    end;
+    InfoBox( ZONE_FHQMenu1.GetRect() );
+    InfoBox( ZONE_FHQMenu2.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+    PilotInfoForSelectingAMecha( BP_Focus, InfoGB, ZONE_FHQMenu1 );
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		N := CurrentMenuItemValue( BP_ActiveMenu );
+		if N > 0 then begin
+			Part := RetrieveGearSib( BP_Source , N );
+			if Part <> Nil then begin
+            	LongformGearInfo( Part , InfoGB, ZONE_FHQInfo );
+			end;
+		end;
+	end;
+end;
+{$ENDIF}
 
 Procedure FHQ_SelectMechaForPilot( GB: GameBoardPtr; NPC: GearPtr );
 	{ Select a pilot for the mecha in question. }
@@ -1239,23 +1308,29 @@ var
 	M: GearPtr;
 begin
 {$IFDEF SDLMODE}
-	INFOGear := NPC;
+	BP_Focus := NPC;
+    BP_Source := GB^.Meks;
 	INFOGB := GB;
+    BPRD_CAPTION := ReplaceHash( MsgString('FIELDHQ_SELECTMECHAFORPILOT'), GearName(NPC) );
 {$ENDIF}
 
 	{ Error check- only characters can pilot mecha! Pets can't. }
-	if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) then begin
+	if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) and ( NAttValue( NPC^.NA , NAG_Location , NAS_Team ) <> NAV_DefPlayerTeam ) then begin
 		DialogMsg( ReplaceHash( MsgString( 'FHQ_SMFP_NoPets' ) , GearName( NPC ) ) );
 		Exit;
 	end;
 
 	{ Create the menu. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu2 );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+    {$ENDIF}
 	M := GB^.Meks;
 	N := 1;
 	while M <> Nil do begin
 		if ( M^.G = GG_Mecha ) and ( NAttValue( M^.NA , NAG_Location , NAS_Team ) = NAV_DefPlayerTeam ) then begin
-			AddRPGMenuItem( RPM , GearName( M ) , N );
+			AddRPGMenuItem( RPM , LanceMateMenuName( M ) , N );
 		end;
 		M := M^.Next;
 		Inc( N );
@@ -1265,7 +1340,8 @@ begin
 
 	{ Get a selection from the menu. }
 {$IFDEF SDLMODE}
-	n := SelectMenu( RPM , @PlainRedraw );
+    BP_ActiveMenu := RPM;
+	n := SelectMenu( RPM , @SelectMechaForPilotRedraw );
 {$ELSE}
 	n := SelectMenu( RPM );
 {$ENDIF}
@@ -1645,14 +1721,32 @@ begin
 end;
 
 {$IFDEF SDLMODE}
-	Procedure MPERedraw;
-		{ Show Inventory, select Equipment. }
-	begin
-		SDLCombatDisplay( InfoGB );
-		DrawBPBorder;
-		GameMsg( FullGearName( INFOGear ) + ' '  + MechaDescription( InfoGear) , ZONE_EqpMenu.GetRect() , InfoGreen );
-		{DisplayGearInfo( InfoGear );}
+Procedure MPERedraw;
+	{ Show Inventory, select Equipment. }
+var
+    N: Integer;
+    Part: GearPtr;
+begin
+	SDLCombatDisplay( InfoGB );
+	DrawBPBorder;
+    DrawBackpackHeader( BP_Source );
+
+    if BPRD_CAPTION <> '' then begin
+        CMessage( BPRD_CAPTION , ZONE_BPInstructions.GetRect() , InfoHilight );
+    end;
+
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		N := CurrentMenuItemValue( BP_ActiveMenu );
+		if N > 0 then begin
+			Part := LocateGearByNumber( BP_Source , N );
+			if Part <> Nil then begin
+            	LongformGearInfo( Part , InfoGB, ZONE_BPInfo );
+			end else LongformGearInfo( BP_Source , InfoGB, ZONE_BPInfo );
+        end else LongformGearInfo( BP_Source , InfoGB, ZONE_BPInfo );
 	end;
+
+	GameMsg( FullGearName( BP_Source ) + ' '  + MechaDescription( BP_Source) , ZONE_EqpMenu.GetRect() , InfoGreen );
+end;
 {$ENDIF}
 
 Procedure MechaPartEditor( GB: GameBoardPtr; var LList: GearPtr; PC,Mek: GearPtr );
@@ -1677,8 +1771,9 @@ begin
 		DisplayGearInfo( Mek );
 {$ENDIF}
 {$IFDEF SDLMODE}
-		InfoGear := Mek;
+		BP_Source := Mek;
 		InfoGB := GB;
+        BP_ActiveMenu := RPM;
 		N := SelectMenu( RPM , @MPERedraw);
 {$ELSE}
 		N := SelectMenu( RPM );
@@ -1696,9 +1791,26 @@ end;
 {$IFDEF SDLMODE}
 Procedure PartBrowserRedraw;
 	{ Redraw the screen for the part browser. }
+var
+    N: Integer;
+    Part: GearPtr;
 begin
 	if MPB_Redraw <> Nil then MPB_Redraw;
-	{if MPB_Gear <> Nil then DisplayGearInfo( MPB_Gear );}
+    if BPRD_CAPTION <> '' then begin
+    	InfoBox( ZONE_FHQTitle.GetRect() );
+        CMessage( BPRD_CAPTION , ZONE_FHQTitle.GetRect() , InfoHilight );
+    end;
+    InfoBox( ZONE_FHQMenu.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		N := CurrentMenuItemValue( BP_ActiveMenu );
+		if N > 0 then begin
+			Part := LocateGearByNumber( BP_Source , N );
+			if Part <> Nil then begin
+            	LongformGearInfo( Part , InfoGB, ZONE_FHQInfo );
+			end else LongformGearInfo( BP_Source , InfoGB, ZONE_FHQInfo );
+        end else LongformGearInfo( BP_Source , InfoGB, ZONE_FHQInfo );
+	end;
 end;
 
 Procedure MechaPartBrowser( Mek: GearPtr; RDP: RedrawProcedureType );
@@ -1713,13 +1825,17 @@ var
 begin
 {$IFDEF SDLMODE}
 	MPB_Redraw := RDP;
-	MPB_Gear := Mek;
+	BP_Source := Mek;
+    BPRD_Caption := ReplaceHash( MSgString('PARTBROWSER_CAPTION'), FullGearName( Mek ) );
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu );
+    BP_ActiveMenu := RPM;
+    DialogMsg( 'Working on it' );
+{$ELSE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 {$ENDIF}
 
-	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 	BuildGearMenu( RPM , Mek );
 	AddRPGMenuItem( RPM , 'Exit Browser' , -1 );
-
 
 	Repeat
 {$IFDEF SDLMODE}
@@ -1731,7 +1847,7 @@ begin
 
 		if N > -1 then begin
 {$IFDEF SDLMODE}
-			MPB_Gear := LocateGearByNumber( Mek , N );
+            N := -1;
 {$ELSE}
 			DisplayGearInfo( LocateGearByNumber( Mek , N ) );
 			EndOFGameMoreKey;
@@ -1740,14 +1856,6 @@ begin
 	until N = -1;
 	DisposeRPGMenu( RPM );
 end;
-
-{$IFDEF SDLMODE}
-	Procedure FHQRedraw;
-	begin
-		if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
-		{DisplayGearInfo( InfoGear );}
-	end;
-{$ENDIF}
 
 Procedure FHQ_Transfer( var LList: GearPtr; PC,Item: GearPtr );
 	{ An item has been selected. Allow it to be transferred to }
@@ -1806,7 +1914,8 @@ var
 	name: String;
 begin
 {$IFDEF SDLMODE}
-	name := GetStringFromUser( ReplaceHash( MsgString( 'FHQ_Rename_Prompt' ) , GearName( NPC ) ) , @FHQRedraw );
+    InfoGB := GB;
+	name := GetStringFromUser( ReplaceHash( MsgString( 'FHQ_Rename_Prompt' ) , GearName( NPC ) ) , @PlainRedraw );
 {$ELSE}
 	name := GetStringFromUser( ReplaceHash( MsgString( 'FHQ_Rename_Prompt' ) , GearName( NPC ) ) );
 	GFCombatDisplay( GB );
@@ -1822,15 +1931,17 @@ var
 	RPM: RPGMenuPtr;
 	N: Integer;
 begin
+    N := 1;
 	repeat
 		{ Show the mecha's stats. }
-        {$IFNDEF SDLMODE}
-		DisplayGearInfo( M );
-        {$ENDIF}
-
 		{ Create the FHQ menu. }
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_FHQMenu );
+        {$ELSE}
+		DisplayGearInfo( M );
 		RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_Menu );
 		RPM^.Mode := RPMNoCleanup;
+        {$ENDIF}
 
 		if IsMasterGear( M ) then begin
 			if IsSafeArea( GB ) or OnTheMap( M ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_GoBackpack' ) , 1 );
@@ -1852,11 +1963,13 @@ begin
 
 		AddRPGMenuItem( RPM , MsgString( 'FHQ_ReturnToMain' ) , -1 );
 
+        SetItemByValue( RPM , N );
+
 		{ Get a selection from the menu, then dispose of it. }
 {$IFDEF SDLMODE}
 		InfoGB := GB;
 		infoGear := M;
-		N := SelectMenu( RPM , @FHQRedraw );
+		N := SelectMenu( RPM , @FHQWargearRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -1873,7 +1986,7 @@ begin
 				-3: FHQ_Transfer( LList , PC , M );
 				4: MechaPartEditor( GB , LList , PC , M );
 {$IFDEF SDLMODE}
-				5: SelectColors( M , @FHQRedraw );
+				5: SelectColors( M , @PlainRedraw );
 {$ENDIF}
 				6: Rename_Mecha( GB , M );
 			end;

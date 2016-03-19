@@ -45,6 +45,9 @@ Procedure DrawBackpackHeader( PC: GearPtr );
 
 Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
 
+Procedure PilotInfoForSelectingAMecha( PC: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
+Procedure MechaInfoForSelectingAPilot( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
+
 
 implementation
 
@@ -1175,7 +1178,7 @@ begin
 	GameMsg( ExtendedDescription( Part ) , AI_Dest , InfoGreen );
 end;
 
-Procedure LFGI_ForMecha( Part: GearPtr; gb: GameBoardPtr );
+Procedure LFGI_ForMecha( Part: GearPtr; gb: GameBoardPtr; ReallyLong: Boolean );
     { Longform info for whatever the heck this is. }
 var
     MyDest: TSDL_Rect;
@@ -1208,16 +1211,43 @@ begin
         end;
     end;
 
-    CDest.Y := n + 164;
+    if ReallyLong then begin
+        CDest.Y := n + 164;
+	    AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] , InfoHilight );
+	    MyDest := CZone;
+	    MyDest.X := MyDest.X + 10;
+	    MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
+	    MyDest.W := MyDest.W - 20;
+	    MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
+	    GameMsg( SAttValue( Part^.SA, 'DESC' ) , MyDest , InfoGreen );
+    end;
+end;
 
-	AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] , InfoHilight );
+Procedure LFGI_ForCharacters( Part: GearPtr; gb: GameBoardPtr );
+    { Longform info for whatever the heck this is. }
+var
+    MyDest: TSDL_Rect;
+    msg: String;
+    n,sval: Integer;
+    SS: SensibleSpritePtr;
+begin
+    msg := TeamColorString( GB , Part );
+    CDest.X := CZone.X;
+	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , msg , 100 , 150 );
+	if SS <> Nil then DrawSprite( SS , CDest , 0 );
+	AI_NextLine;
+    for n := 1 to NumGearStats do begin
+	    AI_PrintFromRight( StatName[n] + ':' , 116 , InfoGreen );
+	    AI_PrintFromLeft( BStr( CStat( Part, n ) ) , CZone.W - 8 , InfoGreen );
+	    AI_NextLine;
+    end;
 
-	MyDest := CZone;
-	MyDest.X := MyDest.X + 10;
-	MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
-	MyDest.W := MyDest.W - 20;
-	MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
-	GameMsg( SAttValue( Part^.SA, 'DESC' ) , MyDest , InfoGreen );
+    MyDest := CZone;
+    MyDest.X := MyDest.X + 10;
+    MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
+    MyDest.W := MyDest.W - 20;
+    MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
+    GameMsg( SAttValue( Part^.SA, 'BIO_1' ) , MyDest , InfoGreen );
 end;
 
 
@@ -1234,9 +1264,9 @@ begin
 	{ Show the part's name. }
 	AI_Title( GearName(Part) , InfoHilight );
 
-    if Part^.G = GG_Mecha then begin
-        LFGI_ForMecha( Part, gb );
-    end else LFGI_ForItems( Part, gb );
+    if Part^.G = GG_Mecha then LFGI_ForMecha( Part, gb, True )
+    else if Part^.G = GG_Character then LFGI_ForCharacters( Part, gb )
+    else LFGI_ForItems( Part, gb );
 end;
 
 Procedure DrawBackpackHeader( PC: GearPtr );
@@ -1266,6 +1296,53 @@ Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
 	{ terrain, the terrain palette, and the cursor position. }
 begin
 	CMessage( BStr( X ) + ',' + BStr( Y ) , ZONE_Clock , StdWhite );
+end;
+
+Procedure PilotInfoForSelectingAMecha( PC: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
+    { We are going to select a mecha for this pilot. Remind us of who the }
+    { pilot is, and maybe show their mecha related skills? }
+    Procedure CheckSkill( sk: Integer );
+        { If this skill is known by the PC, print it. }
+    begin
+        if NAttValue( PC^.NA , NAG_Skill, sk ) > 0 then begin
+        	AI_PrintFromRight( SkillMan[sk].name + ': ' + SgnStr(NAttValue( PC^.NA , NAG_Skill, sk )) , 116, InfoGreen );
+        	AI_NextLine;
+        end;
+    end;
+var
+    SS: SensibleSpritePtr;
+    MyDest: TSDL_Rect;
+    t: Integer;
+begin
+    MyDest := Z.GetRect();
+	SetInfoZone( MyDest );
+	AI_Title( GearName(PC) , InfoHilight );
+
+    CDest.X := CZone.X;
+	SS := ConfirmSprite( SAttValue(PC^.SA,'SDL_PORTRAIT') , TeamColorString( GB , PC ) , 100 , 150 );
+	if SS <> Nil then DrawSprite( SS , CDest , 0 );
+    CDest.X := CDest.X + 116;
+    AI_NextLine();
+
+    for t := 1 to 5 do begin
+        CheckSkill( t );
+    end;
+    CheckSkill( NAS_Awareness );
+    CheckSkill( NAS_ElectronicWarfare );
+    CheckSkill( NAS_Initiative );
+    CheckSkill( NAS_SpotWeakness );
+    CheckSkill( NAS_Stealth );
+end;
+
+Procedure MechaInfoForSelectingAPilot( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
+    { We are going to select a pilot for this mecha. }
+var
+    MyDest: TSDL_Rect;
+begin
+    MyDest := Z.GetRect();
+	SetInfoZone( MyDest );
+	AI_Title( GearName(Mek) , InfoHilight );
+    LFGI_ForMecha( Mek, GB, False );
 end;
 
 initialization

@@ -2,6 +2,7 @@ Battroid 5
 Name <Zerosaiko>
 Desig <Z45-60>
 SDL_Sprite <btr_zerosaiko.png>
+SDL_Portrait <mecha_zerosaiko.png>
 desc <The Zerosaiko is known as the favorite mecha of professional duelists.>
 
 Mod Head

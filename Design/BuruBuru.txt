@@ -2,6 +2,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <One of the oldest mecha designs still in common use, the BuruBuru is the dependable workhorse of the mecha world.>
 
 Mod Head
@@ -87,6 +88,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X12 Assault>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the ubiquitous BuruBuru. This version is optimized for short range fighting.>
 
 Mod Head
@@ -177,6 +179,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9b Armored>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version features heavier armor and more weapons than the standard model.>
 
 Mod Head
@@ -301,6 +304,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9c Urban>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version features a shield and improved short range weapons.>
 
 Mod Head
@@ -391,6 +395,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9d Nova Storm>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <The BuruBuru's powerplant is know as being very dependable. This variant uses that powerplant to fuel an array of energy weapons.>
 
 Mod Head
@@ -499,6 +504,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9e Phalanx>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version features a shield.>
 
 Mod Head
@@ -583,6 +589,7 @@ Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9g HeavyFoot>
 SDL_Sprite <btr_buruburu.png>
+SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version is equipped with a powerful gauss cannon.>
 
 Mod Head

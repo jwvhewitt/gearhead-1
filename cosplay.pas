@@ -1,12 +1,12 @@
 program cosplay2;
 
-uses gears,sdlgfx,sdlmenus,colormenu;
+uses gears,sdlgfx,sdlmenus,colormenu,sdl;
 
 Procedure RedrawOpening;
 	{ The opening menu redraw procedure. }
 begin
 	ClrScreen;
-	ClearExtendedBorder( ZONE_Menu );
+	ClearExtendedBorder( ZONE_Menu.GetRect() );
 end;
 
 Procedure BrowseByType( FPat: String; width,height,frames,ColorMode: Integer );
@@ -44,9 +44,13 @@ end;
 var
 	FileMenu: RPGMenuPtr;
 	N: Integer;
+    MySprite: SensibleSpritePtr;
 
 begin
 	FileMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+
+    {MySprite := ConfirmSprite( 'Elisha_Demo.png', '80 40 120 255 230 200 166 47 32', 64, 64 );}
+    {SDL_SaveBmp( MySprite^.img , 'out.bmp' );}
 
 	AddRPGMenuItem( FileMenu , 'Browse Portraits' , 1 );
 	AddRPGMenuItem( FileMenu , 'Browse Mecha' , 2 );
@@ -63,6 +67,8 @@ begin
 		end;
 
 	until N = -1;
+
+
 
 	DisposeRPGMenu( FileMenu );
 end.

@@ -137,6 +137,9 @@ const
     ZONE_FHQMenu: DynamicRect = ( dx:-280; dy:-210; w:292; h:320; anchor: ANC_middle );
 	ZONE_FHQInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 320; anchor: ANC_middle);
 
+    ZONE_FHQMenu1: DynamicRect = ( dx:-280; dy:-210; w:292; h:180; anchor: ANC_middle );
+    ZONE_FHQMenu2: DynamicRect = ( dx:-280; dy: -10; w:292; h:120; anchor: ANC_middle );
+
     { The line of conversion- zones above this have been validated for WIZARD. }
 
 
@@ -643,6 +646,7 @@ var
 	event : TSDL_Event;
 	m2: PChar;
     width,height: Integer;
+    pmsg: PChar;
 begin
 	a := '';
 	repeat
@@ -652,7 +656,11 @@ begin
 			if event.type_ = SDL_KEYDOWN then begin
 				{ Check to see if it was an ASCII character we received. }
 				case event.key.keysym.sym of
-					SDLK_F1:		SDL_SaveBmp( Game_Screen , 'Demo.bmp' );
+					SDLK_F1:    begin
+                                pmsg := QuickPCopy( Config_Directory + replacehash('Demo#.bmp',Bstr(animation_phase)) );
+                        		SDL_SaveBmp( Game_Screen , pmsg );
+                                Dispose( pmsg );
+                                end;
 					SDLK_Up,SDLK_KP8:	a := RPK_Up;
 					SDLK_Down,SDLK_KP2:	a := RPK_Down;
 					SDLK_Left,SDLK_KP4:	a := RPK_Left;

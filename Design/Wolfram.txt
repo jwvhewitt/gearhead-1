@@ -2,6 +2,7 @@ Battroid 5
 Name <Wolfram>
 Desig <HMC-6>
 SDL_Sprite <btr_wolfram.png>
+SDL_Portrait <mecha_wolfram.png>
 Desc <A mining robot developed from the Claymore design. The Wolfram is not designed for combat, but is often used by arena fighters who can't afford anything better yet.>
 
 Mod Head

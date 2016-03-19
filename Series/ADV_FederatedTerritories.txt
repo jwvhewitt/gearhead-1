@@ -1945,7 +1945,7 @@ Scene 12 0
 		NPC Leader
 		name <Elisha Kettel>
 		job <Corporate President>
-		% sdl_portrait <por_f_elisha.png>
+		sdl_portrait <por_f_joe_elisha(AA-).png>
 		sdl_colors <80 40 120 255 230 200 166 47 32>
 		rumor <Elisha's father was a great man.>
 		home <The Office>

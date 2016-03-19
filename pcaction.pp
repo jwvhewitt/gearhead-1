@@ -414,6 +414,7 @@ var
 	RPM: RPGMenuPtr;
 	N: Integer;
 begin
+    N := 1;
 	repeat
         { Create the menu. }
         {$IFDEF SDLMODE}
@@ -444,7 +445,7 @@ begin
 
 	    AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 
-
+        SetItemByValue( RPM, N );
 {$IFDEF SDLMODE}
 		PCACTIONRD_PC := NPC;
         PCACTIONRD_GB := GB;
@@ -1896,6 +1897,7 @@ begin
 	{ Error check - PC must point to the character record. }
 	if PC^.G <> GG_Character then PC := LocatePilot( PC );
 	if PC = Nil then Exit;
+    N := 1;
 
 	repeat
         {$IFDEF SDLMODE}
@@ -1914,6 +1916,7 @@ begin
 			AddRPGMenuItem( DTMenu , MsgString( 'TRAINING_ImproveStat' ) , 3 );
 		end;
 		AddRPGMenuItem( DTMenu ,  MsgString( 'Exit' ) , -1 );
+        SetItemByValue( DTMenu, N );
 {$IFDEF SDLMODE}
     	PCACTIONRD_PC := PC;
     	PCACTIONRD_GB := GB;
