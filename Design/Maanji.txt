@@ -87,7 +87,7 @@ Mod Arm
 			STC SWML-20
 		end
 
-		ArcJet 5
+		ArcJet 4
 	end
 	inv
 		ArmArmor 5

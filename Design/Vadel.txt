@@ -22,8 +22,6 @@ Mod Body
 		Armor 2
 		Mass -1
 
-		Engine 5
-
 		Gyro 2
 
 		Sensor 1

@@ -2,7 +2,7 @@ GroundHugger 10
 Name <Monstrous>
 Desig <CYB-13>
 SDL_Sprite <ghu_monstrous.png>
-desc <A throwback to the previous age, most Monstrouses have been rebuilt several times from the wreckage of their predecessors. This massive hovertank sports more firepower and armor than an entire division of lesser mecha.>
+desc <A throwback to the previous age, most Monstrouses have been rebuilt several times from the wreckage of their predecesors. This massive hovertank sports more firepower and armor than an entire division of lesser mecha.>
 
 Mod Turret
 	Name <Main Turret>

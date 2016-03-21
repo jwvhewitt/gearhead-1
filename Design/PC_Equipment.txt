@@ -232,7 +232,7 @@ Name <Laser Axe>
 Mass 4
 Acc -2
 Speed 3
-desc <An axe with a fiber-optic head. When the blade makes contact, it immediately discharges a destructive flash of laser light.>
+desc <An axe with a fiber-optic head. When the blade makes contact, it immediatey discharges a destructive flash of laser light.>
 
 EMelee 15
 Name <Solar Spear>
@@ -352,7 +352,6 @@ Speed 4
 Magazine 25
 sub
 	Ammo 10
-	Name <Snub Rifle Clip>
 	desc <Ammunition made specially for the Snub Rifle.>
 end
 
@@ -445,7 +444,6 @@ Speed 3
 Magazine 30
 sub
 	Ammo 5
-	Name <Long Rifle Clip>
 	desc <Standard ammunition for Long Rifles and Hunting Rifles>
 end
 
@@ -473,7 +471,6 @@ Speed 3
 Magazine 450
 sub
 	Ammo 4
-	Name <Pin Rifle Clip>
 	desc <This clip contains thousands of tiny slivers for use with the Pin Rifle.>
 	Mass -4
 end
@@ -540,7 +537,6 @@ Speed 3
 Magazine 16
 sub
 	Ammo 12
-	Name <Shotgun Clip>
 	desc <These shells release shrapnel when fired.>
 	Type <SCATTER>
 end
@@ -604,7 +600,6 @@ BV 1
 Magazine 24
 sub
 	Ammo 12
-	Name <Auto-Shotgun Clip>
 	desc <This clip contains more shells than a regular shotgun.>
 	Type <SCATTER>
 end
@@ -628,7 +623,6 @@ Speed 3
 Magazine 24
 sub
 	Ammo 20
-	Name <Thumper Clip>
 	desc <These shots explode on impact.>
 	Type <BLAST 1>
 end
@@ -714,7 +708,6 @@ BV 4
 Magazine 120
 sub
 	Ammo 9
-	Name <Rocket Rifle Clip>
 	desc <These clips are custom-made to fit all standard rocket rifles.>
 	Type <ARMORPIERCING>
 end
