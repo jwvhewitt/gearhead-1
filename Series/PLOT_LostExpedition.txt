@@ -113,14 +113,14 @@ sub
 	% 11 - 15 :  PC got email about mission; asked to accept
 	Msg11 <It's an emergency... A team of surveyors got trapped in a cave-in; now they're injured in a monster-infested dungeon. I need you to perform a rescue mission!>
 	Msg12 <You got here in time... There's been a cave-in, and a bunch of miners are trapped down there. They could be injured or dead. The cave is infested with monsters, so our normal paramedics can't get through.>
-	Msg13 <I need your help! A spellunking club has fallen into a restricted cave. They are probably injured from the fall, and to make matters worse the place is full of giant rats! Your job is to go down there and get them out.>
+	Msg13 <I need your help! A spelunking club has fallen into a restricted cave. They are probably injured from the fall, and to make matters worse the place is full of giant rats! Your job is to go down there and get them out.>
 	Msg14 <\PC , I'm glad to see you... We have a situation which requires your skills. An expedition from the university has been trapped by a cave-in. They're in a monster-infested dungeon; you have to get down there and provide medical aid.>
 	Msg15 <A commercial exploration team was doing some test drilling in a cave when they hit a gas vein. The team members are unconscious but probably not yet dead. The place is infested with mutant creatures; I need you to rescue them.>
 
 	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
 	Msg16 <An expedition from the university has gone missing in some caves. There was a small earthquake... they may have been trapped. I need someone to head in there and rescue them.>
-	Msg17 <A group of spellunkers has fallen into a monster-infested cave. They could be injured or worse! I need a combat-certified medic to go in there and get them out.>
-	Msg18 <I have a mission available for a combat experienced paramedic, if you think you're up for the challenge. A team of spellunkers has been lost in a cave... they're injured and need to be rescued right away!>
+	Msg17 <A group of spelunkers has fallen into a monster-infested cave. They could be injured or worse! I need a combat-certified medic to go in there and get them out.>
+	Msg18 <I have a mission available for a combat experienced paramedic, if you think you're up for the challenge. A team of spelunkers has been lost in a cave... they're injured and need to be rescued right away!>
 	Msg19 <There's been a mine collapse. We've got a bunch of injured miners trapped in a rat-infested tunnel, and I need a combat experienced medic to get down there and provide medical aid.>
 	Msg20 <A team of freelance prospecters has been trapped underground by a small earthquake. They're probably badly injured, but the caves are too dangerous for our regular paramedics to go. I need a medically trained cavalier to run a rescue mission.>
 

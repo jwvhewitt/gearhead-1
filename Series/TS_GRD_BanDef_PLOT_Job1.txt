@@ -177,14 +177,14 @@ sub
 	% 11 - 15 :  Description of mission.
 	%  use "$ \VAL V4 " to insert the pay for the mission,
 	%  and don't forget to mention that the PC also gets salvage.
-	Msg11 <The junkyard has been attacked by bandits. That wouldn't be so bad, except for the recently decommisioned assault mecha waiting to be scrapped there. Pay is $ \VAL V4 to eliminate them.>
+	Msg11 <The junkyard has been attacked by bandits. That wouldn't be so bad, except for the recently decommissioned assault mecha waiting to be scrapped there. Pay is $ \VAL V4 to eliminate them.>
 	Msg12 <A number of combat meks have been stolen from a mercenary team serving in the region. Pay is $ \VAL V4 if you can catch the thieves.>
 	Msg13 <A bandit raid against a munitions factory has netted them a number of advanced model mechas. If you can capture them there's a reward of $ \VAL V4 .>
 	Msg14 <An arms shipment turned up at the base a couple of mecha short. I think I've located where the missing armors are. It's worth $ \VAL V4 if you can capture or disable them.>
 	Msg15 <One of the local bandit gangs hit the jackpot when a caravan they raided was transporting light mecha armors. They need to be stopped before they get a chance to use their new toys. Pay is $ \VAL V4 .>
 
 	% 16 - 20 :  Player is asked if he is looking for a job.
-	Msg16 <Would you be interested in helping me bring some criminals to justice? A number of mechas have been stolen recently. I'm looking for a pilot to aprehend the thieves.>
+	Msg16 <Would you be interested in helping me bring some criminals to justice? A number of mechas have been stolen recently. I'm looking for a pilot to apprehend the thieves.>
 	Msg17 <I have a job available for a mecha pilot, if you'd like to help maintain law and order. What do you say?>
 	Msg18 <Mecha thieves have been operating in town. I could use a mecha pilot to help bring them to justice. Can you do it?>
 	Msg19 <How'd you like to do a mission for the guardians? There are some mecha thieves in town, and I need a pilot to bring them in.>

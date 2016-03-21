@@ -45,7 +45,7 @@ sub
 	CMsg1_1 <ifChatNPCHeroic Accept>
 	Msg1_2 <We meet again, for the last time. Prepare to die.>
 	CMsg1_2 <ifChatNPCShy Accept>
-	Msg1_3 <My old enemy \PC ... You have been a good opponent, though all our battles, but that time must now come to an end. The secret I know must go to the grave with me. Prepare to defend yourself, or die at my hand.>
+	Msg1_3 <My old enemy \PC ... You have been a good opponent, through all our battles, but that time must now come to an end. The secret I know must go to the grave with me. Prepare to defend yourself, or die at my hand.>
 	CMsg1_3 <ifChatNPCSociable Accept>
 	Msg1_4 <What wonderful news! \ELEMENT 1 is to be the site of our final, greatest battle! Let us begin...>
 	CMsg1_4 <ifChatNPCCheerful Accept>

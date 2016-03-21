@@ -79,8 +79,8 @@ sub
 	Msg5 <Playing innocent isn't going to help. I'm on to you, and so are half the bounty hunters in the FedTer...>
 	Msg6 <The wolf may change his coat but not his spots. Word on the underground is that you're deeply involved in this project. Now every bounty hunter in the FedTer is after you.>
 	Msg7 <That's not what I heard. Word on the underground is that you're very important to \NARRATIVE 1 . Now every bounty hunter in the FedTer is after you, hoping to get to your boss.>
-	Msg8 <I know exactly who you are and what you've done. You'll be getting your justice soon enought, believe me on that.>
-	Msg9 <You're very good at lying; I almost want to believe you. You'll be getting your justice soon enought, though. If not from me then from someone else...>
+	Msg8 <I know exactly who you are and what you've done. You'll be getting your justice soon enough, believe me on that.>
+	Msg9 <You're very good at lying; I almost want to believe you. You'll be getting your justice soon enough, though. If not from me then from someone else...>
 	Prompt1 <We've been planning what?>
 	Prompt2 <I don't know what you're talking about.>
 	Prompt3 <I left \NARRATIVE 2 a long time ago.>

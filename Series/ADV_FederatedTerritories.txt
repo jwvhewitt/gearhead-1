@@ -1636,7 +1636,7 @@ Scene 11 0
 		Msg3 <Strange, I don't recall seeing you around here before... So what do you say to taking part in a mecha battle?>
 		Msg4 <Great! Today's big contest is about to begin. Suit up and head over to the starting position.>
 		Msg5 <It takes all kinds, I guess. If you change your mind come on back.>
-		msg6 <Great! Now, if only you had a mek, I could give you a waiver to sign...>
+		Msg6 <Great! Now, if only you had a mek, I could give you a waiver to sign...>
 		Msg7 <Welcome back to Warhammer Arena. We've got another battle lined up this afternoon... are you interested in joining the match?>
 		Msg8 <Too bad. Well, I'm sure there'll still be plenty of competitors to trash when you're ready to play again.>
 		Msg9 <There'll be another fight tomorrow. It's going to take us that long to clear the wreckage out of the arena.>
@@ -2144,7 +2144,8 @@ Scene 13 0
 		result1 <Say 2 Shop Wares EndChat Say 3>
 		wares <10 11>
 		Msg1 <This is Denomolos, the new vision clothing store for the modern future warrior. Our lines are clean, stark but lush, exotic with a dangerous hint of savage brutality.>
-		Msg2 <Certainly. Demonolos clothing is created with both fashion and utility in mind. Our motto is "Better, Stronger, Faster, Style".>
+		% Msg2 <Certainly. Demonolos clothing is created with both fashion and utility in mind. Our motto is "Better, Stronger, Faster, Style".>
+		Msg2 <Certainly. Denomolos clothing is created with both fashion and utility in mind. Our motto is "Better, Stronger, Faster, Style".>
 		Msg3 <Remember, fashion is but an outward mirror of the inward truth. Shop Denomolos.>
 		prompt1 <Uh, do you sell armor here?>
 
@@ -2215,7 +2216,7 @@ Scene 13 0
 		Msg1 <If you're into the game then you're smokin'. Everything is going down in Ipshil.>
 		Msg2 <You're breathing my air, wastesucker. Get out of here before I have to smash that ugly face in.>
 		Msg3 <That's right... go on home to mommy. Count yourself lucky that you didn't piss me off too badly.>
-		msg4 <Don't be harsh... No need to escalate the tension, you're cool on our turf. Let's be buds, okay?>
+		Msg4 <Don't be harsh... No need to escalate the tension, you're cool on our turf. Let's be buds, okay?>
 		Msg5 <This town is owned by the MacGuffins. They're the only game around here. If you want to live long you'll get on their good side.>
 		Msg6 <You know what? Your sorry carcass is going to smell even worse when you're lying face down in a puddle of your own blood... NOW YOU DIE!!!>
 		prompt1 <Sorry, didn't mean to offend.>
@@ -3081,7 +3082,7 @@ Scene 16 0
 		Msg2 <Service crews are hosing down the arena now. The next fight won't be for another few hours, at least.>
 		Msg3 <Welcome back to the Colosseum. What can I do for you today?>
 		Msg4 <Very good. Gear up and head over to the starting position.>
-		Msg5 <Sorry, but you need to have a functioning mecha in order to compete here. I hear \PERSONA 58 has an old junker he might not mind parting with. Ask him.>
+		Msg5 <Sorry, but you need to have a functioning mecha in order to compete here. I hear \PERSONA 1658 has an old junker he might not mind parting with. Ask him.>
 		Msg6 <There's a direct cam TV in the Duelist's Hall. Most people watch from there. You could go out to the field, but that's not so popular ever since Russel lost his arm...>
 		Msg7 <You have completed your tenth victory making you a gladiator champion! In recognition of your achievement, you have won a new top-of-the-line mecha. Congratulations.>
 		Msg8 <That was a good fight! Here's your prize money for winning.>
@@ -3234,7 +3235,7 @@ Scene 16 0
 		Msg2 <We are always on the lookout for the best of the best to join our ranks. How would you like to become a member of the Solar Navy?>
 		Msg3 <That's too bad. We could really use someone with your talents on our side.>
 		Msg4 <Very good! Here is the claim form for your new standard issue mecha. Welcome to the team. You can ask around to see if there are any missions currently underway.>
-		Msg5 <You will be expected to take part in military operations with our forces, defending the unity of the FedTer or otherwise acting on our behaf. You will have access to skill training, and be given a combat mecha.>
+		Msg5 <You will be expected to take part in military operations with our forces, defending the unity of the FedTer or otherwise acting on our behalf. You will have access to skill training, and be given a combat mecha.>
 		Msg6 <You'll note that I said skilled new recruits. I'm afraid that you're going to have to shape up a bit before we can consider you for membership.>
 		prompt1 <I'm not interested.>
 		prompt2 <Definitely!>
@@ -3802,7 +3803,8 @@ Scene 18 0
 		Msg2 <It's a skeleton.>
 		CLUE14 <Print 101 V= 101 1>
 		CLUE29 <Print 102 if= V102 0 Reputation 7 d3 V= 102 1>
-		CLUE34 <if= V103 0 V= 103 1 else GoC34Again Reputation 7 -d6 ifG SkRoll 34 10 else GoC34NoWin Print 103 XPV 100>
+		CLUE34 <if= V103 0 else GoC34Again V= 103 1 Reputation 7 -d6 ifG SkRoll 34 10 else GoC34NoWin Print 103 XPV 100>
+		%CLUE34 <if= V103 0 V= 103 1 else GoC34Again Reputation 7 -d6 ifG SkRoll 34 10 else GoC34NoWin Print 103 XPV 100>
 		GoC34NoWin <Print 104>
 		GoC34Again <Print 105>
 		clue37 <Print 106>
@@ -4367,6 +4369,10 @@ Scene 24 0
 		height 10
 		sub
 			rect
+			FloorType 30
+			name <BioCorp Labs Scientist Room>
+
+			rect
 			FloorType 14
 			name <Holding Cell>
 			special <Cell>
@@ -4406,7 +4412,7 @@ Scene 24 0
 		BorderType 38
 		FloorType 28
 
-		Persona 2414
+		Persona 2415
 		greeting <NewChat Say 1 AddChat 1 AddChat 2>
 		GoNoMoney <Say 4>
 		GoNotHungry <Say 5>
@@ -4429,7 +4435,7 @@ Scene 24 0
 		Prompt12 <I'll take the salad.>
 		Prompt13 <I'll take the steak.>
 
-		Persona 2415
+		Persona 2416
 		% V1 = PC has paid the registration fee
 		greeting <NewChat if= V1 -1 else GoCheckContract Say 3>
 		GoCheckContract <if= V1 1 else GoFirstTime Say 11 AddChat 8 AddChat 9>
@@ -4470,7 +4476,7 @@ Scene 24 0
 		Prompt8 <I could use your skills.>
 		Prompt9 <I don't need any help today.>
 
-		Persona 2413
+		Persona 2414
 		% President of RegEx corporation
 		% V1 = Renown + Reaction, determines if PC can get job...
 		greeting <NewChat ifFactionEnemy 6 else GoSomething SayAnything>
@@ -4499,7 +4505,7 @@ Scene 24 0
 		Prompt3 <Absolutely!>
 		Prompt4 <No, not particularly.>
 
-		Persona 2416
+		Persona 2417
 		greeting <NewChat Say 1 AddChat 1>
 		Result1 <EndChat Say 2 Shop .wares Say 3>
 		.wares <Mecha 17 MEXTRA 4>
@@ -4551,7 +4557,8 @@ Scene 24 0
 		NPC Scientist
 		SetTeam 6
 		SetPersona 2407
-		home <BioCorp Labs>
+		% home <BioCorp Labs>
+		home <BioCorp Labs Scientist Room>
 		SetFaction 5
 
 		STC APPARATUS-1
@@ -4575,29 +4582,29 @@ Scene 24 0
 
 		NPC Journalist
 		SetTeam 2
-		SetPersona 2411
+		SetPersona 2412
 
 		NPC Corporate Executive
 		SetTeam 2
-		SetPersona 2412
+		SetPersona 2413
 		home <BioCorp Building>
 		SetFaction 5
 
 		NPC Leader
 		job <Corporate President>
 		SetTeam 2
-		SetPersona 2413
+		SetPersona 2414
 		home <Regex Corporation>
 		SetFaction 6
 
 		NPC Cook
 		SetTeam 2
-		SetPersona 2414
+		SetPersona 2415
 		home <Twilingate's>
 
 		NPC Cyberdoc
 		SetTeam 2
-		SetPersona 2415
+		SetPersona 2416
 		home <Leiji Hospital>
 		Skill 22 5
 		Skill 24 12
@@ -4607,7 +4614,7 @@ Scene 24 0
 
 		NPC Mechanic
 		SetTeam 2
-		SetPersona 2416
+		SetPersona 2417
 		home <Automata>
 		Ego 16
 
@@ -5770,7 +5777,7 @@ Scene 36 0
 
 	end
 	inv
-		monster ASSASSIN LORD
+		Monster ASSASSIN LORD
 		name <Jjang Bogo>
 		chardesc Old Chaotic Shy Easygoing Renowned
 		job <Guildmaster>

@@ -166,7 +166,7 @@ sub
 	Msg36 <The only catch is the contractual obligation that you perform the mission which will be assigned afterwards. It's routine security duty.>
 	Msg37 <Maybe you can... I need to hire a freelance pilot for the upcoming security duty. Would you like the job? It'd save me a lot of headaches if you would just take it.>
 	Msg38 <Yeah, I guess it does, right about now... Say, you're a pilot, aren't you? How would you like a contract for some freelance security work? It'd save me a lot of trouble if you could do it.>
-	Msg39 <Please don't remind me! And I still have to find a pilot for this upcoming securit mission... That's a major pain in the arse, let me tell you.>
+	Msg39 <Please don't remind me! And I still have to find a pilot for this upcoming security mission... That's a major pain in the arse, let me tell you.>
 	Msg40 <Um, I don't think you're quite the kind of pilot we're looking for. We need someone who is more physically impressive, more intimidating. Check back later and maybe we'll have a low profile piloting job for you.>
 	Msg41 <I like you so I'll let you in on this. We need a freelance mecha pilot for an upcoming security mission. Would you like the job?>
 	Msg42 <If you think that's boring, try working in the accounting department sometime.>
@@ -199,7 +199,7 @@ sub
 	Msg113 <You'll be going up against a well-equipped mecha gang. We just happened to be their most recent targets. I can offer you $3500 and salvage rights for the mission.>
 	Msg112 <I need you to destroy a tough bandit gang. Your salary will be $3150 plus salvage.>
 	Msg111 <Your target is a corporate sabotage team hired by a rival company. Each of the enemy mecha must be disabled. I can give you $2800 and salvage for this job.>
-	Msg110 <Your job is to round up and disable a mecha gang that's been disruting our interests. Pay is $2450 plus salvage.>
+	Msg110 <Your job is to round up and disable a mecha gang that's been disrupting our interests. Pay is $2450 plus salvage.>
 	Msg109 <I need you to eliminate a small bandit gang. Your pay will be $2100 plus salvage for the mission.>
 	Msg108 <Your target is an amateur mecha gang that's been skirmishing with our regular security forces. They didn't do much damage, but they're wasting company resources. Pay is $1750 plus salvage rights.>
 	Msg107 <Your target is a gang of bandits that's been raiding our munitions factory. Your salary will be $1400 plus salvage.>
@@ -207,7 +207,7 @@ sub
 	Msg105 <A local gang of mecha hooligans smashed up the president's limo and threw it into the lake. They have to be taught a lesson. Your salary will be $1000 plus salvage.>
 	Msg104 <I can offer you $950 and salvage rights to eliminate a local bandit gang that's been giving us trouble.>
 	Msg103 <A small group of unknown mecha attacked our security division, badly damaging one of our mecha. It's not known why the attack happened but I want them stopped now. Pay is $900 plus salvage.>
-	Msg102 <A group of young mecha gangers have been skirmishing with our security forces. I want them stopped... perminantly. Pay is $750 plus salvage for this job.>
+	Msg102 <A group of young mecha gangers have been skirmishing with our security forces. I want them stopped... permanently. Pay is $750 plus salvage for this job.>
 	Msg101 <A small bandit gang launched a raid against our trucks. I want them stopped now. Pay is $650 plus salvage.>
 
 	Prompt1 <I'm a great pilot!>

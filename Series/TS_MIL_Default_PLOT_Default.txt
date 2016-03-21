@@ -212,7 +212,7 @@ sub
 	Msg11_4 <As you know, relations with \NARRATIVE 2 have never been good... one of their mecha teams has been sighted in FedCon territory. I need you to eliminate them. You'll get $ \VAL V4 and salvage for the job.>
 	CMsg11_4 <ifG NPCRep E2 3 0 Accept>
 	Msg11_5 <We've encountered mecha from \NARRATIVE 2 close to town. We don't know what they're doing, but plan to stop them before they can complete whatever it is. Pay will be $ \VAL V4 plus salvage.>
-	Msg11_6 <Mecha from \NARRATIVE 2 have have been sighted in our territory. Eliminate them for $ \VAL V4 plus salvage.>
+	Msg11_6 <Mecha from \NARRATIVE 2 have been sighted in our territory. Eliminate them for $ \VAL V4 plus salvage.>
 	CMsg11_6 <ifG 0 NPCRep E2 3 Accept>
 	Msg11_7 <Mecha from \NARRATIVE 2 have been stationed near town. They're planning an operation, and if we don't stop them quickly lots of people are going to die. Eliminate their mecha for $ \VAL V4 plus salvage.>
 	CMsg11_7 <ifG 0 NPCRep E2 5 Accept>

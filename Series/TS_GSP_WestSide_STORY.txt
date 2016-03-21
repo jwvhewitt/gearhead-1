@@ -129,7 +129,7 @@ sub
 	Msg7 <Their hideout is on the other side of town. All I need is for you to move in and bust a few heads. Once their best fighters have been humiliated, the Bloods will disappear. For your help you'll get $ \VAL V4 .>
 	Msg8 <Alright, you rock! They had no chance against you... Here's the money I promised. Now this town is ours!>
 	Msg9 <You helped \NARRATIVE 3 to defeat The Bloods in \NARRATIVE 1 .>
-	Msg10 <You suck! Now The Bloods are gonna escilate the violence... this ain't a good time to be living in \NARRATIVE 1 .>
+	Msg10 <You suck! Now The Bloods are gonna escalate the violence... this ain't a good time to be living in \NARRATIVE 1 .>
 	Msg11 <Bring them hell! Make sure you defeat or chase off all of them.>
 	Msg12 <Come back here when you've got everything in order and we can start the mission then.>
 	Msg13 <You've had enough time to get ready. Shall we start the fight now?>

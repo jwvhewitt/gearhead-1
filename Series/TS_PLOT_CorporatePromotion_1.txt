@@ -24,7 +24,7 @@ Plot 0
 	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// You've earned a promotion. Come see me to accept your reward.>
 	Msg2 <\ELEMENT 2 @ \SCENE EScene 2 :// I have urgent business which requires your attention at once.>
 	Msg3 <\ELEMENT 2 @ \SCENE EScene 2 :// Report here for debriefing at once, soldier.>
-	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// You have been promoted. Report here to receive your comission.>
+	Msg4 <\ELEMENT 2 @ \SCENE EScene 2 :// You have been promoted. Report here to receive your commission.>
 	Msg5 <\ELEMENT 2 @ \SCENE EScene 2 :// Your presence is required at headquarters immediately.>
 
 sub

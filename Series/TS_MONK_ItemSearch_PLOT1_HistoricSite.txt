@@ -107,7 +107,7 @@ sub
 
 	%  16 - 18 :  PC has lost the mission.
 	Msg16 <So, those monsters were too tough for you? I told them we should clean that place more often...>
-	Msg17 <I'm not suprised that you got your ass kicked. If we cleaned the park more often the monsters wouldn't be able to get so powerful.>
+	Msg17 <I'm not surprised that you got your ass kicked. If we cleaned the park more often the monsters wouldn't be able to get so powerful.>
 	Msg18 <Well, I guess that now the park really does belong to the monsters...>
 
 	%  101 :  The item somehow got destroyed...

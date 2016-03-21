@@ -190,7 +190,7 @@ sub
 	CMsg9_4 <ifChatNPCPassionate Accept>
 	Msg9_5 <I got an email from \SPR E4 ... It kind of sounded like a cry for help. I'd like you to go to \ELEMENT 3 and find out what's happened to \SPR E4 . I'm certain \OPR E4 can still be rescued. I hope so...>
 	CMsg9_5 <ifChatNPCCheerful Accept>
-	Msg9_6 <I don't know... I don't know if anything can be done. But I got an email recently saying \OPR E4 'd be in \ELEMENT 4 . Maybe you could go talk with \SPR E4 ?>
+	Msg9_6 <I don't know... I don't know if anything can be done. But I got an email recently saying \OPR E4 'd be in \ELEMENT 3 . Maybe you could go talk with \SPR E4 ?>
 	CMsg9_6 <ifChatNPCMelancholy Accept>
 
 	Msg10 <\ELEMENT 2 in \ELEMENT 1 asked you to speak with \ELEMENT 4 in \ELEMENT 3 .>

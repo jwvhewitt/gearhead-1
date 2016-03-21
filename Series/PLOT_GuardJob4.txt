@@ -101,7 +101,7 @@ sub
 	Msg10 <Hey, I have a personal favor to ask of you. I need a pilot to run a mission, but there's no bounty allocated for this one. Could you do this job for me?>
 
 	Msg11 <The bandit gang "Igor's Marauders" has established a new headquarters in our jurisdiction. I want you to investigate this area, and engage the bandits if they act agressive. Be careful... these criminals are known to be quite deadly.>
-	Msg12 <A mecha death-cult, "Slaves to the Dark God", has set up a base and recruitment center near here. I want you to scout out their encampment and gatehr evidence. If they fire on you, feel free to exterminate them. Be careful.>
+	Msg12 <A mecha death-cult, "Slaves to the Dark God", has set up a base and recruitment center near here. I want you to scout out their encampment and gather evidence. If they fire on you, feel free to exterminate them. Be careful.>
 	Msg13 <The dreaded gang "Bjorn's Berserkers" have set up a base in this area. I want you to investigate them, and eliminate them if it appears that they are planning criminal activity.>
 	Msg14 <It's been rumored that "Vadim's Roughnecks", an infamous team of mecha thieves, has set up a small base in this area. I want you to explore these coordinates. If the thieves are discovered, it may be nessecary to fight them.>
 	Msg15 <There's a new bandit gang in town. They call themselves "Saepheroth Circle". I want you to check out their hideout, and make contact with their leader if possible. If they attack your mecha you are cleared to use deadly force against them.>

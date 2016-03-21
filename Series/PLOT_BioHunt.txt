@@ -172,7 +172,7 @@ sub
 	%  use "$ \VAL V4 " to insert the pay for the mission,
 	%  and don't forget to mention that the PC also gets salvage.
 	Msg11 <Destroy all the monsters and you'll earn $ \VAL V4 . That's really all there is to it.>
-	Msg11_1 <This contract is for complete destruction of the biomonster nest. All monsters mst be eliminated in order to collect. Manage that, and you'll earn $ \VAL V4 .>
+	Msg11_1 <This contract is for complete destruction of the biomonster nest. All monsters must be eliminated in order to collect. Manage that, and you'll earn $ \VAL V4 .>
 	CMsg11_1 <ifChatNPCLawful Accept>
 	Msg11_2 <It's not often that I'll take a mission from the Guardians, but when the safety of \SCENE EScene 1 is at stake I'll make an exception. Destroy all the bioweapons and I'll give you $ \VAL V4 . Ready to go?>
 	CMsg11_2 <ifChatNPCChaotic Accept>

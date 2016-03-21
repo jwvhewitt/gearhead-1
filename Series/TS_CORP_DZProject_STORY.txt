@@ -65,14 +65,14 @@ story
 	% 101 - 105 :  Story has ended, public outcry stopped expansion.
 	Msg101 <\NARRATIVE 1 forced to abandon dead zone construction project following public outcry over treatment of local residents.>
 	Msg102 <\NARRATIVE 1 to be investigated for human rights abuses in failed dead zone mining project.>
-	Msg103 <Victory for human rights. \NARRATIVE 1 forced out of dead zone following acts of violent supression against tribal residents.>
+	Msg103 <Victory for human rights. \NARRATIVE 1 forced out of dead zone following acts of violent suppression against tribal residents.>
 	Msg104 <\NARRATIVE 1 bows to public pressure; abandons plan to place toxic waste dump in tribal village.>
 	Msg105 <FedTer Council orders \NARRATIVE 1 to halt dead zone expansion after evidence of human rights abuses discovered.>
 
 	% 151 - 155 :  Public opposes corporate expansion.
 	Msg151 <Dead zone residents rightful owners of territory being exploited by \NARRATIVE 1 .>
 	Msg152 <FedTer council warns \NARRATIVE 1 to respect international law and human rights in its dead zone expansion project.>
-	Msg153 <Guardians investigate \NARRATIVE 1 for violently supressing dead zone residents in its expansion project.>
+	Msg153 <Guardians investigate \NARRATIVE 1 for violently suppressing dead zone residents in its expansion project.>
 	Msg154 <\NARRATIVE 1 suspected of destroying peaceful settlements in order to secure territory for its dead zone expansion program.>
 	Msg155 <Critics say \NARRATIVE 1 purge of dead zone "ravagers" actually intended to quell dissent against expansion program.>
 
@@ -88,7 +88,7 @@ story
 	Msg252 <Dead zone combat tribes fight against \NARRATIVE 1 encroachment onto their territory.>
 	Msg253 <Resistance from dead zone combat tribes more fierce than originally expected, says \NARRATIVE 1 spokesperson.>
 	Msg254 <Workers will not arrive at new \NARRATIVE 1 industrial complex until fighting with local ravagers has ended.>
-	Msg255 <Ravager agression blamed for delays in \NARRATIVE 1 industrial expansion project.>
+	Msg255 <Ravager aggression blamed for delays in \NARRATIVE 1 industrial expansion project.>
 
 	% 301 - 305 :  Just tell that corp is expanding without elaboration.
 	Msg301 <\NARRATIVE 1 plans new industrial complex on edge of dead zone.>

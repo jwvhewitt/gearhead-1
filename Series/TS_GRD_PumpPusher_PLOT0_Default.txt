@@ -108,7 +108,7 @@ sub
 
 	%  02 :  PC won't take the case.
 	Prompt2 <Sorry, this isn't my kind of case.>
-	Prompt2_1 <I don't belive in criminalizing drugs.>
+	Prompt2_1 <I don't believe in criminalizing drugs.>
 
 	%  03 :  Next clue has been discovered.
 	Prompt3 <What did you find out?>

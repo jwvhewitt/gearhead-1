@@ -264,12 +264,12 @@ sub
 				Msg7 <In this day and age almost every town has some trouble with bandits. What concern is it of yours?>
 				Msg8 <\PERSONA E4 can probably tell you something about the attack.>
 				Msg9 <Well, yes, that's what investigate usually means...>
-				Msg10 <\PERSONA E4 was the latest merchant to be robbed. Go see if you can find out anything abut the attack that might help us.>
+				Msg10 <\PERSONA E4 was the latest merchant to be robbed. Go see if you can find out anything about the attack that might help us.>
 				Msg11 <Why do you want to do that?>
-				Msg12 <I can see that's important to you. You help would be gladly appreciated.>
+				Msg12 <I can see that's important to you. Your help would be gladly appreciated.>
 				Msg13 <I don't think that's why you're really here... but I need whatever help I can get.>
 				Msg14 <We'll talk about your reward once the bandits have been located. Right now I could use your help in finding out where they are.>
-				Msg15 <The first thing to do is find out where the bandits are camped. \PERSONA E4 was their latest victim... maybe you can find some information about the circumstances of the attack.>
+				Msg15 <The first thing to do is finding out where the bandits are camped. \PERSONA E4 was their latest victim... maybe you can find some information about the circumstances of the attack.>
 				Msg16 <Talk to \PERSONA E4 about the bandit attacks.>
 				Msg17 <So, what did you find out?>
 				Msg18 <Well, that's something at least. Maybe if you spoke to the merchant who sent the order we can find out more.>
@@ -534,7 +534,7 @@ sub
 			Msg15 <This shipment is bound to \SCENE EScene 4 where \PERSONA E4 will receive it. Once the delivery is made, head on back here to pick up your salary.>
 			Msg16 <Where's the mecha you had last time you were here? I'm afraid that you can't very well deliver these materials to \SCENE EScene 4 if you don't have a vehicle. Come back when you're ready.>
 			Msg17 <Hello. Is there any problem with the shipment? How can I help you?>
-			Msg18 <\PERSONA E4 in \SCENE ESCene 4 is the buyer for this merchandise.
+			Msg18 <\PERSONA E4 in \SCENE ESCene 4 is the buyer for this merchandise.>
 			Msg19 <Really? That's too bad. I'll have to find another courier now.>
 			Msg20 <Well, you're going to have to get one if you want to be a trucker.>
 			Prompt1 <I'd like that.>

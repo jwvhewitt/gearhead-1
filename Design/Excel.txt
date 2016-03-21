@@ -9,6 +9,8 @@ Mod Body
 		CPit
 		Armor 2
 
+		Engine 8
+
 		STC LAS-10
 		Range 6
 

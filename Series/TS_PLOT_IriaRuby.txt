@@ -120,7 +120,7 @@ sub
 	result15 <NewChat Say 19 P= 4 1>
 	result16 <NewChat Say 21>
 	result17 <NewChat Say 22>
-	Msg1 <You should not do anything to abuse our trust while you stay here; otherwise the reprocussions could be terrible.>
+	Msg1 <You should not do anything to abuse our trust while you stay here; otherwise the repercussions could be terrible.>
 	Msg2 <Remember what we have spoken about; the Iria Ruby should remain where it is, for the good of all involved.>
 	Msg3 <Humans do not generally come to this place unless they are invited. What purpose do you have to visit?>
 	Msg4 <Truthfully?>

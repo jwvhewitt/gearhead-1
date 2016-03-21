@@ -31,7 +31,7 @@ sub
 	Msg8 <You have to take time out to enjoy life!>
 
 	Msg9 <You know, it takes twice as many muscles to frown as it does to smile!>
-	Msg10 <Nice way to rain on someon's parade, \PC .>
+	Msg10 <Nice way to rain on someone's parade, \PC .>
 	Msg11 <Well, you're a real gloomy gus today.>
 
 	Prompt1 <The same to you.>

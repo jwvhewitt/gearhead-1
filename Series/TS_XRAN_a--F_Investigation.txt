@@ -134,7 +134,7 @@ sub
 	CMsg4_4 <ifChatNPCPassionate Accept>
 	Msg4_5 <Hello, \PC . I'm sorry but I need to ask you some questions about your parents. We've been investigating their deaths, and it looks like they could have been murdered... though we're going to need more evidence before we can say for sure.>
 	CMsg4_5 <ifChatNPCCheerful Accept>
-	Msg4_6 <I've been investigating the death of your parents. There have been several other recent deaths which follow the same basic patter. I fear they may have been the victims of an assassin gang, but more evidence is needed before we can be certain.>
+	Msg4_6 <I've been investigating the death of your parents. There have been several other recent deaths which follow the same basic pattern. I fear they may have been the victims of an assassin gang, but more evidence is needed before we can be certain.>
 	CMsg4_6 <ifChatNPCMelancholy Accept>
 
 	Msg5 <Come back here once you've eliminated the guardian mecha. Our forensic cryptologists will then be able to scour their computer systems for the contract.>
