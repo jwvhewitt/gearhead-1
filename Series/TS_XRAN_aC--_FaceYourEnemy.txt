@@ -83,7 +83,7 @@ sub
 	CMsg1_4 <ifChatNPCMelancholy Accept>
 	Msg1_5 <So this time you win. Very well... next time I will, and you can expect no mercy. Meet me in \ELEMENT 3 for a rematch if you're brave enough.>
 	CMsg1_5 <ifChatNPCEasygoing Accept>
-	Msg1_6 <Your powers are formidible... But you are nothing to me, and I will crush you in time! I demand a rematch, in \ELEMENT 3 ! Meet me if you dare!>
+	Msg1_6 <Your powers are formidable... But you are nothing to me, and I will crush you in time! I demand a rematch, in \ELEMENT 3 ! Meet me if you dare!>
 	CMsg1_6 <ifChatNPCPassionate Accept>
 	Msg1_7 <An honorable duel, \PC ... You have bested me today. I demand a rematch... what say, in \ELEMENT 3 ? I know you won't be able to resist...>
 	CMsg1_7 <ifChatNPCLawful Accept>
@@ -148,7 +148,7 @@ sub
 	CMsg8_13 <if= XRB NAV_XRBExMember Accept>
 
 	Msg9 <I am a force you should not take so lightly!!!>
-	Msg9_3 <Ah, it's good to see that I will be facing someone with at least a modicun of wit.>
+	Msg9_3 <Ah, it's good to see that I will be facing someone with at least a modicum of wit.>
 	CMsg9_3 <ifChatNPCCheerful Accept>
 	Msg9_4 <If you fight as well as you insult, this should be an easy fight for me...>
 	CMsg9_4 <ifChatNPCMelancholy Accept>

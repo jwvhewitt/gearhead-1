@@ -68,7 +68,7 @@ sub
 	Msg4 <Come on now. I know that you'll be able to find another one. You're champion material, after all.>
 	Msg5 <If you don't have a mecha, you can't take part in the contest. Better find one quick or you'll be disqualified.>
 
-	Msg6 <Ah, one of our Robot Warriors legends is back for another go at it. We've got some new compeditors, they think they can take you, if you'd like to have a go at it.>
+	Msg6 <Ah, one of our Robot Warriors legends is back for another go at it. We've got some new competitors, they think they can take you, if you'd like to have a go at it.>
 	Msg7 <You're in the finals now. Just a few more matches and you'll be fighting for the championship. The competition is getting really harsh... Best of luck, and may the best pilot win!>
 	Msg8 <You've made it to the semi-finals. You've shown yourself to be better than most... but could you be the best? Just a few more battles and you'll be in our series finals. It's time for mayhem!>
 	Msg9 <You've won a few fights. Maybe you're good enough to go all the way. There's only one way to find out, and it's a hard unforgiving road. Are you tough enough for Robot Warriors?>
@@ -147,7 +147,7 @@ sub
 
 	msg1 <You have cleared all ten stages of competition and are our tournament champion. Congradulations!>
 	msg2 <You are currently at challenge level \VAL G24 out of 10.>
-	msg3 <You're one of the perrenial favorites here at Robot Warriors. A few of our past compeditors- who you've beaten- want a rematch with our greatest champion of all time.>
+	msg3 <You're one of the perennial favorites here at Robot Warriors. A few of our past competitors- who you've beaten- want a rematch with our greatest champion of all time.>
 	Msg4 <This is a special event, and it's the only chance you'll get. If you can't take part in the combat I'm afraid that I'll have to declare one of the other pilots the winner.>
 	Msg5 <That's too bad. It would have really improved our ratings if you had taken part...>
 	Msg6 <Head on over to the arena and take your starting position. The match will start in just a few minutes.>

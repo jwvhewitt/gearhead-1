@@ -88,7 +88,7 @@ inv
 	sub
 		gear 4 3 20
 		name <Mega Smasher>
-		type <LINE BURN STRAIN MYSYERY>
+		type <LINE BURN STRAIN MYSTERY>
 		scale 0
 		mass 2
 		Range 6

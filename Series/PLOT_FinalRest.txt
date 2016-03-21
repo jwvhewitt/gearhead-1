@@ -44,7 +44,7 @@ sub
 	Msg2 <The life of an adventurer is perilous, and frequently far too short.>
 	Msg3 <Our time in this world is measured not by what we have earned, but by what we have done.>
 	Msg4 <Life is measured not by time, but by actions. All people must die but not all truly live.>
-	Msg5 <Life is short and precious. Be midnful of how you spend yours.>
+	Msg5 <Life is short and precious. Be mindful of how you spend yours.>
 
 	Msg6 <I may have a task for you. A special package needs to be escorted to its final destination... This is a spiritual matter. It would be greatly appreciated if you could aid us now.>
 	Msg7 <This urn contains the ashes of a poor unfortunate adventurer. The family wishes for it to be placed in \ELEMENT 2 eternally.>

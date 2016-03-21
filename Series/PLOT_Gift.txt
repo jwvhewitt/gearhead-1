@@ -111,15 +111,15 @@ sub
 	Msg21 <Well, that's easy enough to help you with. Here's $100000. I hope that will be enough to purchase new supplies.>
 	Msg22 <That's easy to do. Here is a "Corsair" mecha, recently decommisioned from the \SCENE EScene 1 garrison. I hear that it's quite fast, and has good ranged combat ability.>
 	Msg23 <Really? Hm, well if you ever do need anything I hope you remember that you have a friend in me.>
-	Msg24 <I think that you have a bright future ahead of you. On behaf of \SCENE EScene 1 I'd like to help fund your adventure. We have a cheque for $50000 if you want to take it.>
+	Msg24 <I think that you have a bright future ahead of you. On behalf of \SCENE EScene 1 I'd like to help fund your adventure. We have a cheque for $50000 if you want to take it.>
 	Msg25 <Here you go. I certainly hope that this money will be of use to you in your adventures.>
 	Msg26 <If that's what you want, then so be it. I wish you the best of luck.>
 	Msg27 <You have been a shining defender of the law, and for that our community wishes to thank you. I have been authorized to present you with a reward in honor of your heroic deeds.>
 	Msg28 <That's up to you, really. What do you wish for? Give me a suggestion and I'll let you know whether or not it is within my ability to provide.>
 	Msg29 <No, please, we've decided that we want to give you something. Surely there must be something that you want or need.>
-	Msg30 <You posess true nobility. On behaf of \SCENE EScene 1 I offer you our deepest thanks, for helping to keep our town safe.>
+	Msg30 <You posess true nobility. On behalf of \SCENE EScene 1 I offer you our deepest thanks, for helping to keep our town safe.>
 	Msg31 <Here is a small grant from our city treasury. Hopefully it will be useful to you in your adventuring career.>
-	Msg32 <You have shown yourself to be a true defender of the law. On behaf of \SCENE EScene 1 I'd like to give you this cash grant, so that you may continue to develop your adventuring career.>
+	Msg32 <You have shown yourself to be a true defender of the law. On behalf of \SCENE EScene 1 I'd like to give you this cash grant, so that you may continue to develop your adventuring career.>
 	Msg33 <I think you'll find that your accomplishments are already recognized by a large number of people. Here is your reward; I hope that it will help you.>
 	Msg34 <In time I know you will be recognized for all the potential you have. Here is your reward. May it aid you in your adventuring career.>
 	Msg35 <It's in the best interest of \SCENE EScene 1 to promote and encourage noble adventurers such as yourself. Here is your reward. I hope that it will be quite useful to you.>

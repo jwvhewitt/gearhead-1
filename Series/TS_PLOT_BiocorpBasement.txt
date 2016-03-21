@@ -22,7 +22,7 @@ sub
 	Msg1 <You shouldn't go poking around here. You aren't authorized for this lab. However, since you are the type to go poking around... I have a job you may be interested in.>
 	Msg2 <You destroyed the spawning vat in the BioCorp lab basement.>
 	Msg4 <It's not very reasonable to refuse my offer before you've even heard the details.>
-	Msg5 <BioCorp industries has a delicate problem. Beneath this lab is an old production complex, currently infested with bioweapons. If their spawning vat were destroyed, they could no longer reproduce. I'll pay $23000 it you can destroy it.>
+	Msg5 <BioCorp industries has a delicate problem. Beneath this lab is an old production complex, currently infested with bioweapons. If their spawning vat were destroyed, they could no longer reproduce. I'll pay $23000 if you can destroy it.>
 	Msg6 <Yes. You can find the entrance to the complex in our storage cell. Be careful of the monsters... they are the most dangerous creatures technology can produce.>
 	Msg7 <\PERSONA 2407 in \SCENE SCeneID wants you to destroy the spawning vat in the basement of BioCorp Labs.>
 	Msg8 <It is.>

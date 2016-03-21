@@ -63,7 +63,7 @@ sub
 	Prompt1 <What are you selling?>
 	Prompt2 <No thanks, you've got nothing I want.>
 	Prompt3 <I'll take it!>
-	CPrompt3 <ifG PC$ 99999 Accept>
+	CPrompt3 <ifG PC$ 9999 Accept>
 	Prompt4 <I don't want that.>
 	Prompt5 <I'm a guardian. You're under arrest!>
 	CPrompt5 <if= PCFac 3 Accept>

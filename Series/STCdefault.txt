@@ -271,6 +271,17 @@ end
 
 MLauncher 1
 name <Light Rockets>
+desig <LRL-24>
+Scale 2
+Range 6
+ACC -2
+Magazine 24
+sub
+	Rockets 1
+end
+
+MLauncher 1
+name <Light Rockets>
 desig <LRL-32>
 Scale 2
 Range 6
@@ -589,10 +600,10 @@ Msg3 <You've already tried this experiment today.>
 Msg5 <Perform an experiment.>
 Msg6 <Don't touch anything.>
 Msg7 <You attempt an experiment...>
-Msg26 <The apparatus has been set up to investigate emergency medical techniques.>
-Msg30 <The apparatus has been set up to investigate new surgical techniques.>
-Msg46 <The experiment is a success. You make some new discoveries about First Aid.>
-Msg50 <The experiment is a success. You make some new discoveries about Medicine.>
+Msg26 <The apparatus has been set up to investigate new surgical techniques.>
+Msg30 <The apparatus has been set up to investigate emergency medical techniques.>
+Msg46 <The experiment is a success. You make some new discoveries about Medicine.>
+Msg50 <The experiment is a success. You make some new discoveries about First Aid.>
 
 Prop 5
 name <COMPUTER>
@@ -656,7 +667,7 @@ Msg2 <Play the game>
 Msg3 <Don't bother>
 Msg4 <You can't afford to play the game...>
 Msg5 <You've already played Ultima Fighter once today.>
-Msg6 <This is a great game! You defeated Lord Gariott, the final boss!>
+Msg6 <This is a great game! You defeated Lord Garriott, the final boss!>
 Msg7 <This is a great game!>
 
 Prop 5

@@ -167,7 +167,7 @@ sub
 	% 26 - 30 :  PC will be told exact enemy point value.
 	%  use "\VAL V3 " to insert the value.
 	Msg26 <Our reports indicate that you'll be up against \VAL V3 threat points.>
-	Msg27 <I've heard from some friends in Lost Hope that \ELEMENT 1 has around \VAL V3 threat points worth of mecha in the area.>
+	Msg27 <I've heard from some friends in Last Hope that \ELEMENT 1 has around \VAL V3 threat points worth of mecha in the area.>
 	Msg28 <They've got \VAL V3 points worth of death in there, give or take a few hundred.>
 	Msg29 <You'll be fighting \VAL V3 tac-points of company mecha. Should be no problem for a badass like you, right?>
 	Msg30 <They've got around \VAL V3 worth in their strike team.>

@@ -64,7 +64,7 @@ sub
 	CMsg2_2 <ifChatNPCShy Accept>
 	Msg2_3 <Hey, we all know there's nothing worse than having to work for your money. If you're willing to do a bit of robbery I have some info that may interest you.>
 	CMsg2_3 <ifChatNPCEasygoing Accept>
-	Msg2_4 <You look like the sort that enjoys a challenge... How'd you like to try your luck at burgulary?>
+	Msg2_4 <You look like the sort that enjoys a challenge... How'd you like to try your luck at burglary?>
 	CMsg2_4 <ifChatNPCPassionate Accept>
 	Msg2_5 <There's no opportunity in this world for people like us, so we have to make our own... How'd you like to try a bit of larceny?>
 	CMsg2_5 <ifChatNPCMelancholy Accept>

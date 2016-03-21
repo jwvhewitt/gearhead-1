@@ -74,7 +74,7 @@ sub
 	CMsg2_15 <ifChatNPCCheerful Accept>
 	Msg2_16 <Here, let me show you the data I've acquired. There's an old apartment building on the outskirts of town. It looks like something bad happened there, but so far I haven't been able to determine what.>
 	CMsg2_16 <ifChatNPCPragmatic Accept>
-	Msg2_17 <There is a derelect building on the way into town. It contains nothing that I desire, but maybe it is here you can find the answers you seek?>
+	Msg2_17 <There is a derelict building on the way into town. It contains nothing that I desire, but maybe it is here you can find the answers you seek?>
 	CMsg2_17 <ifChatNPCSpiritual Accept>
 
 

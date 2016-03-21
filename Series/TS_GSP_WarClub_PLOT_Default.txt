@@ -27,7 +27,7 @@ sub
 	% V1 = Been Before
 	% V2 = Randomizer
 	% MoveKeyItem E3 E2 to place the war club... don't forget!
-	rumor <!1 is very interested in old artefacts.>
+	rumor <!4 is very interested in old artefacts.>
 	greeting <NewChat  ifG V1 0 else GoCheckFriend  ifG P2 0 else GoNoLike  ifKeyItem E3 else GoKeepLooking  Say 38  AddChat 14  AddChat 15>
 	GoKeepLooking <V= 2 38 V+ 2 d2 Say V2  AddChat 6  AddChat 8  AddChat 9  AddChat 16>
 
@@ -102,7 +102,7 @@ sub
 	Msg20 <I've been researching a PreZero weapons program. Their prototype went missing on its first field test, and I think I know where to find it. This weapon would be a great help to my studies.>
 
 	Msg21 <Thanks! I think I'm going to need it...>
-	Msg22 <Luck is for the superstitous.>
+	Msg22 <Luck is for the superstitious.>
 	Msg23 <Yes, I think you could... There is an object lost in a dangerous place near here. I need an adventurer to recover it for me.>
 	Msg24 <No, I don't think you'd be very well suited to this mission. I really need someone with a better scientific background.>
 	Msg25 <I know you could do the mission, but I don't know that I can trust you... Once you find this artefact, what are the chances that you'll keep it for yourself or sell it to someone else?>

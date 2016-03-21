@@ -91,7 +91,7 @@ sub
 	Msg15 <Some outsiders just moved into town. I don't know where they came from, but they've got some awesome machines. I need them eliminated. The job pays $15000 plus salvage. How about it?>
 	Msg16 <One of the big gangs in the area has been keeping the rest of us down. I need for them to be taken back a notch or two. Upon elimination of the gang I'll give you $7500, and the salvage is yours. What do you say?>
 	Msg17 <A rival gang has just acquired some military grade hardware. I need those meks annihilated as soon as possible. This mission pays $4500 and salvage.>
-	Msg18 <One of the rival gangs has been pushing into our territory. I need someone to teach them a perminant lesson. You'll make $3000 plus whatever salvage is left over. What do you think?>
+	Msg18 <One of the rival gangs has been pushing into our territory. I need someone to teach them a permanent lesson. You'll make $3000 plus whatever salvage is left over. What do you think?>
 	Msg19 <Some young thugs just bought their first armor units... I need you to make sure it's also their last. I'll give you $1500 for the job, along with salvage rights.>
 	Msg20 <A couple of kids got their hands on some light meks and now they think they're a gang. I need you to eliminate them. If you can pull this off it's worth $1000 plus salvage.>
 

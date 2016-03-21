@@ -31,7 +31,7 @@ sub
 	Msg3 <Well, you aren't going to have a very long career as a thief if you're that obvious about it. I could give you some pointers, help you out a bit... what do you say?>
 	Msg4 <I guess not. Still, you should know that Megi really thinks you were being serious. If you were interested I know how we could make some quick cash, if you really are up for a bit of petty thievery.>
 	Msg5 <Hello again. My offer is still good... How'd you like to be my partner in crime?>
-	Msg6 <Very good... There's a wide world of oppurtunity and vice out there for sharp young entrepraneurs like you and me. Meet me back here in a few minutes, I'll fill you in on the details then.>
+	Msg6 <Very good... There's a wide world of oppurtunity and vice out there for sharp young entrepreneurs like you and me. Meet me back here in a few minutes, I'll fill you in on the details then.>
 	Msg7 <That's too bad. I could really use someone with your obvious talents on my side... If you ever change your mind, be sure to come back.>
 	prompt1 <Megi really can't take a joke.>
 	prompt2 <Yes, I am.>

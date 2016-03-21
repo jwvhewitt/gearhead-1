@@ -52,7 +52,7 @@ sub
 	GoStartFight <EndChat Say 2 SoloAttack E3>
 
 	Msg1 <I have a message for you. You gonna listen?>
-	Msg1_1 <Hey \PC , I have a message for you straight from \NARRATIVE 1 . You want to hear it?>
+	Msg1_1 <Hey \PC , I have a message for you straight from \NARRATIVE 2 . You want to hear it?>
 	CMsg1_1 <if= XRE NAV_XREFaction Accept>
 	Msg1_2 <You're \PC , right? I have a message for you, from \NARRATIVE 2 .>
 	CMsg1_2 <ifPersona N2 Accept>
@@ -61,7 +61,7 @@ sub
 
 	Msg2 <The message is... you know too much, and you'll never leave \ELEMENT 1 alive!!!>
 	Msg2_1 <The message is, that you know far too much information for us to allow you to live. Goodbye \PC .>
-	Msg2_2 <You know too much to live, so now I'm gonna silence you perminently!>
+	Msg2_2 <You know too much to live, so now I'm gonna silence you permanently!>
 	Msg2_3 <You know too much about my employer, so now you gotta die!>
 	Msg2_4 <You're getting too close to my employer, if you catch my meaning. So now I've got to kill you.>
 

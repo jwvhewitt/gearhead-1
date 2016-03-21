@@ -24,7 +24,7 @@ sub
 
 	Team 2
 	SetEnemy 1
-	Set Ally 3
+	SetAlly 3
 
 	Team 3
 	home <Lab>

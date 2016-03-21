@@ -1092,7 +1092,7 @@ sdl_sprite <monster_androbot.png>
 sdl_colors <157 172 183 162 153 235 230 0 0>
 sdl_portrait <por_x_androbot.png>
 type <Robot Guard>
-CHAT_ATTACK <Leave the premesis or face retaliation.>
+CHAT_ATTACK <Leave the premises or face retaliation.>
 % Begin Science block.
 clue29 <ifSelfOK else GoPelt>
 GoPelt <if= V1 0 else GoDone Mental Gut Flay V= 1 SkRoll 29 ifG V1 27 else GoMeat Print 1 GiveSTC .stcdesc>

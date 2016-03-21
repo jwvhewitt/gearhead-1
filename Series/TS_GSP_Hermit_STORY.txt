@@ -36,7 +36,7 @@ sub
 
 	Msg1 <You have made it all the way to the top of the hill. Now, you have proven yourself worthy to be my pupil.>
 	Msg2 <The most important thing about surviving combat is not getting hit yourself. To that end, I recommend using a gun. Stand far away from your target and blast away.>
-	Msg3 <When your enemy is bigger and stronger than you, only proper technique can save your hide... and the technique I reccomend is unloading the biggest gun you can find into the bugger. It may not be sporting but it is good for your health.>
+	Msg3 <When your enemy is bigger and stronger than you, only proper technique can save your hide... and the technique I recommend is unloading the biggest gun you can find into the bugger. It may not be sporting but it is good for your health.>
 	Msg4 <You must master these techniques of swordmanship. Only someone who has learned the proper use of a blade can truly be respected as a warrior.>
 	Msg5 <Martial Arts is the most edifying skill of all... To turn your own body into a lethal weapon, that is true power. Come, let me show you something.>
 	Msg6 <Many warriors seek glory in defeating their opponents... but it is just as important to not be defeated by them. I will teach you all about that.>

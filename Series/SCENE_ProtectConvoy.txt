@@ -77,6 +77,8 @@ inv
 		armor 8
 		mass 81
 		sub
+			Gyro 1
+			Engine 5
 			Sensor 1
 			CPIT
 			sub

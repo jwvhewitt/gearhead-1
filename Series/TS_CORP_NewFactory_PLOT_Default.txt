@@ -172,7 +172,7 @@ sub
 
 	% 06 - 10 :  Player has lost the battle.
 	Msg6 <You lost... our work schedule has been set back by a week.>
-	Msg7 <They defeated you... our factory project has been jeapordized.>
+	Msg7 <They defeated you... our factory project has been jeopardized.>
 	Msg8 <You lost. How could you?>
 	Msg9 <That's strange... the security report didn't indicate that the raiders were that dangerous. In any event, the mission was a failure.>
 	Msg10 <You failed to complete the mission.>

@@ -162,7 +162,7 @@ sub
 	Msg11 <A stretch of highway outside of town is notorious for bandit attacks. Your job is to accompany one of our trucks and defend it until it gets past that area. Pay for the job is $ \VAL V4 .>
 	Msg12 <We're very concerned about raider attacks while leaving town. I need you to guard one of our trucks as it passes through a particularly dangerous spot. You'll earn $ \VAL V4 , so long as our truck makes it through in one piece.>
 	Msg13 <You'll need to guard one of our trucks as it passes through "Ravager Alley". I can offer $ \VAL V4 for this mission.>
-	Msg14 <Our convoy will be leaving town via a particularly dangerous stretch of highway that's been abandoned by the guardians. Your job is to keep our truck safe as it runs the guantlet. For doing so, you'll earn $ \VAL V4 .>
+	Msg14 <Our convoy will be leaving town via a particularly dangerous stretch of highway that's been abandoned by the guardians. Your job is to keep our truck safe as it runs the gauntlet. For doing so, you'll earn $ \VAL V4 .>
 	Msg15 <In order to avoid the highway patrol, we'll be leaving town via a seldom-used back road. Unfortunately that road is frequented by gangs... but as long as we get past them we should make excellent time to \SCENE E2 . Pay is $ \VAL V4 .>
 
 	% 16 - 20 :  Player is asked if he is looking for a job.
@@ -180,7 +180,7 @@ sub
 	Msg25 <I need to send a truck to \ELEMENT 2 , but with all the bandits on the highway I don't know if it'll make it.>
 
 	% 26 - 30 :  Why are you taking such a dangerous route?
-	Msg26 <Look, I don't question you about mecha piloting, don't you question me about trucking. This is the route we're taking. Either you sigh up for the job or I'll find someone who will.>
+	Msg26 <Look, I don't question you about mecha piloting, don't you question me about trucking. This is the route we're taking. Either you sign up for the job or I'll find someone who will.>
 	Msg27 <It's much quicker to travel the dangerous roads. There we only have to worry about bandits... if we followed the main roads, we'd have to deal with commuters, traffic police, photo radar...>
 	Msg28 <That's a good question. I'll be sure to look into it. For right now, though, I have a truck ready to move out and no time to think about changing the route.>
 	Msg29 <Beats me.>

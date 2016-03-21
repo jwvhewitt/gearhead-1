@@ -54,7 +54,7 @@ sub
 	Msg1 <Biomonster "Cetus" attacks \ELEMENT 1 ; military searches for way to stop this terror.>
 	Msg2 <Massive fires in \ELEMENT 1 following an attack by Cetus.>
 	Msg3 <Families of victims in \ELEMENT 1 seek class action suit against BioCorp following an attack by the biomonster Cetus.>
-	Msg4 <East \ELEMENT 1 in ruins following a suprise attack by the biomonster Cetus.>
+	Msg4 <East \ELEMENT 1 in ruins following a surprise attack by the biomonster Cetus.>
 	Msg5 <\ELEMENT 1 shopping area destroyed after being attacked by Cetus. At least seven people dead.>
 	Msg21 <Famed pilot \ELEMENT 2 of \ELEMENT 1 has succeeded in destroying the biomonster Cetus.>
 

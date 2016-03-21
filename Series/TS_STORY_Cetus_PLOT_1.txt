@@ -92,8 +92,8 @@ sub
 	Msg1 <I wish I could get out of this cave... This could be the biggest story of my life, if I wasn't stuck here!!!>
 	Msg2 <Oh man, am I glad to see you... I was trying to sneak into BioCorp labs to get a story on their new mecha project, but the place was attacked! Now I'm trapped here, I can't go back up and I can't get out!>
 	Msg3 <Not really... Right after I arrived, before I could find out anything, I heard gunshots. The BioCorp guards were fighting with someone else... then there was a huge explosion, and after that I ran. I managed to hide here but now I'm stuck.>
-	Msg4 <The rumor is that they're making an anthromorphic mecha using pure biological components. They're doing it in Last Hope because it's a small town, so there won't be as many people nosing around. I tried investigating it but now I'm stuck.>
-	Msg5 <Yes, that'd help a lot! With this I can get past the guard robots downstairs... Thanks! Be careful, without this card you might be pretty vunerable yourself... I'll try to send help if I can.>
+	Msg4 <The rumor is that they're making an anthropomorphic mecha using pure biological components. They're doing it in Last Hope because it's a small town, so there won't be as many people nosing around. I tried investigating it but now I'm stuck.>
+	Msg5 <Yes, that'd help a lot! With this I can get past the guard robots downstairs... Thanks! Be careful, without this card you might be pretty vulnerable yourself... I'll try to send help if I can.>
 	Prompt1 <This passcard might help. [give passcard]>
 	Prompt2 <Can you tell me exactly what happened?>
 	Prompt3 <Tell me about this mecha project.>
@@ -173,7 +173,7 @@ sub
 		Persona 4
 		greeting <NewChat if= V1 1 else GoFirstTime SayAnything>
 		GoFirstTime <V= 1 1 Say 1>
-		Msg1 <Thank you for destroying Cetus... It saved the company a considerable amount of embarassment. The loss of Cetus is a tragic setback, but we have other means of acquiring the knowledge we require.>
+		Msg1 <Thank you for destroying Cetus... It saved the company a considerable amount of embarrassment. The loss of Cetus is a tragic setback, but we have other means of acquiring the knowledge we require.>
 
 	end
 
