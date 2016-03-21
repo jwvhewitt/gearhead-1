@@ -47,11 +47,12 @@ Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
 
 Procedure PilotInfoForSelectingAMecha( PC: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
 Procedure MechaInfoForSelectingAPilot( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
+Procedure MechaEngineeringInfo( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
 
 
 implementation
 
-uses ghmodule,ghweapon,ghmecha,ghchars,ghsupport;
+uses ghmodule,ghweapon,ghmecha,ghchars,ghsupport,ghmovers;
 
 const
 	StatusPerfect:TSDL_Color =	( r:  0; g:255; b: 65 );
@@ -1344,6 +1345,80 @@ begin
 	AI_Title( GearName(Mek) , InfoHilight );
     LFGI_ForMecha( Mek, GB, False );
 end;
+
+Procedure MechaEngineeringInfo( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect );
+    { Display the technical info for this mecha. }
+var
+    SS: SensibleSpritePtr;
+    MyDest: TSDL_Rect;
+    t,needed_pts,active_pts: Integer;
+    MyText: PSDL_Surface;
+begin
+    MyDest := Z.GetRect();
+	SetInfoZone( MyDest );
+    AI_Title( FullGearName( Mek ), InfoHilight );
+    MyText := PrettyPrint( MassString( Mek ) + ' ' + FormName[Mek^.S] + ': ' + MsgString( 'FORMINFO_' + BStr( Mek^.S ) ) , MyDest.W, InfoHilight, True );
+	if MyText <> Nil then begin
+        CDest.X := CZone.X;
+        CDest.W := CZone.W;
+		SDL_SetClipRect( Game_Screen , @CZone );
+		SDL_BlitSurface( MyText , Nil , Game_Screen , @CDest );
+        CDest.Y := CDest.Y + MyText^.H + 8;
+		SDL_FreeSurface( MyText );
+		SDL_SetClipRect( Game_Screen , Nil );
+	end;
+    AI_PrintFromRight( MsgString('MEI_IntrinsicMass') + MakeMassString( IntrinsicMass(Mek), Mek^.Scale ) + ReplaceHash( MsgString('MEI_MVTRPenalty'),SgnStr(IntrinsicMVTVMod(Mek))), 0, InfoGreen);
+    AI_NextLine();
+    AI_PrintFromRight( MsgString('MEI_ExtrinsicMass') + MakeMassString( EquipmentMass(Mek), Mek^.Scale ) + ReplaceHash( MsgString('MEI_MVTRPenalty'),SgnStr(EquipmentMVTVMod(Mek))), 0, InfoGreen);
+    AI_NextLine();
+    AI_NextLine();
+
+    if BaseMoveRate( Mek, MM_Walk ) > 0 then begin
+        needed_pts := NeededLegPoints( mek );
+        active_pts := CountActivePoints( Mek , GG_Module , GS_Leg );
+        if active_pts > needed_pts then begin
+            AI_PrintFromRight( MsgString('MEI_LegPoints') + '100%+', 0, InfoGreen);
+        end else begin
+            AI_PrintFromRight( MsgString('MEI_LegPoints') + BStr((active_pts * 100 ) div needed_pts) + '%', 0, InfoGreen);
+        end;
+        AI_NextLine();
+    end;
+
+    if BaseMoveRate( Mek, MM_Roll ) > 0 then begin
+        needed_pts := NeededWheelPoints( mek );
+        active_pts := CountActivePoints( Mek , GG_MoveSys , GS_Wheels ) + CountActivePoints( Mek , GG_MoveSys , GS_Tracks );
+        if active_pts > needed_pts then begin
+            AI_PrintFromRight( MsgString('MEI_RollPoints') + '100%+', 0, InfoGreen);
+        end else begin
+            AI_PrintFromRight( MsgString('MEI_RollPoints') + BStr((active_pts * 100 ) div needed_pts) + '%', 0, InfoGreen);
+        end;
+        AI_NextLine();
+    end;
+
+    if BaseMoveRate( Mek, MM_Skim ) > 0 then begin
+        active_pts :=  CountThrustPoints( mek , MM_Skim , mek^.Scale );
+        if active_pts > 0 then begin
+            AI_PrintFromRight( MsgString('MEI_SkimThrust') + BStr(active_pts), 0, InfoGreen);
+            AI_NextLine();
+        end;
+    end;
+
+    if BaseMoveRate( Mek, MM_Fly ) > 0 then begin
+        active_pts :=  FlightThrust( mek );
+        if active_pts > 0 then begin
+            AI_PrintFromRight( MsgString('MEI_FlyThrust') + BStr(active_pts), 0, InfoGreen);
+            AI_NextLine();
+        end;
+    end;
+
+    active_pts :=  OverchargeBonus( mek );
+    if active_pts > 0 then begin
+        AI_PrintFromRight( MsgString('MEI_OverChargeBonus') + SgnStr(active_pts), 0, InfoGreen);
+        AI_NextLine();
+    end;
+
+end;
+
 
 initialization
 	Interact_Sprite := ConfirmSprite( Interact_Sprite_Name , '' , 4 , 16 );

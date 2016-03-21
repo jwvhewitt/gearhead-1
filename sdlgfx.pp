@@ -116,12 +116,6 @@ const
 	ZONE_InteractInfo: DynamicRect = ( dx: -250; dy:-165; w:395; h:40; anchor: ANC_middle );
 	ZONE_InteractTotal: DynamicRect = ( dx: -255; dy: -215; w: 510; h: 335; anchor: ANC_middle );
 
-	ZONE_BPTotal: DynamicRect = (dx:-300; dY:-215; W: 570; H: 330; anchor: ANC_middle);
-    ZONE_BPHeader: DynamicRect = (dx:-295; dY:-210; W: 300; H: 40; anchor: ANC_middle);
-	ZONE_EqpMenu: DynamicRect = ( dx:-295; dy:-165; w:300; h:80; anchor: ANC_middle );
-	ZONE_InvMenu: DynamicRect = ( dx:-295; dy:-80; w:300; h:145; anchor: ANC_middle );
-	ZONE_BPInstructions: DynamicRect = (dx:-295; dY:70; W: 300; H: 40; anchor: ANC_middle);
-	ZONE_BPInfo: DynamicRect = (dx:15; dY:-210; W: 250; H: 320; anchor: ANC_middle);
 
 	ZONE_Menu: DynamicRect = ( dx: 10; dy:10; w:Right_Column_Width; h:205; anchor: ANC_upperleft );
 	ZONE_Menu1: DynamicRect = ( dx: 10; dy:10; w:Right_Column_Width; h:100; anchor: ANC_upperleft );
@@ -136,9 +130,15 @@ const
     ZONE_FHQTitle: DynamicRect = ( dx:-165; dy:-255; w:300; h:20; anchor: ANC_middle ); 
     ZONE_FHQMenu: DynamicRect = ( dx:-280; dy:-210; w:292; h:320; anchor: ANC_middle );
 	ZONE_FHQInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 320; anchor: ANC_middle);
-
     ZONE_FHQMenu1: DynamicRect = ( dx:-280; dy:-210; w:292; h:180; anchor: ANC_middle );
-    ZONE_FHQMenu2: DynamicRect = ( dx:-280; dy: -10; w:292; h:120; anchor: ANC_middle );
+    ZONE_FHQMenu2: DynamicRect = ( dx:-280; dy: -15; w:292; h:125; anchor: ANC_middle );
+
+	ZONE_BPTotal: DynamicRect = (dx:-285; dY:-215; W: 570; H: 330; anchor: ANC_middle);
+    ZONE_BPHeader: DynamicRect = (dx:-280; dY:-210; W: 292; H: 40; anchor: ANC_middle);
+	ZONE_EqpMenu: DynamicRect = ( dx:-280; dy:-165; w:292; h:80; anchor: ANC_middle );
+	ZONE_InvMenu: DynamicRect = ( dx:-280; dy:-80; w:292; h:145; anchor: ANC_middle );
+	ZONE_BPInstructions: DynamicRect = (dx:-280; dY:70; W: 292; H: 40; anchor: ANC_middle);
+	ZONE_BPInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 320; anchor: ANC_middle);
 
     { The line of conversion- zones above this have been validated for WIZARD. }
 
@@ -202,6 +202,8 @@ Function ConfirmSprite( Name: String; const Color: String; W,H: Integer ): Sensi
 function RPGKey: Char;
 Procedure ClrZone( var Z: TSDL_Rect );
 Procedure ClrScreen;
+
+Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean ): PSDL_Surface;
 
 Procedure QuickText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 Procedure QuickTinyText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
@@ -909,7 +911,7 @@ Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
 var
 	MyText: PSDL_Surface;
 begin
-	ClrZone( Z );
+	{ClrZone( Z );}
 	MyText := PrettyPrint( msg , Z.W , C , False );
 	if MyText <> Nil then begin
 		SDL_SetClipRect( Game_Screen , @Z );

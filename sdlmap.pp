@@ -1563,7 +1563,7 @@ initialization
 	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_rustysteel.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Stone ] := ConfirmSprite( 'wall_stone.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Industrial ] := ConfirmSprite( 'wall_industrial.png' , '' , 64 , 96 );
-	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_extra_b.png' , '' , 64 , 96 );
+	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_residential.png' , '' , 64 , 96 );
 {	Thin_Wall_Sprites[ ThinWall_Default ] := ConfirmSprite( 'wall_extra_a.png' , '' , 64 , 96 );}
 
 	Thin_wall_Cap := ConfirmSprite( 'wall_cap.png' , '' , 64 , 96 );

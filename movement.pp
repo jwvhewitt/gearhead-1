@@ -127,6 +127,13 @@ const
 	NAS_TimeLimit = 5;	{ Time limit for jumping movement. }
 	NAS_JumpRecharge = 6;
 
+Function CountThrustPoints( Master: GearPtr; MM,Scale: Integer ): LongInt;
+
+function NeededLegPoints( Mek: GearPtr ): Integer;
+function NeededWheelPoints( Mek: GearPtr ): Integer;
+function FlightThrust( Mek: GearPtr ): LongInt;
+
+Function OverchargeBonus( Master: GearPtr ): LongInt;
 
 
 function BaseMoveRate( Master: GearPtr ; MoveMode: Integer ): Integer;
@@ -200,6 +207,16 @@ begin
 	CountThrustPoints := it;
 end;
 
+function NeededLegPoints( Mek: GearPtr ): Integer;
+    { Return the number of leg points this gear needs. }
+var
+    it: Integer;
+begin
+    it := Mek^.V * 2 - 2;
+    if it < 2 then it := 2;
+    NeededLegPoints := it;
+end;
+
 function CalcWalk( Mek: GearPtr ): Integer;
 	{ Calculate the base walking rate for this mecha. }
 var
@@ -221,8 +238,7 @@ begin
 		{ the mek is damaged, or if it was just built with stubby }
 		{ legs. Ideally, the number of leg points must be no less }
 		{ than mecha Size * 2 - 2 }
-		MinLegPoints := Mek^.V * 2 - 2;
-		if MinLegPoints < 2 then MinLegPoints := 2;
+		MinLegPoints := NeededLegPoints( Mek );
 
 		ActualLegPoints := CountActivePoints( Mek , GG_Module , GS_Leg );
 		if Mek^.S = GS_Zoanoid then begin
@@ -274,6 +290,17 @@ begin
 	CalcWalk := spd;
 end;
 
+function NeededWheelPoints( Mek: GearPtr ): Integer;
+    { Return the number of wheel points this gear needs. }
+var
+    it: Integer;
+begin
+    it := Mek^.V * 2 - 2;
+    if it < 2 then it := 2;
+    NeededWheelPoints := it;
+end;
+
+
 function CalcRoll( Mek: GearPtr ): Integer;
 	{ Calculate the base ground movement rate for this mecha. }
 var
@@ -292,8 +319,7 @@ begin
 			spd := ( spd * 3 ) div 2;
 		end;
 
-		MinWheelPoints := Mek^.V * 2 - 2;
-		if MinWheelPoints < 2 then MinWheelPoints := 2;
+		MinWheelPoints := NeededWheelPoints( Mek );
 
 	end else if Mek^.G = GG_Character then begin
 		spd := CStat( Mek , STAT_Speed ) * CharRollMultiplier;
@@ -356,24 +382,11 @@ begin
 	CalcSkim := spd;
 end;
 
-function CalcFly( Mek: GearPtr; TrueSpeed: Boolean ): LongInt;
-	{ Calculate the base flight speed for this mecha. }
-	{ Set TRUESPEED to TRUE if you want the actual speed of the }
-	{ mecha, or to FALSE if you want its projected speed (needed }
-	{ to calculate jumpjet time- see below. }
+function FlightThrust( Mek: GearPtr ): LongInt;
+    { Calculate the number of thrust points this mecha has. }
 var
-	mass,thrust,spd,WingPoints: LongInt;
+    thrust,WingPoints: LongInt;
 begin
-	if Mek^.G = GG_Mecha then begin
-		{ Calculate the mass... }
-		mass := GearMass( Mek );
-	end else begin
-		mass := GearMass( Mek ) + 25;
-	end;
-
-	{ Calculate the number of thrust points. This is equal to }
-	{ the number of active hover jets times the thrust per jet }
-	{ constant. }
 	thrust := CountThrustPoints( mek , MM_Fly , mek^.Scale );
 
 	{ Count the number of wing points present. }
@@ -401,6 +414,29 @@ begin
 
 		end;
 	end;
+
+    FlightThrust := thrust;
+end;
+
+function CalcFly( Mek: GearPtr; TrueSpeed: Boolean ): LongInt;
+	{ Calculate the base flight speed for this mecha. }
+	{ Set TRUESPEED to TRUE if you want the actual speed of the }
+	{ mecha, or to FALSE if you want its projected speed (needed }
+	{ to calculate jumpjet time- see below. }
+var
+	mass,thrust,spd,WingPoints: LongInt;
+begin
+	if Mek^.G = GG_Mecha then begin
+		{ Calculate the mass... }
+		mass := GearMass( Mek );
+	end else begin
+		mass := GearMass( Mek ) + 25;
+	end;
+
+	{ Calculate the number of thrust points. This is equal to }
+	{ the number of active hover jets times the thrust per jet }
+	{ constant. }
+    thrust := FlightThrust( Mek );
 
 
 	if thrust >= mass then begin

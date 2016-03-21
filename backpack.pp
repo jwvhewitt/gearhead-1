@@ -174,20 +174,27 @@ begin
 	LongformGearInfo( InfoGear , InfoGB, ZONE_FHQInfo );
 end;
 
-
-
-Procedure TradeItemRedraw;
-	{ Miscellaneous menu redraw procedure. The Eqp display will be shown; }
-	{ the INV display won't be. }
+Procedure TransferRedraw;
+    { The redrawer for the transfer frontend. }
+var
+	Part: GearPtr;
 begin
-	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
-	DrawBPBorder;
-	if InfoGear <> Nil then 	LongformGearInfo( InfoGear , InfoGB, ZONE_BPInfo );
-	if EqpRPM <> Nil then begin
-		DisplayMenu( EqpRPM , Nil );
-		GameMsg( MsgString( 'BACKPACK_Directions' ) , ZONE_BPInstructions.GetRect() , MenuItem );
+	SDLCombatDisplay( InfoGB );
+    if BPRD_CAPTION <> '' then begin
+    	InfoBox( ZONE_FHQTitle.GetRect() );
+        CMessage( BPRD_CAPTION , ZONE_FHQTitle.GetRect() , InfoHilight );
+    end;
+    InfoBox( ZONE_FHQMenu.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+
+	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
+		Part := RetrieveGearSib( BP_Source , CurrentMenuItemValue( BP_ActiveMenu ) );
+		if Part <> Nil then begin
+        	LongformGearInfo( Part , InfoGB, ZONE_FHQInfo );
+		end;
 	end;
 end;
+
 
 Procedure RobotPartRedraw;
 	{ Redraw procedure for the robot part selector. }
@@ -238,13 +245,6 @@ begin
 
 	DisposeRPGMenu( RPM );
 end;
-
-Procedure FHQRedraw;
-begin
-	if InfoGB <> Nil then SDLCombatDisplay( InfoGB );
-	{DisplayGearInfo( InfoGear );}
-end;
-
 
 {$ENDIF}
 
@@ -1114,7 +1114,7 @@ var
 		If Dest = PC then Exit(False);
 
 		{ Team check.  This could probably be simplified --
-		  How could the source Master's team be other than
+		  How could the source Master's team be TradeFrontendother than
 		  DefPlayer or Lancemate anyway? }
   		DTeam := NAttValue( Dest^.NA , NAG_Location , NAS_Team );
 		if DTeam = NAV_LancemateTeam then DTeam := NAV_DefPlayerTeam;
@@ -1140,7 +1140,11 @@ begin
 	end;
 
 	{ Build the slot selection menu. }
+    {$IFDEF SDLMODE}
+	TI_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu );
+    {$ELSE}
 	TI_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
+    {$ENDIF}
 	N := 1;
 	M := LList;
 	Team := NAttValue( PC^.NA , NAG_Location , NAS_Team );
@@ -1150,7 +1154,7 @@ begin
 	{ belong to Team 1. }
 	while M <> Nil do begin
 		if IsMasterGear( M ) and Transferable_To(M) then
-			AddRPGMenuItem( TI_Menu , GearName( M ) , N );
+			AddRPGMenuItem( TI_Menu , LanceMateMenuName( M ) , N );
 		M := M^.Next;
 		Inc( N );
 	end;
@@ -1160,7 +1164,12 @@ begin
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
-	N := SelectMenu( TI_Menu , @TradeItemRedraw);
+	InfoGear := Item;
+    BP_Source := LList;
+    BP_ActiveMenu := TI_Menu;
+    BPRD_Caption := ReplaceHash( MsgString('TRANSFER_GiveTo'), GearName( Item ) );
+
+	N := SelectMenu( TI_Menu , @TransferRedraw);
 {$ELSE}
 	N := SelectMenu( TI_Menu );
 {$ENDIF}
@@ -1728,24 +1737,20 @@ var
     Part: GearPtr;
 begin
 	SDLCombatDisplay( InfoGB );
-	DrawBPBorder;
-    DrawBackpackHeader( BP_Source );
-
-    if BPRD_CAPTION <> '' then begin
-        CMessage( BPRD_CAPTION , ZONE_BPInstructions.GetRect() , InfoHilight );
-    end;
+    InfoBox( ZONE_FHQMenu1.GetRect() );
+    InfoBox( ZONE_FHQMenu2.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+    MechaEngineeringInfo( BP_Source, InfoGB, ZONE_FHQMenu1 );
 
 	if ( BP_ActiveMenu <> Nil ) and ( BP_Source <> Nil ) then begin
 		N := CurrentMenuItemValue( BP_ActiveMenu );
 		if N > 0 then begin
 			Part := LocateGearByNumber( BP_Source , N );
 			if Part <> Nil then begin
-            	LongformGearInfo( Part , InfoGB, ZONE_BPInfo );
-			end else LongformGearInfo( BP_Source , InfoGB, ZONE_BPInfo );
-        end else LongformGearInfo( BP_Source , InfoGB, ZONE_BPInfo );
+            	LongformGearInfo( Part , InfoGB, ZONE_FHQInfo );
+			end else LongformGearInfo( BP_Source , InfoGB, ZONE_FHQInfo );
+        end else LongformGearInfo( BP_Source , InfoGB, ZONE_FHQInfo );
 	end;
-
-	GameMsg( FullGearName( BP_Source ) + ' '  + MechaDescription( BP_Source) , ZONE_EqpMenu.GetRect() , InfoGreen );
 end;
 {$ENDIF}
 
@@ -1761,7 +1766,11 @@ begin
 	I := 0;
 
 	Repeat
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu2 );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
+        {$ENDIF}
 		BuildGearMenu( RPM , Mek );
 		if I > 0 then SetItemByPosition( RPM , I );
 		AddRPGMenuItem( RPM , 'Exit Editor' , -1 );
@@ -1857,6 +1866,7 @@ begin
 	DisposeRPGMenu( RPM );
 end;
 
+
 Procedure FHQ_Transfer( var LList: GearPtr; PC,Item: GearPtr );
 	{ An item has been selected. Allow it to be transferred to }
 	{ one of the team's master gears. }
@@ -1877,7 +1887,7 @@ begin
 	Team := NAttValue( PC^.NA , NAG_LOcation , NAS_Team );
 	while M <> Nil do begin
 		if ( ( NAttValue( M^.NA , NAG_LOcation , NAS_Team ) = Team ) or ( NAttValue( M^.NA , NAG_LOcation , NAS_Team ) = NAV_LancemateTeam ) ) and IsMasterGear( M ) and IsLegalSlot( M , Item ) then begin
-			AddRPGMenuItem( RPM , GearName( M ) , N );
+			AddRPGMenuItem( RPM , LanceMateMenuName( M ) , N );
 		end;
 
 		M := M^.Next;
@@ -1892,7 +1902,10 @@ begin
 	DialogMSG( MsgString( 'FHQ_SelectDestination' ) );
 {$IFDEF SDLMODE}
 	InfoGear := Item;
-	N := SelectMenu( RPM , @FHQRedraw );
+    BP_Source := LList;
+    BP_ActiveMenu := RPM;
+    BPRD_Caption := ReplaceHash( MsgString('TRANSFER_GiveTo'), GearName( Item ) );
+	N := SelectMenu( RPM , @TransferRedraw );
 {$ELSE}
 	N := SelectMenu( RPM );
 {$ENDIF}

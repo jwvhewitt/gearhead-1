@@ -441,7 +441,7 @@ begin
 	        if ( GB <> Nil ) and ( GB^.Scene <> Nil ) and IsSubCom( GB^.Scene ) and IsSAfeArea( GB ) and OnTheMap( NPC ) and ( NAttValue( NPC^.NA , NAG_Location , NAS_Team ) = NAV_LancemateTeam ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_LMV_Dismiss' ) , 3 );
 	        if ( NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) = 0 ) and ( UpCase( SAttValue( NPC^.SA , 'JOB' ) ) = 'ROBOT' ) then AddRPGMenuItem( RPM , MsgString( 'FHQ_Disassemble' ) , 7 );
         end;
-	    AddRPGMenuItem( RPM , MsgString( 'FHQ_PartEditor' ) , 8 );
+	    AddRPGMenuItem( RPM , MsgString( 'FHQ_PartViewer' ) , 8 );
 
 	    AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 
