@@ -15,7 +15,7 @@ end
 mod body
 armor 4
 sub
-	LRL-32
+	STC LRL-32
 end
 
 mod arm

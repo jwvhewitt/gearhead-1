@@ -1,0 +1,2091 @@
+% GearHead PC Scale Equipment
+
+%  ************************
+%  ***  MELEE  WEAPONS  ***
+%  ************************
+
+Melee 2
+Name <Knife>
+Type <THROWN>
+desc <A simple knife.>
+Acc 1
+Speed 5
+
+Melee 3
+Name <Survival Knife>
+Type <THROWN>
+desc <A sturdy knife with a wide variety of uses.>
+Acc 1
+Speed 5
+Mass -1
+
+Melee 3
+Name <Sickle>
+Type <ARMORPIERCING>
+desc <An extremely sharp curved blade.>
+Acc 1
+Speed 4
+Mass -2
+
+Melee 5
+Name <Cutlass>
+desc <A curved short sword.>
+Acc 1
+Speed 4
+Mass -2
+
+Melee 6
+Name <Hand Axe>
+desc <A small axe, light enough to be wielded with one hand.>
+Type <THROWN>
+Speed 3
+
+Melee 5
+Name <Pick>
+desc <A tool for digging. Also a passable weapon.>
+Mass 2
+Speed 1
+
+Melee 10
+Name <Battle Axe>
+desc <A large axe, balanced for combat.>
+Mass -2
+
+Melee 4
+Name <Mace>
+desc <A steel club.>
+Speed 3
+Mass 2
+
+Melee 8
+Name <Katana>
+desc <A long sword emphasising sharpness, based on the ancient PreZero Japanese design.>
+Acc 2
+Speed 4
+Mass -5
+
+Melee 7
+Name <Longsword>
+desc <A long-bladed sword capable of causing large amounts of damage through its swing velocity.>
+Acc 1
+Speed 4
+Mass -4
+
+Melee 5
+Name <Rapier>
+desc <A light dueling sword with a thin blade. Designed for stabbing and lunging.>
+Acc 3
+Speed 5
+Mass -3
+
+Melee 3
+Name <Steel Pipe>
+desc <A simple but effective weapon.>
+Mass 2
+Acc -2
+Speed 3
+
+Melee 7
+Name <War Hammer>
+desc <A big hammer weighted for combat.>
+
+Melee 10
+Name <Spear>
+Type <EXTEND THROWN>
+Mass -3
+desc <A primitive melee weapon, composed of a long shaft tipped with a metal piercing blade.>
+
+Melee 9
+Name <Trident>
+Type <EXTEND THROWN>
+Acc 1
+Mass -3
+desc <A primitive melee weapon, consisting of a long handle and a pronged head.>
+
+Melee 2
+Name <Boomerang>
+Type <RETURN THROWN>
+Mass -1
+Speed 1
+desc <A throwing club that should return to its user, if thrown correctly.>
+
+Melee 6
+Name <Deathwing>
+Type <POISON RETURN THROWN>
+Mass -5
+Speed 1
+desc <A bladed boomerang with an integrated poison dispenser. This weapon is favored by assassins, since even a grazing hit can be lethal.>
+
+Melee 15
+Name <Pole-Axe>
+Type <EXTEND>
+Mass -7
+desc <A primitive melee weapon. It features a wide cutting blade at the end.>
+
+Melee 17
+Name <Scythe>
+Type <EXTEND>
+Mass -9
+Acc -1
+desc <A primitive melee weapon. Originally used to harvest crops, but these models are created with lighter and sturdier materials.>
+
+Melee 19
+Name <Chainsaw>
+Type <BRUTAL>
+Mass -6
+Acc -1
+desc <An energy-cell powered cutting tool. Particularly suited for cutting through materials.>
+
+Melee 14
+Name <Chainsword>
+Type <ARMORPIERCING>
+Mass -10
+Acc 1
+Speed 4
+desc <A sword with a spinning chainsaw for a blade. A trigger on the hilt controls the chain itself.>
+
+Melee 12
+Name <Gyro Mace>
+Type <BRUTAL>
+Mass -7
+Acc 2
+Speed 3
+desc <A combat mace with counterspinning contact heads for maximum damage potential.>
+
+Melee 9
+Name <Night Blade>
+Type <POISON>
+Acc 2
+Speed 4
+Mass -6
+desc <A longsword with an integrated venom dispenser. This weapon is favored by assassins, since even a grazing hit can be lethal.>
+
+Melee 10
+Name <MonoSword>
+Type <ARMORPIERCING>
+Acc 1
+Speed 6
+Mass -8
+desc <A ceram sword with a monomolecularly sharp edge.>
+
+Melee 22
+Name <MonoScythe>
+Type <ARMORPIERCING EXTEND>
+Mass -15
+desc <A ceram scythe with a monomolecularly sharp edge.>
+
+Melee 11
+Name <Immolator>
+Type <BURN FLAIL>
+Speed 3
+Mass -3
+desc <A flail whose head disperses an incindiary gel on contact.>
+
+Melee 13
+Name <Thunder Axe>
+Type <HAYWIRE THROWN>
+Speed 3
+Mass -7
+desc <This axe releases a powerful electric charge on contact.>
+
+Melee 18
+Name <Thunder Star>
+Type <BRUTAL FLAIL HAYWIRE>
+Speed 3
+Acc -1
+Mass -9
+desc <This flail releases a powerful electric charge on contact.>
+
+Melee 20
+Name <Monomolecular Whip>
+Speed 6
+Acc -2
+Type <ARMORPIERCING EXTEND FLAIL>
+Mass -14
+desc <An extremely thin cord of incredibly strong polymer, the monomolecular whip can cut through anything it comes in contact with.>
+
+Melee 2
+Name <Nerve Whip>
+Acc -2
+Speed 5
+Type <EXTEND FLAIL STONE>
+desc <This whip transmits an electric pulse which can temporarily disrupt the nervous system of its target.>
+
+Melee 2
+Name <Whip>
+Acc -2
+Speed 4
+Type <EXTEND FLAIL>
+desc <A long flexible lash used for hitting people.>
+
+%  ********************************
+%  ***  ENERGY  MELEE  WEAPONS  ***
+%  ********************************
+
+EMelee 3
+Name <Beam Knife>
+Speed 5
+desc <A small plasma-beam projector, useful for cutting through tough materials.>
+
+EMelee 10
+Name <Laser Axe>
+Mass 4
+Acc -2
+Speed 3
+desc <An axe with a fiber-optic head. When the blade makes contact, it immediatey discharges a destructive flash of laser light.>
+
+EMelee 15
+Name <Solar Spear>
+Acc 1
+Type <BURN EXTEND THROWN>
+Mass 5
+desc <At the head of this spear is a plasma field generator. When activated, it can burn through just about anything.>
+
+%  ****************************
+%  ***  BALLISTIC  WEAPONS  ***
+%  ****************************
+
+Gun 2
+Name <Autopistol>
+desc <A small caliber low velocity automatic pistol.>
+Mass -2
+Range 3
+Acc 1
+Speed 5
+BV 2
+Magazine 30
+sub
+	Ammo 2
+	Desc <The compact design of this clip offers a conveniently large ammunition count.>
+end
+
+Gun 2
+Name <Autogun>
+desc <A small caliber low velocity automatic rifle.>
+Range 5
+Acc 1
+Speed 5
+BV 2
+Magazine 90
+sub
+	Ammo 2
+	Desc <An ammunition clip designed primarily for use in an Autogun.>
+end
+
+Gun 16
+Name <Sniper Rifle>
+Type <ARMORPIERCING>
+desc <A large caliber, single firing magnetic rifle. Favored in long-range engagements.>
+Range 15
+Acc 2
+Speed 1
+Magazine 8
+sub
+	Ammo 16
+	Desc <The heavy metal slugs in this clip mean that reload time is increased somewhat.>
+end
+
+Gun 6
+Name <Assault Rifle>
+desc <A rapid-firing magnetic rifle.>
+Mass -2
+Range 7
+Acc -1
+Speed 4
+BV 3
+Magazine 40
+sub
+	Ammo 6
+	Name <Rifle Clip>
+	Desc <Standard ammo for Combat Rifles and Assault Rifles>
+end
+
+Gun 6
+Name <Combat Rifle>
+desc <A single firing magnetic rifle.>
+Mass -3
+Range 7
+Speed 5
+Magazine 40
+sub
+	Ammo 6
+	Name <Rifle Clip>
+	Desc <Standard ammo for Combat Rifles and Assault Rifles>
+end
+
+Ammo 6
+Name <Rifle Clip (AP)>
+desc <These bullets have slender tips suited for penetrating armor.>
+AmmoCount 40
+Type <ARMORPIERCING>
+
+Ammo 6
+Name <Rifle Clip (Incendiary)>
+desc <Flat-tipped bullets which release an incendiary gel that ignites on contact.>
+AmmoCount 40
+Type <BURN>
+
+Ammo 6
+Name <Rifle Clip (Flechette)>
+desc <Bullets designed to release shrapnel on firing.>
+AmmoCount 40
+Type <SCATTER>
+
+Ammo 6
+Name <Rifle Clip (Assassin)>
+desc <Ammunition suited for quick elimination of living targets.>
+AmmoCount 40
+Type <POISON>
+
+Ammo 6
+Name <Rifle Clip (EMP)>
+desc <These bullets explode and cause electromagnetic interference.>
+AmmoCount 40
+Type <BLAST 1 HAYWIRE>
+
+Gun 10
+Name <Snub Rifle>
+desc <A large caliber single-firing magnetic rifle.>
+Range 8
+Mass -4
+Speed 4
+Magazine 25
+sub
+	Ammo 10
+	desc <Ammunition made specially for the Snub Rifle.>
+end
+
+Ammo 10
+Name <Snub Rifle Clip (Explosive)>
+desc <These bullets explode on contact.>
+Type <BLAST 1>
+AmmoCount 25
+
+Ammo 10
+Name <Snub Rifle Clip (Grapeshot)>
+desc <The individual bullets in this clip are actually composed of many smaller bullets, scattering when fired.>
+Type <SCATTER>
+AmmoCount 25
+
+Ammo 10
+Name <Snub Rifle Clip (EMP)>
+desc <Each bullet encases an electromagnetic pulse device and an explosive charge.>
+Type <BLAST 3 HAYWIRE>
+AmmoCount 25
+
+Gun 17
+Name <Assault Cannon>
+desc <A heavy gatling-style magnetic cannon.>
+Type <SWARM>
+Mass -9
+Range 10
+Acc 2
+Speed 5
+BV 7
+Magazine 80
+sub
+	Ammo 17
+	desc <This clip is distributed as standard with the Assault Cannon.>
+	Mass -7
+end
+
+Ammo 17
+Name <Assault Cannon Clip (Carbide)>
+desc <The shots of this clip are sharpened and aerodynamically designed for reaching higher velocities than conventional assault cannon shots.>
+AmmoCount 80
+Type <ARMORPIERCING>
+Mass -7
+
+Ammo 17
+Name <Assault Cannon Clip (Ceram)>
+desc <Designed from the light, non-metallic ceram material.>
+AmmoCount 80
+Mass -10
+
+Ammo 17
+Name <Assault Cannon Clip (Shard)>
+desc <These shots burst into shrapnel to damage over a wide area.>
+AmmoCount 80
+Type <BRUTAL SCATTER>
+Mass -7
+
+Gun 3
+Name <Slug Pistol>
+desc <A low velocity single firing magnetic pistol. Fires solid metal slugs.>
+Mass -1
+Range 3
+Acc 2
+Speed 4
+Magazine 12
+sub
+	Ammo 3
+	desc <Contains non-explosive heavy metal slugs.>
+end
+
+Gun 4
+Name <Revolver>
+desc <A low velocity single firing chemically powered pistol.>
+Mass -3
+Range 3
+Magazine 6
+sub
+	Ammo 4
+	desc <A departure from the traditional cartridge, this clip comes in the form of a cylinder with the bullets preloaded.>
+	Mass 1
+end
+
+Gun 5
+Name <Long Rifle>
+desc <The long rifled barrel of this firearm can increase the spin of its bullets, thus increasing its range without decreasing the gun's durability.>
+Mass -1
+Range 10
+Acc 1
+Speed 3
+Magazine 30
+sub
+	Ammo 5
+	desc <Standard ammunition for Long Rifles and Hunting Rifles>
+end
+
+Gun 5
+Name <Hunting Rifle>
+desc <A rifle designed for hunting animals.>
+Range 12
+Acc 1
+Magazine 30
+sub
+	Ammo 5
+	Name <Long Rifle Clip>
+	desc <Standard ammunition for Long Rifles and Hunting Rifles>
+end
+
+Gun 4
+Name <Pin Rifle>
+Type <SWARM>
+desc <A magnetic cannon that fires tiny slivers of metal at extreme velocity.>
+Mass -8
+Acc 1
+Range 8
+BV 8
+Speed 3
+Magazine 450
+sub
+	Ammo 4
+	desc <This clip contains thousands of tiny slivers for use with the Pin Rifle.>
+	Mass -4
+end
+
+Ammo 4
+Name <Pin Rifle Clip (Carbide)>
+desc <The material used for these slivers are designed to penetrate armor.>
+Mass -4
+AmmoCount 450
+Type <ARMORPIERCING>
+
+Gun 5
+Name <Headhunter Pistol>
+desc <A powerful magnetic pistol.>
+Type <ARMORPIERCING>
+Range 4
+Mass -4
+Speed 6
+sub
+	Ammo 5
+	desc <These clips come as standard with the Headhunter Pistol.>
+	Mass 1
+end
+
+Ammo 5
+Name <Headhunter Pistol Clip (assassin)>
+desc <Bullets tipped with poison in order to quickly eliminate living targets.>
+AmmoCount 10
+Type <POISON>
+Mass 1
+
+Gun 2
+Name <Fallback Pistol>
+desc <A cheaply made chemical pistol. This weapon is generally only kept on hand as a backup.>
+Mass -1
+Range 2
+Speed 3
+Magazine 8
+sub
+	Ammo 2
+	desc <An inexpensive bullet clip that provides ammunition to the Fallback Pistol.>
+	Mass 1
+end
+
+Gun 9
+Name <Heavy Slug Pistol>
+desc <A low velocity single firing magnetic pistol. Relies on the mass of its bullets to cause damage, rather than their velocity.>
+Mass -7
+Range 3
+Speed 3
+Magazine 10
+sub
+	Ammo 9
+	desc <This clip contains condensed-mass solid metal slugs that damage through sheer impact force.>
+end
+
+Gun 12
+Name <Shotgun>
+desc <A large-barrelled firearm that fires shotgun shells.>
+Mass -4
+Range 5
+Acc 1
+Speed 3
+Magazine 16
+sub
+	Ammo 12
+	desc <These shells release shrapnel when fired.>
+	Type <SCATTER>
+end
+
+Gun 12
+Name <Combat Shotgun>
+desc <A derivative of the conventional shotgun, optimised for heavy combat situations.>
+Mass -4
+Range 5
+Acc 1
+Speed 5
+Magazine 24
+sub
+	Ammo 12
+	Name <Auto-Shotgun Clip>
+	desc <This clip contains more shells than a regular shotgun.>
+	Type <SCATTER>
+end
+
+Ammo 12
+AmmoCount 16
+Name <Shotgun Clip (Solid)>
+desc <Unlike conventional shotgun shells, these do not scatter.>
+
+Ammo 12
+AmmoCount 24
+Name <Auto-Shotgun Clip (Solid)>
+desc <Unlike conventional shotgun shells, these do not scatter.>
+
+Ammo 12
+AmmoCount 16
+Name <Shotgun Clip (Shard)>
+desc <Shells manufactured with crystalline microfragmentation shrapnel.>
+Type <BRUTAL SCATTER>
+
+Ammo 12
+AmmoCount 24
+Name <Auto-Shotgun Clip (Shard)>
+desc <Shells manufactured with crystalline microfragmentation shrapnel.>
+Type <BRUTAL SCATTER>
+
+Ammo 12
+AmmoCount 16
+Name <Shotgun Clip (Incendiary)>
+desc <These shells contain incendiary fluid which releases when the shell itself is fired.>
+Type <BURN LINE>
+
+Ammo 12
+AmmoCount 16
+Name <Shotgun Clip (Explosive)>
+desc <These shells contain a focused explosive charge, rather than shrapnel.>
+Type <BLAST 2>
+
+Gun 12
+Name <Auto-Shotgun>
+desc <A shotgun designed to automatically reload and continue firing while the trigger is pulled.>
+Mass -4
+Range 5
+Acc 1
+BV 1
+Magazine 24
+sub
+	Ammo 12
+	desc <This clip contains more shells than a regular shotgun.>
+	Type <SCATTER>
+end
+
+Gun 15
+Name <Cone Rifle>
+desc <A revolutionary rifle design with a balance of range and damage.>
+Range 8
+Magazine 9
+sub
+	Ammo 15
+	desc <A rifle clip specifically designed for use with the cone rifle.>
+end
+
+Gun 20
+Name <Thumper>
+desc <A heavy, low-velocity projectile launcher.>
+Mass -13
+Range 5
+Speed 3
+Magazine 24
+sub
+	Ammo 20
+	desc <These shots explode on impact.>
+	Type <BLAST 1>
+end
+
+Ammo 20
+Name <Thumper Clip (Plasma)>
+desc <Each shot releases exploding superheated ionised gas.>
+AmmoCount 24
+Type <ARMORPIERCING BLAST 4>
+
+Gun 1
+Name <Light Machinepistol>
+desc <A light, handheld rapid-fire pistol.>
+Type <SWARM>
+Mass -4
+Range 3
+Speed 5
+BV 4
+Magazine 50
+sub
+	Ammo 1
+	Name <Machinepistol Clip>
+	desc <Houses a large clip capacity for bursts of fire from the Machinepistol and its variants.>
+	Mass 1
+end
+
+Gun 1
+Name <Machinepistol>
+desc <A handheld rapid-fire pistol.>
+Type <SWARM>
+Mass -7
+Range 4
+Speed 5
+BV 9
+Magazine 50
+sub
+	Ammo 1
+	desc <Houses a large clip capacity for bursts of fire from the Machinepistol and its variants.>
+	Mass 1
+end
+
+Gun 9
+Name <Rocket Pistol>
+desc <This handheld firearm shoots miniature rockets.>
+Mass -8
+Acc 1
+Range 5
+Speed 5
+BV 2
+Magazine 60
+sub
+	Ammo 9
+	desc <This clip contains miniature rockets.>
+	Type <ARMORPIERCING>
+end
+
+Ammo 9
+Name <Rocket Pistol Clip (HE)>
+desc <High explosive charges distinguish this clip from other variants.>
+AmmoCount 60
+Type <BLAST 2>
+
+Ammo 9
+Name <Rocket Pistol Clip (SMART)>
+desc <Each rocket contains a miniature propulsion system and electronic circuitry in order attack multiple parts of the target.>
+AmmoCount 60
+Type <ARMORPIERCING SWARM>
+
+Ammo 9
+Name <Rocket Pistol Clip (Napalm-X)>
+desc <Contains an acidic napalm derivative used to both ignite and erode metals. The compound is poisonous to living beings.>
+AmmoCount 60
+Type <BURN POISON RUST SCATTER>
+
+Gun 9
+Name <Rocket Rifle>
+desc <A large-caliber rifle that fires miniature rockets.>
+Mass -10
+Acc 1
+Range 8
+Speed 5
+BV 4
+Magazine 120
+sub
+	Ammo 9
+	desc <These clips are custom-made to fit all standard rocket rifles.>
+	Type <ARMORPIERCING>
+end
+
+Gun 9
+Name <Heavy Rocket Rifle>
+desc <A modified version of the rocket rifle with increased range and firing rate.>
+Mass -9
+Acc 1
+Range 10
+Speed 5
+BV 7
+Magazine 120
+sub
+	Ammo 9
+	Name <Rocket Rifle Clip>
+	desc <These clips are custom-made to fit all standard rocket rifles.>
+	Type <ARMORPIERCING>
+end
+
+Ammo 9
+Name <Rocket Rifle Clip (HE)>
+desc <These rockets are noted for their highly explosive charge.>
+AmmoCount 120
+Type <BLAST 2>
+
+Ammo 9
+Name <Rocket Rifle Clip (SMART)>
+desc <Tiny propulsion systems and targeting computers exist within these rockets.>
+AmmoCount 120
+Type <ARMORPIERCING SWARM>
+
+Ammo 9
+Name <Rocket Rifle Clip (Napalm-X)>
+desc <Contains an acidic napalm derivative used to both ignite and erode metals. The compound is poisonous to living beings.>
+AmmoCount 120
+Type <BURN POISON RUST SCATTER>
+
+%  ********************
+%  ***  BEAM  GUNS  ***
+%  ********************
+
+BeamGun 1
+Name <Shock Pistol>
+desc <Fires focused electrostatic shocks.>
+Mass 1
+Range 3
+Acc 1
+Speed 5
+
+BeamGun 5
+Name <Laser Pistol>
+desc <A pistol housing a small but powerful laser generator.>
+Mass -4
+Range 3
+Acc 1
+Speed 5
+
+BeamGun 7
+Name <Laser Carbine>
+desc <A laser rifle, featuring improved heatsinks and vents around the laser generator.>
+Mass -4
+Acc 1
+Speed 4
+
+BeamGun 10
+Name <Laser Rifle>
+desc <An advanced combat rifle, powered by a laser generator.>
+Mass -6
+Acc 1
+Speed 3
+
+BeamGun 15
+Name <Dual Laser Rifle>
+desc <Two miniature laser generators give this rifle higher range and accuracy over the conventional laser rifle.>
+Mass -8
+Acc 2
+Range 5
+Speed 3
+
+BeamGun 25
+Name <Laser Cannon>
+desc <A high-energy cannon that fires wide, penetrating laser beams.>
+Mass -5
+Acc 1
+
+BeamGun 5
+Name <Plasma Pistol>
+desc <A handheld superheated plasma firearm.>
+Type <SCATTER>
+Mass -3
+Range 3
+Speed 5
+BV 4
+
+BeamGun 5
+Name <Plasma Rifle>
+desc <A plasma combat firearm used particularly for breaking enemy lines.>
+Type <SCATTER>
+Range 6
+Acc 0
+Speed 5
+BV 4
+
+BeamGun 15
+Name <Plasma Cannon>
+desc <A cannon capable of releasing large and quick bursts of superheated plasma.>
+Type <LINE>
+Mass 5
+Range 10
+Acc 1
+BV 8
+
+%  ***************************
+%  ***  MISSILE LAUNCHERS  ***
+%  ***************************
+
+MLauncher 22
+Name <Anti-Tank Bazooka>
+desc <A weapon designed for personal-scale defense against heavy artillery such as tanks and mecha.>
+Range 32
+Acc 2
+Magazine 1
+sub
+	Rockets 22
+	Name <Bazooka Clip>
+	desc <Causes significant damage to vehicles and light mecha, and is adequate against mid-size meks.>
+	Type <ARMORPIERCING BRUTAL>
+end
+
+MLauncher 22
+Name <Rapid Fire Bazooka>
+desc <A bazooka specially suited to long-range heavy combat situations.>
+Range 32
+Acc 1
+Speed 4
+Magazine 6
+sub
+	Rockets 22
+	desc <Six bazooka rockets>
+	Type <ARMORPIERCING BRUTAL>
+end
+
+MLauncher 14
+Name <Rocket Quad Launcher>
+desc <Fires medium impact rockets with explosive charges.>
+Range 24
+Acc 1
+Speed 4
+Magazine 4
+sub
+	Rockets 14
+	desc <Each rocket contains a highly explosive charge with a considerable blast radius.>
+	Type <BLAST 5>
+end
+
+MLauncher 1
+Name <Calliope Rocket Launcher>
+desc <A miniature rocket launcher used to fire on personal-scale targets.>
+Type <SWARM>
+Range 8
+Speed 5
+Magazine 64
+sub
+	Rockets 1
+	desc <Although these rockets are less damaging than others, they are nonetheless useful against small-scale targets.>
+end
+
+%  ************************
+%  ***  WEAPON ADD-ONS  ***
+%  ************************
+
+GunAddOn 0
+Name <Barrel Extension>
+desc <The increased barrel length provided by this addon will slightly increase range.>
+Range 2
+
+GunAddOn 0
+Name <Red Dot Sight>
+desc <A low-powered targeting laser.>
+Acc 1
+
+GunAddOn 0
+Name <Gas Vents>
+desc <Improves heat dissipation in firearms.>
+Speed 1
+
+GunAddOn 0
+Name <Bayonet>
+desc <Adds close-combat capabilities to a firearm.>
+Mass -1
+sub
+	Melee 3
+	Name <Bayonet>
+	desc <A blade designed to be attached to a firearm.>
+	Mass -1
+end
+
+GunAddOn 0
+Name <Aux Grenade Launcher>
+desc <Provides heavy-weapon support to a firearm.>
+sub
+	MLauncher 5
+	Name <Aux Grenade Launcher>
+	desc <A grenade launcher designed as auxiliary support for a lighter firearm.>
+	Range 6
+	Magazine 1
+	sub
+		Rockets 5
+		Name <AGL Clip>
+		desc <Explosive grenades designed exclusively for an Aux Grenade Launcher.>
+		Type <BLAST 4 BRUTAL>
+	end
+end
+
+Rockets 5
+Name <AGL Clip (Smoke)>
+desc <Allows an Aux Grenade Launcher to fire smoke grenades.>
+AmmoCount 1
+Type <BLAST 6 SMOKE>
+
+Rockets 5
+Name <AGL Clip (Toxin)>
+desc <Allows an Aux Grenade Launcher to fire toxic gas-releasing grenades.>
+AmmoCount 1
+Type <BLAST 6 GAS>
+
+GunAddOn 0
+Name <Assault Pack>
+desc <Provides a miniature rocket pack for a firearm.>
+Mass 2
+sub
+	MLauncher 4
+	Name <Rocket Pack>
+	desc <Size-reduced in order to fit on a firearm.>
+	Range 6
+	Magazine 12
+	Type <SWARM>
+	sub
+		Rockets 4
+		Desc <Provides ammunition for the weapon-mounted Rocket Pack.>
+	end
+end
+
+HeavyAddOn 0
+Name <Laser Guidance System>
+desc <Provides an improved laser-based targeting system to heavy weapons.>
+Acc 2
+
+HeavyAddOn 0
+Name <Gyro Mount>
+desc <Reduces recoil in heavy weapons.>
+Acc 1
+Speed 1
+
+HeavyAddOn 0
+Name <Heavy Assault Pack>
+desc <Adds a rocket-based assault option to heavy weapons.>
+Mass 2
+sub
+	MLauncher 4
+	Name <Heavy Rocket Pack>
+	desc <Releases a large number of miniature rockets.>
+	Range 6
+	Magazine 48
+	Type <SWARM>
+	sub
+		Rockets 4
+		Desc <Provides ammunition for the heavy weapon-mounted Rocket Pack.>
+	end
+end
+
+MeleeAddOn 0
+Name <Ergonomic Grip>
+desc <A comfortable handle for close combat weapons.>
+Acc 1
+
+MeleeAddOn 0
+Name <Counterbalance>
+desc <Reduces overswing in melee weapons.>
+Speed 2
+
+MeleeAddOn 0
+Name <Haft Spike>
+desc <Adds a spike to the end of a close combat handle.>
+Mass -1
+sub
+	Melee 3
+	Name <Spike>
+	desc <A metal spike.>
+	Mass -2
+end
+
+MeleeAddOn 1
+Name <Fire Token>
+desc <Creates a brief burst of heat along the impact surface of a melee weapon.>
+Type <BURN>
+
+MeleeAddOn 1
+Name <Thunder Token>
+desc <This token releases an electric shock when the weapon it is attached to impacts.>
+Type <HAYWIRE>
+
+MeleeAddOn 1
+Name <Deadly Token>
+desc <Releases a deadly poison when attached to a close combat weapon.>
+Type <POISON>
+
+MeleeAddOn 0
+Name <Magnet Token>
+desc <Allows thrown close combat weapons to return to the wielder.>
+Type <RETURN>
+Acc 1
+
+MeleeAddOn 0
+Name <Eris Token>
+desc <This token releases a mysterious glow...>
+Type <MYSTERY STONE>
+Speed 1
+
+MeleeAddOn 2
+Name <Rocket Token>
+desc <Allows a melee weapon to be thrown.>
+Type <THROWN>
+
+MeleeAddOn 0
+Name <Sonic Token>
+desc <Releases a sonic burst when used in conjunction with a melee weapon.>
+sub
+	BeamGun 8
+	Name <Sonic Wave>
+	desc <A sonic burst that damages multiple targets.>
+	Range 5
+	Acc -1
+	Type <SCATTER>
+end
+
+%  ******************
+%  ***  GRENADES  ***
+%  ******************
+
+Grenade 20
+Name <Heavy Smoke Grenade>
+desc <A tactical grenade used to provide heavy smoke cover.>
+Type <BLAST 6 SMOKE>
+
+Grenade 10
+Name <Smoke Grenade>
+desc <A tactical grenade used to provide smoke cover.>
+Type <BLAST 3 SMOKE>
+
+Grenade 20
+Name <Hellstorm Grenade>
+desc <A grenade that releases a fiery blast.>
+Type <ARMORPIERCING BLAST 2 BURN>
+
+Grenade 18
+Name <Concussion Grenade>
+desc <Used effectively, an explosion from this can render human targets helpless.>
+Type <BLAST 4>
+
+Grenade 15
+Name <EMP Grenade>
+desc <A conventional grenade containing thousands of tiny radio frequency emitters to cause electromagnetic interference.>
+Type <BLAST 3 HAYWIRE>
+
+Grenade 12
+Name <Acid Grenade>
+desc <A grenade containing acid.>
+Type <BLAST 2 RUST>
+
+Grenade 13
+Name <Toxin Grenade>
+desc <This grenade contains reactants that create toxic fumes when thrown.>
+Type <BLAST 5 GAS>
+
+Grenade 16
+Name <Plasma Grenade>
+desc <This plasma-based grenade is capable of circumventing armor.>
+Type <ARMORPIERCING BLAST 3>
+
+Grenade 6
+Name <Micro-Grenade>
+desc <This small grenade packs a punch.>
+Type <BLAST 2>
+Mass -1
+
+Grenade 14
+Name <Heavy Grenade>
+desc <A grenade with a large blast radius.>
+Type <BLAST 5>
+
+Grenade 12
+Name <Frag Grenade>
+desc <This grenade is packed with shrapnel.>
+Type <BLAST 3>
+
+Grenade 18
+Name <AntiArmor Grenade>
+desc <A grenade containing shards designed to penetrate armor.>
+Type <ARMORPIERCING SCATTER>
+
+Grenade 8
+Name <Stick Bomb>
+desc <A grenade with a thin, cylindrical body.>
+Type <BLAST 1>
+
+Grenade 7
+Name <Oil Bomb>
+desc <This explosive releases highly volatile oil.>
+Type <BLAST 1 BURN>
+
+Grenade 5
+Name <Shuriken>
+desc <A PreZero ancient Japanese weapon, literally "thrown blade." The four-bladed shuriken was considered the best in that era, despite the existence of others.>
+GrenadeSkill 3
+Mass -1
+BV 4
+Type <SWARM>
+
+Grenade 13
+Name <MonoShuriken>
+desc <A redesign of the shuriken, this is manufactured with a monomolecularly sharp edge.>
+GrenadeSkill 3
+Mass -1
+BV 9
+Type <ARMORPIERCING SWARM>
+
+%  ***************
+%  ***  ARMOR  ***
+%  ***************
+
+BodyArmor 1
+Name <Leather Jacket>
+desc <A comfortable leather jacket with a zipper down the front.>
+Mass 3
+
+BodyArmor 2
+Name <Armorweave Clothes>
+desc <Armor mesh has been integrated with these clothes, making them a little stiff.>
+Mass -3
+
+BodyArmor 2
+Name <Flak Jacket>
+desc <This jacket is designed to protect against shrapnel.>
+Mass 1
+
+BodyArmor 3
+Name <Mesh Jacket>
+desc <This whole jacket is woven with a thick layer of armor mesh.>
+Mass -1
+
+BodyArmor 3
+Name <Armored Vest>
+desc <This vest contains full armor plates and shock absorbers.>
+Mass -3
+
+BodyArmor 2
+Name <Security Vest>
+desc <A standard vest issued to security guards.>
+Mass -1
+
+BodyArmor 4
+Name <Flak Suit>
+desc <A larger and sturdier version of the flak jacket.>
+Mass 11
+
+BodyArmor 5
+Name <Mesh Suit>
+desc <This armor mesh suit does not contain exposed weak points in its design.>
+Mass 9
+
+BodyArmor 5
+Name <Hazard Vest>
+desc <Armor used by rescuers traversing hazardous situations.>
+Mass -1
+
+BodyArmor 7
+Name <Heavy Mesh Suit>
+desc <This mesh suit has been thickened to accept heavier blows.>
+Mass 8
+
+BodyArmor 4
+Name <Breastplate>
+desc <A solid plate of body armor.>
+Mass -6
+
+BodyArmor 6
+Name <Blast Suit>
+desc <This suit is designed to resist explosions.>
+Mass 1
+
+BodyArmor 6
+Name <Ceram Breastplate>
+desc <A strong armor plate made from the light ceram material.>
+Mass -10
+
+BodyArmor 7
+Name <Carapace Suit>
+desc <A suit of armor made of bonded solid plates.>
+Mass -5
+
+BodyArmor 2
+Name <Wilco Jet Pack>
+Desc <Due to the harnesses involved, this jet pack can't be worn at the same time as body armor.>
+Mass -1
+sub
+	Flight 20
+end
+
+ArmArmor 5
+Name <Carapace Sleeve>
+desc <Armored sleeve made up of solid plates.>
+Mass -5
+
+LegArmor 5
+Name <Carapace Legging>
+desc <Armored legging made up of solid plates.>
+Mass -5
+
+HeadArmor 1
+Name <Field Cap>
+desc <A lightweight cap.>
+Mass -1
+
+HeadArmor 2
+Name <Sports Helmet>
+desc <A hard polymer helmet more suited to sports than combat.>
+Mass -3
+
+HeadArmor 2
+Name <Light Helmet>
+desc <A light combat helmet, made from a combination of plastics and shock absorbers.>
+Mass -3
+
+HeadArmor 3
+Name <Combat Helmet>
+desc <An armored helmet with an integrated objective-storing system.>
+Mass -5
+sub
+	PCS 1
+end
+
+HeadArmor 3
+Name <Recce Helmet>
+desc <Helmet used in reconnaissance missions, capable of transmitting and receiving data.>
+Mass -5
+sub
+	PCS 3
+	Mass -2
+end
+
+HeadArmor 4
+Name <Blast Helmet>
+desc <Helmet used to resist blasts and explosions.>
+Mass -5
+
+HeadArmor 4
+Name <Ceram Helmet>
+desc <A strong helmet made from the light ceram material.>
+Mass -6
+
+HeadArmor 5
+Name <Heavy Combat Helmet>
+desc <A helmet typically used in heavy combat situations. It contains an integrated objective-storage system.>
+Mass -7
+sub
+	PCS 1
+	Mass -1
+end
+
+ArmArmor 4
+Name <Ceram Plate Sleeve>
+desc <A strong sleeve made from the light ceram material.>
+Mass -7
+
+LegArmor 4
+Name <Ceram Plate Legging>
+desc <Strong legging made from the light ceram material.>
+Mass -7
+
+ArmArmor 4
+Name <Blast Sleeve>
+desc <Sleeve used to resist blasts and explosions.>
+Mass -5
+
+LegArmor 4
+Name <Blast Legging>
+desc <Leg armor used to resist blasts and explosions.>
+Mass -5
+
+ArmArmor 3
+Name <Plate Sleeve>
+desc <Arm armor composed of a solid plate.>
+Mass -4
+
+LegArmor 3
+Name <Plate Legging>
+desc <Legging composed of a solid plate.>
+Mass -4
+
+ArmArmor 2
+Name <Armored Sleeve>
+desc <Arm armor made from a combination of tough cloths and armor plates.>
+Mass -1
+
+LegArmor 2
+Name <Armored Legging>
+desc <Leg armor made from a combination of tough cloths and armor plates.>
+Mass -1
+
+ArmArmor 1
+Name <Elbow Pad>
+desc <Protects elbows from grazes and other accidents.>
+Mass -1
+
+LegArmor 1
+Name <Knee Pad>
+desc <Protects knees from grazes and other accidents.>
+Mass -1
+
+ArmArmor 2
+Name <Heavy Elbow Pad>
+desc <Elbow pad that protects some of the forearm as well.>
+Mass -3
+
+LegArmor 2
+Name <Heavy Knee Pad>
+desc <Knee pad that protects part of the shins as well.>
+Mass -3
+
+ArmArmor 7
+Name <Power Claw>
+desc <This armor features a sharp claw.>
+Mass -10
+sub
+	Melee 18
+	Name <Claw>
+	desc <A sharp claw.>
+	Acc 1
+	Speed 4
+	Mass -8
+end
+
+ArmArmor 2
+Name <Rocket Gauntlet>
+desc <This gauntlet reaches from the hand to the elbow, and features a tiny rocket launcher.>
+Mass -2
+sub
+	MLauncher 7
+	Name <Wrist Rockets>
+	desc <Rockets designed for the Rocket Gauntlet.>
+	Acc -2
+	Magazine 3
+	sub
+		Rockets 7
+		Name <Wrist Rocket Clip>
+		Desc <Due to its blast radius, this clip can be useful for clearing out heavy concentrations of targets.>
+		Type <BLAST 1>
+	end
+end
+
+ArmArmor 2
+Name <Pistol Gauntlet>
+desc <This gauntlet contains a small rapid-fire cannon.>
+Mass -2
+sub
+	Gun 1
+	Name <Wrist Cannon>
+	desc <This weapon is integrated into the Pistol Gauntlet.>
+	Type <SWARM>
+	Mass -8
+	Range 4
+	BV 9
+	Magazine 100
+	sub
+		Ammo 1
+		Name <Wrist Cannon Clip>
+		Desc <This clip contains small bullets that provide firepower to the Wrist Cannon.>
+	end
+end
+
+ArmArmor 2
+Name <Spiked Bracer>
+desc <This forearm armor features a sharp spike that functions as a weapon.>
+Mass -1
+sub
+	Melee 5
+	Mass -4
+	Speed 1
+	Name <Spike>
+	desc <A sharp spike.>
+end
+
+LegArmor 2
+Name <Spiked Legging>
+desc <This leg armor has a spike that can be used as a weapon.>
+Mass -1
+sub
+	Melee 5
+	Mass -4
+	Speed 1
+	Name <Spike>
+	desc <A sharp spike.>
+end
+
+ArmArmor 4
+Name <Blade Bracer>
+desc <A metal blade runs along this bracer.>
+Mass -5
+sub
+	Melee 12
+	Name <Arm Blade>
+	desc <This metal blade can be used as a weapon.>
+	Speed 1
+	Mass -10
+end
+
+LegArmor 4
+Name <Blade Legging>
+desc <A metal blade runs down this legging.>
+Mass -5
+sub
+	Melee 12
+	Name <Knee Blade>
+	desc <This metal blade can be used as a weapon.>
+	Speed 1
+	Mass -10
+end
+
+ArmArmor 1
+Name <Data Bracelet>
+desc <This wrist attachment is capable of storing and retrieving notes.>
+Mass -1
+sub
+	PCS 1
+end
+
+HeadArmor 6
+Name <Havoc Helmet>
+desc <Helmet worn by aggressive attackers. Contains a note-storing system.>
+Mass -8
+sub
+	PCS 1
+end
+
+BodyArmor 7
+Mass -9
+Name <Havoc Suit>
+desc <Body armor worn by aggressive attackers.>
+
+ArmArmor 6
+Name <Havoc Sleeve>
+desc <Sleeve worn by aggressive attackers. Features a gun for offensive tactics.>
+Mass -8
+sub
+	Gun 6
+	Name <Havoc Cannon>
+	desc <A gun for offensive tactics.>
+	Mass -4
+	Range 5
+	Acc -1
+	Speed 1
+	BV 4
+	Type <SWARM>
+	Magazine 40
+	sub
+		Ammo 6
+		Name <Rifle Clip>
+		Desc <Standard ammo for Combat Rifles and Assault Rifles>
+	end
+end
+
+LegArmor 6
+Name <Havoc Legging>
+desc <Legging worn by aggressive attackers. Features a rocket launcher.>
+Mass -8
+sub
+	MLauncher 5
+	Name <Havoc Rockets>
+	desc <These rockets can be used to attack clusters of enemies at once.>
+	Mass -3
+	Acc -1
+	Range 7
+	Magazine 6
+	sub
+		Rockets 5
+		Desc <This clip arms the leg-mounted rocket launcher featured on the Havoc Legging.>
+		Type <BLAST 3>
+	end
+end
+
+HeadArmor 7
+Name <Maximus Helmet>
+desc <Maximus gear boasts the highest quality components and construction. This helmet has advanced communications integrated to its design.>
+Mass -12
+sub
+	PCS 3
+end
+
+BodyArmor 8
+Name <Maximus Suit>
+desc <Maximus gear boasts the highest quality components and construction. This body armor is amongst the finest made on Earth.>
+Mass -7
+
+ArmArmor 7
+Name <Maximus Sleeve>
+desc <Maximus gear boasts the highest quality components and construction. This sleeve is amongst the finest made on Earth.>
+Mass -9
+
+LegArmor 7
+Name <Maximus Legging>
+desc <Maximus gear boasts the highest quality components and construction. This legging is amongst the finest made on Earth.>
+Mass -9
+
+%  *****************
+%  ***  SHIELDS  ***
+%  *****************
+
+Shield 3
+Name <Plastic Shield>
+desc <A shield made from plastic.>
+
+Shield 3
+Name <Plastic Buckler>
+desc <A solid plastic buckler.>
+DefBonus -3
+
+Shield 4
+Name <Small Shield>
+desc <A small, but sturdy shield.>
+DefBonus -2
+
+Shield 6
+Name <Large Shield>
+desc <This shield can deflect attacks from multiple heights easily.>
+
+Shield 5
+Name <Riot Shield>
+desc <A light and transparent polymer shield used by crowd control forces.>
+DefBonus 2
+
+Shield 4
+Name <Spiked Shield>
+desc <This shield is covered in sharp spikes.>
+DefBonus -1
+sub
+	Melee 8
+	Mass -7
+	Name <Shield Spikes>
+	desc <These spikes add offensive capabilities to the Spiked Shield.>
+end
+
+Shield 5
+Name <Gun-Shield>
+desc <This shield allows the wielder to both defend and attack simultaneously.>
+sub
+	Gun 6
+	Name <Shield Cannon>
+	desc <This gun fires just in front of the shield, and so is unaffected by the shield itself in terms of accuracy.>
+	Mass -4
+	Range 4
+	Acc 1
+	Speed 1
+	BV 1
+	Magazine 40
+	sub
+		Ammo 6
+		Name <Rifle Clip>
+		Desc <Standard ammo for Combat Rifles and Assault Rifles>
+	end
+end
+
+%  *********************
+%  ***  ELECTRONICS  ***
+%  *********************
+
+PCS 2
+Name <Databook>
+desc <A basic data storage and retrieval system. Also sports email retrieval.>
+
+PCS 3
+Name <Mobile Phone>
+desc <A handheld communication device.>
+Mass -2
+
+PCS 3
+Name <Field Communicator>
+desc <Originally designed to coordinate field training in the Federation Defense Force, it has entered general circulation due to its success as a training tool.>
+
+PCS 5
+Name <Internet Phone>
+desc <A high-resolution mobile phone with connectivity options.>
+Mass -4
+
+PCS 5
+Name <Micro PC>
+desc <A miniturised personal computer. Includes a newsreader and email software.>
+
+%  *****************************
+%  ***  MUSICAL INSTRUMENTS  ***
+%  *****************************
+
+Instrument 2
+Name <Guitar>
+desc <A large, stringed instrument played by plucking the strings.>
+UseBonus 0
+UseRange 6
+
+Instrument 3
+Name <Electric Guitar>
+desc <A electric guitar featuring an integrated amp and sound adjusting circuitry.>
+UseBonus 1
+UseRange 7
+
+Instrument 4
+Name <Digital Guitar>
+desc <This instrument has no strings; laser beams record the musician's movements and translate these into sound.>
+Mass -1
+UseBonus 2
+UseRange 8
+
+Instrument 2
+Name <Classical Guitar>
+desc <A guitar constructed from its original materials.>
+UseBonus 3
+UseRange 5
+
+Instrument 5
+Name <Synthesizer>
+desc <An electronic instrument featuring a wide range of samples and mixing options.>
+Mass -1
+UseBonus 0
+UseRange 6
+
+Instrument 2
+Name <Violin>
+desc <A small, stringed instrument played by drawing a bow across the strings.>
+UseBonus 2
+UseRange 7
+
+Instrument 3
+Name <Accordion>
+desc <A box-shaped reed instrument, featuring an array of valves and keys.>
+UseBonus 1
+UseRange 7
+
+Instrument 3
+Name <Bagpipes>
+desc <A wind instrument that produces a loud, shrill, but distinct sound.>
+UseBonus 0
+UseRange 10
+
+%  *********************
+%  ***  REPAIR FUEL  ***
+%  *********************
+
+FirstAidFuel 30
+Name <Sticky Band>
+desc <This can bind wounds.>
+Mass 1
+
+FirstAidFuel 60
+Name <Gauze>
+desc <Light cloth used for making bandages for wounds.>
+Mass 1
+
+FirstAidFuel 90
+Name <Antiseptic Ointment>
+desc <An ointment that stops any chance of infection in a wound.>
+Mass 1
+
+FirstAidFuel 120
+Name <Medicated Bandages>
+desc <Premedicated sterile bandages.>
+Mass 1
+
+FirstAidFuel 300
+Name <First Aid Kit>
+desc <A kit containing a variety of supplies required for a wide range of injuries.>
+Mass 2
+
+GenRepairFuel 10
+Name <Scotch Tape>
+desc <Transparent tape used for binding things together.>
+Mass 1
+
+GenRepairFuel 50
+Name <Super Glue>
+desc <Strong glue capable of joining together cracks of hard materials.>
+Mass 1
+
+GenRepairFuel 75
+Name <Duct Tape>
+desc <Silvery adhesive tape generally used for binding sheets of metal.>
+Mass 1
+
+GenRepairFuel 100
+Name <Epoxy Putty>
+desc <A thick paste used as a strong adhesive.>
+Mass 1
+
+GenRepairFuel 170
+Name <Handyman's Kit>
+desc <Contains everything the modern-day handyman could ever ask for!>
+Mass 1
+
+GenRepairFuel 750
+Name <Basic Repair Kit>
+desc <Contains various adhesives, screws, nails, tools and other general repair supplies.>
+Mass 3
+
+MechaRepairFuel 100
+Name <Sheet Metal>
+desc <Plain ol' sheet of metal.>
+Mass 2
+
+MechaRepairFuel 125
+Name <Heavy-Duty Duct Tape>
+desc <Industrial-strength silvery duct tape.>
+Mass 1
+
+MechaRepairFuel 50
+Name <Scratch Remover>
+desc <A fiberglass set designed to polish off and seal cracks.>
+Mass 1
+
+MechaRepairFuel 500
+Name <Epoxy Bodyfiller>
+desc <Epoxy resin used to repair large structural damage.>
+Mass 3
+
+MechaRepairFuel 1500
+Name <Mecha Patch Kit>
+desc <For the budding mecha engineer wanting to do their own repairs!>
+Mass 4
+
+MechaRepairFuel 3000
+Name <Mecha Welding Set>
+desc <This heavy-duty mecha repair set is commonly found in mecha garages.>
+Mass 5
+
+MediceneFuel 50
+Name <Sutures>
+desc <Sterilised string used to bind open wounds and, in less fortunate circumstances, reattach limbs.>
+Mass 1
+
+MediceneFuel 150
+Name <Field Surgery Kit>
+desc <A kit often found in the possession of combat medics.>
+Mass 2
+
+BiotechFuel 500
+Name <Biotech Lab Set>
+desc <This contains the equipment needed to perform biotech experiments.>
+Mass 1
+
+%  *********************
+%  ***  CONSUMABLES  ***
+%  *********************
+
+Food 50
+Name <Adventuring Ration>
+FoodMorale -2
+Mass -3
+desc <It's not delicious, but it'll keep you alive.>
+
+Food 50
+Name <Standard Ration>
+Mass -3
+desc <Packaged with survival as a priority.>
+
+Food 50
+Name <Deluxe Ration>
+Mass -3
+FoodMorale 1
+desc <Contains nuts, chocolate and other high-calorie foods. Used by the military in particularly harsh conditions.>
+
+Food 50
+Name <Standard Meal>
+desc <A small variety of meats, vegetables and grains.>
+
+Food 40
+Name <Light Meal>
+Mass -6
+desc <A lightweight source of food.>
+
+Food 40
+Name <Military Ration>
+Mass -3
+FoodMorale -2
+desc <It's not delicious, but it'll keep you alive.>
+
+Food 20
+Name <Noodle Cup>
+Mass -2
+FoodMorale -1
+desc <Seems rather ordinary, even for noodles.>
+
+Food 20
+Name <Deluxe Noodle Cup>
+Mass -2
+FoodMorale 1
+desc <Contains an exciting combination of flavors and spices.>
+
+Food 25
+Mass -2
+Name <Sub Sandwich>
+desc <Three different cheeses and five different meats with lettuce and onions on a whole wheat bun.>
+
+Food 25
+Mass -2
+Name <Rice Roll>
+desc <Sticky rice and vegetables wrapped in seaweed.>
+
+Food 15
+Name <Survival Bar>
+Mass -2
+FoodMorale -3
+FoodQuantity 3
+desc <It's everything that a human needs to stay alive packaged in a crunchy bar!>
+
+Food 5
+Name <Chocolate Bar>
+FoodMorale 2
+desc <Some delicious chocolate.>
+
+Food 60
+Name <Survival Sludge>
+Mass -11
+FoodMorale -5
+FoodXValue 30
+desc <According to the label, this can contains a full day's worth of essential vitamins and nutrients.>
+
+Food 35
+Name <Nutrient Pill>
+FoodMorale -1
+Mass -70
+FoodQuantity 10
+desc <Complete nutrition in pill form.>
+
+Food 0
+Name <Quick Fix Pill>
+FoodQuantity 10
+% Healing (2), restore Step3 damage using skill 20 (First Aid)
+% Effect strings are not user-friendly... read effects.pp for
+% all the information you can possibly get. I should write some
+% better docs (or a better encoding) someday.
+Effect <2 3 20 0>
+FoodXValue 2000
+desc <This medicine promotes rapid cellular regeneration, and can instantly heal many injuries.>
+
+Food 0
+Name <Quick Fix Pill>
+FoodQuantity 5
+% Healing (2), restore Step3 damage using skill 20 (First Aid)
+Effect <2 3 20 0>
+FoodXValue 2000
+desc <This medicine promotes rapid cellular regeneration, and can instantly heal many injuries.>
+
+Food 0
+Name <Regen Boost Pill>
+FoodQuantity 10
+% Status Effect (1), Duration Step6, Regen(3), Skill25 but can't
+% resist anyway
+Effect <1 6 3 25>
+FoodXValue 3500
+desc <This medicine increases the body's ability to repair itself. While it is in effect injuries will be healed much faster than normal.>
+
+Food 0
+Name <Regen Boost Pill>
+FoodQuantity 5
+% Status Effect (1), Duration Step6, Regen(3), Skill25 but can't
+% resist anyway
+Effect <1 6 3 25>
+FoodXValue 3500
+desc <This medicine increases the body's ability to repair itself. While it is in effect injuries will be healed much faster than normal.>
+
+Food 5
+Name <Xozu>
+% Status Effect (1), Duration Step3, Stoned(4), Skill7 to resist
+Effect <1 3 4 7 CanResist>
+FoodXValue 10
+FoodMorale 3
+desc <An alcoholic beverage.>
+
+%  *******************
+%  ***  CYBERWARE  ***
+%  *******************
+
+StatModifier 50
+Name <Reinforced Skeleton>
+desc <(SKELETON) A structurally-strengthened skeleton.>
+CyberSlot <SKELETON>
+Type <CHARA CYBER>
+Body 7
+Speed -1
+Mass 25
+
+StatModifier 45
+Name <Lightened Skeleton>
+desc <(SKELETON) Does away with the weight caused by organically dense bones.>
+CyberSlot <SKELETON>
+Type <CHARA CYBER>
+Body -1
+Speed 4
+Reflexes 2
+Mass 14
+
+SkillModifier 40
+Name <Heavy Lifting Skeletal Frame>
+desc <(SKELETON) A skeleton suited to heavy lifting applications.>
+CyberSlot <SKELETON>
+Type <CHARA CYBER>
+SkillModWeightLifting
+SkillModAmount 8
+Mass 25
+
+StatModifier 45
+Name <Armored Spine>
+desc <(SPINE) Does away with the fragile nature of a human's organic spine.>
+CyberSlot <SPINE>
+Type <CHARA CYBER>
+Body 4
+Ego 4
+Speed -1
+Mass 16
+
+StatModifier 45
+Name <Optical Spine>
+desc <(SPINE) Replaces many of the spinal nerves with fiber-optic data transmission wires.>
+CyberSlot <SPINE>
+Type <CHARA CYBER>
+Speed 3
+Craft 2
+Reflexes 1
+Knowledge 2
+Body -1
+Mass 10
+
+StatModifier 60
+Name <Predator Reflexes>
+desc <(BRAIN) Takes advantage of certain predator instincts found in animals of prey.>
+CyberSlot <BRAIN>
+Type <CHARA CYBER>
+Body 2
+Reflexes 5
+Speed 4
+Perception 3
+Ego 2
+Knowledge -3
+Charm -1
+Mass 15
+
+StatModifier 35
+Name <Heavy Myomer Muscles>
+desc <(MUSCULATURE) Replaces conventional muscles with a technologically-improved biomaterial.>
+CyberSlot <MUSCULATURE>
+Type <CHARA CYBER>
+Body 4
+Mass 20
+
+StatModifier 40
+Name <Rapid Strike Muscles>
+desc <(MUSCULATURE) Muscles tuned for quick reactions.>
+CyberSlot <MUSCULATURE>
+Type <CHARA CYBER>
+Reflexes 2
+Speed 2
+Mass 20
+
+StatModifier 20
+Name <Cyber Eyes>
+desc <(EYES) These eyes include resolution enhancers.>
+CyberSlot <EYES>
+Type <CHARA CYBER>
+Reflexes 2
+Perception 3
+Charm -1
+Mass 1
+
+StatModifier 20
+Name <Fashion Cybereyes>
+desc <(EYES) A pair of rather charming eyes.>
+CyberSlot <EYES>
+Type <CHARA CYBER>
+Perception 1
+Charm 1
+Mass 1
+
+SkillModifier 25
+Name <Targeter Eye>
+desc <(EYES) Provides highlighting of personal-scale targets.>
+CyberSlot <EYES>
+Type <CHARA CYBER>
+SkillModSmallArms
+SkillModAmount 4
+Mass 1
+
+SkillModifier 25
+Name <Sniper Scope Eye>
+desc <(EYES) These eyes highlight potential heavy weapon targets.>
+CyberSlot <EYES>
+Type <CHARA CYBER>
+SkillModHeavyWeapons
+SkillModAmount 3
+Mass 1
+
+StatModifier 15
+Name <Cyber Ears>
+desc <(EARS) Improves the perception of sound.>
+CyberSlot <EARS>
+Type <CHARA CYBER>
+Perception 1
+Mass 1
+
+SkillModifier 20
+Name <Perfect Pitch Ears>
+desc <(EARS) Ears used by some performance judges to dissect and analyse music.>
+CyberSlot <EARS>
+Type <CHARA CYBER>
+SkillModPerformance
+SkillModAmount 3
+Mass 1
+
+StatModifier 15
+Name <Cyber Heart>
+desc <(HEART) A heavy-duty replacement for a conventional organic heart.>
+CyberSlot <HEART>
+Type <CHARA CYBER>
+Body 2
+Mass 2
+
+SkillModifier 5
+Name <Self-Diagnostic>
+desc <() Increases the body's acceptance of cybernetic components.>
+Type <CHARA CYBER>
+SkillModCybertech
+SkillModAmount 3
+Mass 1
+
+SkillModifier 30
+Name <Spinal Pilot Link>
+desc <(BRAINSTEM) Interacts with a piloted mecha and provides neural feedback to the pilot.>
+CyberSlot <BRAINSTEM>
+Type <CHARA CYBER>
+SkillModMechaPiloting
+SkillModAmount 3
+Mass 1
+
+StatModifier 10
+Name <Data Link>
+desc <(BRAIN) Provides direct links between some parts of the brain.>
+CyberSlot <BRAIN>
+Type <CHARA CYBER>
+Knowledge 1
+Mass 1
+
+StatModifier 20
+Name <Neural Coprocessor>
+desc <(BRAIN) Removes some of the processing burden from the human brain.>
+CyberSlot <BRAIN>
+Type <CHARA CYBER>
+Knowledge 2
+Mass 1
+
+StatModifier 35
+Name <Sensory Amplifier>
+desc <(BRAIN) Tunes the mind to detect tiny inputs that would otherwise go unnoticed.>
+CyberSlot <BRAIN>
+Type <CHARA CYBER>
+Perception 5
+Mass 2
+
+StatModifier 40
+Name <Synaptic Booster>
+desc <(BRAIN) Works with the existing synapses of the brain to greatly boost data storage and retrieval capabilities.>
+CyberSlot <BRAIN>
+Type <CHARA CYBER>
+Knowledge 5
+Mass 1
