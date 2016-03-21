@@ -45,7 +45,7 @@ Mod Storage
 		HoverJet 13
 
 		Mount
-		Name <Right Thruster Mount>
+		Name <Left Thruster Mount>
 		inv
 			BeamGun 8
 			Name <Heavy Phase Cannon>
