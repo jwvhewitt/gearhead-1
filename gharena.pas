@@ -41,6 +41,16 @@ const
 var
 	RPM: RPGMenuPtr;
 	N: Integer;
+
+{$IFDEF SDLMODE}
+Procedure MainMenuRedraw;
+    { Draw the opening screen, and add the infobox + logo. }
+begin
+    RedrawOpening();
+    InfoBox( ZONE_TitleScreenMenu.GetRect() );
+end;
+{$ENDIF}
+
 begin
 {$IFDEF SDLMODE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_TitleScreenMenu );
@@ -61,7 +71,9 @@ begin
 	AddRPGMenuItem( RPM , 'Quit Game' , -1 );
 
 	repeat
+        {$IFNDEF SDLMODE}
 		ClrScreen;
+        {$ENDIF}
 
 		{ Get rid of the console history from previous games. }
 		DisposeSAtt( Console_History );
@@ -70,7 +82,7 @@ begin
 		if not STARTUP_OK then DialogMsg( 'ERROR: Main game directories not found. Please check installation of the game.' );
 {$IFDEF SDLMODE}
 		PrepOpening;
-		N := SelectMenu( RPM , @RedrawOpening );
+		N := SelectMenu( RPM , @MainMenuRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -79,16 +91,21 @@ begin
 			1:	CreateNewUnit;
 			2:	LoadUnit;
 			3:	GenerateNewPC;
-			4:	StartRPGCampaign;
 {$IFDEF SDLMODE}
-			5:	RestoreCampaign( @RedrawOpening );
+			4:	StartRPGCampaign( @MainMenuRedraw );
+			5:	RestoreCampaign( @MainMenuRedraw );
 {$ELSE}
+			4:	StartRPGCampaign;
 			5:	RestoreCampaign;
 {$ENDIF}
 {$IFNDEF SDLMODE}
 			6:	EditMap;
 {$ENDIF}
+{$IFDEF SDLMODE}
+			7:	DesignDirBrowser( @RedrawOpening );
+{$ELSE}
 			7:	DesignDirBrowser;
+{$ENDIF}
 		end;
 	until N = -1;
 

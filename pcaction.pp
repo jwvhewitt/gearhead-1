@@ -397,7 +397,12 @@ begin
 		end;
 
 		if HList <> Nil then begin
+            {$IFDEF SDLMODE}
+            PCACTIONRD_GB := GB;
+			MoreText( HList , 1, @PCActionRedraw );
+            {$ELSE}
 			MoreText( HList , 1 );
+            {$ENDIF}
 			DisposeSAtt( HList );
             {$IFNDEF SDLMODE}
 			DisplayGearInfo( PC , GB );
@@ -480,7 +485,11 @@ begin
 {$ENDIF}
 
 			9:	begin
+                {$IFDEF SDLMODE}
+				InjuryViewer( NPC , @PCActionRedraw );
+                {$ELSE}
 				InjuryViewer( NPC );
+                {$ENDIF}
 				RPGKey;
 				end;
 			10:	FieldHQ( GB , NPC );
@@ -500,9 +509,10 @@ Procedure FieldHQ( GB: GameBoardPtr; PC: GearPtr );
 	{ train and dismiss these characters. }
 var
 	RPM: RPGMenuPtr;
-	N: Integer;
+	N,OldPos: Integer;
 	M: GearPtr;
 begin
+    OldPos := 1;
 	repeat
 		{ Create the menu. }
         {$IFDEF SDLMODE}
@@ -525,6 +535,7 @@ begin
 		end;
 		RPMSortAlpha( RPM );
 		AddRPGMenuItem( RPM , MSgString( 'EXIT' ) , -1 );
+        SetItemByPosition( RPM, OldPos );
 
 		{ Get a selection from the menu. }
 {$IFDEF SDLMODE}
@@ -537,6 +548,7 @@ begin
 {$ELSE}
 		n := SelectMenu( RPM );
 {$ENDIF}
+        OldPos := RPM^.selectitem;
 		DisposeRPGMenu( RPM );
 
 		if N > 0 Then begin
@@ -2492,7 +2504,12 @@ begin
 	txt := LoadStringList( FName );
 
 	if txt <> Nil then begin
+        {$IFDEF SDLMODE}
+        PCACTIONRD_GB := GB;
+		MoreText( txt , 1, @PCActionRedraw );
+        {$ELSE}
 		MoreText( txt , 1 );
+        {$ENDIF}
 		DisposeSAtt( txt );
         {$IFNDEF SDLMODE}
 		GFCombatDisplay( GB );

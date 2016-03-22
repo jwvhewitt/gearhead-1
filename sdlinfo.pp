@@ -39,7 +39,7 @@ Procedure LongformGearInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
 Procedure QuickWeaponInfo( Part: GearPtr );
 Procedure CharacterDisplay( PC: GearPtr; GB: GameBoardPtr; DZone: DynamicRect );
-Procedure InjuryViewer( PC: GearPtr );
+Procedure InjuryViewer( PC: GearPtr; Redrawer: RedrawProcedureType );
 
 Procedure DrawBackpackHeader( PC: GearPtr );
 
@@ -52,7 +52,7 @@ Procedure MechaEngineeringInfo( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect )
 
 implementation
 
-uses ghmodule,ghweapon,ghmecha,ghchars,ghsupport,ghmovers;
+uses ghmodule,ghweapon,ghmecha,ghchars,ghsupport,ghmovers,ui4gh;
 
 const
 	StatusPerfect:TSDL_Color =	( r:  0; g:255; b: 65 );
@@ -287,7 +287,7 @@ begin
 	end;
 end;
 
-Procedure DisplayModules( Mek: GearPtr );
+Procedure DisplayModules( Mek: GearPtr; MyZone: TSDL_Rect );
 	{ Draw a lovely little diagram detailing this mek's modules. }
 var
 	X0: LongInt;	{ Midpoint of the info display. }
@@ -370,8 +370,8 @@ var
 begin
 	{ Draw the status diagram for this mek. }
 	{ Line One - Heads, Turrets, Storage }
-	MyDest.Y := CDest.Y + 12;
-	X0 := CZone.X + ( CZone.W div 2 ) - 7;
+	MyDest.Y := MyZone.Y + 12;
+	X0 := MyZone.X + ( MyZone.W div 2 ) - 7;
 
 	N := 0;
 	AddPartsOfType( GS_Head );
@@ -510,7 +510,7 @@ begin
 	AI_Title( GearName(Mek) , InfoHilight );
 
 	{ Draw the status diagram for this mek. }
-	DisplayModules( Mek );
+	DisplayModules( Mek, CDest );
 	LocationInfo( Mek , GB );
 
 	{ Print MV, TR, and SN. }
@@ -580,7 +580,7 @@ begin
 	{ Show the character's name and health status. }
 	AI_Title( GearName(Part) , InfoHilight );
 
-	DisplayModules( Part );
+	DisplayModules( Part, CDest );
 	LocationInfo( Part , GB );
 
 	{ Print HP, ME, and SP. }
@@ -1038,7 +1038,7 @@ begin
 	MyDest.W := MyZone.W - 98;
 	MyDest.Y := Y0 + TTF_FontLineSkip( Game_Font ) * 10;
 	MyDest.H := 150;
-	SDL_FillRect( game_screen , @MyDest , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
+    InfoBox( MyDest );
 
 	MyDest.X := MyDest.X + 1;
 	MyDest.Y := MyDest.Y + 1;
@@ -1047,7 +1047,7 @@ begin
 	GameMsg( SAttValue( PC^.SA , 'BIO1' ) , MyDest , InfoGreen );
 end;
 
-Procedure InjuryViewer( PC: GearPtr );
+Procedure InjuryViewer( PC: GearPtr; Redrawer: RedrawProcedureType );
 	{ Display a brief listing of all the PC's major health concerns. }
 	Procedure ShowSubInjuries( Part: GearPtr );
 		{ Show the injuries of this part, and also for its subcoms. }
@@ -1071,13 +1071,16 @@ Procedure InjuryViewer( PC: GearPtr );
 	Procedure RealInjuryDisplay;
 	var
 		SP,MP,T: Integer;
+        MyZone: TSDL_Rect;
 	begin
 		{ Begin with one massive error check... }
 		if PC = Nil then Exit;
 		if PC^.G <> GG_Character then PC := LocatePilot( PC );
 		if PC = Nil then Exit;
 
-		SetInfoZone( ZONE_Map );
+        MyZone := ZONE_MoreText.GetRect();
+        InfoBox( MyZone );
+		SetInfoZone( MyZone );
 
 		AI_Title( MsgString( 'INFO_InjuriesTitle' ) , StdWhite );
 
@@ -1133,13 +1136,12 @@ var
 	A: Char;
 begin
 	repeat
-		SetupCombatDisplay;
-		RedrawConsole;
-		DisplayPCInfo( PC, Nil );
-
-		RealInjuryDisplay;
-		GHFlip;
 		A := RPGKey;
+        if A = RPK_TimeEvent then begin
+            if Redrawer <> Nil then Redrawer();
+    		RealInjuryDisplay;
+            ghflip();
+        end;
 	until ( A = ' ' ) or ( A = #27 ) or ( A = #8 );
 end;
 
@@ -1184,7 +1186,7 @@ Procedure LFGI_ForMecha( Part: GearPtr; gb: GameBoardPtr; ReallyLong: Boolean );
 var
     MyDest: TSDL_Rect;
     msg: String;
-    n,mm,mspeed: Integer;
+    n,mm,mspeed,CurM,MaxM: Integer;
     SS: SensibleSpritePtr;
 begin
     msg := TeamColorString( GB , Part );
@@ -1194,33 +1196,48 @@ begin
     CDest.X := CDest.X + 173;
     SS := ConfirmSprite( GearSpriteName(Nil,Part) , msg , 64 , 64 );
 	if SS <> Nil then DrawSprite( SS , CDest , Animation_Phase div 5 mod 8 );
-    n := CDest.Y;
-    CDest.X := CDest.X + 164;
-    CDest.Y := CDest.Y + 70;
-	AI_PrintFromRight( 'MV:' + SgnStr(MechaManeuver(Part)) , 164, InfoGreen );
-	AI_NextLine;
-	AI_PrintFromRight( 'TR:' + SgnStr(MechaTargeting(Part)) , 164, InfoGreen );
-	AI_NextLine;
-	AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Part)) , 164, InfoGreen );
-	AI_NextLine;
 
-    for mm := 1 to NumMoveMode do begin
-        mspeed := AdjustedMoveRate( Part , MM , NAV_NormSpeed );
-        if mspeed > 0 then begin
-        	AI_PrintFromRight( MoveDesc(Part,MM), 164, InfoGreen );
-        	AI_NextLine;
-        end;
-    end;
+    CDest.X := CZone.X + 160;
+    CDest.Y := CDest.Y + 72;
+    CDest.W := CZone.W - 160;
+    DisplayModules( Part, CDest );
+    CDest.Y := CDest.Y + 50;
+    n := PercentDamaged( Part );
+    msg := BStr(n) + '%';
+    CMessage( msg, CDest, StatusColor( 100, n ) );
 
     if ReallyLong then begin
-        CDest.Y := n + 164;
+        CDest.Y := CZone.Y + 174;
 	    AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] , InfoHilight );
-	    MyDest := CZone;
-	    MyDest.X := MyDest.X + 10;
-	    MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
-	    MyDest.W := MyDest.W - 20;
-	    MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
-	    GameMsg( SAttValue( Part^.SA, 'DESC' ) , MyDest , InfoGreen );
+
+        { Get the current mass of carried equipment. }
+        CurM := EquipmentMass( Part );
+
+        { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+        MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+        AI_SmallTitle( 'Enc: ' + MakeMassString( CurM, Part^.Scale ) + '/' + MakeMassString( MaxM, Part^.Scale ), EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+
+        CDest.Y := CDest.Y + 5;
+        n := CDest.Y;
+        CDest.X := CZone.X;
+	    AI_PrintFromRight( 'MV:' + SgnStr(MechaManeuver(Part)) , 175, InfoGreen );
+	    AI_NextLine;
+	    AI_PrintFromRight( 'TR:' + SgnStr(MechaTargeting(Part)) , 175, InfoGreen );
+	    AI_NextLine;
+	    AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Part)) , 175, InfoGreen );
+	    AI_NextLine;
+        for mm := 1 to NumMoveMode do begin
+            mspeed := AdjustedMoveRate( Part , MM , NAV_NormSpeed );
+            if mspeed > 0 then begin
+            	AI_PrintFromRight( MoveDesc(Part,MM), 175, InfoGreen );
+            	AI_NextLine;
+            end;
+        end;
+	    MyDest.X := CZone.X;
+	    MyDest.Y := n;
+	    MyDest.W := 170;
+	    MyDest.H := CZone.Y + CZone.H - n;
+	    GameMsg( SAttValue( Part^.SA, 'DESC' ) , MyDest , InfoGreen, Info_Font );
     end;
 end;
 
@@ -1357,7 +1374,7 @@ begin
     MyDest := Z.GetRect();
 	SetInfoZone( MyDest );
     AI_Title( FullGearName( Mek ), InfoHilight );
-    MyText := PrettyPrint( MassString( Mek ) + ' ' + FormName[Mek^.S] + ': ' + MsgString( 'FORMINFO_' + BStr( Mek^.S ) ) , MyDest.W, InfoHilight, True );
+    MyText := PrettyPrint( MassString( Mek ) + ' ' + FormName[Mek^.S] + ': ' + MsgString( 'FORMINFO_' + BStr( Mek^.S ) ) , MyDest.W, InfoHilight, True, Info_Font );
 	if MyText <> Nil then begin
         CDest.X := CZone.X;
         CDest.W := CZone.W;

@@ -229,7 +229,7 @@ var
 	RPM: RPGMenuPtr;
 	fname: String;
 begin
-	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
 	if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Female then begin
 		BuildFileMenu( RPM , Graphics_Directory + 'cha_f_*.*' );
 	end else begin
@@ -1577,7 +1577,7 @@ end;
 Function DoInvMenu( GB: GameBoardPtr; var LList: GearPtr; var PC,M: GearPtr ): Boolean;
 	{ Return TRUE if the user selected Quit. }
 var
-	N: Integer;
+	N,OldPos: Integer;
 begin
 	Repeat
 {$IFDEF SDLMODE}
@@ -1594,9 +1594,11 @@ begin
 		{ If an item was selected, pass it along to the appropriate }
 		{ procedure. }
 		if N > 0 then begin
+            OldPos := InvRPM^.selectitem;
 			ThisItemWasSelected( GB , LList , PC , M , LocateGearByNumber( M , N ) );
 			{ Restore the display. }
 			UpdateBackpack( M );
+            SetItemByPosition( InvRPM, OldPos );
             {$IFNDEF SDLMODE}
 			DisplayGearInfo( M );
             {$ENDIF}
@@ -1629,7 +1631,7 @@ end;
 Function DoEqpMenu( GB: GameBoardPtr; var LList: GearPtr; var PC,M: GearPtr ): Boolean;
 	{ Return TRUE if the user selected Quit. }
 var
-	N: Integer;
+	N, OldPos: Integer;
 begin
 	Repeat
 {$IFDEF SDLMODE}
@@ -1646,9 +1648,11 @@ begin
 		{ If an item was selected, pass it along to the appropriate }
 		{ procedure. }
 		if N > 0 then begin
+            OldPos := EqpRPM^.selectitem;
 			ThisItemWasSelected( GB , LList , PC , M , LocateGearByNumber( M , N ) );
 			{ Restore the display. }
 			UpdateBackpack( M );
+            SetItemByPosition( EqpRPM, OldPos );
             {$IFNDEF SDLMODE}
 			DisplayGearInfo( M );
             {$ENDIF}

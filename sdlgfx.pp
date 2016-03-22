@@ -128,17 +128,21 @@ const
     ZONE_CenterMenu: DynamicRect = ( dx:-120; dy:-155; w:240; h:210; anchor: ANC_middle );
 
     ZONE_FHQTitle: DynamicRect = ( dx:-165; dy:-255; w:300; h:20; anchor: ANC_middle ); 
-    ZONE_FHQMenu: DynamicRect = ( dx:-280; dy:-210; w:292; h:320; anchor: ANC_middle );
-	ZONE_FHQInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 320; anchor: ANC_middle);
+    ZONE_FHQMenu: DynamicRect = ( dx:-280; dy:-210; w:292; h:340; anchor: ANC_middle );
+	ZONE_FHQInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 340; anchor: ANC_middle);
     ZONE_FHQMenu1: DynamicRect = ( dx:-280; dy:-210; w:292; h:180; anchor: ANC_middle );
-    ZONE_FHQMenu2: DynamicRect = ( dx:-280; dy: -15; w:292; h:125; anchor: ANC_middle );
+    ZONE_FHQMenu2: DynamicRect = ( dx:-280; dy: -15; w:292; h:145; anchor: ANC_middle );
 
-	ZONE_BPTotal: DynamicRect = (dx:-285; dY:-215; W: 570; H: 330; anchor: ANC_middle);
+	ZONE_BPTotal: DynamicRect = (dx:-285; dY:-215; W: 570; H: 350; anchor: ANC_middle);
     ZONE_BPHeader: DynamicRect = (dx:-280; dY:-210; W: 292; H: 40; anchor: ANC_middle);
-	ZONE_EqpMenu: DynamicRect = ( dx:-280; dy:-165; w:292; h:80; anchor: ANC_middle );
-	ZONE_InvMenu: DynamicRect = ( dx:-280; dy:-80; w:292; h:145; anchor: ANC_middle );
-	ZONE_BPInstructions: DynamicRect = (dx:-280; dY:70; W: 292; H: 40; anchor: ANC_middle);
-	ZONE_BPInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 320; anchor: ANC_middle);
+	ZONE_EqpMenu: DynamicRect = ( dx:-280; dy:-165; w:292; h:100; anchor: ANC_middle );
+	ZONE_InvMenu: DynamicRect = ( dx:-280; dy:-60; w:292; h:145; anchor: ANC_middle );
+	ZONE_BPInstructions: DynamicRect = (dx:-280; dY:90; W: 292; H: 40; anchor: ANC_middle);
+	ZONE_BPInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 340; anchor: ANC_middle);
+
+
+	ZONE_MoreText: DynamicRect = ( dx:-350; dy:-270; w: 700 ; h: 385; anchor: ANC_middle );
+	ZONE_MorePrompt: DynamicRect = ( dx:-300; dy: 130 ; w:600; h:30; anchor: ANC_middle );
 
     { The line of conversion- zones above this have been validated for WIZARD. }
 
@@ -154,8 +158,6 @@ const
 	ZONE_UsagePrompt: DynamicRect = ( dx:500; dy:190; w:130; h:170; anchor: ANC_middle );
 	ZONE_UsageMenu: DynamicRect = ( dx:50; dy:155; w:380; h:245; anchor: ANC_middle );
 
-	ZONE_MoreText: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - 20 ; h: ScreenHeight - 50 );
-	ZONE_MorePrompt: TSDL_Rect = ( x:10; y: ScreenHeight - 40 ; w:ScreenWidth - 20; h:30 );
 
 	Console_History_Length = 240;
 
@@ -203,12 +205,13 @@ function RPGKey: Char;
 Procedure ClrZone( var Z: TSDL_Rect );
 Procedure ClrScreen;
 
-Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean ): PSDL_Surface;
+Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean; MyFont: PTTF_Font ): PSDL_Surface;
 
 Procedure QuickText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 Procedure QuickTinyText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
-Procedure CMessage( const msg: String; Z: TSDL_Rect; var C: TSDL_Color );
+Procedure CMessage( const msg: String; Z: TSDL_Rect; C: TSDL_Color );
 Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
+Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color; MyFont: PTTF_FONT );
 
 Function DirKey( ReDrawer: RedrawProcedureType ): Integer;
 Procedure EndOfGameMoreKey;
@@ -220,7 +223,8 @@ Procedure DialogMSG(msg: string); {can't const}
 Function GetStringFromUser( const Prompt: String; ReDrawer: RedrawProcedureType ): String;
 Function MsgString( const MsgLabel: String ): String;
 Function MoreHighFirstLine( LList: SAttPtr ): Integer;
-Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
+
+Procedure MoreText( LList: SAttPtr; FirstLine: Integer; ReDrawer: RedrawProcedureType );
 
 Procedure ClearExtendedBorder( Dest: TSDL_Rect );
 Procedure InfoBox( MyBox: TSDL_Rect );
@@ -780,7 +784,7 @@ begin
 end;
 
 {Can't const}
-Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean ): PSDL_Surface;
+Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean; MyFont: PTTF_Font ): PSDL_Surface;
 	{ Create a SDL_Surface containing all the text within "msg" formatted }
 	{ in lines of no longer than "width" pixels. Sound simple? Mostly just }
 	{ tedious, I'm afraid. }
@@ -816,8 +820,8 @@ begin
 	{ Create a bitmap for the message. }
 	if SList <> Nil then begin
 		{ Create a big bitmap to hold everything. }
-{		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( game_font ) * NumSAtts( SList ) , 16 , 0 , 0 , 0 , 0 );
-}		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( game_font ) * NumSAtts( SList ) , 32 , $FF000000 , $00FF0000 , $0000FF00 , $000000FF );
+{		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( MyFont ) * NumSAtts( SList ) , 16 , 0 , 0 , 0 , 0 );
+}		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( MyFont ) * NumSAtts( SList ) , 32 , $FF000000 , $00FF0000 , $0000FF00 , $000000FF );
 		MyDest.X := 0;
 		MyDest.Y := 0;
 
@@ -825,7 +829,7 @@ begin
 		SA := SList;
 		while SA <> Nil do begin
 			pline := QuickPCopy( SA^.Info );
-			S_Temp := TTF_RenderText_Solid( game_font , pline , fg );
+			S_Temp := TTF_RenderText_Solid( MyFont , pline , fg );
 {$IFDEF LINUX}
 			SDL_SetColorKey( S_Temp , SDL_SRCCOLORKEY , SDL_MapRGB( S_Temp^.Format , 0 , 0, 0 ) );
 {$ENDIF}
@@ -834,14 +838,14 @@ begin
 
 			{ We may or may not be required to do centering of the text. }
 			if DoCenter then begin
-				MyDest.X := ( Width - TextLength( Game_Font , SA^.Info ) ) div 2;
+				MyDest.X := ( Width - TextLength( MyFont , SA^.Info ) ) div 2;
 			end else begin
 				MyDest.X := 0;
 			end;
 
 			SDL_BlitSurface( S_Temp , Nil , S_Total , @MyDest );
 			SDL_FreeSurface( S_Temp );
-			MyDest.Y := MyDest.Y + TTF_FontLineSkip( game_font );
+			MyDest.Y := MyDest.Y + TTF_FontLineSkip( MyFont );
 			SA := SA^.Next;
 		end;
 		DisposeSAtt( SList );
@@ -886,14 +890,14 @@ begin
 	SDL_FreeSurface( MyText );
 end;
 
-Procedure CMessage( const msg: String; Z: TSDL_Rect; var C: TSDL_Color );
+Procedure CMessage( const msg: String; Z: TSDL_Rect; C: TSDL_Color );
 	{ Print a message to the screen, centered in the requested rect. }
 	{ Clear the specified zone before doing so. }
 var
 	MyText: PSDL_Surface;
 	MyDest: TSDL_Rect;
 begin
-	MyText := PrettyPrint( msg , Z.W , C , True );
+	MyText := PrettyPrint( msg , Z.W , C , True, game_font );
 	if MyText <> Nil then begin
 		MyDest := Z;
 		MyDest.Y := MyDest.Y + ( Z.H - MyText^.H ) div 2;
@@ -905,14 +909,14 @@ begin
 end;
 
 
-Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
+Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color; MyFont: PTTF_FONT );
 	{ Print a line-justified message in the requested screen zone. }
 	{ Clear the specified zone before doing so. }
 var
 	MyText: PSDL_Surface;
 begin
 	{ClrZone( Z );}
-	MyText := PrettyPrint( msg , Z.W , C , False );
+	MyText := PrettyPrint( msg , Z.W , C , False, MyFont );
 	if MyText <> Nil then begin
 		SDL_SetClipRect( Game_Screen , @Z );
 		SDL_BlitSurface( MyText , Nil , Game_Screen , @Z );
@@ -921,6 +925,11 @@ begin
 	end;
 end;
 
+Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
+    { Call the above procedure with the default font. }
+begin
+    GameMSG( msg, Z, C, game_font );
+end;
 
 Function DirKey( ReDrawer: RedrawProcedureType ): Integer;
 	{ Get a direction selection from the user. If a standard direction }
@@ -1204,11 +1213,11 @@ begin
 	MoreHighFirstLine := it;
 end;
 
-Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
+Procedure MoreText( LList: SAttPtr; FirstLine: Integer; ReDrawer: RedrawProcedureType );
 	{ Browse this text file across the majority of the screen. }
 	{ Clear the screen upon exiting, though restoration of the }
 	{ previous display is someone else's responsibility. }
-	Procedure DisplayTextHere;
+	Procedure DisplayTextHere( const MyZone: TSDL_Rect );
 	var
 		T: Integer;
 		MyDest: TSDL_Rect;
@@ -1217,20 +1226,23 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 		PLine: PChar;
 	begin
 		{ Set the clip area. }
-		ClrZone( ZONE_MoreText );
-		SDL_SetClipRect( Game_Screen , @ZONE_MoreText );
-		MyDest := ZONE_MoreText;
+		SDL_SetClipRect( Game_Screen , @MyZone );
+		MyDest := MyZone;
 
 		{ Error check. }
 		if FirstLine < 1 then FirstLine := 1
 		else if FirstLine > MoreHighFirstLine( LList ) then FirstLine := MoreHighFirstLine( LList );
 
 		CLine := RetrieveSATt( LList , FirstLine );
-		for t := 1 to ( ZONE_MoreText.H  div  TTF_FontLineSkip( game_font ) ) do begin
+		for t := 1 to ( MyZone.H  div  TTF_FontLineSkip( game_font ) ) do begin
 			if CLine <> Nil then begin
 				pline := QuickPCopy( CLine^.Info );
 				MyImage := TTF_RenderText_Solid( game_font , pline , NeutralGrey );
 				Dispose( pline );
+                {$IFDEF LINUX}
+		        SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
+                {$ENDIF}
+
 				SDL_BlitSurface( MyImage , Nil , Game_Screen , @MyDest );
 				SDL_FreeSurface( MyImage );
 				MyDest.Y := MyDest.Y + TTF_FontLineSkip( game_font );
@@ -1238,18 +1250,27 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 			end;
 		end;
 
+        if (Animation_Phase div 10 mod 2) = 1 then begin
+            if FirstLine > 1 then begin
+                MyDest.X := MyZone.X + MyZone.W - 16;
+                MyDest.Y := MyZone.Y;
+                QuickText('+', MyDest, MenuSelect );
+            end;
+            if CLine <> Nil then begin
+                MyDest.X := MyZone.X + MyZone.W - 16;
+                MyDest.Y := MyZone.Y + MyZone.H - TTF_FontLineSkip( game_font );
+                QuickText('+', MyDest, MenuSelect );
+            end;
+        end;
+
 		{ Restore the clip area. }
 		SDL_SetClipRect( Game_Screen , Nil );
 		GHFlip;
 	end;
 var
 	A: Char;
+    MyPromptZone,MyTextZone: TSDL_Rect;
 begin
-	CMessage( MsgString( 'MORETEXT_Prompt' ) , ZONE_MorePrompt , InfoGreen );
-
-	{ Display the screen. }
-	DisplayTextHere;
-
 	repeat
 		{ Get input from user. }
 		A := RPGKey;
@@ -1257,10 +1278,18 @@ begin
 		{ Possibly process this input. }
 		if A = RPK_Down then begin
 			Inc( FirstLine );
-			DisplayTextHere;
 		end else if A = RPK_Up then begin
 			Dec( FirstLine );
-			DisplayTextHere;
+        end else if A = RPK_TimeEvent then begin
+            MyTextZone := ZONE_MoreText.GetRect();
+            MyPromptZone := ZONE_MorePrompt.GetRect();
+            if Redrawer <> Nil then Redrawer();
+            InfoBox( MyTextZone );
+            InfoBox( MyPromptZone );
+	        CMessage( MsgString( 'MORETEXT_Prompt' ) , MyPromptZone , InfoGreen );
+
+	        { Display the screen. }
+	        DisplayTextHere( MyTextZone );
 		end;
 
 	until ( A = #27 ) or ( A = 'Q' ) or ( A = #8 );
