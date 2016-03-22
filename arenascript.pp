@@ -1490,7 +1490,12 @@ begin
 	end;
 
 	SaveStringList( Config_Directory + FName + '.txt' , VList );
+    {$IFDEF SDLMODE}
+    ASRD_GameBoard := GB;
+    MoreText( VList, 1 , @ArenaScriptRedraw );
+    {$ELSE}
 	MoreText( VList , 1 );
+    {$ENDIF}
 	DisposeSAtt( VList );
     {$IFNDEF SDLMODE}
 	GFCombatDisplay( GB );
@@ -3490,7 +3495,12 @@ begin
 				L := L^.Next;
 			end;
 
-			MoreText( txt , 1 );
+            {$IFDEF SDLMODE}
+            ASRD_GameBoard := GB;
+            MoreText( txt, 1 , @ArenaScriptRedraw );
+            {$ELSE}
+	        MoreText( txt , 1 );
+            {$ENDIF}
 			DisposeSAtt( txt );
 
 			{ Restore the display. }

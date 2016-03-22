@@ -23,26 +23,42 @@ unit ArenaHQ;
 
 interface
 
+{$IFDEF SDLMODE}
+uses sdlgfx;
+{$ENDIF}
+
 const
 	NAV_StartingCash = 250000;	{ This is how much money a unit starts with. }
 
 
 Procedure CreateNewUnit;
 Procedure LoadUnit;
-Procedure StartRPGCampaign;
 
+{$IFDEF SDLMODE}
+Procedure StartRPGCampaign( RD: RedrawProcedureType );
+Procedure DesignDirBrowser( RD: RedrawProcedureType );
+{$ELSE}
+Procedure StartRPGCampaign;
 Procedure DesignDirBrowser;
+{$ENDIF}
 
 implementation
 
 {$IFDEF SDLMODE}
 uses ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
      locale,navigate,pcaction,randchar,randmaps,texutil,wmonster,
-     sdlinfo,sdlgfx,sdlmap,sdlmenus,ui4gh;
+     sdlinfo,sdlmap,sdlmenus,ui4gh,backpack;
 {$ELSE}
 uses ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
      locale,navigate,pcaction,randchar,randmaps,texutil,wmonster,
      coninfo,congfx,conmap,conmenus,context,ui4gh;
+{$ENDIF}
+
+{$IFDEF SDLMODE}
+var
+	HQRD_Redraw: RedrawProcedureType;
+    HQRD_Source: GearPtr;
+    HQRD_Menu: RPGMenuPtr;
 {$ENDIF}
 
 Procedure SaveUnit( U: GearPtr );
@@ -1217,7 +1233,11 @@ begin
 	DisposeGear( PC );
 end;
 
+{$IFDEF SDLMODE}
+Procedure StartRPGCampaign( RD: RedrawProcedureType );
+{$ELSE}
 Procedure StartRPGCampaign;
+{$ENDIF}
 	{ Load & run the teaser adventure. }
 var
 	RPM: RPGMenuPtr;
@@ -1240,7 +1260,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'STARTRPG_NewChar' ) , -2 );
 		DialogMSG('Select character file.');
 {$IFDEF SDLMODE}
-		uname := SelectFile( RPM , Nil );
+		uname := SelectFile( RPM , RD );
 {$ELSE}
 		uname := SelectFile( RPM );
 {$ENDIF}
@@ -1309,6 +1329,64 @@ begin
 {$ENDIF}
 end;
 
+{$IFDEF SDLMODE}
+
+Procedure DDBRedraw;
+    { SDL redrawer for the design dir browser. }
+var
+    Part: GearPtr;
+begin
+    HQRD_Redraw();
+    InfoBox( ZONE_FHQMenu.GetRect() );
+    InfoBox( ZONE_FHQInfo.GetRect() );
+
+	Part := RetrieveGearSib( HQRD_Source , CurrentMenuItemValue( HQRD_Menu ) );
+	if Part <> Nil then begin
+    	LongformGearInfo( Part , Nil, ZONE_FHQInfo );
+	end;
+end;
+
+Procedure DesignDirBrowser( RD: RedrawProcedureType );
+	{ Browse the mecha files on disk. }
+	{ NOTE: This procedure must be called from the Arena opening menu, so that }
+	{ the RedrawOpening procedure is properly initialized. }
+var
+    N: Integer;
+	part: GearPtr;
+begin
+    HQRD_Redraw := RD;
+    HQRD_Source := AggregatePattern( '*.txt', Design_Directory );
+	HQRD_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_FHQMenu );
+
+    part := HQRD_Source;
+    n := 1;
+    while part <> Nil do begin
+        if part^.G = GG_Mecha then begin
+            AddRPGMenuItem( HQRD_Menu, FullGearName( part ), n );
+        end;
+        Inc( n );
+        part := part^.Next;
+    end;
+
+	RPMSortAlpha( HQRD_Menu );
+	AddRPGMenuItem( HQRD_Menu , '  Exit' , -1 );
+
+	repeat
+		N := SelectMenu( HQRD_Menu , @DDBRedraw );
+
+		if N > -1 then begin
+			part := RetrieveGearSib( HQRD_Source , N );
+			if Part <> Nil then begin
+                MechaPartBrowser( Part, RD );
+			end;
+		end;
+	until N = -1;
+	DisposeRPGMenu( HQRD_Menu );
+    DisposeGear( HQRD_Source );
+    CleanSpriteList();
+end;
+
+{$ELSE}
 Procedure BrowseDesignFile( List: GearPtr );
 	{ Choose one of the sibling gears from LIST and display its properties. }
 	{ NOTE: This procedure must be called from the DesignDirBrowser, which must }
@@ -1335,11 +1413,7 @@ begin
 
 	repeat
 		{ Select a gear. }
-{$IFDEF SDLMODE}
-		N := SelectMenu( BrowseMenu, @RedrawOpening );
-{$ELSE}
 		N := SelectMenu( BrowseMenu );
-{$ENDIF}
 		if N > -1 then begin
 			Part := RetrieveGearSib( List , N );
 			ViewMechaDesign( Part );
@@ -1365,11 +1439,7 @@ begin
 	AddRPGMenuItem( MekMenu , '  Exit' , -1 );
 
 	repeat
-{$IFDEF SDLMODE}
-		fname := SelectFile( MekMenu , @RedrawOpening );
-{$ELSE}
 		fname := SelectFile( MekMenu );
-{$ENDIF}
 
 		if fname <> '' then begin
 			part := LoadFile( fname , Design_Directory );
@@ -1388,6 +1458,6 @@ begin
 	until fname = '';
 	DisposeRPGMenu( MekMenu );
 end;
-
+{$ENDIF}
 
 end.

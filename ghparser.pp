@@ -52,6 +52,8 @@ Function LoadNewMonster( MonsterName: String ): GearPtr;
 Function LoadNewNPC( NPCName: String ): GearPtr;
 Function LoadNewSTC( Desig: String ): GearPtr;
 
+Function AggregatePattern( FName,DName: String ): GearPtr;
+
 implementation
 
 uses dos,ability,gearutil,ghchars,ghmodule,
@@ -1101,6 +1103,33 @@ begin
 	Close( F );
 
 end;
+
+Function AggregatePattern( FName,DName: String ): GearPtr;
+	{ Search for the given pattern. Then, load all files that match }
+	{ the pattern and concatenate them together. Did I spell that }
+	{ right? Probably not. }
+var
+	FList,F: SAttPtr;
+	part,it: GearPtr;
+begin
+	it := Nil;
+	if FName <> '' then begin
+		{ Build search list for files that match the pattern. }
+		FList := CreateFileList( DName + FName );
+		F := FList;
+
+		while F <> Nil do begin
+			part := LoadFile( F^.Info , DName );
+			AppendGear( it , part );
+			F := F^.Next;
+		end;
+		DisposeSAtt( FList );
+	end;
+
+	{ Return the selected & loaded gears. }
+	AggregatePattern := it;
+end;
+
 
 initialization
 	Parser_Macros := LoadStringList( Parser_Macro_File );

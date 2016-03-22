@@ -208,6 +208,7 @@ var
 	Opening_Phase,Opening_Count: Integer;
 
     ComDisplay_PC: GearPtr;
+    MoreText_GB: GameBoardPtr;
 
 Procedure ClearOverlayLayer( L: Integer );
 	{ Clear sprite descriptions from the provided overlay layer. }
@@ -541,7 +542,7 @@ var
 	Team: GearPtr;
 begin
 	it := SAttValue( M^.SA , 'SDL_COLORS' );
-	if ( it = '' ) then begin
+	if ( it = '' ) and ( GB <> Nil ) then begin
 		T := NAttValue( M^.NA , NAG_Location , NAS_Team );
 		Team := LocateTeam( GB , T );
 		if Team <> Nil then it := SAttValue( Team^.SA , 'TEAM_COLORS' );
@@ -574,6 +575,10 @@ begin
             it := it + ' ' + RandomColorString( CS_Skin ) + ' ' + RandomColorString( CS_Hair );
         end;
 
+		SetSAtt( M^.SA , 'SDL_COLORS <' + it + '>' );
+
+    end else if it = '' then begin
+        it := RandomColorString(CS_PrimaryMecha)+' '+RandomColorString(CS_SecondaryMecha)+' '+RandomColorString(CS_Detailing);
 		SetSAtt( M^.SA , 'SDL_COLORS <' + it + '>' );
 	end;
 	TeamColorString := it;
@@ -1228,12 +1233,18 @@ begin
 end;
 
 
+Procedure MoreTextRedraw;
+begin
+    SDLCombatDisplay( MoreText_GB );
+end;
+
 Procedure DisplayConsoleHistory( GB: GameBoardPtr );
 	{ Display the console history, then restore the display. }
 var
 	SL: SAttPtr;
 begin
-	MoreText( Console_History , MoreHighFirstLine( Console_History ) );
+    MoreText_GB := GB;
+	MoreText( Console_History , MoreHighFirstLine( Console_History ), @MoreTextRedraw );
 end;
 
 Procedure WriteCampaign( Camp: CampaignPtr; var F: Text );
@@ -1488,9 +1499,6 @@ begin
 	Use_Alpha_Blending := False;
 	RenderMap;
 	Use_Alpha_Blending := Normally_Use_Alpha;
-
-    InfoBox( ZONE_TitleScreenMenu.GetRect() );
-
 end;
 
 Function ScreenToMap( X,Y: Integer ): Point;
@@ -1563,7 +1571,7 @@ initialization
 	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_rustysteel.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Stone ] := ConfirmSprite( 'wall_stone.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Industrial ] := ConfirmSprite( 'wall_industrial.png' , '' , 64 , 96 );
-	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_extra_b.png' , '' , 64 , 96 );
+	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_residential.png' , '' , 64 , 96 );
 {	Thin_Wall_Sprites[ ThinWall_Default ] := ConfirmSprite( 'wall_extra_a.png' , '' , 64 , 96 );}
 
 	Thin_wall_Cap := ConfirmSprite( 'wall_cap.png' , '' , 64 , 96 );

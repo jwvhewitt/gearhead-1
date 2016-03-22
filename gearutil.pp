@@ -65,7 +65,11 @@ Function SeekGear( Master: GearPtr; G,S: Integer ): GearPtr;
 Function SeekCurrentLevelGear( Master: GearPtr; G,S: Integer ): GearPtr;
 
 Function GearEncumberance( Mek: GearPtr ): Integer;
+
+Function IntrinsicMVTVMod( Mek: GearPtr ): Integer;
+Function EquipmentMVTVMod( Mek: GearPtr ): Integer;
 Function BaseMVTVScore( Mek: GearPtr ): Integer;
+
 Function BaseGearValue( Master: GearPtr ): LongInt;
 Function GearValue( Master: GearPtr ): LongInt;
 
@@ -1053,24 +1057,34 @@ begin
 	end;
 end;
 
-Function BaseMVTVScore( Mek: GearPtr ): Integer;
-	{ Calculate the basic MV/TV score, ignoring for the moment }
-	{ such things as form, tarcomps, gyros, falafel, etc. }
-var
-	IMass,EMass: LongInt;
-	MV,EV: Integer;
-	CPit: GearPtr;
+Function IntrinsicMVTVMod( Mek: GearPtr ): Integer;
+    { Return the MV/TV modifier from intrinsic mass. }
 begin
-	MV := 0;
+    IntrinsicMVTVMod := -(IntrinsicMass( Mek ) div MassPerMV);
+end;
 
-	{ Basic MV/TV is determined by the gear's mass and it's equipment. }
-	IMass := IntrinsicMass( Mek );
+Function EquipmentMVTVMod( Mek: GearPtr ): Integer;
+    { Return the MV/TV modifier from carried stuff. }
+var
+	EMass: LongInt;
+	EV: Integer;
+begin
 	EV := GearEncumberance( Mek );
 	if EV < 1 then EV := 1;
 	EMass := EquipmentMass( Mek ) - EV;
 	if EMass < 0 then EMass := 0;
+    EquipmentMVTVMod := -( EMass div EV );
+end;
 
-	MV := - ( IMass div MassPerMV + EMass div EV );
+Function BaseMVTVScore( Mek: GearPtr ): Integer;
+	{ Calculate the basic MV/TV score, ignoring for the moment }
+	{ such things as form, tarcomps, gyros, falafel, etc. }
+var
+	MV: Integer;
+	CPit: GearPtr;
+begin
+	{ Basic MV/TV is determined by the gear's mass and it's equipment. }
+	MV := IntrinsicMVTVMod( Mek ) + EquipmentMVTVMod( Mek );
 
 	{ Seek the cockpit. If it's located in the head, +1 to MV and TR. }
 	CPit := SeekGear( Mek , GG_Cockpit , 0 , False );
@@ -1082,6 +1096,7 @@ begin
 
 	BaseMVTVScore := MV;
 end;
+
 
 Function ManeuverCost( Mek: GearPtr ): Integer;
 	{ Determine the MV cost multiplier for this mecha. }

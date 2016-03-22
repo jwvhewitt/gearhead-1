@@ -1,3 +1,5 @@
+- SDL UI reworked all over. Heaps more info shown to the player.
+- Backpack and FieldHQ now save menu position (pcaction.pp,backpack.pp)
 - Training menu has been reworked (pcaction.pp)
 - Pressing left or right in backpack will cycle lancemates (backpack.pp)
 - Backpack menu for SDL mode reworked (backpack.pp)

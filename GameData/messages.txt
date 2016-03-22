@@ -508,7 +508,8 @@ EJECT_AI <# has ejected!>
 NEWRPGCAMP_NoCamps <No campaign files found. Always remember to save the game before quitting.>
 FHQ_ReturnToMain <   [EXIT]>
 FHQ_GoBackpack <View Inventory>
-FHQ_PartEditor <Examine Components>
+FHQ_PartViewer <Examine Components>
+FHQ_PartEditor <Examine + Edit Components>
 FHQ_SelectMecha <Assign Mecha>
 FHQ_SelectDestination <Select a mecha or character to receive this item.>
 FHQ_ItemMoved <The item has been moved.>
@@ -591,4 +592,24 @@ FIELDHQ_TITLE <Field H.Q.>
 FIELDHQ_SELECTMECHAFORPILOT <Select mecha for #>
 FIELDHQ_SELECTPILOTFORMECHA <Select pilot for #>
 PARTBROWSER_CAPTION <Examine #>
+FORMINFO_0 <+1 MV, +1 TR>
+FORMINFO_1 <+2 MV, -1 TR, +2 melee damage, fast walk>
+FORMINFO_2 <-1 MV, +2 TR, +2 armor>
+FORMINFO_3 <+0 MV, +1 TR, +1 armor, fast walk>
+FORMINFO_4 <-5 MV, -1 TR, +100% flight>
+FORMINFO_5 <-1 MV, -2 TR, +50% flight, wing thrust>
+FORMINFO_6 <-3 MV, +0 TR, +25% flight>
+FORMINFO_7 <-3 MV, +0 TR, +25% flight>
+FORMINFO_8 <-1 MV, +1 TR, +50% roll speed>
+MEI_IntrinsicMass <Intrinsic Mass: >
+MEI_ExtrinsicMass <Equipment Mass: >
+MEI_MVTRPenalty < (# MV/TR)>
+MEI_LegPoints <Walk Capacity: >
+MEI_RollPoints <Roll Capacity: >
+MEI_SkimThrust <Skim Thrust: >
+MEI_FlyThrust <Flight Thrust: >
+MEI_OverChargeBonus <Full Speed Bonus: >
+TRANSFER_GiveTo <Who should get #?>
+
+
 
