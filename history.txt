@@ -1,3 +1,4 @@
+- SDL Browse Design Files now works like GH2 version (arenahq.pp)
 - SDL UI reworked all over. Heaps more info shown to the player.
 - Backpack and FieldHQ now save menu position (pcaction.pp,backpack.pp)
 - Training menu has been reworked (pcaction.pp)

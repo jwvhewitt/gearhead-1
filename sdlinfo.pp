@@ -31,6 +31,8 @@ var
 
 Function JobAgeGenderDesc( NPC: GearPtr ): String;
 
+Procedure DrawPortrait( GB: GameBoardPtr; NPC: GearPtr; MyDest: TSDL_Rect; WithBackground: Boolean );
+
 Procedure DisplayTargetInfo( Part: GearPtr; gb: GameBoardPtr; Z: DynamicRect );
 Procedure DisplayPCInfo( Part: GearPtr; GB: GameBoardPtr );
 
@@ -91,6 +93,7 @@ begin
 	msg := msg + '.';
 	JobAgeGenderDesc := msg;
 end;
+
 
 Function MaxTArmor( Part: GearPtr ): LongInt;
 	{ Find the max amount of armor on this gear, counting external armor. }
@@ -832,6 +835,16 @@ begin
 	PortraitName := it;
 end;
 
+Procedure DrawPortrait( GB: GameBoardPtr; NPC: GearPtr; MyDest: TSDL_Rect; WithBackground: Boolean );
+    { Draw this character's portrait in the requested area. }
+var
+    SS: SensibleSpritePtr;
+begin
+	if WithBackground then DrawSprite( Backdrop_Sprite , MyDest , 0 );
+	SS := ConfirmSprite( PortraitName( NPC ) , TeamColorString( GB , NPC ) , 100 , 150 );
+	DrawSprite( SS , MyDest , 0 );
+end;
+
 
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
 	{ Show the needed information regarding this conversation. }
@@ -901,9 +914,7 @@ begin
 	end;
 
 	{ Draw the portrait. }
-	DrawSprite( Backdrop_Sprite , ZONE_InteractPhoto.GetRect() , 0 );
-	SS := ConfirmSprite( PortraitName( NPC ) , TeamColorString( GB , NPC ) , 100 , 150 );
-	DrawSprite( SS , ZONE_InteractPhoto.GetRect() , 0 );
+    DrawPortrait( GB, NPC, ZONE_InteractPhoto.GetRect(), True );
 end;
 
 Procedure QuickWeaponInfo( Part: GearPtr );
@@ -1028,10 +1039,8 @@ begin
 	{ Show the character portrait. }
 	MyDest.X := MyZone.X + ( MyZone.W * 5 div 6 ) - 50;
 	MyDest.Y := Y0;
-	DrawSprite( Backdrop_Sprite , MyDest , 0 );
-	SS := ConfirmSprite( PortraitName( PC ) , SAttValue( PC^.SA , 'SDL_COLORS' ) , 100 , 150 );
-	DrawSprite( SS , MyDest , 0 );
 
+    DrawPortrait( GB, PC, MyDest, True );
 
 	{ Print the biography. }
 	MyDest.X := MyZone.X + 49;
@@ -1208,7 +1217,7 @@ begin
 
     if ReallyLong then begin
         CDest.Y := CZone.Y + 174;
-	    AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] , InfoHilight );
+	    AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] + '  PV:' + BStr( GearValue( Part ) ) , InfoHilight );
 
         { Get the current mass of carried equipment. }
         CurM := EquipmentMass( Part );
@@ -1280,7 +1289,7 @@ begin
 	SetInfoZone( MyDest );
 
 	{ Show the part's name. }
-	AI_Title( GearName(Part) , InfoHilight );
+	AI_Title( FullGearName(Part) , InfoHilight );
 
     if Part^.G = GG_Mecha then LFGI_ForMecha( Part, gb, True )
     else if Part^.G = GG_Character then LFGI_ForCharacters( Part, gb )
