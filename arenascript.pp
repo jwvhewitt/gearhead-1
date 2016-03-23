@@ -3831,7 +3831,7 @@ begin
 			GameMSG( MsgString( 'ARENASCRIPT_CheckMechaEquipped' ) , ZONE_UsagePrompt , InfoGreen );
 {$ENDIF}
 {$IFDEF SDLMODE}
-			MechaSelectionMenu( GB , GB^.Meks , PC , ZONE_UsageMenu );
+			FHQ_SelectMechaForPilot( GB, PC );
 {$ELSE}
 			MechaSelectionMenu( GB^.Meks , PC , ZONE_UsageMenu );
 {$ENDIF}

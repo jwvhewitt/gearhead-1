@@ -27,7 +27,7 @@ interface
 {$IFDEF SDLMODE}
 uses gears,locale,sdlgfx,ui4gh;
 {$ELSE}
-uses gears,locale;
+uses gears,locale,ui4gh;
 {$ENDIF}
 
 const
