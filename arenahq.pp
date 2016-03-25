@@ -169,21 +169,17 @@ var
 	DSM: RPGMenuPtr;	{ Display Menu }
 begin
 	DSM := CreateHQPilotMenu( U );
-{$IFDEF SDLMODE}
-	if DSM^.NumItem > 0 then DisplayMenu( DSM , Nil )
-{$ELSE}
+{$IFNDEF SDLMODE}
 	if DSM^.NumItem > 0 then DisplayMenu( DSM )
-{$ENDIF}
 	else ClrZone(ZONE_HQPilots);
+{$ENDIF}
 	DisposeRPGMenu( DSM );
 
 	DSM := CreateHQMechaMenu( U );
-{$IFDEF SDLMODE}
-	if DSM^.NumItem > 0 then DisplayMenu( DSM , Nil )
-{$ELSE}
+{$IFNDEF SDLMODE}
 	if DSM^.NumItem > 0 then DisplayMenu( DSM )
-{$ENDIF}
 	else ClrZone(ZONE_HQMecha);
+{$ENDIF}
 	DisposeRPGMenu( DSM );
 
 	{ Display how many credits the unit has. }

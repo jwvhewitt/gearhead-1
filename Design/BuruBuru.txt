@@ -396,7 +396,7 @@ Name <Buru Buru>
 Desig <SAN-X9d Nova Storm>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
-desc <The BuruBuru's powerplant is know as being very dependable. This variant uses that powerplant to fuel an array of energy weapons.>
+desc <The BuruBuru's powerplant is known as being very dependable. This variant uses that powerplant to fuel an array of energy weapons.>
 
 Mod Head
 	Armor 4

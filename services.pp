@@ -64,7 +64,8 @@ Const
 {$IFDEF SDLMODE}
 var
 	SERV_GB: GameBoardPtr;
-	SERV_PC,SERV_NPC,SERV_Info: GearPtr;
+	SERV_PC,SERV_CUSTOMER,SERV_NPC,SERV_Info: GearPtr;
+    SERV_Menu: RPGMenuPtr;
 {$ENDIF}
 
 Function ScalePrice( PC,NPC: GearPtr; Price: Int64 ): LongInt;
@@ -130,6 +131,12 @@ begin
 end;
 
 {$IFDEF SDLMODE}
+Procedure JustGBRedraw;
+    { Just redraw the map. }
+begin
+    SDLCombatDisplay( SERV_GB );
+end;
+
 Procedure ServiceRedraw;
 	{ Redraw the screen for whatever service is going to go on. }
 begin
@@ -143,6 +150,61 @@ begin
 	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
 	GameMsg( CHAT_Message , ZONE_InteractMsg.GetRect() , InfoHiLight );
 end;
+
+Procedure BasicServiceRedraw;
+    { Redraw the services interface without any of the bells and whistles. }
+begin
+	SDLCombatDisplay( SERV_GB );
+    InfoBox( ZONE_ShopTop.GetRect() );
+    InfoBox( ZONE_ShopBottom.GetRect() );
+    InfoBox( ZONE_ShopInfo.GetRect() );
+    InfoBox( ZONE_ShopCash.GetRect() );
+    DrawPortrait( SERV_GB, SERV_NPC, ZONE_ShopNPCPortrait.GetRect(), False );
+    DrawPortrait( SERV_GB, SERV_Customer, ZONE_ShopPCPortrait.GetRect(), False );
+	CMessage( GearName(SERV_NPC) , ZONE_ShopNPCName.GetRect() , InfoHilight );
+	CMessage( GearName(SERV_Customer) , ZONE_ShopPCName.GetRect() , InfoHilight );
+	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_ShopCash.GetRect() , InfoHilight );
+	GameMsg( CHAT_Message , ZONE_ShopText.GetRect() , InfoHiLight );
+end;
+
+Procedure BrowseListRedraw;
+    { Redraw the services interface and show the longform info for a list item. }
+var
+    Part: GearPtr;
+begin
+    BasicServiceRedraw();
+	if ( SERV_Menu <> Nil ) and ( SERV_Info <> Nil ) then begin
+		Part := RetrieveGearSib( SERV_Info , CurrentMenuItemValue( SERV_Menu ) );
+		if Part <> Nil then begin
+        	LongformGearInfo( Part , SERV_GB, ZONE_ShopInfo );
+		end;
+	end;
+end;
+
+Procedure BrowseTreeRedraw;
+    { Redraw the services interface and show the longform info for a gear. }
+var
+    Part: GearPtr;
+begin
+    BasicServiceRedraw();
+	if ( SERV_Menu <> Nil ) and ( SERV_Info <> Nil ) then begin
+		Part := LocateGearByNumber( SERV_Info , CurrentMenuItemValue( SERV_Menu ) );
+		if Part <> Nil then begin
+        	LongformGearInfo( Part , SERV_GB, ZONE_ShopInfo );
+		end;
+	end;
+end;
+
+Procedure FocusOnOneRedraw;
+    { Redraw the services interface and show the longform info for a list item. }
+begin
+    BasicServiceRedraw();
+	if ( SERV_Info <> Nil ) then begin
+    	LongformGearInfo( SERV_Info , SERV_GB, ZONE_ShopInfo );
+	end;
+end;
+
+
 {$ENDIF}
 
 procedure BuyAmmoClips( GB: GameBoardPtr; PC,NPC,Weapon: GearPtr );
@@ -182,7 +244,11 @@ begin
 	LookForAmmo( Weapon^.SubCom );
 
 	{ Step Two: Create the shopping menu. }
+    {$IFDEF SDLMODE}
+	ShopMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	ShopMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    {$ENDIF}
 
 	N := 1;
 	Ammo := AmmoList;
@@ -198,9 +264,14 @@ begin
 
 	{ Step Three: Keep shopping until the PC selects exit. }
 	repeat
-		SERV_Info := AmmoList;
 {$IFDEF SDLMODE}
-		N := SelectMenu( ShopMenu , @ServiceRedraw );
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
+        SERV_Info := AmmoList;
+        SERV_Menu := ShopMenu;
+		N := SelectMenu( ShopMenu , @BrowseListRedraw );
 {$ELSE}
 		N := SelectMenu( ShopMenu );
 {$ENDIF}
@@ -258,7 +329,11 @@ var
 begin
 	Cost := PurchasePrice( PC , NPC , Part );
 
+    {$IFDEF SDLMODE}
+	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    {$ENDIF}
 	AddRPGMenuItem( YNMenu , 'Buy ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
 	if ( Part^.G = GG_Mecha ) then 	AddRPGMenuItem( YNMenu , 'View Tech Stats' , 3 );
 	if ( Part^.SubCom <> Nil ) or ( Part^.InvCom <> Nil ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BrowseParts' ) , 2 );
@@ -277,9 +352,12 @@ begin
 
 	repeat
 {$IFDEF SDLMODE}
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
 		SERV_Info := Part;
-		N := SelectMenu( YNMenu , @ServiceRedraw );
-		serv_Info := PC;
+		N := SelectMenu( YNMenu , @FocusOnOneRedraw );
 {$ELSE}
 		DisplayGearInfo( Part );
 		CMessage( '$' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
@@ -316,7 +394,7 @@ begin
 			end;
 		end else if N = 2 then begin
 {$IFDEF SDLMODE}
-			MechaPartBrowser( Part , @ServiceRedraw );
+			MechaPartBrowser( Part , @JustGBRedraw );
 {$ELSE}
 			MechaPartBrowser( Part );
 {$ENDIF}
@@ -348,6 +426,7 @@ Function SellGear( var LList,Part: GearPtr; PC,NPC: GearPtr ): Boolean;
 	{ The unit may or may not want to sell PART. }
 	{ Show the price of this gear, and ask whether or not the }
 	{ player wants to make this sale. }
+    { NOTE: SERV_GB must be set before this proc is called!!! }
 var
 	YNMenu: RPGMenuPtr;
 	Cost: Int64;
@@ -417,7 +496,11 @@ begin
 	Cost := ( Cost * (20 + ShopRk ) ) div 100;
 	if Cost < 1 then Cost := 1;
 
+    {$IFDEF SDLMODE}
+	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    {$ENDIF}
 	AddRPGMenuItem( YNMenu , 'Sell ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
 	AddRPGMenuItem( YNMenu , 'Maybe later' , -1 );
 
@@ -426,10 +509,12 @@ begin
 	msg := ReplaceHash( msg , BStr( Cost ) );
 	msg := ReplaceHash( msg , GearName( Part ) );
 {$IFDEF SDLMODE}
+    SERV_PC := PC;
+    SERV_Customer := PC;
+    SERV_NPC := NPC;
 	SERV_Info := Part;
 	CHAT_Message := Msg;
-	N := SelectMenu( YNMenu , @ServiceRedraw );
-	SERV_Info := Pc;
+	N := SelectMenu( YNMenu , @FocusOnOneRedraw );
 {$ELSE}
 	GameMsg( msg , ZONE_InteractMsg , InfoHilight );
 	N := SelectMenu( YNMenu );
@@ -1083,14 +1168,19 @@ var
 begin
 
 	{ Create the browsing menu. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
 	AttachMenuDesc( RPM , ZONE_Menu );
+    {$ENDIF}
 	I := Wares;
 	N := 1;
 	while I <> Nil do begin
 		msg := FullGearName( I );
 
 		{ Add extra information, depending upon item type. }
+        {$IFNDEF SDLMODE}
 		if I^.G = GG_Weapon then begin
 			msg := msg + '  (DC:' + BStr( ScaleDC( I^.V , I^.Scale ) ) + ')';
 		end else if ( I^.G = GG_ExArmor ) or ( I^.G = GG_Shield ) then begin
@@ -1098,6 +1188,7 @@ begin
 		end else if I^.G = GG_Consumable then begin
 			msg := msg + '  (' + BStr( I^.Stat[ STAT_FoodQuantity ] ) + ')';
 		end;
+        {$ENDIF}
 
 		{ Add extra information, depending upon item scale. }
 		if ( I^.G <> GG_Mecha ) and ( I^.Scale > 0 ) then begin
@@ -1106,7 +1197,7 @@ begin
 
 		{ Pad the message. }
 {$IFDEF SDLMODE}
-		while TextLength( GAME_FONT , ( msg + ' $' + BStr( PurchasePrice( PC , NPC , I ) ) ) ) < ( ZONE_InteractMenu.W - 50 ) do msg := msg + ' ';
+		while TextLength( GAME_FONT , ( msg + ' $' + BStr( PurchasePrice( PC , NPC , I ) ) ) ) < ( ZONE_ShopMenu.W - 5 ) do msg := msg + ' ';
 {$ELSE}
 		while Length( msg ) < ( ScreenZone[ ZONE_InteractMenu , 3 ] - ScreenZone[ ZONE_InteractMenu , 1 ] - 12 ) do msg := msg + ' ';
 {$ENDIF}
@@ -1131,8 +1222,13 @@ begin
 		{ Display the trading stats. }
 
 {$IFDEF SDLMODE}
-		SERV_Info := PC;
-		N := SelectMenu( RPM , @ServiceRedraw );
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
+        SERV_Info := Wares;
+        SERV_Menu := RPM;
+		N := SelectMenu( RPM , @BrowseListRedraw );
 {$ELSE}
 		DisplayGearInfo( PC );
 		CMessage( '$' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
@@ -1157,7 +1253,11 @@ var
 	msg: String;
 begin
 	{ Allocate a menu. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    {$ENDIF}
 
 	{ Add each mek to the board. }
 	N := 1;
@@ -1192,8 +1292,12 @@ begin
 	MI := 1;
 	repeat
 		{ Create the menu. }
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
 		RPM^.Mode := RPMNoCleanup;
+        {$ENDIF}
 		AttachMenuDesc( RPM , ZONE_Menu );
 		BuildInventoryMenu( RPM , PCInv );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
@@ -1203,7 +1307,13 @@ begin
 		{ Get a choice from the menu, then record the current item }
 		{ number. }
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @ServiceRedraw );
+        SERV_GB := GB;
+        SERV_PC := PCChar;
+        SERV_Customer := PCChar;
+        SERV_NPC := NPC;
+        SERV_Info := PCInv;
+        SERV_Menu := RPM;
+		N := SelectMenu( RPM , @BrowseListRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -1239,7 +1349,11 @@ begin
 
 	repeat
 		{ Create the menu. }
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+        {$ENDIF}
 
 		{ Add options, depending on the mek. }
 		if not OnTheMap( Mek ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_Sell' ) + GearName( Mek ) , 1 );
@@ -1249,8 +1363,12 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
 
 {$IFDEF SDLMODE}
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
 		SERV_Info := Mek;
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @FocusOnOneRedraw );
 {$ELSE}
 		DisplayGearInfo( Mek );
 		N := SelectMenu( RPM );
@@ -1268,7 +1386,7 @@ begin
 		end else if N = 3 then begin
 			{ Use the parts browser. }
 {$IFDEF SDLMODE}
-			MechaPartBrowser( Mek , @ServiceRedraw );
+			MechaPartBrowser( Mek , @JustGBRedraw );
 {$ELSE}
 			MechaPartBrowser( Mek );
 {$ENDIF}
@@ -1295,7 +1413,13 @@ begin
 
 		{ Select an item from the menu, then get rid of the menu. }
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @ServiceRedraw );
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
+        SERV_Info := GB^.Meks;
+        SERV_Menu := RPM;
+		N := SelectMenu( RPM , @BrowseListRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -1396,12 +1520,15 @@ var
 		{ the "CYBER" tag to the menu. }
 	var
 		Part: GearPtr;
+        N: Integer;
 	begin
 		Part := LocatePilot( PC )^.InvCom;
+        N := 1;
 		while Part <> Nil do begin
 			if AStringHasBString( SAttValue( Part^.SA , 'TYPE' ) , 'CYBER' ) then begin
-				AddRPGMenuItem( RPM , GearName( Part ) , FindGearIndex( PC , Part ) );
+				AddRPGMenuItem( RPM , GearName( Part ) , N );
 			end;
+            Inc( N );
 			Part := Part^.Next;
 		end;
 	end;
@@ -1414,13 +1541,22 @@ var
 		Cost: LongInt;
 	begin
 		Cost := SkillAdvCost( Nil , NAttValue( NPC^.NA , NAG_Skill , 24 ) ) * 2;
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+        {$ENDIF}
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_Pay_Yes' ) , 1 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_Pay_No' ) , -1 );
 
 {$IFDEF SDLMODE}
 		CHAT_Message := ReplaceHash( MsgString( 'SERVICES_Cyber_Pay' ) , BStr( Cost ) );
-		N := SelectMenu( RPM , @ServiceRedraw );
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
+		SERV_Info := Item;
+		N := SelectMenu( RPM , @FocusOnOneRedraw );
 {$ELSE}
 		GameMsg( ReplaceHash( MsgString( 'SERVICES_Cyber_Pay' ) , BStr( Cost ) ) , ZONE_InteractMsg , InfoHiLight );
 		N := SelectMenu( RPM );
@@ -1444,7 +1580,11 @@ var
 	var
 		Result: Integer;
 	begin
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+        {$ENDIF}
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_WaitPrompt' ) , -1 );
 		ClearCyberSlot( Slot , Item );
 		DelinkGear( Item^.Parent^.InvCom , Item );
@@ -1456,8 +1596,13 @@ var
 		AddReputation( PC , 7 , 3 );
 		ApplyCyberware( LocatePilot( PC ) , Item );
 {$IFDEF SDLMODE}
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
+		SERV_Info := Item;
 		CHAT_Message := MsgString( 'SERVICES_Cyber_Wait' );
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @FocusOnOneRedraw );
 		DisposeRPGMenu( RPM );
 		CHAT_Message := MsgString( 'SERVICES_Cyber_Done' + BStr( Result ) );
 {$ELSE}
@@ -1470,13 +1615,23 @@ var
 		DialogMsg( ReplaceHash( MsgString( 'SERVICES_Cyber_Confirmation' ) , GearName( Item ) ) );
 	end;
 begin
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    {$ENDIF}
 	CreateCyberMenu;
 
 	if RPM^.NumItem > 0 then begin
 {$IFDEF SDLMODE}
+        SERV_GB := GB;
+        SERV_PC := PC;
+        SERV_Customer := PC;
+        SERV_NPC := NPC;
+        SERV_Info := PC^.InvCom;
+        SERV_Menu := RPM;
 		CHAT_Message := MsgString( 'SERVICES_Cyber_SelectPart' );
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @BrowseListRedraw );
 {$ELSE}
 		GameMsg( MsgString( 'SERVICES_Cyber_SelectPart' ) , ZONE_InteractMsg , InfoHiLight );
 		N := SelectMenu( RPM );
@@ -1484,16 +1639,25 @@ begin
 		DisposeRPGMenu( RPM );
 
 		if N > 0 then begin
-			Item := LocateGearByNumber( PC , N );
+			Item := RetrieveGearSib( PC^.InvCom , N );
 			if Item <> Nil then begin
+                {$IFDEF SDLMODE}
+				RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+                {$ELSE}
 				RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+                {$ENDIF}
 				BuildSubMenu( RPM , PC , Item , False );
 				if RPM^.NumItem = 1 then begin
 					Slot := LocateGearByNumber( PC , RPM^.FirstItem^.Value );
 				end else if RPM^.NumItem > 1 then begin
 {$IFDEF SDLMODE}
+                    SERV_GB := GB;
+                    SERV_PC := PC;
+                    SERV_Customer := PC;
+                    SERV_NPC := NPC;
+		            SERV_Info := Item;
 					CHAT_Message := MsgString( 'SERVICES_Cyber_SelectSlot' );
-					N := SelectMenu( RPM , @ServiceRedraw );
+					N := SelectMenu( RPM , @FocusOnOneRedraw );
 {$ELSE}
 					GameMsg( MsgString( 'SERVICES_Cyber_SelectSlot' ) , ZONE_InteractMsg , InfoHiLight );
 					N := SelectMenu( RPM );
@@ -1545,7 +1709,6 @@ begin
 	end;
 end;
 
-
 Procedure OpenShop( GB: GameBoardPtr; PC,NPC: GearPtr; Stuff: String );
 	{ Let the shopping commence! This procedure is called when }
 	{ a conversation leads to a transaction... This is the top }
@@ -1561,12 +1724,7 @@ var
 	N: Integer;
 	Cost: LongInt;
 begin
-{$IFDEF SDLMODE}
-	SERV_GB := GB;
-	SERV_NPC := NPC;
-	SERV_PC := PC;
-	SERV_Info := PC;
-{$ELSE}
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_Menu );
 {$ENDIF}
 
@@ -1577,7 +1735,15 @@ begin
 		{ Start by allocating the menu. }
 		{ This menu will use the same dimensions as the interaction }
 		{ menu, since it branches from there. }
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+	    SERV_GB := GB;
+	    SERV_NPC := NPC;
+	    SERV_PC := PC;
+	    SERV_Customer := PC;
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+        {$ENDIF}
 
 		{ Add the basic options. }
 		if Wares <> Nil then AddRPGMenuItem( RPM , 'Browse Wares' , 0 );
@@ -1623,7 +1789,7 @@ begin
 
 		{ Display the trading stats. }
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @BasicServiceRedraw );
 {$ELSE}
 		DisplayGearInfo( PC );
 		CMessage( '$' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
@@ -1862,17 +2028,23 @@ begin
 	SERV_GB := GB;
 	SERV_NPC := NPC;
 	SERV_PC := PC;
+    SERV_Customer := PC;
+    SERV_Info := FindRoot( GB^.Scene );
 {$ELSE}
 	ClrZone( ZONE_Menu );
 {$ENDIF}
 
 	repeat
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+        {$ENDIF}
 		FillExpressMenu( GB , RPM );
 		RPMSortAlpha( RPM );
 		AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @BrowseTreeRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -1887,8 +2059,9 @@ begin
 				AddRPGMenuItem( RPM , MsgString( 'SERVICES_MoveNo' ) ,  -1 );
 
 {$IFDEF SDLMODE}
+                SERV_Info := Mek;
 				Chat_Message := ReplaceHash( MsgString( 'SERVICES_MovePrompt' + BStr( Random( 3 ) + 1 ) ) , BStr( Cost ) );
-				N := SelectMenu( RPM , @ServiceRedraw );
+				N := SelectMenu( RPM , @FocusOnOneRedraw );
 {$ELSE}
 				GameMsg( ReplaceHash( MsgString( 'SERVICES_MovePrompt' + BStr( Random( 3 ) + 1 ) ) , BStr( Cost ) ) , ZONE_InteractMsg , InfoHiLight );
 				N := SelectMenu( RPM );

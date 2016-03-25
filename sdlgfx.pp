@@ -140,24 +140,24 @@ const
 	ZONE_BPInstructions: DynamicRect = (dx:-280; dY:90; W: 292; H: 40; anchor: ANC_middle);
 	ZONE_BPInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 340; anchor: ANC_middle);
 
+    ZONE_ShopNPCName: DynamicRect = ( dx:-330; dy: -230; w: 100; h: 16; anchor: ANC_middle );
+    ZONE_ShopNPCPortrait: DynamicRect = ( dx:-330; dy: -210; w: 100; h: 150; anchor: ANC_middle );
+    ZONE_ShopText: DynamicRect = ( dx:-225; dy: -230; w: 287; h: 170; anchor: ANC_middle );
+    ZONE_ShopPCName: DynamicRect = ( dx:-330; dy: -30; w: 100; h: 16; anchor: ANC_middle );
+    ZONE_ShopPCPortrait: DynamicRect = ( dx:-330; dy: -10; w: 100; h: 150; anchor: ANC_middle );
+    ZONE_ShopMenu: DynamicRect = ( dx:-225; dy: -30; w: 287; h: 190; anchor: ANC_middle );
+
+	ZONE_ShopInfo: DynamicRect = (dx:85; dY:-225; W: 250; H: 340; anchor: ANC_middle);
+    ZONE_ShopCash: DynamicRect = ( dx:135; dy: 130; w: 150; h: 16; anchor: ANC_middle );
+    ZONE_ShopTop: DynamicRect = ( dx:-335; dy: -235; w: 402; h: 180; anchor: ANC_middle );
+    ZONE_ShopBottom: DynamicRect = ( dx:-335; dy: -35; w: 402; h: 180; anchor: ANC_middle );
 
 	ZONE_MoreText: DynamicRect = ( dx:-350; dy:-270; w: 700 ; h: 385; anchor: ANC_middle );
 	ZONE_MorePrompt: DynamicRect = ( dx:-300; dy: 130 ; w:600; h:30; anchor: ANC_middle );
 
-    { The line of conversion- zones above this have been validated for WIZARD. }
-
-
-	ZONE_HQPilots: TSDL_Rect = ( x:20; y:10; w:200; h:400 );
-	ZONE_HQMecha: TSDL_Rect = ( x:240; y:10; w:200; h:400 );
-
-
-	ZONE_YesNoTotal: DynamicRect = ( dx:100; dy:115; w:ScreenWidth - Right_Column_Width - 210; h:280; anchor: ANC_middle );
-	ZONE_YesNoPrompt: DynamicRect = ( dx:110; dy:125; w:ScreenWidth - Right_Column_Width - 230; h:200; anchor: ANC_middle );
-	ZONE_YesNoMenu: DynamicRect = ( dx:110; dy:335; w:ScreenWidth - Right_Column_Width - 230; h:50; anchor: ANC_middle );
-
-	ZONE_UsagePrompt: DynamicRect = ( dx:500; dy:190; w:130; h:170; anchor: ANC_middle );
-	ZONE_UsageMenu: DynamicRect = ( dx:50; dy:155; w:380; h:245; anchor: ANC_middle );
-
+	ZONE_YesNoTotal: DynamicRect = ( dx:-180; dy:-155; w:360; h:265; anchor: ANC_middle );
+	ZONE_YesNoPrompt: DynamicRect = ( dx:-175; dy:-150; w:350; h:200; anchor: ANC_middle );
+	ZONE_YesNoMenu: DynamicRect = ( dx:-175; dy:55; w:350; h:50; anchor: ANC_middle );
 
 	Console_History_Length = 240;
 
@@ -755,7 +755,7 @@ begin
 	TextLength := W;
 end;
 
-Procedure GetNextLine( var TheLine , msg , NextWord: String; Width: Integer );
+Procedure GetNextLine( var TheLine , msg , NextWord: String; Width: Integer; MyFont: PTTF_Font );
 	{ Get a line of text of maximum width "Width". }
 var
 	LC: Boolean;	{ Loop Condition. So I wasn't very creative when I named it, so what? }
@@ -767,7 +767,7 @@ begin
 	repeat
 		NextWord := ExtractWord( Msg );
 
-		if TextLength( Game_Font , THEline + ' ' + NextWord) < Width then
+		if TextLength( MyFont , THEline + ' ' + NextWord) < Width then
 			THEline := THEline + ' ' + NextWord
 		else
 			LC := False;
@@ -807,7 +807,7 @@ begin
 
 	{Start the main processing loop.}
 	while TheLine <> '' do begin
-		GetNextLine( TheLine , msg , NextWord , Width );
+		GetNextLine( TheLine , msg , NextWord , Width, MyFont );
 
 		{ Output the line. }
 		{ Next append it to whatever has already been created. }
@@ -1041,7 +1041,7 @@ begin
 
 	{Start the main processing loop.}
 	while TheLine <> '' do begin
-		GetNextLine( TheLine , msg , NextWord , ZONE_Dialog.w );
+		GetNextLine( TheLine , msg , NextWord , ZONE_Dialog.w, Game_Font );
 
 		{ If appropriate, save the line. }
 		if TheLine <> '' then begin
