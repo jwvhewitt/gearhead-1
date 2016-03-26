@@ -1274,7 +1274,27 @@ begin
     MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
     MyDest.W := MyDest.W - 20;
     MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
-    GameMsg( SAttValue( Part^.SA, 'BIO_1' ) , MyDest , InfoGreen );
+    GameMsg( SAttValue( Part^.SA, 'BIO1' ) , MyDest , InfoGreen );
+end;
+
+Procedure LFGI_ForScenes( Part: GearPtr; gb: GameBoardPtr );
+    { Longform info for a scene. }
+var
+    MyDest: TSDL_Rect;
+    SS: SensibleSpritePtr;
+begin
+    CDest.X := CZone.X;
+    CDest.Y := CDest.Y + 8;
+	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , '' , 250 , 150 );
+	if (SS = Nil) or (SS^.Img = Nil) then SS := ConfirmSprite( 'scene_default.png', '' , 250 , 150 );
+	if SS <> Nil then DrawSprite( SS , CDest , 0 );
+
+    MyDest := CZone;
+    MyDest.X := MyDest.X + 10;
+    MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
+    MyDest.W := MyDest.W - 20;
+    MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
+    GameMsg( SAttValue( Part^.SA , 'DESC' ) , MyDest , InfoGreen );
 end;
 
 
@@ -1293,6 +1313,7 @@ begin
 
     if Part^.G = GG_Mecha then LFGI_ForMecha( Part, gb, True )
     else if Part^.G = GG_Character then LFGI_ForCharacters( Part, gb )
+    else if Part^.G = GG_Scene then LFGI_ForScenes( Part, gb )
     else LFGI_ForItems( Part, gb );
 end;
 

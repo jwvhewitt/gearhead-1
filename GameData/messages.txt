@@ -231,10 +231,16 @@ SCHOOL_Learn2 <You feel that you are a better warrior than before.>
 SCHOOL_Learn3 <You think you leaned something.>
 SCHOOL_Learn4 <You feel like Bruce Lee with a giant robot.>
 SCHOOL_Learn5 <You feel like you aced the test.>
+SCHOOL_NPCLearn1 <# has learned something.>
+SCHOOL_NPCLearn2 <# has improved.>
+SCHOOL_NPCLearn3 <# aces the test.>
+SCHOOL_NPCLearn4 <# learns some new tricks.>
+SCHOOL_NPCLearn5 <# achieves illumination.>
 SCHOOL_TeachingInProgress <Let's get started on your training right away.>
 SCHOOL_HowMuch <How much do you want to spend on your training?>
 SCHOOL_ExitCostSelector <  [No thanks.]>
 SCHOOL_Exit <  [Stop Learning]>
+SCHOOL_Switch <# will do training.>
 SHOPPING_SkillAdvance <You feel like a wise consumer.>
 STAT_1 <Reflexes measures grace and accuracy. It determines most combat rolls.>
 STAT_2 <Body measures your character's size and strength. It determines your health and stamina levels.>

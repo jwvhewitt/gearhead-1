@@ -582,7 +582,7 @@ begin
 	while S <> Nil do begin
 		S2 := S^.Next;
 
-		if S^.Color <> '' then begin
+		if ( S^.Color <> '' ) or ( S^.img = Nil ) then begin
 			RemoveSprite( S );
 		end;
 

@@ -39,8 +39,8 @@ Procedure SelectSprite( M: GearPtr; Redrawer: RedrawProcedureType );
 {$ENDIF}
 
 Function LanceMateMenuName( M: GearPtr ): String;
-Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
-Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
+Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
 
 
 Procedure GivePartToPC( GB: GameBoardPtr; Part, PC: GearPtr );
@@ -263,12 +263,21 @@ begin
 	LanceMateMenuName := msg;
 end;
 
-Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
     { Locate the next player character on the gameboard. }
     Function IsPC( PC: GearPtr ): Boolean;
         { Return True if this is a PC, or False otherwise. }
+    var
+        team: Longint;
+        Pilot: GearPtr;
     begin
-        IsPC := IsMasterGear( PC ) and GearActive(PC) and ((NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_LancemateTeam));
+        if IsMasterGear( PC ) and GearActive(PC) then begin
+            team := NAttValue( PC^.NA , NAG_Location, NAS_Team );
+            Pilot := LocatePilot( PC );
+            if team = NAV_DefPlayerTeam then IsPC := True
+            else if team = NAV_LancemateTeam then IsPC := AllowPets or ( NAttValue( Pilot^.NA , NAG_Personal , NAS_CID ) <> 0 )
+            else IsPC := False;
+        end else IsPC := False;
     end;
 var
     PC,NextPC,FirstPC: GearPtr;
@@ -293,12 +302,21 @@ begin
 	end else FindNextPC := NextPC;
 end;
 
-Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
     { Locate the previous player character on the gameboard. }
     Function IsPC( PC: GearPtr ): Boolean;
         { Return True if this is a PC, or False otherwise. }
+    var
+        team: Longint;
+        Pilot: GearPtr;
     begin
-        IsPC := IsMasterGear( PC ) and GearActive(PC) and ((NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_LancemateTeam));
+        if IsMasterGear( PC ) and GearActive(PC) then begin
+            team := NAttValue( PC^.NA , NAG_Location, NAS_Team );
+            Pilot := LocatePilot( PC );
+            if team = NAV_DefPlayerTeam then IsPC := True
+            else if team = NAV_LancemateTeam then IsPC := AllowPets or ( NAttValue( Pilot^.NA , NAG_Personal , NAS_CID ) <> 0 )
+            else IsPC := False;
+        end else IsPC := False;
     end;
 var
     PC,PrevPC,LastPC: GearPtr;
@@ -1603,7 +1621,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -3 then begin
-            M := FindNextPC( GB, M );
+            M := FindNextPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1611,7 +1629,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -4 then begin
-            M := FindPrevPC( GB, M );
+            M := FindPrevPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1657,7 +1675,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -3 then begin
-            M := FindNextPC( GB, M );
+            M := FindNextPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1665,7 +1683,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -4 then begin
-            M := FindPrevPC( GB, M );
+            M := FindPrevPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
