@@ -1201,6 +1201,7 @@ begin
     msg := TeamColorString( GB , Part );
     CDest.X := CZone.X;
 	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , msg , 160 , 160 );
+	if (SS = Nil) or (SS^.Img = Nil) then SS := ConfirmSprite( 'mecha_noimage.png', msg, 160 , 160 );
 	if SS <> Nil then DrawSprite( SS , CDest , 0 );
     CDest.X := CDest.X + 173;
     SS := ConfirmSprite( GearSpriteName(Nil,Part) , msg , 64 , 64 );

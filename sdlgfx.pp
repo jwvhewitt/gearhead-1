@@ -79,13 +79,8 @@ const
 
 	ZONE_Map: TSDL_Rect = ( x:10; y:10; w: ScreenWidth - Right_Column_Width - 30 ; h: ScreenHeight - Dialog_Area_Height - 20 );
 	ZONE_Clock: TSDL_Rect = ( x: ScreenWidth - Right_Column_Width - 10 ; y:ScreenHeight - Dialog_Area_Height - 30; w:Right_Column_Width; h:20 );
-	ZONE_Info: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:10; w:Right_Column_Width; h:150 );
 	ZONE_PCInfo: TSDL_Rect = ( x:  ScreenWidth - Right_Column_Width - 10 ; y:10; w:Right_Column_Width; h:150 );
-{$IFDEF ULTIMATE}
-	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: Right_Column_Width ; h:Dialog_Area_Height-10 );
-{$ELSE}
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: ScreenWidth - 20 ; h:Dialog_Area_Height-10 );
-{$ENDIF}
 
     ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100; anchor: ANC_middle );
 
@@ -238,12 +233,7 @@ Procedure SetupYesNoDisplay;
 Procedure SetupInteractDisplay( TeamColor: TSDL_Color );
 Procedure SetupMemoDisplay;
 
-{$IFDEF ULTIMATE}
-Procedure SetupUltimateDisplay(menus: Integer);
-{$ENDIF}
-{$IFDEF WIZARD}
 Procedure SetupWizardDisplay();
-{$ENDIF}
 
 implementation
 
@@ -985,13 +975,6 @@ var
 	MyDest: TSDL_Rect;
 	NumLines,LineNum: Integer;
 begin
-{$IFNDEF ULTIMATE}
-{$IFNDEF WIZARD}
-	{Clear the message area, and set clipping bounds.}
-    ZONE_Dialog.y := Game_Screen^.h - ZONE_Dialog.h - 10;
-	InfoBox( ZONE_Dialog );
-{$ENDIF}
-{$ENDIF}
 	SDL_SetClipRect( Game_Screen , @ZONE_Dialog );
 
 	MyDest := ZONE_Dialog;
@@ -1372,77 +1355,8 @@ begin
 	ClearExtendedBorder( ZONE_InteractInfo.GetRect() );
 end;
 
-{$IFDEF ULTIMATE}
-Procedure SetupUltimateDisplay(menus: Integer);
-    { This procedure will set the Ultimate display decorations and resize all }
-    { the relevant game zones. Yay? }
-var
-    MyRect: TSDL_Rect;
-    Procedure AddDivider( Y: Integer );
-        { Add a divider to the Ultimate sidebar. }
-    var
-        Dest: TSDL_Rect;
-        X: Integer;
-    begin
-        Dest.X := MyRect.X-8;
-        Dest.Y := Y;
-        DrawSprite( Infobox_Border, Dest, 6 );
-        Dest.X := MyRect.X + MyRect.W;
-        DrawSprite( Infobox_Border, Dest, 7 );
-
-        Dest := GrowRect( MyRect, 0, 8 );
-	    SDL_SetClipRect( Game_Screen , @Dest );
-	    Dest.Y := Y;
-	    for X := 0 to ( MyRect.W div 8 + 1 ) do begin
-		    Dest.X := MyRect.X + X * 8;
-		    DrawSprite( Infobox_Border , Dest , 1 );
-	    end;
-	    SDL_SetClipRect( Game_Screen , Nil );
-    end;
-begin
-    ClrScreen();
-    MyRect.X := Game_Screen^.w - Right_Column_Width - 8;
-    MyRect.Y := 8;
-    MyRect.w := Right_Column_Width;
-    MyRect.h := Game_Screen^.h - 16;
-    InfoBox( MyRect );
-
-    ZONE_Dialog.x := MyRect.X;
-    ZONE_Dialog.w := Right_Column_Width;
-
-    ZONE_Map.X := 0;
-    ZONE_Map.Y := 0;
-    ZONE_Map.W := Game_Screen^.W - Right_Column_Width - 16;
-    ZONE_Map.H := Game_Screen^.H;
-
-    ZONE_Clock.x := MyRect.X;
-    ZONE_Clock.y := Game_Screen^.h - 28;
-
-	ZONE_Info.X := MyRect.X;
-    ZONE_Menu.X := MyRect.X;
-    ZONE_Menu1.X := MyRect.X;
-    ZONE_Menu2.X := MyRect.X;
-
-    AddDivider( 160 );
-    AddDivider( Game_Screen^.H - 36 );
-
-    if menus > 0 then begin
-        AddDivider( ZONE_Menu.Y + ZONE_Menu.H );
-        ZONE_Dialog.y := ZONE_Menu.Y + ZONE_Menu.H + 8;
-        if menus > 1 then begin
-            AddDivider( ZONE_Menu1.Y + ZONE_Menu1.H );
-        end;
-    end else begin
-        ZONE_Dialog.y := 168;
-    end;
-    ZONE_Dialog.h := Game_Screen^.H - ZONE_Dialog.y - 36;
-
-end;
-{$ENDIF}
-
-{$IFDEF WIZARD}
 Procedure SetupWizardDisplay();
-    { This procedure will set the Ultimate display decorations and resize all }
+    { This procedure will set the Wizard display decorations and resize all }
     { the relevant game zones. Yay? }
 var
     MyRect: TSDL_Rect;
@@ -1529,7 +1443,6 @@ begin
     ZONE_Dialog.h := Game_Screen^.H - ZONE_Dialog.y - 36;
 }
 end;
-{$ENDIF}
 
 
 initialization
@@ -1570,9 +1483,7 @@ initialization
 	Infobox_Border := ConfirmSprite( 'sys_boxborder.png' , '', 8 , 8 );
 	Infobox_Backdrop := ConfirmSprite( 'sys_boxbackdrop.png' , '', 16 , 16 );
 
-    {$IFDEF WIZARD}
 	SDL_SetAlpha( Infobox_Backdrop^.Img , SDL_SRCAlpha , 224 );
-    {$ENDIF}
 
 {	MIX_OpenAudio( MIX_DEFAULT_FREQUENCY , MIX_DEFAULT_FORMAT , MIX_CHANNELS , 4096 );
 	Music_List := LoadStringList( 'music.cfg' );

@@ -389,12 +389,10 @@ var
 	MyDest: TSDL_Rect;
 begin
 	{ Set the clip area. }
-    {$IFNDEF ULTIMATE}
     ZONE_Map.X := 0;
     ZONE_Map.Y := 0;
     ZONE_Map.W := Game_Screen^.W;
     ZONE_Map.H := Game_Screen^.H;
-    {$ENDIF}
 	ClrZone( ZONE_Map );
 	SDL_SetClipRect( Game_Screen , @ZONE_Map );
 
@@ -1015,13 +1013,8 @@ var
 	pmsg: PChar;
 	MyImage: PSDL_Surface;
 begin
-{$IFDEF ULTIMATE}
-    SetupUltimateDisplay(0);
-{$ENDIF}
 	NFDisplayMap( GB );
-{$IFDEF WIZARD}
     SetupWizardDisplay();
-{$ENDIF}
 	CMessage( TimeString( GB^.ComTime ) , ZONE_Clock , NeutralGrey );
 
 	{ Update the console. }

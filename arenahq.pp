@@ -454,7 +454,9 @@ begin
 					{ Just get rid of the character. }
 					DisposeGear( PC );
 				end;
+                {$IFNDEF SDLMODE}
 				ClrZone( ZONE_Info );
+                {$ENDIF}
 
 			end else begin
 				{ PC isn't a valid character. Get rid of it. }
