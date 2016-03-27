@@ -786,8 +786,12 @@ Function AddNAtt(var LList: NAttPtr; G,S: Integer; V: LongInt ): NAttPtr;
 	{If, as a result of this operation, V drops to 0,}
 	{the numerical attribute will be removed and Nil will}
 	{be returned.}
+const
+	V_MAX = 2147483647;
+	V_MIN = -2147483648;
 var
 	it: NAttPtr;
+	tmp: Int64;
 begin
 	it := FindNAtt(LList,G,S);
 
@@ -798,7 +802,14 @@ begin
 		it^.S := S;
 		it^.V := V;
 	end else begin
-		it^.V := it^.V + V;
+		tmp := Int64(it^.V) + Int64(V);
+		if (V_MAX < tmp) then begin
+			it^.V := V_MAX;
+		end else if (tmp < V_MIN) then begin
+			it^.V := V_MIN;
+		end else begin
+			it^.V := tmp;
+		end;
 	end;
 
 	if it^.V = 0 then RemoveNAtt(LList,it);

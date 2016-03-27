@@ -477,8 +477,11 @@ end;
 Function ShakeDown( GB: GameBoardPtr; Part: GearPtr; X,Y: Integer ): LongInt;
 	{ This is the workhorse for this function. It does the }
 	{ dirty work of separating inventory from (former) owner. }
+const
+	V_MAX = 2147483647;
+	V_MIN = -2147483648;
 var
-	cash: LongInt;
+	Cash: Int64;
 	SPart: GearPtr;		{ Sub-Part }
 begin
 	{ Start by removing the cash from this part. }
@@ -507,6 +510,12 @@ begin
 	while SPart <> Nil do begin
 		if SPart^.G <> GG_Cockpit then cash := cash + ShakeDown( GB , SPart , X , Y );
 		SPart := SPart^.Next;
+	end;
+
+	if (V_MAX < Cash) then begin
+		Cash := V_MAX;
+	end else if (Cash < V_MIN) then begin
+		Cash := V_MIN;
 	end;
 
 	ShakeDown := Cash;
@@ -1466,8 +1475,11 @@ end;
 
 Procedure EatItem( GB: GameBoardPtr; TruePC , Item: GearPtr );
 	{ The PC wants to eat this item. Give it a try. }
+const
+	WaitTime_Max = 32767;
 var
 	effect: String;
+	WaitTime: Int64;
 begin
 	TruePC := LocatePilot( TruePC );
 
@@ -1479,7 +1491,12 @@ begin
 		DialogMsg( ReplaceHash( ReplaceHash( MsgString( 'BACKPACK_YouAreEating' ) , GearName( TruePC ) ) , GearName( Item ) ) );
 
 		{ Eating takes time... }
-		WaitAMinute( GB , TruePC , ReactionTime( TruePC ) * GearMass( Item ) + 1 );
+		WaitTime := ReactionTime( TruePC ) * GearMass( Item ) + 1;
+		while (WaitTime_Max < WaitTime) do begin
+			WaitAMinute( GB, TruePC, WaitTime_Max );
+			WaitTime := WaitTime - WaitTime_Max;
+		end;
+		WaitAMinute( GB, TruePC, WaitTime );
 
 		{ ...and also exits the backpack. }
 		ForceQuit := True;

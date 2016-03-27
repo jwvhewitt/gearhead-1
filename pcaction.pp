@@ -262,8 +262,10 @@ end;
 Procedure FHQ_Disassemble( GB: GameBoardPtr; PC,NPC: GearPtr );
 	{ Robot NPC is no longer desired. Disassemble it into spare parts, delete the NPC, }
 	{ then give the parts to PC. }
+const
+	V_MAX = 32767;
 var
-	M: Integer;
+	M: LongInt;
 begin
 	{ Error check- NPC must be on the gameboard. }
 	if not IsFoundAlongTrack( GB^.Meks , NPC ) then Exit;
@@ -282,7 +284,11 @@ begin
 
 	{ Get the spare parts. }
 	NPC := LoadNewSTC( 'SPAREPARTS-1' );
-	NPC^.V := M * 5;
+	if (V_MAX < (Int64(M) * 5)) then begin
+		NPC^.V := V_MAX;
+	end else begin
+		NPC^.V := M * 5;
+	end;
 	InsertInvCom( PC , NPC );
 end;
 

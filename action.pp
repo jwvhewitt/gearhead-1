@@ -990,14 +990,19 @@ end;
 Function TeamPV( MList: GearPtr; Team: Integer ): LongInt;
 	{ Calculate the total point value of active models belonging }
 	{ to TEAM which are present on the map. }
+const
+	it_MAX = 2147483647;
 var
-	it: LongInt;
+	it: Int64;
 begin
 	it := 0;
 
 	while MList <> Nil do begin
 		if GearActive( MList ) and ( NAttValue( MList^.NA , NAG_Location , NAS_TEam ) = Team ) then begin
 			it := it + GearValue( MList );
+			if it_MAX < it then begin
+				it := it_MAX;
+			end;
 		end;
 		MList := MList^.Next;
 	end;
