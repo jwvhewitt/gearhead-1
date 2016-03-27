@@ -623,8 +623,13 @@ Function SeekActiveIntrinsic( Master: GearPtr; G,S: Integer ): GearPtr;
 				if ( P^.G = G ) and ( P^.S = S ) then begin
 					it := CompGears( it , P );
 				end;
-				it := CompGears( SeekPartAlongTrack( P^.SubCom ) , it );
-				it := CompGears( it , SeekPartAlongTrack( P^.InvCom ) );
+				if ( GG_Cockpit = P^.G ) then begin
+					{ Don't add parts beyond the cockpit barrier. }
+					it := CompGears( it , SeekPartAlongTrack( P^.InvCom ) );
+				end else begin
+					it := CompGears( SeekPartAlongTrack( P^.SubCom ) , it );
+					it := CompGears( it , SeekPartAlongTrack( P^.InvCom ) );
+				end;
 			end;
 			P := P^.Next;
 		end;
