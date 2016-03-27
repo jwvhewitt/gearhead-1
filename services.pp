@@ -441,6 +441,8 @@ Function SellGear( var LList,Part: GearPtr; PC,NPC: GearPtr ): Boolean;
 	{ Show the price of this gear, and ask whether or not the }
 	{ player wants to make this sale. }
     { NOTE: SERV_GB must be set before this proc is called!!! }
+const
+	V_MAX = 2147483647;
 var
 	YNMenu: RPGMenuPtr;
 	Cost: Int64;
@@ -508,7 +510,11 @@ begin
 	else if ShopRk < 0 then ShopRk := 0;
 
 	Cost := ( Cost * (20 + ShopRk ) ) div 100;
-	if Cost < 1 then Cost := 1;
+	if (V_MAX < Cost) then begin
+		Cost := V_MAX;
+	end else if (Cost < 1) then begin
+		Cost := 1;
+	end;
 
     {$IFDEF SDLMODE}
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
@@ -575,10 +581,12 @@ end;
 Function RepairMasterCost( Master: GearPtr; Skill: Integer ): LongInt;
 	{ Return the expected cost of repairing every component of }
 	{ MASTER which can be handled using SKILL. }
+const
+	it_MAX = 2147483647;
 var
-	it: LongInt;
+	it: Int64;
 begin
-	it := TotalRepairableDamage( Master , SKill ) * CredsPerDP;
+	it := Int64(TotalRepairableDamage( Master , SKill )) * Int64(CredsPerDP);
 
 	{ Since parts that could be helped by First Aid heal by themselves }
 	{ usually, the cost to treat injuries using the First Aid skill is }
@@ -586,6 +594,12 @@ begin
 	if ( Skill = 20 ) and ( it > 0 ) then begin
 		it := it div 2;
 		if it < 1 then it := 1;
+	end;
+
+	if it < 0 then begin
+		it := 0;
+	end else if it_MAX < it then begin
+		it := it_MAX;
 	end;
 
 	RepairMasterCost := it;
@@ -2047,8 +2061,12 @@ end;
 Function DeliveryCost( Mek: GearPtr ): LongInt;
 	{ Return the cost to deliver this mecha from one location }
 	{ to the next. Cost is determined by mass. }
+const
+	Cost_MAX = 2147483647;
+	Cost_MIN = -2147483648;
 var
-	C,T: LongInt;
+	C: Int64;
+	T: LongInt;
 begin
 	{ Base value is the mass of the mek. }
 	C := GearMass( Mek );
@@ -2057,6 +2075,11 @@ begin
 	for t := 1 to Mek^.Scale do C := C * 5;
 
 	{ Return the finished cost. }
+	if C < Cost_MIN then begin
+		C := Cost_MIN;
+	end else if Cost_MAX < C then begin
+		C := Cost_MAX;
+	end;
 	DeliveryCost := C;
 end;
 

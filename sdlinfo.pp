@@ -656,7 +656,7 @@ begin
 	else msg := '-';
 	AI_PrintFromRight( msg + ' DP' , CZone.W div 2 , HitsColor( Part ) );
 
-	N := ( GearMass( Part ) + 1 ) div 2;
+	N := ( Int64(GearMass( Part )) + 1 ) div 2;
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , CZone.W - 1 , InfoGreen );
 
 	if Part^.G < 0 then begin
@@ -687,7 +687,7 @@ Procedure RepairFuelInfo( Part: GearPtr );
 	{ Display info for any gear that doesn't have its own info }
 	{ procedure. }
 var
-	N: Integer;
+	N: LongInt;
 begin
 	{ Show the part's name. }
 	AI_Title( GearName(Part) , InfoHilight );
@@ -1159,7 +1159,7 @@ Procedure LFGI_ForItems( Part: GearPtr; gb: GameBoardPtr );
 var
     AI_Dest: TSDL_Rect;
     msg: String;
-    n: Integer;
+	N: LongInt;
 begin
 	{ Display the part's armor rating. }
 	N := GearCurrentArmor( Part );
