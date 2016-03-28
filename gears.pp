@@ -165,6 +165,12 @@ Const
 	RandMaps_Param_File = Data_Directory + 'randmaps.txt';
 	NPC_Chatter_File = Data_Directory + 'taunts.txt';
 
+	I18N_Settings_File         = Data_Directory + 'I18N_settings.txt';
+	I18N_Name_File             = Data_Directory + 'I18N_name.txt';
+	I18N_Messages_File         = Data_Directory + 'I18N_messages.txt';
+	I18N_Help_Keymap_Name_File = Data_Directory + 'I18N_keymap_name.txt';
+	I18N_Help_Keymap_Desc_File = Data_Directory + 'I18N_keymap_desc.txt';
+
 	Doc_DirName = 'doc';
 	Doc_Directory = Doc_DirName + OS_Dir_Separator;
 	Mecha_Help_File = Doc_Directory + 'man_umek.txt';

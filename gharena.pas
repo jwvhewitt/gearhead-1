@@ -30,9 +30,9 @@ program GHArena;
 {$IFNDEF DEBUG}
 {$APPTYPE GUI}
 {$ENDIF}
-uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap;
+uses gears,i18nmsg,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap;
 {$ELSE}
-uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
+uses gears,i18nmsg,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const

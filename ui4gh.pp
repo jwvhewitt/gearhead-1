@@ -329,9 +329,31 @@ const
 	KMC_SwitchTarget = 44;
 	KMC_RunToggle = 45;
 
+
+Function I18N_Help_Keymap_Name_String( const MsgLabel: String ): String;
+Function I18N_Help_Keymap_Desc_String( const MsgLabel: String ): String;
+
+
 implementation
 
-uses dos,ability,gears,texutil;
+uses sysutils,dos,gears,i18nmsg,ability,texutil;
+
+
+var
+	I18N_Help_Keymap_Name: SAttPtr;
+	I18N_Help_Keymap_Desc: SAttPtr;
+
+
+Function I18N_Help_Keymap_Name_String( const MsgLabel: String ): String;
+begin
+	I18N_Help_Keymap_Name_String := SAttValue( I18N_Help_Keymap_Name, MsgLabel );
+end;
+
+Function I18N_Help_Keymap_Desc_String( const MsgLabel: String ): String;
+begin
+	I18N_Help_Keymap_Desc_String := SAttValue( I18N_Help_Keymap_Desc, MsgLabel );
+end;
+
 
 	Procedure LoadConfig;
 		{ Open the configuration file and set the variables }
@@ -552,11 +574,19 @@ uses dos,ability,gears,texutil;
 
 
 initialization
+begin
+	I18N_Help_Keymap_Name := LoadStringList( I18N_Help_Keymap_Name_File );
+	I18N_Help_Keymap_Desc := LoadStringList( I18N_Help_Keymap_Desc_File );
 
 	LoadConfig;
+end;
+
 
 finalization
-
+begin
     SaveConfig;
+	DisposeSAtt( I18N_Help_Keymap_Desc );
+	DisposeSAtt( I18N_Help_Keymap_Name );
+end;
 
 end.

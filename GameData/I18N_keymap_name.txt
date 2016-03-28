@@ -1,0 +1,84 @@
+% Help Messages for Showing keymap
+NormSpeed		<NormSpeed>
+FullSpeed		<FullSpeed>
+TurnLeft		<TurnLeft>
+TurnRight		<TurnRight>
+Stop			<Stop>
+
+Dir-SouthWest		<Dir-SouthWest>
+Dir-South		<Dir-South>
+Dir-SouthEast		<Dir-SouthEast>
+Dir-West		<Dir-West>
+Dir-East		<Dir-East>
+Dir-NorthWest		<Dir-NorthWest>
+Dir-North		<Dir-North>
+Dir-NorthEast		<Dir-NorthEast>
+
+Dir-UpLeft              <Dir-UpLeft>
+Dir-Up                  <Dir-Up>
+Dir-UpRight             <Dir-UpRight>
+Dir-Left                <Dir-Left>
+Dir-Right               <Dir-Right>
+Dir-DownLeft            <Dir-DownLeft>
+Dir-Down                <Dir-Down>
+Dir-DownRight           <Dir-DownRight>
+
+Menu-Up			<Menu-Up>
+Menu-Down		<Menu-Down>
+Menu-Left		<Menu-Left>
+Menu-Right		<Menu-Right>
+Menu-PageUp		<Menu-PageUp>
+Menu-PageDown		<Menu-PageDown>
+Menu-ScrollUp		<Menu-ScrollUp>
+Menu-ScrollDown		<Menu-ScrollDown>
+
+ShiftGears		<ShiftGears>
+Transformation		<Transformation>
+PurgeParts		<PurgeParts>
+Look			<Look>
+AttackMenu		<AttackMenu>
+QuitGame		<QuitGame>
+Talk			<Talk>
+Help			<Help>
+SwitchWeapon		<SwitchWeapon>
+CalledShot		<CalledShot>
+Recenter		<Recenter>
+Get			<Get>
+Inventory		<Inventory>
+Equipment		<Equipment>
+Enter			<Enter>
+PartBrowser		<PartBrowser>
+LearnSkills		<LearnSkills>
+Attack			<Attack>
+SelectMecha		<SelectMecha>
+UseScenery		<UseScenery>
+Messages		<Messages>
+SaveGame		<SaveGame>
+Enter2			<Enter2>
+CharInfo		<CharInfo>
+FirstAid		<FirstAid>
+ApplySkill		<ApplySkill>
+Eject			<Eject>
+Rest			<Rest>
+History			<History>
+FieldHQ			<FieldHQ>
+Search			<Search>
+Telephone		<Telephone>
+SwitchBV		<SwitchBV>
+Reverse			<Reverse>
+SwitchTarget		<SwitchTarget>
+RunToggle		<RunToggle>
+AddressBook		<AddressBook>
+ToggleDrawWall		<ToggleDrawWall>
+ForcePlot		<(DEBUG COMMAND)>
+MechaPartBrowser	<(DEBUG COMMAND)>
+ShowRep			<(DEBUG COMMAND)>
+DirectScript		<(DEBUG COMMAND)>
+WheelClick		<WheelClick>
+WheelUp			<WheelUp>
+WheelDown		<WheelDown>
+WheelLeft		<WheelLeft>
+WheelRight		<WheelRight>
+SelectPortrait		<(CHEAT COMMAND)>
+RenameMecha		<(CHEAT COMMAND)>
+EditMenuOrder		<(CHEAT COMMAND)>

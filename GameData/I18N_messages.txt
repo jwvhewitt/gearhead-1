@@ -1,0 +1,687 @@
+%%% GEARHEAD I18N TEXT MESSAGES %%%
+
+% gharena.pas
+GHARENA.PAS_START_RPG_CAMPAIGN    <Start RPG Campaign>
+GHARENA.PAS_LOAD_RPG_CAMPAIGN     <Load RPG Campaign>
+GHARENA.PAS_NEW_ARENA_UNIT        <New Arena Unit>
+GHARENA.PAS_LOAD_ARENA_UNIT       <Load Arena Unit>
+GHARENA.PAS_CREATE_CHARACTER      <Create Character>
+GHARENA.PAS_EDIT_MAP              <Edit Map>
+GHARENA.PAS_VIEW_DESIGN_FILES     <View Design Files>
+GHARENA.PAS_QUIT_GAME             <Quit Game>
+
+
+% ui4gh.pp
+ui4gh_ControlTypeName_Menu      <Menu>
+ui4gh_ControlTypeName_Roguelike <Roguelike>
+ui4gh_BVTypeName1               <Off>
+ui4gh_BVTypeName2               <1/4>
+ui4gh_BVTypeName3               <1/2>
+ui4gh_BVTypeName4               <Max>
+
+
+% ability.pp PilotName()
+PILOTNAME_NOTHING               <Nothing>
+
+% aibrain.pp AIRepair()
+%	#1 : GearName(NPC)
+%	#2 : GearName(Target)
+NPCREPAIR_UseSkill              <#1 tends to #2.>
+%
+% aibrain.pp NPC_Flirtation()
+%	#1 : PilotName(NPC)
+%	#2 : PilotName(Target)
+NPCFLIRT_Good                   <#1 is having a good time with #2.>
+NPCFLIRT_Okay                   <#1 goes to see #2.>
+NPCFLIRT_Bad                    <#2 asks #1 to go away.>
+%
+% aibrain.pp NPC_Chatting()
+%	#1 : PilotName(NPC)
+%	#2 : PilotName(Target)
+NPCCHAT_OKAY                    <#1 chats with #2.>
+
+% arenahq.pp PurchaseGear()
+%	#1 : GearName()
+%	#2 : Cost
+PURCHASEGEAR_BUY                <Buy #1 ($#2)>
+PURCHASEGEAR_SEARCH_AGAIN       <Search Again>
+%	# : GearName()
+PURCHASEGEAR_PURCHASED          <You have purchased #.>
+%	# : GearName()
+PURCHASEGEAR_DONOT_PURCHASED    <You don't have enough money to buy #.>
+%
+% arenahq.pp SellGear()
+%	#1 : GearName()
+%	#2 : Cost
+SELLGEAR_SELL                   <Sell #1 ($#2)>
+%	#1 : GearName()
+%	#2 : Cost
+SELLGEAR_SOLD                   <You have sold #1 for $#2.>
+%
+% arenahq.pp FixEntireUnit()
+%	# : Cost
+FIXENTIREUNIT_RECOVERY          <Recovery from the combat cost $#.>
+FIXENTIREUNIT_SOME_PROBLEMS     <There have been some problems...>
+%
+% arenahq.pp FixSingleGear()
+%	#1 : GearName()
+%	#2 : Cost
+FIXSINGLEGEAR_RESTORING         <Restoring #1 cost $#2.>
+FIXSINGLEGEAR_SOME_PROBLEMS     <There have been some problems...>
+%
+% arenahq.pp AddPilotToUnit()
+ADDPILOTTOUNIT_HIRE_CHARACTER   <Hire Character>
+ADDPILOTTOUNIT_SEARCH_AGAIN     <Search Again>
+ADDPILOTTOUNIT_SELECT_CHARACTER <Select character file.>
+ADDPILOTTOUNIT_EXIT             <  Exit>
+ADDPILOTTOUNIT_CORRUPT_FILE     <ERROR - Corrupt save file.>
+%
+% arenahq.pp SelectOneGear()
+SELECTONEGEAR_CANCEL            <  Cancel>
+%
+% arenahq.pp BuyMechsForUnit()
+BUYMECHSFORUNIT_EXIT            <  Exit>
+BUYMECHSFORUNIT_SELECT_DESIGN   <Select design file.>
+BUYMECHSFORUNIT_CORRUPT_FILE    <ERROR - Corrupt design file.>
+%
+% arenahq.pp ExamineUnitMecha() GetPilotForMek()
+%	# : GearName()
+EXAMINEUNITMECHA_SELECT_CHARACTER       <SELECT CHARACTER>
+EXAMINEUNITMECHA_SELECT_A_PILOT         <Select a pilot for #.>
+%
+% arenahq.pp ExamineUnitMecha()
+EXAMINEUNITMECHA_ASSIGN_PILOT   <Assign Pilot>
+EXAMINEUNITMECHA_SELL           <Sell this Mecha>
+EXAMINEUNITMECHA_REPAIR         <Repair Mecha>
+EXAMINEUNITMECHA_EXIT           <Exit>
+EXAMINEUNITMECHA_NO_MEKS        <Your unit does not currently have any meks.>
+EXAMINEUNITMECHA_SELECT_MECHA_TO_EXAMINE       <SELECT MECHA TO EXAMINE>
+%
+% arenahq.pp ExamineUnitPilots() GetMekForPilot()
+%	# : GearName()
+EXAMINEUNITPILOTS_SELECT_A_MECHA    <Select a mecha for #.>
+EXAMINEUNITPILOTS_SELECT_MECHA      <SELECT MECHA>
+%
+% arenahq.pp ExamineUnitPilots()
+EXAMINEUNITPILOTS_BIOGRAPHY         <BIOGRAPHY>
+EXAMINEUNITPILOTS_VIEW_BIOGRAPHY    <View Biography>
+EXAMINEUNITPILOTS_ASSIGN            <Assign Mecha for Pilot>
+EXAMINEUNITPILOTS_TRAINING          <Do Training>
+EXAMINEUNITPILOTS_QUIT              <Quit This Team>
+EXAMINEUNITPILOTS_EXIT              <Exit>
+EXAMINEUNITPILOTS_NO_CHARACTERS     <Your unit does not currently have any characters.>
+EXAMINEUNITPILOTS_SELECT_CHARACTER_TO_EXAMINE   <SELECT CHARACTER TO EXAMINE>
+%
+% arenahq.pp EnterCombat()
+ENTERCOMBAT_SELECT_DIFFICULCY_LEVEL     <SELECT DIFFICULCY LEVEL>
+ENTERCOMBAT_EASY                <Easy>
+ENTERCOMBAT_REGULAR             <Regular>
+ENTERCOMBAT_HARD                <Hard>
+ENTERCOMBAT_SUICIDAL            <Suicidal>
+ENTERCOMBAT_SELECT_MECHA        <SELECT MECHA>
+%
+% arenahq.pp ExamineUnitPilots()
+%	# : Earn
+EXAMINEUNITPILOTS_EARNED        <You earned $# for this mission.>
+%
+% arenahq.pp HQMain()
+HQMAIN_EXAMINE_CHARACTERS       <Examine Characters>
+HQMAIN_EXAMINE_MECHA            <Examine Mecha>
+HQMAIN_PURCHASE_HARDWARE        <Purchase Hardware>
+HQMAIN_HIRE_CHARACTER           <Hire Character>
+HQMAIN_CREATE_NEW_CHARACTER     <Create New Character>
+HQMAIN_ENTER_COMBAT             <Enter Combat>
+HQMAIN_DISPLAY_LOG              <Display Log>
+HQMAIN_EXIT                     <Exit to Main>
+%
+% arenahq.pp CreateNewUnit()
+CREATENEWUNIT_ENTER_A_NAME      <enter a name for your new unit>
+%
+% arenahq.pp LoadUnit()
+LOADUNIT_SELECT                 <Select unit file to load.>
+%
+% arenahq.pp StartRPGCampaign()
+STARTRPGCAMPAIGN_SELECT         <Select character file.>
+
+% arenaplay.pp DecideCombatOutcome()
+PreparePCForDelink_Died                 <# died.>
+DecideCombatOutcome_Player_won          <Player has won this combat.>
+DecideCombatOutcome_Computer_won        <Computer has won this combat.>
+DecideCombatOutcome_Draw                <The game has ended in a draw.>
+%
+% arenaplay.pp DoPillaging()
+DoPillaging_PillagingIsProhibited       <Pillaging is prohibited in this place.>
+DoPillaging_YouGotMoney                 <You Got $#.>
+DoPillaging_YouGotItem                  <You Got a #.>
+DoPillaging_NotTragetedForPillage       <This map is not targeted for pillage.>
+%
+% arenaplay.pp DelinkJJang()
+DelinkJJang_DontPillaging               <You can't pillage because this place is not safe.>
+
+% arenascript.pp ProcessVictory()
+%	#1 : GearName()
+%	#2 : PCRankName()
+ProcessVictory_History_Faction  <You were promoted to #2 in #1.>
+%	#1 : PersonalityTraitDesc()
+%	#2 : NATtValue(NAG_CharDescription)
+ProcessVictory_HISTORY_Traits   <You are #1. (#2%)>
+%	#1 : SkillMan[].Name
+%	#2 : NATtValue(NAG_Skill)
+%	#3 : SkillValue()
+ProcessVictory_HISTORY_Skills   <#1     +#2  (#3)>
+%
+% arenascript.pp ProcessNewChat()
+ProcessNewChat_Chat             <[Chat]>
+ProcessNewChat_Goodbye          <[Goodbye]>
+ProcessNewChat_Join             <[Join]>
+ProcessNewChat_Quit_Lance       <[Quit Lance]>
+
+% backpack.pp AddRepairOptions()
+%	# : SkillMan[].Name
+BACKPACK_REPAIR                 <Use #>
+%
+% backpack.pp EatItem()
+%	#1 : GearName(TruePC)
+%	#2 : GearName(Item)
+BACKPACK_YouAreEating           <#1 consumes the #2.>
+%
+% backpack.pp UseSkillOnItem()
+%	#1 : SkillMan[].Name
+%	#2 : GearName(Item)
+BACKPACK_ClueSkillPrompt        <Use #1 on #2>
+%
+% backpack.pp SelectVisibleItem()
+SelectVisibleItem_PickUpAll             <[Pick Up All]>
+%
+% backpack.pp PCGetItem()
+PCGetItem_you_need_hands        <You need hands in order to use this command.>
+PCGetItem_No_item_found         <No item found.>
+%
+% backpack.pp CreateInvMenu()
+CreateInvMenu_no_inventory_items        <[no inventory items]>
+%
+% backpack.pp CreateEqpMenu()
+CreateEqpMenu_no_equipped_items         <[no equipped items]>
+%	#1 : Inventory Mass
+%	#2 : Equipment Mass
+CreateEqpMenu_MassMeter                 <BaseMass:#1 Eqp.Mass:#2>
+%	# : Limit Mass
+CreateEqpMenu_MassMeter_Limit           <(Ref.Eqp.Mass:#)>
+CreateEqpMenu_MassMeter_LimitOver       <Equipemnt Limit Over>
+CreateEqpMenu_MassMeter_LimitOver2      <** Equipemnt Limit Over **>
+%
+% backpack.pp UnequipFrontend()
+%	# : Item
+UnequipFrontend_You_unequip     <You unequip #.>
+%
+% backpack.pp EquipItemFrontend()
+%	# : Item
+EquipItemFrontend_cannot_equip  <[cannot equip #]>
+EquipItemFrontend_You_can_not_install_to_it     <You can not install to it.>
+EquipItemFrontend_You_equip     <You equip #.>
+%
+% backpack.pp InstallFrontend()
+%	# : Item
+InstallFrontend_cannot_install  <[cannot install #]>
+InstallFrontend_You_can_not_install_to_it       <You can not install to it.>
+%
+% backpack.pp ReloadAmmo()
+%	#1 : User
+%	#2 : Weapon
+%	#3 : Ammo
+ReloadAmmo_Ammo_loaded                  <#1 load #3 into #2.>
+%
+% backpack.pp InstallAmmoFrontend()
+%	# : Item
+InstallAmmoFrontend_no_weapon   <[no weapon for #]>
+InstallAmmoFrontend_You_can_not_install_to_it   <You can not install to it.>
+%	#1 : Gun
+%	#2 : Item
+InstallAmmoFrontend_You_load    <You load #1 into #2.>
+%
+% backpack.pp DropFrontEnd()
+%	# : Item
+DropFrontEnd_You_drop           <You drop #.>
+%
+% backpack.pp TradeFrontend()
+%	# : Item
+TradeFrontend_cannot_trade      <[cannot trade #]>
+TradeFrontend_CannotTrade               <[Cannot Trade]>
+TradeAllFrontend_ItemTraded             <# has been transfered.>
+TradeAllFrontend_NotTraded              <# can't be transfered to that destination.>
+%
+% backpack.pp ThisItemWasSelected()
+%	# : GearName(Item)
+ThisItemWasSelected_Equip       <Equip #>
+BACKPACK_Install                <Install #>
+BACKPACK_Remove                 <Remove #>
+ThisItemWasSelected_Unequip     <Unequip #>
+BACKPACK_Transformation         <Transformation #>
+BACKPACK_PurgeParts             <Purge Parts from #>
+ThisItemWasSelected_DropAll             <[Drop All]>
+ThisItemWasSelected_TransferAll         <[Transfer All]>
+ThisItemWasSelected_YouCannotDropIt     <You cannot drop it.>
+ThisItemWasSelected_YouCannotTransferIt <You cannot transfer it.>
+ThisItemWasSelected_AllowSelling        <Allow Selling>
+ThisItemWasSelected_DisallowSelling     <Disallow Selling>
+ThisItemWasSelected_AllowDropping       <Allow Dropping>
+ThisItemWasSelected_DisallowDropping    <Disallow Dropping>
+ThisItemWasSelected_AllowTransfering    <Allow Transfering>
+ThisItemWasSelected_DisallowTransfering <Disallow Transfering>
+%
+% backpack.pp MechaPartEditor()
+MechaPartEditor_Exit_Editor     <Exit Editor>
+%
+% backpack.pp MechaPartBrowser()
+MechaPartBrowser_Exit_Browser   <Exit Browser>
+%
+% backpack.pp SwapMenu()
+BACKPACK_SwapMenu_Exit          <    [Exit]>
+BACKPACK_SwapMenu_Cancel        <  [Cancel]>
+
+% effects.pp AttemptDefenses()
+AttemptDefenses_Success                 <Successed>
+AttemptDefenses_Fail                    <Failed>
+%	# : Success/Fail
+AttemptDefenses_Dodge                   <Dodge... # .>
+AttemptDefenses_Resist                  <Resist... # .>
+AttemptDefenses_HapKiDo                 <HapKiDo... # .>
+AttemptDefenses_StuntDriving            <Stunt Driving... # .>
+%	#1 : Success/Fail
+%	#2 : DefGear
+AttemptDefenses_ECM                     <Use a ECM #2 ... #1 .>
+AttemptDefenses_Shield                  <Use a shield #2 ... #1 .>
+AttemptDefenses_Intercept               <Use an intercepter #2 ... #1 .>
+AttemptDefenses_Parry                   <Parrying with a #2 ... #1 .>
+%
+% effects.pp ProcessHealingEffect()
+%	#1 : GearName()
+%	#2 : D
+ProcessHealingEffect_HEALING_Announce   <#1 has been restored #2 damage.>
+%
+% effects.pp INDICATE_Latest_Attack()
+%	# : ATTACK_DamageDone
+INDICATE_Latest_Attack_damaged          <for # damage.>
+%
+% effects.pp INDICATE_Latest_Attack()
+INDICATE_Latest_Attack_AmmoExplosion    <# is Exploding!>
+%	# : GearName(ATTACK_TMaster)
+INDICATE_Latest_Attack_destroyed        <# is destroyed!>
+INDICATE_Latest_Attack_didnot_eject     <# didn't eject in time!>
+INDICATE_Latest_Attack_ejected          <# ejected!>
+INDICATE_Latest_Attack_died             <# died!>
+%
+% effects.pp ProcessAttackEffect()
+%	#1 : GearName(ATTACK_TMaster)
+ProcessAttackEffect_crashed             <# has crashed!>
+%
+% effects.pp DoDirectFireAttack()
+%	#1 : PilotName( Attacker )
+%	#2 : PilotName( Target )
+%	#3 : FXName
+DoDirectFireAttack_attacks              <#1 attacks #2 with #3.>
+%	#1 : PilotName( Attacker )
+%	#2 : GearName( Attacker )
+DoDirectFireAttack_fires                <#1 fires #2.>
+%
+% effects.pp DoSwarmAttack()
+%	#1 : PilotName( Attacker )
+%	#2 : GearName( Attacker )
+DoSwarmAttack_fires                     <#1 fires #2.>
+%
+% effects.pp DoBlastAttack()
+%	#1 : PilotName( Attacker )
+%	#2 : GearName( Attacker )
+DoBlastAttack_fires                     <#1 fires #2.>
+%
+% effects.pp DoLineAttack()
+%	#1 : PilotName( Attacker )
+%	#2 : GearName( Attacker )
+DoLineAttack_fires                      <#1 fires #2.>
+%
+% effects.pp DoSTCAttack()
+%	#1 : PilotName( Attacker )
+%	#2 : GearName( Attacker )
+DoSTCAttack_fires                       <#1 fires #2.>
+
+% gflooker.pp WeaponDisplay()
+%	# : KeyMap[].KCode
+WeaponDisplay_KeyMap_SwitchWeapon       <[#] Change Weapon>
+WeaponDisplay_KeyMap_CalledShot         <[#] Called Shot: >
+WeaponDisplay_KeyMap_CalledShot_On      <On>
+WeaponDisplay_KeyMap_CalledShot_Off     <Off>
+WeaponDisplay_KeyMap_SwitchBV           <[#] Burst Value: >
+WeaponDisplay_KeyMap_SwitchTarget       <[#] Switch Target>
+%
+% gflooker.pp DisplayTileInfo()
+DisplayTileInfo_Off_The_Map     <Off The Map>
+DisplayTileInfo_UNKNOWN         <UNKNOWN>
+%
+% gflooker.pp CreateTileMechaMenu()
+CreateTileMechaMenu_stripped            < (stripped>
+CreateTileMechaMenu_gutted              < (gutted>
+CreateTileMechaMenu_flayed              < (flayed>
+CreateTileMechaMenu_X                   < (X>
+CreateTileMechaMenu_looted              <, looted)>
+CreateTileMechaMenu_                    <)>
+
+% ghchars.pp PersonalityTraitDesc()
+%	# : PTraitName[]
+PERSONALITYTRAITDESC_           <#>
+PERSONALITYTRAITDESC_SLIGHTLY   <Slightly #>
+PERSONALITYTRAITDESC_EXTREMELY  <Extremely #>
+PERSONALITYTRAITDESC_VERY       <Very #>
+
+% interact.pp BlowOff()
+INTERACT_BLOWOFF                <I really don't have much time to chat today, I have a lot of things to do.>
+%
+% interact.pp DoTraitChatter()
+%	#1 : TRAITCHAT_Lead? in GameData/chat_msg.txt
+%	#2 : TRAITCHAT_Like/Hate/Ehhh? in GameData/chat_msg.txt
+%	#3 : Trait_Chatter in GameData/TC_?_?.txt
+DoTraitChatter_Sentence_Pattern <#1 #2 #3.>
+%
+% interact.pp PersonalizeGenderTraits()
+%	Mob NPC are use its.
+PersonalizeGenderTraits_Default_I       <I>
+PersonalizeGenderTraits_Default_You     <You>
+%
+% interact.pp CreateRumorList() ExtractData()
+%	#1 : MadLibString( RLI_List )
+%	#2 : RUMOR <>
+CreateRumorList_ExtractData_Series      <#1 #2>
+%	#1 : PersonalityTraitDesc()
+%	#2 : MadLibString(RLI_List) GameData/rumors.txt
+CREATERUMORLIST_YOUARE1         <#2 you are #1.>
+%	#1 : GearName(P)
+%	#2 : PersonalityTraitDesc()
+%	#3 : MadLibString(RLI_List) GameData/rumors.txt
+CREATERUMORLIST_YOUARE2         <#3 #1 is #2.>
+%	#1 : GearName(Persona)
+%	#2 : MadLibString(RLI_List) GameData/rumors.txt
+CREATERUMORLIST_RUMOR_TownFac   <#2 this town is controlled by #1.>
+%	#1 : GearName(P)
+%	#2 : MadLibString(RLI_List) GameData/rumors.txt
+FACTION_IS_INACTIVE             <#2 #1 has been disbanded.>
+%	#1 : GearName(P)
+%	#2 : PersonalityTraitDesc()
+%	#3 : MadLibString(RLI_List) GameData/rumors.txt
+CREATERUMORLIST_YOUARE3         <#3 #1 is #2.>
+%	#1 : GearName(Persona)
+%	#2 : TRAITCHAT_Lead? in GameData/chat_msg.txt
+CREATERUMORLIST_RUMOR_Membership        <#2 I am a member of #1.>
+
+% menugear.pp BuildInventoryMenu()
+BuildInventoryMenu_CannotBeSold         < [Unsellable]>
+BuildInventoryMenu_CannotBeDropped      < [NoDrop]>
+BuildInventoryMenu_CannotBeTransfered   < [NoTransfer]>
+
+% navigate.pp RestoreCampaign()
+RestoreCampaign_Select_campaign <Select campaign file to load.>
+
+% pcaction.pp
+PCACTION_CANCELLED              <Cancelled.>
+%
+% pcaction.pp ImproveStatus()
+%	# : GearName()
+IMPROVESTATS_NOTIMPROVED        <# doesn't have enough experience points.>
+%	#1 : GearName()
+%	#2 : StatName[]
+IMPROVESTATS_IMPROVED           <#1 has improved #2.>
+%
+% pcaction.pp AutoTraining()
+%	#1 : GearName()
+%	#2 : SkillMan[]
+AUTOTRAIN_LEARN                 <#1 has improved #2.>
+%
+% pcaction.pp BuildRobot()
+%	#1 : GearName()
+%	#2 : SkillMan[]
+BUILD_ROBOT_SKILL               <#1 knows #2.>
+%
+% pcaction.pp DoTraining() ImproveSkills()
+%	#1 : GearName()
+%	#2 : SkillMan[]
+DOTRAINING_IMPROVESKILLS_DOESNOTDO      <#1 doesn't have enough experience points to improve #2.>
+DOTRAINING_IMPROVESKILLS_DONE           <#1 has improved #2.>
+%
+% pcaction.pp DoTraining() GetNewSkill()
+DOTRAINING_GETNEWSKILL_CANCEL           <  Cancel>
+%	#1 : GearName()
+%	#2 : SkillMan[]
+DOTRAINING_GETNEWSKILL_DOESNOTDO        <#1 doesn't have enough experience points to learn #2.>
+DOTRAINING_GETNEWSKILL_DONE             <#1 has learned the #2 skill.>
+%
+% pcaction.pp DoTraining() GetNewTalent()
+DoTraining_GetNewTalent_CANCEL          <  Cancel>
+%	#1 : GearName(PC)
+%	#2 : TALENT
+DoTraining_GetNewTalent_learned         <#1 has learned #2.>
+%
+% pcaction.pp DoTraining() ReviewTalents()
+DoTraining_ReviewTalents_Exit           <  Exit>
+%
+% pcaction.pp DoTraining() ReviewCyberware()
+DoTraining_ReviewCyberware_Exit         <  Exit>
+%
+% pcaction.pp PCAddressBookAdd()
+PCAddressBookAdd_PHONE_AddName          <Please input a name to register.>
+PCAddressBookAdd_PHONE_AddDesc          <Please input a description.>
+%
+% pcaction.pp AutoTraining()
+%	#1 : GearName(NPC)
+%	#2 : GearName(M)
+AUTOTRAIN_EVOLVE                <#1 has mutated into #2!>
+%
+% pcaction.pp PickPockets()
+%	#1 : Cash
+%	#2 : GearName(M)
+PICKPOCKET_CASH+ITEM            <You steal $#1 and a #2.>
+%
+% pcaction.pp DoTalkingWithNPC()
+%	# : NPC
+DoTalkingWithNPC_doesnt_talk            <# doesn't want to talk to you.>
+DoTalkingWithNPC_conversation           <You strike up a conversation with #.>
+DoTalkingWithNPC_doesnt_talk_now        <# doesn't want to talk right now.>
+DoTalkingWithNPC_No_response            <No response!>
+DoTalkingWithNPC_too_far_away           <You're too far away to talk with #.>
+DoTalkingWithNPC_Not_found              <Not found!>
+%
+% pcaction.pp PCTalk()
+PCTalk_Select                           <Select a character to talk with.>
+PCTalk_cancelled                        <Talking cancelled.>
+%
+% pcaction.pp PCAddressBook()
+PCAddressBook_call                      <call>
+PCAddressBook_add                       <add>
+PCAddressBook_edit                      <edit>
+PCAddressBook_delete                    <delete>
+PCAddressBook_redial                    <redial>
+PCAddressBook_cancel                    < [cancel]>
+%
+% pcaction.pp ForcePlot()
+ForcePlot_Select                        <Select plot file to load.>
+ForcePlot_successfully                  <Plot successfully loaded.>
+ForcePlot_rejected                      <Plot rejected.>
+%
+% pcaction.pp SetPlayOptions()
+SetPlayOptions_prefrences               <Set game prefrences>
+SetPlayOptions_Mecha_Control            <Mecha Control: >
+SetPlayOptions_Chara_Control            <Chara Control: >
+SetPlayOptions_Explore_Control          <Explore Control: >
+SetPlayOptions_Ballistic_Wpn_BV         <Ballistic Wpn BV: >
+SetPlayOptions_Energy_Wpn_BV            <Energy Wpn BV: >
+SetPlayOptions_Missile_BV               <Missile BV: >
+SetPlayOptions_Enable_Transparency      <Enable Transparency>
+SetPlayOptions_Disable_Transparency     <Disable Transparency>
+SetPlayOptions_Enable_Mini-Map          <Enable Mini-Map>
+SetPlayOptions_Disable_Mini-Map         <Disable Mini-Map>
+SetPlayOptions_Enable_Name_Display      <Enable Name Display>
+SetPlayOptions_Disable_Name_Display     <Disable Name Display>
+SetPlayOptions_Exit                     <  Exit Prefrences>
+%
+% pcaction.pp AimThatAttack()
+AimThatAttack_cancelled                 <Attack cancelled.>
+%
+% pcaction.pp DoPlayerAttack()
+DoPlayerAttack_Called_Off               <  Called Shot: Off [/]>
+DoPlayerAttack_Called_On                <  Called Shot: On [/]>
+DoPlayerAttack_Wait_for_recharge        <  Wait for recharge [.]>
+DoPlayerAttack_Options                  <  Options [?]>
+DoPlayerAttack_Cancel                   <  Cancel [ESC]>
+%
+% pcaction.pp DoEjection()
+%	#1 : GearName(Pilot)
+%	#2 : GearName(Mek)
+EJECT_Message                           <#1 ejects from #2.>
+%
+% pcaction.pp RLQuickAttack()
+RLQuickAttack_dont_have_a_weapon        <You don't have a weapon ready!>
+%
+% pcaction.pp RLBumpAttack()
+RLBumpAttack_dont_have_a_weapon         <You don't have a weapon ready!>
+%
+% pcaction.pp RLSmartAction()
+RLSmartAction_Blocked                   <Blocked!>
+%
+% pcaction.pp GameOptionMenu()
+GameOptionMenu_Inventory                <Inventory>
+GameOptionMenu_Get_Item                 <Get Item>
+GameOptionMenu_Enter_Location           <Enter Location>
+GameOptionMenu_Do_Repairs               <Do Repairs>
+GameOptionMenu_Combat_Settings          <Combat Settings>
+GameOptionMenu_Eject_from_Mecha         <Eject from Mecha>
+GameOptionMenu_Character_Info           <Character Info>
+GameOptionMenu_Quit_Game                <Quit Game>
+GameOptionMenu_Return_to_Main           <Return to Main>
+GameOptionMenu_Advanced_options_menu    <Advanced options menu.>
+%
+% pcaction.pp InfoMenu()
+InfoMenu_Examine_Map                    <Examine Map>
+InfoMenu_Mecha_Browser                  <Mecha Browser>
+InfoMenu_Return_to_Main                 <Return to Main>
+InfoMenu_Information_Menu               <Information Menu.>
+%
+% pcaction.pp MenuPlayerInput()
+MenuPlayerInput_Walk                    <Walk>
+MenuPlayerInput_Run                     <Run>
+MenuPlayerInput_Cruise_Speed            <Cruise Speed>
+MenuPlayerInput_Full_Speed              <Full Speed>
+MenuPlayerInput_Turn_Left               <((( Turn Left>
+MenuPlayerInput_Turn_Right              <    Turn Right )))>
+MenuPlayerInput_Reverse                 <     Reverse>
+MenuPlayerInput_Jump                    <Jump>
+MenuPlayerInput_Wait                    <Wait>
+MenuPlayerInput_Stop                    <Stop>
+MenuPlayerInput_Weapons_Menu            <Weapons Menu>
+MenuPlayerInput_Info_Menu               <Info Menu>
+MenuPlayerInput_Options_Menu            <Options Menu>
+MenuPlayerInput_Search                  <Search>
+%
+% pcaction.pp GetPlayerInput()
+%	# : time
+GetPlayerInput_time_left                <# seconds jump time left.>
+%
+% pcaction.pp Transformation()
+Transformation_Select_Form              <Transformation>
+Transformation_Can_not_transform        <Can not transform.>
+Transformation_Cancel                   < [Cancel]>
+Transformation_Cancelled                <Cancelled.>
+%
+% pcaction.pp PurgeParts()
+PurgeParts_Select_Mode                  <Purge Parts>
+PurgeParts_Cancel                       < [Cancel]>
+PurgeParts_Cancelled                    <Cancelled.>
+
+% randchar.pp SelectAge()
+%	# : years
+SelectAge_years_old             <# years old>
+
+% randmaps.pp AddDoor()
+%	# : Door name
+RANDMAPS_DoorSign_org           <Door of #>
+RANDMAPS_DoorSign               <Door of #>
+
+% services.pp PurchaseGear()
+%	#1 : GearName()
+%	#2 : Cost
+PurchaseGear_Buy_it             <Buy #1 ($#2)>
+PurchaseGear_View_Tech_Stats    <View Tech Stats>
+PurchaseGear_Search_Again       <Search Again>
+PurchaseGear_BUYPROMPT1         <I can give you this #1 for $#2. What do you say, do we have a deal?>
+PurchaseGear_BUYPROMPT2         <This #1 can be yours for the low price of $#2.>
+PurchaseGear_BUYPROMPT3         <The price for this #1 is $#2. You won't find it cheaper anywhere else.>
+PurchaseGear_BUYPROMPT4         <I see you're looking at the #1. It's a very good deal at only $#2.>
+PurchaseGear_Purchased          <You have purchased #.>
+PurchaseGear_Not_enough_money   <You don't have enough money to buy #.>
+%
+% services.pp BrowseWares()
+BrowseWares_You_can_not_buy_only_it     <You can not buy only it.>
+%
+% services.pp SellStuff()
+SellStuff_You_can_not_sell_only_it      <You can not sell only it.>
+SellStuff_SellAll                       <[Sell All]>
+%
+% services.pp SellGear()
+%	#1 : GearName()
+%	#2 : Cost
+SellGear_YouCannotSellIt                <You cannot sell it.>
+SellGear_ItHasAPilotAssigned            <You cannot sell it while it has a pilot assigned.>
+SellGear_Sell_it                <Sell #1 ($#2)>
+SellGear_Maybe_later            <Maybe later>
+SellGear_SELLPROMPT1            <I'll give you $#2 for the #1. Do we have a deal?>
+SellGear_SELLPROMPT2            <I can't give you any more than $#2 for your #1.>
+SellGear_SELLPROMPT3            <I can give you $#2 for the #1.>
+SellGear_SELLPROMPT4            <If you're interested in parting with it, I can give you $#2 for that #1 you have.>
+SellGear_Sold                   <You have sold #1 for $#2.>
+%
+% services.pp ThisMechaWasSelected()
+%	# : GearName(Mek)
+SERVICES_Sell                   <Sell #>
+%
+% services.pp InstallCyberware()
+InstallCyberware_You_can_not_install_to_it      <You can not install to it.>
+%
+% services.pp OpenShop()
+OpenShop_Browse_Wares           <Browse Wares>
+OpenShop_Exit_Shop              <Exit Shop>
+
+
+% coninfo.pp, sdlinfo.pp JobAgeGenderDesc()
+%	#1 : age
+%	#2 : gender
+%	#3 : jobs
+JOBAGEGENDERDESC                <#1 year old #2 #3.>
+% coninfo.pp, sdlinfo.pp MekStatDisplay()
+%	# : PercentDamaged()
+MekStatDisplay_Broken           < (#%)>
+% coninfo.pp, sdlinfo.pp MekStatDisplay()
+MekStatDisplay_Immobile         <Immobile>
+MekStatDisplay_Turn             <Rotate>
+MekStatDisplay_Enc:             <Enc:>
+% coninfo.pp, sdlinfo.pp CharacterInfo()
+CharacterInfo_Enc               <Enc>
+
+% conmap.pp, sdlmap.pp TimeString()
+%	#1 : day
+%	#2 : hour
+%	#3 : minute
+%	#4 : second
+TIMESTRING                      <#2:#3:#4, day #1>
+%
+% conmap.pp, sdlmap.pp ProcessMovement()
+ProcessMovement_Left  <# has left this area.>
+%
+% conmap.pp, sdlmap.pp ProcessMovement()
+%	#1 : GearName()
+%	#2 : DAMAGE_DamageDone
+ProcessMovement_Crash <#1 has crashed! #2 damage.>
+ProcessMovement_Fall  <#1 has fallen! #2 damage.>
+
+% context.pp, sdlgfx.pp EndOfGameMoreKey()
+EndOfGameMoreKey_Hit_space_bar  <[Hit space bar.]>
+%
+% sdlgfx.pp, MoreText()
+MoreText_Prompt <  [UP] to go up, [DOWN] to go down, [ESC] to exit>
+
+%%% [ End of File ] %%%
