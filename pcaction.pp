@@ -540,6 +540,7 @@ begin
 			Inc( N );
 		end;
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		AddRPGMenuItem( RPM , MSgString( 'EXIT' ) , -1 );
         SetItemByPosition( RPM, OldPos );
 

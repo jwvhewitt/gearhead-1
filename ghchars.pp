@@ -79,6 +79,8 @@ Const
 	NAS_Gender = 0;
 	NAV_Male = 0;
 	NAV_Female = 1;
+    NAV_Nonbinary = 2;
+    NAV_Undefined = 3;
 
 	GenderName: Array[0..1] of String = ( 'Male' , 'Female' );
 

@@ -72,6 +72,7 @@ Function GearActive( Mek: GearPtr ): Boolean;
 function SkillValue( Master: GearPtr; Skill: Integer ): Integer;
 function ReactionTime( Master: GearPtr ): Integer;
 function PilotName( Part: GearPtr ): String;
+Function LanceMateMenuName( M: GearPtr ): String;
 
 Procedure DoleExperience( Mek: GearPtr; XPV: LongInt );
 Procedure DoleExperience( Mek,Target: GearPtr; XPV: LongInt );
@@ -299,6 +300,20 @@ begin
 	end;
 
 	PilotName := Name;
+end;
+
+Function LanceMateMenuName( M: GearPtr ): String;
+var
+	msg,pilot: string;
+begin
+	msg := FullGearName( M );
+
+	if M^.G = GG_Mecha then begin
+		pilot := SAttValue( M^.SA , 'PILOT' );
+		if pilot <> '' then msg := msg + ' (' + pilot + ')';
+	end;
+
+	LanceMateMenuName := msg;
 end;
 
 Procedure DoleExperience( Mek: GearPtr; XPV: LongInt );

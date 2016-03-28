@@ -194,7 +194,7 @@ var
 	OFF_MAP_MODELS: Array [1..4,0..NumOMM] of Integer;
 
 	Terrain_Sprite,Meta_Terrain_Sprite,Terrain_Toupee_Sprite,Targeting_Srpite,Items_Sprite: SensibleSpritePtr;
-	Strong_Hit_Sprite,Weak_Hit_Sprite,Parry_Sprite,Miss_Sprite: SensibleSpritePtr;
+	Strong_Hit_Sprite,Weak_Hit_Sprite,Parry_Sprite,Miss_Sprite,Water_Sprite1,Water_Sprite2: SensibleSpritePtr;
 	Thin_wall_Cap: SensibleSpritePtr;
 	hill_1,hill_2,hill_3: SensibleSpritePtr;
 	Off_Map_Model_Sprite: SensibleSpritePtr;
@@ -687,6 +687,17 @@ begin
 					AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , WallCapFrame( X , Y ) , Thin_Wall_Cap );
 					Overlay_Map[ X , Y , 0 , OVERLAY_ThinWall ].UseAlpha := True;
 					Overlay_Map[ X , Y , 0 , OVERLAY_Toupee ].UseAlpha := True;
+
+                end else if GB^.Map[ X , Y ].terr = 4 then begin
+					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 , Water_Sprite1 );
+					AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 , Water_Sprite2 );
+                end else if GB^.Map[ X , Y ].terr = 21 then begin
+					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 + 8 , Water_Sprite1 );
+					AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 + 8 , Water_Sprite2 );
+                end else if GB^.Map[ X , Y ].terr = 22 then begin
+					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 + 16 , Water_Sprite1 );
+					AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 + 16 , Water_Sprite2 );
+
 				end else begin
 					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , GB^.Map[ X , Y ].terr - 1 , Terrain_Sprite );
 					if Terrain_Toupee[ GB^.Map[ X , Y ].terr ] <> 0 then AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , Terrain_Toupee[ GB^.Map[ X , Y ].terr ] - 1 , Terrain_Toupee_Sprite );
@@ -1559,6 +1570,11 @@ initialization
 	Weak_Hit_Sprite := ConfirmSprite( Weak_Hit_Sprite_Name , '' , 64 , 64 );
 	Parry_Sprite := ConfirmSprite( Parry_Sprite_Name , '' , 64 , 64 );
 	Miss_Sprite := ConfirmSprite( Miss_Sprite_Name , '' , 64 , 64 );
+
+    Water_Sprite1 := ConfirmSprite( 'terrain_water1.png', '', 64, 64 );
+    Water_Sprite2 := ConfirmSprite( 'terrain_water2.png', '', 64, 64 );
+    SDL_SetAlpha( Water_Sprite1^.Img , SDL_SRCAlpha , 150 );
+    SDL_SetAlpha( Water_Sprite2^.Img , SDL_SRCAlpha , 150 );
 
 	Thin_Wall_Sprites[ ThinWall_Earth ] := ConfirmSprite( 'wall_earth.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_RustySteel ] := ConfirmSprite( 'wall_rustysteel.png' , '' , 64 , 96 );

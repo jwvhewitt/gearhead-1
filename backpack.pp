@@ -38,7 +38,6 @@ Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
 Procedure SelectSprite( M: GearPtr; Redrawer: RedrawProcedureType );
 {$ENDIF}
 
-Function LanceMateMenuName( M: GearPtr ): String;
 Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
 Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
 
@@ -249,19 +248,6 @@ end;
 {$ENDIF}
 
 
-Function LanceMateMenuName( M: GearPtr ): String;
-var
-	msg,pilot: string;
-begin
-	msg := FullGearName( M );
-
-	if M^.G = GG_Mecha then begin
-		pilot := SAttValue( M^.SA , 'PILOT' );
-		if pilot <> '' then msg := msg + ' (' + pilot + ')';
-	end;
-
-	LanceMateMenuName := msg;
-end;
 
 Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
     { Locate the next player character on the gameboard. }

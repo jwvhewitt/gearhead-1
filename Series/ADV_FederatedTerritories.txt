@@ -144,7 +144,7 @@ Scene 2 0
 			room 5 5
 			name <Mayor's House>
 			FloorType 25
-			BorderType 23
+			BorderType 13
 
 			room 3 3
 			name <Bus Terminal>
