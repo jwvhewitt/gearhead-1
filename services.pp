@@ -1325,8 +1325,8 @@ begin
         {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
 		RPM^.Mode := RPMNoCleanup;
-        {$ENDIF}
 		AttachMenuDesc( RPM , ZONE_Menu );
+        {$ENDIF}
 		BuildInventoryMenu( RPM , PCInv );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
 
@@ -1339,7 +1339,7 @@ begin
         SERV_PC := PCChar;
         SERV_Customer := PCChar;
         SERV_NPC := NPC;
-        SERV_Info := PCInv;
+        SERV_Info := PCInv^.InvCom;
         SERV_Menu := RPM;
 		N := SelectMenu( RPM , @BrowseListRedraw );
 {$ELSE}

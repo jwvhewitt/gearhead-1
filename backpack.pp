@@ -1906,7 +1906,11 @@ begin
     {$ENDIF}
 
 	{ Create the menu. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_FHQMenu );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_Menu );
+    {$ENDIF}
 	M := LList;
 	N := 1;
 	Team := NAttValue( PC^.NA , NAG_LOcation , NAS_Team );
