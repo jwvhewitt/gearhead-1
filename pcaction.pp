@@ -68,6 +68,15 @@ begin
 	SDLCombatDisplay( PCACTIONRD_GB );
 end;
 
+Procedure PhoneRedraw;
+	{ Redraw the map and the PC's info. }
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+    InfoBox( ZONE_PhoneInstructions.GetRect() );
+    CMessage( MsgString( 'PHONE_INSTRUCTIONS' ), ZONE_PhoneInstructions.GetRect(), InfoGreen );
+end;
+
+
 Procedure MenuControlRedraw;
 	{ Redraw the map and the PC's info. }
 begin
@@ -762,7 +771,7 @@ begin
 	if HasPCommCapability( PC , PCC_Comm ) then  begin
 		DialogMsg( MsgString( 'PHONE_Prompt' ) );
 {$IFDEF SDLMODE}
-		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PCActionRedraw );
+		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PhoneRedraw );
 {$ELSE}
 		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) );
 {$ENDIF}

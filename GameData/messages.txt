@@ -621,6 +621,7 @@ GENDER_1 <Female>
 GENDER_2 <Nonbinary>
 GENDER_3 <Undefined>
 MAX_SPEED <Max: #>
+PHONE_INSTRUCTIONS <Enter name or job of person to contact; * for redial.>
 
 
 

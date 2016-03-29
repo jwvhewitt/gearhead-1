@@ -100,9 +100,10 @@ const
 	ZONE_CharViewDesc: DynamicRect = ( dx:148; dy:-260; w:220; h:150; anchor: ANC_middle );
 
 
-	ZONE_TextInputPrompt: DynamicRect = ( dx:-210; dy:-35; w:420; h:30; anchor: ANC_middle );
-	ZONE_TextInput: DynamicRect = ( dx:-210; dy:5; w:420; h:30; anchor: ANC_middle );
-	ZONE_TextInputBigBox: DynamicRect = ( dx:-220; dy:-45; w:440; h:90; anchor: ANC_middle );
+	ZONE_TextInputPrompt: DynamicRect = ( dx:-210; dy:-51; w:420; h:16; anchor: ANC_middle );
+	ZONE_TextInput: DynamicRect = ( dx:-210; dy:-27; w:420; h:16; anchor: ANC_middle );
+	ZONE_TextInputBigBox: DynamicRect = ( dx:-220; dy:-61; w:440; h:56; anchor: ANC_middle );
+    ZONE_PhoneInstructions: DynamicRect = ( dx:-200; dy:15; w:400; h:16; anchor: ANC_middle );
 
 	ZONE_InteractStatus: DynamicRect = ( dx:-250; dy: -210; w: 395; h: 40; anchor: ANC_middle );
 	ZONE_InteractMsg: DynamicRect = ( dx: -250; dy:-120; w:395; h: 110; anchor: ANC_middle );
@@ -1156,8 +1157,8 @@ begin
 
 		{ Set up the display. }
 		if ReDrawer <> Nil then ReDrawer;
-		ClearExtendedBorder( MyBigBox );
-		SDL_FillRect( game_screen , @MyBigBox , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );
+		InfoBox( MyBigBox );
+		{SDL_FillRect( game_screen , @MyBigBox , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );}
 		SDL_FillRect( game_screen , @MyInputBox , SDL_MapRGB( Game_Screen^.Format , StdBlack.R , StdBlack.G , StdBlack.B ) );
 
 		CMessage( Prompt , ZONE_TextInputPrompt.GetRect() , StdWhite );
