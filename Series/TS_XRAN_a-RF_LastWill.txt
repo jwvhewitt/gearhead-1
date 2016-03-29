@@ -150,7 +150,7 @@ sub
 	Msg1 <I heard you lost some money in that bank robbery... Well, so did a bunch of other people. I'll try hard to catch \ELEMENT 5 !>
 	Msg2 <\ELEMENT 5 is most likely hiding out in \ELEMENT 1 .>
 	Msg3 <No, not at the moment. The guardian office in \ELEMENT 1 is also working on the case, since we've gotten a lead that \ELEMENT 5 is taking a vacation there with \PPR E5 newfound riches.>
-	Msg4 <It seems most likely that \OPR E5 is in \ELEMENT 1 ; we've gotten a tip saying that \OPR E5 's there enjoying the high life with \PPR E5 newfound riches.>
+	Msg4 <It seems most likely that \SPR E5 is in \ELEMENT 1 ; we've gotten a tip saying that \SPR E5 's there enjoying the high life with \PPR E5 newfound riches.>
 	Msg5 <It's a busy life, being a guardian.>
 	Msg6 <You have? Well, it couldn't have happened at a worse time... We've got our hands full dealing with serious health code violations. Someone sold tainted sausages to a school cafeteria. \ELEMENT 5 will have to wait.>
 	Prompt1 <Need any help on the case?>

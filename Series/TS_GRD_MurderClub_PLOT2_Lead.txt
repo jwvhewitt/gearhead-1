@@ -87,7 +87,7 @@ sub
 
 	%  16 - 20 :  General clue reminder.
 	Msg16 <The next member of the murder club is named \PERSONA S6 , and can be found in \NARRATIVE 2 . Go there and see what you come up with.>
-	Msg17 <We've traced club member \PERSONA S6 to \NARRATIVE 2 . You should proceed to that town and attempt to locate the fugitive. Be careful; \OPR S6 may be dangerous.>
+	Msg17 <We've traced club member \PERSONA S6 to \NARRATIVE 2 . You should proceed to that town and attempt to locate the fugitive. Be careful; \SPR S6 may be dangerous.>
 	Msg18 <\NARRATIVE 2 is thought to be the hiding place of \PERSONA S6 , one of the club's members. You should go there and see what you can find. Be careful; even though they're students they're all extremely dangerous.>
 	Msg19 <Club member \PERSONA S6 is known to be in \NARRATIVE 2 right now. You should go there and try to aprehend the fugitive. Be warned, though, that it's not going to be easy.>
 	Msg20 <It's believed that \PERSONA S6 of the murder club is currently in \NARRATIVE 2 . Proceed to that town and attempt capture.>

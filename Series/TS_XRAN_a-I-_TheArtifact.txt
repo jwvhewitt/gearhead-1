@@ -63,8 +63,8 @@ sub
 	result6 <NewChat Say 8>
 	Msg1 <I can't believe what happened to Professor \ELEMENT 4 ... Who would do such a thing?>
 	Msg2 <It's been all over the news. Some thieves killed the professor and ransacked \PPR E4 office. It doesn't make sense. We haven't discovered anything valuable in the ruins; there's probably nothing valuable there.>
-	Msg3 <\ELEMENT 4 was a great researcher. It makes no sense that \OPR E4 was killed... The ruin we're exploring is a cultural dig site. We haven't discovered anything valuable; there's probably nothing valuable there.>
-	Msg4 <They're just outside of town. We've explored down to about \VAL S103 meters deep; \ELEMENT 4 wouldn't let us dig past that... \OPR E4 said there were too many monsters past that depth.>
+	Msg3 <\ELEMENT 4 was a great researcher. It makes no sense that \SPR E4 was killed... The ruin we're exploring is a cultural dig site. We haven't discovered anything valuable; there's probably nothing valuable there.>
+	Msg4 <They're just outside of town. We've explored down to about \VAL S103 meters deep; \ELEMENT 4 wouldn't let us dig past that... \SPR E4 said there were too many monsters past that depth.>
 	Msg5 <I don't see why not. Our expedition here is finished... If you could find anything that we missed, that could be very useful. Would you like to go there now, or do you need to prepare?>
 	Msg6 <The ruins in \ELEMENT 1 have been explored to \VAL S103 meters deep, but no farther.>
 	Msg7 <Do you want to explore the ruins?>

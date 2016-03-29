@@ -61,7 +61,7 @@ sub
 	CMsg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg2 <Not really, but I remember they had a similar incident in Hogye just a short time ago. As far as I know their doctor went missing shortly thereafter.>
-	Msg2_1 <It was likely the same people who broke into the Hogye clinic. That happened just a little while ago. Doctor Kim, who works there, hasn't been seen since... \OPR 3 could have been kidnapped or killed.>
+	Msg2_1 <It was likely the same people who broke into the Hogye clinic. That happened just a little while ago. Doctor Kim, who works there, hasn't been seen since... \SPR 3 could have been kidnapped or killed.>
 	CMsg2_1 <ifChatNPCSociable Accept>
 	Msg2_2 <They had a similar incident in Hogye a short time ago; I believe the doctor there was killed. It was probably the same people.>
 	CMsg2_2 <ifChatNPCShy Accept>

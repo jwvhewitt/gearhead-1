@@ -106,7 +106,7 @@ sub
 	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <It's good to see you looking so healthy... people say you're the walking dead. I've learned that \NARRATIVE 2 ordered a hit against you and \ELEMENT 4 plans to collect. Keep your eyes open or you'll walk straight into an ambush.>
 	CMsg1_5 <ifChatNPCCheerful Accept>
-	Msg1_6 <You're walking dead... \NARRATIVE 2 ordered \ELEMENT 4 to kill you. Even if \OPR E4 fails it's only a matter of time before someone succeeds... Be careful, there could be an ambush waiting for you anywhere.>
+	Msg1_6 <You're walking dead... \NARRATIVE 2 ordered \ELEMENT 4 to kill you. Even if \SPR E4 fails it's only a matter of time before someone succeeds... Be careful, there could be an ambush waiting for you anywhere.>
 	CMsg1_6 <ifChatNPCMelancholy Accept>
 	Msg1_7 <I'm glad you made it here. There's a contract on your life, funded by \NARRATIVE 2 ... I heard it from my regular source. \ELEMENT 4 has been instructed to not return without your head. Be careful out there, alright?>
 	CMsg1_7 <ifG React 25 Accept>

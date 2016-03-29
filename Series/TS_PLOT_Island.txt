@@ -53,7 +53,7 @@ sub
 	Msg7 <You cannot understand. Ladon only speaks to the people of the island... if ever you heard her voice, you would know for certain that what I speak is the truth.>
 	Msg8 <It's sad, I know, but we must do as Ladon says... All my friends have already given themselves. Soon it will be my time.>
 	Msg9 <Oh, I don't know... Well, I guess there's no harm in it... Alright, let's go!>
-	Msg10 <\ELEMENT 6 was an outsider, but heard the voice of Ladon... \OPR E6 is gone now. No-one in the village knows where.>
+	Msg10 <\ELEMENT 6 was an outsider, but heard the voice of Ladon... \SPR E6 is gone now. No-one in the village knows where.>
 	Prompt1 <What is this "Ladon" thing?>
 	Prompt2 <Why must you sacrifice yourself?>
 	Prompt3 <What does Ladon eat?>
@@ -82,7 +82,7 @@ sub
 	Msg2 <These are dark times for our island. Ladon, the mountain-mother, has grown even more hungry as of late. Now, my only child \ELEMENT 1 has been called to sacrifice \PPR E1 self.>
 	Msg3 <Ladon is the mountain-mother, the guardian spirit of our people. We hear her voice and cannot refuse to answer. Many years ago she saved us from the tyrant of the north... To deny her sacrifice would sentence the entire village to death.>
 	Msg4 <No, all the other villages of proper age and virtue true have already been sacrificed... Such is the enormous hunger of the mountain-mother.>
-	Msg5 <\ELEMENT 6 ? An outsider by that name was in this village some moons ago... \OPR E6 left as quietly as \OPR E6 came. I couldn't say what became of \SPR E6 .>
+	Msg5 <\ELEMENT 6 ? An outsider by that name was in this village some moons ago... \SPR E6 left as quietly as \SPR E6 came. I couldn't say what became of \OPR E6 .>
 	Msg6 <That may be best, this talk of sacrifice is depressing.>
 	Msg7 <In that case, you may ask.>
 	Msg8 <Not just anyone can do that. To be a sacrifice to Ladon, you must be of pure virtue. I must ask... you are, I hope, of bodily innocence?>
@@ -118,15 +118,15 @@ sub
 	Msg1 <You should go to Tokto Island and search for \ELEMENT 6 .>
 	Msg2 <I haven't heard from \ELEMENT 6 in a long time. I hope nothing has gone wrong during the expedition.>
 	Msg3 <You might be able to help me. I require the services of a cavalier to search for a colleague who went missing in the east sea.>
-	Msg4 <I need the services of a cavalier, and was wondering if you'd be interested. One of my assistants has gone missing. I need someone to go search for \SPR E6 .>
+	Msg4 <I need the services of a cavalier, and was wondering if you'd be interested. One of my assistants has gone missing. I need someone to go search for \OPR E6 .>
 	Msg5 <That's too bad. I'll just have to keep hoping that everything is alright...>
-	Msg6 <\ELEMENT 6 was doing research on a primitive tribe. The last emails I received from \SPR E6 were disturbing... \OPR E6 discovered something bad, possibly something that drove \SPR E6 insane. The last communication I received was in June.>
-	Msg7 <Very good. \ELEMENT 6 was last seen on Tokto, an island several hundred kilometers south of here. Here is a dataslate containing the last emails \OPR E6 sent... it may be some help. If you can discover what happened to \SPR E6 I'll reward you.>
+	Msg6 <\ELEMENT 6 was doing research on a primitive tribe. The last emails I received from \OPR E6 were disturbing... \SPR E6 discovered something bad, possibly something that drove \OPR E6 insane. The last communication I received was in June.>
+	Msg7 <Very good. \ELEMENT 6 was last seen on Tokto, an island several hundred kilometers south of here. Here is a dataslate containing the last emails \SPR E6 sent... it may be some help. If you can discover what happened to \OPR E6 I'll reward you.>
 	Msg8 <\ELEMENT 3 in \SCENE EScene 3 asked you to go to Tokto Island and investigate the disappearance of \ELEMENT 6 .>
 	Msg9 <I must find someone... these mysteries must be answered.>
 	Prompt1 <Give me some more information.>
 	Prompt2 <Sorry, I can't help you.>
-	Prompt3 <Alright, I'll go search for \SPR E6 .>
+	Prompt3 <Alright, I'll go search for \OPR E6 .>
 	Prompt4 <Scary. I don't think I can help.>
 
 	Plot 1

@@ -68,13 +68,13 @@ sub
 	Msg4 <I was at the shop fixing up my mecha when I overheard some zoners talking about their next hit... you. The contract's being funded by \NARRATIVE 2 . That's all I know, but \ELEMENT 4 was also there, and may be able to tell you more.>
 	Msg4_1 <I was getting my mecha repaired in the deadzone- don't ask why. Anyhow I overheard some bandits talking. They were hired to kill you by \NARRATIVE 2 . \ELEMENT 4 was there as well and might be able to provide more information.>
 	CMsg4_1 <ifChatNPCSociable Accept>
-	Msg4_2 <It's \NARRATIVE 2 behind the contract. \ELEMENT 4 has better underworld connections than I do... \OPR E4 could tell you more.>
+	Msg4_2 <It's \NARRATIVE 2 behind the contract. \ELEMENT 4 has better underworld connections than I do... \SPR E4 could tell you more.>
 	CMsg4_2 <ifChatNPCShy Accept>
 	Msg4_3 <From what I've heard it's \NARRATIVE 2 behind the contract. I don't know that much about it myself... My friend \ELEMENT 4 has some underworld contacts and may be able to tell you more, if you're interested.>
 	CMsg4_3 <ifChatNPCEasygoing Accept>
 	Msg4_4 <It's \NARRATIVE 2 behind it. You want to live long enough to find out why? You're going to need some help. Look, go talk with \ELEMENT 4 .>
 	CMsg4_4 <ifChatNPCPassionate Accept>
-	Msg4_5 <It's your old enemies \NARRATIVE 2 of course. Lucky for you I heard some zoners talking about it at the repair shop... I don't know much about these things, but I know who does. Go see \ELEMENT 4 . Don't worry; \OPR E4 can be trusted.>
+	Msg4_5 <It's your old enemies \NARRATIVE 2 of course. Lucky for you I heard some zoners talking about it at the repair shop... I don't know much about these things, but I know who does. Go see \ELEMENT 4 . Don't worry; \SPR E4 can be trusted.>
 	CMsg4_5 <ifChatNPCCheerful Accept>
 	Msg4_6 <Sometimes I visit pirate netsites... You know, just keeping an eye on the dark side of human nature. There was a bounty offer from \NARRATIVE 2 for anyone who could kill you. If you want to find out more, \ELEMENT 4 's the person to see.>
 	CMsg4_6 <ifChatNPCMelancholy Accept>
@@ -82,9 +82,9 @@ sub
 	CMsg4_7 <ifChatNPCChaotic Accept>
 
 	Msg5 <I overheard some bandits at the repair shop talking about their next big hit... Every gangster in the dead zone is apparently gunning for your hide now. \ELEMENT 4 was also there with me, and may be able to tell you more details.>
-	Msg5_1 <While getting repairs I overheard some zoners talking about the hit. I don't know what you did to piss \NARRATIVE 2 off, but they really want you dead... \ELEMENT 4 was there at the same time. Maybe \OPR E4 can tell you more.>
+	Msg5_1 <While getting repairs I overheard some zoners talking about the hit. I don't know what you did to piss \NARRATIVE 2 off, but they really want you dead... \ELEMENT 4 was there at the same time. Maybe \SPR E4 can tell you more.>
 	CMsg5_1 <ifChatNPCSociable Accept>
-	Msg5_2 <I don't know any way to help you, but I know someone who might. \ELEMENT 4 has some underworld connections. Believe me, you can trust \SPR E4 .>
+	Msg5_2 <I don't know any way to help you, but I know someone who might. \ELEMENT 4 has some underworld connections. Believe me, you can trust \OPR E4 .>
 	CMsg5_2 <ifChatNPCShy Accept>
 	Msg5_3 <What you need is someone with underworld connections, to help get to the bottom of things. My buddy \ELEMENT 4 may be just the person.>
 	CMsg5_3 <ifChatNPCEasygoing Accept>
@@ -96,11 +96,11 @@ sub
 	CMsg5_6 <ifChatNPCMelancholy Accept>
 
 	Msg6 <\ELEMENT 4 is in \SCENE EScene 4 right now.>
-	Msg6_1 <The last time I was talking to \SPR E4 \OPR E4 was in \SCENE EScene 4 . That's the best place to start looking.>
+	Msg6_1 <The last time I was talking to \OPR E4 \SPR E4 was in \SCENE EScene 4 . That's the best place to start looking.>
 	CMsg6_1 <ifChatNPCSociable Accept>
-	Msg6_2 <You can find \SPR E4 in \SCENE EScene 4 .>
+	Msg6_2 <You can find \OPR E4 in \SCENE EScene 4 .>
 	CMsg6_2 <ifChatNPCShy Accept>
-	Msg6_3 <I believe \OPR E4 lives in \SCENE EScene 4 , but I could be wrong.>
+	Msg6_3 <I believe \SPR E4 lives in \SCENE EScene 4 , but I could be wrong.>
 	CMsg6_3 <ifChatNPCEasygoing Accept>
 	Msg6_4 <\ELEMENT 4 lives in \SCENE EScene 4 ... You should hurry.>
 	CMsg6_4 <ifChatNPCPassionate Accept>
@@ -110,7 +110,7 @@ sub
 	Prompt2 <I already know that.>
 	Prompt2_1 <Tell me something I don't know.>
 	Prompt3 <Where can I find \ELEMENT 4 ?>
-	Prompt3_1 <Where can I find \SPR E4 ?>
+	Prompt3_1 <Where can I find \OPR E4 ?>
 
 	Plot 1
 		% The attempts against the PC's life have begun...

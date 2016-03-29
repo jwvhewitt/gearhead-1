@@ -77,7 +77,7 @@ sub
 	Msg20 <Do you really think you can help us? Go speak with \ELEMENT 3 in \SCENE EScene 3 about the utilities contract. If you can manage to negotiate a better deal, there'll be a reward waiting back here for you.>
 
 	% 21 - 25 : Mission details
-	Msg21 <\ELEMENT 3 in \SCENE EScene 3 is the one handling the deal for \ELEMENT 2 . You'll have to speak with \SPR E3 about the contract. If you can get the city a good deal, I'll give you a reward.>
+	Msg21 <\ELEMENT 3 in \SCENE EScene 3 is the one handling the deal for \ELEMENT 2 . You'll have to speak with \OPR E3 about the contract. If you can get the city a good deal, I'll give you a reward.>
 	Msg22 <The one you'll have to speak with is \ELEMENT 3 in \SCENE EScene 3 . Try to negotiate a better deal for \SCENE EScene 1 ... If you can do that, I'll give you our first month of savings as a reward!>
 	Msg23 <Go to \SCENE EScene 3 and speak with \ELEMENT 3 . Try to get the best possible deal for our city... If you can do that, I'll give you a sizable reward.>
 	Msg24 <Here's the deal. You should go speak with \ELEMENT 3 in \SCENE EScene 3 ... that's who's making the deal for \ELEMENT 2 . If you can save the city some money in our utilities contract, I'll pass some of that on to you in the form of a reward.>
@@ -226,7 +226,7 @@ sub
 	Msg12 <I heard it before, and I didn't agree. Let's try to keep the meeting moving foreword.>
 
 	Msg101 <There. That was easy... now we have plenty of time left over to take a business lunch.>
-	Msg102 <You may be right... \ELEMENT 2 must not be undersold! You can tell \ELEMENT 1 \OPR E1 has a deal.>
+	Msg102 <You may be right... \ELEMENT 2 must not be undersold! You can tell \ELEMENT 1 \SPR E1 has a deal.>
 	Msg103 <That's impossible. \ELEMENT 2 already offers the lowest prices in this field. You'll have to do better than that, I'm afraid.>
 	Msg104 <Hmm... There are other contracts \ELEMENT 2 holds with the city which \ELEMENT 1 could possibly refuse to renew... Alright, to protect our other interests in \SCENE EScene 1 , I'll give a discount on this contract.>
 	Msg105 <We don't hold any other business interests in \SCENE EScene 1 which could possibly be affected by this. I still have no reason to modify the contract.>
@@ -293,12 +293,12 @@ sub
 	result203 <Goto result202>
 
 	Msg201 <Ah, \PC . It's a lucky thing you were the negotiator sent by \ELEMENT 1 . I've decided to raise their sevice rates, and if you go along you can benefit as well.>
-	Msg202 <So \ELEMENT 1 sent you to negotiate, did \OPR E1 ? Well, I've already decided to raise their rates. You can benefit from this too if you play along.>
+	Msg202 <So \ELEMENT 1 sent you to negotiate, did \SPR E1 ? Well, I've already decided to raise their rates. You can benefit from this too if you play along.>
 	Msg203 <You're here to negotiate for the \SCENE EScene 1 service rates? I've decided to raise them... if you don't cause any trouble, I'll make sure you get a share of the first month's profits.>
 
 	Msg204 <You're here to negotiate for the \SCENE EScene 1 service contract. Well, there is to be no bargaining. The old contract won't be changed.>
 	Msg205 <I'm not in a mood to negotiate. The old rates are final. \ELEMENT 2 will not be making any concessions to \SCENE EScene 1 .>
-	Msg206 <Tell \ELEMENT 1 that \OPR E1 will have to agree to the contract under the previous terms or find another service provider. I'm not in any mood to negotiate.>
+	Msg206 <Tell \ELEMENT 1 that \SPR E1 will have to agree to the contract under the previous terms or find another service provider. I'm not in any mood to negotiate.>
 
 	Msg251 <Go tell \ELEMENT 1 that \SCENE EScene 1 will be paying 25% more for utilities this year, then come back and I'll give you a cut of the new profits.>
 	Msg252 <Alright, we'll renew the contract under the old rates, then. That's the best I'm willing to offer, and only because you're a personal friend...>

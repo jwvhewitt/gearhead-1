@@ -72,13 +72,13 @@ sub
 	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <You haven't spoken with \ELEMENT 4 yet? Let me know when you do.>
 	CMsg1_2 <ifChatNPCShy Accept>
-	Msg1_3 <I think someone should go talk with \ELEMENT 4 in \ELEMENT 3 ... If you're free sometime, could you check up on \SPR E4 ?>
+	Msg1_3 <I think someone should go talk with \ELEMENT 4 in \ELEMENT 3 ... If you're free sometime, could you check up on \OPR E4 ?>
 	CMsg1_3 <ifChatNPCEasygoing Accept>
 	Msg1_4 <Why haven't you spoken to \ELEMENT 4 yet!? I asked you to do that a while ago...>
 	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <I hope that \ELEMENT 4 is alright. I'd hate for something bad to happen to anyone I know, no matter what...>
 	CMsg1_5 <ifChatNPCCheerful Accept>
-	Msg1_6 <\ELEMENT 4 has started down a path of self destruction... I fear \OPR E4 may be beyond any help.>
+	Msg1_6 <\ELEMENT 4 has started down a path of self destruction... I fear \SPR E4 may be beyond any help.>
 	CMsg1_6 <ifChatNPCMelancholy Accept>
 
 	Msg2 <\PC ! I haevn't seen you in ages... not since graduation, I think. How have you been? I'm sorry that I didn't write to you all this time but it was a lot of work in the piloting academy, you know?>
@@ -124,7 +124,7 @@ sub
 	CMsg4_6 <ifChatNPCMelancholy Accept>
 
 	Msg5 <You're right, we both should have. Anyway, there's a reason why I asked you here today. Tell me... Do you remember \ELEMENT 4 ? We all went to school together. I kind of remember that the two of you didn't get along.>
-	Msg5_1 <I'm just glad to be speaking with you now. Look, I need to tell you about something... Do you remember our ex-classmate \ELEMENT 4 ? Well, \OPR E4 's mixed up in something really bad.>
+	Msg5_1 <I'm just glad to be speaking with you now. Look, I need to tell you about something... Do you remember our ex-classmate \ELEMENT 4 ? Well, \SPR E4 's mixed up in something really bad.>
 	CMsg5_1 <ifChatNPCSociable Accept>
 	Msg5_2 <Point taken. In any case, I had a reason for calling you here. Do you remember the name \ELEMENT 4 ?>
 	CMsg5_2 <ifChatNPCShy Accept>
@@ -137,60 +137,60 @@ sub
 	Msg5_6 <No, it's my fault, I wanted to write many times... but today, I have a reason for contacting you. Tell me, do you remember \ELEMENT 4 from our school days?>
 	CMsg5_6 <ifChatNPCMelancholy Accept>
 
-	Msg6 <I can't say I'm surprised. After graduation we both applied to the academy... but during training \OPR E4 began to change. Soon \OPR E4 dropped out. I kept contact with \SPR E4 for a while. I'm certain \OPR E4 got involved in something bad...>
-	Msg6_1 <That doesn't surprise me... not anymore. \ELEMENT 4 joined the academy the same time I did. A year later, something happened to \SPR E4 ... \OPR E4 stopped talking to just about everyone, then dropped out. I'm certain something very bad is going on.>
+	Msg6 <I can't say I'm surprised. After graduation we both applied to the academy... but during training \SPR E4 began to change. Soon \SPR E4 dropped out. I kept contact with \OPR E4 for a while. I'm certain \SPR E4 got involved in something bad...>
+	Msg6_1 <That doesn't surprise me... not anymore. \ELEMENT 4 joined the academy the same time I did. A year later, something happened to \OPR E4 ... \SPR E4 stopped talking to just about everyone, then dropped out. I'm certain something very bad is going on.>
 	CMsg6_1 <ifChatNPCSociable Accept>
-	Msg6_2 <That sounds like \SPR E4 ... \OPR E4 has really changed since dropping out of the academy. I suspect that \OPR E4 's in some kind of trouble.>
+	Msg6_2 <That sounds like \OPR E4 ... \SPR E4 has really changed since dropping out of the academy. I suspect that \SPR E4 's in some kind of trouble.>
 	CMsg6_2 <ifChatNPCShy Accept>
-	Msg6_3 <Is that true!? Then \OPR E4 must be even worse off than I thought... A few years ago \OPR E4 dropped out of the academy. We kept in touch for a while, but there was like a dark shadow growing across \SPR E4 . I'm certain \OPR E4 's in trouble.>
+	Msg6_3 <Is that true!? Then \SPR E4 must be even worse off than I thought... A few years ago \SPR E4 dropped out of the academy. We kept in touch for a while, but there was like a dark shadow growing across \OPR E4 . I'm certain \SPR E4 's in trouble.>
 	CMsg6_3 <ifChatNPCEasygoing Accept>
-	Msg6_4 <I can't believe that! The \ELEMENT 4 I know could never... of course, \OPR E4 hasn't been \SPR E4 self for a while now. There's something very bad going on. I only wish I knew more...>
+	Msg6_4 <I can't believe that! The \ELEMENT 4 I know could never... of course, \SPR E4 hasn't been \OPR E4 self for a while now. There's something very bad going on. I only wish I knew more...>
 	CMsg6_4 <ifChatNPCPassionate Accept>
-	Msg6_5 <You're still alive, so I guess \OPR E4 couldn't have wanted to kill you very badly. Last year \OPR E4 dropped out of the academy and got involved in a bad crowd... I don't know exactly what they're up to, but I know it isn't good.>
+	Msg6_5 <You're still alive, so I guess \SPR E4 couldn't have wanted to kill you very badly. Last year \SPR E4 dropped out of the academy and got involved in a bad crowd... I don't know exactly what they're up to, but I know it isn't good.>
 	CMsg6_5 <ifChatNPCCheerful Accept>
-	Msg6_6 <In that case \OPR E4 may already be beyond our help. \ELEMENT 4 quit the academy a year ago... there was something going on, \OPR E4 got involved with some bad people. I don't know all the details but I can tell it's very serious.>
+	Msg6_6 <In that case \SPR E4 may already be beyond our help. \ELEMENT 4 quit the academy a year ago... there was something going on, \SPR E4 got involved with some bad people. I don't know all the details but I can tell it's very serious.>
 	CMsg6_6 <ifChatNPCMelancholy Accept>
 
-	Msg7 <After graduation both \ELEMENT 4 and I applied to the academy... but during training \OPR E4 began to change. Soon \OPR E4 dropped out. I kept contact with \SPR E4 for a while. I'm certain \OPR E4 got involved in something bad...>
-	Msg7_1 <After graduating we both applied to the academy, but a short time later \ELEMENT 4 dropped out. Over the course of basic training \OPR E4 changed.  I kept contact with \SPR E4 for a while. I'm certain \OPR E4 got involved in something bad...>
+	Msg7 <After graduation both \ELEMENT 4 and I applied to the academy... but during training \SPR E4 began to change. Soon \SPR E4 dropped out. I kept contact with \OPR E4 for a while. I'm certain \SPR E4 got involved in something bad...>
+	Msg7_1 <After graduating we both applied to the academy, but a short time later \ELEMENT 4 dropped out. Over the course of basic training \SPR E4 changed.  I kept contact with \OPR E4 for a while. I'm certain \SPR E4 got involved in something bad...>
 	CMsg7_1 <ifChatNPCSociable Accept>
-	Msg7_2 <\ELEMENT 4 went to the same piloting academy as me, but dropped out of the program suddenly and without explanation. My contact with \SPR E4 suggests that \OPR E4 got involved with some bad people.>
+	Msg7_2 <\ELEMENT 4 went to the same piloting academy as me, but dropped out of the program suddenly and without explanation. My contact with \OPR E4 suggests that \SPR E4 got involved with some bad people.>
 	CMsg7_2 <ifChatNPCShy Accept>
-	Msg7_3 <\ELEMENT 4 used to be a good person... that changed after we joined the piloting academy together. I think \OPR E4 was being influenced by someone else... I really don't know what happened...>
+	Msg7_3 <\ELEMENT 4 used to be a good person... that changed after we joined the piloting academy together. I think \SPR E4 was being influenced by someone else... I really don't know what happened...>
 	CMsg7_3 <ifChatNPCEasygoing Accept>
-	Msg7_4 <\ELEMENT 4 really changed after graduation. After we both joined the academy, \OPR E4 would sometimes disappear for days at a time. Later \OPR E4 dropped out, without reason or explanation.>
+	Msg7_4 <\ELEMENT 4 really changed after graduation. After we both joined the academy, \SPR E4 would sometimes disappear for days at a time. Later \SPR E4 dropped out, without reason or explanation.>
 	CMsg7_4 <ifChatNPCPassionate Accept>
-	Msg7_5 <That's good. You might also remember that \OPR E4 and I both applied to the piloting academy... While there, \ELEMENT 4 changed horribly. It's like \OPR E4 joined a cult or something worse.>
+	Msg7_5 <That's good. You might also remember that \SPR E4 and I both applied to the piloting academy... While there, \ELEMENT 4 changed horribly. It's like \SPR E4 joined a cult or something worse.>
 	CMsg7_5 <ifChatNPCCheerful Accept>
-	Msg7_6 <I guess \ELEMENT 4 is a hard person to forget... Shortly after we both joined the academy, \OPR E4 cut off all ties to \PPR E4 old friends. It's like \OPR E4 joined a cult. I'm certain something terrible is brewing...>
+	Msg7_6 <I guess \ELEMENT 4 is a hard person to forget... Shortly after we both joined the academy, \SPR E4 cut off all ties to \PPR E4 old friends. It's like \SPR E4 joined a cult. I'm certain something terrible is brewing...>
 	CMsg7_6 <ifChatNPCMelancholy Accept>
 
-	Msg8 <I can't say I much care for the person \OPR E4 has become... but for the person \OPR E4 used to be, and for my sake, could you go to \ELEMENT 3 and check up on \SPR E4 ? I have this awful feeling that something terrible is about to happen.>
-	Msg8_1 <I would have thought you'd at least be curious as to why \OPR E4 's changed so much... Look, you're better at talking to people than me. Could you go to \ELEMENT 3 and check up on \SPR E4 ?>
+	Msg8 <I can't say I much care for the person \SPR E4 has become... but for the person \SPR E4 used to be, and for my sake, could you go to \ELEMENT 3 and check up on \OPR E4 ? I have this awful feeling that something terrible is about to happen.>
+	Msg8_1 <I would have thought you'd at least be curious as to why \SPR E4 's changed so much... Look, you're better at talking to people than me. Could you go to \ELEMENT 3 and check up on \OPR E4 ?>
 	CMsg8_1 <ifG PCRep 3 0 Accept>
 	Msg8_2 <That's why you're the best person to ask for this favor... I want someone to go to \ELEMENT 3 , and see what \ELEMENT 4 's up to. I have this awful feeling that something terrible is about to happen.>
 	CMsg8_2 <ifG 0 PCRep 3 Accept>
-	Msg8_3 <But there's something weird going on, and I'm quite sure you won't let your feelings get in the way of finding out what... The people who've corrupted \ELEMENT 4 are into some bad stuff. Could you go to \ELEMENT 3 and check up on \SPR E4 ?>
+	Msg8_3 <But there's something weird going on, and I'm quite sure you won't let your feelings get in the way of finding out what... The people who've corrupted \ELEMENT 4 are into some bad stuff. Could you go to \ELEMENT 3 and check up on \OPR E4 ?>
 	CMsg8_3 <ifG PCRep 4 0 Accept>
-	Msg8_4 <This could be more important than just your feelings... The people who've corrupted \ELEMENT 4 are plotting something big. Could you go to \ELEMENT 3 and check up on \SPR E4 ? This could be dangerous to us all.>
+	Msg8_4 <This could be more important than just your feelings... The people who've corrupted \ELEMENT 4 are plotting something big. Could you go to \ELEMENT 3 and check up on \OPR E4 ? This could be dangerous to us all.>
 	CMsg8_4 <ifG 0 PCRep 4 Accept>
-	Msg8_5 <I know, but we were schoolmates after all... You can't just throw that history away. For the friend that \OPR E4 used to be, and for my sake, could you go to \ELEMENT 3 and check up on \SPR E4 ?>
+	Msg8_5 <I know, but we were schoolmates after all... You can't just throw that history away. For the friend that \SPR E4 used to be, and for my sake, could you go to \ELEMENT 3 and check up on \OPR E4 ?>
 	CMsg8_5 <ifG PCRep 5 0 Accept>
-	Msg8_6 <I keep hanging on to this feeling that the old \ELEMENT 4 can still be rescued... That maybe \OPR E4 isn't dead yet. Please, go to \ELEMENT 3 and see if you can talk any sense into \SPR E4 . Do it for me, if for no other reason.>
+	Msg8_6 <I keep hanging on to this feeling that the old \ELEMENT 4 can still be rescued... That maybe \SPR E4 isn't dead yet. Please, go to \ELEMENT 3 and see if you can talk any sense into \OPR E4 . Do it for me, if for no other reason.>
 	CMsg8_6 <ifG 0 PCRep 5 Accept>
 
-	Msg9 <Go to \ELEMENT 3 and talk to \SPR E4 . You know, \OPR E4 used to really look up to you in our school days. That's why \OPR E4 decided to be a pilot. Please do this for me. I have this awful feeling that something terrible is about to happen.>
-	Msg9_1 <I recently got an email from \ELEMENT 4 ... \OPR E4 's in \ELEMENT 3 . If you could go there and talk with \SPR E4 , we could find out what's going on...>
+	Msg9 <Go to \ELEMENT 3 and talk to \OPR E4 . You know, \SPR E4 used to really look up to you in our school days. That's why \SPR E4 decided to be a pilot. Please do this for me. I have this awful feeling that something terrible is about to happen.>
+	Msg9_1 <I recently got an email from \ELEMENT 4 ... \SPR E4 's in \ELEMENT 3 . If you could go there and talk with \OPR E4 , we could find out what's going on...>
 	CMsg9_1 <ifChatNPCSociable Accept>
-	Msg9_2 <I got an email from \SPR E4 recently. There's more going on than \OPR E4 's willing to say. If you go there and speak with \SPR E4 we could find out what's really behind all this.>
+	Msg9_2 <I got an email from \OPR E4 recently. There's more going on than \SPR E4 's willing to say. If you go there and speak with \OPR E4 we could find out what's really behind all this.>
 	CMsg9_2 <ifChatNPCShy Accept>
-	Msg9_3 <Nothing much, just go to \ELEMENT 3 and talk with \SPR E4 . Maybe we can find out what's been going on.>
+	Msg9_3 <Nothing much, just go to \ELEMENT 3 and talk with \OPR E4 . Maybe we can find out what's been going on.>
 	CMsg9_3 <ifChatNPCEasygoing Accept>
-	Msg9_4 <I've become convinced that \OPR E4 is involved in some huge conspiracy. But, for the friend \OPR E4 once was, I hope \OPR E4 can still be saved... Go to \ELEMENT 3 and seek \SPR E4 out.>
+	Msg9_4 <I've become convinced that \SPR E4 is involved in some huge conspiracy. But, for the friend \SPR E4 once was, I hope \SPR E4 can still be saved... Go to \ELEMENT 3 and seek \OPR E4 out.>
 	CMsg9_4 <ifChatNPCPassionate Accept>
-	Msg9_5 <I got an email from \SPR E4 ... It kind of sounded like a cry for help. I'd like you to go to \ELEMENT 3 and find out what's happened to \SPR E4 . I'm certain \OPR E4 can still be rescued. I hope so...>
+	Msg9_5 <I got an email from \OPR E4 ... It kind of sounded like a cry for help. I'd like you to go to \ELEMENT 3 and find out what's happened to \OPR E4 . I'm certain \SPR E4 can still be rescued. I hope so...>
 	CMsg9_5 <ifChatNPCCheerful Accept>
-	Msg9_6 <I don't know... I don't know if anything can be done. But I got an email recently saying \OPR E4 'd be in \ELEMENT 3 . Maybe you could go talk with \SPR E4 ?>
+	Msg9_6 <I don't know... I don't know if anything can be done. But I got an email recently saying \SPR E4 'd be in \ELEMENT 3 . Maybe you could go talk with \OPR E4 ?>
 	CMsg9_6 <ifChatNPCMelancholy Accept>
 
 	Msg10 <\ELEMENT 2 in \ELEMENT 1 asked you to speak with \ELEMENT 4 in \ELEMENT 3 .>
@@ -207,7 +207,7 @@ sub
 	Prompt5_1 <Oh, I remember, all right...>
 	Prompt6 <I don't care about \ELEMENT 4 .>
 	Prompt6_1 <I could care less about \ELEMENT 4 .>
-	Prompt7 <What do you expect me to do about \SPR E4 ?>
+	Prompt7 <What do you expect me to do about \OPR E4 ?>
 	Prompt7_1 <So what do you want from me?>
 
 
@@ -225,14 +225,14 @@ sub
 	GoR7Fail <Say 12>
 	result8 <EndChat ifG 0 PCRep 4 else GoR8Fail Say 13 P= 4 1>
 	GoR8Fail <Say 14>
-	Msg1 <Why are you here? That fool \ELEMENT 2 sent you, didn't \OPR E2 ? I told \SPR E2 that I didn't need \SPR E2 anymore... \ELEMENT 6 has turned me into a greater pilot than I ever dreamt possible!>
+	Msg1 <Why are you here? That fool \ELEMENT 2 sent you, didn't \SPR E2 ? I told \OPR E2 that I didn't need \OPR E2 anymore... \ELEMENT 6 has turned me into a greater pilot than I ever dreamt possible!>
 	Msg1_1 <Ah, if it isn't my old friend \PC ... Well, you're too late to interfere in my mission for \ELEMENT 6 , since it's already been completed!>
 	CMsg1_1 <ifChatNPCSociable Accept>
 	Msg1_2 <Greetings \PC . I hope you're not here to stop me... my mission for \ELEMENT 6 has already been completed.>
 	CMsg1_2 <ifChatNPCShy Accept>
 	Msg1_3 <\PC , you must be here to continue our battle... Well, I'm afraid that I'll have to disappoint you; \ELEMENT 6 has business for me elsewhere.>
 	CMsg1_3 <ifChatNPCEasygoing Accept>
-	Msg1_4 <How did you find me!? You must be in league with that \ELEMENT 2 ... no matter, \ELEMENT 6 will deal with \SPR E2 soon enough. What do you want?>
+	Msg1_4 <How did you find me!? You must be in league with that \ELEMENT 2 ... no matter, \ELEMENT 6 will deal with \OPR E2 soon enough. What do you want?>
 	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <Ah, so \PC has come to play with me once again. I'm sorry but \ELEMENT 6 has other things for me to do.>
 	CMsg1_5 <ifChatNPCCheerful Accept>
@@ -267,7 +267,7 @@ sub
 	Msg3_6 <There's nothing you could say. All of my dreams were crushed by you... \ELEMENT 2 would never be with me, as long as you lived... But \ELEMENT 6 has given me the power to take revenge!>
 	CMsg3_6 <ifChatNPCMelancholy Accept>
 
-	Msg4 <\ELEMENT 4 revealed that \OPR E4 was working for \ELEMENT 6 .>
+	Msg4 <\ELEMENT 4 revealed that \SPR E4 was working for \ELEMENT 6 .>
 	Msg5 <You'll have to prove yourself worthy of my new talents first. I've been taking GARU serum... it's boosted my abilities to beyond human levels. My men should be able to kill you themselves. If not, then we'll meet again someday...>
 	Msg5_1 <I'd love to stay and chat with you some more, but I will shortly be needed elsewhere. If you're determined to fight then my men should prove more than capable of defeating you themselves.>
 	CMsg5_1 <ifChatNPCSociable Accept>
@@ -313,7 +313,7 @@ sub
 	Msg8 <You can't speak of me that way! I'm powerful! No-one has the right to... but, it's too late. My choices have been made. There's no way to redemption for me any more, is there?>
 	Msg8_1 <You're right... soon I will no longer be able to show my face in public, cut off forever from the rest of humanity... But my choice has been made. Even if I wanted to change, there's no going back now, is there?>
 	CMsg8_1 <ifChatNPCSociable Accept>
-	Msg8_2 <What does it profit one to gain the world, if \OPR E4 loses \PPR E4 soul? But, no... it's too late for me to turn back. There's no other path for me to take.>
+	Msg8_2 <What does it profit one to gain the world, if \SPR E4 loses \PPR E4 soul? But, no... it's too late for me to turn back. There's no other path for me to take.>
 	CMsg8_2 <ifChatNPCShy Accept>
 	Msg8_3 <If I had any "humanity" I wouldn't have started this process in the first place, would I? But even that doesn't matter any more... The transformation has started and there's no way out for me.>
 	CMsg8_3 <ifChatNPCEasygoing Accept>
@@ -453,27 +453,27 @@ sub
 		CMsg1_1 <ifChatNPCSociable Accept>
 		Msg1_2 <I heard about your fight in \ELEMENT 3 . You might want to know that the survivors from that battle were spotted heading for \ELEMENT 5 . So, I take it \ELEMENT 4 was involved?>
 		CMsg1_2 <ifChatNPCShy Accept>
-		Msg1_3 <I heard about your fight in \ELEMENT 3 . According to the net, those mecha you destroyed belonged to \ELEMENT 6 , and were operating out of \ELEMENT 5 . I couldn't find anything about \ELEMENT 4 but I'm assuming \OPR E4 was behind it.>
+		Msg1_3 <I heard about your fight in \ELEMENT 3 . According to the net, those mecha you destroyed belonged to \ELEMENT 6 , and were operating out of \ELEMENT 5 . I couldn't find anything about \ELEMENT 4 but I'm assuming \SPR E4 was behind it.>
 		CMsg1_3 <ifChatNPCEasygoing Accept>
-		Msg1_4 <Are you okay? I heard you were ambushed by some \ELEMENT 6 meks! The vidnews said the survivors were caught trying to get to \ELEMENT 5 ... \ELEMENT 4 didn't have anything to do with this, did \OPR E4 ?>
+		Msg1_4 <Are you okay? I heard you were ambushed by some \ELEMENT 6 meks! The vidnews said the survivors were caught trying to get to \ELEMENT 5 ... \ELEMENT 4 didn't have anything to do with this, did \SPR E4 ?>
 		CMsg1_4 <ifChatNPCPassionate Accept>
-		Msg1_5 <I saw on the vidnews that you fought a team of \ELEMENT 6 mecha from \ELEMENT 5 ... It looked like you kicked a truckload of ass! \ELEMENT 4 wasn't behind that fight, was \OPR E4 ?>
+		Msg1_5 <I saw on the vidnews that you fought a team of \ELEMENT 6 mecha from \ELEMENT 5 ... It looked like you kicked a truckload of ass! \ELEMENT 4 wasn't behind that fight, was \SPR E4 ?>
 		CMsg1_5 <ifChatNPCCheerful Accept>
-		Msg1_6 <I saw on the vid that you fought a team of \ELEMENT 6 mecha from \ELEMENT 5 ... It certainly looked like there were no survivors. \ELEMENT 4 wasn't behind that fight, was \OPR E4 ?>
+		Msg1_6 <I saw on the vid that you fought a team of \ELEMENT 6 mecha from \ELEMENT 5 ... It certainly looked like there were no survivors. \ELEMENT 4 wasn't behind that fight, was \SPR E4 ?>
 		CMsg1_6 <ifChatNPCMelancholy Accept>
 
 		Msg2 <I should've known something like that could happen. The world seems to be getting crazier every day... I feel like we're moving towards something big and really bad. Look, I've got something else to tell you... Want to hear?>
-		Msg2_1 <That bastard... How could \OPR E4 betray all \PPR E4 old friends like that? Um, \PC ? I have something to tell you... something I've waited years to say...>
+		Msg2_1 <That bastard... How could \SPR E4 betray all \PPR E4 old friends like that? Um, \PC ? I have something to tell you... something I've waited years to say...>
 		CMsg2_1 <ifChatNPCSociable Accept>
 		Msg2_2 <I should have known. Sorry for getting you involved in this. Um, if you have a few minutes before moving on, there's something else... I've got something to tell you, that I've been holding onto for a long time...>
 		CMsg2_2 <ifChatNPCShy Accept>
-		Msg2_3 <Yikes. I had no idea \OPR E4 'd do something like that... I wouldn't have asked you to go if I'd known. Look, there's something I want to tell you... I've wanted to tell you for a long time...>
+		Msg2_3 <Yikes. I had no idea \SPR E4 'd do something like that... I wouldn't have asked you to go if I'd known. Look, there's something I want to tell you... I've wanted to tell you for a long time...>
 		CMsg2_3 <ifChatNPCEasygoing Accept>
-		Msg2_4 <If I ever see \ELEMENT 4 again, \OPR E4 will not live to regret harming to you. And I'm very sorry for getting you involved. Hey, before you go, I had another reason for calling you... There's something I've wanted to say a long time.>
+		Msg2_4 <If I ever see \ELEMENT 4 again, \SPR E4 will not live to regret harming to you. And I'm very sorry for getting you involved. Hey, before you go, I had another reason for calling you... There's something I've wanted to say a long time.>
 		CMsg2_4 <ifChatNPCPassionate Accept>
-		Msg2_5 <No worries, I knew you could take \SPR E4 . While you're here, \PC , there was another reason why I contacted you... there's something I've wanted to say to you for a long long time...>
+		Msg2_5 <No worries, I knew you could take \OPR E4 . While you're here, \PC , there was another reason why I contacted you... there's something I've wanted to say to you for a long long time...>
 		CMsg2_5 <ifChatNPCCheerful Accept>
-		Msg2_6 <Don't tell me whether or not you killed \SPR E4 ... I don't want to know. \PC , there was another reason why you were the one I called about this problem... There's something I've needed to tell you, ever since we were in school...>
+		Msg2_6 <Don't tell me whether or not you killed \OPR E4 ... I don't want to know. \PC , there was another reason why you were the one I called about this problem... There's something I've needed to tell you, ever since we were in school...>
 		CMsg2_6 <ifChatNPCMelancholy Accept>
 
 		Msg3 <I get the feeling that I won't be hearing from \ELEMENT 4 ever again. Something big is getting ready to happen and I just know it isn't going to be good. Um, I have something I never told you before... if you want to listen...>
@@ -683,7 +683,7 @@ sub
 		greeting <NewChat Say 1 AddChat 1 AddChat 2>
 		result1 <NewChat Say 2 AdvancePlot 0>
 		result2 <NewChat Say 3 Reputation 3 -d10 AdvancePlot 0>
-		Msg1 <So, did you speak with \ELEMENT 4 ? What's \OPR E4 gotten into?>
+		Msg1 <So, did you speak with \ELEMENT 4 ? What's \SPR E4 gotten into?>
 		Msg1_1 <Hey, \PC . Have you been to speak with \ELEMENT 4 yet? I heard there was some kind of mecha battle outside of \ELEMENT 3 and was worried that you might have been involved.>
 		CMsg1_1 <ifChatNPCSociable Accept>
 		Msg1_2 <Did you speak with \ELEMENT 4 yet?>
@@ -697,10 +697,10 @@ sub
 		Msg1_6 <It's been a while since you left... I was starting to get worried. Did you speak with \ELEMENT 4 yet?>
 		CMsg1_6 <ifChatNPCMelancholy Accept>
 
-		Msg2 <So it's as I feared... \OPR E4 may well be beyond redemption. You know, I used to have strong feelings for both of you, while we were in school. I think I need to be alone for a while.>
-		Msg2_1 <I know there must be a good reason behind \ELEMENT 4 's actions... I can't believe \OPR E4 'd do these things otherwise... I won't give up on \SPR E4 !>
+		Msg2 <So it's as I feared... \SPR E4 may well be beyond redemption. You know, I used to have strong feelings for both of you, while we were in school. I think I need to be alone for a while.>
+		Msg2_1 <I know there must be a good reason behind \ELEMENT 4 's actions... I can't believe \SPR E4 'd do these things otherwise... I won't give up on \OPR E4 !>
 		CMsg2_1 <ifChatNPCSociable Accept>
-		Msg2_2 <Well, at least you tried. It appears \OPR E4 is beyond our help now.>
+		Msg2_2 <Well, at least you tried. It appears \SPR E4 is beyond our help now.>
 		CMsg2_2 <ifChatNPCShy Accept>
 		Msg2_3 <What happened to us? Years ago we were all friends, now \ELEMENT 4 is trying to kill you... What's happening to the world?>
 		CMsg2_3 <ifChatNPCEasygoing Accept>
@@ -711,21 +711,21 @@ sub
 		Msg2_6 <This is too horrible... When we were in high school, I used to look up to both you and \ELEMENT 4 ... now you're trying to kill one another... I need some time alone, I think, to sort out my feelings...>
 		CMsg2_6 <ifChatNPCMelancholy Accept>
 
-		Msg3 <You don't have to say; I can tell what happened from your eyes. You know, I used to have strong feelings for both you and \SPR E4 , while we were in school. I think I need to be alone for a while.>
+		Msg3 <You don't have to say; I can tell what happened from your eyes. You know, I used to have strong feelings for both you and \OPR E4 , while we were in school. I think I need to be alone for a while.>
 		Msg3_1 <It must have been pretty bad, then...>
 		CMsg3_1 <ifChatNPCSociable Accept>
 		Msg3_2 <Then it would appear there's nothing else we can do.>
 		CMsg3_2 <ifChatNPCShy Accept>
 		Msg3_3 <This is getting way more serious than I'd like...>
 		CMsg3_3 <ifChatNPCEasygoing Accept>
-		Msg3_4 <I can't believe what's happening to \ELEMENT 4 ... \OPR E4 was the brightest among us, once. If someone like \SPR E4 can fall so low I'm afraid for the future of our world.>
+		Msg3_4 <I can't believe what's happening to \ELEMENT 4 ... \SPR E4 was the brightest among us, once. If someone like \OPR E4 can fall so low I'm afraid for the future of our world.>
 		CMsg3_4 <ifChatNPCPassionate Accept>
 		Msg3_5 <That can't be good...>
 		CMsg3_5 <ifChatNPCCheerful Accept>
 		Msg3_6 <In that case, don't tell me any more... I can't bear to think of my dear school friends at each other's throats... What happened to us?>
 		CMsg3_6 <ifChatNPCMelancholy Accept>
 
-		Prompt1 <Yes; \OPR E4 attacked me.>
+		Prompt1 <Yes; \SPR E4 attacked me.>
 		Prompt1_1 <\ELEMENT 4 attacked me.>
 		Prompt2 <I don't want to say.>
 		Prompt2_1 <You don't want to know.>

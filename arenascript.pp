@@ -1156,7 +1156,7 @@ begin
 			{ The name of the PC. }
 			W := GearName( LocatePilot( GG_LocatePC( GB ) ) );
 
-		end else if UpCase( W ) = '\OPR' then begin
+		end else if UpCase( W ) = '\SPR' then begin
 			{ Object Pronoun }
 			ID := ScriptValue( S0 , GB , Scene );
 			Part := GG_LocateNPC( ID , GB , Scene );
@@ -1166,7 +1166,7 @@ begin
 				W := 'it';
 			end;
 
-		end else if UpCase( W ) = '\SPR' then begin
+		end else if UpCase( W ) = '\OPR' then begin
 			{ Object Pronoun }
 			ID := ScriptValue( S0 , GB , Scene );
 			Part := GG_LocateNPC( ID , GB , Scene );

@@ -182,7 +182,7 @@ sub
 	CMsg2_5 <ifChatNPCEasygoing Accept>
 	Msg2_6 <I have some information that you'll want to know, and \NARRATIVE 2 wants to know something about you. If you're skilled enough to defeat a team of our crack pilots I'll explain why your family had to die.>
 	CMsg2_6 <ifChatNPCPassionate Accept>
-	Msg3 <\ELEMENT 2 revealed that \OPR E2 was taking orders from \NARRATIVE 2 .>
+	Msg3 <\ELEMENT 2 revealed that \SPR E2 was taking orders from \NARRATIVE 2 .>
 
 	Prompt1 <Tell \NARRATIVE 2 to shove it.>
 	Prompt1_1 <You and your masters can kiss my ass.>

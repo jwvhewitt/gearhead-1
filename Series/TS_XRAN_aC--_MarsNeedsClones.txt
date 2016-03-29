@@ -118,7 +118,7 @@ sub
 	GoStartFight <EndChat SoloAttack E3>
 	GoE3Dead <EndChat Say 101 N= 3 E2 FreezeItem E5 FreezeChar E7 FreezeChar E3 AdvancePlot 1>
 	Msg101 <You haven't won yet... I can still defeat you...>
-	Msg101_1 <If you meet my ghost on the road... kill \spr E3 ...>
+	Msg101_1 <If you meet my ghost on the road... kill \OPR E3 ...>
 	CMsg101_1 <ifChatNPCHeroic Accept>
 
 Plot 1
@@ -191,10 +191,10 @@ sub
 	greeting <NewChat if= V1 0 else GoBeenBefore V= 1 1 Say 1 Addchat 1 Memo 2>
 	GoBeenBefore <SayAnything>
 	result1 <NewChat Say 3>
-	Msg1 <I have some strange news for you about \ELEMENT 3 . I know the two of you fought here recently, and he apparently died... But the guardian office in \ELEMENT 2 claims \OPR E3 's been there all this time!>
-	Msg1_2 <You just fought \ELEMENT 3 , right? Well, according to the Guardian liason in \ELEMENT 2 , \OPR E3 's been there all along.>
+	Msg1 <I have some strange news for you about \ELEMENT 3 . I know the two of you fought here recently, and he apparently died... But the guardian office in \ELEMENT 2 claims \SPR E3 's been there all this time!>
+	Msg1_2 <You just fought \ELEMENT 3 , right? Well, according to the Guardian liason in \ELEMENT 2 , \SPR E3 's been there all along.>
 	CMsg1_2 <ifChatNPCShy Accept>
-	Msg1_3 <This is strange. I heard about your fight with \ELEMENT 3 , and how \OPR E3 supposedly died. Well, the Guardians in \ELEMENT 2 say they've been staking out \PPR E3 position over there. It certainly seems like \OPR E3 's in two places at once.>
+	Msg1_3 <This is strange. I heard about your fight with \ELEMENT 3 , and how \SPR E3 supposedly died. Well, the Guardians in \ELEMENT 2 say they've been staking out \PPR E3 position over there. It certainly seems like \SPR E3 's in two places at once.>
 	CMsg1_3 <ifChatNPCSociable Accept>
 	Msg1_4 <>
 	CMsg1_4 <ifChatNPCCheerful Accept>
@@ -213,11 +213,11 @@ sub
 	CMsg3_3 <ifChatNPCSociable Accept>
 	Msg3_4 <Eh, everybody needs a hobby.>
 	CMsg3_4 <ifChatNPCCheerful Accept>
-	Msg3_5 <\ELEMENT 3 killed my fiance. I will bring \SPR E3 to justice if it's the last thing I do.>
+	Msg3_5 <\ELEMENT 3 killed my fiance. I will bring \OPR E3 to justice if it's the last thing I do.>
 	CMsg3_5 <ifChatNPCMelancholy Accept>
 	Msg3_6 <>
 	CMsg3_6 <ifChatNPCEasygoing Accept>
-	Msg3_7 <\ELEMENT 3 has been involved in some horrifying crimes... I've dedicated myself to bring \SPR E3 to justice. I cannot rest until it is done!>
+	Msg3_7 <\ELEMENT 3 has been involved in some horrifying crimes... I've dedicated myself to bring \OPR E3 to justice. I cannot rest until it is done!>
 	CMsg3_7 <ifChatNPCPassionate Accept>
 
 	Prompt1 <Why do you care about \ELEMENT 3 ?>
