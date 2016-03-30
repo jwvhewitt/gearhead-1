@@ -53,6 +53,7 @@ Mod Turret
 		STC GR-24
 		Name <Heavy Massdriver>
 		Type <ANTIAIR BRUTAL SCATTER>
+		Integral
 	end
 	inv
 		TurretArmor 5

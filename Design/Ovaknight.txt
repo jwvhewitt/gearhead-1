@@ -20,7 +20,7 @@ Mod Head
 	end
 	inv
 		HeadArmor 5
-		Mass -2
+		Mass -7
 	end
 
 Mod Body
@@ -37,6 +37,7 @@ Mod Body
 		BeamGun 15
 		Name <Plasma Core Cannon>
 		Type <BRUTAL HYPER>
+		Integral
 		Acc 1
 		Speed 1
 

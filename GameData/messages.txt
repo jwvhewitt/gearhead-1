@@ -610,6 +610,13 @@ MEI_SkimThrust <Skim Thrust: >
 MEI_FlyThrust <Flight Thrust: >
 MEI_OverChargeBonus <Full Speed Bonus: >
 TRANSFER_GiveTo <Who should get #?>
+INTRINSIC_1 <Memo>
+INTRINSIC_2 <Email>
+INTRINSIC_3 <News>
+INTRINSIC_4 <Phone>
+INTRINSIC_5 <Sealed>
+INTRINSIC_6 <Integral>
+INTRINSIC_7 <Personadex>
 
 
 

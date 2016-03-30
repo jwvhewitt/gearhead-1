@@ -13,6 +13,7 @@ Mod Turret
 		sub
 			Ammo 9
 		end
+		Integral
 	end
 
 Mod Body
@@ -74,6 +75,7 @@ Mod Turret
 		Type <SCATTER>
 		Speed 1
 		BV 4
+		Integral
 	end
 
 Mod Body
@@ -139,6 +141,7 @@ Mod Turret
 			Rockets 8
 			Type <BLAST 3>
 		end
+		Integral
 	end
 
 Mod Body

@@ -72,11 +72,11 @@ implementation
 {$IFDEF SDLMODE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
-     sdlinfo,sdlmap,sdlmenus,ghweapon,colormenu,sdl;
+     sdlinfo,sdlmap,sdlmenus,ghweapon,ghintrinsic,colormenu,sdl;
 {$ELSE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
-     congfx,coninfo,conmap,conmenus,context,ghweapon;
+     congfx,coninfo,conmap,conmenus,context,ghweapon,ghintrinsic;
 {$ENDIF}
 
 var
@@ -761,8 +761,11 @@ begin
 		CanBeExtracted := False;
 	end else if ( Item^.G = GG_Module ) and ( Item^.S = GS_Body ) then begin
 		CanBeExtracted := False;
+	end else if SeekGear( Item , GG_Cockpit , 0 , False ) <> Nil then begin
+		{ If the item contains the cockpit, it can't be extracted. }
+		CanBeExtracted := False;
 	end else begin
-		CanBeExtracted := True;
+		CanBeExtracted := Not PartHasIntrinsic( Item , NAS_Integral );
 	end;
 end;
 
