@@ -195,6 +195,20 @@ begin
 	end;
 end;
 
+Procedure ShuttleServiceRedraw;
+    { Redraw the services interface and show the longform info for a list item. }
+var
+    Part: GearPtr;
+begin
+    BasicServiceRedraw();
+	if ( SERV_Menu <> Nil ) and ( SERV_Info <> Nil ) then begin
+		Part := FindActualScene( SERV_GB , CurrentMenuItemValue( SERV_Menu ) );
+		if Part <> Nil then begin
+        	LongformGearInfo( Part , SERV_GB, ZONE_ShopInfo );
+		end;
+	end;
+end;
+
 Procedure FocusOnOneRedraw;
     { Redraw the services interface and show the longform info for a list item. }
 begin
@@ -427,6 +441,8 @@ Function SellGear( var LList,Part: GearPtr; PC,NPC: GearPtr ): Boolean;
 	{ Show the price of this gear, and ask whether or not the }
 	{ player wants to make this sale. }
     { NOTE: SERV_GB must be set before this proc is called!!! }
+const
+	V_MAX = 2147483647;
 var
 	YNMenu: RPGMenuPtr;
 	Cost: Int64;
@@ -494,7 +510,11 @@ begin
 	else if ShopRk < 0 then ShopRk := 0;
 
 	Cost := ( Cost * (20 + ShopRk ) ) div 100;
-	if Cost < 1 then Cost := 1;
+	if (V_MAX < Cost) then begin
+		Cost := V_MAX;
+	end else if (Cost < 1) then begin
+		Cost := 1;
+	end;
 
     {$IFDEF SDLMODE}
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
@@ -561,10 +581,12 @@ end;
 Function RepairMasterCost( Master: GearPtr; Skill: Integer ): LongInt;
 	{ Return the expected cost of repairing every component of }
 	{ MASTER which can be handled using SKILL. }
+const
+	it_MAX = 2147483647;
 var
-	it: LongInt;
+	it: Int64;
 begin
-	it := TotalRepairableDamage( Master , SKill ) * CredsPerDP;
+	it := Int64(TotalRepairableDamage( Master , SKill )) * Int64(CredsPerDP);
 
 	{ Since parts that could be helped by First Aid heal by themselves }
 	{ usually, the cost to treat injuries using the First Aid skill is }
@@ -572,6 +594,12 @@ begin
 	if ( Skill = 20 ) and ( it > 0 ) then begin
 		it := it div 2;
 		if it < 1 then it := 1;
+	end;
+
+	if it < 0 then begin
+		it := 0;
+	end else if it_MAX < it then begin
+		it := it_MAX;
 	end;
 
 	RepairMasterCost := it;
@@ -1297,8 +1325,8 @@ begin
         {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
 		RPM^.Mode := RPMNoCleanup;
-        {$ENDIF}
 		AttachMenuDesc( RPM , ZONE_Menu );
+        {$ENDIF}
 		BuildInventoryMenu( RPM , PCInv );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
 
@@ -1311,7 +1339,7 @@ begin
         SERV_PC := PCChar;
         SERV_Customer := PCChar;
         SERV_NPC := NPC;
-        SERV_Info := PCInv;
+        SERV_Info := PCInv^.InvCom;
         SERV_Menu := RPM;
 		N := SelectMenu( RPM , @BrowseListRedraw );
 {$ELSE}
@@ -1866,6 +1894,7 @@ begin
 	SERV_GB := GB;
 	SERV_NPC := NPC;
 	SERV_PC := PC;
+    SERV_Customer := PC;
 {$ELSE}
 	ClrZone( ZONE_Menu );
 {$ENDIF}
@@ -1875,7 +1904,11 @@ begin
 	Direct_Skill_Learning := True;
 
 	{ Step One: Create the skills menu. }
+    {$IFDEF SDLMODE}
+	SkillMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    {$ELSE}
 	SkillMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+    {$ENDIF}
 
 	while Stuff <> '' do begin
 		N := ExtractValue( Stuff );
@@ -1886,6 +1919,15 @@ begin
 	RPMSortAlpha( SkillMenu );
 	AddRPGMenuItem( SkillMenu , MsgString( 'SCHOOL_Exit' ) , -1 );
 
+{$IFDEF SDLMODE}
+	AddRPGMenuKey( SkillMenu , RPK_Right ,  -3 );
+	AddRPGMenuKey( SkillMenu , RPK_Left , -4 );
+{$ELSE}
+	AddRPGMenuKey( SkillMenu , KeyMap[ KMC_East ].KCode , -3 );
+	AddRPGMenuKey( SkillMenu , KeyMap[ KMC_West ].KCode , -4 );
+{$ENDIF}
+
+
 	repeat
 		{ Display the trading stats. }
 {$IFNDEF SDLMODE}
@@ -1895,7 +1937,8 @@ begin
 
 		{ Get a selection from the menu. }
 {$IFDEF SDLMODE}
-		Skill := SelectMenu( SkillMenu , @ServiceRedraw );
+        SERV_Info := SERV_Customer;
+		Skill := SelectMenu( SkillMenu , @FocusOnOneRedraw );
 {$ELSE}
 		Skill := SelectMenu( SkillMenu );
 {$ENDIF}
@@ -1904,7 +1947,11 @@ begin
 		if ( Skill >= 1 ) and ( Skill <= NumSkill ) then begin
 			{ Create the CostMenu, and see how much the }
 			{ player wants to spend. }
+            {$IFDEF SDLMODE}
+			CostMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+            {$ELSE}
 			CostMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+            {$ENDIF}
 			Cash := NAttValue( PC^.NA , NAG_Experience , NAS_Credits );
 
 			{ Add menu entries for each of the cost values }
@@ -1921,7 +1968,7 @@ begin
 
 {$IFDEF SDLMODE}
 			Chat_Message := MsgString( 'SCHOOL_HowMuch' );
-			N := SelectMenu( CostMenu , @ServiceRedraw );
+			N := SelectMenu( CostMenu , @FocusOnOneRedraw );
 {$ELSE}
 			GameMsg( MsgString( 'SCHOOL_HowMuch' ) , ZONE_InteractMsg , InfoHiLight );
 			N := SelectMenu( CostMenu );
@@ -1943,15 +1990,16 @@ begin
 
 				{ Add bonus for high Knowledge stat, }
 				{ or penalty for low Knowledge stat. }
-				if CStat( PC , STAT_Knowledge ) >= Knowledge_First_Bonus then begin
+				if CStat( SERV_Customer , STAT_Knowledge ) >= Knowledge_First_Bonus then begin
 					Cash := ( Cash * ( 100 + ( CStat( PC , STAT_Knowledge ) - Knowledge_First_Bonus + 1 ) * 5 ) ) div 100;
-				end else if CStat( PC , STAT_Knowledge ) <= Knowledge_First_Penalty then begin
+				end else if CStat( SERV_Customer , STAT_Knowledge ) <= Knowledge_First_Penalty then begin
 					Cash := ( Cash * ( 100 - ( Knowledge_First_Penalty - CStat( PC , STAT_Knowledge ) + 1 ) * 10 ) ) div 100;
 					if Cash < 1 then Cash := 1;
 				end;
 
-				if DoleSkillExperience( PC , Skill , Cash ) then begin
-					DialogMsg( MsgString( 'SCHOOL_Learn' + BStr( Random( 5 ) + 1 ) ) );
+				if DoleSkillExperience( SERV_Customer , Skill , Cash ) then begin
+                    if SERV_Customer = PC then DialogMsg( MsgString( 'SCHOOL_Learn' + BStr( Random( 5 ) + 1 ) ) )
+                    else DialogMsg( ReplaceHash( MsgString( 'SCHOOL_NPCLearn' + BStr( Random( 5 ) + 1 ) ), GearName( SERV_Customer )) );
 				end;
 
 				{ Training takes time. }
@@ -1960,6 +2008,18 @@ begin
 					Dec( N );
 				end;
 			end;
+        end else if Skill = -3 then begin
+            SERV_Customer := FindNextPC( GB, SERV_Customer, False );
+            {$IFNDEF SDLMODE}
+            DialogMsg( ReplaceHash( MsgString( 'SCHOOL_Switch' ), GearName( SERV_Customer ) ) );
+            {$ENDIF}
+
+        end else if Skill = -4 then begin
+            SERV_Customer := FindPrevPC( GB, SERV_Customer, False );
+            {$IFNDEF SDLMODE}
+            DialogMsg( ReplaceHash( MsgString( 'SCHOOL_Switch' ), GearName( SERV_Customer ) ) );
+            {$ENDIF}
+
 		end;
 	until Skill = -1;
 
@@ -2001,8 +2061,12 @@ end;
 Function DeliveryCost( Mek: GearPtr ): LongInt;
 	{ Return the cost to deliver this mecha from one location }
 	{ to the next. Cost is determined by mass. }
+const
+	Cost_MAX = 2147483647;
+	Cost_MIN = -2147483648;
 var
-	C,T: LongInt;
+	C: Int64;
+	T: LongInt;
 begin
 	{ Base value is the mass of the mek. }
 	C := GearMass( Mek );
@@ -2011,6 +2075,11 @@ begin
 	for t := 1 to Mek^.Scale do C := C * 5;
 
 	{ Return the finished cost. }
+	if C < Cost_MIN then begin
+		C := Cost_MIN;
+	end else if Cost_MAX < C then begin
+		C := Cost_MAX;
+	end;
 	DeliveryCost := C;
 end;
 
@@ -2044,6 +2113,7 @@ begin
 		RPMSortAlpha( RPM );
 		AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 {$IFDEF SDLMODE}
+        SERV_Menu := RPM;
 		N := SelectMenu( RPM , @BrowseTreeRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
@@ -2054,7 +2124,11 @@ begin
 			Mek := LocateGearByNumber( FindRoot( GB^.Scene ) , N );
 			if Mek <> Nil then begin
 				Cost := ScalePrice( PC , NPC , DeliveryCost( Mek ) );
+                {$IFDEF SDLMODE}
+				RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+                {$ELSE}
 				RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+                {$ENDIF}
 				AddRPGMenuItem( RPM , ReplaceHash( MsgString( 'SERVICES_MoveYes' ) , GearName( Mek ) ) , 1 );
 				AddRPGMenuItem( RPM , MsgString( 'SERVICES_MoveNo' ) ,  -1 );
 
@@ -2151,8 +2225,13 @@ begin
 	{ enemies of the current scene, must be located on the same world, }
 	{ must be within a certain range, and must have "DESTINATION" in their }
 	{ TYPE string attribute. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+    SERV_Menu := RPM;
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
 	AttachMenuDesc( RPM , ZONE_InteractMsg );
+    {$ENDIF}
     { KLUDGE: Assume that the world map is Scene 1. This is bad, I know, but }
     { given that the game is umpteen years old and no alternate campaigns have }
     { been made for the engine, it should do just fine. Programmers of later }
@@ -2196,7 +2275,7 @@ begin
 	repeat
 		{ Perform the menu selection. }
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @ShuttleServiceRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -2233,12 +2312,7 @@ var
 	RPM: RPGMenuPtr;
 	N: Integer;
 begin
-{$IFDEF SDLMODE}
-	SERV_GB := GB;
-	SERV_NPC := NPC;
-	SERV_PC := PC;
-	SERV_Info := PC;
-{$ELSE}
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_Menu );
 {$ENDIF}
 
@@ -2246,7 +2320,16 @@ begin
 		{ Start by allocating the menu. }
 		{ This menu will use the same dimensions as the interaction }
 		{ menu, since it branches from there. }
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
+	    SERV_GB := GB;
+	    SERV_NPC := NPC;
+	    SERV_PC := PC;
+	    SERV_Info := PC;
+        SERV_Customer := PC;
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
+        {$ENDIF}
 
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_ShuttleService' ) , 1 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_ExpressDelivery' ) , -8 );
@@ -2255,7 +2338,7 @@ begin
 		AddRPGMenuItem( RPM , 'Exit Shop' , -1 );
 
 {$IFDEF SDLMODE}
-		N := SelectMenu( RPM , @ServiceRedraw );
+		N := SelectMenu( RPM , @BasicServiceRedraw );
 {$ELSE}
 		DisplayGearInfo( PC );
 		CMessage( '$' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );

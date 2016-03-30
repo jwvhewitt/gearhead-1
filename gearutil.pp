@@ -42,7 +42,7 @@ Function GearMaxArmor(Part: GearPtr): Integer;
 Function GearName(Part: GearPtr): String;
 Function FullGearName(Part: GearPtr): String;
 
-Function GearMass( Master: GearPtr ): Integer;
+Function GearMass( Master: GearPtr ): LongInt;
 Function IntrinsicMass( Master: GearPtr ): LongInt;
 Function EquipmentMass( Master: GearPtr ): LongInt;
 
@@ -70,7 +70,7 @@ Function IntrinsicMVTVMod( Mek: GearPtr ): Integer;
 Function EquipmentMVTVMod( Mek: GearPtr ): Integer;
 Function BaseMVTVScore( Mek: GearPtr ): Integer;
 
-Function BaseGearValue( Master: GearPtr ): LongInt;
+Function BaseGearValue( Master: GearPtr ): Int64;
 Function GearValue( Master: GearPtr ): LongInt;
 
 function SeekGearByName( LList: GearPtr; Name: String ): GearPtr;
@@ -430,11 +430,14 @@ begin
 	FullGearName := it + GearName( Part );
 end;
 
-Function ComponentMass( Part: GearPtr ): Integer;
+Function ComponentMass( Part: GearPtr ): LongInt;
 	{Calculate the unscaled mas of PART, ignoring for the}
 	{moment its subcomponents.}
+const
+	Mass_MAX = 2147483647;
+	Mass_MIN = -2147483648;
 var
-	it,MAV: Integer;
+	it,MAV: Int64;
 begin
 	Case Part^.G of
 		GG_Module:	it := ModuleBaseMass(Part);
@@ -465,14 +468,24 @@ begin
 	{ Mass adjustment can't result in a negative mass. }
 	if it < 0 then it := 0;
 
+	if it < Mass_MIN then begin
+		it := Mass_MIN;
+	end else if Mass_MAX < it then begin
+		it := Mass_MAX;
+	end;
+
 	ComponentMass := it;
 end;
 
-Function TrackMass( Part: GearPtr; Scale: Integer; Mode: Byte; AddThis: Boolean ): Integer;
+Function TrackMass( Part: GearPtr; Scale: Integer; Mode: Byte; AddThis: Boolean ): LongInt;
 	{Calculate the mass of this list of gears, including all}
 	{subcomponents.}
+const
+	Mass_MAX = 2147483647;
+	Mass_MIN = -2147483648;
 var
-	it,W,t: Integer;
+	it,W: Int64;
+	t: Integer;
 begin
 	{Initialize the total Mass to 0.}
 	it := 0;
@@ -511,34 +524,76 @@ begin
 	end;
 
 	{Return the value.}
+	if it < Mass_MIN then begin
+		it := Mass_MIN;
+	end else if Mass_MAX < it then begin
+		it := Mass_MAX;
+	end;
 	TrackMass := it;
 end;
 
-Function GearMass( Master: GearPtr ): Integer;
+Function GearMass( Master: GearPtr ): LongInt;
 	{Calculate the mass of MASTER, including all of its}
 	{subcomponents.}
+const
+	Mass_MAX = 2147483647;
+	Mass_MIN = -2147483648;
+var
+	tmp: Int64;
 begin
 	{The formula to work out the total mass of this gear}
 	{is basic mass + SubCom mass + InvCom mass.}
 	if ( Master = Nil ) or ( Master^.G < 0 ) then begin
 		GearMass := 0;
 	end else begin
-		GearMass := ComponentMass(Master) + TrackMass(Master^.SubCom,Master^.Scale,GMMODE_AddAll,True) + TrackMass(Master^.InvCom,Master^.Scale,GMMODE_AddAll,True);
+		tmp := ComponentMass(Master);
+		tmp := tmp + TrackMass(Master^.SubCom,Master^.Scale,GMMODE_AddAll,True);
+		tmp := tmp + TrackMass(Master^.InvCom,Master^.Scale,GMMODE_AddAll,True);
+		if tmp < Mass_MIN then begin
+			tmp := Mass_MIN;
+		end else if Mass_MAX < tmp then begin
+			tmp := Mass_MAX;
+		end;
+		GearMass := tmp;
 	end;
 end;
 
 Function IntrinsicMass( Master: GearPtr ): LongInt;
 	{ Return the mass of MASTER and all its subcomponents. Do not }
 	{ calculate the mass of inventory components. }
+const
+	Mass_MAX = 2147483647;
+	Mass_MIN = -2147483648;
+var
+	tmp: Int64;
 begin
-	IntrinsicMass := ComponentMass(Master) + TrackMass(Master^.SubCom,Master^.Scale,GMMODE_Intrinsic,True);
+	tmp := ComponentMass(Master);
+	tmp := tmp + TrackMass(Master^.SubCom,Master^.Scale,GMMODE_Intrinsic,True);
+	if tmp < Mass_MIN then begin
+		tmp := Mass_MIN;
+	end else if Mass_MAX < tmp then begin
+		tmp := Mass_MAX;
+	end;
+	IntrinsicMass := tmp;
 end;
 
 Function EquipmentMass( Master: GearPtr ): LongInt;
 	{ Return the mass of all inventory components of MASTER. Do not }
 	{ include the mass of intrinsic components. }
+const
+	Mass_MAX = 2147483647;
+	Mass_MIN = -2147483648;
+var
+	tmp: Int64;
 begin
-	EquipmentMass := TrackMass(Master^.SubCom,Master^.Scale,GMMODE_Equipment,False) + TrackMass(Master^.InvCom,Master^.Scale,GMMODE_Equipment,True);
+	tmp := TrackMass(Master^.SubCom,Master^.Scale,GMMODE_Equipment,False);
+	tmp := tmp + TrackMass(Master^.InvCom,Master^.Scale,GMMODE_Equipment,True);
+	if tmp < Mass_MIN then begin
+		tmp := Mass_MIN;
+	end else if Mass_MAX < tmp then begin
+		tmp := Mass_MAX;
+	end;
+	EquipmentMass := tmp;
 end;
 
 Function MakeMassString( BaseMass: LongInt; Scale: Integer ): String;
@@ -1064,32 +1119,64 @@ end;
 
 Function IntrinsicMVTVMod( Mek: GearPtr ): Integer;
     { Return the MV/TV modifier from intrinsic mass. }
+const
+	tmp_MAX = 32767;
+	tmp_MIN = -32768;
+var
+	tmp: Int64;
 begin
-    IntrinsicMVTVMod := -(IntrinsicMass( Mek ) div MassPerMV);
+	tmp := -(Int64(IntrinsicMass( Mek )) div Int64(MassPerMV));
+	if tmp < tmp_MIN then begin
+		tmp := tmp_MIN;
+	end else if tmp_MAX < tmp then begin
+		tmp := tmp_MAX;
+	end;
+	IntrinsicMVTVMod := tmp;
 end;
 
 Function EquipmentMVTVMod( Mek: GearPtr ): Integer;
     { Return the MV/TV modifier from carried stuff. }
+const
+	tmp_MAX = 32767;
+	tmp_MIN = -32768;
 var
 	EMass: LongInt;
 	EV: Integer;
+	tmp: Int64;
 begin
 	EV := GearEncumberance( Mek );
 	if EV < 1 then EV := 1;
 	EMass := EquipmentMass( Mek ) - EV;
 	if EMass < 0 then EMass := 0;
-    EquipmentMVTVMod := -( EMass div EV );
+	tmp := -( Int64(EMass) div Int64(EV) );
+	if tmp < tmp_MIN then begin
+		tmp := tmp_MIN;
+	end else if tmp_MAX < tmp then begin
+		tmp := tmp_MAX;
+	end;
+	EquipmentMVTVMod := tmp;
 end;
 
 Function BaseMVTVScore( Mek: GearPtr ): Integer;
 	{ Calculate the basic MV/TV score, ignoring for the moment }
 	{ such things as form, tarcomps, gyros, falafel, etc. }
+const
+	tmp_MAX = 32767;
+	tmp_MIN = -32768;
 var
 	MV: Integer;
 	CPit: GearPtr;
+	tmp: Int64;
 begin
 	{ Basic MV/TV is determined by the gear's mass and it's equipment. }
-	MV := IntrinsicMVTVMod( Mek ) + EquipmentMVTVMod( Mek );
+	tmp := Int64(IntrinsicMVTVMod( Mek )) + Int64(EquipmentMVTVMod( Mek ));
+	if tmp < tmp_MIN then begin
+		MV := tmp_MIN;
+	end else if tmp_MAX < tmp then begin
+		MV := tmp_MAX;
+	end else begin
+		MV := tmp;
+	end;
 
 	{ Seek the cockpit. If it's located in the head, +1 to MV and TR. }
 	CPit := SeekGear( Mek , GG_Cockpit , 0 , False );
@@ -1167,12 +1254,13 @@ begin
 end;
 
 
-Function ComponentValue( Part: GearPtr ): LongInt;
+Function ComponentValue( Part: GearPtr ): Int64;
 	{Calculate the scaled value of PART, ignoring for the}
 	{moment its subcomponents.}
 var
-	it: LongInt;
-	t,n,MAV: Integer;
+	it: Int64;
+	t,n: Integer;
+	MAV: Int64;
 begin
 	Case Part^.G of
 		GG_Module:	it := 25 * Part^.V + 35 * Part^.Stat[ STAT_Armor ];
@@ -1241,11 +1329,11 @@ begin
 	ComponentValue := it;
 end;
 
-Function TrackValue( Part: GearPtr ): LongInt;
+Function TrackValue( Part: GearPtr ): Int64;
 	{Calculate the value of this list of gears, including all}
 	{subcomponents.}
 var
-	it: LongInt;
+	it: Int64;
 begin
 	{Initialize the total Value to 0.}
 	it := 0;
@@ -1266,7 +1354,7 @@ begin
 	TrackValue := it;
 end;
 
-Function BaseGearValue( Master: GearPtr ): LongInt;
+Function BaseGearValue( Master: GearPtr ): Int64;
 	{Calculate the value of MASTER, including all of its}
 	{subcomponents.}
 begin
@@ -1277,6 +1365,9 @@ end;
 
 Function GearValue( Master: GearPtr ): LongInt;
 	{ Calculate the value of this gear, adjusted for mecha stats. }
+const
+	V_MAX = 2147483647;
+	V_MIN = -2147483648;
 var
 	it: Int64;	{ Using a larger container than the cost needs so as to catch }
 	MV: LongInt;	{ overflow when doing calculations. }
@@ -1295,7 +1386,13 @@ begin
 		it := ( it * ( 100 + MV ) ) div 100;
 	end;
 
-	GearValue := it;
+	if (V_MAX < it) then begin
+		GearValue := V_MAX;
+	end else if (it < V_MIN) then begin
+		GearValue := V_MIN;
+	end else begin
+		GearValue := it;
+	end;
 end;
 
 function SeekGearByName( LList: GearPtr; Name: String ): GearPtr;
@@ -1411,8 +1508,12 @@ end;
 Function EncumberanceLevel( PC: GearPtr ): Integer;
 	{ Return a value indicating this character's current }
 	{ encumberance level. }
+const
+	ret_MAX = 32767;
 var
-	EMass,EV: Integer;
+	EMass: LongInt;
+	EV: Integer;
+	ret: LongInt;
 begin
 	EV := GearEncumberance( PC );
 	if EV < 1 then EV := 1;
@@ -1424,7 +1525,12 @@ begin
 	end;
 
 	if EMass > 0 then begin
-		EncumberanceLevel := EMass div EV;
+		ret := EMass div LongInt(EV);
+		if ret_MAX < ret then begin
+			EncumberanceLevel := ret_MAX;
+		end else begin
+			EncumberanceLevel := ret;
+		end;
 	end else begin
 		EncumberanceLevel := 0;
 	end;

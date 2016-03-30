@@ -764,9 +764,13 @@ end;
 
 Procedure DoPillaging( GB: GameBoardPtr );
 	{ Pillage everything that isn't nailed down. }
+const
+	V_MAX = 2147483647;
+	V_MIN = -2147483648;
 var
 	PC,M,M2: GearPtr;
-	Cash,NID: LongInt;
+	Cash: Int64;
+	NID: LongInt;
 begin
 	Cash := 0;
 	PC := GG_LocatePC( GB );
@@ -782,6 +786,11 @@ begin
 				cash := cash + SHakeDown( GB , M , 1 , 1 );
 			end;
 			M := M^.Next;
+		end;
+		if (V_MAX < Cash) then begin
+			Cash := V_MAX;
+		end else if (Cash < V_MIN) then begin
+			Cash := V_MIN;
 		end;
 
 		{ Second pass: Pick up anything we can! }

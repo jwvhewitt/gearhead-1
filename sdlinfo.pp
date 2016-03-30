@@ -68,8 +68,8 @@ const
 	Module_Sprite_Name = 'modules.png';
 	Backdrop_Sprite_Name = 'backdrops.png';
 
-	Altimeter_Sprite_Name = 'altimeter.png';
-	Speedometer_Sprite_Name = 'speedometer.png';
+	Altimeter_Sprite_Name = 'sys_altimeter.png';
+	Speedometer_Sprite_Name = 'sys_speedometer.png';
 	StatusFX_Sprite_Name = 'statusfx.png';
 	OtherFX_Sprite_Name = 'otherfx.png';
 
@@ -373,7 +373,7 @@ var
 begin
 	{ Draw the status diagram for this mek. }
 	{ Line One - Heads, Turrets, Storage }
-	MyDest.Y := MyZone.Y + 12;
+	MyDest.Y := MyZone.Y;
 	X0 := MyZone.X + ( MyZone.W div 2 ) - 7;
 
 	N := 0;
@@ -398,17 +398,15 @@ begin
 	if N < 1 then N := 1;	{ Want legs to either side of body; tail in middle. }
 	AddPartsOfType( GS_Leg );
     AddPartsOfTier( 3 );
-	AI_NextLine;
 end;
 
-Procedure DisplayStatusFX( Part: GearPtr );
+Procedure DisplayStatusFX( Part: GearPtr; MyZone: TSDL_Rect );
 	{ Show status effects and other things this part might be suffering from. }
 var
 	MyDest: TSDL_Rect;
 	T: Integer;
 begin
-	MyDest.X := CZone.X + 8;
-	MyDest.Y := CZone.Y + CZone.H - 20;
+	MyDest := MyZone;
 
 	if Part^.G = GG_Character then begin
 		T := NAttValue( Part^.NA , NAG_Condition , NAS_Hunger ) - Hunger_Penalty_Starts;
@@ -467,14 +465,14 @@ var
 begin
 	if ( GB <> Nil ) and OnTheMap( Part ) and IsMasterGear( Part ) and ( Part^.G <> GG_Prop ) then begin
 		{ Props are master gears, but they don't get location info. }
-		MyDest.Y := CDest.Y + 12;
+		MyDest.Y := CDest.Y + 16;
 		MyDest.X := CZone.X + ( CZone.W div 8 );
 		DrawSprite( Module_Sprite , MyDest , 144 + ( NAttValue( Part^.NA , NAG_Location , NAS_D ) + 1 ) mod 8 );
 
 		n := mekAltitude( GB , Part ) + 3;
 		if N < 0 then n := 0
 		else if N > 8 then n := 8;
-		MyDest.Y := CDest.Y - 8;
+		MyDest.Y := CDest.Y;
 		MyDest.X := CZone.X + ( CZone.W div 8 ) + 15;
 		DrawSprite( Altimeter_Sprite , MyDest , N );
 
@@ -488,7 +486,7 @@ begin
 		end else begin
 			N := 0;
 		end;
-		MyDest.Y := CDest.Y - 8;
+		MyDest.Y := CDest.Y;
 		MyDest.X := CZone.X + ( CZone.W div 8 ) - 24;
 		DrawSprite( Speedometer_Sprite , MyDest , N );
 
@@ -508,6 +506,7 @@ var
 	MM,A,B,CurM,MaxM: Integer;
 	MD: GearPtr;
 	C: TSDL_Color;
+    MyDest: TSDL_Rect;
 begin
 	{ General mecha information - Name, mass, maneuver }
 	AI_Title( GearName(Mek) , InfoHilight );
@@ -523,7 +522,13 @@ begin
 	AI_NextLine;
 	AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Mek)) , ( CZone.W * 3 ) div 4 , InfoGreen );
 	AI_NextLine;
-	AI_NextLine;
+
+    MyDest := CDest;
+    MyDest.X := ( CZone.W * 3 ) div 4 + CZone.X - 12;
+	DisplayStatusFX( Mek, MyDest );
+
+    CDest.Y := CZone.Y + 50 + TTF_FontLineSkip( Game_Font );
+	if LongForm then AI_NextLine;
 
 	{ Pilot Information - Name, health, rank }
 	MD := LocatePilot( Mek );
@@ -548,16 +553,16 @@ begin
 		AI_NextLine;
 	end;
 
+    { Movement information. }
+    MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
+    if MM > 0 then begin
+	    msg := MoveModeName[ MM ];
+	    msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
+    end else msg := 'Immobile';
+    AI_SmallTitle( msg , InfoGreen );
+
     if Longform then begin
 	    AI_SmallTitle( MassString( Mek ) + ' ' + FormName[Mek^.S] + '  PV:' + BStr( GearValue( Mek ) ) , InfoHilight );
-
-	    { Movement information. }
-	    MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
-	    if MM > 0 then begin
-		    msg := MoveModeName[ MM ];
-		    msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
-	    end else msg := 'Immobile';
-	    AI_SmallTitle( msg , InfoGreen );
 
 	    { Encumbrance information. }
 
@@ -570,7 +575,6 @@ begin
 	    AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , InfoGreen );
 	    AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
     end;
-	DisplayStatusFX( Mek );
 end;
 
 Procedure CharacterInfo( Part: GearPtr; GB: GameBoardPtr; LongForm: Boolean );
@@ -578,7 +582,7 @@ Procedure CharacterInfo( Part: GearPtr; GB: GameBoardPtr; LongForm: Boolean );
 var
 	T,TT,Width,S,CurM,MaxM: Integer;
 	C: TSDL_Color;
-	
+	MyDest: TSDL_Rect;
 begin
 	{ Show the character's name and health status. }
 	AI_Title( GearName(Part) , InfoHilight );
@@ -596,29 +600,35 @@ begin
 	AI_PrintFromRight( 'Me:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Me:' ) - 2 , InfoGreen );
 	AI_PrintFromRight( BStr( CharCurrentMental(Part)) + '/' + BStr( CharMental(Part)) , ( CZone.W * 13 ) div 16 , EnduranceColor( CharMental(Part) , CharCurrentMental(Part) ) );
 	AI_NextLine;
-	AI_NextLine;
 
-    if Longform then begin
+    MyDest := CDest;
+    MyDest.X := ( CZone.W * 3 ) div 4 + CZone.X - 12;
+	DisplayStatusFX( Part, MyDest );
 
-	    { Determine the spacing for the character's stats. }
-	    Width := CZone.W div 4;
+    CDest.Y := CZone.Y + 50 + TTF_FontLineSkip( Game_Font );
+	if LongForm then AI_NextLine;
 
-	    { Show the character's stats. }
-	    for t := 1 to ( NumGearStats div 4 ) do begin
-		    for tt := 1 to 4 do begin
-			    AI_PrintFromRight( StatName[ T * 4 + TT - 4 ][1] + StatName[ T * 4 + TT - 4 ][2] + ':' , ( TT-1 ) * Width + 1 , InfoGreen );
 
-			    { Determine the stat value. This may be higher or lower than natural... }
-			    S := CStat( Part , T * 4 + TT - 4 );
-			    if S > Part^.Stat[ T * 4 + TT - 4 ] then C := StatusPerfect
-			    else if S < Part^.Stat[ T * 4 + TT - 4 ] then C := StatusBad
-			    else C := StatusOK;
-			    AI_PrintFromLeft( BStr( S ) , TT * Width -5 , C );
-		    end;
-		    AI_NextLine;
+    { Determine the spacing for the character's stats. }
+    Width := CZone.W div 4;
+
+    { Show the character's stats. }
+    for t := 1 to ( NumGearStats div 4 ) do begin
+	    for tt := 1 to 4 do begin
+		    AI_PrintFromRight( StatName[ T * 4 + TT - 4 ][1] + StatName[ T * 4 + TT - 4 ][2] + ':' , ( TT-1 ) * Width + 1 , InfoGreen );
+
+		    { Determine the stat value. This may be higher or lower than natural... }
+		    S := CStat( Part , T * 4 + TT - 4 );
+		    if S > Part^.Stat[ T * 4 + TT - 4 ] then C := StatusPerfect
+		    else if S < Part^.Stat[ T * 4 + TT - 4 ] then C := StatusBad
+		    else C := StatusOK;
+		    AI_PrintFromLeft( BStr( S ) , TT * Width -5 , C );
 	    end;
+	    AI_NextLine;
+    end;
 
 	    { Encumbrance information. }
+    if Longform then begin
 
 	    { Get the current mass of carried equipment. }
 	    CurM := EquipmentMass( Part );
@@ -629,7 +639,6 @@ begin
 	    AI_PrintFromRight( 'Enc:' , 1 , InfoGreen );
 	    AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , 36 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
     end;
-	DisplayStatusFX( Part );
 end;
 
 Procedure MiscInfo( Part: GearPtr );
@@ -656,7 +665,7 @@ begin
 	else msg := '-';
 	AI_PrintFromRight( msg + ' DP' , CZone.W div 2 , HitsColor( Part ) );
 
-	N := ( GearMass( Part ) + 1 ) div 2;
+	N := ( Int64(GearMass( Part )) + 1 ) div 2;
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , CZone.W - 1 , InfoGreen );
 
 	if Part^.G < 0 then begin
@@ -687,7 +696,7 @@ Procedure RepairFuelInfo( Part: GearPtr );
 	{ Display info for any gear that doesn't have its own info }
 	{ procedure. }
 var
-	N: Integer;
+	N: LongInt;
 begin
 	{ Show the part's name. }
 	AI_Title( GearName(Part) , InfoHilight );
@@ -1159,7 +1168,7 @@ Procedure LFGI_ForItems( Part: GearPtr; gb: GameBoardPtr );
 var
     AI_Dest: TSDL_Rect;
     msg: String;
-    n: Integer;
+	N: LongInt;
 begin
 	{ Display the part's armor rating. }
 	N := GearCurrentArmor( Part );
@@ -1195,12 +1204,13 @@ Procedure LFGI_ForMecha( Part: GearPtr; gb: GameBoardPtr; ReallyLong: Boolean );
 var
     MyDest: TSDL_Rect;
     msg: String;
-    n,mm,mspeed,CurM,MaxM: Integer;
+    n,mm,mspeed,hispeed,CurM,MaxM: Integer;
     SS: SensibleSpritePtr;
 begin
     msg := TeamColorString( GB , Part );
     CDest.X := CZone.X;
 	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , msg , 160 , 160 );
+	if (SS = Nil) or (SS^.Img = Nil) then SS := ConfirmSprite( 'mecha_noimage.png', msg, 160 , 160 );
 	if SS <> Nil then DrawSprite( SS , CDest , 0 );
     CDest.X := CDest.X + 173;
     SS := ConfirmSprite( GearSpriteName(Nil,Part) , msg , 64 , 64 );
@@ -1235,13 +1245,21 @@ begin
 	    AI_NextLine;
 	    AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Part)) , 175, InfoGreen );
 	    AI_NextLine;
+        hispeed := 0;
         for mm := 1 to NumMoveMode do begin
             mspeed := AdjustedMoveRate( Part , MM , NAV_NormSpeed );
             if mspeed > 0 then begin
             	AI_PrintFromRight( MoveDesc(Part,MM), 175, InfoGreen );
             	AI_NextLine;
             end;
+            if MoveLegal( Part, MM, NAV_FullSpeed, 0 ) then begin
+                mspeed := AdjustedMoveRate( Part , MM , NAV_FullSpeed );
+                if mspeed > hispeed then hispeed := mspeed;
+            end;
         end;
+    	AI_PrintFromRight( ReplaceHash(MsgString('MAX_SPEED'),BStr(hispeed)), 175, InfoGreen );
+    	AI_NextLine;
+
 	    MyDest.X := CZone.X;
 	    MyDest.Y := n;
 	    MyDest.W := 170;
@@ -1274,7 +1292,27 @@ begin
     MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
     MyDest.W := MyDest.W - 20;
     MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
-    GameMsg( SAttValue( Part^.SA, 'BIO_1' ) , MyDest , InfoGreen );
+    GameMsg( SAttValue( Part^.SA, 'BIO1' ) , MyDest , InfoGreen );
+end;
+
+Procedure LFGI_ForScenes( Part: GearPtr; gb: GameBoardPtr );
+    { Longform info for a scene. }
+var
+    MyDest: TSDL_Rect;
+    SS: SensibleSpritePtr;
+begin
+    CDest.X := CZone.X;
+    CDest.Y := CDest.Y + 8;
+	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , '' , 250 , 150 );
+	if (SS = Nil) or (SS^.Img = Nil) then SS := ConfirmSprite( 'scene_default.png', '' , 250 , 150 );
+	if SS <> Nil then DrawSprite( SS , CDest , 0 );
+
+    MyDest := CZone;
+    MyDest.X := MyDest.X + 10;
+    MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
+    MyDest.W := MyDest.W - 20;
+    MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
+    GameMsg( SAttValue( Part^.SA , 'DESC' ) , MyDest , InfoGreen );
 end;
 
 
@@ -1293,6 +1331,7 @@ begin
 
     if Part^.G = GG_Mecha then LFGI_ForMecha( Part, gb, True )
     else if Part^.G = GG_Character then LFGI_ForCharacters( Part, gb )
+    else if Part^.G = GG_Scene then LFGI_ForScenes( Part, gb )
     else LFGI_ForItems( Part, gb );
 end;
 
@@ -1305,7 +1344,7 @@ var
 begin
     MyDest := ZONE_BPHeader.GetRect();
 	SetInfoZone( MyDest );
-	AI_Title( GearName(PC) , NeutralGrey );
+	AI_Title( LanceMateMenuName(PC) , NeutralGrey );
 
     { Get the current mass of carried equipment. }
     CurM := EquipmentMass( PC );
@@ -1450,8 +1489,8 @@ initialization
 	Interact_Sprite := ConfirmSprite( Interact_Sprite_Name , '' , 4 , 16 );
 	Module_Sprite := ConfirmSprite( Module_Sprite_Name , '' , 16 , 16 );
 	Backdrop_Sprite := ConfirmSprite( Backdrop_Sprite_Name , '' , 100 , 150 );
-	Altimeter_Sprite := ConfirmSprite( Altimeter_Sprite_Name , '' , 26 , 65 );
-	Speedometer_Sprite := ConfirmSprite( Speedometer_Sprite_Name , '' , 26 , 65 );
+	Altimeter_Sprite := ConfirmSprite( Altimeter_Sprite_Name , '' , 26 , 48 );
+	Speedometer_Sprite := ConfirmSprite( Speedometer_Sprite_Name , '' , 26 , 48 );
 	StatusFX_Sprite := ConfirmSprite( StatusFX_Sprite_Name , '' , 10 , 12 );
 	OtherFX_Sprite := ConfirmSprite( OtherFX_Sprite_Name , '' , 10 , 12 );
 

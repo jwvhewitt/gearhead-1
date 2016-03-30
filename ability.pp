@@ -74,6 +74,7 @@ Function GearActive( Mek: GearPtr ): Boolean;
 function SkillValue( Master: GearPtr; Skill: Integer ): Integer;
 function ReactionTime( Master: GearPtr ): Integer;
 function PilotName( Part: GearPtr ): String;
+Function LanceMateMenuName( M: GearPtr ): String;
 
 Procedure DoleExperience( Mek: GearPtr; XPV: LongInt );
 Procedure DoleExperience( Mek,Target: GearPtr; XPV: LongInt );
@@ -304,6 +305,20 @@ begin
 	PilotName := Name;
 end;
 
+Function LanceMateMenuName( M: GearPtr ): String;
+var
+	msg,pilot: string;
+begin
+	msg := FullGearName( M );
+
+	if M^.G = GG_Mecha then begin
+		pilot := SAttValue( M^.SA , 'PILOT' );
+		if pilot <> '' then msg := msg + ' (' + pilot + ')';
+	end;
+
+	LanceMateMenuName := msg;
+end;
+
 Procedure DoleExperience( Mek: GearPtr; XPV: LongInt );
 	{ Give XPV experience points to whoever is behind the wheel of }
 	{ master unit Mek. }
@@ -321,9 +336,14 @@ Procedure DoleExperience( Mek,Target: GearPtr; XPV: LongInt );
 	{ Give XPV experience points to whoever is behind the wheel of }
 	{ master unit Mek. Scale the experience points by the relative }
 	{ values of Mek and Target. }
+const
+	XPV_MAX = 2147483647;
+	XPV_MIN = -2147483648;
 var
 	MPV,TPV,MonPV: LongInt;	{ Mek PV, Target PV }
-	XP2: Int64;
+	XPV_TPV: Int64;
+	XPV_TPV_TS: double;
+	XP2: double;
 begin
 	MPV := GearValue( Mek );
 	if MPV < 1 then MPV := 1;
@@ -336,8 +356,17 @@ begin
 			MonPV := Target^.V * Target^.V * 150 - Target^.V * 100;
 			if MonPV > TPV then TPV := MonPV;
 		end;
-		XP2 := ( XPV * TPV * ( Target^.Scale + 1 ) ) div MPV;
-		XPV := XP2;
+		{ To avoid a range overflow of the LongInt. }
+		XPV_TPV := Int64(XPV) * Int64(TPV);
+		XPV_TPV_TS := double(XPV_TPV) * double( Target^.Scale + 1 );
+		XP2 := XPV_TPV_TS / double(MPV);
+		if XP2 < XPV_MIN then begin
+			XPV := XPV_MIN;
+		end else if XPV_MAX < XP2 then begin
+			XPV := XPV_MAX;
+		end else begin
+			XPV := LongInt(Trunc(XP2));
+		end;
 	end;
 	if XPV < 1 then XPV := 1;
 	DoleExperience( Mek , XPV );

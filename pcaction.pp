@@ -68,6 +68,15 @@ begin
 	SDLCombatDisplay( PCACTIONRD_GB );
 end;
 
+Procedure PhoneRedraw;
+	{ Redraw the map and the PC's info. }
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+    InfoBox( ZONE_PhoneInstructions.GetRect() );
+    CMessage( MsgString( 'PHONE_INSTRUCTIONS' ), ZONE_PhoneInstructions.GetRect(), InfoGreen );
+end;
+
+
 Procedure MenuControlRedraw;
 	{ Redraw the map and the PC's info. }
 begin
@@ -262,8 +271,10 @@ end;
 Procedure FHQ_Disassemble( GB: GameBoardPtr; PC,NPC: GearPtr );
 	{ Robot NPC is no longer desired. Disassemble it into spare parts, delete the NPC, }
 	{ then give the parts to PC. }
+const
+	V_MAX = 32767;
 var
-	M: Integer;
+	M: LongInt;
 begin
 	{ Error check- NPC must be on the gameboard. }
 	if not IsFoundAlongTrack( GB^.Meks , NPC ) then Exit;
@@ -282,7 +293,11 @@ begin
 
 	{ Get the spare parts. }
 	NPC := LoadNewSTC( 'SPAREPARTS-1' );
-	NPC^.V := M * 5;
+	if (V_MAX < (Int64(M) * 5)) then begin
+		NPC^.V := V_MAX;
+	end else begin
+		NPC^.V := M * 5;
+	end;
 	InsertInvCom( PC , NPC );
 end;
 
@@ -534,6 +549,7 @@ begin
 			Inc( N );
 		end;
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		AddRPGMenuItem( RPM , MSgString( 'EXIT' ) , -1 );
         SetItemByPosition( RPM, OldPos );
 
@@ -761,7 +777,7 @@ begin
 	if HasPCommCapability( PC , PCC_Phone ) then  begin
 		DialogMsg( MsgString( 'PHONE_Prompt' ) );
 {$IFDEF SDLMODE}
-		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PCActionRedraw );
+		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PhoneRedraw );
 {$ELSE}
 		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) );
 {$ENDIF}

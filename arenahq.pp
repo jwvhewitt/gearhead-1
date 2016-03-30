@@ -454,7 +454,9 @@ begin
 					{ Just get rid of the character. }
 					DisposeGear( PC );
 				end;
+                {$IFNDEF SDLMODE}
 				ClrZone( ZONE_Info );
+                {$ENDIF}
 
 			end else begin
 				{ PC isn't a valid character. Get rid of it. }
@@ -824,6 +826,9 @@ procedure EnterCombat( HQCamp: CampaignPtr );
 	{ Insert surviving PCs and salvage into the unit. }
 	{ Deallocate NPCs and wasted meks. }
 	{ Save the game. }
+const
+	TPV_MAX = 2147483647;
+	TPV_MIN = -2147483648;
 var
 	ECM: RPGMenuPtr;	{ Enter Combat Menu }
 	Diff: Integer;		{ Difficulcy Level }
@@ -833,7 +838,7 @@ var
 	MList: GearPtr;		{ The list of meks which will take part }
 	N: Integer;		{ A menu input code }
 	msg: String;
-	TPV: LongInt;
+	TPV: Int64;
 	SA: SAttPtr;
 	XPV: Integer;
 begin
@@ -919,6 +924,11 @@ begin
 		DelinkGear( HQCamp^.Source^.SubCom , Pilot );
 		DeployMek( HQCamp^.GB , Mek , Pilot , NAV_DefPlayerTeam );
 	end;
+	if TPV < TPV_MIN then begin
+		TPV := TPV_MIN;
+	end else if TPV_MAX < TPV then begin
+		TPV := TPV_MAX;
+	end;
 
 	{ Add a number of random enemies to the scenario. }
 	{ Generate a shopping list of mecha found in the Design/ drawer. }
@@ -931,6 +941,11 @@ begin
 	{ selected (Diff). Yes, I'm reassigning TPV to now represent the enemy }
 	{ point value... bad programming style. }
 	TPV := ( TPV * Diff ) div 2;
+	if TPV < TPV_MIN then begin
+		TPV := TPV_MIN;
+	end else if TPV_MAX < TPV then begin
+		TPV := TPV_MAX;
+	end;
 
 	{ Call the SelectEnemyForces procedure from ArenaPlay. This will }
 	{ choose mecha designs from the list generated & give pilots to them. }

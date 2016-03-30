@@ -79,6 +79,8 @@ Const
 	NAS_Gender = 0;
 	NAV_Male = 0;
 	NAV_Female = 1;
+    NAV_Nonbinary = 2;
+    NAV_Undefined = 3;
 
 	GenderName: Array[0..1] of String = ( 'Male' , 'Female' );
 
@@ -742,8 +744,11 @@ const
 		500,800,1300,2100,3400,
 		5500,8900,14400,23300,37700
 	);
+	SAC_MAX = 2147483647;
+	SAC_MIN = -2147483648;
 var
 	SAC,N: LongInt;
+	tmp: Int64;
 begin
 	{ The chart lists skill costs according to desired level, }
 	{ not current level. So, modify things a bit. }
@@ -763,7 +768,15 @@ begin
 	if ( PC <> Nil ) and ( PC^.G = GG_Character ) then begin
 		N := TooManySkillsPenalty( PC , NumberOfSkills( PC ) );
 		if N > 0 then begin
-			SAC := ( SAC * ( 100 + N ) ) div 100;
+			tmp := Int64(SAC) * Int64( 100 + N );
+			tmp := tmp div 100;
+			if (SAC_MAX < tmp) then begin
+				SAC := SAC_MAX;
+			end else if (tmp < SAC_MIN) then begin
+				SAC := SAC_MIN;
+			end else begin
+				SAC := tmp;
+			end;
 		end;
 	end;
 

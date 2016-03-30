@@ -118,10 +118,13 @@ end;
 Procedure ApplyRepairPoints( Target: GearPtr; Skill: Integer; var RP: LongInt );
 	{ Search through TARGET, and restore DPs to parts }
 	{ that can be repaired using SKILL. }
+const
+	tmp_MAX = 2147483647;
 var
 	Part: GearPtr;
 	SD,AD,TCom,SCom,ARP,RPNeeded: LongInt;
 	T: Integer;
+	tmp: Int64;
 begin
 	{ Only examine TARGET for damage if it's of a type that can be }
 	{ repaired using SKILL. }
@@ -137,9 +140,22 @@ begin
 				TCom := ComponentComplexity( Target );
 				SCom := SubComComplexity( Target );
 				if SCom > TCom then begin
-					RPNeeded := ( RPNeeded * SCom ) div TCom;
-					ARP := ( ARP * TCom ) div SCom;
-					if ARP < 1 then ARP := 1;
+					tmp := ( Int64(RPNeeded) * Int64(SCom) ) div TCom;
+					if tmp < 0 then begin
+						RPNeeded := 0;
+					end else if tmp_MAX < tmp then begin
+						RPNeeded := tmp_MAX;
+					end else begin
+						RPNeeded := tmp;
+					end;
+					tmp := ( Int64(ARP) * Int64(TCom) ) div SCom;
+					if tmp < 1 then begin
+						ARP := 1;
+					end else if tmp_MAX < tmp then begin
+						ARP := tmp_MAX;
+					end else begin
+						ARP := tmp;
+					end;
 				end;
 			end;
 
@@ -159,9 +175,22 @@ begin
 				TCom := ComponentComplexity( Target );
 				SCom := SubComComplexity( Target );
 				if SCom > TCom then begin
-					RPNeeded := ( RPNeeded * SCom ) div TCom;
-					ARP := ( ARP * TCom ) div SCom;
-					if ARP < 1 then ARP := 1;
+					tmp := ( Int64(RPNeeded) * Int64(SCom) ) div TCom;
+					if tmp < 0 then begin
+						RPNeeded := 0;
+					end else if tmp_MAX < tmp then begin
+						RPNeeded := tmp_MAX;
+					end else begin
+						RPNeeded := tmp;
+					end;
+					tmp := ( Int64(ARP) * Int64(TCom) ) div SCom;
+					if tmp < 1 then begin
+						ARP := 1;
+					end else if tmp_MAX < tmp then begin
+						ARP := tmp_MAX;
+					end else begin
+						ARP := tmp;
+					end;
 				end;
 			end;
 
@@ -443,9 +472,15 @@ Function UseRobotics( GB: GameBoardPtr; PC,Ingredients: GearPtr ): GearPtr;
 	{ adding a GENE BLENDER for the BioTech skill later on... }
 	{ This function returns the robot, or NIL if construction failed. }
 	{ The calling procedure should place the robot on the map or dispose of it. }
+const
+	BP_MAX = 2147483647;
+	BP_MIN = -2147483648;
+	Stat_MAX = 32767;
 var
 	Robot,Part,Part2: GearPtr;
-	BP,SkRk,T,BaseSkill,Sensor,Electronic,Armor,Skill: Integer;
+	BP: LongInt;
+	BP_tmp: Int64;
+	SkRk,T,BaseSkill,Sensor,Electronic,Armor,Skill: Integer;
 	Viable,Good: Boolean;
 
 	Procedure InstallLimb( N,Size: Integer );
@@ -542,13 +577,26 @@ begin
 		if Part^.G = GG_RepairFuel then begin
 			BP := BP + Part^.V;
 		end else begin
-			BP := BP + GearMaxDamage( Part ) + GearMaxArmor( Part ) + GearMass( Part );
+			BP_tmp := BP;
+			BP_tmp := BP_tmp + GearMaxDamage( Part );
+			BP_tmp := BP_tmp + GearMaxArmor( Part );
+			BP_tmp := BP_tmp + GearMass( Part );
+			if BP_tmp < BP_MIN then begin
+				BP_tmp := BP_MIN;
+			end else if BP_MAX < BP_tmp then begin
+				BP_tmp := BP_MAX;
+			end;
+			BP := BP_tmp;
 		end;
 		Part := Part^.Next;
 	end;
 
 	{ Use the BP total to calculate the robot's BODY stat. }
-	Robot^.Stat[ STAT_Body ] := BP div 25;
+	if (Stat_MAX < (BP div 25)) then begin
+		Robot^.Stat[ STAT_Body ] := Stat_MAX;
+	end else begin
+		Robot^.Stat[ STAT_Body ] := BP div 25;
+	end;
 	if Robot^.Stat[ STAT_Body ] < 1 then Robot^.Stat[ STAT_Body ] := 1
 	else if Robot^.Stat[ STAT_Body ] > 25 then Robot^.Stat[ STAT_Body ] := 25;
 
