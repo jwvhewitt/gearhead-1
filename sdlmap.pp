@@ -149,6 +149,7 @@ const
 	DefaultFemaleSpriteName = 'cha_f_citizen.png';
 	DefaultMaleSpriteHead = 'cha_m_';
 	DefaultFemaleSpriteHead = 'cha_f_';
+    DefaultNonbinarySpriteHead = 'cha_*_';
 
 
 	Strong_Hit_Sprite_Name = 'blast64.png';
@@ -499,6 +500,7 @@ const
 var
 	it: String;
 	FList: SAttPtr;
+    gen: Integer;
 begin
 	{ If this model is an out-of-scale character, return the mini-sprite. }
 	if ( M^.G = GG_Character ) and (GB <> Nil) and ( M^.Scale < GB^.Scale ) then Exit( mini_sprite );
@@ -506,10 +508,13 @@ begin
 	it := SAttValue( M^.SA , 'SDL_SPRITE' );
 	if it = '' then begin
 		if M^.G = GG_Character then begin
-			if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
+            gen := NAttValue( M^.NA , NAG_CharDescription , NAS_Gender );
+			if gen = NAV_Male then begin
 				it := DefaultMaleSpriteHead;
-			end else begin
+			end else if gen = NAV_Female then begin
 				it := DefaultFemaleSpriteHead;
+            end else begin
+                it := DefaultNonbinarySpriteHead;
 			end;
 			it := it + LowerCase( SAttValue( M^.SA , 'JOB' ) ) + '.*';
 			FList := CreateFileList( Graphics_Directory + it );
@@ -517,11 +522,12 @@ begin
 				it := SelectRandomSAtt( FList )^.Info;
 				DisposeSAtt( FList );
 			end else begin
-				if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
+				if gen = NAV_Male then begin
 					it := DefaultMaleSpriteName;
-				end else begin
+				end else if gen = NAV_Female then begin
 					it := DefaultFemaleSpriteName;
-				end;
+                end else if random(2) = 1 then it := DefaultMaleSpriteName
+				else it := DefaultFemaleSpriteName;
 			end;
 		end else if ( M^.G = GG_Mecha ) and ( M^.S >= 0 ) and ( M^.S < NumForm ) then begin
 			it := FORM_DEFAULT[ M^.S + 1 ];

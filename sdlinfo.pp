@@ -29,6 +29,7 @@ var
 	CHAT_Message: String;
 	CHAT_React,CHAT_Endurance: Integer;
 
+Function DefaultPortraitList( NPC: GearPtr ): SAttPtr;
 Function JobAgeGenderDesc( NPC: GearPtr ): String;
 
 Procedure DrawPortrait( GB: GameBoardPtr; NPC: GearPtr; MyDest: TSDL_Rect; WithBackground: Boolean );
@@ -79,6 +80,22 @@ var
 	Altimeter_Sprite,Speedometer_Sprite: SensibleSpritePtr;
 	StatusFX_Sprite,OtherFX_Sprite: SensibleSpritePtr;
     Master_Portrait_List: SAttPtr;
+
+Function DefaultPortraitList( NPC: GearPtr ): SAttPtr;
+    { Return the default list of sprites for this NPC, based on gender. }
+var
+    PList: SAttPtr;
+begin
+	if (NPC<>Nil) and (NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male) then begin
+		PList := CreateFileList( Graphics_Directory + 'por_m_*.*' );
+	end else if (NPC<>Nil) and (NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Female) then begin
+		PList := CreateFileList( Graphics_Directory + 'por_f_*.*' );
+	end else begin
+		PList := CreateFileList( Graphics_Directory + 'por_m_*.*' );
+        ExpandFileList( PList, Graphics_Directory + 'por_f_*.*' );
+	end;
+    DefaultPortraitList := PList;
+end;
 
 Function JobAgeGenderDesc( NPC: GearPtr ): String;
 	{ Return the Job, Age, and Gender of the provided character in }
@@ -782,11 +799,7 @@ begin
 	it := SAttValue( NPC^.SA , 'SDL_PORTRAIT' );
 	if (it = '') or not StringInList( it, Master_Portrait_List ) then begin
 		{ Create a portrait list based upon the character's gender. }
-		if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
-			PList := CreateFileList( Graphics_Directory + 'por_m_*.*' );
-		end else begin
-			PList := CreateFileList( Graphics_Directory + 'por_f_*.*' );
-		end;
+        PList := DefaultPortraitList( NPC );
 
 		{ Filter the portrait list based on the NPC's traits. }
 		if NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) < 6 then begin

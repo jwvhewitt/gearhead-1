@@ -32,7 +32,7 @@ Plot 0
 	% At startup, do initialization.
 	% Also check to make sure E2 is alive and well, since otherwise there
 	% will be problems.
-	start <ifPersona E2 else GoDelete if= P1 0 P= 1 1 FreezeChar E6 MoveChar E2 E1 ConGen E2 AddNPCReact E2 50 NPCLevel E2 S103 EMail 1 Goto GoSetTriggers>
+	start <ifPersona E2 else GoDelete if= P1 0 P= 1 1 FreezeChar E6 MoveChar E2 E1 AddNPCReact E2 50 NPCLevel E2 S103 EMail 1 Goto GoSetTriggers>
 	GoSetTriggers <Compose EWM E3 .ewm ifFaction N2 else GoReplaceFaction E= 6 N2>
 	GoReplaceFaction <N= 2 E6>
 	GoDelete <S= 101 1 N= 3 E3 AdvancePlot 0>
@@ -569,6 +569,7 @@ sub
 		CPrompt3 <if= P2 1 Accept>
 		Prompt3_1 <Everything worked out for the best.>
 		Prompt4 <Alright, tell me.>
+        CPrompt4 <ifChatNPCSexy Accept>
 		Prompt4_1 <What is it?>
 		Prompt5 <Some things are best left in the past.>
 		Prompt5_1 <You can't live your entire life in the past.>

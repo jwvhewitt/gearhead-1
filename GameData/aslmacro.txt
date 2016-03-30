@@ -47,7 +47,6 @@ DEPLOYCHAR <GrabNPC ? DeployGG ?>
 DynaNPC <GrabNPC ? DynaGG ?>
 NPCLevel <GrabNPC ? GSkillLevel ?>
 NPCAbsoluteLevel <GrabNPC ? GAbsoluteLevel ?> % scales all skills by percent
-ConGen <GrabNPC ? GSetNAtt 3 0 1 GAddNAtt 3 0 -PCGender> % set NPC opposite gender of PC
 DynaItem <GrabItem ? DynaGG 0>
 DynaItemTeam <GrabItem ? DynaGG ?>
 MOVEKEYITEM <GrabItem ?  MoveGG ?>
@@ -63,6 +62,7 @@ IFM <GrabLocal ? IFGInPlay>
 IFITEMOK <GrabItem ? IfGOK>
 IFITEMEXISTS <GrabItem ? IfGExists>
 IFNPCSEXY <GrabNPC ? IfGSexy>
+IFCHATNPCSEXY <GrabChatNPC IfGSexy>
 IFFACTIONENEMY <GrabFaction ? ifGArchEnemy>
 IFNPCARCHENEMY <GrabNPC ? ifGArchEnemy>
 ifVisible <if= StatVal STAT_MetaVisibility 0>

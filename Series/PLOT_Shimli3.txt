@@ -3,7 +3,7 @@ Plot 0
 	% Shimli tests are those personality quizzes that one can find
 	% in women's magazines. Shimli plots are multiple choice
 	% conversations that may somehow affect the PC's reputation.
-	element1 <Character Young Sex:F Lawful>
+	element1 <Character Young Charm Lawful>
 	rumor <!1 has been reading fashion magazines.>
 	% Time limit - this plot will fade after a short time.
 	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 500>

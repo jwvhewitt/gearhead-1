@@ -529,8 +529,12 @@ begin
 	if it > 100 then it := 100
 	else if it < -100 then it := -100;
 
-	{ A true archenemy will never have a greater reaction score than 0. }
-	if ( NAttValue( NPC^.NA , NAG_Relationship , NAttValue( PC^.NA , NAG_Personal , NAS_CID ) ) = NAV_ArchEnemy ) then begin
+    if HasTalent( PC, NAS_Bishounen ) then begin
+        it := it + 10;
+        if it < 0 then it := 0;
+	end else if ( NAttValue( NPC^.NA , NAG_Relationship , NAttValue( PC^.NA , NAG_Personal , NAS_CID ) ) = NAV_ArchEnemy ) then begin
+	    { A true archenemy will never have a greater reaction score than 0. }
+        { Unless you're very very good looking, of course. }
 		it := it - ArchEnemyReactionPenalty;
 		if it > 0 then it := 0;
 	end;
@@ -821,11 +825,15 @@ end;
 
 Function IsSexy( PC, NPC: GearPtr ): Boolean;
 	{ Return TRUE if there are some potential sparks between }
-	{ the PC and NPC, or FALSE if there aren't. In this simple }
-	{ universe we'll describe that as being if their genders }
-	{ aren't equal to each other. }
+	{ the PC and NPC, or FALSE if there aren't. }
 begin
-	IsSexy := ( NAttValue( PC^.NA , NAG_CharDescription , NAS_Gender ) <> NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ) or HasTalent( PC , NAS_Bishounen );
+    if NAttValue( PC^.NA, NAG_CharDescription, NAS_RomanceType ) = NAV_RT_Anyone then begin
+    	IsSexy := True;
+    end else if NAttValue( PC^.NA, NAG_CharDescription, NAS_RomanceType ) = NAV_RT_Male then begin
+    	IsSexy := NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male;
+    end else if NAttValue( PC^.NA, NAG_CharDescription, NAS_RomanceType ) = NAV_RT_Female then begin
+    	IsSexy := NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Female;
+    end else IsSexy := False;
 end;
 
 Function DoleChatExperience( PC,NPC: GearPtr ): String;
@@ -908,8 +916,15 @@ begin
 
 	{ Apply flirtation bonus to the skill roll, if appropriate. }
 	{ The bonus only applies if the PC has ranks in flirtation or is a Jack of all Trades. }
-	if IsSexy( PC , NPC ) and ( ( NAttValue( PC^.NA , NAG_Skill , 27 ) > 0 ) or HasTalent( PC , NAS_JackOfAll ) ) then begin
-		SkRoll := SkRoll + RollStep( SkillValue( PC , 27 ) );
+	if ( NAttValue( PC^.NA , NAG_Skill , 27 ) > 0 ) or HasTalent( PC , NAS_JackOfAll ) then begin
+        if HasTalent( PC, NAS_Bishounen ) then begin
+    		SkRoll := SkRoll + RollStep( SkillValue( PC , 27 ) );
+        end else if NAttValue( PC^.NA, NAG_CharDescription, NAS_RomanceType ) in [NAV_RT_NoOne,NAV_RT_Anyone] then begin
+            { If looking for anyone, or looking for no-one, apply half the normal bonus. }
+    		SkRoll := SkRoll + ( RollStep( SkillValue( PC , 27 ) ) div 2 );
+        end else if IsSexy( PC , NPC ) then begin
+    		SkRoll := SkRoll + RollStep( SkillValue( PC , 27 ) );
+        end;
 	end;
 
 	{ Initialize TRAIT to random, and find the NPC's PERSONA value. }

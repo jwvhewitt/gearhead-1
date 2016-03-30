@@ -56,8 +56,13 @@ Function UseRobotics( GB: GameBoardPtr; PC,Ingredients: GearPtr ): GearPtr;
 
 implementation
 
+{$IFDEF SDLMODE}
+uses ability,action,damage,gearutil,ghchars,ghholder,ghmodule,ghmovers,ghswag,
+     ghweapon,movement,interact,rpgdice,texutil,sdlgfx;
+{$ELSE}
 uses ability,action,damage,gearutil,ghchars,ghholder,ghmodule,ghmovers,ghswag,
      ghweapon,movement,interact,rpgdice,texutil;
+{$ENDIF}
 
 Function TotalRepairableDamage( Target: GearPtr; Skill: Integer ): LongInt;
 	{ Search through TARGET, and calculate how much damage it has }
@@ -557,7 +562,11 @@ begin
 	SetSAtt( Robot^.SA , 'NAME <' + RandomRobotName + '>' );
 	SetNAtt( Robot^.NA , NAG_CharDescription , NAS_DAge , -19 );
 	SetSAtt( Robot^.SA , 'ROGUECHAR <R>' );
+    {$IFDEF SDLMODE}
+    SetSAtt( Robot^.SA, 'SDL_COLORS <' + RandomColorString(CS_Clothing) + ' ' + RandomColorString(CS_PrimaryMecha) + ' ' + RandomColorString(CS_Detailing) + '>' );
+    {$ELSE}
 	SetSAtt( Robot^.SA , 'SDL_COLORS <80 80 85 170 155 230 6 42 120>' );
+    {$ENDIF}
 
 	{ Determine the PC's ROBOTICS skill. }
 	{ The skill rank is penalized by 10 here since it will be given a bonus }
@@ -643,7 +652,7 @@ begin
 			{ This robot has become self-aware!!! }
 			{ Give it a CID, a gender, and it likes the PC. }
 			SetNAtt( Robot^.NA , NAG_Personal , NAS_CID , NewCID( GB , FindRoot( GB^.Scene ) ) );
-			SetNAtt( Robot^.NA , NAG_CharDescription , NAS_Gender , Random( 2 ) );
+			SetNAtt( Robot^.NA , NAG_CharDescription , NAS_Gender , Random( 3 ) );
 			AddNAtt( PC^.NA , NAG_ReactionScore , NAttValue( Robot^.NA , NAG_Personal , NAS_CID ) , 50 );
 
 			{ Give the PC some extra XP for a job well done. }

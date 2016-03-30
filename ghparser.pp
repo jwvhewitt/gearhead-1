@@ -753,7 +753,7 @@ begin
 		CCD_Cmd := ExtractWord( TheLine );
 
 		{ Check to see if this is a gender command. }
-		for t := 0 to 1 do begin
+		for t := 0 to 3 do begin
 			if CCD_Cmd = UpCase( GenderName[ T ] ) then begin
 				SetNAtt( C^.NA , NAG_CharDescription , NAS_Gender , T );
 			end;

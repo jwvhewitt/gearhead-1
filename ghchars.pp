@@ -82,13 +82,19 @@ Const
     NAV_Nonbinary = 2;
     NAV_Undefined = 3;
 
-	GenderName: Array[0..1] of String = ( 'Male' , 'Female' );
+	GenderName: Array[0..3] of String = ( 'Male' , 'Female', 'Nonbinary', 'Undefined' );
 
 	NAS_DAge = 1;	{ CharDescription/Delta age - Offset from 20. }
 
 	NAS_CharType = 2;	{ Character type - PC or NPC. }
 	NAV_CTPrimary = 0;	{ default value }
 	NAV_CTLancemate = 1;	{ lancemate }
+
+    NAS_RomanceType = 3;
+    NAV_RT_NoOne = 0;
+    NAV_RT_Male = 1;
+    NAV_RT_Female = 2;
+    NAV_RT_Anyone = 3;
 
 	{ CharDescription / Personality Traits }
 	Num_Personality_Traits = 7;
@@ -828,7 +834,7 @@ begin
 	if ( NPC = Nil ) or ( NPC^.G <> GG_Character ) then begin
 		NPCTraitDesc := '';
 	end else begin
-		it := 'SEX:' + GenderName[ NATtValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ];
+		it := 'GENDER:' + GenderName[ NATtValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ];
 
 		T := NATtValue( NPC^.NA , NAG_CharDescription , NAS_Dage );
 		if T < 0 then begin

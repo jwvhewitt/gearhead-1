@@ -231,8 +231,10 @@ begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
 	if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Female then begin
 		BuildFileMenu( RPM , Graphics_Directory + 'cha_f_*.*' );
-	end else begin
+	end else if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
 		BuildFileMenu( RPM , Graphics_Directory + 'cha_m_*.*' );
+	end else begin
+		BuildFileMenu( RPM , Graphics_Directory + 'cha_*_*.*' );
 	end;
 	AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 
