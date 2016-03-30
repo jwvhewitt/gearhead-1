@@ -195,7 +195,7 @@ sub
 	CMsg7_6 <ifChatNPCMelancholy Accept>
 
 	% 8 : PC doesn't really want this mission
-	Msg8 <Well, I do know another adventurer who may be able to help... If you could contact \ELEMENT 5 in \SCENE EScene 5 for me, \OPR E5 could do the infiltration instead.>
+	Msg8 <Well, I do know another adventurer who may be able to help... If you could contact \ELEMENT 5 in \SCENE EScene 5 for me, \SPR E5 could do the infiltration instead.>
 	Msg8_1 <>
 	CMsg8_1 <ifChatNPCSociable Accept>
 	Msg8_2 <>
@@ -244,7 +244,7 @@ sub
 
 	Msg12 <\ELEMENT 2 asked you to help investigate \NARRATIVE 2 .>
 
-	Msg13 <Great! You're going to have to bring \SPR E5 \PPR E5 hiring fee, of course. This cash should cover that... if there's any change you can keep that for yourself.>
+	Msg13 <Great! You're going to have to bring \OPR E5 \PPR E5 hiring fee, of course. This cash should cover that... if there's any change you can keep that for yourself.>
 	Msg13_1 <>
 	CMsg13_1 <ifChatNPCSociable Accept>
 	Msg13_2 <>
@@ -318,10 +318,10 @@ sub
 		GoFirstTime <Say 1>
 		result1 <NewChat Say 3 goto GoEndMission>
 		GoEndMission <History 4 MoveChar E5 P1 S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1 XRBadThing NAV_XRBSeekingRevenge AdvancePlot 0>
-		Msg1 <Go find \ELEMENT 5 in \SCENE EScene 5 , and pay \SPR E5 for the mission.>
+		Msg1 <Go find \ELEMENT 5 in \SCENE EScene 5 , and pay \OPR E5 for the mission.>
 
 		Msg2 <\ELEMENT 5 has done the job; \NARRATIVE 2 is planning to reactivate something called the "T-1". Plus, we found something that will be of great personal interest to you...>
-		Msg2_1 <\ELEMENT 5 infiltrated the complex and found the info. That's why people say \OPR E5 's so good. Apparently \NARRATIVE 2 is planning to activate something called "T-1"; also, something was found that would be of personal interest to you.>
+		Msg2_1 <\ELEMENT 5 infiltrated the complex and found the info. That's why people say \SPR E5 's so good. Apparently \NARRATIVE 2 is planning to activate something called "T-1"; also, something was found that would be of personal interest to you.>
 		CMsg2_1 <ifChatNPCSociable Accept>
 		Msg2_2 <My investigation is complete. I've learned that \NARRATIVE 2 plans to active a PreZero weapon codenamed "T-1". I also found something of personal interest to you.>
 		CMsg2_2 <ifChatNPCShy Accept>

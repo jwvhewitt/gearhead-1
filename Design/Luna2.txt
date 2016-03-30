@@ -2,6 +2,7 @@ Battroid 3
 Name <Luna II>
 Desig <AEF>
 desc <This is Aegis Overlord's elite commando mecha.>
+SDL_PORTRAIT <mecha_luna2.png>
 
 Mod Head
 	Size 2

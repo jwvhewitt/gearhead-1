@@ -3,6 +3,7 @@ Name <Trailblazer>
 SDL_Sprite <btr_trailblazer.png>
 Desig <TR9-01b Beta>
 desc <The Trailblazer is Maquise Spinner's scout mecha design.>
+SDL_PORTRAIT <mecha_trailblazer.png>
 
 Mod Head
 	Armor 2

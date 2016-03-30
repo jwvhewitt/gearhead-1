@@ -2,6 +2,7 @@ Battroid 3
 Name <Chameleon>
 Desig <CHA-01>
 desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
+SDL_PORTRAIT <mecha_chameleon.png>
 
 Mod Head
 	Size 2
@@ -92,6 +93,7 @@ Battroid 3
 Name <Chameleon>
 Desig <CHA-02b Sniper>
 desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
+SDL_PORTRAIT <mecha_chameleon.png>
 
 Mod Head
 	Size 2
@@ -174,6 +176,7 @@ Battroid 3
 Name <Chameleon>
 Desig <CHA-03 Command>
 desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
+SDL_PORTRAIT <mecha_chameleon.png>
 
 Mod Head
 	Size 2

@@ -3,6 +3,7 @@ Name <Vadel>
 Desig <AD26>
 SDL_Sprite <btr_vadel.png>
 desc <Fast and well-armed, the Vadel is the high end battroid against which all others are measured.>
+SDL_PORTRAIT <mecha_vadel.png>
 
 Mod Head
 	Size 3

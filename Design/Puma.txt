@@ -2,6 +2,7 @@ Battroid 4
 Name <Puma>
 Desig <LCA-1S>
 desc <This is the main battroid used by the Solar Navy.>
+SDL_PORTRAIT <mecha_puma.png>
 
 Mod Head
 	Size 2

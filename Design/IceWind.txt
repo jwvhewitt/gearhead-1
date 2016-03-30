@@ -1,6 +1,7 @@
 Battroid 3
 Name <Ice Wind>
 Desig <CBG-87>
+SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
 	Size 1
@@ -94,6 +95,7 @@ end
 Battroid 3
 Name <Ice Wind>
 Desig <CBG-87b>
+SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
 	Size 1
@@ -196,6 +198,7 @@ end
 Battroid 3
 Name <Ice Wind>
 Desig <CBG-88d>
+SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
 	Size 1
@@ -293,6 +296,7 @@ end
 Battroid 3
 Name <Ice Fox>
 Desig <CBG-99>
+SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
 	Size 1

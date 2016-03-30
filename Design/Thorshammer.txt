@@ -3,6 +3,7 @@ Name <Thorshammer>
 Desig <THD-35>
 SDL_Sprite <btr_thorshammer.png>
 desc <This is RegEx corporation's most popular mecha design.>
+SDL_PORTRAIT <mecha_thorshammer.png>
 
 Mod Body
 	Armor 7
