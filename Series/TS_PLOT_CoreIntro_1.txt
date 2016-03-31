@@ -73,8 +73,8 @@ sub
 	GoBeenBefore <Say 2>
 	result1 <NewChat Say 3 AddChat 3 AddChat 4 AddChat 5 Memo 8>
 	result2 <NewChat Reputation 3 -d6 Say 4 AddChat 3 AddChat 4 AddChat 5 Memo 8>
-	result3 <NewChat Reputation 6 1 Say 5>
-	result4 <NewChat Reputation 1 1 Say 6>
+	result3 <NewChat Reputation 6 1 Say 5 Memo 9>
+	result4 <NewChat Reputation 1 1 Say 6 Memo 9>
 	result5 <NewChat Reputation 3 -d10 Reputation 6 1 Say 7>
 	Msg1 <Hey there. You just got into town, right? Did you happen to see anything strange on the way in?>
 	Msg2 <I'm still looking for clues about that weapon smuggling ring. I haven't found anything yet, but neither has \ELEMENT 3 .>
@@ -84,6 +84,7 @@ sub
 	Msg6 <You can talk with \ELEMENT 3 in the Guardian's HQ if you're interested.>
 	Msg7 <Eh, whatever.>
 	Msg8 <There's a weapon smuggling ring operating in Snake Lake.>
+	Msg9 <There's a weapon smuggling ring operating in Snake Lake. You can talk to \ELEMENT 3 in Downtown Snake Lake for more information.>
 	Prompt1 <No, not really...>
 	Prompt2 <That's none of your business.>
 	Prompt3 <Any chance of me benefiting from this?>
@@ -113,7 +114,7 @@ sub
 	.lawmek <BuruBuru.txt>
 	GoR103NoChance <Say 104>
 	result104 <NewChat Say 105>
-	GoStartMission <EndChat SavePos Staged .mission1 150000 DynaNPC E3 3 PassVAr 10 E3 P= 2 1>
+	GoStartMission <EndChat SavePos Staged .mission1 threat 5 150 DynaNPC E3 3 PassVAr 10 E3 P= 2 1>
 	.mission1 <TS_SCENE_CoreIntro_1a.txt>
 	Msg101 <May I help you?>
 	Msg102 <Remember, if you find any information about the smugglers, there's a reward available.>
@@ -166,7 +167,7 @@ sub
 	.badmek <BuruBuru.txt>
 	GoR103NoChance <Say 104>
 	result104 <NewChat Say 105>
-	GoStartMission <EndChat SavePos Staged .mission1 150000 DynaNPC E4 3 PassVAr 10 E4 P= 2 1>
+	GoStartMission <EndChat SavePos Staged .mission1 threat 5 150 DynaNPC E4 3 PassVAr 10 E4 P= 2 1>
 	.mission1 <TS_SCENE_CoreIntro_1a.txt>
 	Msg101 <Yes, what do you want?>
 	Msg102 <Chat, eh? I could tell you all about the good old days... But to be perfectly frank, they weren't all that good.>

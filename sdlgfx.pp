@@ -83,6 +83,7 @@ const
 	ZONE_Dialog: TSDL_Rect = ( x:10; y: ScreenHeight - Dialog_Area_Height ; w: ScreenWidth - 20 ; h:Dialog_Area_Height-10 );
 
     ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100; anchor: ANC_middle );
+    ZONE_TitleScreenLogo: DynamicRect = ( dx:-250; dy:-190; w:500; h:215; anchor: ANC_middle );
 
 	ZONE_TargetInfo: DynamicRect = ( dx:  -Right_Column_Width -10 ; dy:10; w:Right_Column_Width; h:150; anchor: ANC_upperright );
     ZONE_TargetDistance: DynamicRect = ( dx:  -Right_Column_Width -10 ; dy:176; w:Right_Column_Width; h:20; anchor: ANC_upperright );

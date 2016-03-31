@@ -2462,7 +2462,7 @@ end;
 
 
 
-procedure ShiftGears( Mek: GearPtr );
+procedure ShiftGears( GB: GameBoardPtr; Mek: GearPtr );
 	{ Set the mek's MoveMode attribute to the next }
 	{ active movemode that this mek has. }
 var
@@ -2475,7 +2475,11 @@ begin
 		MM := MM mod NumMoveMode + 1;
 	end;
 
-	if MM <> 0 then SetNAtt( Mek^.NA , NAG_Action , NAS_MoveMode , MM);
+	if MM <> 0 then begin
+        SetNAtt( Mek^.NA , NAG_Action , NAS_MoveMode , MM);
+        PrepAction( GB, Mek, NAV_Stop );
+		SetNAtt( Mek^.NA , NAG_Action , NAS_CallTime , GB^.ComTime + 1 );
+    end;
 end;
 
 Procedure KeyMapDisplay;
@@ -3032,8 +3036,8 @@ begin
 
 		end else if ( S div 100 ) = 1 then begin
 			{ A movemode switch has been selected. }
-			SetNAtt( Mek^.NA , NAG_Action , NAS_MoveAction , NAV_Stop );
 			SetNAtt( Mek^.NA , NAG_Action , NAS_MoveMode , S mod 100 );
+            PrepAction( GB, Mek, NAV_Stop );
 			SetNAtt( Mek^.NA , NAG_Action , NAS_CallTime , GB^.ComTime + 1 );
 
 		end else if S = -1 then begin
@@ -3280,7 +3284,7 @@ begin
 
 
 			end else if KP = KeyMap[ KMC_ShiftGears ].KCode then begin
-				ShiftGears( Mek );
+				ShiftGears( Camp^.GB, Mek );
 			end else if KP = KeyMap[ KMC_ExamineMap ].KCode then begin
 				LookAround( Camp^.GB , Mek );
 			end else if KP = KeyMap[ KMC_AttackMenu ].KCode then begin
@@ -3413,7 +3417,7 @@ begin
 
 	{ Check the player for jumping. }
 	TL := NAttValue( Mek^.NA , NAG_Action , NAS_TimeLimit );
-	if ( TL > 0 ) then begin
+	if ( TL > 0 ) and ( NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode ) = MM_Fly ) then begin
 		DialogMsg( BStr( Abs( TL - Camp^.GB^.ComTime ) ) + ' seconds jump time left.' );
 	end;
 

@@ -1120,6 +1120,14 @@ begin
 				W := 'ERROR!!!';
 			end;
 
+		end else if UpCase( W ) = '\SOURCE' then begin
+			{ Insert the name of the current source. }
+			if Scene <> Nil then begin
+				W := GearName( Scene );
+			end else begin
+				W := 'SOURCE-ERROR!!!';
+			end;
+
 		end else if UpCase( W ) = '\ELEMENT' then begin
 			{ Insert the name of a specified plot element. }
 			ID := ScriptValue( S0 , GB , Scene );
@@ -1161,7 +1169,7 @@ begin
 			ID := ScriptValue( S0 , GB , Scene );
 			Part := GG_LocateNPC( ID , GB , Scene );
 			if Part <> Nil then begin
-				W := MsgString( 'OPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
+				W := MsgString( 'SPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
 			end else begin
 				W := 'it';
 			end;
@@ -1171,7 +1179,7 @@ begin
 			ID := ScriptValue( S0 , GB , Scene );
 			Part := GG_LocateNPC( ID , GB , Scene );
 			if Part <> Nil then begin
-				W := MsgString( 'SPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
+				W := MsgString( 'OPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
 			end else begin
 				W := 'it';
 			end;

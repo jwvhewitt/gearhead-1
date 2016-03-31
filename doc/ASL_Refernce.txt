@@ -649,6 +649,9 @@
 	This formatting command will be replaced by the name of the
 	specified location.
 
+    \SOURCE
+    The name of the gear containing this script.
+
 	\VAL [value]
 	This formatting command will be replaced by the value
 	indicated.

@@ -1,3 +1,6 @@
+- Added title screen logo (gharena.pas)
+- Jump countdown timer fixed (pcaction.pp)
+- Updated gender and romance options (ghchars.pp)
 - Refactored \SPR and \OPR tags to be correct (arenascript.pp)
 - Added instructions to phone (pcaction.pp)
 - Lancemates may use skill trainers (services.pp)

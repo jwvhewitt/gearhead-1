@@ -23,7 +23,13 @@ Mod Body
 		sub
 			Rockets 2
 		end
+
+        ECM 3
 	end
+    inv
+		BodyArmor 3
+        name <Puma Armor>
+    end
 
 Mod Arm
 	Name <Right Arm>
@@ -46,18 +52,30 @@ Mod Arm
 
 		STC LAS-5
 	end
+	inv
+		EShield 2
+        name <Puma Shield>
+		DefBonus 1
+	end
+
 
 Mod Leg
 	Name <Right Leg>
 	Armor 3
 	sub
-		Flight 4
+		Flight 5
 	end
+    inv
+		LegArmor 2
+    end
 
 Mod Leg
 	Name <Left Leg>
 	Armor 3
 	sub
-		Flight 4
+		Flight 5
 	end
+    inv
+		LegArmor 2
+    end
 end
