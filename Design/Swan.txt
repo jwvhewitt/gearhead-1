@@ -49,6 +49,7 @@ Mod Wing
 		EMelee 4
 		Name <Shining Edge>
 		Acc 2
+		Integral
 
 		Flight 4
 	end
@@ -62,6 +63,7 @@ Mod Wing
 		EMelee 4
 		Name <Shining Edge>
 		Acc 2
+		Integral
 
 		Flight 4
 	end

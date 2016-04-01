@@ -16,6 +16,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body
@@ -102,6 +103,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body
@@ -193,6 +195,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body
@@ -318,6 +321,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body
@@ -409,6 +413,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body
@@ -518,6 +523,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body
@@ -603,6 +609,7 @@ Mod Head
 		Range 4
 		Acc 2
 		Speed 3
+		Integral
 	end
 
 Mod Body

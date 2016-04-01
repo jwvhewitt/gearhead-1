@@ -24,6 +24,7 @@ size 5
 armor 3
 sub
 	STC LAS-10
+	Integral
 end
 
 mod arm
@@ -32,6 +33,7 @@ size 5
 armor 3
 sub
 	STC LAS-10
+	Integral
 end
 
 mod leg

@@ -65,6 +65,7 @@ Mod Arm
 		sub
 			MLauncher 8
 			Name <Heavy Rocket Pod>
+			Integral
 			Magazine 5
 			sub
 				Rockets 8
@@ -90,6 +91,7 @@ Mod Arm
 		sub
 			MLauncher 8
 			Name <Heavy Rocket Pod>
+			Integral
 			Magazine 5
 			sub
 				Rockets 8

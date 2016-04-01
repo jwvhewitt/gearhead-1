@@ -6,6 +6,7 @@ Desc <The Claymore is one of the oldest battroid mecha designs, dating from the 
 
 Mod Body
 	Armor 6
+	mass 1
 	sub
 		CPit
 		Armor 2
@@ -70,6 +71,7 @@ Mod Leg
 	Name <Right Leg>
 	Size 7
 	Armor 5
+	mass 1
 	sub
 		MLauncher 4
 		Name <Rocket Launcher>
@@ -86,6 +88,7 @@ Mod Leg
 	Name <Left Leg>
 	Size 7
 	Armor 5
+	mass 1
 	sub
 		MLauncher 4
 		Name <Rocket Launcher>

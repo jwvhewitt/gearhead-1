@@ -8,6 +8,7 @@ Mod Head
 	Armor 2
 	sub
 		Sensor 10
+		Integral
 
 		TarComp 2
 	end

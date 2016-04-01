@@ -12,6 +12,7 @@ Mod Head
 		Name <Medium Laser>
 		Range 3
 		Acc 1
+		Integral
 
 		Sensor 5
 	end
@@ -37,6 +38,7 @@ Mod Arm
 		Name <Autocannon>
 		Range 5
 		Speed 3
+		Integral
 		Magazine 20
 		sub
 			Ammo 10

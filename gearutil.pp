@@ -85,11 +85,12 @@ function CStat( PC: GearPtr; Stat: Integer ): Integer;
 Procedure WriteCGears( var F: Text; G: GearPtr );
 Function ReadCGears( var F: Text ): GearPtr;
 
+Function IsExternalPart( Master,Part: GearPtr ): Boolean;
 
 implementation
 
 uses ghchars,ghcpit,ghguard,ghholder,ghmecha,ghmodule,ghmovers,
-     ghprop,ghsensor,ghsupport,
+     ghintrinsic,ghprop,ghsensor,ghsupport,
      ghswag,ghweapon,texutil;
 
 Const
@@ -657,6 +658,10 @@ begin
 			GG_MoveSys: ComponentComplexity := Part^.V;
 		else ComponentComplexity := 1;
 		end;
+
+		{ If the part is integral, and not a module, reduce complexity by 1 }
+		{ down to a minimum value of 1. }
+		if ( ComponentComplexity > 1 ) and ( Part^.G <> GG_Module ) and PartHasIntrinsic( Part , NAS_Integral ) then Dec( ComponentComplexity );
 	end;
 end;
 
@@ -1315,6 +1320,9 @@ begin
 		for t := 1 to Part^.Scale do it := it * 5;
 	end;
 
+	{ Modify for intrinsics. }
+	it := it + IntrinsicCost( Part );
+
 	{ Modify for Fudge. }
 	it := it + NAttValue( Part^.NA , NAG_GearOps , NAS_Fudge );
 
@@ -1826,6 +1834,21 @@ Function ReadCGears( var F: Text ): GearPtr;
 begin
 	{ Call the real procedure with a PARENT value of Nil. }
 	ReadCGears := REALReadGears( Nil );
+end;
+
+
+Function IsExternalPart( Master,Part: GearPtr ): Boolean;
+	{ Return TRUE if Part is an invcom or a descendant of an invcom. }
+var
+	IsXP: Boolean;
+begin
+	{ Assume FALSE until proven TRUE. }
+	IsXP := False;
+	while ( Part <> Nil ) and ( Part <> Master ) and not IsXP do begin
+		if IsInvCom( Part ) then IsXP := True;
+		Part := Part^.Parent;
+	end;
+	IsExternalPart := IsXP;
 end;
 
 end.

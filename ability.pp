@@ -25,7 +25,7 @@ unit ability;
 
 interface
 
-uses gears,ghsensor;
+uses gears,ghsensor,ghintrinsic;
 
 const
 	XPA_AttackHit = 2;
@@ -38,6 +38,13 @@ const
 	XPA_SK_Critical = 2;
 	XPA_SK_Basic = 1;	{ XP for just using a combat skill. }
 	XPA_SK_UseRepair = 3;
+
+	{ PERSONAL COMMUNICATION CAPABILITIES }
+	PCC_Memo = GV_Memo;	{ Can view adventure memos }
+	PCC_EMail = GV_EMail;	{ Can receive emails from NPCs }
+	PCC_Comm = GV_Comm;	{ Can receive communications from NPCs }
+	PCC_Phone = GV_Comm;	{ Can receive communications from NPCs / legacy, same as above}
+	PCC_News = GV_News;	{ Can view internet global news }
 
 	CHAT_EXPERIENCE_TARGET = 20;
 
@@ -54,11 +61,6 @@ const
 	);
 
 
-	{ PERSONAL COMMUNICATION CAPABILITIES }
-	PCC_Memo = GV_Memo;	{ Can view adventure memos }
-	PCC_EMail = GV_EMail;	{ Can receive emails from NPCs }
-	PCC_Comm = GV_Comm;	{ Can receive communications from NPCs }
-	PCC_News = GV_News;	{ Can view internet global news }
 
 	Direct_Skill_Learning: Boolean = False;
 
@@ -97,6 +99,7 @@ Function CurrentStamina( PC: GearPtr ): Integer;
 Function MechaDescription( Mek: GearPtr ): String;
 Function HasPCommCapability( PC: GearPtr; C: Integer ): Boolean;
 Function HasTalent( PC: GearPtr; T: Integer ): Boolean;
+Function HasIntrinsic( PC: GearPtr; I: Integer; CasualUse: Boolean ): Boolean;
 
 Function LancematePoints( PC: GearPtr ): Integer;
 
@@ -870,6 +873,44 @@ begin
 	PC := LocatePilot( PC );
 	HasTalent := ( PC <> Nil ) and ( NAttValue( PC^.NA , NAG_Talent , T ) <> 0 );
 end;
+
+Function HasIntrinsic( PC: GearPtr; I: Integer; CasualUse: Boolean ): Boolean;
+	{ Return TRUE if the PC has the listed intrinsic, or FALSE otherwise. }
+	{ If this is casual use, search the general inventory. Otherwise }
+	{ just search the subcomponents. }
+	Function IntrinsicFoundAlongTrack( Part: GearPtr ): Boolean;
+		{ Return TRUE if the intrinsic is found along this track. }
+	var
+		WasFound: Boolean;
+	begin
+		{ Begin by assuming FALSE. }
+		WasFound := False;
+
+		{ Search along the track until we run out of parts or find }
+		{ the intrinsic. }
+		while ( Part <> Nil ) and not WasFound do begin
+			if NotDestroyed( Part ) then begin
+				WasFound := NAttValue( Part^.NA , NAG_Intrinsic , I ) <> 0;
+				if not WasFound then WasFound := IntrinsicFoundAlongTrack( Part^.SubCom );
+				if not WasFound then WasFound := IntrinsicFoundAlongTrack( Part^.InvCom );
+			end;
+			Part := Part^.Next;
+		end;
+
+		IntrinsicFoundAlongTrack := WasFound;
+	end;
+var
+	it: Boolean;
+begin
+	{ Start with an error check- if this isn't a regular intrinsic, return FALSE. }
+	if ( PC = Nil ) or ( I < 1 ) or ( I > NumIntrinsic ) then Exit( False );
+
+	it := NAttValue( PC^.NA , NAG_Intrinsic , I ) <> 0;
+	if not it then it := IntrinsicFoundAlongTrack( PC^.SubCom );
+	if CasualUse and not it then it := IntrinsicFoundAlongTrack( PC^.InvCom );
+	HasIntrinsic := it;
+end;
+
 
 Function LancematePoints( PC: GearPtr ): Integer;
 	{ Return however many lancemates the PC can have. }

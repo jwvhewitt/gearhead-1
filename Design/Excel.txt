@@ -37,6 +37,7 @@ Mod Arm
 	sub
 		STC LAS-10
 		Range 6
+		Integral
 	end
 	inv
 		Shield 3

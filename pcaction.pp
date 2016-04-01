@@ -641,6 +641,12 @@ end;
 Procedure MemoBrowser( GB: GameBoardPtr; PC: GearPtr );
 	{ Find all the memos that the player has accumulated, then allow }
 	{ them to be browsed through, then restore the display afterwards. }
+const
+	m_email = 1;
+	m_memo = 2;
+	m_rumor = 3;
+	m_news = 4;
+	m_Personadex = 5;
 var
 	MainMenu: RPGMenuPtr;
 	CRating,A: Integer;
@@ -768,7 +774,7 @@ var
 	Name: String;
 	NPC: GearPtr;
 begin
-	if HasPCommCapability( PC , PCC_Comm ) then  begin
+	if HasPCommCapability( PC , PCC_Phone ) then  begin
 		DialogMsg( MsgString( 'PHONE_Prompt' ) );
 {$IFDEF SDLMODE}
 		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PhoneRedraw );
