@@ -8,6 +8,7 @@ Mod Turret
 	sub
 		Gun 2
 		Name <Chain Gun>
+        Range 4
 		Speed 3
 		BV 4
 		Magazine 50

@@ -137,10 +137,10 @@ const
 	ZONE_BPInstructions: DynamicRect = (dx:-280; dY:90; W: 292; H: 40; anchor: ANC_middle);
 	ZONE_BPInfo: DynamicRect = (dx:30; dY:-210; W: 250; H: 340; anchor: ANC_middle);
 
-    ZONE_ShopNPCName: DynamicRect = ( dx:-330; dy: -230; w: 100; h: 16; anchor: ANC_middle );
+    ZONE_ShopNPCName: DynamicRect = ( dx:-330; dy: -230; w: 100; h: 32; anchor: ANC_middle );
     ZONE_ShopNPCPortrait: DynamicRect = ( dx:-330; dy: -210; w: 100; h: 150; anchor: ANC_middle );
     ZONE_ShopText: DynamicRect = ( dx:-225; dy: -230; w: 287; h: 170; anchor: ANC_middle );
-    ZONE_ShopPCName: DynamicRect = ( dx:-330; dy: -30; w: 100; h: 16; anchor: ANC_middle );
+    ZONE_ShopPCName: DynamicRect = ( dx:-330; dy: -30; w: 100; h: 32; anchor: ANC_middle );
     ZONE_ShopPCPortrait: DynamicRect = ( dx:-330; dy: -10; w: 100; h: 150; anchor: ANC_middle );
     ZONE_ShopMenu: DynamicRect = ( dx:-225; dy: -30; w: 287; h: 190; anchor: ANC_middle );
 

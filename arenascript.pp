@@ -593,6 +593,7 @@ var
 begin
 	{ Calculate the base reward value. }
 	RV := ThreatLevel div 100 * Percent div 100;
+    if RV < 100 then RV := 100;
 
 	{ Modify this for the PC's talents. }
 	if GB <> Nil then begin
