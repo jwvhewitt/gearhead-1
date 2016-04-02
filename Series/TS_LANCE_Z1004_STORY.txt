@@ -67,7 +67,8 @@ inv
 	name <Omega-1004>
 	job <ROBOT>
 	sdl_colors <130 143 114 116 100 13 0 230 0>
-	DAge -17
+    IsCharacter
+	DAge 35
 	chardesc Pragmatic Pragmatic Pragmatic Pragmatic Pragmatic
 	stat 7 25
 	stat 8 14

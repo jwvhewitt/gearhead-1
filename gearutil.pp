@@ -39,6 +39,7 @@ Function ScaleDP( DP , Scale , Material: Integer ): Integer;
 Function UnscaledMaxDamage( Part: GearPtr ): Integer;
 Function GearMaxDamage(Part: GearPtr): Integer;
 Function GearMaxArmor(Part: GearPtr): Integer;
+Function GenericName( Part: GearPtr ): String;
 Function GearName(Part: GearPtr): String;
 Function FullGearName(Part: GearPtr): String;
 
@@ -376,6 +377,35 @@ begin
 	GearMaxArmor := it;
 end;
 
+Function GenericName( Part: GearPtr ): String;
+    { Return a generic name for this part. }
+begin
+    case Part^.G of
+		GG_Module:	GenericName := ModuleName(Part);
+		GG_Mecha:	GenericName := MechaName(Part);
+		GG_Character:	GenericName := 'Character';
+		GG_Cockpit:	GenericName := 'Cockpit';
+		GG_Weapon:	GenericName := WeaponName(Part);
+		GG_Ammo:	GenericName := AmmoName(Part);
+		GG_MoveSys:	GenericName := MoveSysName(Part);
+		GG_Holder:	GenericName := HolderName( Part );
+		GG_Sensor:	GenericName := SensorName( Part );
+		GG_Support:	GenericName := SupportName( Part );
+		GG_Shield:	GenericName := ShieldName( Part );
+		GG_ExArmor:	GenericName := ArmorName( Part );
+		GG_Scene:	GenericName := 'Scene ' + BStr( Part^.S );
+		GG_Swag:	GenericName := SwagName( Part );
+		GG_Prop:	GenericName := 'Prop';
+		GG_MetaTerrain:	GenericName := 'Scenery';
+		GG_Electronics:	GenericName := ElecName( Part );
+		GG_Usable:	GenericName := UsableName( Part );
+		GG_RepairFuel:	GenericName := RepairFuelName( Part );
+		GG_Consumable:	GenericName := 'Food';
+		GG_WeaponAddOn:	GenericName := 'Weapon Accessory';
+		else GenericName := 'Platonic Form';
+	end;
+end;
+
 Function GearName(Part: GearPtr): String;
 	{Determine the name of Part. If Part has a NAME attribute,}
 	{this is easy. If not, locate a default name based upon}
@@ -389,30 +419,7 @@ begin
 
 	it := SAttValue(Part^.SA,'NAME');
 
-	if it = '' then case Part^.G of
-		GG_Module:	it := ModuleName(Part);
-		GG_Mecha:	it := MechaName(Part);
-		GG_Character:	it := 'Character';
-		GG_Cockpit:	it := 'Cockpit';
-		GG_Weapon:	it := WeaponName(Part);
-		GG_Ammo:	it := AmmoName(Part);
-		GG_MoveSys:	it := MoveSysName(Part);
-		GG_Holder:	it := HolderName( Part );
-		GG_Sensor:	it := SensorName( Part );
-		GG_Support:	it := SupportName( Part );
-		GG_Shield:	it := ShieldName( Part );
-		GG_ExArmor:	it := ArmorName( Part );
-		GG_Scene:	it := 'Scene ' + BStr( Part^.S );
-		GG_Swag:	it := SwagName( Part );
-		GG_Prop:	it := 'Prop';
-		GG_MetaTerrain:	it := 'Scenery';
-		GG_Electronics:	it := ElecName( Part );
-		GG_Usable:	it := UsableName( Part );
-		GG_RepairFuel:	it := RepairFuelName( Part );
-		GG_Consumable:	it := 'Food';
-		GG_WeaponAddOn:	it := 'Weapon Accessory';
-		else it := 'Platonic Form';
-	end;
+	if it = '' then it := GenericName( Part );
 
     if Part^.g = GG_AbsolutelyNothing then it := '~!' + it;
 
@@ -1827,5 +1834,6 @@ begin
 	{ Call the real procedure with a PARENT value of Nil. }
 	ReadCGears := REALReadGears( Nil );
 end;
+
 
 end.

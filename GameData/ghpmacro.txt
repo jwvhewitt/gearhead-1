@@ -218,3 +218,4 @@ SkillModRobotics          <Stat 1 38>
 SkillModLeadership        <Stat 1 39>
 SkillModDominateAnimal    <Stat 1 40>
 SkillModPickPockets       <Stat 1 41>
+IsCharacter <NAtt 3 4 0>

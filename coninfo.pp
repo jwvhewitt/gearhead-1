@@ -705,8 +705,10 @@ Function JobAgeGenderDesc( NPC: GearPtr ): String;
 var
 	msg,job: String;
 begin
-	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 );
-	msg := msg + ' year old ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
+	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ) + ' year old';
+    if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
+    	msg := msg + ' ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
+    end;
 	job := SAttValue( NPC^.SA , 'JOB' );
 	if job <> '' then msg := msg + ' ' + LowerCase( job );
 	msg := msg + '.';

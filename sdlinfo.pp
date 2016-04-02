@@ -103,8 +103,10 @@ Function JobAgeGenderDesc( NPC: GearPtr ): String;
 var
 	msg,job: String;
 begin
-	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 );
-	msg := msg + ' year old ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
+	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ) + ' year old';
+    if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
+    	msg := msg + ' ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
+    end;
 	job := SAttValue( NPC^.SA , 'JOB' );
 	if job <> '' then msg := msg + ' ' + LowerCase( job );
 	msg := msg + '.';
@@ -193,26 +195,20 @@ begin
 end;
 
 
-Procedure AI_Line( msg: String; C: TSDL_Color );
-	{ Draw a left justified message on the current line. }
+Procedure AI_Text( msg: String; C: TSDL_Color );
+	{ Draw a text message starting from the current line. }
 var
-	MyImage: PSDL_Surface;
+	MyText: PSDL_Surface;
 	PLine: PChar;
 begin
-	pline := QuickPCopy( msg );
-	MyImage := TTF_RenderText_Solid( Info_Font , pline , C );
-	Dispose( pline );
-
-{$IFDEF LINUX}
-	if MyImage <> Nil then SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
-{$ENDIF}
-
-	CDest.X := CZone.X;
-
-	SDL_BlitSurface( MyImage , Nil , Game_Screen , @CDest );
-	SDL_FreeSurface( MyImage );
-
-	AI_NextLine;
+    MyText := PrettyPrint( msg , CDest.W, C, True, Info_Font );
+	if MyText <> Nil then begin
+		SDL_SetClipRect( Game_Screen , @CZone );
+		SDL_BlitSurface( MyText , Nil , Game_Screen , @CDest );
+        CDest.Y := CDest.Y + MyText^.H + 8;
+		SDL_FreeSurface( MyText );
+		SDL_SetClipRect( Game_Screen , Nil );
+	end;
 end;
 
 Procedure AI_PrintFromRight( msg: String; Tab: Integer; C: TSDL_Color );
@@ -859,12 +855,21 @@ end;
 
 Procedure DrawPortrait( GB: GameBoardPtr; NPC: GearPtr; MyDest: TSDL_Rect; WithBackground: Boolean );
     { Draw this character's portrait in the requested area. }
+    { Note that if we have a pet rather than a character, }
+    { draw its sprite instead. }
 var
     SS: SensibleSpritePtr;
 begin
-	if WithBackground then DrawSprite( Backdrop_Sprite , MyDest , 0 );
-	SS := ConfirmSprite( PortraitName( NPC ) , TeamColorString( GB , NPC ) , 100 , 150 );
-	DrawSprite( SS , MyDest , 0 );
+    if NAttValue( NPC^.NA, NAG_CharDescription, NAS_Sentience ) = NAV_IsCharacter then begin
+	    if WithBackground then DrawSprite( Backdrop_Sprite , MyDest , 0 );
+	    SS := ConfirmSprite( PortraitName( NPC ) , TeamColorString( GB , NPC ) , 100 , 150 );
+	    DrawSprite( SS , MyDest , 0 );
+    end else begin
+        MyDest.X := MyDest.X + 18;
+        MyDest.Y := MyDest.Y + 43;
+        SS := ConfirmSprite( GearSpriteName(Nil,NPC) , TeamColorString( GB , NPC ) , 64 , 64 );
+	    if SS <> Nil then DrawSprite( SS , MyDest , Animation_Phase div 5 mod 8 );
+    end;
 end;
 
 
@@ -1183,33 +1188,42 @@ var
     msg: String;
 	N: LongInt;
 begin
-	{ Display the part's armor rating. }
-	N := GearCurrentArmor( Part );
-	if N > 0 then msg := '[' + BStr( N )
-	else msg := '[-';
-	msg := msg + '] ';
-	AI_PrintFromRight( msg , 1 , ArmorColor( Part ) );
+    msg := GenericName( Part );
+    if msg <> GearName( Part ) then begin
+        AI_SmallTitle( msg, InfoGreen );
+        AI_NextLine();
+    end;
 
 	{ Display the part's damage rating. }
 	N := GearCurrentDamage( Part );
 	if N > 0 then msg := BStr( N )
 	else msg := '-';
-	AI_PrintFromRight( msg + ' DP' , CZone.W div 2 , HitsColor( Part ) );
+	AI_PrintFromRight( 'Damage: ' + msg, 8 , HitsColor( Part ) );
+    AI_NextLine;
 
-	N := ( GearMass( Part ) + 1 ) div 2;
-	if N > 0 then AI_PrintFromLeft( MassString( Part ) , CZone.W - 1 , InfoGreen );
+	{ Display the part's armor rating. }
+	N := GearCurrentArmor( Part );
+	if N > 0 then msg := BStr( N )
+	else msg := '-';
+	AI_PrintFromRight( 'Armor: ' + msg, 8 , ArmorColor( Part ) );
+    AI_NextLine;
 
-	if Part^.G < 0 then begin
+	AI_PrintFromRight( 'Mass: ' + MassString( Part ) , 8 , InfoGreen );
+	AI_NextLine;
+	AI_NextLine;
+
+    if Part^.G = GG_Weapon then begin
+
+	end else if Part^.G < 0 then begin
 		AI_NextLine;
 		AI_PrintFromRight( Bstr( Part^.G ) + ',' + BStr( Part^.S ) + ',' + BStr( Part^.V ) , CZone.W div 2 , StdWhite );
 	end;
 
-	AI_Dest := CZone;
-	AI_Dest.X := AI_Dest.X + 10;
-	AI_Dest.Y := CDest.Y + TTF_FontLineSkip( Info_Font ) + 10;
-	AI_Dest.W := AI_Dest.W - 20;
-	AI_Dest.H := AI_Dest.H - ( CDest.Y - CZone.Y ) - 20 - TTF_FontLineSkip( Info_Font );
-	GameMsg( ExtendedDescription( Part ) , AI_Dest , InfoGreen );
+    CDest.X := CZone.X;
+    CDest.W := CZone.W;
+    AI_Text( ExtendedDescription( Part ) , InfoGreen );
+    msg := SAttValue( Part^.SA , 'DESC' );
+    if msg <> '' then AI_Text( msg, InfoGreen );
 end;
 
 Procedure LFGI_ForMecha( Part: GearPtr; gb: GameBoardPtr; ReallyLong: Boolean );
@@ -1286,23 +1300,57 @@ Procedure LFGI_ForCharacters( Part: GearPtr; gb: GameBoardPtr );
 var
     MyDest: TSDL_Rect;
     msg: String;
-    n,sval: Integer;
+    n,sval,CurM,MaxM: Integer;
     SS: SensibleSpritePtr;
 begin
     msg := TeamColorString( GB , Part );
     CDest.X := CZone.X;
-	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , msg , 100 , 150 );
-	if SS <> Nil then DrawSprite( SS , CDest , 0 );
+    DrawPortrait( GB, Part, CDest, False );
+
+    N := CDest.Y;
 	AI_NextLine;
-    for n := 1 to NumGearStats do begin
-	    AI_PrintFromRight( StatName[n] + ':' , 116 , InfoGreen );
-	    AI_PrintFromLeft( BStr( CStat( Part, n ) ) , CZone.W - 8 , InfoGreen );
+
+	{ Print HP, ME, and SP. }
+	AI_PrintFromLeft( 'HP:' , 170 , InfoGreen );
+	AI_PrintFromRight( BStr( GearCurrentDamage(Part)) + '/' + BStr( GearMaxDamage(Part)) , 175 , HitsColor( Part ) );
+	AI_NextLine;
+	AI_PrintFromLeft( 'St:' , 170 , InfoGreen );
+	AI_PrintFromRight( BStr( CharCurrentStamina(Part)) + '/' + BStr( CharStamina(Part)) , 175 , EnduranceColor( CharStamina(Part) , CharCurrentStamina(Part) ) );
+	AI_NextLine;
+	AI_PrintFromLeft( 'Me:' , 170 , InfoGreen );
+	AI_PrintFromRight( BStr( CharCurrentMental(Part)) + '/' + BStr( CharMental(Part)) , 175 , EnduranceColor( CharMental(Part) , CharCurrentMental(Part) ) );
+	AI_NextLine;
+    { Get the current mass, max mass of carried equipment. }
+    CurM := EquipmentMass( Part );
+    MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+	AI_PrintFromLeft( 'Enc:' , 170 , InfoGreen );
+	AI_PrintFromRight( MakeMassString( CurM, Part^.Scale ), 175 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+    AI_NextLine;
+
+    CDest.X := CZone.X + 160;
+    CDest.Y := N + 72;
+    CDest.W := CZone.W - 160;
+    DisplayModules( Part, CDest );
+    CDest.Y := CDest.Y + 50;
+    n := PercentDamaged( Part );
+    msg := BStr(n) + '%';
+    CMessage( msg, CDest, StatusColor( 100, n ) );
+
+    CDest.X := CZone.X;
+    CDest.Y := CZone.Y + 174;
+
+
+    for n := 1 to 4 do begin
+	    AI_PrintFromRight( StatName[n] + ':' , 8 , InfoGreen );
+	    AI_PrintFromLeft( BStr( CStat( Part, n ) ) , CZone.W div 2 - 8 , InfoGreen );
+	    AI_PrintFromRight( StatName[n+4] + ':' , CZone.W div 2 + 8 , InfoGreen );
+	    AI_PrintFromLeft( BStr( CStat( Part, n+4 ) ) , CZone.W - 8 , InfoGreen );
 	    AI_NextLine;
     end;
 
     MyDest := CZone;
     MyDest.X := MyDest.X + 10;
-    MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
+    MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font );
     MyDest.W := MyDest.W - 20;
     MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
     GameMsg( SAttValue( Part^.SA, 'BIO1' ) , MyDest , InfoGreen );

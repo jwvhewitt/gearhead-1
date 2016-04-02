@@ -930,32 +930,35 @@ Function DirKey( ReDrawer: RedrawProcedureType ): Integer;
 	{ Return -1 if no good direction was chosen. }
 var
 	K: Char;
+    DK: Integer;
 begin
+    DK := -2;
 	repeat
 		K := RPGKey;
 		if K = KeyMap[ KMC_East ].KCode then begin
-			DirKey := 0;
+			DK := 0;
 		end else if K = KeyMap[ KMC_SouthEast ].KCode then begin
-			DirKey := 1;
+			DK := 1;
 		end else if K = KeyMap[ KMC_South ].KCode then begin
-			DirKey := 2;
+			DK := 2;
 		end else if K = KeyMap[ KMC_SouthWest ].KCode then begin
-			DirKey := 3;
+			DK := 3;
 		end else if K = KeyMap[ KMC_West ].KCode then begin
-			DirKey := 4;
+			DK := 4;
 		end else if K = KeyMap[ KMC_NorthWest ].KCode then begin
-			DirKey := 5;
+			DK := 5;
 		end else if K = KeyMap[ KMC_North ].KCode then begin
-			DirKey := 6;
+			DK := 6;
 		end else if K = KeyMap[ KMC_NorthEast ].KCode then begin
-			DirKey := 7;
+			DK := 7;
 		end else if K = RPK_TimeEvent then begin
 			ReDrawer;
-			DirKey := -2;
+            GHFlip();
 		end else begin
-			DirKey := -1;
+			DK := -1;
 		end;
-	until DirKey <> -2;
+	until DK <> -2;
+    DirKey := DK;
 end;
 
 Procedure EndOfGameMoreKey;

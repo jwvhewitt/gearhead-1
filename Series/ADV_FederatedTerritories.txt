@@ -7870,6 +7870,7 @@ Scene 49 0
 		job <Cyclops Guard>
 		SetPersona 4901
 		SetTeam 2
+        IsCharacter
 
 		Monster Cyclops Guard
 		name <Nolbu>
@@ -7877,9 +7878,11 @@ Scene 49 0
 		job <Cyclops Guard>
 		SetPersona 4902
 		SetTeam 2
+        IsCharacter
 
 		Monster Cyclops Progenitor
 		SetTeam 2
+        IsCharacter
 	end
 
 scene 50 0
@@ -7948,26 +7951,32 @@ scene 50 0
 		roguechar <P>
 		SetTeam 2
 		SetPersona 5001
+        IsCharacter
 
 		Monster Cyclops Guard
 		SetTeam 2
 		SetPersona 5002
+        IsCharacter
 
 		Monster Cyclops Guard
 		SetTeam 2
 		SetPersona 5003
+        IsCharacter
 
 		Monster Cyclops
 		SetTeam 2
 		SetPersona 5004
+        IsCharacter
 
 		Monster Cyclops
 		SetTeam 2
 		SetPersona 5005
+        IsCharacter
 
 		Monster Cyclops
 		SetTeam 2
 		SetPersona 5006
+        IsCharacter
 
 		STC COMPUTER-2
 		home <Computer Cell>
@@ -8813,6 +8822,7 @@ Scene 58 0
 		SetPersona 5801
 		chardesc sociable heroic
 		DAge 12
+        IsCharacter
 	end
 
 Scene 59 0

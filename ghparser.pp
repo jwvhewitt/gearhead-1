@@ -1026,6 +1026,8 @@ begin
 	{ If it loaded successfully, set its job to "ANIMAL". }
 	if Mon <> Nil then begin
 		SetSATt( Mon^.SA , 'JOB <ANIMAL>' );
+        SetNAtt( Mon^.NA, NAG_CharDescription, NAS_Gender, NAV_Undefined );
+        SetNAtt( Mon^.NA, NAG_CharDescription, NAS_Sentience, NAV_IsMonster );
 	end;
 
 	{ Return whatever value was returned. }

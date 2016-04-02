@@ -61,10 +61,11 @@ Const
 	CredsPerDP = 1;		{ Cost to repair 1DP of damage. }
 	MaxShopItems = 21;	{ Maximum number of items in a shop. }
 
-{$IFDEF SDLMODE}
 var
+    SERV_CUSTOMER: GearPtr;
+{$IFDEF SDLMODE}
 	SERV_GB: GameBoardPtr;
-	SERV_PC,SERV_CUSTOMER,SERV_NPC,SERV_Info: GearPtr;
+	SERV_PC,SERV_NPC,SERV_Info: GearPtr;
     SERV_Menu: RPGMenuPtr;
 {$ENDIF}
 
@@ -185,13 +186,17 @@ Procedure BrowseTreeRedraw;
     { Redraw the services interface and show the longform info for a gear. }
 var
     Part: GearPtr;
+    N: Integer;
 begin
     BasicServiceRedraw();
 	if ( SERV_Menu <> Nil ) and ( SERV_Info <> Nil ) then begin
-		Part := LocateGearByNumber( SERV_Info , CurrentMenuItemValue( SERV_Menu ) );
-		if Part <> Nil then begin
-        	LongformGearInfo( Part , SERV_GB, ZONE_ShopInfo );
-		end;
+        N := CurrentMenuItemValue( SERV_Menu );
+        if N > 0 then begin
+		    Part := LocateGearByNumber( SERV_Info , N );
+		    if Part <> Nil then begin
+            	LongformGearInfo( Part , SERV_GB, ZONE_ShopInfo );
+		    end;
+        end;
 	end;
 end;
 
@@ -278,10 +283,10 @@ begin
 
 	{ Step Three: Keep shopping until the PC selects exit. }
 	repeat
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
         SERV_Info := AmmoList;
         SERV_Menu := ShopMenu;
@@ -365,10 +370,10 @@ begin
 {$ENDIF}
 
 	repeat
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
 		SERV_Info := Part;
 		N := SelectMenu( YNMenu , @FocusOnOneRedraw );
@@ -528,9 +533,9 @@ begin
 	msg := MSgString( 'SELLPROMPT' + Bstr( Random( 4 ) + 1 ) );
 	msg := ReplaceHash( msg , BStr( Cost ) );
 	msg := ReplaceHash( msg , GearName( Part ) );
+    SERV_Customer := PC;
 {$IFDEF SDLMODE}
     SERV_PC := PC;
-    SERV_Customer := PC;
     SERV_NPC := NPC;
 	SERV_Info := Part;
 	CHAT_Message := Msg;
@@ -1248,11 +1253,11 @@ begin
 
 	Repeat
 		{ Display the trading stats. }
+        SERV_Customer := PC;
 
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
         SERV_Info := Wares;
         SERV_Menu := RPM;
@@ -1334,10 +1339,10 @@ begin
 
 		{ Get a choice from the menu, then record the current item }
 		{ number. }
+        SERV_Customer := PCChar;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PCChar;
-        SERV_Customer := PCChar;
         SERV_NPC := NPC;
         SERV_Info := PCInv^.InvCom;
         SERV_Menu := RPM;
@@ -1389,11 +1394,10 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellMekInv' ) , 4 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_BrowseParts' ) , 3 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );
-
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
 		SERV_Info := Mek;
 		N := SelectMenu( RPM , @FocusOnOneRedraw );
@@ -1440,10 +1444,10 @@ begin
 		RPM := CreateMechaMenu( GB );
 
 		{ Select an item from the menu, then get rid of the menu. }
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
         SERV_Info := GB^.Meks;
         SERV_Menu := RPM;
@@ -1577,11 +1581,11 @@ var
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_Pay_Yes' ) , 1 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Cyber_Pay_No' ) , -1 );
 
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
 		CHAT_Message := ReplaceHash( MsgString( 'SERVICES_Cyber_Pay' ) , BStr( Cost ) );
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
 		SERV_Info := Item;
 		N := SelectMenu( RPM , @FocusOnOneRedraw );
@@ -1623,10 +1627,10 @@ var
 		AddMentalDown( PC , Random( 8 ) + Random( 8 ) + Random( 8 ) + 3 );
 		AddReputation( PC , 7 , 3 );
 		ApplyCyberware( LocatePilot( PC ) , Item );
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
 		SERV_Info := Item;
 		CHAT_Message := MsgString( 'SERVICES_Cyber_Wait' );
@@ -1651,10 +1655,10 @@ begin
 	CreateCyberMenu;
 
 	if RPM^.NumItem > 0 then begin
+        SERV_Customer := PC;
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PC;
-        SERV_Customer := PC;
         SERV_NPC := NPC;
         SERV_Info := PC^.InvCom;
         SERV_Menu := RPM;
@@ -1678,10 +1682,10 @@ begin
 				if RPM^.NumItem = 1 then begin
 					Slot := LocateGearByNumber( PC , RPM^.FirstItem^.Value );
 				end else if RPM^.NumItem > 1 then begin
+                    SERV_Customer := PC;
 {$IFDEF SDLMODE}
                     SERV_GB := GB;
                     SERV_PC := PC;
-                    SERV_Customer := PC;
                     SERV_NPC := NPC;
 		            SERV_Info := Item;
 					CHAT_Message := MsgString( 'SERVICES_Cyber_SelectSlot' );
@@ -1761,14 +1765,12 @@ begin
 
 	repeat
 		{ Start by allocating the menu. }
-		{ This menu will use the same dimensions as the interaction }
-		{ menu, since it branches from there. }
+	    SERV_Customer := PC;
         {$IFDEF SDLMODE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
 	    SERV_GB := GB;
 	    SERV_NPC := NPC;
 	    SERV_PC := PC;
-	    SERV_Customer := PC;
         {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
         {$ENDIF}
@@ -1890,11 +1892,11 @@ var
 	Cash: LongInt;
 	DSLTemp: Boolean;
 begin
+    SERV_Customer := PC;
 {$IFDEF SDLMODE}
 	SERV_GB := GB;
 	SERV_NPC := NPC;
 	SERV_PC := PC;
-    SERV_Customer := PC;
 {$ELSE}
 	ClrZone( ZONE_Menu );
 {$ENDIF}
@@ -1931,7 +1933,7 @@ begin
 	repeat
 		{ Display the trading stats. }
 {$IFNDEF SDLMODE}
-		DisplayGearInfo( PC );
+		DisplayGearInfo( SERV_CUSTOMER );
 		CMessage( '$' + BStr( NAttValue( PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
 {$ENDIF}
 
@@ -2093,11 +2095,11 @@ var
 	Mek: GearPtr;
 	Cost: LongInt;
 begin
+    SERV_Customer := PC;
 {$IFDEF SDLMODE}
 	SERV_GB := GB;
 	SERV_NPC := NPC;
 	SERV_PC := PC;
-    SERV_Customer := PC;
     SERV_Info := FindRoot( GB^.Scene );
 {$ELSE}
 	ClrZone( ZONE_Menu );
@@ -2320,13 +2322,13 @@ begin
 		{ Start by allocating the menu. }
 		{ This menu will use the same dimensions as the interaction }
 		{ menu, since it branches from there. }
+        SERV_Customer := PC;
         {$IFDEF SDLMODE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
 	    SERV_GB := GB;
 	    SERV_NPC := NPC;
 	    SERV_PC := PC;
 	    SERV_Info := PC;
-        SERV_Customer := PC;
         {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
         {$ENDIF}

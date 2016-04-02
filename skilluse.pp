@@ -562,6 +562,8 @@ begin
 	SetSAtt( Robot^.SA , 'NAME <' + RandomRobotName + '>' );
 	SetNAtt( Robot^.NA , NAG_CharDescription , NAS_DAge , -19 );
 	SetSAtt( Robot^.SA , 'ROGUECHAR <R>' );
+    SetNAtt( Robot^.NA, NAG_CharDescription, NAS_Gender, NAV_Undefined );
+    SetNAtt( Robot^.NA, NAG_CharDescription, NAS_Sentience, NAV_IsMonster );
     {$IFDEF SDLMODE}
     SetSAtt( Robot^.SA, 'SDL_COLORS <' + RandomColorString(CS_Clothing) + ' ' + RandomColorString(CS_PrimaryMecha) + ' ' + RandomColorString(CS_Detailing) + '>' );
     {$ELSE}
@@ -587,8 +589,8 @@ begin
 			BP := BP + Part^.V;
 		end else begin
 			BP_tmp := BP;
-			BP_tmp := BP_tmp + GearMaxDamage( Part );
-			BP_tmp := BP_tmp + GearMaxArmor( Part );
+			BP_tmp := BP_tmp + GearMaxDamage( Part ) * 5;
+			BP_tmp := BP_tmp + GearMaxArmor( Part ) * 3;
 			BP_tmp := BP_tmp + GearMass( Part );
 			if BP_tmp < BP_MIN then begin
 				BP_tmp := BP_MIN;
@@ -653,6 +655,7 @@ begin
 			{ Give it a CID, a gender, and it likes the PC. }
 			SetNAtt( Robot^.NA , NAG_Personal , NAS_CID , NewCID( GB , FindRoot( GB^.Scene ) ) );
 			SetNAtt( Robot^.NA , NAG_CharDescription , NAS_Gender , Random( 3 ) );
+            SetNAtt( Robot^.NA, NAG_CharDescription, NAS_Sentience, NAV_IsCharacter );
 			AddNAtt( PC^.NA , NAG_ReactionScore , NAttValue( Robot^.NA , NAG_Personal , NAS_CID ) , 50 );
 
 			{ Give the PC some extra XP for a job well done. }
@@ -738,8 +741,7 @@ begin
 			end else if Random( 5 ) = 1 then begin
 				{ Add a specialist skill, maybe. }
 				Skill := Robot_Skill[ Random( Num_Robot_Skill ) + 1 ];
-				if RollStep( SkillValue( PC , Skill ) ) > 10 then AddNAtt( Robot^.NA , NAG_Skill , Skill , Random( BaseSkill ) + 1 )
-				else Inc( Robot^.Stat[ Random( 7 ) + 1 ] );
+				AddNAtt( Robot^.NA , NAG_Skill , Skill , Random( BaseSkill ) + 1 );
 			end else begin
 				{ Improve a stat. }
 				Inc( Robot^.Stat[ Random( 7 ) + 1 ] );

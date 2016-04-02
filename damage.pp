@@ -1127,6 +1127,13 @@ begin
 	UsableDescription := msg;
 end;
 
+Function RepairFuelDescription( Part: GearPtr ): String;
+	{ Return a description of the size/type of this movement }
+	{ system. }
+begin
+	RepairFuelDescription := SkillMan[ Part^.S ].Name + ' ' + BStr( Part^.V ) + ' DP';
+end;
+
 Function ExtendedDescription( Part: GearPtr ): String;
 	{ Provide an extended description telling all about the }
 	{ attributes of this particular item. }
@@ -1151,6 +1158,8 @@ begin
 		it := ModifierDescription( Part );
 	end else if Part^.G = GG_Usable then begin
 		it := UsableDescription( Part );
+    end else if Part^.G = GG_RepairFuel then begin
+        it := RepairFuelDescription( Part );
 	end else if Part^.G = GG_Shield then begin
 		it := ShieldDescription( Part );
 
@@ -1219,6 +1228,14 @@ begin
 	end;
 end;
 
+Function ListInfo( Part: GearPtr ): SAttPtr;
+    { Create a list of strings telling all about this item. }
+var
+    MyInfo: SATtPtr;
+begin
+    MyInfo := Nil;
+
+end;
 
 initialization
 	Damage_Strings := LoadStringList( Damage_Strings_File );

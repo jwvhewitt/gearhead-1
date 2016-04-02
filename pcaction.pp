@@ -113,6 +113,13 @@ begin
     end;
 end;
 
+Procedure ThisLancemateWasSelectedRedraw;
+    { Redraw for the character browser. }
+begin
+    CharViewRedraw();
+    DisplayTargetInfo( PCACTIONRD_PC, PCACTIONRD_GB, ZONE_CharViewDesc );
+end;
+
 Procedure FieldHQRedraw;
 	{ Do a redraw for the Field HQ. }
 var
@@ -470,7 +477,7 @@ begin
 		PCACTIONRD_PC := NPC;
         PCACTIONRD_GB := GB;
         PCACTIONRD_CAPTION := '';
-		n := SelectMenu( RPM , @CharViewRedraw );
+		n := SelectMenu( RPM , @ThisLancemateWasSelectedRedraw );
 {$ELSE}
 		DisplayGearInfo( NPC , GB );
 		n := SelectMenu( RPM );

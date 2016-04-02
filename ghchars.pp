@@ -96,6 +96,10 @@ Const
     NAV_RT_Female = 2;
     NAV_RT_Anyone = 3;
 
+    NAS_Sentience = 4;
+    NAV_IsCharacter = 0;
+    NAV_IsMonster = 1;
+
 	{ CharDescription / Personality Traits }
 	Num_Personality_Traits = 7;
 	NAS_Heroic = -1;	{ CharDescription/ Heroic <-> Villanous }
