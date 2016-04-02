@@ -81,4 +81,6 @@ Mod Leg
 	CyberSlot <ELECTRONICS>
 	SkillModStealth
 	SkillModAmount 3
+	Integral
+
 end

@@ -16,6 +16,7 @@ Mod Head
 		Range 4
 		Acc 1
 		BV 6
+		Integral
 	end
 	inv
 		HeadArmor 2

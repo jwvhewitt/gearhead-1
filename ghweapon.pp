@@ -314,7 +314,7 @@ Function HasStatus( Mek: GearPtr; SFX: Integer ): Boolean;
 
 implementation
 
-uses texutil,gearutil,ghmodule;
+uses texutil,gearutil,ghmodule,ghintrinsic;
 
 Function ScaleDC( DC,Scale: LongInt ): LongInt;
 	{ Take the basic, unscaled damage class DC and change it }
@@ -619,7 +619,9 @@ Function IsLegalWeaponSub( Wep, Equip: GearPtr ): Boolean;
 	{ Return TRUE if the provided EQUIP can be installed in WEP, }
 	{ FALSE if it can't be. }
 begin
-	if ( Wep^.S = GS_Ballistic ) or ( Wep^.S = GS_Missile ) then begin
+	if Equip^.G = GG_Weapon then begin
+		IsLegalWeaponSub := PartHasIntrinsic( Equip , NAS_Integral );
+	end else if ( Wep^.S = GS_Ballistic ) or ( Wep^.S = GS_Missile ) then begin
 		if NotGoodAmmo( Wep, Equip ) then IsLegalWeaponSub := False
 		else if Equip^.Stat[ STAT_AmmoPresent ] > Wep^.Stat[ STAT_Magazine ] then IsLegalWeaponSub := False
 		else IsLegalWeaponSub := True;

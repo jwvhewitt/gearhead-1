@@ -23,7 +23,7 @@ unit damage;
 
 interface
 
-uses gears;
+uses gears,context,ghintrinsic;
 
 Const
 	NAG_Damage = 12;
@@ -1134,11 +1134,38 @@ begin
 	RepairFuelDescription := SkillMan[ Part^.S ].Name + ' ' + BStr( Part^.V ) + ' DP';
 end;
 
+Function IntrinsicsDescription( Part: GearPtr ): String;
+	{ Return a list of all the intrinsics associated with this part. }
+var
+	T: Integer;
+	it: String;
+begin
+	it := '';
+
+	{ Start by adding the armor type, if appropriate. FM:not yet backported}
+	{T := NAttValue( Part^.NA , NAG_GearOps , NAS_ArmorType );
+	if T <> 0 then it := MsgString( 'ARMORTYPE_' + BStr( T ) );}
+
+	{ We're only interested if the intrinsics are attached directly }
+	{ to this part. }
+	for t := 1 to NumIntrinsic do begin
+		if NAttValue( Part^.NA , NAG_Intrinsic , T ) <> 0 then begin
+			if it = '' then begin
+				it := MsgString( 'INTRINSIC_' + BStr( T ) );
+			end else begin
+				it := it + ', ' + MsgString( 'INTRINSIC_' + BStr( T ) );
+			end;
+		end;
+	end;
+
+	IntrinsicsDescription := it;
+end;
+
 Function ExtendedDescription( Part: GearPtr ): String;
 	{ Provide an extended description telling all about the }
 	{ attributes of this particular item. }
 var
-	it: String;
+	it,IntDesc: String;
 	SC: GearPtr;
 begin
 	{ Error check first. }
@@ -1188,6 +1215,13 @@ begin
 			SC := SC^.Next;
 		end;
 	end;
+
+	IntDesc := IntrinsicsDescription( Part );
+	if IntDesc <> '' then begin
+		if it = '' then it := IntDesc
+		else it := it + ', ' + IntDesc;
+	end;
+	
 	ExtendedDescription := it;
 end;
 

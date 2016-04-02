@@ -59,7 +59,8 @@ Procedure WaitAMinute( GB: GameBoardPtr; Mek: GearPtr; D: Integer );
 
 implementation
 
-uses ability,damage,gearutil,ghchars,ghmodule,ghweapon,interact,movement,rpgdice,texutil;
+uses ability,damage,gearutil,ghchars,ghmodule,ghweapon,interact,movement,rpgdice,texutil,
+	ghintrinsic;
 
 const
 	EjectDamage = 10;	{ The damage step to roll during an ejection attempt. }
@@ -185,7 +186,7 @@ begin
 					TakeDamage( GB , Part , RollStep(EjectDamage) );
 				end;
 
-				if ERoll > EMod then begin
+				if ( ERoll > EMod ) and not PartHasIntrinsic( Part , NAS_Integral ) then begin
 					{ Delink the chaacter, then attach as a sibling of the master gear. }
 					DelinkGear( Part^.Parent^.SubCom , Part );
 					Part^.Next := Master^.Next;
