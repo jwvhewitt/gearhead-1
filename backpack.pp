@@ -561,6 +561,7 @@ end;
 	Procedure GetItemRedraw;
 	begin
 		SDLCombatDisplay( InfoGB );
+        InfoBox( ZONE_CenterMenu.GetRect() );
 		{DisplayGearInfo( InfoGear , InfoGB );}
 	end;
 {$ENDIF}
@@ -586,7 +587,11 @@ begin
 	{ pick one. }
 	end else if N > 1 then begin
 		DialogMsg( MsgString( 'GET_WHICH_ITEM?' ) );
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CenterMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+        {$ENDIF}
 		for t := 1 to N do begin
 			AddRPGMenuItem( RPM , GearName( GetVisibleItemAtSpot( GB , X , Y , T ) ) , T );
 		end;

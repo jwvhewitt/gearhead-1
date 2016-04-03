@@ -84,6 +84,7 @@ const
 
     ZONE_TitleScreenMenu: DynamicRect = ( dx:-100; dy:50; w:200; h:100; anchor: ANC_middle );
     ZONE_TitleScreenLogo: DynamicRect = ( dx:-250; dy:-190; w:500; h:215; anchor: ANC_middle );
+    ZONE_TitleScreenVersion: DynamicRect = ( dx:-50; dy:-25; w:100; h:20; anchor: ANC_lowerright );
 
 	ZONE_TargetInfo: DynamicRect = ( dx:  -Right_Column_Width -10 ; dy:10; w:Right_Column_Width; h:150; anchor: ANC_upperright );
     ZONE_TargetDistance: DynamicRect = ( dx:  -Right_Column_Width -10 ; dy:176; w:Right_Column_Width; h:20; anchor: ANC_upperright );
@@ -1488,7 +1489,7 @@ initialization
 	Infobox_Border := ConfirmSprite( 'sys_boxborder.png' , '', 8 , 8 );
 	Infobox_Backdrop := ConfirmSprite( 'sys_boxbackdrop.png' , '', 16 , 16 );
 
-	SDL_SetAlpha( Infobox_Backdrop^.Img , SDL_SRCAlpha , 224 );
+	if Transparent_Interface then SDL_SetAlpha( Infobox_Backdrop^.Img , SDL_SRCAlpha , 224 );
 
 {	MIX_OpenAudio( MIX_DEFAULT_FREQUENCY , MIX_DEFAULT_FORMAT , MIX_CHANNELS , 4096 );
 	Music_List := LoadStringList( 'music.cfg' );
