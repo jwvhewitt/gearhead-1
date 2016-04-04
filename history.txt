@@ -1,3 +1,5 @@
+1.300	April 4 2016
+- Fixed bug in Hermit Hop (SCENE_MeetingPath.txt)
 - Fixed DirKey screen refresh (sdlgfx.pp)
 - Set correct age for Omega-1004 (TS_LANCE_Z1004_STORY.txt)
 - Added title screen logo (gharena.pas)
