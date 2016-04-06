@@ -36,7 +36,7 @@ uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
-	Version = '1.201';
+	Version = '1.300';
 
 var
 	RPM: RPGMenuPtr;
@@ -51,6 +51,7 @@ begin
     RedrawOpening();
     InfoBox( ZONE_TitleScreenMenu.GetRect() );
     DrawSprite( MyLogo, ZONE_TitleScreenLogo.GetRect(), 0 );
+    QuickTinyText( Version, ZONE_TitleScreenVersion.GetRect(), BrightYellow );
 end;
 {$ENDIF}
 

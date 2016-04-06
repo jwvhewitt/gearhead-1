@@ -82,6 +82,7 @@ const
 
 	Use_Alpha_Blending: Boolean = True;
 	Alpha_Level: Byte = 135;
+    Transparent_Interface: Boolean = True;
 
 	Names_Above_Heads: Boolean = False;
 
@@ -423,6 +424,8 @@ uses dos,ability,gears,texutil;
 
 					end else if cmd = 'NOALPHA' then begin
 						Use_Alpha_Blending := False;
+					end else if cmd = 'NO_TRANSPARENT_INTERFACE' then begin
+						Transparent_Interface := False;
 					end else if cmd = 'ALPHALEVEL' then begin
 						T := ExtractValue( S );
 						if T > 255 then T := 255
@@ -531,6 +534,7 @@ uses dos,ability,gears,texutil;
 	    AddBoolean( 'NAMESON' , Names_Above_Heads );
 
 	    AddBoolean( 'NOALPHA' , not Use_Alpha_Blending );
+	    AddBoolean( 'NO_TRANSPARENT_INTERFACE' , not Transparent_Interface );
         writeln( F, 'ALPHALEVEL ' + BStr( Alpha_Level ) );
 
         writeln( F, 'NUMPLOTS ' + BStr( Max_Plots_Per_Adventure ) );

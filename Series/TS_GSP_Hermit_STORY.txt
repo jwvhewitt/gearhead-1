@@ -13,10 +13,9 @@ Story
 
 	start <ifPersona N3 else GoDelete if= S1 0 ItemVar= N2 1 N3 ItemVar= N2 3 25 S= 1 1>
 	GoDelete <EndStory>
-
 sub
 	Persona 3
-	greeting <NewChat ifG S2 4 else GoNoMaster Say 9 AddChat 4>
+	greeting <NewChat ifG S2 4 else GoNoMaster Say 9 AddChat 4 Memo 0 History 13>
 	GoNoMaster <Say 1 AddChat 1 AddChat 2>
 
 	result1 <NewChat AddChat 3 S+ 2 1 if= d5 5 else GoR1_2 Say 2 SkillXP 1 * S1 100 SkillXP 6 * S1 100   Goto GoResetSign>
@@ -29,7 +28,7 @@ sub
 
 	result3 <NewChat Say 8>
 
-	GoResetSign <V= 2 ComTime V+ 2 172800 ItemVar= N2 2 V2 V= 2 25 V+ 2 * S2 20 ItemVar= N2 3 V2  RunAway N3>
+	GoResetSign <V= 2 ComTime V+ 2 172800 ItemVar= N2 2 V2  Memo 12  V= 2 25 V+ 2 * S2 20 ItemVar= N2 3 V2 RunAway N3>
 
 	result4 <EndChat Say 10 School .skills Say 11>
 	.skills <1 2 3 4 5 6 7 8 9 10 33 18 13 12 11>
@@ -45,6 +44,8 @@ sub
 	Msg9 <You have learned all that I have to teach. Of course, if you want some more practice, we may do that as well.>
 	Msg10 <Focus your mind and your body, keep your eyes open and safely away from your ass.>
 	Msg11 <This was fun. Drop by again and we can play some more.>
+    Msg12 <You may return to the Hermit Hop at \NARRATIVE 1 for more training after \DATE V2 .>
+    Msg13 <You may return to the Hermit Hop at \NARRATIVE 1 any time.>
 
 	Prompt1 <Teach me, oh hermit.>
 	Prompt1_1 <What do you have to teach me?>
