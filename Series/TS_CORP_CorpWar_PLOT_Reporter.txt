@@ -76,7 +76,7 @@ sub
 	Prompt6 <\NARRATIVE 2 attacked us, the criminals...>
 	Prompt7 <\NARRATIVE 1 has been attacking us.>
 	Prompt8 <We're going to defeat them!>
-	Prompt9 <You shouldn't ask difficult questions.>
+	Prompt9 <Bad things will happen if you keep asking questions.>
 	Prompt10 <It's a fun time to be a pilot.>
 	Prompt11 <We strictly obey the law.>
 	Prompt12 <Of course we have.>

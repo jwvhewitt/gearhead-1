@@ -68,7 +68,7 @@ sub
 	result5 <Goto result4>
 	result6 <Goto result4>
 
-	result7 <EndChat Reputation 1 -5 Say 11 DeleteChar E4 DeleteChar E5 AdvancePlot 0>
+	result7 <EndChat Reputation 3 -10 LoseRenown Say 11 DeleteChar E4 DeleteChar E5 AdvancePlot 0>
 	result8 <goto result7>
 
 	Msg1 <You did it! The killer has been stopped, and \PERSONA E5 has been rescued. Here's the money you earned. When \SPR E5 gets out of the hospital, you should go visit \OPR E5 . Also you should visit \PERSONA S7 in \SCENE S8 .>

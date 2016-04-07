@@ -14,7 +14,7 @@ sub
 	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
 	result1 <Reputation 1 1 NewChat Say 2>
 	result2 <NewChat Say 3>
-	result3 <Reputation 1 -1 NewChat Say 4>
+	result3 <AddReact d10 NewChat Say 4>
 	Msg1 <Only the strong survive. The weak are worthless, and exist only to serve those who can master them. This is a universal truth; it transcends all laws, all cultures, and all of nature. Are you one of the strong or are you one of the chattel?>
 	Msg2 <Believe what you like, but in the end the only real virtue is power.>
 	Msg3 <What kind of a stupid answer was that!? You're pissing me off.>

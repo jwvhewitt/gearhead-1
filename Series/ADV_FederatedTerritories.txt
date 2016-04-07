@@ -8752,6 +8752,7 @@ Scene 58 0
 		Persona 5801
 		% Forager
 		% V1 = Have offered quest; =cash reward
+        % V2 = Have threatened Forager before
 		greeting <NewChat if= G4 1 else GoNoComplete Say 3>
 		GoNoComplete <ifG V1 0 else GoFirstTime Say 1 AddChat 1 AddChat 2>
 		GoFirstTime <ifG PCRep 1 10 else GoNoChance ifItemOK 36 else GoNoChance Say 4 AddChat 3 AddChat 6 AddChat 5>
@@ -8759,7 +8760,7 @@ Scene 58 0
 		result1 <NewChat Say 2 DeleteKeyItem 36 Reputation 1 1 CashPrize V1 XPV 250 Memo 0 G= 4 1>
 		result2 <NewChat Say 3>
 		result3 <NewChat V= 1 Reward Threat PCRep 6 100 500 Say 9 Memo 10>
-		result4 <EndChat Say 6 Reputation 1 -1 Reputation 4 -20>
+		result4 <EndChat Say 6 Reputation 1 -1 Reputation 4 -20 V= 2 1>
 		result5 <NewChat Say 7 ifG PCRep 1 10 AddChat 3 AddChat 6>
 		result6 <NewChat Say 8 Reputation 4 -5>
 		Msg1 <Have you liberated the primal genome from Ipshil?>
@@ -8778,6 +8779,7 @@ Scene 58 0
 		Prompt2 <I'm still looking for it.>
 		Prompt3 <Tell me what you want.>
 		Prompt4 <Now you'll die, monster!>
+        CPrompt4 <if= V2 0 Accept>
 		Prompt5 <What exactly are you?>
 		Prompt6 <Why should I help you, monster?>
 

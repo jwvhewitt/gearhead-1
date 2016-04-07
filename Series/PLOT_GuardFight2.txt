@@ -93,7 +93,7 @@ sub
 
 	Result8 <Say 16 memo 20 P+ 1 45000 NewChat>
 
-	Result9 <AdvancePlot 0 Reputation 1 -1 Reputation 2 -3 AddReact -3 Say 17 NewChat>
+	Result9 <AdvancePlot 0 LoseRenown AddReact -3 Say 17 NewChat ifPCLawful Reputation 2 -1>
 
 	Msg1 <There's something important I need your help with. I've just located a serial killer who's been on the run from the law. I need a hunter to raid his hideout and bring him back, dead or alive.>
 	Msg2 <I could use your help for the murder case I'm working on. The killer's gang has been located, now I need a hunter to raid their hideout and bring them to justice.>

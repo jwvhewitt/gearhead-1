@@ -46,9 +46,9 @@ sub
 	GoRealStart <if= L3 1 else GoFirstTime Say 1>
 	GoFirstTime <Say 3 AddChat 1 AddChat 2>
 	result1 <NewChat Say 4 if= V2 0 else GoRescue V= 2 1 Reputation 1 1 Goto GoRescue>
-	result2 <NewChat AddReact -d10 Say 5 AddChat 3 AddChat 4 Reputation 1 -1 Reputation 2 -2>
+	result2 <NewChat AddReact -d10 Say 5 AddChat 3 AddChat 4>
 	result3 <NewChat Say 6 CashPrize 25 Goto GoRescue>
-	result4 <NewChat Say 7 Reputation 1 -5>
+	result4 <NewChat Say 7  Reputation 1 -1 Reputation 2 -2>
 	GoRescue <L= 3 1 TORD 2 FOL PCUID>
 	Msg1 <Get me out of here!>
 	Msg3 <Help! I came here to reload the still, but the woods out there are full of monsters! It's not safe for me to go out there alone... Can you get me out of here?>
@@ -73,7 +73,7 @@ sub
 		Msg1 <Thanks for returning \ELEMENT 3 . You're one of the good ones.>
 
 		Persona 3
-		greeting <NewChat Say 1 AddReact d5 AdvancePlot 0>
+		greeting <NewChat Say 1 AddReact d10 AdvancePlot 0>
 		Msg1 <Thanks for your help getting me out of that swamp.>
 
 	end

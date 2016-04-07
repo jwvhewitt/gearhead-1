@@ -29,7 +29,7 @@ sub
 	GoBeenBefore <Say 2 AddChat 4 AddChat 5 ifG PC$ V3 AddChat 6>
 
 	result1 <NewChat Say 3 Reputation 1 1 AddChat 7 AddChat 8 ifG PC$ V3 AddChat 6>
-	result2 <NewChat Reputation 1 -1 Reputation 3 -d10 Say 4 AddChat 9 AddChat 10>
+	result2 <NewChat Reputation 3 -25 Reputation 3 -d10 Say 4 AddChat 9 AddChat 10>
 	result3 <NewChat Say 5 AddReact d10 AddChat 7 AddChat 8 ifG PC$ V3 AddChat 6>
 	result4 <NewChat Say 6>
 	result5 <NewChat Say 7>
@@ -37,7 +37,7 @@ sub
 	result7 <NewChat Say 8>
 	result8 <NewChat Say 10 Reputation 7 d10>
 	result9 <NewChat Say 11 Reputation 5 d10  AddChat 7 AddChat 8 ifG PC$ V3 AddChat 6>
-	result10 <NewChat Say 12 Reputation 5 -d10 Reputation 1 -1 Reputation 2 -1>
+	result10 <NewChat Say 12 Reputation 5 -d10 Reputation 5 -25>
 
 	Msg1 <You've got to help me! Mom and Dad left some money for us when they went away, but it wasn't much. There's not much left. I'll have to spend the last of it on either food or school. Please, I haven't called for help before...>
 	Msg1_1 <I've got a big problem that I wanted to talk with you about. I'm running out of money... I need to pay for tuition and rent, and I already have two part-time jobs. If Mom and Dad were still here I'd go to them, but...>

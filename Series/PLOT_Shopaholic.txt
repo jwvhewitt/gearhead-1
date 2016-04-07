@@ -29,7 +29,7 @@ sub
 	result4 <NewChat Reputation 4 -1  Say 110  AddChat 14 AddChat 15>
 	result5 <EndChat Say 111 School .ShopSkill Say 109>
 	result6 <NewChat Reputation 3 -1  Say 104>
-	result7 <EndChat Say 112 AddReact -15 AddReact d5  Reputation 5 -2 Reputation 1 -1>
+	result7 <EndChat Say 112 AddReact -15 AddReact d5  Reputation 5 -2>
 	result8 <NewChat Say 113 AddReact 3 AddReact d3 Reputation 3 1>
 	result9 <NewChat Say 114 AddReact d3 Reputation 4 1>
 	result10 <NewChat Say 115  Reputation 4 1  AddChat 15 AddChat 16>

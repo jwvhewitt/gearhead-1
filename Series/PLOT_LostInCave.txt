@@ -12,7 +12,7 @@ sub
 	prompt1 <Sure. It's just over there.>
 	prompt2 <I can show you, for a price...>
 	result1 <Say 2  AdvancePlot 0 Reputation 1 1 Print 4 EndChat  DeleteChar E2>
-	result2 <Say 3  AdvancePlot 0 Reputation 1 -1 Print 4 CashPrize 50 EndChat  DeleteChar E2>
+	result2 <Say 3  AdvancePlot 0 Print 4 CashPrize 50 EndChat  DeleteChar E2>
 	Msg2 <Thank you very much! You're very kind.>
 	Msg3 <Here's some money for your help. Thank you.>
 	Msg4 <\Persona E2 has left the area.>

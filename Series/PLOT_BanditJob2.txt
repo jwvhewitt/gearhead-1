@@ -69,7 +69,7 @@ sub
 	% See whether or not the PC will accept the job.
 	GoChoose <NewChat AddChat 6>
 
-	Result6 <EndChat Say 21 Reputation 1 -1 Reputation 2 -2 AddReact 3 P= 2 1 SavePos Dynamic 2 V1 FrzNU1 FrzNU2 Encounter 10 1 .enemydata>
+	Result6 <EndChat Say 21 Reputation 2 -2 AddReact 3 P= 2 1 SavePos Dynamic 2 V1 FrzNU1 FrzNU2 Encounter 10 1 .enemydata>
 	FrzNU1 <if= T1 0 Return>
 	FrzNU2 <if= T2 0 Salvage Return>
 	.enemydata <Villainous Chaotic Young>

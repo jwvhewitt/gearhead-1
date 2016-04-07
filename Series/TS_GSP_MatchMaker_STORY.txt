@@ -61,7 +61,7 @@ sub
 	GoNothing <SayAnything>
 
 	result1 <NewChat Say 2 S= 1 2>
-	result2 <NewChat Say 1 Reputation 1 -1 Reputation 2 -1 Reputation 5 -10 EndStory>
+	result2 <NewChat Say 1 Reputation 1 -1 LoseRenown Reputation 5 -10 EndStory>
 
 	Msg1 <Really!? I thought she liked me...>
 	Msg2 <Really? I'll have to give her a call sometime...>
