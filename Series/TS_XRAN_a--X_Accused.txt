@@ -31,7 +31,7 @@ Plot 0
 	GoCheckInTheMission <if= V2 1 else GoCheckPersona if= V3 0 V= 3 1 ForceChat E2>
 
 	% If Persona E2 dies, load a new plot.
-	GoCheckPersona <ifPersona E2 else GoDelete>
+	GoCheckPersona <ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	GoStartCombat <Block Print 101 History 102 SavePos P= 2 1 Dynamic 2 Threat S103 140 .nu1 .nu2 NPCLevel E2 S103 DynaNPC E2 2>
@@ -63,7 +63,7 @@ sub
 	Prompt101 <I don't want to fight you.>
 	Prompt102 <If you want to die, fine with me.>
 	GoInTown <NewChat AddChat 1 AddChat 2 ifFaction N2 else GoCheckChara Say 1 AddChat 3>
-	GoCheckChara <ifPersona N1 else GoUnknownEnemy Say 2 AddChat 4>
+	GoCheckChara <ifNPCOK N1 else GoUnknownEnemy Say 2 AddChat 4>
 	GoUnknownEnemy <Say 3>
 	result1 <NewChat Say 4  AddChat 5 AddChat 6>
 	result2 <NewChat Say 5  AddChat 5 AddChat 6>
@@ -95,7 +95,7 @@ sub
 	name <Accused! Act 2>
 
 	% V2 = Combat Indicator
-	start <ifPersona E5 else GoDelete Memo 1>
+	start <ifNPCOK E5 else GoDelete Memo 1>
 	GoDelete <S= 101 1 AdvancePlot 0>
 	Msg1 <\ELEMENT 2 said that your old enemies were doing something in \ELEMENT 3 .>
 
@@ -111,7 +111,7 @@ sub
 		GoMaybeFirst <if# V1 0 else GoFirstTime ifG ComTime V1 else GoWaitRecharge Say 6 AddChat 2>
 		GoWaitRecharge <Say 4>
 		GoFirstTime <AddChat 1 ifFaction N2 else GoCheckChara Say 1 Memo 8>
-		GoCheckChara <ifPersona N1 else GoUnknownEnemy Say 2 Memo 9>
+		GoCheckChara <ifNPCOK N1 else GoUnknownEnemy Say 2 Memo 9>
 		GoUnknownEnemy <Say 3 Memo 10>
 		result1 <EndChat Say 11 Goto GoStartCombat>
 		result2 <Goto result1>
@@ -134,7 +134,7 @@ sub
 	Plot 2
 		name <Accused! Act 3>
 		start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 864000 MoveChar E2 E1 ifFaction N2 else GoCheckPersona History 1>
-		GoCheckPersona <ifPersona N1 else GoMisc History 2>
+		GoCheckPersona <ifNPCOK N1 else GoMisc History 2>
 		GoMisc <History 3>
 		GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 		Msg1 <You destroyed a base belonging to \NARRATIVE 2 .>

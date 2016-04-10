@@ -1,3 +1,8 @@
+- Renamed ifPersona ASL command to ifNPCOK
+- Removed faction difficulty counter (ADV_FederatedTerritories.txt)
+- Robotics adjusted (skilluse.pp)
+- Fixed heroism pecking in series folder
+
 1.300	April 4 2016
 - Fixed bug in Hermit Hop (SCENE_MeetingPath.txt)
 - Fixed DirKey screen refresh (sdlgfx.pp)

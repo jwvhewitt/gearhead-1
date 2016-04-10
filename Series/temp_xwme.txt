@@ -27,7 +27,7 @@ Plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 dies, load a new plot.
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	ENC1 <if= V3 1  if= V2 0  if= d3 1  Block Goto GoStartCombat>

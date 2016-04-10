@@ -23,7 +23,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 dies, load a new plot.
-	start <ifPersona E2 else GoDelete ifItemOK E4 else GoDelete if= V1 0 V= 1 1 Compose KEY E4 .usecomp>
+	start <ifNPCOK E2 else GoDelete ifItemOK E4 else GoDelete if= V1 0 V= 1 1 Compose KEY E4 .usecomp>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	.usecomp <if= P3 0 P= 3 1 History 101 XPV 100>
@@ -306,7 +306,7 @@ sub
 		% The PC doesn't want to perform the mission himself...
 		% must go and contact E5 about it.
 		% The amount of money needed is Threat S103 35
-		start <ifPersona E2 else GoDelete ifPersona E5 else GoDelete memo 101>
+		start <ifNPCOK E2 else GoDelete ifNPCOK E5 else GoDelete memo 101>
 		GoDelete <S= 101 1 AdvancePlot 0 if# V1 0 MoveChar E5 V1>
 
 		% P1 = Have paid E5; actually original location of E5

@@ -68,7 +68,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -134,9 +134,9 @@ sub
 	% he is a friend of the NPC, or if he's already been sent email.
 
 	% The PC will be denied the mission if he's helped the enemy.
-	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 Threat FacVar N1 1000 100 V= 4 Reward V3 100 Goto GoCheckFaction>
+	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRenown 100 V= 4 Reward V3 100 Goto GoCheckFaction>
 	% <ENEMY> If this is an enemy mission, use the following line.
-	% GoCheckFirst <if= S103 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 Threat FacVar N1 1000 100 V= 4 Reward V3 100 Goto GoCheckFaction>
+	% GoCheckFirst <if= S103 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRenown 100 V= 4 Reward V3 100 Goto GoCheckFaction>
 
 	GoCheckFaction <if= PCFac E1 else GoCheckEmail Say 11 Goto GoAddComOps>
 	GoCheckEmail <if= P3 1 else GoCheckFriend Say 11 Goto GoAddComOps>
@@ -199,9 +199,6 @@ sub
 	% The PC tries to get the job via "PLAN B"- be friendly.
 	% This is done with the Conversation skill.
 	result14 <NewChat ifG Conversation 15 else GoR14Lose Say 31 AddChat 7 AddChat 9>
-
-	% The PC will impress the NPC with RENOWNED reputation...
-	% result14 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR14Lose Say 31 AddChat 7 AddChat 9>
 
 	% The PC will impress the NPC with HEROIC reputation...
 	% result14 <NewChat ifG PCRep 1 30 else GoR14Lose Say 31 AddChat 7 AddChat 9>

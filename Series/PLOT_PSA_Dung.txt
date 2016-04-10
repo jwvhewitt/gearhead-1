@@ -8,7 +8,7 @@ PLOT 0
 	element1 <Character HasMecha Heroic>
 
 	% Time limit - this plot will fade after a short time.
-	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
+	START <ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 5000>
 	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 sub

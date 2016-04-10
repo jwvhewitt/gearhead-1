@@ -12,7 +12,7 @@ Plot 0
 	% P3 = PC's initial Wangtta reputation
 	% P4 = Email Indicator
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 P= 3 PCRep 6>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 P= 3 PCRep 6>
 	GoCheckTime <if= P2 0 ifG -9 PCRep 6 else GoDelete ifG ComTime P1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

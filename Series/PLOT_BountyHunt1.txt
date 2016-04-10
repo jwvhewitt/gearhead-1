@@ -11,7 +11,7 @@ Plot 0
 	rumor <!1 just posted a bounty notice for a wanted criminal.>
 
 	% Time limit - this plot will fade after a short time.
-	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 70000>
+	START <ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 70000>
 	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -172,7 +172,7 @@ sub
 	Plot 2
 		% The player won the battle.
 		% Time limit - this plot will fade after a short time.
-		START <Memo 1 ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 150000>
+		START <Memo 1 ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 150000>
 		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
 		GoDelete <AdvancePlot 0>
 		Msg1 <\ELEMENT 1 in \SCENE EScene 1 offered you a bounty hunting mission.>

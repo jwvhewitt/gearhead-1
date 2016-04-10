@@ -35,7 +35,7 @@ Plot 0
 	% V1 = Initialization Counter
 
 
-	start <ifPersona E4 else GoDelete if= V1 0 V= 1 1 EMail d5>
+	start <ifNPCOK E4 else GoDelete if= V1 0 V= 1 1 EMail d5>
 	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
 
 	Msg1 <\ELEMENT 4 @ \ELEMENT 2 :// Your parents left something for you. Come see me at the Bank of \ELEMENT 2 .>
@@ -65,7 +65,7 @@ Plot 1
 	% V1 = Initialization Counter
 	% V2 = Have spoken with E5
 
-	start <ifitemOK E6 else GoDelete if= V1 0 V= 1 1 MoveChar E5 E1 ItemVar= E6 1 E3 Compose KEY E6 .usekey Memo 2 ifPersona N1 else GoN1Dead DeleteCHar E8 E= 8 N1>
+	start <ifitemOK E6 else GoDelete if= V1 0 V= 1 1 MoveChar E5 E1 ItemVar= E6 1 E3 Compose KEY E6 .usekey Memo 2 ifNPCOK N1 else GoN1Dead DeleteCHar E8 E= 8 N1>
 	GoN1Dead <N= 1 E8>
 	.usekey <History 1 S= 101 1 N= 3 E3 S= 105 1 XRMystery NAV_XRMItem AdvancePlot 2>
 	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>

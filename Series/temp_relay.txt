@@ -39,7 +39,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 or NPC E3 are killed.
-	start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E2 else GoDelete ifNPCOK E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -91,7 +91,7 @@ sub
 	%  V1 = if mission denied, V1 <> 0
 	%  V2 = message randomizer
 	%  V4 = mission reward
-	greeting <NewChat V= 4 Reward Threat FacVar E1 1000 100 200 if= V1 0 else GoDenied if= PCFac E1 else GoCheckEmail Goto GoStartJob>
+	greeting <NewChat V= 4 Reward Threat PCRenown 100 200 if= V1 0 else GoDenied if= PCFac E1 else GoCheckEmail Goto GoStartJob>
 	GoCheckEmail <if= P3 1 else GoCheckFriend Say d2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
 	GoCheckFriend <ifG React 40 else GoNoAutomatic V= 2 2 V+ 2 d3 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
 
@@ -114,7 +114,7 @@ sub
 
 	% PC will try to get job by "Plan A"... in this case,
 	% counting on a high RENOWNED reputation.
-	result5 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR5Lose V= 2 20 V+ 2 d5 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
+	result5 <NewChat ifG PCRep 6 50 else GoR5Lose V= 2 20 V+ 2 d5 Say V2 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
 	GoR5Lose <V= 1 -1 Say 18>
 	result6 <Goto result5>
 
@@ -218,11 +218,11 @@ sub
 		% in a single day. You can alter the time limit by altering the
 		% value added to V1 below.
 		% Also, at the first startup, set the memo.
-		start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Memo 1>
+		start <ifNPCOK E2 else GoDelete ifNPCOK E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Memo 1>
 
 		% If you don't want a time limit, comment out the above line
 		% and uncomment the following:
-		% start <ifPersona E2 else GoDelete ifPersona E3 else GoDelete if= V1 0  V= 1 1 Memo 1>
+		% start <ifNPCOK E2 else GoDelete ifNPCOK E3 else GoDelete if= V1 0  V= 1 1 Memo 1>
 
 		GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 		GoDelete <AdvancePlot 0>
@@ -255,7 +255,7 @@ sub
 		% already been finished- if so, the NPC will reward PC.
 		% If not, the NPC will just remind the PC where he's
 		% supposed to go.
-		greeting <NewChat V= 4 Reward Threat FacVar E1 1000 100 200 if= P2 3 else GoCheckLoss V= 2 10 V+ 2 d5 Say V2 CashPrize V4 AdvancePlot 0>
+		greeting <NewChat V= 4 Reward Threat PCRenown 100 200 if= P2 3 else GoCheckLoss V= 2 10 V+ 2 d5 Say V2 CashPrize V4 AdvancePlot 0>
 
 		% if the PC lost, print a message then end the story.
 		GoCheckLoss <if= P2 2 else GoNoCombat V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
@@ -301,7 +301,7 @@ sub
 		%  V2 = Message Randomizer
 		%  V3 = Enemy threat value
 		%  V4 = Eventual cash reward
-		greeting <NewChat V= 3 Threat FacVar E1 1000 100 V= 4 Reward V3 200 ifG P2 0 else GoLetsGo Say 6>
+		greeting <NewChat V= 3 Threat PCRenown 100 V= 4 Reward V3 200 ifG P2 0 else GoLetsGo Say 6>
 		GoLetsGo <Say d5 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2 V= 2 4 V+ 2 d2 AddCHat V2>
 
 		% Start combat now.

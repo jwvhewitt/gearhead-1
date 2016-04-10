@@ -14,7 +14,7 @@ Story
 	%    2: Have spoken to N3 about the crush
 
 
-	start <ifPersona N2 else GoDelete ifPersona N3 else GoDelete>
+	start <ifNPCOK N2 else GoDelete ifNPCOK N3 else GoDelete>
 	GoDelete <EndStory>
 
 sub

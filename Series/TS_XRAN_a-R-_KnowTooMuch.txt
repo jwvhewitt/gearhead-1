@@ -24,7 +24,7 @@ plot 0
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1   S= 101 1 S+ 102 1 N= 3 E2 if= P4 1 else GoDelete S= 105 1 AdvancePlot 0>
 	GoDelete <S= 105 -1 AdvancePlot 0>
 
-	GoOldStart <ifPersona E3 else GoEndPlot  if= V1 0 else GoSetOrder V= 1 1 NPCLevel E3 S103 Compose UTD E3 .killerdies Compose GET E4 .getkey Goto GoSetOrder>
+	GoOldStart <ifNPCOK E3 else GoEndPlot  if= V1 0 else GoSetOrder V= 1 1 NPCLevel E3 S103 Compose UTD E3 .killerdies Compose GET E4 .getkey Goto GoSetOrder>
 	GoEndPlot <S= 101 1 AdvancePlot 0>
 	.killerdies <if# V1 5 V= 1 5 ForceChat E3 XPV 100 History 2>
 	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
@@ -42,7 +42,7 @@ sub
 	Persona 3
 	rumor <!3 will take a contract to kill anybody, as long as the price is right.>
 	% V2 = Message Randomizer
-	greeting <NewChat ifPersona E3 else GoE3Dead P= 1 2 Say 1 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
+	greeting <NewChat ifNPCOK E3 else GoE3Dead P= 1 2 Say 1 AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
 	result1 <Reputation 3 -d8 Goto GoStartFight>
 	result2 <Reputation 4  d8 Goto GoStartFight>
 	result3 <Reputation 5  d8 Goto GoStartFight>
@@ -55,7 +55,7 @@ sub
 	Msg1_1 <Hey \PC , I have a message for you straight from \NARRATIVE 2 . You want to hear it?>
 	CMsg1_1 <if= XRE NAV_XREFaction Accept>
 	Msg1_2 <You're \PC , right? I have a message for you, from \NARRATIVE 2 .>
-	CMsg1_2 <ifPersona N2 Accept>
+	CMsg1_2 <ifNPCOK N2 Accept>
 	Msg1_3 <You're \PC . I've been looking for you. There's a message that I have to deliver.>
 	Msg1_4 <What about that. Here I was looking for \PC , and you come find me. I have a message to deliver. Wanna hear it?>
 

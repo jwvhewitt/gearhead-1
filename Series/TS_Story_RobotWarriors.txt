@@ -38,7 +38,7 @@ sub
 	% V2 -> Arena Recharge Time
 	% V3 -> Arena Rank
 	rumor <The new season of Robot Warriors has just begun!>
-	greeting <NewChat if= S4 2 else GoNoSpecial  ifPersona E3 else GoJohnDied Say 14>
+	greeting <NewChat if= S4 2 else GoNoSpecial  ifNPCOK E3 else GoJohnDied Say 14>
 	GoJohnDied <Say 15  S= 4 1>
 	GoNoSpecial <if= G24 10 else GoCheckWin G+ 24 1 Say 12 XPV 1000 CashPrize Reward Threat V1 150 250 GiveKeyItem N4 Reputation 6 10 History 17>
 	GoCheckWin <ifG G24 V3 else GoCheckTime V= 3 G24 V+ 1 d6 V+ 1 d6  CashPrize Reward Threat V1 125 200  Say 16>

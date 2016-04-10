@@ -11,7 +11,7 @@ Story
 	% S2 = NPC has joined party.
 
 	% At startup, set the potential lancemate's skill level and reputation.
-	start <ifPersona N2 else GoDelete if= S1 0 S= 1 d50 S+ 1 20 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 ItemVar= N3 1 N2 ItemVar= N3 3 S1>
+	start <ifNPCOK N2 else GoDelete if= S1 0 S= 1 d50 S+ 1 20 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 ItemVar= N3 1 N2 ItemVar= N3 3 S1>
 	GoDelete <EndStory>
 
 

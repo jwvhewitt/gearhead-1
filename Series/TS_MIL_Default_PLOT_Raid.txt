@@ -7,7 +7,7 @@ Plot 0
 
 	% This plot works on the half-hour, since it has a fairly
 	% short duration.
-	HalfHour <ifPersona E2 else CleanUp if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10000 Compose EWM N3 .entry>
+	HalfHour <ifNPCOK E2 else CleanUp if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10000 Compose EWM N3 .entry>
 	GoCheckTime <ifG ComTime V1 else GoCheckBomb AdvancePlot 0>
 	CleanUp <AdvancePlot 0>
 

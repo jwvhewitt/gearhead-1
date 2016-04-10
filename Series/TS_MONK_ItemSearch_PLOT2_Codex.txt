@@ -15,7 +15,7 @@ Plot 0
 	% V1 = Initialization Counter
 	% V2 = Combat Indicator
 
-	start <ifPersona E2 else GoCheckDelete if= V1 0 V= 1 1 Compose KEY E3 .getkey ItemVar= E3 1 * 5 S2>
+	start <ifNPCOK E2 else GoCheckDelete if= V1 0 V= 1 1 Compose KEY E3 .getkey ItemVar= E3 1 * 5 S2>
 	.getkey <S= 104 1 EndStory AdvancePlot 0>
 
 	GoCheckDelete <EndStory AdvancePlot 0 if= V2 0 DeleteKeyItem E3>

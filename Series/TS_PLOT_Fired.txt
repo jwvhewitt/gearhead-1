@@ -8,7 +8,7 @@ Plot 0
 	Element2 <Character !Comrade 1>
 
 	% V1 = Email indicator
-	hour <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 176400 EMail 1 SetPlayerFaction 0 LoseRenown LoseRenown LoseRenown>
+	hour <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 176400 EMail 1 SetPlayerFaction 0 LoseRenown LoseRenown LoseRenown>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

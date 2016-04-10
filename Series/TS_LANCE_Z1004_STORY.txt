@@ -12,7 +12,7 @@ Story
 	% S1 = Initialization Counter
 	% S2 = Have recovered Omega-1004
 
-	start <ifPersona N4 else GoDelete if= S1 0 S= 1 1 ItemVar= N2 1 N3 Compose KEY N3 .useprop>
+	start <ifNPCOK N4 else GoDelete if= S1 0 S= 1 1 ItemVar= N2 1 N3 Compose KEY N3 .useprop>
 	GoDelete <EndStory>
 
 	.useprop <ForceChat N4 PCAlly N4 MoveChar N4 N1 ItemVar= N2 1 0 DeleteKeyItem N3>

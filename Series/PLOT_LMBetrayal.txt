@@ -10,7 +10,7 @@ Plot 0
 	% V1 = Initialization counter
 	% V2 = Have started combat
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 432000 Compose EWM E2 .ambush Compose EWM E3 .ambush Compose EWM E4 .ambush>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 432000 Compose EWM E2 .ambush Compose EWM E3 .ambush Compose EWM E4 .ambush>
 	GoDelete <AdvancePlot 0>
 
 	.ambush <Goto GoAmbush>

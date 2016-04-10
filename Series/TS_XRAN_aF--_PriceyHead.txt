@@ -20,7 +20,7 @@ Plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 or E4 dies, load a new plot.
-	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete>
+	start <ifNPCOK E4 else GoDelete ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	5Min <if= d50 23 if= V3 0 ifG PCCharm d80 V= 3 1 Email d5>
@@ -125,7 +125,7 @@ sub
 		% If Persona E4 dies, load a new plot.
 		% If the PC fights 20 encounters without visiting E4,
 		%  load a new plot
-		start <ifPersona E4 else GoDelete ifG 20 v3 else GoDelete if= V1 0  V= 1 1 Memo 102>
+		start <ifNPCOK E4 else GoDelete ifG 20 v3 else GoDelete if= V1 0  V= 1 1 Memo 102>
 		GoDelete <S= 101 1 AdvancePlot 0>
 
 		% The order is reversed here- the better the encounter,

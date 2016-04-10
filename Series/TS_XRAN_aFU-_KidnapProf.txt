@@ -28,7 +28,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 or E4 dies, load a new plot.
-	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete if= V1 0 V= 1 1 Compose EWM E1 .entry>
+	start <ifNPCOK E4 else GoDelete ifNPCOK E2 else GoDelete if= V1 0 V= 1 1 Compose EWM E1 .entry>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	.entry <if= P1 1 ifG PCScale 0 Block Alert 1 SavePos dynamic 2 Threat S103 50 .nu1 .nu2 PassVar 1 E1 P= 1 2 History 2>

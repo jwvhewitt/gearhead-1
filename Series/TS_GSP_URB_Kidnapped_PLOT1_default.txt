@@ -13,8 +13,8 @@ Plot 0
 
 	% If the NPC with the clue gets killed, we're gonna need
 	% a different plot.
-	start <ifPersona E2 else GoDelete>
-	5Min <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
+	5Min <ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1  AdvancePlot 0>
 
 	% A cleanup trigger means that the story has been deleted;

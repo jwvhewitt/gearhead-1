@@ -32,7 +32,7 @@ Story
 	%  - V201 is nonzero, and PC speaks with N2
 	%  - N2 dies or is otherwise removed from the game
 
-	start <ifPersona N2 else GoEndStory if= V3 0 StoryLine .leaderbit V= 3 1>
+	start <ifNPCOK N2 else GoEndStory if= V3 0 StoryLine .leaderbit V= 3 1>
 	GoEndStory <EndStory>
 	.leaderbit <TS_GSP_URB_Kidnapped_PLOT0_*.txt>
 

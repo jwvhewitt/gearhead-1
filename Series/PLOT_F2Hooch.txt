@@ -8,17 +8,17 @@ Plot 0
 	element3 <Character !Near 1 Sociable Cheerful>
 	element4 <Prefab>
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckE3 V= 1 ComTime V+ 1 86400 FreezeChar E3>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckE3 V= 1 ComTime V+ 1 86400 FreezeChar E3>
 	GoCheckE3 <if= SceneID E2 else GoCheckTime if= EScene 3 E2 else GoCheckTime AdvancePlot 1>
 	GoCheckTime <if# SceneID 0 ifG 50 PCRep 6 else GoDelete ifG ComTime V1 Goto GoDelete>
-	GoDelete <ifPersona E3 else GoE3Died MoveChar E3 E2 AdvancePlot 0>
+	GoDelete <ifNPCOK E3 else GoE3Died MoveChar E3 E2 AdvancePlot 0>
 	GoE3Died <MoveCHar E4 E2 AdvancePlot 0>
 
 sub
 	Persona 1
 	rumor <!1 has a whisky still outside of town.>
 	greeting <NewChat if= P1 0 else GoRealStart Say 8 AdvancePlot 0>
-	GoRealStart <ifG P1 0 else GoFalseStart ifPersona E3 else GoE3Died if= EScene 3 E2 else GoNoRescue Say 2 XPV 150 AdvancePlot 0>
+	GoRealStart <ifG P1 0 else GoFalseStart ifNPCOK E3 else GoE3Died if= EScene 3 E2 else GoNoRescue Say 2 XPV 150 AdvancePlot 0>
 	GoNoRescue <Say 1 AddChat 1>
 	GoFalseStart <SayAnything>
 	GoE3Died <Say 4 AdvancePlot 0>

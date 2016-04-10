@@ -11,7 +11,7 @@ Plot 0
 
 	% V1 = Initialization Counter
 
-	start <ifPersona E2 else GoDelete if= V1 0 S= 7 E2 S= 8 EScene 2 V= 1 1>
+	start <ifNPCOK E2 else GoDelete if= V1 0 S= 7 E2 S= 8 EScene 2 V= 1 1>
 	GoDelete <S= 4 0 AdvancePlot 0>
 
 	CleanUp <ifG S103 0 else GoRealDelete ifG S202 3 else GoRealDelete AdvancePlot 1>
@@ -37,7 +37,7 @@ sub
 
 	% If the number of clues equals the number of wins, then E2
 	% can tell the PC where to head next.
-	GoStartWithCase <NewChat if= S202 S203 else GoCheckClue ifPersona S6 else GoPersonaNotKnown V= 2 15 V+ 2 d5 Say V2>
+	GoStartWithCase <NewChat if= S202 S203 else GoCheckClue ifNPCOK S6 else GoPersonaNotKnown V= 2 15 V+ 2 d5 Say V2>
 	GoPersonaNotKnown <Say 21>
 
 	% If the clue timer has run its course, tell the PC the next
@@ -56,7 +56,7 @@ sub
 	result5 <Goto Result4>
 	result6 <Goto result4>
 
-	result7 <NewChat ifPersona S6 else GoPersonaNotKnown V= 2 15 V+ 2 d5 Say V2>
+	result7 <NewChat ifNPCOK S6 else GoPersonaNotKnown V= 2 15 V+ 2 d5 Say V2>
 	result8 <Goto Result7>
 	result9 <Goto result7>
 

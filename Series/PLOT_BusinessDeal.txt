@@ -8,7 +8,7 @@ plot 0
 	element2 <Faction Corporate>
 	element3 <Character Executive !Comrade 2 !Far 1>
 
-	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 News d5>
+	start <ifNPCOK E1 else GoDelete ifNPCOK E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 News d5>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -130,7 +130,7 @@ Plot 1
 	%   if P1=1, PC has arranged a better deal.
 	% P2 = Have told about worse deal...
 
-	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete Memo 101>
+	start <ifNPCOK E1 else GoDelete ifNPCOK E3 else GoDelete Memo 101>
 	GoDelete <AdvancePlot 0>
 
 	Msg101 <\ELEMENT 1 in \SCENE EScene 1 asked you to speak with \ELEMENT 3 in \SCENE EScene 3 about the city utilities contract.>

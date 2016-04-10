@@ -30,7 +30,7 @@ Plot 0
 	GoHasMission <AdvancePlot 1>
 
 	start <ifKeyItem E5 else GoCheckBegin if= V1 1 else GoCheckBegin V= 1 2>
-	GoCheckBegin <ifPersona E2 else GoDelete ifPersona E4 else GoDelete ifItemOK E5 else GoDelete if= V1 0  V= 1 1 ItemVar= E5 1 E6 Compose KEY E5 .key>
+	GoCheckBegin <ifNPCOK E2 else GoDelete ifNPCOK E4 else GoDelete ifItemOK E5 else GoDelete if= V1 0  V= 1 1 ItemVar= E5 1 E6 Compose KEY E5 .key>
 	GoDelete <if= P5 0 else GoRealDelete S= 201 0  N= 2 E6  AdvancePlot 0>
 	GoRealDelete <AdvancePlot 0>
 	.key <if= P5 0 S= 201 0  S+ 101 1  P= 5 1  N= 2 E6>

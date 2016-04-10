@@ -133,7 +133,7 @@ sub
 	% The second part of the plot... activates when the PC is
 	% tossed into Ladon.
 
-	start <if= E8 1 else GoDelete ifPersona E3 else GoDelete Memo 1>
+	start <if= E8 1 else GoDelete ifNPCOK E3 else GoDelete Memo 1>
 	GoDelete <DeleteChar E6 AdvancePlot 0>
 	Msg1 <\ELEMENT 3 in \SCENE EScene 3 asked you to go to Tokto Island and investigate the disappearance of \ELEMENT 6 .>
 

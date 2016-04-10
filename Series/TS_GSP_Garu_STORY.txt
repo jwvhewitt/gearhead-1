@@ -28,7 +28,7 @@ Story
 
 	% When the serum is used, record initial REF,BOD,KNO...
 	.usegaru <S= 2 1  DeleteKeyItem N3  S= 17 PCKNOWLEDGE  S= 11 PCREFLEXES S= 12 PCBODY S= 13 PCSPEED S= 18 PCCHARM>
-	.getgaru <ifPersona N2 Print 2 DeleteChar N2>
+	.getgaru <ifNPCOK N2 Print 2 DeleteChar N2>
 
 	% If the PC has taken the drug, every quarter his stats will be changed.
 	quarter <if= S2 1  ifG PCKnowledge 1 else GoCheckCharm PCStat+ 7 -1 PCStat+ 1 1 PCStat+ 2 1 PCStat+ 3 1 ifG PCCharm 1 else GoCheckMessage PCStat+ 8 -1 Goto GoCheckMessage>

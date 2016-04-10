@@ -31,7 +31,7 @@ plot 0
 
 	% If Persona E2 dies, load a new plot.
 	% Upon entering combat, force a conversation with the supposed enemy.
-	start <ifPersona E2 else GoDelete if= V2 1 if= V1 0 V= 1 1 ifPersona E4 ForceChat E4 NPCLevel E4 S103>
+	start <ifNPCOK E2 else GoDelete if= V2 1 if= V1 0 V= 1 1 ifNPCOK E4 ForceChat E4 NPCLevel E4 S103>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	% Combat check. If combat has been entered, V2=1.
@@ -66,7 +66,7 @@ sub
 	% completed the mission or not.
 
 	greeting <NewChat if= P2 3 else GoCheckLoss  Say 1 CashPrize V4 Goto GoEndMission>
-	GoCheckLoss <if= P2 2 else GoCheckMission ifPersona E4 else GoE4Died Say 2 PCEnemy E4 S= 101 1 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission ifNPCOK E4 else GoE4Died Say 2 PCEnemy E4 S= 101 1 AdvancePlot 0>
 	GoE4Died <Say 3 Goto GoEndMission>
 	GoCheckMission <if= V1 1 else GoFirstTime Say 4 AddChat 1 AddChat 2 AddChat 3>
 

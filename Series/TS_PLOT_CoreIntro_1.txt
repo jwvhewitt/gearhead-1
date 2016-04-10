@@ -60,7 +60,7 @@ Plot 0
 
 	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 NPCLevel E3 20 NPCLevel E4 20 Goto GoCheckEncounter>
 	GoCheckTime <if= V2 0 ifG ComTime V1 else GoCheckEncounter AdvancePlot 1>
-	GoCheckEncounter <if= V10 0 if= SceneID 10 ifPersona E2 V= 10 1 Print 1 ForceChat E2>
+	GoCheckEncounter <if= V10 0 if= SceneID 10 ifNPCOK E2 V= 10 1 Print 1 ForceChat E2>
 	Msg1 <\ELEMENT 2 strikes up a conversation with you.>
 
 	nu1 <ifG V2 0 if= t1 0 if= L10 E3 else GoChaosMission AdvancePlot 2>

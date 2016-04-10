@@ -3,7 +3,7 @@ Plot 0
 
 	element1 <Character Citizen Cheerful Passionate>
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoDelete <AdvancePlot 0>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 

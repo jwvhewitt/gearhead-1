@@ -485,7 +485,7 @@ var
 	Robot,Part,Part2: GearPtr;
 	BP: LongInt;
 	BP_tmp: Int64;
-	SkRk,T,BaseSkill,Sensor,Electronic,Armor,Skill: Integer;
+	Bulk,SkRk,T,BaseSkill,Sensor,Electronic,Armor,Skill: Integer;
 	Viable,Good: Boolean;
 
 	Procedure InstallLimb( N,Size: Integer );
@@ -542,15 +542,48 @@ var
 		end;
 	end;
 
+    function RobotStats( RobotC: GearPtr; Pts,MaxStat: Integer): Integer;
+	    { Randomly allocate PTS points to all of the robot's }
+	    { stats. }
+    var
+	    Stat, Tries: Integer;	{ A loop counter. }
+	    STemp: Array [1..NumGearStats] of Integer;
+    begin
+	    for Stat := 1 to NumGearStats do begin
+		    STemp[Stat] := 0;
+	    end;
+
+	    { Keep processing until we run out of stat points to allocate. }
+        Tries := 0;
+	    while ( Pts > 0 ) and ( Tries < 100 ) do begin
+		    Stat := Random( NumGearStats ) + 1;
+
+		    { If the stat selected is under the max value, }
+		    { improve it. If it is at or above the max value, }
+		    { there's a one in three chance of improving it. }
+		    if ( STemp[Stat] + RobotC^.Stat[ Stat ] ) < MaxStat then begin
+			    Inc( STemp[Stat] );
+			    Dec( Pts );
+
+		    end else begin
+			    Inc( Tries );
+
+		    end;
+	    end;
+
+	    { Add the STemp values to the stat baseline. }
+	    for Stat := 1 to NumGearStats do RobotC^.Stat[Stat] := RobotC^.Stat[Stat] + STemp[Stat];
+
+        { Return the number of unspent points. }
+        RobotStats := Pts;
+    end;
+
 begin
 	{ PC must have some energy to do this. }
 	if CurrentMental( PC ) < 1 then begin
 		DisposeGear( Ingredients );
 		Exit( Nil );
 	end;
-
-	{ Add the stamina decrease here. }
-	AddMentalDown( PC , 10 );
 
 	{ Start with allocating the robot's base gear. }
 	Robot := NewGear( Nil );
@@ -571,11 +604,13 @@ begin
     {$ENDIF}
 
 	{ Determine the PC's ROBOTICS skill. }
-	{ The skill rank is penalized by 10 here since it will be given a bonus }
-	{ by the robot build points later; in most cases the two will cancel out. }
-	SkRk := TeamSkill( GB , NAV_DefPlayerTeam , 38 ) - 10;
+	SkRk := TeamSkill( GB , NAV_DefPlayerTeam , 38 );
 	PC := LocatePilot( PC );
 	BaseSkill := NAttValue( PC^.NA , NAG_Skill , 38 );
+
+
+	{ Add the stamina decrease here. }
+	AddMentalDown( PC , 10 );
 
 	{ Give some experience. }
 	DoleSkillExperience( PC , 38 , NumSiblingGears( Ingredients ) );
@@ -589,9 +624,7 @@ begin
 			BP := BP + Part^.V;
 		end else begin
 			BP_tmp := BP;
-			BP_tmp := BP_tmp + GearMaxDamage( Part ) * 5;
-			BP_tmp := BP_tmp + GearMaxArmor( Part ) * 3;
-			BP_tmp := BP_tmp + GearMass( Part );
+			BP_tmp := BP_tmp + GearValue( Part ) div 10;
 			if BP_tmp < BP_MIN then begin
 				BP_tmp := BP_MIN;
 			end else if BP_MAX < BP_tmp then begin
@@ -602,31 +635,8 @@ begin
 		Part := Part^.Next;
 	end;
 
-	{ Use the BP total to calculate the robot's BODY stat. }
-	if (Stat_MAX < (BP div 25)) then begin
-		Robot^.Stat[ STAT_Body ] := Stat_MAX;
-	end else begin
-		Robot^.Stat[ STAT_Body ] := BP div 25;
-	end;
-	if Robot^.Stat[ STAT_Body ] < 1 then Robot^.Stat[ STAT_Body ] := 1
-	else if Robot^.Stat[ STAT_Body ] > 25 then Robot^.Stat[ STAT_Body ] := 25;
-
-	{ Build Points also make constructing the robot easier. }
-	while BP > 0 do begin
-		BP := BP div 2;
-		Inc( SkRk );
-	end;
-
-	{ Roll for the other stats. }
-	{ REFLEXES and SPEED }
-	Robot^.Stat[ STAT_Reflexes ] := RollStep( SkRk ) - 7 - ( Robot^.Stat[ STAT_Body ] div 4 );
-	Robot^.Stat[ STAT_Speed ] := RollStep( SkRk ) - 5 - ( Robot^.Stat[ STAT_Body ] div 2 );
-
-	{ PERCEPTION, CRAFT, KNOWLEDGE }
-	Robot^.Stat[ STAT_Perception ] := RollStep( SkRk ) - 10;
-	Robot^.Stat[ STAT_Craft ] := RollStep( SkRk ) - 7;
-	Robot^.Stat[ STAT_Knowledge ] := RollStep( SkRk ) - 7;
-	Robot^.Stat[ STAT_Ego ] := RollStep( SkRk ) - 10;
+    { Roll the stats. }
+    BP := RobotStats( Robot, BP div 20 + RollStep( SkRk ), SkRk - 2 );
 
 	{ Make sure nothing has gone below 0. }
 	{ If all the stats are above 10, maybe make robot self-aware. }
@@ -676,6 +686,7 @@ begin
 		{ Other robots get random bodies. }
 		if Good then begin
 			ExpandCharacter( Robot );
+    		for t := 1 to 5 do SetNAtt( Robot^.NA , NAG_Skill , T , SkRk div 2 );
 		end else begin
 			InstallLimb( GS_Body , MasterSize( Robot ) );
 			if RollStep( SkRk ) > 20 then begin
@@ -696,7 +707,7 @@ begin
 		end;
 
 		{ Give our robot some skills. }
-		for t := 6 to 10 do if Random( 5 ) <> 1 then SetNAtt( Robot^.NA , NAG_Skill , T , Random( BaseSkill ) );
+		for t := 6 to 10 do SetNAtt( Robot^.NA , NAG_Skill , T , SkRk div 3 + 1 );
 		SetNAtt( Robot^.NA , NAG_Skill , NAS_WeightLifting , 10 );
 		SetNAtt( Robot^.NA , NAG_Skill , 26 , 5 );
 		SetNAtt( Robot^.NA , NAG_Skill , 30 , 5 );
@@ -754,6 +765,7 @@ begin
 
 	end else begin
 		{ The construction attempt has failed. }
+        {DoleSkillExperience( PC, 38, 10 );}
 		DisposeGear( Robot );
 	end;
 

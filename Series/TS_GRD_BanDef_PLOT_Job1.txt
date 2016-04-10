@@ -37,7 +37,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 45500>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 45500>
 	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -100,7 +100,7 @@ sub
 	% The first time the PC meets the NPC, the PC will be given the
 	% mission automatically if he's part of the same faction, or if
 	% he is a friend of the NPC, or if he's already been sent email.
-	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat FacVar E1 1000 100 V= 4 Reward V3 150 if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRenown 100 V= 4 Reward V3 150 if= PCFac E1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	% If the reaction score is greater than 40, PC will automatically
 	% be offered the job, but unlike above will not be automatically

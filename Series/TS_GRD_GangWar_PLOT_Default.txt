@@ -33,7 +33,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -97,7 +97,7 @@ sub
 	% he is a friend of the NPC, or if he's already been sent email.
 
 	% The PC will be denied the mission if he's helped the enemy.
-	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 FacVar N1 1000 V+ 3 d6 V= 4 Threat V3 1 Goto GoCheckFaction>
+	GoCheckFirst <if= S104 0 else GoDenied if= V1 0 else GoDenied V= 1 -1 V= 3 PCRenown V+ 3 d6 V= 4 Threat V3 1 Goto GoCheckFaction>
 	GoCheckFaction <if= PCFac N1 else GoCheckEmail V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	GoCheckEmail <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 

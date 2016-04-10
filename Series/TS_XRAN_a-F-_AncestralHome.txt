@@ -22,7 +22,7 @@ plot 0
 
 	% If Persona E2 dies, load a new plot.
 	% Upon entering combat, force a conversation with the supposed enemy.
-	start <ifPersona E2 else GoDelete if= V1 0 if= SceneID E1 ifNPCInPlay E2 NPCGoPC E2>
+	start <ifNPCOK E2 else GoDelete if= V1 0 if= SceneID E1 ifNPCInPlay E2 NPCGoPC E2>
 	GoDelete <S= 101 1 N= 3 E3 S= 105 -1  AdvancePlot 0>
 
 	TM1 <if= SceneID E1 ifNPCinPlay E2 if= V1 0 ifG 6 Range PCUID NPCUID E2  Print 1 ForceChat E2>
@@ -154,7 +154,7 @@ sub
 
 	Plot 1
 	% P1 = Initialization Counter
-	start <ifPersona E2 else GoDelete if= V1 0 Memo 1 V= 1 1>
+	start <ifNPCOK E2 else GoDelete if= V1 0 Memo 1 V= 1 1>
 	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
 	cleanup <AdvancePlot 0>
 	Msg1 <\ELEMENT 2 in \ELEMENT 1 has some information about your family history.>

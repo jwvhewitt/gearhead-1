@@ -21,7 +21,7 @@ Plot 0
 	% V3  = Have accepted job from Elisha
 	% V4  = Have agreed to help Praetor
 
-	start <ifPersona E1 else GoDelete ifItemOK E3 else GoMaybeDelete if= V1 0 V= 1 1 MoveKeyItem E3 50 Compose GET E3 .getit>
+	start <ifNPCOK E1 else GoDelete ifItemOK E3 else GoMaybeDelete if= V1 0 V= 1 1 MoveKeyItem E3 50 Compose GET E3 .getit>
 	.getit <P= 2 1  P= 4 0  G= 3 -1  if= SCENEID 50 Reputation 1 -1 if# L2 1 Print 101 TeamAttack 2>
 	GoDelete <AdvancePlot 0 if= V2 0 DeleteKeyItem E3>
 	GoMaybeDelete <if= V3 0 AdvancePlot 0>

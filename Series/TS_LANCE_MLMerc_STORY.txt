@@ -13,7 +13,7 @@ Story
 	% S2 = PC has hired mercenary
 
 	% At startup, set the potential lancemate's skill level and reputation.
-	start <ifPersona N2 else GoDelete if= S1 0 S= 1 d50 S+ 1 25 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1>
+	start <ifNPCOK N2 else GoDelete if= S1 0 S= 1 d50 S+ 1 25 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1>
 	GoDelete <EndStory>
 
 sub

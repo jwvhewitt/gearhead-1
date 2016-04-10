@@ -34,7 +34,7 @@ Plot 0
 	% entered.
 	cleanup <if= V2 0 AdvancePlot 0>
 
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckC2 V= 1 1 Compose EWM E1 .entrycombat ifFaction N2 else GoReplaceFaction>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckC2 V= 1 1 Compose EWM E1 .entrycombat ifFaction N2 else GoReplaceFaction>
 	GoReplaceFaction <N= 2 E4>
 	GoCheckC2 <ifG V2 1 else GoCheckC1 ForceChat E2>
 	GoCheckC1 <if= V2 1 if= V3 0 V= 3 1 ForceChat E2>

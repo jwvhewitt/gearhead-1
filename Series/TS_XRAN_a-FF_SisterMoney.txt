@@ -8,7 +8,7 @@ Plot 0
 	element2 <Prefab>
 	element3 <Scene Target Town !Far 1>
 
-	start <ifPersona E2 else GoDelete if= V1 0 PCFamily E2 if= d3 1 Email d5 V= 1 1>
+	start <ifNPCOK E2 else GoDelete if= V1 0 PCFamily E2 if= d3 1 Email d5 V= 1 1>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	Msg1 <\ELEMENT 2 @ \SCENE EScene 2 :// Hey! It's your sister calling. I need some money, come see me...>

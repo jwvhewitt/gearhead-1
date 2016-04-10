@@ -12,7 +12,7 @@ Plot 0
 	% P2 = PC has contacted the leader of the resistance.
 	% P3 = Combat Indicator
 
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 	GoDelete <AdvancePlot 0>
 
 	% Every time the bone devils lose, add one point to the victory column.

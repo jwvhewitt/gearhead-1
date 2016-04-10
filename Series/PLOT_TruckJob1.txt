@@ -203,7 +203,7 @@ sub
 				NU2 <if= T2 0 if= V2 1 AdvancePlot 7 XPV 150 Salvage Reputation 6 1   V= 2 2>
 
 				% Time limit - this plot will fade after a short time.
-				START <ifPersona E5 else GoDelete ifPersona E4 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 150000>
+				START <ifNPCOK E5 else GoDelete ifNPCOK E4 else GoDelete ifNPCOK E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 150000>
 				GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 				GoDelete <AdvancePlot 0>
 			sub
@@ -421,7 +421,7 @@ sub
 		% V4 = Second Job Offer
 
 		% Time limit - this plot will fade after a short time.
-		START <ifPersona E1 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 86000 V= 3 Comtime V+ 3 10800>
+		START <ifNPCOK E1 else GoDelete ifNPCOK E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 86000 V= 3 Comtime V+ 3 10800>
 		GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 		GoDelete <AdvancePlot 0>
 	sub
@@ -491,7 +491,7 @@ sub
 			% P2 = Phase
 
 			% Time limit - this plot will fade after a short time.
-			START <ifPersona E3 else GoDelete ifPersona E4 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 25000>
+			START <ifNPCOK E3 else GoDelete ifNPCOK E4 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 25000>
 			GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 			GoDelete <AdvancePlot 0>
 		sub
@@ -566,7 +566,7 @@ sub
 			Plot 9
 				% Player has successfully made the delivery.
 				% Time limit - this plot will fade after a short time.
-				START <ifPersona E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 75000>
+				START <ifNPCOK E3 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 75000>
 				GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
 				GoDelete <AdvancePlot 0>
 			sub

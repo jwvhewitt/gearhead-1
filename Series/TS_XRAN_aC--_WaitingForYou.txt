@@ -20,7 +20,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 dies, load a new plot.
-	start <ifPersona E2 else GoDelete if= V1 0 V= 1 1 Compose EWM E1 .comstart Compose UTD E2 .e2dies>
+	start <ifNPCOK E2 else GoDelete if= V1 0 V= 1 1 Compose EWM E1 .comstart Compose UTD E2 .e2dies>
 	GoDelete <S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0>
 
 	.e2dies <ifFaction N2 else GoE2DiesNoFac Goto GoE2DeathFinal>
@@ -29,8 +29,8 @@ plot 0
 
 	.comstart <ifG PCScale 0 else GoDelete Print 101 Block SavePos P= 2 1 Dynamic 2 Threat S103 100 .nu1 .nu2 DynaNPC E2 2 ComposeD Start .start PassVar 1 E2>
 	.start <if= L2 0 ForceChat L1 L= 2 1>
-	.nu1 <if= T1 0 Return if= L3 0 L= 3 1 ifPersona L1 ForceChat L1>
-	.nu2 <if= T2 0 if= L3 0 L= 3 1 Salvage Reputation 6  1 ifPersona L1 XPV 100 ForceChat L1>
+	.nu1 <if= T1 0 Return if= L3 0 L= 3 1 ifNPCOK L1 ForceChat L1>
+	.nu2 <if= T2 0 if= L3 0 L= 3 1 Salvage Reputation 6  1 ifNPCOK L1 XPV 100 ForceChat L1>
 
 	hour <ifG PCCharm d30 if= P3 0 Email 1 P= 3 1>
 

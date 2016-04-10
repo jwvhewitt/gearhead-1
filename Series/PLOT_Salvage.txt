@@ -6,7 +6,7 @@ Plot 0
 	% V1 = Time Limit
 	% V2 = Combat Indicator
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

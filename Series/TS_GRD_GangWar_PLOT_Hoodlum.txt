@@ -10,7 +10,7 @@ Plot 0
 	% V1 = Phase Counter
 	% V2 = Reward Counter
 
-	start <ifPersona E2 else GoEndPlot if= V1 0 else GoSetOrder V= 1 1 Compose UTD E2 .killerdies NPCLevel E2 PCRep 6 Goto GoSetOrder>
+	start <ifNPCOK E2 else GoEndPlot if= V1 0 else GoSetOrder V= 1 1 Compose UTD E2 .killerdies NPCLevel E2 PCRep 6 Goto GoSetOrder>
 	GoEndPlot <AdvancePlot 0>
 	.killerdies <if= V2 0 else GoEndPlot V= 2 1 FacXP+ N1 1 AdvancePlot 0>
 	GoSetOrder <ifNPCInPlay E2 NPCGoPC E2>

@@ -26,7 +26,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 or E4 dies, load a new plot.
-	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete>
+	start <ifNPCOK E4 else GoDelete ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 
@@ -59,7 +59,7 @@ sub
 		% V2 = Combat Counter
 
 		% If Persona E4 dies, load a new plot.
-		start <ifPersona E4 else GoDelete if= V1 0 V= 1 1 Memo 101>
+		start <ifNPCOK E4 else GoDelete if= V1 0 V= 1 1 Memo 101>
 		GoDelete <S= 101 1 AdvancePlot 0>
 
 		% Combat check. If combat has been entered, V2=1.

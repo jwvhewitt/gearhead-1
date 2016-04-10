@@ -11,7 +11,7 @@ Story
 	% S1 = Initialization counter
 	% S2 = Challenge Rating
 
-	start <ifPersona N3 else GoDelete if= S1 0 ItemVar= N2 1 N3 ItemVar= N2 3 25 S= 1 1>
+	start <ifNPCOK N3 else GoDelete if= S1 0 ItemVar= N2 1 N3 ItemVar= N2 3 25 S= 1 1>
 	GoDelete <EndStory>
 sub
 	Persona 3
@@ -68,7 +68,7 @@ inv
 	% V1 = CID of the hermit
 	% V2 = Training recharge timer
 	% V3 = Training Level
-	use <ifYesNo 1 2 3 ifPersona V1 else GoInfinite ifG ComTime V2 else GoInfinite Goto GoFinite>
+	use <ifYesNo 1 2 3 ifNPCOK V1 else GoInfinite ifG ComTime V2 else GoInfinite Goto GoFinite>
 	GoFinite <LoadD .sitename PassVar 1 V1 PassVar 2 V3 PassVar 3 10 SeekGate -1>
 	GoInfinite <LoadD .sitename PassVar 2 V3 PassVar 3 10 SeekGate -1>
 	.sitename <SCENE_MeetingPath.txt>

@@ -44,7 +44,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Compose EWM E1 .entrycombat>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 Compose EWM E1 .entrycombat>
 	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 	.entrycombat <Block Print 101 SavePos MDynamic 0 S2 .edesc .nu1 .nu2 PassVar 1 E1>

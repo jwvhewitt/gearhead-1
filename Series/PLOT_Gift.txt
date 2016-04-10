@@ -6,7 +6,7 @@ Plot 0
 	Element1 <Character Leader Renowned Cheerful>
 
 	% Time limit code.
-	START <ifPersona E1 else GoDelete  if= V1 0 else GotoCheckTime  V= 1 ComTime V+ 1 30000>
+	START <ifNPCOK E1 else GoDelete  if= V1 0 else GotoCheckTime  V= 1 ComTime V+ 1 30000>
 	GotoCheckTime <ifG ComTime V1  AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

@@ -20,7 +20,7 @@ Plot 0
 	% V2 = Combat Indicator
 	% V3 = The key item index
 
-	start <ifPersona E2 else GoCheckDelete if= V1 0 V= 1 1 V= 3 2 V+ 3 d5 Compose GET EV3 .getkey>
+	start <ifNPCOK E2 else GoCheckDelete if= V1 0 V= 1 1 V= 3 2 V+ 3 d5 Compose GET EV3 .getkey>
 	.getkey <S= 104 1 EndStory AdvancePlot 0>
 
 	GoCheckDelete <EndStory AdvancePlot 0>

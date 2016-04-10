@@ -36,7 +36,7 @@ Plot 0
 	% V1 = Initialization Counter
 
 	start <ifKeyItem E7 else GoCheckDelete S= 105 -1 N= 3 EScene 5 History 101 XRMystery NAV_XRMResolved AdvancePlot 1>
-	GoCheckDelete <ifPersona E3 else GoDelete ifPersona E5 else GoDelete ifItemOK E7 else GoDelete if= V1 0 V= 1 1 News d3 ifPersona N1 else GoN1Dead DeleteChar E6 E= 6 N1>
+	GoCheckDelete <ifNPCOK E3 else GoDelete ifNPCOK E5 else GoDelete ifItemOK E7 else GoDelete if= V1 0 V= 1 1 News d3 ifNPCOK N1 else GoN1Dead DeleteChar E6 E= 6 N1>
 	GoN1Dead <N= 1 E6 FreezeChar E6>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
@@ -84,7 +84,7 @@ Plot 1
 	% V1 = Combat recharge indicator
 	% V10 = Told NPC don't have item
 
-	start <ifPersona E5 else GoDelete if= V1 -1 else goCheckCombat V= 1 1 ForceChat E6>
+	start <ifNPCOK E5 else GoDelete if= V1 -1 else goCheckCombat V= 1 1 ForceChat E6>
 	GoCheckCombat <if= SceneID 1 else GoCheckTown if= V1 0 Block V= 1 -1 Alert 1 SavePos Dynamic 2 Threat S103 90 .nu1 .nu2>
 	.nu1 <if= T1 0 Return>
 	.nu2 <if= T2 0 Return>

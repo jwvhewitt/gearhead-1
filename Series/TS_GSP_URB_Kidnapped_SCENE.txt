@@ -47,7 +47,7 @@ sub
 	BorderType 24
 	sub
 		Door 15
-		USE <ifG -99 MetaPass else GoCloseDoor  if= StatVal STAT_Lock 0 else GoDoorLocked  Print 1  SetStat STAT_Pass 0  Transform 1 if= L2 0 L= 2 1 ifPersona -1 ForceChat -1>
+		USE <ifG -99 MetaPass else GoCloseDoor  if= StatVal STAT_Lock 0 else GoDoorLocked  Print 1  SetStat STAT_Pass 0  Transform 1 if= L2 0 L= 2 1 ifNPCOK -1 ForceChat -1>
 		UPDATE <if= V1 0 V= 1 1 if# d4 2 SetStat STAT_Lock 15>
 	end
 

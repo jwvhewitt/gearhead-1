@@ -9,7 +9,7 @@ Plot 0
 	element1 <Character HasMecha Sociable Cheerful Body>
 
 	% Time limit - this plot will fade after a short time.
-	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10000>
+	START <ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10000>
 	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

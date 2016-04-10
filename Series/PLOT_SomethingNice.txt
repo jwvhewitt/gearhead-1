@@ -6,7 +6,7 @@ Plot 0
 	element2 <Character Citizen Renowned !X 1>
 	element3 <PREFAB>
 
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 17000 Compose GET E3 .get SetItemFudge E3 Reward Threat PCRep 6 100 2000>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 17000 Compose GET E3 .get SetItemFudge E3 Reward Threat PCRep 6 100 2000>
 	GoCheckTime <ifG ComTime V1 DeleteKeyItem E3 AdvancePlot 0>
 	GoDelete <DeleteKeyItem E3 AdvancePlot 0>
 	.get <FacXP+ E1 1 AdvancePlot 0>
