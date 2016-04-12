@@ -201,6 +201,7 @@ begin
 						dialogmsg( ReplaceHash( ReplaceHash( MsgString( 'AUTOTRAIN_LEARN' ) , GearName( NPC ) ) , SkillMan[ T ].Name ) );
 						TrainedSome := True;
 						N := 5;
+                        break;
 					end;
 					Dec( N );
 				end;

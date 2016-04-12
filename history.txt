@@ -1,3 +1,4 @@
+- Fixed AutoTraining overspending bug (pcaction.pp)
 - Renamed ifPersona ASL command to ifNPCOK
 - Removed faction difficulty counter (ADV_FederatedTerritories.txt)
 - Robotics adjusted (skilluse.pp)
