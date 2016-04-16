@@ -3251,8 +3251,8 @@ begin
 {$IFNDEF SDLMODE}
 			{ Indicate the mek to get the action for. }
 			DisplayGearInfo( Mek , Camp^.gb );
-			IndicateTile( Camp^.GB , Mek );
 			ClrZone( ZONE_Menu );
+			IndicateTile( Camp^.GB , Mek );
 {$ENDIF}
 
 			{ Input the action. }
