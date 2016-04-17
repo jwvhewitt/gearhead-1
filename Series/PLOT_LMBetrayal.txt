@@ -14,7 +14,7 @@ Plot 0
 	GoDelete <AdvancePlot 0>
 
 	.ambush <Goto GoAmbush>
-	GoAmbush <ifG PCRep 6 d100 else GoDelete BLOCK FreezeNPC E1 V= 2 1 Alert 1 History 2 Dynamic 0 Threat PCRep 6 1 .nu1 .nu2 ComposeD TYPE .type Goto GoPrepEnemy>
+	GoAmbush <ifG PCRep 6 d100 else GoDelete BLOCK FreezeChar E1 V= 2 1 Alert 1 History 2 Dynamic 0 Threat PCRep 6 1 .nu1 .nu2 ComposeD TYPE .type Goto GoPrepEnemy>
 	GoPrepEnemy <DynaNPC E1 2 PCEnemy E1 ComposeD START .start PassVar 1 E1 PassVar 2 E2>
 	.start <if# L1 0 ForceChat L1 L= 1 0>
 	.nu1 <if= T1 0 Return if= V3 0 V= 3 1 LoseRenown>
