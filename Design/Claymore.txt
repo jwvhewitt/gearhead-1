@@ -1,20 +1,31 @@
 Battroid 6
 Name <Claymore>
 Desig <ITM-01>
+Desig_I18N <ITM-01>
 SDL_Sprite <btr_claymore.png>
 Desc <The Claymore is one of the oldest battroid mecha designs, dating from the Age of Superpowers. Though completely obsolete new Claymores are still being produced in DeadZone workshops.>
 
 Mod Body
+	Name_I18N <>
 	Armor 6
 	mass 1
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 6
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 4
+		Name_I18N <>
 
 		Gun 2
 		Name <Autocannon>
+		Name_I18N <>
 		Range 4
 		Acc -2
 		Speed 1
@@ -22,10 +33,12 @@ Mod Body
 		Magazine 80
 		sub
 			Ammo 2
+			Name_I18N <>
 		end
 
 		Gun 2
 		Name <Autocannon>
+		Name_I18N <>
 		Range 4
 		Acc -2
 		Speed 1
@@ -33,18 +46,22 @@ Mod Body
 		Magazine 80
 		sub
 			Ammo 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 6
 			Name <Heavy Autocannon>
+			Name_I18N <>
 			Range 7
 			Acc -1
 			Speed 1
@@ -52,51 +69,61 @@ Mod Arm
 			Magazine 40
 			sub
 				Ammo 6
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	sub
 		Hand
+		Name_I18N <>
 	end
 	inv
 		Shield 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 7
 	Armor 5
 	mass 1
 	sub
 		MLauncher 4
 		Name <Rocket Launcher>
+		Name_I18N <>
 		Range 7
 		Speed 1
 		Magazine 5
 		sub
 			Rockets 4
+			Name_I18N <>
 			Type <BLAST 2>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 7
 	Armor 5
 	mass 1
 	sub
 		MLauncher 4
 		Name <Rocket Launcher>
+		Name_I18N <>
 		Range 7
 		Speed 1
 		Magazine 5
 		sub
 			Rockets 4
+			Name_I18N <>
 			Type <BLAST 2>
 		end
 	end

@@ -94,6 +94,7 @@ Const
 	{ Stick an attack attribute or status effect name in a weapon's TYPE string }
 	{ attribute to activate said ability. }
 	Num_Attack_Attributes = 22;
+	{ PATCH_I18N: Don't translate it. }
 	AA_Name: Array [1..Num_Attack_Attributes] of string = (
 		'SWARM', 'BLAST', 'LINE', 'SCATTER', 'EXTEND',
 		'HYPER', 'ARMORPIERCING', 'MYSTERY', 'THROWN', 'RETURN',
@@ -153,6 +154,7 @@ Const
 	NAS_Anemia = 11;
 	NAS_Rust = 18;
 
+	{ PATCH_I18N: Don't translate it. }
 	SX_Name: Array [1..Num_Status_FX] of String = (
 		'POISON','BURN','REGEN','STONE','HAYWIRE',
 		'Inhuman Visage', 'Twitchy Hands', 'Depression', 'Rejection', 'Body Aches',
@@ -265,6 +267,7 @@ Const
 		(-2,-5,-2, 0, 0,-2, 0, 0)	{ Heart Problem }
 	);
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	DefaultWeaponName: Array [0..4] of String = (
 		'Melee Weapon',
 		'Energy Weapon',

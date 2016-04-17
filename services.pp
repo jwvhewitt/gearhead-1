@@ -48,11 +48,11 @@ Procedure OpenShuttle( GB: GameBoardPtr; PC,NPC: GearPtr );
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,arenacfe,backpack,damage,gearutil,ghchars,ghmodule,ghparser,
+uses i18nmsg,ability,arenacfe,backpack,damage,gearutil,ghchars,ghmodule,ghparser,
      ghswag,ghweapon,interact,menugear,rpgdice,skilluse,texutil,sdlgfx,
      sdlinfo,sdlmap,sdlmenus,ui4gh,ghprop;
 {$ELSE}
-uses ability,arenacfe,backpack,damage,gearutil,ghchars,ghmodule,ghparser,
+uses i18nmsg,ability,arenacfe,backpack,damage,gearutil,ghchars,ghmodule,ghparser,
      ghswag,ghweapon,interact,menugear,rpgdice,skilluse,texutil,congfx,
      coninfo,conmap,conmenus,context,ui4gh,ghprop;
 {$ENDIF}
@@ -146,7 +146,7 @@ begin
 	DisplayInteractStatus( SERV_GB , SERV_NPC , CHAT_React , CHAT_Endurance );
 	if SERV_Info <> Nil then begin
 {		DisplayGearInfo( SERV_Info , SERV_GB );}
-		CMessage( SAttValue( SERV_Info^.SA , 'DESC' ) , ZONE_Menu.GetRect() , MenuItem );
+		CMessage( FormatDescString(SERV_Info), ZONE_Menu.GetRect(), MenuItem );
 	end;
 	CMessage( '$' + BStr( NAttValue( SERV_PC^.NA , NAG_Experience , NAS_Credits ) ) , ZONE_Clock , InfoHilight );
 	GameMsg( CHAT_Message , ZONE_InteractMsg.GetRect() , InfoHiLight );
@@ -277,7 +277,8 @@ begin
 		Inc( N );
 		Ammo := Ammo^.Next;
 	end;
-	RPMSortAlpha( ShopMenu );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( ShopMenu );}
 	AlphaKeyMenu( ShopMenu );
 	AddRPGMenuItem( ShopMenu , MsgString( 'EXIT' ) , -1 );
 
@@ -353,15 +354,18 @@ begin
     {$ELSE}
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
     {$ENDIF}
-	AddRPGMenuItem( YNMenu , 'Buy ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
-	if ( Part^.G = GG_Mecha ) then 	AddRPGMenuItem( YNMenu , 'View Tech Stats' , 3 );
-	if ( Part^.SubCom <> Nil ) or ( Part^.InvCom <> Nil ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BrowseParts' ) , 2 );
-	if ( SeekSubsByG( Part^.SubCom , GG_Ammo ) <> Nil ) and ( Part^.Scale = 0 ) then AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BuyClips' ) , 4 );
-	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
-
-	msg := MSgString( 'BuyPROMPT' + Bstr( Random( 4 ) + 1 ) );
-	msg := ReplaceHash( msg , GearName( Part ) );
-	msg := ReplaceHash( msg , BStr( Cost ) );
+	AddRPGMenuItem( YNMenu , ReplaceHash( I18N_MsgString('PurchaseGear','Buy It'), GearName(Part), BStr(Cost) ) , 1 );
+	if ( Part^.G = GG_Mecha ) then begin
+		AddRPGMenuItem( YNMenu , I18N_MsgString('PurchaseGear','View Tech Stats') , 3 );
+	end;
+	if ( Part^.SubCom <> Nil ) or ( Part^.InvCom <> Nil ) then begin
+		AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BrowseParts' ) , 2 );
+	end;
+	if ( SeekSubsByG( Part^.SubCom , GG_Ammo ) <> Nil ) and ( Part^.Scale = 0 ) then begin
+		AddRPGMenuItem( YNMenu , MsgString( 'SERVICES_BuyClips' ) , 4 );
+	end;
+	AddRPGMenuItem( YNMenu , I18N_MsgString('PurchaseGear','Search Again') , -1 );
+	msg := ReplaceHash( I18N_MsgString('PurchaseGear','BuyPROMPT' + Bstr( Random(4) +1 ) ), GearName(Part), BStr(Cost) );
 
 {$IFDEF SDLMODE}
 	CHAT_Message := Msg;
@@ -527,12 +531,10 @@ begin
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );
     {$ENDIF}
 	AddRPGMenuItem( YNMenu , 'Sell ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
-	AddRPGMenuItem( YNMenu , 'Maybe later' , -1 );
+	AddRPGMenuItem( YNMenu , I18N_MsgString('SellGear','Maybe later') , -1 );
 
 	{ Query the menu - Sell it or not? }
-	msg := MSgString( 'SELLPROMPT' + Bstr( Random( 4 ) + 1 ) );
-	msg := ReplaceHash( msg , BStr( Cost ) );
-	msg := ReplaceHash( msg , GearName( Part ) );
+	msg := ReplaceHash( I18N_MsgString('SellGear','SELLPROMPT' + Bstr( Random(4) +1 ) ), GearName(Part), BStr(Cost) );
     SERV_Customer := PC;
 {$IFDEF SDLMODE}
     SERV_PC := PC;
@@ -554,10 +556,7 @@ begin
 		GameMsg( MSgString( 'SELLREPLY' + Bstr( Random( 4 ) + 1 ) ) , ZONE_InteractMsg , InfoHilight );
 {$ENDIF}
 
-		msg := MSgString( 'SELL_YOUHAVESOLD' );
-		msg := ReplaceHash( msg , GearName( Part ) );
-		msg := ReplaceHash( msg , BStr( Cost ) );
-		DialogMSG( msg );
+		DialogMSG( ReplaceHash( I18N_MsgString('SellGear','Sold'), GearName(Part), BStr(Cost) ) );
 
 		{ Give some XP to the PC's SHOPPING skill. }
 		ShoppingXP( PC , Part );
@@ -1232,11 +1231,11 @@ begin
 {$IFDEF SDLMODE}
 		while TextLength( GAME_FONT , ( msg + ' $' + BStr( PurchasePrice( PC , NPC , I ) ) ) ) < ( ZONE_ShopMenu.W - 5 ) do msg := msg + ' ';
 {$ELSE}
-		while Length( msg ) < ( ScreenZone[ ZONE_InteractMenu , 3 ] - ScreenZone[ ZONE_InteractMenu , 1 ] - 12 ) do msg := msg + ' ';
+		while WidthMBCharStr( msg ) < ( ScreenZone[ ZONE_InteractMenu , 3 ] - ScreenZone[ ZONE_InteractMenu , 1 ] - 12 ) do msg := msg + ' ';
 {$ENDIF}
 
 		{ Add it to the menu. }
-		AddRPGMenuItem( RPM , msg + ' $' + BStr( PurchasePrice( PC , NPC , I ) ) , N , SAttValue( I^.SA , 'DESC' ) );
+		AddRPGMenuItem( RPM , msg + ' $' + BStr( PurchasePrice( PC , NPC , I ) ) , N , FormatDescString(I) );
 		Inc( N );
 		I := I^.Next;
 	end;
@@ -1390,7 +1389,7 @@ begin
         {$ENDIF}
 
 		{ Add options, depending on the mek. }
-		if not OnTheMap( Mek ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_Sell' ) + GearName( Mek ) , 1 );
+		if not OnTheMap( Mek ) then AddRPGMenuItem( RPM , ReplaceHash( I18N_MsgString('SERVICES','Sell'), GearName(Mek) ) , 1 );
 		if TotalRepairableDamage( Mek , 15 ) > 0 then AddRPGMenuItem( RPM , MsgString( 'SERVICES_OSRSP1' ) + ' [$' + BStr( ScalePrice(PC,NPC,RepairMasterCost( Mek , 15 )) ) + ']' , 2 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellMekInv' ) , 4 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_BrowseParts' ) , 3 );
@@ -1777,7 +1776,7 @@ begin
         {$ENDIF}
 
 		{ Add the basic options. }
-		if Wares <> Nil then AddRPGMenuItem( RPM , 'Browse Wares' , 0 );
+		if Wares <> Nil then AddRPGMenuItem( RPM , I18N_MsgString('OpenShop','Browse Wares') , 0 );
 
 		{ Add options for each of the repair skills. }
 		{ The repair skills are:   }
@@ -1816,7 +1815,7 @@ begin
 
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Inventory' ) , -6 );
 
-		AddRPGMenuItem( RPM , 'Exit Shop' , -1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('OpenShop','Exit Shop') , -1 );
 
 		{ Display the trading stats. }
 {$IFDEF SDLMODE}
@@ -1916,10 +1915,11 @@ begin
 	while Stuff <> '' do begin
 		N := ExtractValue( Stuff );
 		if ( N >= 1 ) and ( N <= NumSkill ) then begin
-			AddRPGMenuItem( SkillMenu , SkillMan[ N ].Name , N );
+			AddRPGMenuItem( SkillMenu , I18N_Name('SkillMan',SkillMan[ N ].Name) , N );
 		end;
 	end;
-	RPMSortAlpha( SkillMenu );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( SkillMenu );}
 	AddRPGMenuItem( SkillMenu , MsgString( 'SCHOOL_Exit' ) , -1 );
 
 {$IFDEF SDLMODE}
@@ -2260,7 +2260,7 @@ begin
             if (City <> Nil) and ( City <> GB^.Scene ) and ( ( Fac = Nil ) or ( NAttValue( Fac^.NA , NAG_FactionScore , GetFactionID( City ) ) >= 0 ) ) then begin
 			{ Do the range check. }
 			    if AStringHasBString( SAttValue( City^.SA , 'TYPE' ) , 'DESTINATION' ) and (range(X0,y0,x1,y1) <= MaxShuttleRange) then begin
-				    AddRPGMenuItem( RPM , GearName( City ) + ' ($' + BStr( TravelCost( World, Entrance , X0 , Y0 ) ) + ')' , City^.S , SAttValue( City^.SA , 'DESC' ) );
+				    AddRPGMenuItem( RPM , GearName( City ) + ' ($' + BStr( TravelCost( World, Entrance , X0 , Y0 ) ) + ')' , City^.S , FormatDescString(City) );
 			    end;
 		    end;
 
@@ -2338,7 +2338,7 @@ begin
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_ExpressDelivery' ) , -8 );
 
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellStuff' ) , -5 );
-		AddRPGMenuItem( RPM , 'Exit Shop' , -1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('OpenShop','Exit Shop') , -1 );
 
 {$IFDEF SDLMODE}
 		N := SelectMenu( RPM , @BasicServiceRedraw );

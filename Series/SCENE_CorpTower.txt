@@ -60,6 +60,7 @@ sub
 	rect
 	FloorType 28
 	name <Computer Spot>
+	Name_I18N <>
 end
 inv
 	STC COMPUTER-1

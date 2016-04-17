@@ -1,45 +1,62 @@
 GroundHugger 5
 Name <Ultari>
 Desig <ULT-16f>
+Desig_I18N <ULT-16f>
 SDL_Sprite <ghu_ultari.png>
 
 Mod Turret
+	Name_I18N <>
 	Armor 5
 	sub
 		Gun 9
 		Name <Primary Cannon>
+		Name_I18N <>
 		Speed 1
 		Magazine 50
 		sub
 			Ammo 9
+			Name_I18N <>
 		end
 		Integral
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 4
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Range 3
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 9
 		Magazine 200
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
@@ -47,31 +64,38 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Right Track>
-    MidTier
+	Name_I18N <>
+	MidTier
 	sub
 		Tracks 6
+		Name_I18N <>
 	end
 
 Mod Storage
 	Size 3
 	Armor 3
 	Name <Left Track>
-    MidTier
+	Name_I18N <>
+	MidTier
 	sub
 		Tracks 6
+		Name_I18N <>
 	end
 end
 
 GroundHugger 5
 Name <Ultari>
 Desig <ULT-16p>
+Desig_I18N <ULT-16p>
 SDL_Sprite <ghu_ultari.png>
 
 Mod Turret
+	Name_I18N <>
 	Armor 5
 	sub
 		BeamGun 7
 		Name <Plasma Cannon>
+		Name_I18N <>
 		Type <SCATTER>
 		Speed 1
 		BV 4
@@ -79,29 +103,42 @@ Mod Turret
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 4
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Range 3
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 9
 		Magazine 200
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
@@ -109,65 +146,86 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Right Track>
-    MidTier
+	Name_I18N <>
+	MidTier
 	sub
 		Tracks 6
+		Name_I18N <>
 	end
 
 Mod Storage
 	Size 3
 	Armor 3
 	Name <Left Track>
-    MidTier
+	Name_I18N <>
+	MidTier
 	sub
 		Tracks 6
+		Name_I18N <>
 	end
 end
 
 GroundHugger 5
 Name <Ultari>
 Desig <ULT-16k>
+Desig_I18N <ULT-16k>
 SDL_Sprite <ghu_ultari.png>
 
 Mod Turret
+	Name_I18N <>
 	Armor 5
 	sub
 		MLauncher 8
 		Name <Rocket Launcher>
+		Name_I18N <>
 		Range 8
 		Speed 1
 		Magazine 16
 		sub
 			Rockets 8
+			Name_I18N <>
 			Type <BLAST 3>
 		end
 		Integral
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 4
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Range 3
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 9
 		Magazine 200
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
@@ -175,17 +233,21 @@ Mod Storage
 	Size 3
 	Armor 3
 	Name <Right Track>
-    MidTier
+	Name_I18N <>
+	MidTier
 	sub
 		Tracks 6
+		Name_I18N <>
 	end
 
 Mod Storage
 	Size 3
 	Armor 3
 	Name <Left Track>
-    MidTier
+	Name_I18N <>
+	MidTier
 	sub
 		Tracks 6
+		Name_I18N <>
 	end
 end

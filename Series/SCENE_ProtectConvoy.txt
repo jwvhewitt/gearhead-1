@@ -70,29 +70,38 @@ end
 inv
 	GroundCar 5
 	name <Truck>
+	name_I18N <>
 	SetTeam 3
 	update <V= 1 PCRenown V+ 1 d20 GrabSource GSkillLevel V1>
 	sub
 		mod Body
+		Name_I18N <>
 		armor 8
 		mass 81
 		sub
 			Gyro 1
+			Name_I18N <>
 			Engine 5
+			Name_I18N <>
 			Sensor 1
+			Name_I18N <>
 			CPIT
+			Name_I18N <>
 			sub
 				NPC Trucker
 			end
 			wheels 6
+			Name_I18N <>
 
 			Gun 2
 			name <Machine Gun>
+			name_I18N <>
 			range 4
 			BV 5
 			magazine 30
 			sub
 				Ammo 2
+				Name_I18N <>
 			end
 		end
 	end

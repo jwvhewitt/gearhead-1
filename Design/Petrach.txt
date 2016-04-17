@@ -1,33 +1,47 @@
 Battroid 3
 Name <Petrach>
 Desig <XB-7>
+Desig_I18N <XB-7>
 SDL_Sprite <btr_petrach.png>
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	Mass 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 3
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 7
+		Name_I18N <>
 
 		Mount
+		Name_I18N <>
 		inv
 			Gun 1
 			Name <Machine Gun>
+			Name_I18N <>
 			Range 3
 			Acc -1
 			BV 5
 			Magazine 60
 			sub
 				Ammo 1
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Storage
 	Name <Right Pod>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
@@ -36,6 +50,7 @@ Mod Storage
 
 Mod Storage
 	Name <Left Pod>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
@@ -44,11 +59,13 @@ Mod Storage
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 2
 	Mass 4
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 2
 	Mass 4
 end
@@ -56,67 +73,88 @@ end
 Battroid 3
 Name <Petrach>
 Desig <XB-7a>
+Desig_I18N <XB-7a>
 SDL_Sprite <btr_petrach.png>
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	Mass 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 3
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 7
+		Name_I18N <>
 
 		Mount
+		Name_I18N <>
 		inv
 			Gun 1
 			Name <Machine Gun>
+			Name_I18N <>
 			Range 3
 			Acc -1
 			BV 5
 			Magazine 60
 			sub
 				Ammo 1
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Storage
 	Name <Right Pod>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		MLauncher 20
 		Name <Leveler Missiles>
+		Name_I18N <>
 		Magazine 4
 		sub
 			Rockets 20
+			Name_I18N <>
 			Type <BLAST 1>
 		end
 	end
 
 Mod Storage
 	Name <Left Pod>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		MLauncher 20
 		Name <Leveler Missiles>
+		Name_I18N <>
 		Range 8
 		Magazine 4
 		sub
 			Rockets 20
+			Name_I18N <>
 			Type <BLAST 1>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 2
 	Mass 4
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 2
 	Mass 4
 end

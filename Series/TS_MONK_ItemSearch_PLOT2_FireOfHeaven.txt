@@ -62,6 +62,7 @@ end
 inv
 	Grenade 25
 	name <The Fire of Heaven>
+	name_I18N <The Fire of Heaven>
 	mass 8
 	type <Blast 7 Mystery Hyper Armorpiercing Brutal Burn Haywire>
 	Clue29 <Print 1>
@@ -69,6 +70,7 @@ inv
 
 	HeadArmor 7
 	name <Zeron Helmet>
+	name_I18N <Zeron Helmet>
 	Biotech
 	mass -12
 	scale 0
@@ -76,18 +78,21 @@ inv
 	Msg1 <A helmet crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
 	sub
 		PCS 5
+		name_I18N <>
 	end
 
 	BodyArmor 8
 	scale 0
 	mass -4
 	name <Zeron Armor>
+	name_I18N <Zeron Armor>
 	Biotech
 	Clue29 <Print 1>
 	Msg1 <A bodysuit crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
 	sub
 		gear 4 3 20
 		name <Mega Smasher>
+		name_I18N <Mega Smasher>
 		type <LINE BURN STRAIN MYSTERY>
 		scale 0
 		mass 2
@@ -98,6 +103,7 @@ inv
 
 	ArmArmor 7
 	name <Zeron Sleeve>
+	name_I18N <Zeron Sleeve>
 	scale 0
 	mass -2
 	Biotech
@@ -106,6 +112,7 @@ inv
 	sub
 		Melee 12
 		name <High Frequency Blade>
+		name_I18N <High Frequency Blade>
 		type <BRUTAL ARMORPIERCING>
 		recharge 1
 		mass -4
@@ -113,13 +120,15 @@ inv
 
 	LegArmor 7
 	name <Zeron Legging>
+	name_I18N <Zeron Legging>
 	mass -2
 	scale 0
 	Biotech
 	Clue29 <Print 1>
 	Msg1 <A legging crafted of living tissue. It appears to be powered by feeding off its wearer's blood.>
-        sub
-	        Flight 12
-        end
+	sub
+		Flight 12
+		name_I18N <>
+	end
 
 end

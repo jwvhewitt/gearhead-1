@@ -1,44 +1,61 @@
 Battroid 4
 Name <Condor>
 Desig <RW-2016>
+Desig_I18N <RW-2016>
 SDL_Sprite <btr_condor.png>
 desc <At one time the Condor was the Solar Navy's main aerial battroid. Recently however they have been searching for a more capable mecha to replace their ageing fleet.>
 
 Mod Head
+	Name_I18N <>
 	Armor 3
 	Size 3
 	Mass -1
 	sub
 		CPit
+		Name_I18N <>
 
 		Sensor 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	Mass -2
 	sub
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Mount
 		Name <Right Collar Mount>
+		Name_I18N <>
 		inv
 			STC LRL-32
 		end
 
 		Mount
 		Name <Left Collar Mount>
+		Name_I18N <>
 		inv
 			STC LRL-32
 		end
 
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			STC MAC-4
 		end
@@ -46,51 +63,63 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Right Wing>
+	Name_I18N <>
 	Size 3
 	Armor 2
 	sub
 		Flight 3
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Left Wing>
+	Name_I18N <>
 	Size 3
 	Armor 2
 	sub
 		Flight 3
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 3
 	sub
 		Mount
 		Name <Right Hip Mount>
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		Flight 2
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 3
 	sub
 		Mount
 		Name <Left Hip Mount>
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		Flight 2
+		Name_I18N <>
 	end
 end

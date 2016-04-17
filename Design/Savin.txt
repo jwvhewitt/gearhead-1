@@ -1,43 +1,54 @@
 Battroid 7
 Name <Savin>
 Desig <RIG-01 Zero>
+Desig_I18N <RIG-01 Zero>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Zero Savin is a general purpose fighter.>
 SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 5
 	Size 5
 	Mass -5
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		STC VC-5
 		Type <INTERCEPT>
 		Name <Vulcan Interceptor>
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 5
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Sensor 1
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		TarComp 3
+		Name_I18N <>
 
 		Gyro 4
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
@@ -46,9 +57,11 @@ Mod Body
 		STC LAS-5
 
 		ArcJet 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 8
+		Name_I18N <>
 		Mass -9
 		sub
 			STC HWML-4
@@ -59,36 +72,44 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 		inv
 			Gun 10
 			Name <Breaker Cannon>
+			Name_I18N <>
 			Range 8
 			Magazine 12
 			sub
 				Ammo 10
+				Name_I18N <>
 				Type <ARMORPIERCING HYPER>
 			end
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			EMelee 12
 			Name <Nova Sword>
+			Name_I18N <>
 			Speed 3
 			Acc 1
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -98,20 +119,25 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -119,22 +145,27 @@ Mod Arm
 		end
 
 		Shield 5
+		Name_I18N <>
 		DefBonus 1
 		Mass -5
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC SWML-60
@@ -143,16 +174,20 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC SWML-60
@@ -163,43 +198,54 @@ end
 Battroid 7
 Name <Savin>
 Desig <RIG-02 Overkill>
+Desig_I18N <RIG-02 Overkill>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Overkill Savin is a heavy artillery platform.>
 SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 5
 	Size 5
 	Mass -5
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		STC VC-5
 		Type <INTERCEPT>
 		Name <Vulcan Interceptor>
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 4
+		Name_I18N <>
 		Mass -4
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Sensor 1
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		TarComp 3
+		Name_I18N <>
 
 		Gyro 4
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
@@ -208,9 +254,11 @@ Mod Body
 		STC LAS-5
 
 		ArcJet 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 6
+		Name_I18N <>
 		Mass -8
 		sub
 			STC LAS-5
@@ -221,65 +269,79 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC RG-16
 			Mass -6
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 5
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			STC RG-16
 			Mass -6
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 5
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 4
+		Name_I18N <>
 		Mass -3
 		sub
 			STC SWML-40
@@ -288,19 +350,23 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 4
+		Name_I18N <>
 		Mass -3
 		sub
 			STC SWML-40
@@ -311,43 +377,54 @@ end
 Battroid 7
 Name <Savin>
 Desig <RIG-03 Reaper>
+Desig_I18N <RIG-03 Reaper>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Reaper Savin is a close combat fighter.>
 SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 5
 	Size 5
 	Mass -5
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		STC VC-5
 		Type <INTERCEPT>
 		Name <Vulcan Interceptor>
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 5
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Sensor 1
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		TarComp 3
+		Name_I18N <>
 
 		Gyro 4
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
@@ -356,26 +433,32 @@ Mod Body
 		STC LAS-5
 
 		ArcJet 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 7
+		Name_I18N <>
 		Mass -8
 		sub
 			ArcJet 4
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 		inv
 			EMelee 20
 			Name <Nova Scythe>
+			Name_I18N <>
 			Speed 3
 			Acc 2
 			Type <ARMORPIERCING EXTEND>
@@ -384,11 +467,14 @@ Mod Arm
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -398,20 +484,25 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -419,53 +510,65 @@ Mod Arm
 		end
 
 		Shield 3
+		Name_I18N <>
 		DefBonus -1
 		sub
 			EMelee 5
 			Name <Shield Blade>
+			Name_I18N <>
 			Type <RETURN THROWN>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 		inv
 			STC HWML-2
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			ArcJet 6
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 		inv
 			STC HWML-2
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			ArcJet 6
+			Name_I18N <>
 		end
 	end
 end
@@ -473,43 +576,54 @@ end
 Battroid 7
 Name <Savin>
 Desig <RIG-04 Fortress>
+Desig_I18N <RIG-04 Fortress>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Fortress Savin is a long range sniper.>
 SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 5
 	Size 5
 	Mass -5
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		STC VC-5
 		Type <INTERCEPT>
 		Name <Vulcan Interceptor>
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 5
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Sensor 1
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		TarComp 3
+		Name_I18N <>
 
 		Gyro 4
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
@@ -518,9 +632,11 @@ Mod Body
 		STC LAS-5
 
 		ArcJet 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 8
+		Name_I18N <>
 		Mass -10
 		sub
 			STC MAC-4
@@ -533,15 +649,18 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 		inv
 			Melee 10
 			Name <Ion Sabre>
+			Name_I18N <>
 			Acc 1
 			Type <ARMORPIERCING OVERLOAD>
 			Mass -5
@@ -549,6 +668,7 @@ Mod Arm
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC GR-24
 			Mass -8
@@ -556,9 +676,11 @@ Mod Arm
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -568,20 +690,25 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -589,47 +716,58 @@ Mod Arm
 		end
 
 		Shield 5
+		Name_I18N <>
 		DefBonus 1
 		Mass -5
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC SWML-40
 
 			ArcJet 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC SWML-40
 
 			ArcJet 2
+			Name_I18N <>
 		end
 	end
 end
@@ -637,43 +775,54 @@ end
 Battroid 7
 Name <Savin>
 Desig <RIG-05 Dragon>
+Desig_I18N <RIG-05 Dragon>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Dragon Savin is a short range assault platform.>
 SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 5
 	Size 5
 	Mass -5
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		STC VC-5
 		Type <INTERCEPT>
 		Name <Vulcan Interceptor>
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 5
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Sensor 1
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		TarComp 3
+		Name_I18N <>
 
 		Gyro 4
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
@@ -682,43 +831,53 @@ Mod Body
 		STC LAS-5
 
 		ArcJet 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 8
+		Name_I18N <>
 		Mass -9
 		sub
 			ArcJet 6
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 		inv
 			EMelee 12
 			Name <Double Lance>
+			Name_I18N <>
 			Type <EXTEND>
 			Mass 5
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			Melee 4
 			Name <Dragon Fang>
+			Name_I18N <>
 			Mass -3
 			Speed 1
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -728,15 +887,18 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 		inv
 			Melee 10
 			Name <Dragon Sword>
+			Name_I18N <>
 			Type <OVERLOAD>
 			Acc 1
 			Mass -4
@@ -744,17 +906,21 @@ Mod Arm
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			Melee 4
 			Name <Dragon Fang>
+			Name_I18N <>
 			Mass -3
 			Speed 1
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			STC AC-2
@@ -764,14 +930,17 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 		inv
 			Gun 12
 			Name <Flame Cannon>
+			Name_I18N <>
 			Mass -10
 			Type <BLAST 1 BURN>
 			Range 4
@@ -779,29 +948,36 @@ Mod Leg
 			Magazine 10
 			sub
 				Ammo 12
+				Name_I18N <>
 			end
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			ArcJet 3
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 7
 	Mass -7
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 		inv
 			Gun 12
 			Name <Flame Cannon>
+			Name_I18N <>
 			Mass -10
 			Type <BLAST 1 BURN>
 			Range 4
@@ -809,16 +985,20 @@ Mod Leg
 			Magazine 10
 			sub
 				Ammo 12
+				Name_I18N <>
 			end
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 6
+		Name_I18N <>
 		Mass -7
 		sub
 			ArcJet 3
+			Name_I18N <>
 		end
 	end
 end

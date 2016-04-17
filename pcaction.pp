@@ -36,13 +36,13 @@ Procedure GetPlayerInput( Mek: GearPtr; Camp: CampaignPtr );
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,action,aibrain,arenacfe,arenascript,backpack,
+uses i18nmsg,ability,action,aibrain,arenacfe,arenascript,backpack,
      damage,effects,gearutil,gflooker,ghchars,ghparser,
      ghprop,ghswag,ghweapon,interact,menugear,movement,
      playwright,randchar,rpgdice,skilluse,texutil,ui4gh,
      sdlgfx,sdlinfo,sdlmap,sdlmenus;
 {$ELSE}
-uses ability,action,aibrain,arenacfe,arenascript,backpack,
+uses i18nmsg,ability,action,aibrain,arenacfe,arenascript,backpack,
      damage,effects,gearutil,gflooker,ghchars,ghparser,
      ghprop,ghswag,ghweapon,interact,menugear,movement,
      playwright,randchar,rpgdice,skilluse,texutil,ui4gh,
@@ -198,7 +198,7 @@ begin
 					if N = 0 then begin
 						AddNAtt( NPC^.NA , NAG_Experience , NAS_SpentXP , SkillAdvCost( NPC , NAttValue( NPC^.NA , NAG_SKill , T ) ) );
 						AddNAtt( NPC^.NA , NAG_Skill , T , 1 );
-						dialogmsg( ReplaceHash( ReplaceHash( MsgString( 'AUTOTRAIN_LEARN' ) , GearName( NPC ) ) , SkillMan[ T ].Name ) );
+						DialogMSG( ReplaceHash( I18N_MsgString('AUTOTRAIN_LEARN'), GearName(NPC), I18N_Name('SkillMan',SkillMan[ T ].Name) ) );
 						TrainedSome := True;
 						N := 5;
                         break;
@@ -247,7 +247,7 @@ begin
 				{ Insert M into the map. }
 				DeployMek( GB , M , True );
 
-				DialogMsg( ReplaceHash( ReplaceHash( MsgString( 'AUTOTRAIN_EVOLVE' ) , GearName( NPC ) ) , GearName( M ) ) );
+				DialogMsg( ReplaceHash( I18N_MsgString('AUTOTRAIN','EVOLVE'), GearName(NPC), GearName(M) ) );
 
 				{ Copy over name, XP, team, location, and skills. }
 				SetSAtt( M^.SA , 'name <' + GearName( NPC ) + '>' );
@@ -319,7 +319,7 @@ begin
 	{ The menu needs to be re-created with each iteration, since the }
 	{ data in it needs to be updated. }
 {$IFNDEF SDLMODE}
-	CMessage( 'Set game prefrences' , ZONE_Menu1 , NeutralGrey );
+	CMessage( I18N_MsgString('SetPlayOptions','prefrences') , ZONE_Menu1 , NeutralGrey );
 {$ENDIF}
 	N := 1;
 	repeat
@@ -328,38 +328,38 @@ begin
 {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 {$ENDIF}
-		AddRPGMenuItem( RPM , 'Mecha Control: '+ControlTypeName[ControlMethod] , 1 );
-		AddRPGMenuItem( RPM , 'Chara Control: '+ControlTypeName[CharacterMethod] , 5 );
-		AddRPGMenuItem( RPM , 'Explore Control: '+ControlTypeName[WorldMapMethod] , 6 );
-		AddRPGMenuItem( RPM , 'Ballistic Wpn BV: '+BVTypeName[DefBallisticBV] , 2 );
-		AddRPGMenuItem( RPM , 'Energy Wpn BV: '+BVTypeName[DefBeamGunBV] , 3 );
-		AddRPGMenuItem( RPM , 'Missile BV: '+BVTypeName[DefMissileBV] , 4 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Mecha Control') +ControlTypeName[ControlMethod] , 1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Chara Control') +ControlTypeName[CharacterMethod] , 5 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Explore Control') +ControlTypeName[WorldMapMethod] , 6 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Ballistic Wpn BV') +BVTypeName[DefBallisticBV] , 2 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Energy Wpn BV') +BVTypeName[DefBeamGunBV] , 3 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Missile BV') +BVTypeName[DefMissileBV] , 4 );
 {$IFDEF SDLMODE}
 		if Use_Alpha_Blending then begin
-			AddRPGMenuItem( RPM , 'Disable Transparency' , 7 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Enable Transparency') , 7 );
 		end else begin
-			AddRPGMenuItem( RPM , 'Enable Transparency' , 7 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Disable Transparency') , 7 );
 		end;
 		if Display_Mini_Map then begin
-			AddRPGMenuItem( RPM , 'Disable Mini-Map' , 8 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Enable Mini-Map') , 8 );
 		end else begin
-			AddRPGMenuItem( RPM , 'Enable Mini-Map' , 8 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Disable Mini-Map') , 8 );
 		end;
 		if Names_Above_Heads then begin
-			AddRPGMenuItem( RPM , 'Disable Name Display' , 9 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Enable Name Display') , 9 );
 		end else begin
-			AddRPGMenuItem( RPM , 'Enable Name Display' , 9 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Disable Name Display') , 9 );
 		end;
 {$ELSE}
 		if Accessibility_On then begin
-			AddRPGMenuItem( RPM , 'Disable Accessibility+' , 10 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Disable Accessibility+') , 10 );
 		end else begin
-			AddRPGMenuItem( RPM , 'Enable Accessibility+' , 10 );
+			AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Enable Accessibility+') , 10 );
 		end;
 
 
 {$ENDIF}
-		AddRPGMenuItem( RPM , '  Exit Prefrences' , -1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('SetPlayOptions','Exit') , -1 );
 		SetItemByValue( RPM , N );
 {$IFDEF SDLMODE}
 		N := SelectMenu( RPM , @CenterMenuRedraw );
@@ -747,13 +747,13 @@ begin
 				{ If the NPC really doesn't like the PC, }
 				{ they'll refuse to talk on principle. }
 				if ( ( React + RollStep( SkillValue ( PC , 28 ) ) ) < -Random( 120 ) ) or AreEnemies( GB , NPC , PC ) then begin
-					DialogMsg( GearName( NPC ) + ' doesn''t want to talk to you.' );
+					DialogMsg( ReplaceHash( I18N_MsgString('DoTalkingWithNPC','doesnt talk'), GearName(NPC) ) );
 					SetNAtt( NPC^.NA , NAG_Personal , NAS_Retalk , GB^.ComTime + 1500 );
 
 				{ If the NPC is ready to talk, is friendly with the PC, or has a PERSONA gear defined, }
 				{ they'll be willing to talk. }
 				end else if ( ReTalk < GB^.ComTime ) or ( Random( 50 ) < ( React + 20 ) ) or ( Persona <> Nil ) then begin
-					DialogMsg( 'You strike up a conversation with ' + GearName( NPC ) + '.' );
+					DialogMsg( ReplaceHash( I18N_MsgString('DoTalkingWithNPC','conversation'), GearName(NPC) ) );
 
 					HandleInteract( GB , PC , NPC , Persona );
                     {$IFNDEF SDLMODE}
@@ -761,28 +761,28 @@ begin
 					DisplayGearInfo( PC , GB );
                     {$ENDIF}
 				end else begin
-					DialogMsg( GearName( NPC ) + ' doesn''t want to talk right now.' );
+					DialogMsg( ReplaceHash( I18N_MsgString('DoTalkingWithNPC','doesnt talk now'), GearName(NPC) ) );
 
 				end;
 			end else begin
-				DialogMsg( 'No response!' );
+				DialogMsg( I18N_MsgString('DoTalkingWithNPC','No response') );
 			end;
 		end else begin
-			DialogMsg( 'You''re too far away to talk with ' + GearName( NPC ) + '.' );
+			DialogMsg( ReplaceHash( I18N_MsgString('DoTalkingWithNPC','too far away'), GearName(NPC) ) );
 		end;
 	end else begin
-		DialogMsg( 'Not found!' );
+		DialogMsg( I18N_MsgString('DoTalkingWithNPC','Not found') );
 	end;
 end;
 
 Procedure PCTalk( GB: GameBoardPtr; PC: GearPtr );
 	{ PC wants to do some talking. Select an NPC, then let 'er rip. }
 begin
-	DialogMsg( 'Select a character to talk with.' );
+	DialogMsg( I18N_MsgString('PCTalk','Select') );
 	if LookAround( GB , PC ) then begin
 		DoTalkingWithNPC( GB , PC , LOOKER_Gear , False );
 	end else begin
-		DialogMsg( 'Talking cancelled.' );
+		DialogMsg( I18N_MsgString('PCTalk','cancelled') );
 	end;
 end;
 
@@ -1063,7 +1063,7 @@ begin
 		{ Give the PC a rundown on the new robot's skills. }
 		for t := 1 to Num_Robot_Skill do begin
 			if NAttValue( Robot^.NA , NAG_Skill , Robot_Skill[ T ] ) > 0 then begin
-				DialogMsg( ReplaceHash( ReplaceHash( MsgString( 'BUILD_ROBOT_SKILL' ) , GearName( Robot ) ) , SkillMan[ Robot_Skill[ t ] ].Name ) );
+				DialogMsg( ReplaceHash( I18N_MsgString('BUILD_ROBOT_SKILL'), GearName(Robot), I18N_Name('SkillMan',SkillMan[ Robot_Skill[ t ] ].Name) ) );
 			end;
 		end;
 	end;
@@ -1285,7 +1285,7 @@ begin
 				NID := NAttValue( M^.NA , NAG_Narrative , NAS_NID );
 				if NID <> 0 then SetTrigger( GB , TRIGGER_GetItem + BStr( NID ) );
 
-				DialogMsg( ReplaceHash( ReplaceHash( MsgString( 'PICKPOCKET_CASH+ITEM' ) , BStr( Cash ) ) , GearName( M ) ) );
+				DialogMsg( ReplaceHash( I18N_MsgString('PICKPOCKET','CASH+ITEM'), BStr(Cash), GearName(M) ) );
 			end else begin
 				DialogMsg( ReplaceHash( MsgString( 'PICKPOCKET_CASH' ) , BStr( Cash ) ) );
 			end;
@@ -1348,9 +1348,9 @@ begin
         {  and this seems stupid to him, so for now all usable skills are }
         {  accessible. Let's see what happens. }
 		if ( SkillMan[ N ].Usage > 0 ) and ( TeamHasSkill( GB , NAV_DefPlayerTeam , N ) or HasTalent( PC , NAS_JackOfAll ) ) then begin
-			AddRPGMenuItem( RPM , SkillMan[N].Name , N , SkillDesc( N ) );
+			AddRPGMenuItem( RPM , I18N_Name('SkillMan',SkillMan[N].Name) , N , SkillDesc( N ) );
 		end else if ( SkillMan[ N ].Usage > 0 ) and HasSkill( PC , N ) then begin
-			AddRPGMenuItem( RPM , SkillMan[N].Name , N , SkillDesc( N ) );
+			AddRPGMenuItem( RPM , I18N_Name('SkillMan',SkillMan[N].Name) , N , SkillDesc( N ) );
 		end;
 	end;
 	RPMSortAlpha( RPM );
@@ -1400,7 +1400,7 @@ begin
 
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
-		DialogMSG('Select plot file to load.');
+		DialogMSG( I18N_MsgString('ForcePlot','Select') );
 {$IFDEF SDLMODE}
 		pname := SelectFile( RPM , @MenuControlRedraw );
 {$ELSE}
@@ -1412,9 +1412,9 @@ begin
 			Plot := ReadGear(F);
 			Close(F);
 			if InsertPlot( FindRoot( Scene ) , Plot , True , GB ) then begin
-				DialogMsg( 'Plot successfully loaded.' );
+				DialogMsg( I18N_MsgString('ForcePlot','successfully') );
 			end else begin
-				DialogMsg( 'Plot rejected.' );
+				DialogMsg( I18N_MsgString('ForcePlot','rejected') );
 			end;
 		end;
 	end;
@@ -1434,7 +1434,7 @@ begin
 	end;
 
 	{ Find the PC's name, open the file, and save. }
-	Name := Save_Campaign_Base + PilotName( PC ) + Default_File_Ending;
+	Name := Save_Campaign_Base + TextEncode(PilotName( PC ) + Default_File_Ending);
 	Assign( F , Name );
 	Rewrite( F );
 	WriteCampaign( Camp , F );
@@ -1487,7 +1487,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			while Sk <> Nil do begin
 				if ( Sk^.G = NAG_Skill ) and ( Sk^.S > 0 ) then begin
 					{ Add this skill to the menu. This is going to be one doozy of a long description. }
-					AddRPGMenuItem( SkMenu , SkillMan[Sk^.S].Name + ' +' + BStr( Sk^.V ) + '   (' + BStr( SkillAdvCost( PC , Sk^.V ) ) + ' XP)' , Sk^.S , SkillDesc( Sk^.S ) );
+					AddRPGMenuItem( SkMenu , I18N_Name('SkillMan',SkillMan[Sk^.S].Name) + ' +' + BStr( Sk^.V ) + '(' + BStr( SkillAdvCost( PC , Sk^.V ) ) + ' XP)' , Sk^.S , SkillDesc( Sk^.S ) );
 				end;
 				Sk := Sk^.Next;
 			end;
@@ -1525,10 +1525,10 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 				{ If the PC has enough free XP, this skill will be improved. }
 				{ Otherwise, do nothing. }
 				if N > FXP then begin
-					DialogMsg( GearName( PC ) + ' doesn''t have enough experience points to improve ' + SkillMan[Sk^.S].name + '.' );
+					DialogMSG( ReplaceHash( I18N_MsgString('DOTRAINING_IMPROVESKILLS_DOESNOTDO'), GearName(PC), I18N_Name('SkillMan',SkillMan[Sk^.S].Name) ) );
 				end else begin
 					{ Improve the skill, pay the XP. }
-					DialogMsg( GearName( PC ) + ' has improved ' + SkillMan[Sk^.S].name + '.' );
+					DialogMSG( ReplaceHash( I18N_MsgString('DOTRAINING_IMPROVESKILLS_DONE'), GearName(PC), I18N_Name('SkillMan',SkillMan[Sk^.S].Name) ) );
 					AddNAtt( PC^.NA , NAG_Skill , Sk^.S , 1 );
 					AddNAtt( PC^.NA , NAG_Experience , NAS_SpentXP , N );
 				end;
@@ -1617,7 +1617,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 					{ Find out how many times this stat has been }
 					{ improved thus far. }
 					CIV := NAttValue( PC^.NA , NAG_StatImprovementLevel , T );
-					AddRPGMenuItem( StMenu , StatName[ T ] + '   (' + BStr( StatImprovementCost( CIV ) ) + ' XP)' , T, MsgString( 'STAT_' + BStr( T ) ) );
+					AddRPGMenuItem( StMenu , I18N_Name( 'StatName', StatName[ T ] ) + '   (' + BStr( StatImprovementCost( CIV ) ) + ' XP)' , T, MsgString( 'STAT_' + BStr( T ) ) );
 				end;
 			end;
 
@@ -1651,10 +1651,10 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 				XP := StatImprovementCost( CIV );
 
 				if XP > FXP then begin
-					DialogMsg( GearName( PC ) + ' doesn''t have enough experience points.' );
+					DialogMsg( ReplaceHash( I18N_MsgString('IMPROVESTATS_NOTIMPROVED'), GearName( PC ) ) );
 				end else begin
 					{ Improve the skill, pay the XP. }
-					DialogMsg( GearName( PC ) + ' has improved ' + StatName[ N ] + '.' );
+					DialogMsg( ReplaceHash( I18N_MsgString('IMPROVESTATS_IMPROVED'), GearName( PC ), I18N_Name( 'StatName', StatName[ N ] ) ) );
 					Inc( PC^.Stat[ N ] );
 					AddNAtt( PC^.NA , NAG_Experience , NAS_SpentXP , XP );
 					AddNAtt( PC^.NA , NAG_StatImprovementLevel , N , 1 );
@@ -1718,11 +1718,11 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 
 		for N := 1 to NumSkill do begin
 			if FindNAtt( PC^.NA , NAG_Skill , N ) = Nil then begin
-				AddRPGMenuItem( SkMenu , SkillMan[N].Name + '   (' + BStr( SkillAdvCost( PC , 0 ) ) + ' XP)' , N , SkillDesc( N ) );
+				AddRPGMenuItem( SkMenu , I18N_Name('SkillMan',SkillMan[N].Name) + ' (' + BStr( SkillAdvCost( PC , 0 ) ) + ' XP)' , N , SkillDesc( N ) );
 			end;
 		end;
 		RPMSortAlpha( SkMenu );
-		AddRPGMenuItem( SkMenu , '  Cancel' , -1 );
+		AddRPGMenuItem( SkMenu , I18N_MsgString('DoTraining_GetNewSkill','Cancel') , -1 );
 
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
@@ -1739,7 +1739,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			{ If the PC has enough free XP, this skill will be improved. }
 			{ Otherwise, do nothing. }
 			if SkillAdvCost( PC , 0 ) > FXP then begin
-				DialogMsg( GearName( PC ) + ' doesn''t have enough experience points to learn ' + SkillMan[N].name + '.' );
+				DialogMSG( ReplaceHash( I18N_MsgString('DOTRAINING_GETNEWSKILL_DOESNOTDO'), GearName(PC), I18N_Name('SkillMan',SkillMan[N].Name) ) );
 
 			end else begin
 				{ Improve the skill, pay the XP. }
@@ -1775,7 +1775,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 
 
 				if ( N >= 1 ) and ( N <= NumSkill ) then begin
-					DialogMsg( GearName( PC ) + ' has learned the ' + SkillMan[N].name + ' skill.' );
+					DialogMSG( ReplaceHash( I18N_MsgString('DOTRAINING_GETNEWSKILL_DONE'), GearName(PC), I18N_Name('SkillMan',SkillMan[N].Name) ) );
 					SetNAtt( PC^.NA , NAG_Skill , N , 1 );
 					AddNAtt( PC^.NA , NAG_Experience , NAS_SpentXP , SkillAdvCost( PC , 0 ) );
 
@@ -1815,7 +1815,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			end;
 		end;
 		RPMSortAlpha( TMenu );
-		AddRPGMenuItem( TMenu , '  Cancel' , -1 );
+		AddRPGMenuItem( TMenu , I18N_MsgString('DoTraining_GetNewTalent','CANCEL') , -1 );
         {$IFNDEF SDLMODE}
 		CMessage( ReplaceHash( MSgString('FREEXP'),BStr( FXP )) , ZONE_Menu1 , InfoHilight );
         {$ENDIF}
@@ -1838,7 +1838,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 					DialogMsg( MsgString( 'NOFREETALENTS' ) );
 				end else begin
 					{ Improve the skill, pay the XP. }
-					DialogMsg( GearName( PC ) + ' has learned ' + MsgString( 'TALENT' + BStr( N ) ) + '.' );
+					DialogMsg( ReplaceHash( I18N_MsgString('DoTraining_GetNewTalent','learned'), GearName(PC), MsgString('TALENT' + BStr( N )) ) );
 					ApplyTalent( PC , N );
 					AddNAtt( PC^.NA , NAG_Experience , NAS_SpentXP , 1000 );
 
@@ -1883,7 +1883,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			end;
 		end;
 		RPMSortAlpha( TMenu );
-		AddRPGMenuItem( TMenu , '  Exit' , -1 );
+		AddRPGMenuItem( TMenu , I18N_MsgString('DoTraining_ReviewTalents','Exit') , -1 );
 
 {$IFDEF SDLMODE}
         PCACTIONRD_GB := GB;
@@ -1927,7 +1927,7 @@ Procedure DoTraining( GB: GameBoardPtr; PC: GearPtr );
 			S := S^.Next;
 		end;
 		RPMSortAlpha( TMenu );
-		AddRPGMenuItem( TMenu , '  Exit' , -1 );
+		AddRPGMenuItem( TMenu , I18N_MsgString('DoTraining_ReviewCyberware','Exit') , -1 );
 
 
 {$IFDEF SDLMODE}
@@ -2234,7 +2234,7 @@ begin
 			end;
 
 		end else if ( FindRoot( LOOKER_Gear ) = FindRoot( Mek ) ) then begin
-			DialogMSG( 'Attack cancelled.' );
+			DialogMSG( I18N_MsgString('AimThatAttack','cancelled') );
 
 		end else if RangeArcCheck( GB , Mek , Weapon , LOOKER_Gear ) then begin
 			{ Call the Attack procedure with the info we've gained. }
@@ -2303,15 +2303,14 @@ Procedure DoPlayerAttack( Mek: GearPtr; GB: GameBoardPtr );
 	{ The player has accessed the weapons menu. Select an active }
 	{ weapon, then select a target. If the target is within range, }
 	{ process the attack and report upon it to the user. }
-const
-	CalledShotOff = '  Called Shot: Off [/]';
-	CalledShotOn = '  Called Shot: On [/]';
 var
 	WPM: RPGMenuPtr;	{ The Weapons Menu }
 	MI,MI2: RPGMenuItemPtr;	{ For checking all the weapons. }
 	Weapon: GearPtr;	{ Also for checking all the weapons. }
 	N: Integer;
 	CallShot: Boolean;
+	CalledShotOff: String;
+	CalledShotOn: String;
 begin
 	{ Error check - make sure that MEK is a valid, active master gear. }
 	if not IsMasterGear( Mek ) then exit;
@@ -2353,15 +2352,18 @@ begin
 		MI := MI2;
 	end;
 
+	CalledShotOff := I18N_MsgString('DoPlayerAttack','Called Off');
+	CalledShotOn := I18N_MsgString('DoPlayerAttack','Called On');
+
 	{ Add the firing options. Save the address of the called shot entry. }
 	MI := AddRPGMenuItem( WPM , CalledShotOff , -4 );
 	AddRPGMenuKey( WPM , '/' , -4 );
 	CallShot := False;
-	AddRPGMenuItem( WPM , '  Wait for recharge [.]' , -3 );
+	AddRPGMenuItem( WPM , I18N_MsgString('DoPlayerAttack','Wait for recharge') , -3 );
 	AddRPGMenuKey( WPM , '.' , -3 );
-	AddRPGMenuItem( WPM , '  Options [?]' , -2 );
+	AddRPGMenuItem( WPM , I18N_MsgString('DoPlayerAttack','Options') , -2 );
 	AddRPGMenuKey( WPM , '?' , -2 );
-	AddRPGMenuItem( WPM , '  Cancel [ESC]' , -1 );
+	AddRPGMenuItem( WPM , I18N_MsgString('DoPlayerAttack','Cancel') , -1 );
 	{ *** END MENU BUILDER *** }
 
 	{ Actually get a selection from the menu. }
@@ -2440,7 +2442,7 @@ begin
 			Pilot := ExtractPilot( Mek );
 
 			if Pilot <> Nil then begin
-				DialogMsg( GearName( Pilot ) + MsgString( 'EJECT_Message' ) + GearName( Mek ) + '.' );
+				DialogMsg( ReplaceHash( I18N_MsgString('EJECT_Message'), GearName(Pilot), GearName(Mek) )  );
 				{ In a safe area, deploy the pilot in the same tile as the mecha. }
 				if IsSafeArea( GB ) and not IsBlocked( Pilot , GB , P.X , P.Y ) then begin
 					SetNAtt( Pilot^.NA , NAG_Location , NAS_X , P.X );
@@ -2518,10 +2520,11 @@ begin
 	AttachMenuDesc( RPM , ZONE_Menu1 );
 
 	for t := 1 to NumMappedKeys do begin
-		AddRPGMenuItem( RPM , KeyMap[T].CmdName , T , KeyMap[T].CmdDesc );
+		AddRPGMenuItem( RPM , KeyMap[T].CmdName + '(' +  I18N_Help_Keymap_Name_String(KeyMap[T].CmdName) + ')' , T , I18N_Help_Keymap_Desc_String(KeyMap[T].CmdName) );
 	end;
 
-	RPMSortAlpha( RPM );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( RPM );}
 	RPI := RPM^.FirstItem;
 	while RPI <> Nil do begin
 		RPI^.msg := KeyMap[RPI^.Value].KCode + ' - ' + RPI^.msg;
@@ -2630,7 +2633,7 @@ begin
 	SeekWeapon( PC^.InvCom );
 
 	if Weapon = Nil then begin
-		DialogMsg( 'You don''t have a weapon ready!' );
+		DialogMsg( I18N_MsgString('RLQuickAttack','dont have a weapon') );
 		WaitOnRecharge( GB , PC );
 
 	end else begin
@@ -2700,7 +2703,7 @@ Procedure RLBumpAttack( GB: GameBoardPtr; PC,Target: GearPtr );
 	{ Call the core bumpattack procedure, cancelling the action if it fails. }
 begin
 	if not CoreBumpAttack( GB , PC , Target ) then begin
-		DialogMsg( 'You don''t have a weapon ready!' );
+		DialogMsg( I18N_MsgString('RLBumpAttack','dont have a weapon') );
 		WaitOnRecharge( GB , PC );
 		SetNAtt( PC^.NA , NAG_Location , NAS_SmartAction , 0 );
 	end;
@@ -2835,7 +2838,7 @@ begin
 			SetNAtt( Mek^.NA , NAG_Location , NAS_SmartAction , 0 );
 
 			if IsBlocked( Mek , GB , P.X , P.Y ) then begin
-				DialogMsg( 'Blocked!' );
+				DialogMsg( I18N_MsgString('RLSmartAction','Blocked') );
 			end else begin
 				{ The move isn't blocked, so walk straight ahead. }
 				if PC_SHOULD_RUN and ( CurrentStamina( Mek ) > 0 ) then begin
@@ -2902,17 +2905,17 @@ var
 	RPM: RPGMenuPtr;
 begin
 	RPM := CreateRPGMenu( teamcolor( GB , mek ) , StdWhite , ZONE_Menu );
-	AddRPGMenuItem( RPM , 'Inventory' , 2 );
-	AddRPGMenuItem( RPM , 'Get Item' , 3 );
-	AddRPGMenuItem( RPM , 'Enter Location' , 4 );
-	AddRPGMEnuItem( RPM , 'Do Repairs' , 5 );
-	AddRPGMenuItem( RPM , 'Combat Settings' , 1 );
-	AddRPGMEnuItem( RPM , 'Eject from Mecha' , -6 );
-	AddRPGMenuItem( RPM , 'Character Info' , 6 );
-	AddRPGMenuItem( RPM , 'Quit Game' , -2 );
-	AddRPGMenuItem( RPM , 'Return to Main' , -1 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Inventory') , 2 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Get Item') , 3 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Enter Location') , 4 );
+	AddRPGMEnuItem( RPM , I18N_MsgString('GameOptionMenu','Do Repairs') , 5 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Combat Settings') , 1 );
+	AddRPGMEnuItem( RPM , I18N_MsgString('GameOptionMenu','Eject from Mecha') , -6 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Character Info') , 6 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Quit Game') , -2 );
+	AddRPGMenuItem( RPM , I18N_MsgString('GameOptionMenu','Return to Main') , -1 );
 
-	DialogMsg('Advanced options menu.');
+	DialogMsg( I18N_MsgString('GameOptionMenu','Advanced options menu') );
 
 	repeat
 {$IFDEF SDLMODE}
@@ -2942,11 +2945,11 @@ var
 	RPM: RPGMenuPtr;
 begin
 	RPM := CreateRPGMenu( teamcolor( GB , mek ) , StdWhite , ZONE_Menu );
-	AddRPGMenuItem( RPM , 'Examine Map' , 1 );
-	AddRPGMenuItem( RPM , 'Mecha Browser' , 3 );
-	AddRPGMenuItem( RPM , 'Return to Main' , -1 );
+	AddRPGMenuItem( RPM , I18N_MsgString('InfoMenu','Examine Map') , 1 );
+	AddRPGMenuItem( RPM , I18N_MsgString('InfoMenu','Mecha Browser') , 3 );
+	AddRPGMenuItem( RPM , I18N_MsgString('InfoMenu','Return to Main') , -1 );
 
-	DialogMsg('Information Menu.');
+	DialogMsg( I18N_MsgString('InfoMenu','Information Menu') );
 
 	repeat
 {$IFDEF SDLMODE}
@@ -2981,15 +2984,15 @@ begin
 	MoveMode := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
 	if CPHMoveRate( Mek , gb^.Scale ) > 0 then begin
 		if MoveMode = MM_Walk then begin
-			AddRPGMenuItem( RPM , 'Walk' , NAV_NormSpeed );
-			AddRPGMenuItem( RPM , 'Run' , NAV_FullSpeed );
+			AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Walk') , NAV_NormSpeed );
+			AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Run') , NAV_FullSpeed );
 		end else begin
-			AddRPGMenuItem( RPM , 'Cruise Speed' , NAV_NormSpeed );
-			if MoveLegal( Mek , NAV_FullSpeed , GB^.ComTime ) then AddRPGMenuItem( RPM , 'Full Speed' , NAV_FullSpeed );
+			AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Cruise Speed') , NAV_NormSpeed );
+			if MoveLegal( Mek , NAV_FullSpeed , GB^.ComTime ) then AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Full Speed') , NAV_FullSpeed );
 		end;
-		if MoveLegal( Mek , NAV_TurnLeft , GB^.ComTime ) then AddRPGMenuItem( RPM , '<<< Turn Left', NAV_TurnLeft );
-		if MoveLegal( Mek , NAV_TurnRight , GB^.ComTime ) then AddRPGMenuItem( RPM , '    Turn Right >>>', NAV_TurnRight);
-		if MoveLegal( Mek , NAV_Reverse , GB^.ComTime ) then AddRPGMenuItem( RPM , '    Reverse', NAV_Reverse);
+		if MoveLegal( Mek , NAV_TurnLeft , GB^.ComTime ) then AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Turn Left'), NAV_TurnLeft );
+		if MoveLegal( Mek , NAV_TurnRight , GB^.ComTime ) then AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Turn Right'), NAV_TurnRight);
+		if MoveLegal( Mek , NAV_Reverse , GB^.ComTime ) then AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Reverse'), NAV_Reverse);
 	end;
 
 	{ Add movemode switching options, if applicable. }
@@ -3002,12 +3005,12 @@ begin
 			if ( BaseMoveRate( Mek , T ) > 0 ) and MoveLegal( Mek , T , NAV_NormSpeed , GB^.ComTime ) then begin
 				if T = MM_Fly then begin
 					if JumpTime( Mek ) > 0 then begin
-						AddRPGMenuItem( RPM , 'Jump' , 100+T );
+						AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Jump') , 100+T );
 					end else begin
-						AddRPGMenuItem( RPM , MoveModeName[T] , 100+T );
+						AddRPGMenuItem( RPM , I18N_Name('MoveModeName',MoveModeName[T]) , 100+T );
 					end;
 				end else begin
-					AddRPGMenuItem( RPM , MoveModeName[T] , 100+T );
+					AddRPGMenuItem( RPM , I18N_Name('MoveModeName',MoveModeName[T]) , 100+T );
 				end;
 			end;
 		end;
@@ -3017,15 +3020,15 @@ begin
 	{ had their movement systems disabled, this will }
 	{ be the only option. }
 	if NAttValue( Mek^.NA , NAG_Action , NAS_MoveAction ) = NAV_Stop then begin
-		AddRPGMenuItem( RPM , 'Wait', -1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Wait'), -1 );
 	end else begin
-		AddRPGMenuItem( RPM , 'Stop', -1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Stop'), -1 );
 	end;
 
-	AddRPGMenuItem( RPM , 'Weapons Menu', -3 );
-	AddRPGMenuItem( RPM , 'Info Menu', -2 );
-	AddRPGMenuItem( RPM , 'Options Menu', -5 );
-	AddRPGMenuItem( RPM , 'Search' , -6 );
+	AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Weapons Menu'), -3 );
+	AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Info Menu'), -2 );
+	AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Options Menu'), -5 );
+	AddRPGMenuItem( RPM , I18N_MsgString('MenuPlayerInput','Search') , -6 );
 
 	{ Set the SelectItem field of the menu to the }
 	{ item which matches the mek's last menu action. }
@@ -3101,7 +3104,7 @@ begin
 	if PC <> Nil then begin
 		for t := 1 to 7 do begin
 			N := NAttValue( PC^.NA , NAG_CharDescription , -T );
-			if N <> 0 then DialogMsg( PersonalityTraitDesc( T , N ) + ' (' + BStr( Abs( N ) ) + ')' );
+			if N <> 0 then DialogMsg( PersonalityTraitDesc( T , N , True ) + ' (' + BStr( Abs( N ) ) + ')' );
 		end;
 	end;
 end;
@@ -3247,6 +3250,11 @@ begin
 
 	if ( NAttValue( Mek^.NA , NAG_Location , NAS_SmartAction ) <> 0 ) and Mobile then begin
 		{ The player is smartbumping. Call the appropriate procedure. }
+{$IFDEF SDLMODE}
+		IndicateTile( Camp^.GB , Mek , True );
+{$ELSE}
+		IndicateTile( Camp^.GB , Mek );
+{$ENDIF}
 		RLSmartAction( Camp^.GB , Mek );
         {$IFDEF SDLMODE}
         SDLCombatDisplay( Camp^.GB );
@@ -3442,7 +3450,7 @@ begin
 	{ Check the player for jumping. }
 	TL := NAttValue( Mek^.NA , NAG_Action , NAS_TimeLimit );
 	if ( TL > 0 ) and ( NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode ) = MM_Fly ) then begin
-		DialogMsg( BStr( Abs( TL - Camp^.GB^.ComTime ) ) + ' seconds jump time left.' );
+		DialogMsg( ReplaceHash( I18N_MsgString('GetPlayerInput','time left'), BStr( Abs( TL - Camp^.GB^.ComTime ) ) ) );
 	end;
 
 	{ Check the player for valid movemode. This is needed }

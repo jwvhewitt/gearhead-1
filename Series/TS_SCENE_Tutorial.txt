@@ -65,6 +65,7 @@ sub
 	sub
 		sign
 		name <Waypoint>
+		name_I18N <Waypoint>
 		roguechar <!>
 		Size 0
 		scale 2

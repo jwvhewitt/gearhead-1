@@ -1,18 +1,22 @@
 Gerwalk 6
 Name <Harpy>
 Desig <HEL-16>
+Desig_I18N <HEL-16>
 SDL_Sprite <ger_harpy.png>
 Desc <This is the Solar Navy's space operations mecha.>
 
 Mod Head
+	Name_I18N <>
 	Size 5
 	Armor 6
 	Mass -5
 	sub
 		Sensor 8
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Pulse Laser>
+		Name_I18N <>
 		Range 6
 		Type <INTERCEPT>
 		Acc 1
@@ -22,59 +26,75 @@ Mod Head
 	inv
 		HeadArmor 5
 		Name <Helmet>
+		Name_I18N <>
 		Mass -8
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 6
 	Mass -5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Gyro 3
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 6
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Sensor 1
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 
 		ECM 7
+		Name_I18N <>
 
 		ArcJet 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 5
+		Name_I18N <>
 		Mass -8
 		sub
 			ArcJet 5
+			Name_I18N <>
 		end
 	end
 
 Mod Storage
 	Name <Right Pod>
+	Name_I18N <>
 	Armor 6
 	Size 5
 	Mass -5
 	sub
 		ArcJet 9
+		Name_I18N <>
 
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			MLauncher 15
 			Name <Heavy Missiles>
+			Name_I18N <>
 			Acc 1
 			Range 10
 			Magazine 6
 			sub
 				Rockets 15
+				Name_I18N <>
 				Type <BLAST 3 BRUTAL>
 			end
 		end
@@ -82,22 +102,27 @@ Mod Storage
 
 Mod Storage
 	Name <Left Pod>
+	Name_I18N <>
 	Armor 6
 	Size 5
 	Mass -5
 	sub
 		ArcJet 9
+		Name_I18N <>
 
 		Mount
 		Name <Left Weapon Mount>
+		Name_I18N <>
 		inv
 			MLauncher 15
 			Name <Heavy Missiles>
+			Name_I18N <>
 			Acc 1
 			Range 10
 			Magazine 6
 			sub
 				Rockets 15
+				Name_I18N <>
 				Type <BLAST 3 BRUTAL>
 			end
 		end
@@ -105,19 +130,23 @@ Mod Storage
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 		inv
 			EMelee 7
 			Name <Scimitar>
+			Name_I18N <>
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC LAS-10
 			Range 8
@@ -127,15 +156,18 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -6
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			STC LAS-10
 			Range 8
@@ -144,6 +176,7 @@ Mod Arm
 	end
 	inv
 		Shield 5
+		Name_I18N <>
 		DefBonus -1
 	end
 end

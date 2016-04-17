@@ -268,6 +268,7 @@ inv
 
 	Chara
 	name <Typhon>
+	name_I18N <Typhon>
 	Scale 2
 	SDL_SPRITE <monster_typhon.png>
 	SDL_COLORS <240 190 170 170 112 89 0 255 0>
@@ -294,10 +295,12 @@ inv
 	skill 33 20
 	skill 36 12
 	mod Turret
+	name_I18N <>
 	Armor 5
 	sub
 		BeamGun 3
 		name <Death Wave>
+		name_I18N <Death Wave>
 		Range 9
 		Acc -3
 		type <HYPER OVERLOAD SWARM MYSTERY BRUTAL>
@@ -306,13 +309,16 @@ inv
 	end
 	inv
 		TurretArmor 7
+		name_I18N <>
 		mass -14
 	end
 	Mod Body
+	name_I18N <>
 	Armor 10
 	sub
 		BeamGun 1
 		name <Shining Beam>
+		name_I18N <Shining Beam>
 		BV 9
 		recharge 5
 		range 4
@@ -320,6 +326,7 @@ inv
 
 		BeamGun 12
 		name <Hellfire>
+		name_I18N <Hellfire>
 		range 6
 		recharge 1
 		type <BURN>
@@ -327,49 +334,62 @@ inv
 	inv
 		BodyArmor 10
 		name <Typhon Breastplate>
+		name_I18N <Typhon Breastplate>
 		mass -20
 	end
 	Mod Arm
 	name <Right Arm>
+	name_I18N <Right Arm>
 	Armor 7
 	sub
 		Hand
+		name_I18N <>
 	end
 	inv
 		Shield 8
 		name <Typhon Shield>
+		name_I18N <Typhon Shield>
 		DefBonus 2
 
 		ArmArmor 7
+		name_I18N <>
 		Mass -14
 	end
 	Mod Arm
 	name <Left Arm>
+	name_I18N <Left Arm>
 	Armor 7
 	sub
 		Hand
+		name_I18N <>
 		inv
 			EMelee 14
 			name <Plasma Spear>
+			name_I18N <Plasma Spear>
 			type <Thrown Return Overload Extend>
 		end
 	end
 	inv
 		ArmArmor 7
+		name_I18N <>
 		Mass -14
 	end
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 5
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 3
 			range 12
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST SWARM>
 			magazine 5
 			sub
@@ -378,17 +398,21 @@ inv
 		end
 	end
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 5
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 3
 			range 12
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST SWARM>
 			magazine 5
 			sub
@@ -397,17 +421,21 @@ inv
 		end
 	end
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 5
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 3
 			range 12
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST SWARM>
 			magazine 5
 			sub
@@ -416,17 +444,21 @@ inv
 		end
 	end
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 5
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 3
 			range 12
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST SWARM>
 			magazine 5
 			sub
@@ -436,6 +468,7 @@ inv
 	end
 	Mod Tail
 	name <Tendril>
+	name_I18N <Tendril>
 	Armor 5
 	type <EXTEND ARMORPIERCING OVERLOAD FLAIL>
 

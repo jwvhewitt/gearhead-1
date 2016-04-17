@@ -330,6 +330,7 @@ inv
 
 	Treasure 40
 	name <Dataslate>
+	name_I18N <Dataslate>
 	% V1 = Scene where the clone dungeon is
 	use <if= SceneID V1 else GoNotHere ifNoObjections KEY SelfNID Print 1>
 	GoNotHere <Print 1>

@@ -1,24 +1,34 @@
 Battroid 7
 Name <Thorshammer>
 Desig <THD-35>
+Desig_I18N <THD-35>
 SDL_Sprite <btr_thorshammer.png>
 desc <This is RegEx corporation's most popular mecha design.>
 SDL_PORTRAIT <mecha_thorshammer.png>
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 7
+		Name_I18N <>
 
 		Sensor 5
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 
 		Gyro 3
+		Name_I18N <>
 
 		Mount
 		Name <Top Weapon Mount>
+		Name_I18N <>
 		inv
 			STC SWML-120
 		end
@@ -38,22 +48,27 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 5
 	Armor 7
 	Mass -1
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			Gun 16
 			Range 6
 			Name <Flame Cannon>
+			Name_I18N <>
 			Magazine 25
 			Speed 3
 			sub
 				Ammo 16
+				Name_I18N <>
 				Type <BLAST 2 BURN>
 			end
 		end
@@ -61,14 +76,17 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 5
 	Armor 7
 	Mass -1
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			STC SML-5
 		end
@@ -76,12 +94,14 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 6
 	Armor 7
 	Mass -2
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 6
 	Armor 7
 	Mass -2

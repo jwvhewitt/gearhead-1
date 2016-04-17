@@ -90,7 +90,7 @@ const
 	GS_AreaAttack = 7;	{ X Y Z }
 
 	{ Maximum length of line when adding list of destroyed parts. }
-	Damage_List_Text_Length = 170;
+	Damage_List_Text_Length = 150;
 
 	FX_DoDamage = 0;
 	FX_CauseStatusFX = 1;
@@ -137,7 +137,7 @@ Procedure HandleEffectString( GB: GameBoardPtr; Target: GearPtr; FX_String,FX_De
 
 implementation
 
-uses ability,action,damage,gearutil,ghchars,ghmodule,ghguard,ghparser,
+uses i18nmsg,ability,action,damage,gearutil,ghchars,ghmodule,ghguard,ghparser,
      ghprop,ghsensor,ghsupport,ghweapon,movement,rpgdice,skilluse,texutil,
 	ghholder;
 
@@ -267,9 +267,7 @@ begin
 
 		{ indicate damage done. }
 		if ATTACK_DamageDone > 0 then begin
-			msg := msg + SAttValue( FX_Messages , 'CFE_Damage1' ) + BStr( ATTACK_DamageDone ) + SAttValue( FX_Messages , 'CFE_Damage2' );
-
-			msg := msg + '.';
+			msg := msg + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','damaged'), BStr(ATTACK_DamageDone) );
 
 			{ Add the list of destroyed parts now. }
 			DP := Destroyed_Parts_List;
@@ -316,16 +314,21 @@ begin
 		end;
 	end;
 
-	if ATTACK_TMasterOK and Destroyed(ATTACK_TMaster) then msg := msg + ' ' + GearName( ATTACK_TMaster ) + ' is destroyed!';
+	if ATTACK_TMasterOK and Destroyed(ATTACK_TMaster) then msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','destroyed'), GearName(ATTACK_TMaster) );
 
 	{ Gotta check that the attack hit, since if the DAMAGE procedure }
 	{ wasn't called the history variables might be holding leftover }
 	{ information. }
 	if ATTACK_TPilotOK and ATTACK_ItHit then begin
 		if DAMAGE_EjectRoll then begin
-			if DAMAGE_PilotDied then msg := msg + ' ' + GearName( ATTACK_TPilot ) + ' didn''t eject in time!'
-			else if DAMAGE_EjectOK then msg := msg + ' ' + GearName( ATTACK_TPilot ) + ' ejected!';
-		end else if Destroyed(ATTACK_TPilot) then msg := msg + ' ' + GearName( ATTACK_TPilot ) + ' died!';
+			if DAMAGE_PilotDied then begin
+				msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','didnot eject'), GearName(ATTACK_TPilot) );
+			end else if DAMAGE_EjectOK then begin
+				msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','ejected'), GearName(ATTACK_TPilot) );
+			end;
+		end else if Destroyed(ATTACK_TPilot) then begin
+			msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','died'), GearName(ATTACK_TPilot) );
+		end;
 	end;
 
 	RecordAnnouncement( msg );
@@ -358,8 +361,7 @@ begin
 		Exit;
 	end else if ATTACK_ItHit and ( ATTACK_DamageDone > 0 ) then begin
 		{ Msg always starts with the target's name. }
-		msg := ReplaceHash( EffectDesc , PilotName( ATTACK_TMaster ) );
-		msg := ReplaceHash( msg , BStr( ATTACK_DamageDone ) );
+		msg := ReplaceHash( EffectDesc , PilotName( ATTACK_TMaster ) , BStr( ATTACK_DamageDone ) );
 
 		{ Add the list of destroyed parts now. }
 		DP := Destroyed_Parts_List;
@@ -368,13 +370,20 @@ begin
 			DP := DP^.Next;
 		end;
 
-		if ATTACK_TMasterOK and Destroyed(ATTACK_TMaster) then msg := msg + ' ' + GearName( ATTACK_TMaster ) + ' is destroyed!';
+		if ATTACK_TMasterOK and Destroyed(ATTACK_TMaster) then begin
+			msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','destroyed'), GearName(ATTACK_TMaster) );
+		end;
 
 		if ATTACK_TPilotOK then begin
 			if DAMAGE_EjectRoll then begin
-				if DAMAGE_PilotDied then msg := msg + ' ' + GearName( ATTACK_TPilot ) + ' didn''t eject in time!'
-				else if DAMAGE_EjectOK then msg := msg + ' ' + GearName( ATTACK_TPilot ) + ' ejected!';
-			end else if Destroyed(ATTACK_TPilot) then msg := msg + ' ' + GearName( ATTACK_TPilot ) + ' died!';
+				if DAMAGE_PilotDied then begin
+					msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','didnot eject'), GearName(ATTACK_TPilot) );
+				end else if DAMAGE_EjectOK then begin
+					msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','ejected'), GearName(ATTACK_TPilot) );
+				end;
+			end else if Destroyed(ATTACK_TPilot) then begin
+				msg := msg + ' ' + ReplaceHash( I18N_MsgString('INDICATE_Latest_Attack','died'), GearName(ATTACK_TPilot) );
+			end;
 		end;
 
 		RecordAnnouncement( msg );
@@ -1394,8 +1403,7 @@ begin
 
 		{ Record the announcement, if any healing done. }
 		if ( D0 - D1 ) > 0 then begin
-			msg := ReplaceHash( SAttValue( FX_Messages , 'Healing_Announce' ) , GearName( TMaster ) );
-			msg := ReplaceHash( msg , BStr( D0 - D1 ) );
+			msg := ReplaceHash( I18N_MsgString('ProcessHealingEffect','Healing_Announce'), GearName(TMaster), BStr(D0 - D1) );
 			RecordAnnouncement( msg );
 		end;
 	end;
@@ -1704,7 +1712,7 @@ begin
 	{ If the mek's move mode has been disabled, it will crash here. }
 	if ATTACK_TMasterMove and (BaseMoveRate( ATTACK_TMaster ) = 0) then begin
 		Crash( GB , ATTACK_TMaster );
-		AddSAtt( ATTACK_History , 'ANNOUNCE_' + BStr( EFFECTS_Event_Order + 1 ) + '_' , PilotName( ATTACK_TMaster ) + ' has crashed!' );
+		AddSAtt( ATTACK_History , 'ANNOUNCE_' + BStr( EFFECTS_Event_Order + 1 ) + '_' , ReplaceHash( I18N_MsgString('ProcessAttackEffect','crashed'), PilotName(ATTACK_TMaster) ) );
 	end;
 end;
 
@@ -1782,6 +1790,10 @@ var
 			AReq.AF.CanBlock := False;
 		end;
 	end;
+var
+	W: String;
+	DItS: Boolean;		{Do insert the space, or not.}
+	CW_I18N: Boolean;	{Is the current word I18N ?}
 begin
 	{ First, make sure we have an originator, and that it's a character. }
 	if ( AReq.Originator = Nil ) or ( AReq.Originator^.G <> GG_Character ) then exit;
@@ -1835,21 +1847,36 @@ begin
 
 		AReq.FXName := '';
 		while msg <> '' do begin
-			C := ExtractWord( msg );
-			if C = '%A' then begin
-				if Adjective <> Nil then begin
-					AReq.FXName := AReq.FXName + ' ' + SelectRandomSAtt( Adjective )^.Info;
+			C := ExtractWordForParse( msg, DItS, CW_I18N );
+			while ( 2 <= Length(C) ) and ( '%' = C[1] ) do begin
+				W := '';
+				if ( 'A' = C[2] ) then begin
+					if ( NIL <> Adjective ) then begin
+						W := SelectRandomSAtt( Adjective )^.Info;
+					end else begin
+						W := SAttValue( FX_Messages , 'FMAFT_MISCA' + BStr( Random( 5 ) + 1 ) );
+					end;
+				end else if ( 'N' = C[2] ) then begin
+					if ( NIL <> Noun ) then begin
+						W := SelectRandomSAtt( Noun )^.Info;
+					end else begin
+						W := SAttValue( FX_Messages , 'FMAFT_MISCN' + BStr( Random( 5 ) + 1 ) );
+					end;
 				end else begin
-					AReq.FXName := AReq.FXName + ' ' + SAttValue( FX_Messages , 'FMAFT_MISCA' + BStr( Random( 5 ) + 1 ) );
+					W := '%' + C[2];
 				end;
-			end else if C = '%N' then begin
-				if Noun <> Nil then begin
-					AReq.FXName := AReq.FXName + ' ' + SelectRandomSAtt( Noun )^.Info;
+				C := Copy( C, 3, Length(C) - 2 );
+				if DItS then begin
+					AReq.FXName := AReq.FXName + ' ' + W;
+					DItS := False;
 				end else begin
-					AReq.FXName := AReq.FXName + ' ' + SAttValue( FX_Messages , 'FMAFT_MISCN' + BStr( Random( 5 ) + 1 ) );
+					AReq.FXName := AReq.FXName + W;
 				end;
-			end else begin
+			end;
+			if DItS then begin
 				AReq.FXName := AReq.FXName + ' ' + C;
+			end else begin
+				AReq.FXName := AReq.FXName + C;
 			end;
 		end;
 
@@ -1955,14 +1982,14 @@ begin
 
 	{ Actually perform the attack. }
 	if Target <> Nil then begin
-		msg := PilotName( FindMaster( Attacker ) ) + ' attacks ' + PilotName( FindMaster( Target ) )+' with ' + AReq.FXName + '.';
+		msg := ReplaceHash( I18N_MsgString('DoDirectFireAttack','attacks'), PilotName(FindMaster(Attacker)), PilotName(FindMaster(Target)), AReq.FXName );
 		RecordAnnouncement( msg );
 		Inc( EFFECTS_Event_Order );
 		{ Give a meager skill experience bonus. }
 		DoleSkillExperience( AReq.Originator , AttackSkillNeeded( Attacker ) , XPA_SK_Basic );
 		ProcessAttackEffect( GB , AReq );
 	end else if Attacker^.Scale >= GB^.Scale then begin
-		msg := PilotName( FindMaster( Attacker ) ) + ' fires ' + GearName( Attacker ) + '.';
+		msg := ReplaceHash( I18N_MsgString('DoDirectFireAttack','fires'), PilotName(FindMaster(Attacker)), GearName(Attacker) );
 		RecordAnnouncement( msg );
 		Inc( EFFECTS_Event_Order );
 		Add_Point_Animation( X , Y , Z , GS_DamagingHit );
@@ -2016,7 +2043,7 @@ var
 	Mek: GearPtr;
 	N,T,AtOp2,R: Integer;
 begin
-	msg := PilotName( FindMaster( Attacker ) ) + ' fires ' + GearName( Attacker ) + '.';
+	msg := ReplaceHash( I18N_MsgString('DoSwarmAttack','fires'), PilotName(FindMaster(Attacker)), GearName(Attacker) );
 	RecordAnnouncement( msg );
 
 	R := SwarmRadius( GB , Attacker );
@@ -2232,7 +2259,7 @@ begin
 	end;
 
 	{ Start by making the initial display. }
-	msg := PilotName( FindMaster( Attacker ) ) + ' fires ' + GearName( Attacker ) + '.';
+	msg := ReplaceHash( I18N_MsgString('DoSwarmAttack','fires'), PilotName(FindMaster(Attacker)), GearName(Attacker) );
 	RecordAnnouncement( msg );
 	Add_Shot_Precisely( GB , AP.X , AP.Y , AP.Z , OP.X , OP.Y , OP.Z );
 	Inc( EFFECTS_Event_Order );
@@ -2335,7 +2362,7 @@ var
 	Rng,T,N,TT: Integer;
 	Mek: GearPtr;
 begin
-	msg := PilotName( FindMaster( Attacker ) ) + ' fires ' + GearName( Attacker ) + '.';
+	msg := ReplaceHash( I18N_MsgString('DoLineAttack','fires'), PilotName(FindMaster(Attacker)), GearName(Attacker) );
 	RecordAnnouncement( msg );
 	Inc( EFFECTS_Event_Order );
 
@@ -2388,7 +2415,7 @@ var
 	AP,OP: Point;
 	SRS: NAttPtr;	{ Side Reaction Score. }
 begin
-	msg := PilotName( FindMaster( Attacker ) ) + ' fires ' + GearName( Attacker ) + '.';
+	msg := ReplaceHash( I18N_MsgString('DoSTCAttack','fires'), PilotName(FindMaster(Attacker)), GearName(Attacker) );
 	RecordAnnouncement( msg );
 
 	ClearStencil;

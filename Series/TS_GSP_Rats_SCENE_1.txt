@@ -67,39 +67,49 @@ skill 26 1
 skill 28 1
 skill 36 3
 mod head
+	name_I18N <>
 	armor 2
 	sub
 		gear 4 0 8
 		name <Fangs>
+		name_I18N <Fangs>
 		type <BRUTAL>
 	end
 mod body
+	name_I18N <>
 	armor 2
 mod leg
 	armor 2
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 	sub
 		gear 4 0 6
 		name <Claws>
+		name_I18N <Claws>
 		stat 3 1
 		type <ARMORPIERCING>
 	end
 mod leg
 	armor 2
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 	sub
 		gear 4 0 6
 		name <Claws>
+		name_I18N <Claws>
 		stat 3 1
 		type <ARMORPIERCING>
 	end
 mod leg
 	armor 2
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	armor 2
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <>
 	armor 2
 end
 

@@ -226,5 +226,6 @@ end
 inv
 	Treasure 1
 	name <Data Cartridge>
+	name_I18N <Data Cartridge>
 
 end

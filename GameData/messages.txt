@@ -197,6 +197,7 @@ HELP_KeyMap <View Game Keys>
 HELP_PersonalHistory <Review Personal History>
 HELP_Exit <   [EXIT]>
 MORETEXT_Prompt <  [UP] to go up, [DOWN] to go down, [Q] or [ESC] to exit>
+PCATTACK_OutOfSmartAttack <The target is outside of your attackable range.>
 PCATTACK_OutOfArc <The target is outside of your firing arc.>
 PCATTACK_OutOfRange <The target is out of range.>
 HELP_Prompt <Scroll through the menu to see all available game commands.>

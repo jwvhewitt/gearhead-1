@@ -83,6 +83,7 @@ implementation
 uses ghchars;
 
 Const
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	UsableTypeName: Array [1..NumUsableType] of String = (
 	'Instrument'
 	);
@@ -91,6 +92,7 @@ Const
 Function SwagName( Part: GearPtr ): String;
 	{ This function will make up a default name for the provided item. }
 begin
+	{ PATCH_I18N: Don't translate it. }
 	SwagName := 'Thing';
 end;
 
@@ -161,6 +163,7 @@ end;
 Function RepairFuelName( Part: GearPtr ): String;
 	{ Returns a default name for some repairfuel. }
 begin
+	{ PATCH_I18N: Don't translate it. }
 	RepairFuelName := SkillMan[ Part^.S ].Name + ' Kit';
 end;
 

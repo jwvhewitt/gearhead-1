@@ -165,6 +165,20 @@ Const
 	RandMaps_Param_File = Data_Directory + 'randmaps.txt';
 	NPC_Chatter_File = Data_Directory + 'taunts.txt';
 
+	I18N_Settings_File         = Data_Directory + 'I18N_settings.txt';
+	I18N_Name_File             = Data_Directory + 'I18N_name.txt';
+	I18N_Messages_File         = Data_Directory + 'I18N_messages.txt';
+	I18N_Help_Keymap_Name_File = Data_Directory + 'I18N_keymap_name.txt';
+	I18N_Help_Keymap_Desc_File = Data_Directory + 'I18N_keymap_desc.txt';
+
+	I18N_NPC_GenderTraits_File1 = Data_Directory + 'I18N_pgt_t_m1.txt';
+	I18N_NPC_GenderTraits_File2 = Data_Directory + 'I18N_pgt_t_f1.txt';
+	I18N_NPC_FirstPerson_File1  = Data_Directory + 'I18N_pgt_fp_m.txt';
+	I18N_NPC_FirstPerson_File2  = Data_Directory + 'I18N_pgt_fp_f.txt';
+	I18N_NPC_SecondPerson_File1 = Data_Directory + 'I18N_pgt_sp_m.txt';
+	I18N_NPC_SecondPerson_File2 = Data_Directory + 'I18N_pgt_sp_f.txt';
+	I18N_Standard_Modifier_File = Data_Directory + 'I18N_modifier.txt';
+
 	Doc_DirName = 'doc';
 	Doc_Directory = Doc_DirName + OS_Dir_Separator;
 	Mecha_Help_File = Doc_Directory + 'man_umek.txt';
@@ -595,7 +609,7 @@ begin
 	{ As long as there are files which match our description, }
 	{ process them. }
 	While DosError = 0 do begin
-		StoreSAtt( FList , SRec.Name );
+		StoreSAtt( FList , TextDecode(SRec.Name) );
 
 		{ Look for the next file in the directory. }
 		FindNext( SRec );

@@ -1,27 +1,38 @@
 Battroid 3
 Name <Alba>
 Desig <GWR-17>
+Desig_I18N <GWR-17>
 Desc <Commando mecha used by Terran Defense Force. Easily recognized by its "bunny-ears" sensor wings.>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 2
 	sub
 		Sensor 10
+		Name_I18N <>
 		Integral
 
 		TarComp 2
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
 
 		Mount
+		Name_I18N <>
 		inv
 			Gun 2
 			Name <Autocannon>
+			Name_I18N <>
 			Range 5
 			Acc 1
 			Speed 1
@@ -29,13 +40,16 @@ Mod Body
 			Magazine 90
 			sub
 				Ammo 2
+				Name_I18N <>
 			end
 		end
 
 		Mount
+		Name_I18N <>
 		inv
 			Gun 2
 			Name <Autocannon>
+			Name_I18N <>
 			Range 5
 			Acc 1
 			Speed 1
@@ -43,88 +57,111 @@ Mod Body
 			Magazine 90
 			sub
 				Ammo 2
+				Name_I18N <>
 			end
 		end
 
 		Sensor 2
+		Name_I18N <>
 
 		HoverJet 2
+		Name_I18N <>
 
 		Gyro 3
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 2
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 3
 			Name <Hand Cannon>
+			Name_I18N <>
 			Mass -1
 			Range 3
 			Speed 3
 			Magazine 12
 			sub
 				Ammo 3
+				Name_I18N <>
 			end
 		end
 
 		Mount
+		Name_I18N <>
 		inv
 			MLauncher 13
 			Name <Rocket Launcher>
+			Name_I18N <>
 			Range 8
 			Magazine 4
 			sub
 				Rockets 13
+				Name_I18N <>
 			end
 		end
 
 		HoverJet 1
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 2
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			EMelee 8
 			Name <Beam Lash>
+			Name_I18N <>
 			Type <FLAIL>
 			Acc 2
 			Speed 5
 		end
 
 		Mount
+		Name_I18N <>
 		inv
 			MLauncher 13
 			Name <Rocket Launcher>
+			Name_I18N <>
 			Range 8
 			Magazine 4
 			sub
 				Rockets 13
+				Name_I18N <>
 			end
 		end
 
 		HoverJet 1
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		HoverJet 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		HoverJet 4
+		Name_I18N <>
 	end
 end
 

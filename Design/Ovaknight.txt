@@ -1,41 +1,53 @@
 Battroid 7
 Name <Ovaknight>
 Desig <OVK-677>
+Desig_I18N <OVK-677>
 sdl_sprite <btr_ovaknight.png>
 Desc <The Federation Defense Force's heavy artillery mecha. The OvaKnight is constructed around a light spaceship engine which powers its devastating core cannon.>
 
+
 Mod Head
+	Name_I18N <>
 	Size 5
 	Armor 7
 	Mass -4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
 		Sensor 5
+		Name_I18N <>
 
 		TarComp 3
+		Name_I18N <>
 
 		ECM 4
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 5
+		Name_I18N <>
 		Mass -7
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -8
 	sub
 		Gyro 3
+		Name_I18N <>
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -2
 		HighOutput
 
 		BeamGun 15
 		Name <Plasma Core Cannon>
+		Name_I18N <>
 		Type <BRUTAL HYPER>
 		Integral
 		Acc 1
@@ -43,38 +55,46 @@ Mod Body
 
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			STC VC-5
 		end
 
 		Mount
 		Name <Left Weapon Mount>
+		Name_I18N <>
 		inv
 			STC VC-5
 		end
 
 		STC LAS-5
 		Name <Intercept Laser>
+		Name_I18N <>
 		Type <INTERCEPT>
 	end
 	inv
 		BodyArmor 8
+		Name_I18N <>
 		Mass -12
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 6
 	Mass -2
 	sub
 		Hand
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 5
+		Name_I18N <>
 		Mass -8
 		sub
 			Gun 5
 			Name <Battle Cannon>
+			Name_I18N <>
 			Type <ANTIAIR>
 			Range 7
 			Acc -1
@@ -84,6 +104,7 @@ Mod Arm
 			Mass -5
 			sub
 				Ammo 5
+				Name_I18N <>
 				Type <ARMORPIERCING>
 			end
 		end
@@ -91,17 +112,21 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 6
 	Mass -2
 	sub
 		Hand
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 5
+		Name_I18N <>
 		Mass -8
 		sub
 			Gun 5
 			Name <Battle Cannon>
+			Name_I18N <>
 			Type <ANTIAIR>
 			Range 7
 			Acc -1
@@ -111,6 +136,7 @@ Mod Arm
 			Mass -5
 			sub
 				Ammo 5
+				Name_I18N <>
 				Type <ARMORPIERCING>
 			end
 		end
@@ -118,61 +144,73 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg 1>
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Left Leg 1>
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Right Leg 2>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	Mass -3
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Left Leg 2>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	Mass -3
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Right Leg 3>
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Left Leg 3>
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 end

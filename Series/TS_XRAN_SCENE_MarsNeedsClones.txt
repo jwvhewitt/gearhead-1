@@ -45,6 +45,7 @@ inv
 
 	STC BIOTANK
 	name <Holding Chamber>
+	name_I18N <Holding Chamber>
 	home <Lab>
 	use <if= V1 0 else GoUsed ifYesNo 1 2 3 V= 1 1 ifG NPCRep L1 1 0 else GoNoHero ForceChat L1>
 	GoNoHero <Alert 5 DeployChar L1 3 PCEnemy L1 SoloAttack L1>

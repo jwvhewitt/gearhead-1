@@ -45,11 +45,11 @@ Procedure DesignDirBrowser;
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
+uses i18nmsg,ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
      locale,navigate,pcaction,randchar,randmaps,texutil,wmonster,
      sdlinfo,sdlmap,sdlmenus,ui4gh,backpack;
 {$ELSE}
-uses ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
+uses i18nmsg,ability,arenaplay,damage,gears,gearutil,ghchars,ghparser,
      locale,navigate,pcaction,randchar,randmaps,texutil,wmonster,
      coninfo,congfx,conmap,conmenus,context,ui4gh;
 {$ENDIF}
@@ -67,7 +67,7 @@ var
 	FName: String;		{ Filename for the character. }
 	F: Text;		{ The file to write to. }
 begin
-	FName := Save_Unit_Base + GearName(U) + Default_File_Ending;
+	FName := Save_Unit_Base + TextEncode(GearName(U) + Default_File_Ending);
 	Assign( F , FName );
 	Rewrite( F );
 	WriteCGears( F , U );
@@ -209,8 +209,8 @@ begin
 	if Cost < 1 then Cost := 1;
 
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-	AddRPGMenuItem( YNMenu , 'Buy ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
-	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
+	AddRPGMenuItem( YNMenu , ReplaceHash(I18N_MsgString('PURCHASEGEAR_BUY'), GearName(Part), BStr(Cost) ) , 1 );
+	AddRPGMenuItem( YNMenu , I18N_MsgString('PurchaseGear','Search Again') , -1 );
 
 {$IFDEF SDLMODE}
 	if SelectMenu( YNMenu , Nil ) = 1 then begin
@@ -229,10 +229,10 @@ begin
 			{ Update the display. }
 			UpdateHQDisplay( U );
 
-			DialogMSG( 'You have purchased ' + GearName( Part ) + '.' );
+			DialogMSG( ReplaceHash(I18N_MsgString('PurchaseGear','Purchased'),GearName(Part)) );
 		end else begin
 			{ Not enough cash to buy... }
-			DialogMSG( 'You don''t have enough money to buy ' + GearName( Part ) + '.' );
+			DialogMSG( ReplaceHash(I18N_MsgString('PurchaseGear','Donot Purchased'),GearName(Part)) );
 		end;
 
 	end;
@@ -262,8 +262,8 @@ begin
 	if Cost < 1 then Cost := 1;
 
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-	AddRPGMenuItem( YNMenu , 'Sell ' + GearName( Part ) + ' ($' + BStr( Cost ) + ')' , 1 );
-	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
+	AddRPGMenuItem( YNMenu , ReplaceHash(I18N_MsgString('SellGear','Sell'),GearName(Part),BStr(Cost)) , 1 );
+	AddRPGMenuItem( YNMenu , I18N_MsgString('PurchaseGear','Search Again') , -1 );
 
 {$IFDEF SDLMODE}
 	if SelectMenu( YNMenu , Nil ) = 1 then begin
@@ -277,7 +277,7 @@ begin
 		{ Update the display. }
 		UpdateHQDisplay( U );
 
-		DialogMSG( 'You have sold ' + GearName( Part ) + ' for $' + BStr( Cost ) + '.' );
+		DialogMSG( ReplaceHash(I18N_MsgString('SellGear','Sold'),GearName(Part),BStr(Cost)) );
 
 		RemoveGear( Part^.Parent^.InvCom , Part );
 	end;
@@ -341,10 +341,10 @@ begin
 
 	C1 := NAttValue( U^.NA , NAG_Experience , NAS_Credits );
 	if C1 < C0 then begin
-		DialogMSG( 'Recovery from the combat cost $' + BStr( C0 - C1 ) + '.' );
+		DialogMSG( ReplaceHash(I18N_MsgString('FixEntireUnit','Recovery'),BStr( C0 - C1 )) );
 	end;
 	if LowRoll < 1 then begin
-		DialogMSG( 'There have been some problems...' );
+		DialogMSG( I18N_MsgString('FixEntireUnit','Some Problems') );
 	end;
 end;
 
@@ -364,10 +364,10 @@ begin
 
 	C1 := NAttValue( U^.NA , NAG_Experience , NAS_Credits );
 	if C1 < C0 then begin
-		DialogMSG( 'Restoring ' + GearName( Mek ) + ' cost $' + BStr( C0 - C1 ) + '.' );
+		DialogMSG( ReplaceHash(I18N_MsgString('FixSingleGear','Restoring'),GearName(Mek),BStr( C0 - C1 )) );
 	end;
 	if Roll < 1 then begin
-		DialogMSG( 'There have been some problems...' );
+		DialogMSG( I18N_MsgString('FixSingleGear','Some Problems') );
 	end;
 end;
 
@@ -385,10 +385,10 @@ begin
 	{ Create the YNMenu here. It'll be the same throughout the }
 	{ hiring process. }
 	YNMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-	AddRPGMenuItem( YNMenu , 'Hire Character' , 1 );
-	AddRPGMenuItem( YNMenu , 'Search Again' , -1 );
+	AddRPGMenuItem( YNMenu , I18N_MsgString('AddPilotToUnit','Hire Character') , 1 );
+	AddRPGMenuItem( YNMenu , I18N_MsgString('AddPilotToUnit','Search Again') , -1 );
 
-	DialogMSG('Select character file.');
+	DialogMSG( I18N_MsgString('AddPilotToUnit','Select Character'));
 
 	{ Keep querying for characters until cancel is selected. }
 	repeat
@@ -396,7 +396,7 @@ begin
 		PCMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 		BuildFileMenu( PCMenu , Save_Character_Base + Default_Search_Pattern );
 		RPMSortAlpha( PCMenu );
-		AddRPGMenuItem( PCMenu , '  Exit' , -1 );
+		AddRPGMenuItem( PCMenu , I18N_MsgString('AddPilotToUnit','Exit') , -1 );
 
 		{ Select a file, then dispose of the menu. }
 		{ Don't need to worry about the menu being empty because }
@@ -412,7 +412,7 @@ begin
 		{ wants to keep it. }
 		if FName <> '' then begin
 			{ Load the character file. }
-			Assign( F , Save_Game_Directory + FName );
+			Assign( F , Save_Game_Directory + TextEncode(FName) );
 			reset(F);
 			PC := ReadCGears(F);
 			Close(F);
@@ -446,7 +446,7 @@ begin
 					{ problem in saving, at least the original }
 					{ character file will be intact. }
 					SaveUnit( U );
-					Assign( F , Save_Game_Directory + FName );
+					Assign( F , Save_Game_Directory + TextEncode(FName) );
 					Erase(F);
 
 					UpdateHQDisplay( U );
@@ -460,7 +460,7 @@ begin
 
 			end else begin
 				{ PC isn't a valid character. Get rid of it. }
-				DialogMSG( 'ERROR - Corrupt save file.' );
+				DialogMSG( I18N_MsgString('AddPilotToUnit','Corrupt File') );
 				DisposeGear( PC );
 			end;
 		end;
@@ -485,7 +485,8 @@ begin
 	Part := List;
 	N := 1;
 	while Part <> Nil do begin
-		msg := SAttValue( Part^.SA , 'desig' );
+		msg := SAttValue( Part^.SA , 'DESIG_I18N' );
+		if ( '' = msg ) then msg := SAttValue( Part^.SA , 'DESIG' );
 		if msg <> '' then msg := msg + ' ' + GearName( Part )
 		else msg := GearName( Part );
 		AddRPGMenuItem( BrowseMenu , msg , N );
@@ -493,7 +494,7 @@ begin
 		Part := Part^.Next;
 	end;
 	RPMSortAlpha( BrowseMenu );
-	AddRPGMenuItem( BrowseMenu , '  Cancel' , -1 );
+	AddRPGMenuItem( BrowseMenu , I18N_MsgString('SelectOneGear','Cancel') , -1 );
 
 	{ Select a gear. }
 {$IFDEF SDLMODE}
@@ -520,9 +521,9 @@ begin
 	MekMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 	BuildFileMenu( MekMenu , Design_Directory + Default_Search_Pattern );
 	RPMSortAlpha( MekMenu );
-	AddRPGMenuItem( MekMenu , '  Exit' , -1 );
+	AddRPGMenuItem( MekMenu , I18N_MsgString('BuyMechsForUnit','Exit') , -1 );
 
-	DialogMSG( 'Select design file.' );
+	DialogMSG( I18N_MsgString('BuyMechsForUnit','Select Design') );
 
 	repeat
 		{ Prompt the user for a file selection. }
@@ -562,7 +563,7 @@ begin
 
 				DisposeGear( m1 );
 			end else begin
-				DialogMsg( 'ERROR - Corrupt design file.' );
+				DialogMsg( I18N_MsgString('BuyMechsForUnit','Corrupt File') );
 			end;
 		end;
 	until fname = '';
@@ -583,8 +584,8 @@ procedure ExamineUnitMecha( U: GearPtr );
 		N: Integer;
 	begin
 {$IFNDEF SDLMODE}
-		CMessage( 'SELECT CHARACTER' , ZONE_Menu1 , InfoHilight );
-		DialogMSG( 'Select a pilot for ' + GearName( M ) + '.' );
+		CMessage( I18N_MsgString('ExamineUnitMecha','SELECT CHARACTER'), ZONE_Menu1, InfoHilight );
+		DialogMSG( ReplaceHash(I18N_MsgString('ExamineUnitMecha','Select a Pilot'),GearName(M)) );
 {$ENDIF}
 		PMenu := CreateHQPilotMenu( U );
 		if PMenu^.NumItem > 0 then begin
@@ -610,17 +611,17 @@ begin
 	{ Create the needed menus. }
 	MekMenu := CreateHQMechaMenu( U );
 	OpMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-	AddRPGMenuItem( OpMenu , 'Assign Pilot' , 1 );
-	AddRPGMenuItem( OpMenu , 'Sell this Mecha' , -2 );
-	AddRPGMenuItem( OpMenu , 'Repair Mecha' , 3 );	
-	AddRPGMenuItem( OpMenu , 'Exit' , -1 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitMecha','Assign Pilot') , 1 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitMecha','Sell') , -2 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitMecha','Repair') , 3 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitMecha','Exit') , -1 );
 
 	{ Error check- this unit better have some meks purchased already. }
 	if MekMenu^.NumItem > 0 then begin
 		MN := 1;
 		repeat
 {$IFNDEF SDLMODE}
-			CMessage( 'SELECT  MECHA  TO  EXAMINE' , ZONE_Menu1 , MenuSelect );
+			CMessage( I18N_MsgString('ExamineUnitMecha','SELECT MECHA TO EXAMINE'), ZONE_Menu1, InfoHilight );
 			DrawZoneBorder( ZONE_Menu2 , PlayerBlue );
 {$ENDIF}
 
@@ -669,7 +670,7 @@ begin
 		{ Restore the display. }
 		UpdateHQDisplay( U );
 	end else begin
-		DialogMSG( 'Your unit does not currently have any meks.' );
+		DialogMSG( I18N_MsgString('ExamineUnitMecha','No Meks') );
 	end;
 
 	{ Free dynamic resources. }
@@ -690,8 +691,8 @@ procedure ExamineUnitPilots( U: GearPtr );
 		N: Integer;
 	begin
 {$IFNDEF SDLMODE}
-		CMessage( 'SELECT MECHA' , ZONE_Menu1 , InfoHilight );
-		DialogMSG( 'Select a mecha for ' + GearName( P ) + '.' );
+		CMessage( I18N_MsgString('ExamineUnitPilots','SELECT MECHA'), ZONE_Menu1, InfoHilight );
+		DialogMSG( ReplaceHash(I18N_MsgString('ExamineUnitPilots','Select a Mecha'),GearName(P)) );
 {$ENDIF}
 		MekMenu := CreateHQMechaMenu( U );
 		if MekMenu^.NumItem > 0 then begin
@@ -727,7 +728,7 @@ procedure ExamineUnitPilots( U: GearPtr );
 	begin
 		msg := SAttValue( PC^.SA , 'Bio1' );
 {$IFNDEF SDLMODE}
-		CMessage( 'BIOGRAPHY' , ZONE_Menu1 , InfoHilight );
+		CMessage( I18N_MsgString('ExamineUnitPilots','BIOGRAPHY'), ZONE_Menu1, InfoHilight );
 		GameMsg( msg , ZONE_Menu2 , InfoGreen );
 {$ENDIF}
 		{ Wait for a keypress before exiting. }
@@ -741,18 +742,18 @@ begin
 	{ Create the needed menus. }
 	PCMenu := CreateHQPilotMenu( U );
 	OpMenu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
-	AddRPGMenuItem( OpMenu , 'View Biography' , 3 );
-	AddRPGMenuItem( OpMenu , 'Assign Mecha for Pilot' , 1 );
-	AddRPGMenuItem( OpMenu , 'Do Training' , 2 );
-	AddRPGMenuItem( OpMenu , 'Quit This Team' , -2 );
-	AddRPGMenuItem( OpMenu , 'Exit' , -1 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitPilots','View Biography') , 3 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitPilots','Assign') , 1 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitPilots','Training') , 2 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitPilots','Quit') , -2 );
+	AddRPGMenuItem( OpMenu , I18N_MsgString('ExamineUnitPilots','Exit') , -1 );
 
 	{ Error check- this unit better have some chars hired already. }
 	if PCMenu^.NumItem > 0 then begin
 		PN := 1;
 		repeat
 {$IFNDEF SDLMODE}
-			CMessage( 'SELECT  CHARACTER  TO  EXAMINE' , ZONE_Menu1 , MenuSelect );
+			CMessage( I18N_MsgString('ExamineUnitPilots','SELECT CHARACTER TO EXAMINE'), ZONE_Menu1, InfoHilight );
 			DrawZoneBorder( ZONE_Menu2 , PlayerBlue );
 {$ENDIF}
 
@@ -805,7 +806,7 @@ begin
 		{ Restore the display. }
 		UpdateHQDisplay( U );
 	end else begin
-		DialogMSG( 'Your unit does not currently have any characters.' );
+		DialogMSG( I18N_MsgString('ExamineUnitPilots','No Characters') );
 	end;
 
 	{ Free dynamic resources. }
@@ -845,12 +846,12 @@ begin
 	{ Create the difficulcy selector menu. }
 	ECM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu2 );
 {$IFNDEF SDLMODE}
-	CMessage( 'SELECT DIFFICULCY LEVEL' , ZONE_Menu1 , InfoGreen );
+	CMessage( I18N_MsgString('EnterCombat','SELECT DIFFICULCY LEVEL'), ZONE_Menu1, InfoHilight );
 {$ENDIF}
-	AddRPGMenuItem( ECM , 'Easy' , 1 );
-	AddRPGMenuItem( ECM , 'Regular' , 3 );
-	AddRPGMenuItem( ECM , 'Hard' , 6 );
-	AddRPGMenuItem( ECM , 'Suicidal' , 10 );
+	AddRPGMenuItem( ECM , I18N_MsgString('EnterCombat','Easy') , 1 );
+	AddRPGMenuItem( ECM , I18N_MsgString('EnterCombat','Regular') , 3 );
+	AddRPGMenuItem( ECM , I18N_MsgString('EnterCombat','Hard') , 6 );
+	AddRPGMenuItem( ECM , I18N_MsgString('EnterCombat','Suicidal') , 10 );
 
 	{ Input the difficulcy level, and dispose of the menu right away. }
 {$IFDEF SDLMODE}
@@ -868,7 +869,7 @@ begin
 
 	{ Select the list of mechas to use on this mission. }
 {$IFNDEF SDLMODE}
-	CMessage( 'SELECT MECHA' , ZONE_Menu1 , InfoGreen );
+	CMessage( I18N_MsgString('EnterCombat','SELECT MECHA'), ZONE_Menu1, InfoHilight );
 {$ENDIF}
 	MList := Nil;
 	repeat
@@ -1078,7 +1079,7 @@ begin
 
 	{ Repair all meks and treat all wounded pilots. }
 	SetupHQDisplay;
-	DialogMSG( 'You earned $' + BStr(TPV) + ' for this mission.' );
+	DialogMSG( ReplaceHash(I18N_MsgString('ExamineUnitPilots','Earned'),BStr(TPV)) );
 	FixEntireUnit( HQCamp^.Source );
 end;
 
@@ -1091,13 +1092,13 @@ var
 begin
 	{ Create the HQ Menu }
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
-	AddRPGMenuItem( RPM , 'Examine Characters' , 5 );
-	AddRPGMenuItem( RPM , 'Examine Mecha' , 1 );
-	AddRPGMenuItem( RPM , 'Purchase Hardware' , 2 );
-	AddRPGMenuItem( RPM , 'Hire Character' , 3 );
-	AddRPGMenuItem( RPM , 'Create New Character' , 4 );
-	AddRPGMenuItem( RPM , 'Enter Combat' , 6 );
-	AddRPGMenuItem( RPM , 'Exit to Main' , 0 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Examine Characters') , 5 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Examine Mecha') , 1 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Purchase Hardware') , 2 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Hire Character') , 3 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Create New Character') , 4 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Enter Combat') , 6 );
+	AddRPGMenuItem( RPM , I18N_MsgString('HQMain','Exit') , 0 );
 	RPM^.mode := RPMNoCancel;
 
 	{ Set up the display. }
@@ -1142,9 +1143,9 @@ begin
 	SetNAtt( HQCamp^.Source^.NA , NAG_Experience , NAS_Credits , NAV_StartingCash );
 
 {$IFDEF SDLMODE}
-	Name := GetStringFromUser( 'enter a name for your new unit' , Nil );
+	Name := GetStringFromUser( I18N_MsgString('CreateNewUnit','Enter a Name') , Nil );
 {$ELSE}
-	Name := GetStringFromUser( 'enter a name for your new unit' );
+	Name := GetStringFromUser( I18N_MsgString('CreateNewUnit','Enter a Name') );
 {$ENDIF}
 	if Name <> '' then begin
 		SetSAtt( HQCamp^.Source^.SA , 'name <'+name+'>');
@@ -1171,7 +1172,7 @@ begin
 	{ Otherwise, go straight to the NEW UNIT procedure. }
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
-		DialogMSG('Select unit file to load.');
+		DialogMSG( I18N_MsgString('LoadUnit','Select') );
 {$IFDEF SDLMODE}
 		uname := SelectFile( RPM , Nil );
 {$ELSE}
@@ -1179,7 +1180,7 @@ begin
 {$ENDIF}
 		if uname <> '' then begin
 			HQCamp := NewCampaign;
-			Assign(F, Save_Game_Directory + uname );
+			Assign(F, Save_Game_Directory + TextEncode(uname) );
 			reset(F);
 			HQCamp^.Source := ReadCGears(F);
 			Close(F);
@@ -1269,7 +1270,7 @@ begin
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
 		AddRPGMenuItem( RPM , MsgString( 'STARTRPG_NewChar' ) , -2 );
-		DialogMSG('Select character file.');
+		DialogMSG( I18N_MsgString('StartRPGCampaign','Select') );
 {$IFDEF SDLMODE}
 		uname := SelectFile( RPM , RD );
 {$ELSE}
@@ -1278,13 +1279,13 @@ begin
 		if uname = MsgString( 'STARTRPG_NewChar' ) then begin
 			EnterCampaign( CharacterCreator );
 		end else if uname <> '' then begin
-			Assign(F, Save_Game_Directory + uname );
+			Assign(F, Save_Game_Directory + TextEncode(uname) );
 			reset(F);
 			PC := ReadCGears(F);
 			Close(F);
 
 			{ Erase character upon entry. }
-			Assign( F , Save_Game_Directory + uName );
+			Assign( F , Save_Game_Directory + TextEncode(uName) );
 			Erase(F);
 
 			EnterCampaign( PC );
@@ -1306,7 +1307,7 @@ var
 	msg: String;
 begin
 {$IFDEF SDLMODE}
-	msg := SAttValue( Part^.SA , 'DESC' );
+	msg := FormatDescString( Part );
 	if ( msg <> '' ) or ( Part^.G <> GG_Mecha ) then begin
 		repeat
 			RedrawOpening;
@@ -1326,7 +1327,7 @@ begin
 	end;
 {$ELSE}
 	DisplayGearInfo( Part );
-	msg := SAttValue( Part^.SA , 'DESC' );
+	msg := FormatDescString( Part );
 	if ( msg <> '' ) or ( Part^.G <> GG_Mecha ) then begin
 		GameMsg( msg , ZONE_Menu , InfoGreen );
 		EndOfGameMoreKey;

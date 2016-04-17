@@ -43,6 +43,7 @@ sub
 
 	room 15 15
 	name <Golden Hotel>
+	name_I18N <Golden Hotel>
 	FloorType 25
 	BorderType 24
 	sub

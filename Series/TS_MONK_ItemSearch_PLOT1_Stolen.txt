@@ -134,6 +134,7 @@ end
 inv
 	treasure 100
 	name <Antique Steel Case>
+	name_I18N <Antique Steel Case>
 	%   instead of investigation you can use Science(29), Mysticism(34),
 	%    CodeBreaking(32) or Survival(14)
 	% V1 = Location of next encounter

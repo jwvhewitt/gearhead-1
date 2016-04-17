@@ -99,7 +99,7 @@ Function PersonalityCompatability( PC, NPC: GearPtr ): Integer;
 Function ReactionScore( Scene, PC, NPC: GearPtr ): Integer;
 
 Function CreateRumorList( GB: gameBoardPtr; PC,NPC: GearPtr ): SAttPtr;
-Function IdleChatter: String;
+Function IdleChatter( NPC: GearPtr ): String;
 Function IsSexy( PC, NPC: GearPtr ): Boolean;
 function DoChatting( GB: GameBoardPtr; var Rumors: SAttPtr; PC,NPC: GearPtr; Var Endurance,FreeRumors: Integer ): String;
 
@@ -120,10 +120,12 @@ Function LancematesPresent( GB: GameBoardPtr ): Integer;
 
 Function FindNPCByKeyWord( GB: GameBoardPtr; KW: String ): GearPtr;
 
+Function FormatChatStringByGender( Msg1: String; NPC: GearPtr ): String;
+
 
 implementation
 
-uses ability,gearutil,ghchars,rpgdice,texutil;
+uses i18nmsg,ability,gearutil,ghchars,rpgdice,texutil;
 
 const
 	Num_Openings = 7;	{ Number of TraitChatter opening phrases. }
@@ -136,6 +138,10 @@ var
 	{ Strings for the random conversation generator. }
 	Noun_List,Phrase_List,Adjective_List,RLI_List,Chat_Msg_List,Threat_List: SAttPtr;
 	Trait_Chatter: Array [1..Num_Personality_Traits,1..2] of SAttPtr;
+	I18N_GenderTraits_M1, I18N_GenderTraits_F1 : SAttPtr;
+	I18N_Firstperson_M, I18N_Firstperson_F: SAttPtr;
+	I18N_Secondperson_M, I18N_Secondperson_F: SAttPtr;
+	I18N_Modifier_List: SAttPtr;
 
 
 Function SeekFaction( Scene: GearPtr; ID: Integer ): GearPtr;
@@ -542,13 +548,13 @@ begin
 	ReactionScore := it;
 end;
 
-Function BlowOff: String;
+Function BlowOff( NPC: GearPtr ): String;
 	{ The NPC will just say something mostly useless to the PC. }
 begin
 	{ At some point in time I will make a lovely procedure that will }
 	{ create all sorts of useless chatter. Right now, I'll just return }
 	{ the following constant string. }
-	BlowOff := 'I really don''t have much time to chat today, I have a lot of things to do.';
+	BlowOff := FormatChatStringByGender( I18N_MsgString('INTERACT_BLOWOFF'), NPC );
 end;
 
 function MadLibString( SList: SAttPtr ): String;
@@ -561,39 +567,113 @@ begin
 	else MadLibString := '***ERROR***';
 end;
 
-Function FormatChatString( Msg1: String ): String;
+Function PersonalizeGenderTraits( kind: Char; NPC: GearPtr ): String;
+	{ returns gender based string of specified kind. }
+var
+	gender,mv,R,t,v: Integer;
+	S: String;
+	ret: String;
+begin
+	ret := '';
+	if ( NPC <> Nil ) then begin
+		gender := NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender );
+		mv := 0;
+		R := 1;
+		for t := 1 to Num_Personality_Traits do begin
+			V := NAttValue( NPC^.NA , NAG_CHarDescription , -T );
+			if (T <> 6) and (abs(mv) < abs(V)) then begin
+				mv := V;
+				R := T
+			end;
+		end;
+		V := NAttValue( NPC^.NA , NAG_CHarDescription , -6 );
+		if (V < 0) and (abs(mv) < abs(V)) then begin
+			mv := V;
+			R := 6;
+		end;
+
+		if Sgn(mv) = 1 then S := 'PGT' + BStr(R) + '+'
+		else S := 'PGT' + BStr(R) + '-';
+		V := NAttValue( NPC^.NA , NAG_CHarDescription , NAS_DAge );
+		if V > 19 then S := S + 'O'
+		else if V < -3 then S := S + 'Y';
+
+	end else begin
+		gender := -1;
+	end;
+
+	if ( kind = 'G' ) then begin
+		if ( gender = NAV_Male ) then ret := SAttValue( I18N_GenderTraits_M1 , S )
+		else if ( gender = NAV_Female ) then ret := SAttValue( I18N_GenderTraits_F1 , S )
+		else ret := '';
+	end else if ( kind = 'F' ) then begin
+		if ( gender = NAV_Male ) then ret := SAttValue( I18N_Firstperson_M , S )
+		else if ( gender = NAV_Female ) then ret := SAttValue( I18N_Firstperson_F , S )
+		else ret := I18N_MsgString('PersonalizeGenderTraits_Default','I');
+	end else if ( kind = 'S' ) then begin
+		if ( gender = NAV_Male ) then ret := SAttValue( I18N_Secondperson_M , S )
+		else if ( gender = NAV_Female ) then ret := SAttValue( I18N_Secondperson_F ,S )
+		else ret := I18N_MsgString('PersonalizeGenderTraits_Default','You');
+	end else if ( kind = 'A' ) then begin
+		if ( Random( 10 ) < 5 ) then ret := MadLibString( I18N_Modifier_List )
+		else ret := MadLibString( Adjective_List );
+	end;
+
+	PersonalizeGenderTraits := ret;
+end;
+
+Function FormatChatStringByGender( Msg1: String; NPC: GearPtr ): String;
 	{ Do formatting on this string, adding nouns, adjectives, }
 	{ and threats as needed. }
+	{ Add some gender based changes to the string, if needed. }
 var
-	msg2,w: String;
+	msg2: String;
+	MaxLen, P, len, checkP: Integer;
 begin
+	{ In KANJI string, it is no mean to find English-style words,  }
+	{ because it usually does not use white space to separate words. }
+
 	msg2 := '';
+	MaxLen := Length( msg1 );
+	P := 1;
+	checkP := 1;
 
-	while msg1 <> '' do begin
-		w := ExtractWord( msg1 );
-
-		if W[1] = '%' then begin
-			DeleteFirstChar( W );
-			if UpCase( W[1] ) = 'N' then begin
-				DeleteFirstChar( W );
-				W := MadLibString( Noun_List ) + W;
-			end else if UpCase( W[1] ) = 'T' then begin
-				DeleteFirstChar( W );
-				W := MadLibString( Threat_List ) + W;
-			end else begin
-				DeleteFirstChar( W );
-				W := MadLibString( Adjective_List ) + W;
+	while ( P <= MaxLen ) do begin
+		if ( ( msg1[ P ] = '%' ) and ( P + 1 <= MaxLen ) ) then begin
+			if ( ( UpCase( msg1[ P + 1 ] ) = 'J' ) and ( P + 2 <= MaxLen ) ) then begin
+				msg2 := msg2 + Copy( msg1, checkP, P - checkP ) + PersonalizeGenderTraits( msg1[ P + 2 ], NPC );
+				P := P + 2;
+				checkP := P + 1;
+			end else if ( UpCase( msg1[ P + 1 ] ) = 'N' ) then begin
+				msg2 := msg2 + Copy( msg1, checkP, P - checkP ) + MadLibString( Noun_List );
+				Inc(P);
+				checkP := P + 1;
+			end else if ( UpCase( msg1[ P + 1 ] ) = 'A' ) then begin
+				msg2 := msg2 + Copy( msg1, checkP, P - checkP ) + MadLibString( Adjective_List );
+				Inc(P);
+				checkP := P + 1;
+			end else if ( UpCase( msg1[ P + 1 ] ) = 'T' ) then begin
+				msg2 := msg2 + Copy( msg1, checkP, P - checkP ) + FormatChatStringByGender( MadLibString( Threat_List ) , NPC );
+				Inc(P);
+				checkP := P + 1;
 			end;
 		end;
 
-		msg2 := msg2 + ' ' + w;
+		len := LengthMBChar( msg1[P] );
+		if len < 1 then
+			len := 1;
+		P := P + len;
+	end;
+
+	if ( P > checkP ) then begin
+		msg2 := msg2 + Copy( msg1, checkP, P - checkP );
 	end;
 
 	DeleteWhiteSpace( Msg2 );
-	FormatChatString := Msg2;
+	FormatChatStringByGender := Msg2;
 end;
 
-Function IdleChatter: String;
+Function IdleChatter( NPC: GearPtr ): String;
 	{ Create a Mad-Libs style line for the NPC to tell the PC. }
 	{ Hopefully, these mad-libs will simulate the cheerfully nonsensical }
 	{ things that poorly tanslated anime characters often say to }
@@ -609,7 +689,8 @@ begin
 	{ nouns and adjectives along the way. }
 	msg1 := MadLibString( Phrase_List );
 
-	IdleChatter := FormatChatString( Msg1 );
+	{ add some gender based changes to the message, if exists. }
+	IdleChatter := FormatChatStringByGender( msg1, NPC );
 end;
 
 Function DoTraitChatter( NPC: GearPtr; Trait: Integer ): String;
@@ -621,6 +702,7 @@ const
 var
 	Rk,Pro: Integer;
 	msg: String;
+	msg_lead, msg_lhe, msg_tc: String;
 begin
 	{ To start with, find the trait rank. }
 	Rk := NAttValue( NPC^.NA , NAG_CharDescription , -Trait );
@@ -628,9 +710,9 @@ begin
 	{ Insert a basic starting phrase in the message, or perhaps none }
 	{ at all... }
 	if Random( 10 ) <> 1 then begin
-		msg := SAttValue( Chat_Msg_List , 'TRAITCHAT_Lead' + BStr( Random( Num_Openings ) + 1 ) ) + ' ';
+		msg_lead := SAttValue( Chat_Msg_List , 'TRAITCHAT_Lead' + BStr( Random( Num_Openings ) + 1 ) );
 	end else begin
-		msg := '';
+		msg_lead := #$0;
 	end;
 
 	if Abs( Rk ) > 10 then begin
@@ -642,18 +724,24 @@ begin
 		{ or that they dislike something from the other. }
 		if Random( 5 ) <> 1 then begin
 			{ Like something. }
-			msg := msg + SAttValue( Chat_Msg_List , 'TRAITCHAT_Like' + BStr( Random( Num_Phrase_Bases ) + 1 ) ) + ' ' + MadLibString( Trait_Chatter[ Trait , Pro ] ) + '.';
+			msg_lhe := SAttValue( Chat_Msg_List , 'TRAITCHAT_Like' + BStr( Random( Num_Phrase_Bases ) + 1 ) );
+			msg_tc := MadLibString( Trait_Chatter[ Trait , Pro ] );
 
 		end else begin
 			{ Dislike something. }
-			msg := msg + SAttValue( Chat_Msg_List , 'TRAITCHAT_Hate' + BStr( Random( Num_Phrase_Bases ) + 1 ) ) + ' ' + MadLibString( Trait_Chatter[ Trait , 3 - Pro ] ) + '.';
+			msg_lhe := SAttValue( Chat_Msg_List , 'TRAITCHAT_Hate' + BStr( Random( Num_Phrase_Bases ) + 1 ) );
+			msg_tc := MadLibString( Trait_Chatter[ Trait , 3 - Pro ] );
 
 		end;
 	end else begin
 		Pro := Random( 2 ) + 1;
-		msg := msg + SAttValue( Chat_Msg_List , 'TRAITCHAT_Ehhh' + BStr( Random( Num_Phrase_Bases ) + 1 ) ) + ' ' + MadLibString( Trait_Chatter[ Trait , Pro ] ) + '.';
+		msg_lhe := SAttValue( Chat_Msg_List , 'TRAITCHAT_Ehhh' + BStr( Random( Num_Phrase_Bases ) + 1 ) );
+		msg_tc := MadLibString( Trait_Chatter[ Trait , Pro ] );
 
 	end;
+
+	{ add some gender based changes to the message if exists. }
+	msg := FormatChatStringByGender( ReplaceHash( I18N_MsgString('DoTraitChatter_Sentence_Pattern'),  msg_lead, msg_lhe, msg_tc ), NPC );
 
 	DoTraitChatter := Msg;
 end;
@@ -673,7 +761,13 @@ var
 	begin
 		if P <> NPC then begin
 			Rumor := SAttValue( P^.SA , 'RUMOR' );
-			if Rumor <> '' then StoreSAtt( InfoList , MadLibString( RLI_List ) + ' ' + Rumor );
+			if Rumor <> '' then begin
+				StoreSAtt( InfoList , FormatChatStringByGender(
+								ReplaceHash( I18N_MsgString('CreateRumorList_ExtractData_Series'),
+									MadLibString(RLI_List),
+									Rumor ),
+								NPC ) );
+			end;
 
 			if P^.G = GG_Character then begin
 				{ At most one personality trait per NPC will be added }
@@ -683,9 +777,18 @@ var
 				Level := NAttValue( P^.NA , NAG_CharDescription , -Trait );
 				if Level <> 0 then begin
 					if P = PC then begin
-						StoreSAtt( InfoList , MadLibString( RLI_List ) + ' you are ' + LowerCase( PersonalityTraitDesc( Trait,Level ) ) + '.' );
+						StoreSAtt( InfoList , FormatChatStringByGender(
+										ReplaceHash( I18N_MsgString('CREATERUMORLIST_YOUARE1'),
+												PersonalityTraitDesc( Trait, Level, True ),
+												MadLibString( RLI_List ) ),
+										NPC ) );
 					end else begin
-						StoreSAtt( InfoList , MadLibString( RLI_List ) + ' ' + GearName( P ) + ' is ' + LowerCase( PersonalityTraitDesc( Trait,Level ) ) + '.' );
+						StoreSAtt( InfoList , FormatChatStringByGender(
+										ReplaceHash( I18N_MsgString('CREATERUMORLIST_YOUARE2'),
+												GearName( P ),
+												PersonalityTraitDesc( Trait, Level, True ),
+												MadLibString( RLI_List ) ),
+										NPC ) );
 					end;
 				end;
 
@@ -696,8 +799,11 @@ var
 				{ Include a rumor based on what faction controls this scene. }
 				Persona := SeekFaction( GB^.Scene , NAttValue( Part^.NA , NAG_Personal , NAS_FactionID ) );
 				if Persona <> Nil then begin
-					Rumor := MadLibString( RLI_List ) + ' ';
-					Rumor := Rumor + SAttValue( Chat_Msg_List , 'RUMOR_TownFac1' ) + GearName( Persona ) + SAttValue( Chat_Msg_List , 'RUMOR_TownFac2' );
+					Rumor := FormatChatStringByGender(
+								ReplaceHash( I18N_MsgString('CREATERUMORLIST_RUMOR_TownFac'),
+									GearName( Persona ),
+									MadLibString( RLI_List ) ),
+								NPC );
 					StoreSAtt( InfoList , Rumor );
 				end;
 
@@ -705,12 +811,21 @@ var
 				{ If the faction is active, tell about its traits. }
 				{ Otherwise, tell that it has been disbanded. }
 				if AStringHasBString( SAttValue( P^.SA , 'TYPE' ) , 'INACTIVE' ) then begin
-					StoreSAtt( InfoList , MadLibString( RLI_List ) + ' ' + GearName( P ) + SAttValue( chat_msg_list , 'FACTION_IS_INACTIVE' ) );
+					StoreSAtt( InfoList , FormatChatStringByGender(
+									ReplaceHash( I18N_MsgString('FACTION_IS_INACTIVE'),
+										GearName( P ),
+										MadLibString( RLI_List ) ),
+									NPC ) );
 				end else begin
 					Trait := Random( Num_Personality_Traits ) + 1;
 					Level := NAttValue( P^.NA , NAG_CharDescription , -Trait );
 					if Level <> 0 then begin
-						StoreSAtt( InfoList , MadLibString( RLI_List ) + ' ' + GearName( P ) + ' is ' + LowerCase( PersonalityTraitDesc( Trait,Level ) ) + '.' );
+						StoreSAtt( InfoList , FormatChatStringByGender(
+										ReplaceHash( I18N_MsgString('CREATERUMORLIST_YOUARE3'),
+												GearName( P ),
+												PersonalityTraitDesc( Trait, Level, True ),
+												MadLibString( RLI_List ) ),
+										NPC ) );
 					end;
 				end;
 
@@ -721,8 +836,11 @@ var
 			{ if appropriate. }
 			Persona := SeekFaction( GB^.Scene , NAttValue( NPC^.NA , NAG_Personal , NAS_FactionID ) );
 			if Persona <> Nil then begin
-				Rumor := SAttValue( Chat_Msg_List , 'TRAITCHAT_Lead' + BStr( Random( Num_Openings ) + 1 ) ) + ' ';
-				Rumor := Rumor + SAttValue( Chat_Msg_List , 'RUMOR_Membership1' ) + GearName( Persona ) + SAttValue( Chat_Msg_List , 'RUMOR_Membership2' );
+				Rumor := FormatChatStringByGender(
+						ReplaceHash( I18N_MsgString('CreateRumorList_RUMOR_Membership'),
+								GearName( Persona ),
+								SAttValue( Chat_Msg_List, 'TRAITCHAT_Lead' + BStr( Random( Num_Openings ) + 1 ) ) ),
+						NPC );
 				StoreSAtt( InfoList , Rumor );
 			end;
 		end;
@@ -852,7 +970,7 @@ begin
 		Skill_To_Improve := 19;
 		if IsSexy( PC , NPC ) and ( Random( 3 ) = 1 ) then Skill_To_Improve := 27;
 		if DoleSkillExperience( PC , Skill_To_Improve , XPA_GoodChat ) then begin
-			msg := SAttValue( Chat_Msg_List , 'CHAT_Skill' + BStr( Skill_To_Improve ) + '_' + BStr( Random( Num_Improve_Msg ) + 1 ) );
+			msg := FormatChatStringByGender( SAttValue( Chat_Msg_List , 'CHAT_Skill' + BStr( Skill_To_Improve ) + '_' + BStr( Random( Num_Improve_Msg ) + 1 ) ), NPC );
 		end else begin
 			msg := '';
 		end;
@@ -907,7 +1025,7 @@ var
 			msg := DoTraitChatter( NPC , Trait );
 		end else begin
 			{ Regular Chatter. }
-			msg := IdleChatter;
+			msg := IdleChatter( NPC );
 		end;
 	end;
 begin
@@ -949,7 +1067,7 @@ begin
 	{ Finally, decide what the result of all this die rolling will be. }
 	{ First see what useful (or useless) information the NPC will share. }
 	if ( SkRoll + ReactionScore( GB^.Scene , PC , NPC ) + Random(10) - Random(10) ) < 0 then begin
-		msg := BlowOff;
+		msg := BlowOff( NPC );
 
 		{ Since the NPC is trying to get rid of the PC, }
 		{ decrement ENDURANCE one more time. }
@@ -1195,6 +1313,7 @@ Function XNPCDesc( Adv,NPC: GearPtr ): String;
 var
 	it: String;
 begin
+	{ PATCH_I18N: Don't translate it. }
 	it := NPCTraitDesc( NPC );
 
 	if IsArchEnemy( Adv, NPC ) then it := it + ' ARCHENEMY';
@@ -1336,28 +1455,28 @@ begin
 		if cmd = '+PCRA' then begin
 			{ Player can run away. Enemy will give player }
 			{ the option to leave. }
-			msg1 := msg1 + ' ' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_PCRA_' + BStr( Random( 5 ) + 1 ) ) );
+			msg1 := msg1 + ' ' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_PCRA_' + BStr( Random( 5 ) + 1 ) ) , NPC);
 			greeting := greeting + ' AddChat 2';
-			SetSAtt( Hook^.SA , 'prompt2 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_P_2_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
+			SetSAtt( Hook^.SA , 'prompt2 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_P_2_' + BStr( Random( 5 ) + 1 ) ) , PC) + '>' );
 			SetSAtt( Hook^.SA , 'result2 <' + SAttValue( Chat_Msg_List , 'EHOOK_R_2' ) + '>' );
-			SetSAtt( Hook^.SA , 'msg3 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_Msg3_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
+			SetSAtt( Hook^.SA , 'msg3 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_Msg3_' + BStr( Random( 5 ) + 1 ) ) , NPC) + '>' );
 
 		end else if cmd = '+ECRA' then begin
 			{ Enemy can run away. Player will have }
 			{ the option to threaten the NPC. }
 			greeting := greeting + ' AddChat 3';
-			SetSAtt( Hook^.SA , 'prompt3 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_P_3_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
-			SetSAtt( Hook^.SA , 'result3 <' + SAttValue( Chat_Msg_List , 'EHOOK_R_3' ) + '>' );
-			SetSAtt( Hook^.SA , 'msg4 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_Msg4_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
-			SetSAtt( Hook^.SA , 'msg5 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_Msg5' ) ) + '>' );
+			SetSAtt( Hook^.SA , 'prompt3 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_P_3_' + BStr( Random( 5 ) + 1 ) ) , PC ) + '>' );
+			SetSAtt( Hook^.SA , 'result3 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_R_3' ) , PC ) + '>' );
+			SetSAtt( Hook^.SA , 'msg4 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_Msg4_' + BStr( Random( 5 ) + 1 ) ) , PC) + '>' );
+			SetSAtt( Hook^.SA , 'msg5 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_Msg5' ) , NPC ) + '>' );
 
 		end;
 	end;
 
 	SetSAtt( Hook^.SA , 'greeting <' + greeting + '>' );
-	SetSAtt( Hook^.SA , 'msg1 <' + FormatChatString( msg1 ) + '>' );
-	SetSAtt( Hook^.SA , 'msg2 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_Msg2_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
-	SetSAtt( Hook^.SA , 'prompt1 <' + FormatChatString( SAttValue( Chat_Msg_List , 'EHOOK_P_1_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
+	SetSAtt( Hook^.SA , 'msg1 <' + FormatChatStringByGender( msg1 , NPC ) + '>' );
+	SetSAtt( Hook^.SA , 'msg2 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_Msg2_' + BStr( Random( 5 ) + 1 ) ) , PC) + '>' );
+	SetSAtt( Hook^.SA , 'prompt1 <' + FormatChatStringByGender( SAttValue( Chat_Msg_List , 'EHOOK_P_1_' + BStr( Random( 5 ) + 1 ) ) , PC) + '>' );
 	SetSAtt( Hook^.SA , 'result1 <' + SAttValue( Chat_Msg_List , 'EHook_R_1' ) + '>' );
 
 	GenerateEnemyHook := Hook;
@@ -1377,9 +1496,9 @@ begin
 
 	SetSAtt( Hook^.SA , 'greeting <' + SAttValue( chat_msg_list , 'AHOOK_Greeting' ) + '>' );
 	SetSAtt( Hook^.SA , 'result1 <' + SAttValue( chat_msg_list , 'AHOOK_R_1' ) + '>' );
-	SetSAtt( Hook^.SA , 'Msg1 <' + FormatChatString( SAttValue( chat_msg_list , 'AHOOK_MSG1_' + BStr( Random( 3 ) + 1 ) ) ) + '>' );
-	SetSAtt( Hook^.SA , 'Msg2 <' + FormatChatString( SAttValue( chat_msg_list , 'AHOOK_MSG2_' + BStr( Random( 3 ) + 1 ) ) ) + '>' );
-	SetSAtt( Hook^.SA , 'Prompt1 <' + FormatChatString( SAttValue( chat_msg_list , 'AHOOK_P_1_' + BStr( Random( 5 ) + 1 ) ) ) + '>' );
+	SetSAtt( Hook^.SA , 'Msg1 <' + FormatChatStringByGender( SAttValue( chat_msg_list , 'AHOOK_MSG1_' + BStr( Random( 3 ) + 1 ) ) , NPC ) + '>' );
+	SetSAtt( Hook^.SA , 'Msg2 <' + FormatChatStringByGender( SAttValue( chat_msg_list , 'AHOOK_MSG2_' + BStr( Random( 3 ) + 1 ) ) , NPC ) + '>' );
+	SetSAtt( Hook^.SA , 'Prompt1 <' + FormatChatStringByGender( SAttValue( chat_msg_list , 'AHOOK_P_1_' + BStr( Random( 5 ) + 1 ) ) , NPC ) + '>' );
 
 	GenerateAllyHook := Hook;
 end;
@@ -1416,6 +1535,7 @@ Function FindNPCByKeyWord( GB: GameBoardPtr; KW: String ): GearPtr;
 		desc: String;
 		Persona: GearPtr;
 	begin
+		{ PATCH_I18N: Don't translate it. }
 		desc := SAttValue( NPC^.SA , 'JOB' );
 		Persona := SeekPersona( GB , NAttValue( NPC^.NA , NAG_Personal , NAS_CID ) );
 		if Persona <> Nil then desc := desc + SAttValue( Persona^.SA , 'KEYWORDS' );
@@ -1464,6 +1584,13 @@ initialization
 	RLI_List := LoadStringList( Standard_Rumors_File );
 	Threat_List := LoadStringList( Standard_Threats_File );
 	Chat_Msg_List := LoadStringList( Standard_Chatter_File );
+	I18N_GenderTraits_M1 := LoadStringList( I18N_NPC_GenderTraits_File1 );
+	I18N_GenderTraits_F1 := LoadStringList( I18N_NPC_GenderTraits_File2 );
+	I18N_Firstperson_M := LoadStringList( I18N_NPC_FirstPerson_File1 );
+	I18N_Firstperson_F := LoadStringList( I18N_NPC_FirstPerson_File2 );
+	I18N_Secondperson_M := LoadStringList( I18N_NPC_SecondPerson_File1 );
+	I18N_Secondperson_F := LoadStringList( I18N_NPC_SecondPerson_File2 );
+	I18N_Modifier_List := LoadStringList( I18N_Standard_Modifier_File );
 	LoadTraitChatter;
 
 finalization
@@ -1473,5 +1600,12 @@ finalization
 	DisposeSAtt( RLI_List );
 	DisposeSAtt( Threat_List );
 	DisposeSAtt( Chat_Msg_List );
+	DisposeSAtt( I18N_GenderTraits_M1 );
+	DisposeSAtt( I18N_GenderTraits_F1 );
+	DisposeSAtt( I18N_Firstperson_M );
+	DisposeSAtt( I18N_Firstperson_F );
+	DisposeSAtt( I18N_Secondperson_M );
+	DisposeSAtt( I18N_Secondperson_F );
+	DisposeSAtt( I18N_Modifier_List );
 	FreeTraitChatter;
 end.

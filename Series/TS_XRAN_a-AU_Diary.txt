@@ -124,6 +124,7 @@ end
 inv
 	Treasure 5
 	name <Diary>
+	name_I18N <Diary>
 	place <3>
 	% V1 = The location for the next episode.
 	% V2 = Got XP for reading the diary

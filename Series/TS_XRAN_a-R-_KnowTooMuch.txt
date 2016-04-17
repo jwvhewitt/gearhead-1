@@ -89,6 +89,7 @@ inv
 
 	Treasure 1
 	name <Ticket Stub>
+	name_I18N <Ticket Stub>
 	Place <3>
 
 end

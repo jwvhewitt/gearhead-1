@@ -60,6 +60,7 @@ end
 inv
 	StatModifier 30
 	name <Advanced Cybereyes>
+	name_I18N <Advanced Cybereyes>
 	CyberSlot <EYES>
 	type <CYBER CHARA>
 	Reflexes 3
@@ -69,6 +70,7 @@ inv
 
 	StatModifier 40
 	name <Neural Cyberboost>
+	name_I18N <Neural Cyberboost>
 	CyberSlot <BRAIN>
 	type <CYBER CHARA>
 	Craft 3
@@ -77,6 +79,7 @@ inv
 
 	StatModifier 60
 	name <Body Optimization>
+	name_I18N <Body Optimization>
 	CyberSlot <MUSCULATURE>
 	type <CYBER CHARA>
 	Body 5

@@ -134,6 +134,7 @@ end
 inv
 	Food 50
 	name <Macaroni and Cheese>
+	name_I18N <Macaroni and Cheese>
 	%   instead of investigation you can use Science(29), Mysticism(34),
 	%    CodeBreaking(32) or Survival(14)
 	% V1 = Location of next encounter

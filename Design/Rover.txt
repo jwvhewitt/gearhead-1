@@ -1,51 +1,69 @@
 GroundCar 8
 Name <Rover>
 Desig <LR-2099-8>
+Desig_I18N <LR-2099-8>
 SDL_Sprite <gca_rover.png>
 Scale 1
 
 Mod Turret
+	Name_I18N <>
 	Size 5
 	Armor 7
 	sub
 		Gun 4
 		Name <Battle Cannon>
+		Name_I18N <>
 		Range 6
 		Magazine 20
 		sub
 			Ammo 4
+			Name_I18N <>
 		end
 
 		Mount
 		Name <Turret Weapon Mount>
+		Name_I18N <>
 		inv
 			MLauncher 7
 			Name <Rocket Launcher>
+			Name_I18N <>
 			Range 8
 			Magazine 10
 			sub
 				Rockets 7
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 8
 	sub
+
+		Engine 8
+		Name_I18N <>
+
 		CPit
+		Name_I18N <>
 		Armor 2
 
 		Sensor 9
+		Name_I18N <>
 
 		Gyro 3
+		Name_I18N <>
 
 		Wheels 10
+		Name_I18N <>
 
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			Gun 3
 			Name <Light Autocannon>
+			Name_I18N <>
 			Range 4
 			Acc 1
 			Speed 3
@@ -53,14 +71,17 @@ Mod Body
 			Magazine 250
 			sub
 				Ammo 3
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Left Weapon Mount>
+		Name_I18N <>
 		inv
 			Gun 3
 			Name <Light Autocannon>
+			Name_I18N <>
 			Range 4
 			Acc 1
 			Speed 3
@@ -68,6 +89,7 @@ Mod Body
 			Magazine 250
 			sub
 				Ammo 3
+				Name_I18N <>
 			end
 		end
 	end

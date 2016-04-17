@@ -170,6 +170,7 @@ inv
 	Melee 16
 	Scale 0
 	name <Atomic War Club>
+	name_I18N <Atomic War Club>
 	type <Blast 7 Brutal ArmorPiercing Burn Mystery>
 	Acc -1
 	mass -7

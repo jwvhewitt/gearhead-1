@@ -32,6 +32,13 @@ type
 		KCode: Char;
 	end;
 
+	FontSearchNameDesc = Record
+		FontFile: String;
+		FontFace: Integer;
+		FontSize: Integer;
+	end;
+	PFontSearchNameDesc = ^FontSearchNameDesc;
+
 const
 	RPK_UpRight = '9';
 	RPK_Up = '8';
@@ -56,6 +63,7 @@ const
 	ControlMethod: Byte = MenuBasedInput;
 	CharacterMethod: Byte = RLBasedInput;
 	WorldMapMethod: Byte = RLBasedInput;
+	{ PATCH_I18N: Converted by Load_I18N_Default }
 	ControlTypeName: Array [0..1] of string = ('Menu','Roguelike');
 
 	DoFullScreen: Boolean = False;
@@ -76,6 +84,7 @@ const
 	DefMissileBV: Byte = BV_Quarter;
 	DefBallisticBV: Byte = BV_Max;
 	DefBeamgunBV: Byte = BV_Max;
+	{ PATCH_I18N: Converted by Load_I18N_Default }
 	BVTypeName: Array [1..4] of string = ('Off','1/4','1/2','Max');
 
 	DoAutoSave: Boolean = True;
@@ -332,9 +341,299 @@ const
 	KMC_SwitchTarget = 44;
 	KMC_RunToggle = 45;
 
+{$IF DEFINED(UNIX)}
+	MaxFontSearchDirNum = 11;
+	FontSearchDir: Array [1..MaxFontSearchDirNum] of String = (
+		'',						{ Read from gharena.cfg }
+		'Image',					{ default directory }
+		'',						{ current directory }
+		'/usr/local/share/fonts/gnu-unifont-ttf',	{ Failback Directory, FreeBSD 9.x and later }
+		'/usr/local/share/fonts/OTF',			{ Failback Directory, FreeBSD 9.x and later }
+		'/usr/local/share/fonts/TTF',			{ Failback Directory, FreeBSD 9.x and later }
+		'/usr/local/lib/X11/fonts/TrueType',		{ Failback Directory, FreeBSD 6.3 and later }
+		'/usr/X11R6/lib/X11/fonts/TrueType',		{ Failback Directory, FreeBSD 6.2 and before, some Distribution of GNU/Linux }
+		'/usr/share/fonts/truetype/unifont',		{ Failback Directory, Debian GNU/Linux }
+		'/usr/share/fonts/truetype/sazanami',		{ Failback Directory, Debian GNU/Linux }
+		'/usr/share/fonts/opentype/ipafont-gothic'	{ Failback Directory, Debian GNU/Linux }
+	);
+	MaxFontSearchNameNum = 14;
+	FontSearchName_Big: Array [1..MaxFontSearchNameNum] of FontSearchNameDesc = (
+		(	{ Read from gharena.cfg }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Read from GameData/I18N_settings.txt }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 1 }
+			FontFile: 'unifont.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 2 }
+			FontFile: 'sazanami-gothic.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 3 }
+			FontFile: 'sazanami-mincho.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 4 }
+			FontFile: 'ipag.otf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 5 }
+			FontFile: 'ipam.otf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 6 }
+			FontFile: 'ipag.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 7 }
+			FontFile: 'ipam.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 8 }
+			FontFile: 'kochi-gothic-subst.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 9 }
+			FontFile: 'kochi-mincho-subst.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 10 }
+			FontFile: 'kochi-gothic.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 11 }
+			FontFile: 'kochi-mincho.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, Default }
+			FontFile: 'VeraBd.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		)
+	);
+	FontSearchName_Small: Array [1..MaxFontSearchNameNum] of FontSearchNameDesc = (
+		(	{ Read from gharena.cfg }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 11;
+		), (	{ Read from GameData/I18N_settings.txt }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 11;
+		), (	{ Failback Font, 1 }
+			FontFile: 'unifont.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 2 }
+			FontFile: 'sazanami-gothic.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 3 }
+			FontFile: 'sazanami-mincho.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 4 }
+			FontFile: 'ipag.otf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 5 }
+			FontFile: 'ipam.otf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 6 }
+			FontFile: 'ipag.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 7 }
+			FontFile: 'ipam.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 8 }
+			FontFile: 'kochi-gothic-subst.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 9 }
+			FontFile: 'kochi-mincho-subst.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 10 }
+			FontFile: 'kochi-gothic.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, 11 }
+			FontFile: 'kochi-mincho.ttf';
+			FontFace: 0;
+			FontSize: 12;
+		), (	{ Failback Font, Default }
+			FontFile: 'VeraMoBd.ttf';
+			FontFace: 0;
+			FontSize: 11;
+		)
+	);
+{$ELSEIF DEFINED(WINDOWS)}
+	MaxFontSearchDirNum = 6;
+	FontSearchDir: Array [1..MaxFontSearchDirNum] of String = (
+		'',			{ Read from gharena.cfg }
+		'Image',		{ default directory }
+		'',			{ current directory }
+		'',			{ Failback Directory, Read environment %windir% or %SystemRoot% }
+		'C:\WINDOWS\Fonts',	{ Failback Directory, MS-Windows XP, MS-Windows 7, MS-Windows 8.1, Wine }
+		'C:\WINNT\Fonts'	{ Failback Directory, MS-Windows 2000 }
+	);
+	MaxFontSearchNameNum = 6;
+	FontSearchName_Big: Array [1..MaxFontSearchNameNum] of FontSearchNameDesc = (
+		(	{ Read from gharena.cfg }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 15;
+		), (	{ Read from GameData/I18N_settings.txt }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, 1 }
+			FontFile: 'meiryo.ttc';
+			FontFace: 0;
+			FontSize: 15;
+		), (	{ Failback Font, 2 }
+			FontFile: 'msgothic.ttc';
+			FontFace: 0;
+			FontSize: 15;
+		), (	{ Failback Font, 3 }
+			FontFile: 'msmincho.ttc';
+			FontFace: 0;
+			FontSize: 15;
+		), (	{ Failback Font, Default }
+			FontFile: 'VeraBd.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		)
+	);
+	FontSearchName_Small: Array [1..MaxFontSearchNameNum] of FontSearchNameDesc = (
+		(	{ Read from gharena.cfg }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 13;
+		), (	{ Read from GameData/I18N_settings.txt }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 11;
+		), (	{ Failback Font, 1 }
+			FontFile: 'meiryo.ttc';
+			FontFace: 0;
+			FontSize: 13;
+		), (	{ Failback Font, 2 }
+			FontFile: 'msgothic.ttc';
+			FontFace: 0;
+			FontSize: 13;
+		), (	{ Failback Font, 3 }
+			FontFile: 'msmincho.ttc';
+			FontFace: 0;
+			FontSize: 13;
+		), (	{ Failback Font, Default }
+			FontFile: 'VeraMoBd.ttf';
+			FontFace: 0;
+			FontSize: 11;
+		)
+	);
+{$ELSE}
+	MaxFontSearchDirNum = 3;
+	FontSearchDir: Array [1..MaxFontSearchDirNum] of String = (
+		'',			{ Read from gharena.cfg }
+		'Image',		{ default directory }
+		''			{ current directory }
+	);
+	MaxFontSearchNameNum = 3;
+	FontSearchName_Big: Array [1..MaxFontSearchNameNum] of FontSearchNameDesc = (
+		(	{ Read from gharena.cfg }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Read from GameData/I18N_settings.txt }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 14;
+		), (	{ Failback Font, Default }
+			FontFile: 'VeraBd.ttf';
+			FontFace: 0;
+			FontSize: 14;
+		)
+	);
+	FontSearchName_Small: Array [1..MaxFontSearchNameNum] of FontSearchNameDesc = (
+		(	{ Read from gharena.cfg }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 11;
+		), (	{ Read from GameData/I18N_settings.txt }
+			FontFile: '';
+			FontFace: 0;
+			FontSize: 11;
+		), (	{ Default font }
+			FontFile: 'VeraMoBd.ttf';
+			FontFace: 0;
+			FontSize: 11;
+		)
+	);
+{$ENDIF}
+
+	FontSize_Big: Integer = 0;
+	FontSize_Small: Integer = 0;
+	{ PATCH_I18N: Converted by Load_I18N_Default }
+	ProhibitationHead  : String = '! ) , . > ? ] }';
+	ProhibitationTrail : String = '( < [ {';
+
+	I18N_UseNameORG : Boolean = False;
+const
+	SDL_AAFont        : Boolean = False;
+	SDL_AAFont_Shaded : Boolean = False;
+
+
+Function I18N_Help_Keymap_Name_String( const MsgLabel: String ): String;
+Function I18N_Help_Keymap_Desc_String( const MsgLabel: String ): String;
+
+
 implementation
 
-uses dos,ability,gears,texutil;
+uses sysutils,dos,i18nmsg,ability,gears,texutil;
+
+
+var
+	I18N_Help_Keymap_Name: SAttPtr;
+	I18N_Help_Keymap_Desc: SAttPtr;
+
+
+Function I18N_Help_Keymap_Name_String( const MsgLabel: String ): String;
+begin
+	I18N_Help_Keymap_Name_String := SAttValue( I18N_Help_Keymap_Name, MsgLabel );
+end;
+
+Function I18N_Help_Keymap_Desc_String( const MsgLabel: String ): String;
+begin
+	I18N_Help_Keymap_Desc_String := SAttValue( I18N_Help_Keymap_Desc, MsgLabel );
+end;
+
+Procedure Load_I18N_Default;
+begin
+	ControlTypeName[0] := I18N_MsgString('ui4gh_ControlTypeName','Menu');
+	ControlTypeName[1] := I18N_MsgString('ui4gh_ControlTypeName','Roguelike');
+	BVTypeName[1]      := I18N_MsgString('ui4gh','BVTypeName1');
+	BVTypeName[2]      := I18N_MsgString('ui4gh','BVTypeName2');
+	BVTypeName[3]      := I18N_MsgString('ui4gh','BVTypeName3');
+	BVTypeName[4]      := I18N_MsgString('ui4gh','BVTypeName4');
+	ProhibitationHead                := I18N_Settings('ProhibitationHead',ProhibitationHead);
+	ProhibitationTrail               := I18N_Settings('ProhibitationTrail',ProhibitationTrail);
+	FontSearchName_Big[2].FontFile   := I18N_Settings('Default_FontFileBig',FontSearchName_Big[2].FontFile);
+	FontSearchName_Big[2].FontFace   := StrToInt(I18N_Settings('Default_FontFaceBig',IntToStr(FontSearchName_Big[2].FontFace)));
+	FontSearchName_Big[2].FontSize   := StrToInt(I18N_Settings('Default_FontSizeBig',IntToStr(FontSearchName_Big[2].FontSize)));
+	FontSearchName_Small[2].FontFile := I18N_Settings('Default_FontFileSmall',FontSearchName_Small[2].FontFile);
+	FontSearchName_Small[2].FontFace := StrToInt(I18N_Settings('Default_FontFaceSmall',IntToStr(FontSearchName_Small[2].FontFace)));
+	FontSearchName_Small[2].FontSize := StrToInt(I18N_Settings('Default_FontSizeSmall',IntToStr(FontSearchName_Small[2].FontSize)));
+end;
+
 
 	Procedure LoadConfig;
 		{ Open the configuration file and set the variables }
@@ -343,7 +642,22 @@ uses dos,ability,gears,texutil;
 		F: Text;
 		S,CMD,C: String;
 		T: Integer;
+{$IF DEFINED(WINDOWS)}
+		WinDir: String;
+{$ENDIF}
 	begin
+{$IF DEFINED(WINDOWS)}
+		WinDir := '';
+		if '' = WinDir then begin
+			WinDir := GetEnvironmentVariable('SystemRoot');
+		end;
+		if '' = WinDir then begin
+			WinDir := GetEnvironmentVariable('windir');
+		end;
+		if '' <> WinDir then begin
+			FontSearchDir[4] := WinDir + DirectorySeparator + 'Fonts';
+		end;
+{$ENDIF}
 		{See whether or not there's a configuration file.}
 		S := FSearch(Config_File,'.');
 		if S <> '' then begin
@@ -478,6 +792,30 @@ uses dos,ability,gears,texutil;
                     end else if cmd = 'ACCESSIBILITY_ON' then begin
                         Accessibility_On := True;
 
+					end else if cmd = 'I18N_USEORIGINALNAME' then begin
+						if ExtractTF(S) then I18N_UseOriginalName := True else I18N_UseOriginalName := False;
+					end else if cmd = 'I18N_USENAMEORG' then begin
+						if ExtractTF(S) then I18N_UseNameORG := True else I18N_UseNameORG := False;
+					end else if cmd = 'FONTFILEBIG' then begin
+						FontSearchName_Big[1].FontFile   := ExtractWord( S );
+						FontSearchName_Big[1].FontFace   := ExtractValue( S );
+						if FontSearchName_Big[1].FontFace < 0 then begin FontSearchName_Big[1].FontFace := 0; end;
+					end else if cmd = 'FONTFILESMALL' then begin
+						FontSearchName_Small[1].FontFile := ExtractWord( S );
+						FontSearchName_Small[1].FontFace := ExtractValue( S );
+						if FontSearchName_Small[1].FontFace < 0 then begin FontSearchName_Small[1].FontFace := 0; end;
+					end else if cmd = 'FONTSIZEBIG' then begin
+						FontSize_Big := ExtractValue( S );
+						if FontSize_Big < 1 then begin FontSize_Big := 0; end;
+					end else if cmd = 'FONTSIZESMALL' then begin
+						FontSize_Small := ExtractValue( S );
+						if FontSize_Small < 1 then begin FontSize_Small := 0; end;
+
+					end else if cmd = 'SDL_AAFONT' then begin
+						if ExtractTF(S) then SDL_AAFont := True else SDL_AAFont := False;
+					end else if cmd = 'SDL_AAFONT_SHADED' then begin
+						if ExtractTF(S) then SDL_AAFont_Shaded := True else SDL_AAFont_Shaded := False;
+
 				    end else if cmd[1] = '#' then begin
 					    S := '';
 
@@ -506,6 +844,15 @@ uses dos,ability,gears,texutil;
 			    writeln( F , '#' + OpTag );
 		    end;
 	    end;
+		Procedure AddTrueFalse( const OpTag: String; IsOn: Boolean );
+			{ Add one of the boolean options to the file. }
+		begin
+			if IsOn then begin
+				writeln( F , OpTag + ' TRUE' );
+			end else begin
+				writeln( F , OpTag + ' FALSE' );
+			end;
+		end;
     begin
 	    { If we've found a configuration file, }
 	    { open it up and start reading. }
@@ -557,16 +904,33 @@ uses dos,ability,gears,texutil;
 	    AddBoolean( 'ADVANCEDCOLORS' ,  UseAdvancedColoring );
 	    AddBoolean( 'ACCESSIBILITY_ON' ,  Accessibility_On );
 
+		AddTrueFalse( 'I18N_USEORIGINALNAME' , I18N_UseOriginalName );
+		AddTrueFalse( 'I18N_USENAMEORG' , I18N_UseNameORG );
+		writeln( F , 'FONTFILEBIG ' + FontSearchName_Big[1].FontFile + ' ' + BStr( FontSearchName_Big[1].FontFace ) );
+		writeln( F , 'FONTFILESMALL ' + FontSearchName_Small[1].FontFile + ' ' + BStr( FontSearchName_Small[1].FontFace ) );
+		writeln( F , 'FONTSIZEBIG ' + BStr( FontSize_Big ) );
+		writeln( F , 'FONTSIZESMALL ' + BStr( FontSize_Small ) );
+		AddTrueFalse( 'SDL_AAFONT' , SDL_AAFont );
+		AddTrueFalse( 'SDL_AAFONT_SHADED' , SDL_AAFont_Shaded );
+
 	    Close(F);
     end;
 
 
 initialization
+begin
+	I18N_Help_Keymap_Name := LoadStringList( I18N_Help_Keymap_Name_File );
+	I18N_Help_Keymap_Desc := LoadStringList( I18N_Help_Keymap_Desc_File );
+	Load_I18N_Default;
 
 	LoadConfig;
+end;
 
 finalization
-
-    SaveConfig;
+begin
+	SaveConfig;
+	DisposeSAtt( I18N_Help_Keymap_Desc );
+	DisposeSAtt( I18N_Help_Keymap_Name );
+end;
 
 end.

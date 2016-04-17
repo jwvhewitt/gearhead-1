@@ -1,46 +1,63 @@
 Battroid 5
 Name <Longman>
 Desig <LGN-05>
+Desig_I18N <LGN-05>
 SDL_Sprite <btr_longman.png>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	sub
 		Sensor 8
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	Mass -4
 	sub
 		Sensor 2
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
 
 		Engine 5
+		Name_I18N <>
 		HighOutput
+
+		Gyro 1
+		Name_I18N <>
 
 		Mount
 		Name <Right Body Mount>
+		Name_I18N <>
 
 		Mount
 		Name <Left Body Mount>
+		Name_I18N <>
 
 		ArcJet 6
+		Name_I18N <>
+
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	Mass -3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 20
 			Name <Heavy Laser Cannon>
+			Name_I18N <>
 			Range 10
 			Acc 1
 			Speed 3
@@ -49,49 +66,61 @@ Mod Arm
 
 		MLauncher 2
 		Name <Rocket Pod>
+		Name_I18N <>
 		Range 4
 		Magazine 10
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	Mass -3
 	sub
 		Hand
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Rocket Pod>
+		Name_I18N <>
 		Range 4
 		Magazine 10
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 3
 	Mass -3
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 3
 	Mass -3
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 end

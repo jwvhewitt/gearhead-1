@@ -39,12 +39,12 @@ Function ScenePlayer( Camp: CampaignPtr ; Scene: GearPtr; var PCForces: GearPtr 
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,aibrain,arenacfe,arenascript,backpack,damage,gearutil,
+uses i18nmsg,ability,aibrain,arenacfe,arenascript,backpack,damage,gearutil,
      ghchars,ghprop,ghweapon,grabgear,menugear,movement,pcaction,
      playwright,randmaps,rpgdice,skilluse,texutil,ui4gh,wmonster,
      sdlmap,sdlgfx;
 {$ELSE}
-uses ability,aibrain,arenacfe,arenascript,backpack,damage,gearutil,
+uses i18nmsg,ability,aibrain,arenacfe,arenascript,backpack,damage,gearutil,
      ghchars,ghprop,ghweapon,grabgear,menugear,movement,pcaction,
      playwright,randmaps,rpgdice,skilluse,texutil,ui4gh,wmonster,
      conmap,context;
@@ -166,13 +166,13 @@ begin
 
 		{ Display message regarding the outcome of the battle. }
 		if ( PTeam > 0 ) and ( ETeam = 0 ) then begin
-			DialogMsg( 'Player has won this combat.' );
+			DialogMsg( I18N_MsgString('DecideCombatOutcome','Player won') );
 			T := 1;
 		end else if ( ETeam > 0 ) and ( PTeam = 0 ) then begin
-			DialogMsg( 'Computer has won this combat.' );
+			DialogMsg( I18N_MsgString('DecideCombatOutcome','Computer won') );
 			T := -1;
 		end else begin
-			DialogMsg( 'The game has ended in a draw.' );
+			DialogMsg( I18N_MsgString('DecideCombatOutcome','Draw') );
 			T := 0;
 		end;
 	end;

@@ -1,5 +1,6 @@
 % DEFAULT DOOR USAGE SCRIPT FILE %
 name <door>
+name_I18N <>
 USE <ifG -99 MetaPass else GoCloseDoor  if= StatVal STAT_Lock 0 else GoDoorLocked Print 1  SetStat STAT_Pass 0  Transform 1>
 GoDoorLocked <Print 6>
 GoCloseDoor <Print 2 SetStat STAT_Pass -100  Transform 2>

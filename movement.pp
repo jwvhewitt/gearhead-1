@@ -102,6 +102,7 @@ const
 
 	Overcharge_Thrust = 125;
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	MoveModeName: Array [ 1 .. NumMoveMode ] of string = (
 		'Walk', 'Roll', 'Skim', 'Fly'
 	);
@@ -117,6 +118,7 @@ const
 
 	NumMoveAction = 5;
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	MoveActionName: Array [0..NumMoveAction] of String = (
 		'Stop','Cruise Speed','Full Speed','Turn Left','Turn Right','Reverse'
 	);
@@ -152,7 +154,7 @@ function MoveDesc( Master: GearPtr; mm: Integer ): String;
 
 implementation
 
-uses damage,gearutil,ghchars,ghmodule,ghsupport,texutil;
+uses i18nmsg,damage,gearutil,ghchars,ghmodule,ghsupport,texutil;
 
 const
 	ZoaWalkBonus = 20;	{ Bonus to walking movement for Zoanoid mecha. }
@@ -667,12 +669,12 @@ begin
     mspeed := AdjustedMoveRate( Master , MM , NAV_NormSpeed );
     if mspeed > 0 then begin
         if ( mm = MM_Fly ) and ( JumpTime( Master ) > 0 ) then begin
-            MoveDesc := 'Jump: '+BStr(JumpTime( Master ))+'s';
+            MoveDesc := ReplaceHash( I18N_MsgString('MoveDesc','Jump') , BStr(JumpTime( Master )) );
         end else begin
-            MoveDesc := MoveModeName[MM]+': '+BStr(mspeed);
+            MoveDesc := I18N_Name('MoveModeName',MoveModeName[MM]) + ': ' + BStr(mspeed);
         end;
     end else begin
-        MoveDesc :=  MoveModeName[MM]+': NA';
+        MoveDesc := I18N_Name('MoveModeName',MoveModeName[MM]) + ': ' + 'NA';
     end;
 end;
 

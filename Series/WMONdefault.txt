@@ -5,6 +5,8 @@
 %  STATS  REF BOD SPD PER CFT EGO KNO CHA
 
 ARCH Smog Monster
+	name <Smog Monster>
+	name_I18N <Smog Monster>
 roguechar <f>
 sdl_sprite <monster_fireworm.png>
 sdl_colors <122 88 193 70 121 119 208 30 50>
@@ -18,47 +20,58 @@ skill 10 6
 skill 11 8
 skill 25 5
 mod body
+	name_I18N <Body>
 	armor 2
 	sub
 		gear 4 0 7
 		name <Fangs>
+		name_I18N <Fangs>
 
 		BeamGun 9
 		name <Acidic Spittle>
+		name_I18N <Acidic Spittle>
 		type <BURN POISON SCATTER>
 		Range 4
 	end
 mod wing
+	name_I18N <Wing>
 	armor 1
 	sub
 		MLauncher 2
 		range 8
 		name <Smog Bomb>
+		name_I18N <Smog Bomb>
 		type <GAS BLAST 1>
 		magazine 1
 		sub
+			name_I18N <Smog Bomb>
 			rockets 2
 		end
 		Flight 5
 	end
 mod wing
+	name_I18N <Wing>
 	armor 1
 	sub
 		MLauncher 2
 		range 8
 		name <Smog Bomb>
+		name_I18N <Smog Bomb>
 		type <GAS BLAST 1>
 		magazine 1
 		sub
+			name_I18N <Smog Bomb>
 			rockets 2
 		end
 		Flight 5
 	end
 mod tail
+	name_I18N <Tail>
 	armor 1
 	sub
 		BeamGun 3
 		name <Smoke Bomb>
+		name_I18N <Smoke Bomb>
 		type <SMOKE BLAST 1>
 		range 7
 		speed 1
@@ -66,6 +79,8 @@ mod tail
 end
 
 Arch Security Guard
+	name <Security Guard>
+	name_I18N <Security Guard>
 statline 9 9 9 9 8 8 8 8
 size 7
 roguechar <G>
@@ -80,13 +95,18 @@ skill 8 1
 skill 9 1
 skill 10 2
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 	inv
 		gear 4 2 12
 		name <Shotgun>
+		name_I18N <Shotgun>
 		mass -4
 		stat 1 5
 		stat 2 1
@@ -95,24 +115,32 @@ sub
 		sub
 			gear 5 2 12
 			name <Shotgun Clip>
+			name_I18N <Shotgun Clip>
 			type <SCATTER>
 		end
 	end
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 inv
 	Shield 4
 	DefBonus 2
 	name <Riot Shield>
+	name_I18N <Riot Shield>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Watchman
+	name <Watchman>
+	name_I18N <Watchman>
 statline 9 9 9 9 8 8 8 8
 size 1
 roguechar <G>
@@ -128,20 +156,30 @@ skill 8 1
 skill 9 1
 skill 10 2
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 ARCH Guard Dog
+	name <Guard Dog>
+	name_I18N <Guard Dog>
 roguechar <d>
 type <guard>
 sdl_sprite <monster_dogfox.png>
@@ -154,23 +192,32 @@ skill 9 5
 skill 10 5
 skill 11 6
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 end
 
 
 ARCH Dog
+	name <Dog>
+	name_I18N <Dog>
 roguechar <d>
 sdl_sprite <monster_dogfox.png>
 sdl_colors <123 63 0 135 90 45 150 200 50>
@@ -183,23 +230,32 @@ skill 9 2
 skill 10 2
 skill 11 3
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 end
 
 
 ARCH StormFeather
+	name <StormFeather>
+	name_I18N <StormFeather>
 roguechar <E>
 sdl_sprite <monster_eagle.png>
 sdl_colors <60 30 81 1 75 70 210 35 50>
@@ -213,21 +269,25 @@ skill 9 3
 skill 10 6
 skill 13 3
 mod head
+	name_I18N <Head>
 armor 2
 mass -4
 	sub
 		melee 8
 		name <Peck>
+		name_I18N <Peck>
 		recharge 5
 		type <ArmorPiercing>
 	end
 mod body
+	name_I18N <Body>
 armor 2
 mass -4
 	sub
 		BeamGun 6
 		mass -6
 		name <Lightning Storm>
+		name_I18N <Lightning Storm>
 		Range 8
 		Recharge 1
 		BV 5
@@ -235,30 +295,37 @@ mass -4
 
 		Flight 16
 		name <Feathers>
+		name_I18N <Feathers>
 	end
 mod wing
+	name_I18N <Wing>
 armor 2
 mass -3
 	sub
 		BeamGun 5
 		mass -5
 		name <Lightning Bolt>
+		name_I18N <Lightning Bolt>
 		range 10
 		type <HAYWIRE>
 	end
 mod wing
+	name_I18N <Wing>
 armor 2
 mass -3
 	sub
 		BeamGun 5
 		mass -5
 		name <Lightning Bolt>
+		name_I18N <Lightning Bolt>
 		range 10
 		type <HAYWIRE>
 	end
 end
 
 ARCH Eagle
+	name <Eagle>
+	name_I18N <Eagle>
 roguechar <E>
 sdl_sprite <monster_eagle.png>
 sdl_colors <123 63 0 120 100 13 122 88 193>
@@ -270,24 +337,32 @@ skill 8 5
 skill 9 3
 skill 10 5
 mod head
+	name_I18N <Head>
 armor 1
 sub
 	melee 5
 	name <Peck>
+	name_I18N <Peck>
 	recharge 5
 end
 mod body
+	name_I18N <Body>
 armor 1
 sub
 	Flight 12
 	name <Feathers>
+	name_I18N <Feathers>
 end
 mod wing
+	name_I18N <Wing>
 mod wing
+	name_I18N <Wing>
 end
 
 
 ARCH Assassin Lord
+	name <Assassin Lord>
+	name_I18N <Assassin Lord>
 roguechar <N>
 size 21
 type <CRIMINAL CITY>
@@ -302,44 +377,57 @@ skill 13 2
 skill 18 7
 Talent 23
 mod head
+	name_I18N <Head>
 armor 3
 mod body
+	name_I18N <Body>
 armor 3
 mod arm
+	name_I18N <Arm>
 armor 3
 	sub
 		hand
+		name_I18N <Hand>
 		inv
 			gun 5
 			name <Headhunter Pistol>
+			name_I18N <Headhunter Pistol>
 			type <ARMORPIERCING>
 			range 4
 			mass -3
 			recharge 6
 			sub
 				ammo 5
+				name_I18N <>
 			end
 		end
 	end
 mod arm
+	name_I18N <Arm>
 armor 3
 	sub
 		hand
+		name_I18N <Hand>
 		inv
 			melee 22
 			name <Night Scythe>
+			name_I18N <Night Scythe>
 			type <Extend ArmorPiercing POISON>
 			scale 0
 			mass -15
 		end
 	end
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 end
 
 ARCH Assassin
+	name <Assassin>
+	name_I18N <Assassin>
 roguechar <N>
 size 15
 type <CRIMINAL CITY>
@@ -353,16 +441,21 @@ skill 10 7
 skill 18 4
 Talent 23
 mod head
+	name_I18N <Head>
 armor 3
 mod body
+	name_I18N <Body>
 armor 3
 mod arm
+	name_I18N <Arm>
 armor 3
 	sub
 		hand
+		name_I18N <Hand>
 		inv
 			gun 5
 			name <Long Rifle>
+			name_I18N <Long Rifle>
 			mass -1
 			range 10
 			acc 1
@@ -371,17 +464,21 @@ armor 3
 			sub
 				ammo 5
 				name <Killer Ammo>
+				name_I18N <Killer Ammo>
 				type <ARMORPIERCING>
 			end
 		end
 	end
 mod arm
+	name_I18N <Arm>
 armor 3
 	sub
 		hand
+		name_I18N <Hand>
 		inv
 			Melee 6
 			name <Deathwing>
+			name_I18N <Deathwing>
 			type <Thrown Return Poison>
 			scale 0
 			mass -5
@@ -389,12 +486,16 @@ armor 3
 		end
 	end
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 end
 
 ARCH Stone Dragon
+	name <Stone Dragon>
+	name_I18N <Stone Dragon>
 roguechar <D>
 genepool <DRAGON>
 size 22
@@ -422,14 +523,17 @@ skill 11 3
 skill 12 3
 skill 13 7
 mod head
+	name_I18N <Head>
 armor 6
 sub
 	Melee 5
 	name <Jaws>
+	name_I18N <Jaws>
 	type <BRUTAL>
 
 	Gun 12
 	name <Poison Gas>
+	name_I18N <Poison Gas>
 	range 7
 	type <POISON BLAST 2>
 	recharge 1
@@ -437,27 +541,38 @@ sub
 	magazine 3
 	sub
 		ammo 12
+		name_I18N <Poison Gas>
 	end
 end
 mod body
+	name_I18N <Body>
 armor 6
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod tail
+	name_I18N <Tail>
 armor 5
 end
 
 ARCH Core Worm
+	name <Core Worm>
+	name_I18N <Core Worm>
 statline 13 19 16 2 11 5 2 2
 roguechar <W>
 type <BUG EARTH MUTANT>
@@ -472,25 +587,32 @@ skill 10 5
 skill 12 3
 skill 13 7
 mod head
+	name_I18N <Head>
 	armor 5
 	sub
 		Melee 4
 		name <Jaws>
+		name_I18N <Jaws>
 		type <BRUTAL>
 
 		BeamGun 6
 		name <Magma Spew>
+		name_I18N <Magma Spew>
 		type <SCATTER>
 		range 4
 		recharge 1
 	end
 mod body
+	name_I18N <Body>
 	armor 5
 mod tail
+	name_I18N <Tail>
 	armor 4
 end
 
 ARCH World Maggot
+	name <World Maggot>
+	name_I18N <World Maggot>
 statline 16 22 21 10 19 20 17 2
 roguechar <W>
 type <BUG RUINS WASTELAND>
@@ -504,22 +626,27 @@ skill 10 5
 skill 12 3
 skill 13 8
 mod head
+	name_I18N <Head>
 	armor 1
 	sub
 		Melee 9
 		name <Jaws>
+		name_I18N <Jaws>
 		type <BRUTAL>
 
 		BeamGun 4
 		name <Toxic Spit>
+		name_I18N <Toxic Spit>
 		type <SCATTER BRUTAL>
 		range 3
 	end
 mod body
+	name_I18N <Body>
 	armor 4
 	sub
 		BeamGun 3
 		name <Poison Spines>
+		name_I18N <Poison Spines>
 		range 7
 		BV 4
 		type <SWARM POISON>
@@ -527,14 +654,18 @@ mod body
 
 		Melee 5
 		name <Spikes>
+		name_I18N <Spikes>
 		recharge 3
 		type <Poison>
 	end
 mod tail
+	name_I18N <Tail>
 	armor 4
 end
 
 ARCH Sun Scarab
+	name <Sun Scarab>
+	name_I18N <Sun Scarab>
 statline 16 13 11 8 1 1 1 1
 roguechar <i>
 sdl_sprite <monster_roach.png>
@@ -557,46 +688,59 @@ skill 8 5
 skill 9 4
 skill 10 6
 mod body
+	name_I18N <Body>
 	armor 5
 	sub
 		gear 4 0 6
 		name <Bite>
+		name_I18N <Bite>
 
 		BeamGun 3
 		name <Sun Flame>
+		name_I18N <Sun Flame>
 		recharge 1
 		range 5
 		type <Line Burn ArmorPiercing>
 		BV 3
 	end
 mod wing
+	name_I18N <Wing>
 	size 6
 	armor 5
 mod wing
+	name_I18N <Wing>
 	size 6
 	armor 5
 mod leg
+	name_I18N <Leg>
 	size 3
 	armor 4
 mod leg
+	name_I18N <Leg>
 	size 3
 	armor 4
 mod leg
+	name_I18N <Leg>
 	size 3
 	armor 4
 mod leg
+	name_I18N <Leg>
 	size 3
 	armor 4
 mod leg
+	name_I18N <Leg>
 	size 3
 	armor 4
 mod leg
+	name_I18N <Leg>
 	size 3
 	armor 4
 end
 
 
 ARCH Black Scarab
+	name <Black Scarab>
+	name_I18N <Black Scarab>
 statline 10 8 9 7 1 1 1 1
 roguechar <i>
 sdl_sprite <monster_roach.png>
@@ -608,33 +752,43 @@ skill 8 4
 skill 9 4
 skill 10 4
 mod body
+	name_I18N <Body>
 	armor 2
 	sub
 		gear 4 0 6
 		name <Bite>
+		name_I18N <Bite>
 	end
 mod leg
+	name_I18N <Leg>
 	size 2
 	armor 2
 mod leg
+	name_I18N <Leg>
 	size 2
 	armor 2
 mod leg
+	name_I18N <Leg>
 	size 2
 	armor 2
 mod leg
+	name_I18N <Leg>
 	size 2
 	armor 2
 mod leg
+	name_I18N <Leg>
 	size 2
 	armor 2
 mod leg
+	name_I18N <Leg>
 	size 2
 	armor 2
 end
 
 
 ARCH Toxic Urchin
+	name <Toxic Urchin>
+	name_I18N <Toxic Urchin>
 roguechar <u>
 SDL_SPRITE <monster_urchin.png>
 SDL_COLORS <152 61 97 122 88 193 122 88 193>
@@ -656,22 +810,27 @@ skill 8 3
 skill 10 1
 skill 13 7
 mod body
+	name_I18N <Body>
 	armor 6
 	sub
 		BeamGun 1
 		Range 5
 		name <Toxic Spines>
+		name_I18N <Toxic Spines>
 		type <Poison>
 		BV 3
 
 		Melee 3
 		name <Toxic Spines>
+		name_I18N <Toxic Spines>
 		type <Poison>
 		Recharge 4
 	end
 end
 
 ARCH Moon Bear
+	name <Moon Bear>
+	name_I18N <Moon Bear>
 roguechar <B>
 SDL_SPRITE <monster_bear.png>
 SDL_COLORS <180 185 200 220 190 150 208 0 230>
@@ -699,37 +858,48 @@ skill 10 4
 % Bears have the talent HARD AS NAILS
 NAtt 16 8 1
 mod head
+	name_I18N <Head>
 armor 3
 sub
 	melee 7
 	name <Bite>
+	name_I18N <Bite>
 	type <BRUTAL>
 end
 mod body
+	name_I18N <Body>
 armor 4
 mod arm
+	name_I18N <Arm>
 armor 3
 sub
 	melee 5
 	name <Claw>
+	name_I18N <Claw>
 	recharge 1
 	type <ArmorPiercing>
 end
 mod arm
+	name_I18N <Arm>
 armor 3
 sub
 	melee 5
 	name <Claw>
+	name_I18N <Claw>
 	recharge 1
 	type <ArmorPiercing>
 end
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 end
 
 ARCH Dragon Bear
+	name <Dragon Bear>
+	name_I18N <Dragon Bear>
 roguechar <B>
 SDL_SPRITE <monster_bear.png>
 SDL_COLORS <234 190 90 245 220 160 0 200 0>
@@ -763,43 +933,55 @@ skill 13 7
 % Bears have the talent HARD AS NAILS
 NAtt 16 8 1
 mod head
+	name_I18N <Head>
 armor 4
 sub
 	melee 5
 	name <Bite>
+	name_I18N <Bite>
 	type <Burn>
 
 	BeamGun 4
 	name <Fireball Breath>
+	name_I18N <Fireball Breath>
 	type <Blast 1>
 	range 6
 	recharge 1
 end
 mod body
+	name_I18N <Body>
 armor 4
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	melee 6
 	name <Claw>
+	name_I18N <Claw>
 	type <ArmorPiercing>
 	recharge 3
 end
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	melee 6
 	name <Claw>
+	name_I18N <Claw>
 	type <ArmorPiercing>
 	recharge 3
 end
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 end
 
 ARCH Harrow Bear
+	name <Harrow Bear>
+	name_I18N <Harrow Bear>
 roguechar <B>
 SDL_SPRITE <monster_bear.png>
 SDL_COLORS <80 90 90 90 100 100 200 50 0>
@@ -825,37 +1007,48 @@ skill 10 2
 NAtt 16 8 1
 skill 13 5
 mod head
+	name_I18N <Head>
 armor 2
 sub
 	melee 9
 	name <Bite>
+	name_I18N <Bite>
 	recharge 1
 end
 mod body
+	name_I18N <Body>
 armor 3
 mod arm
+	name_I18N <Arm>
 armor 2
 sub
 	melee 5
 	name <Claw>
+	name_I18N <Claw>
 	recharge 1
 	type <ArmorPiercing Poison>
 end
 mod arm
+	name_I18N <Arm>
 armor 2
 sub
 	melee 5
 	name <Claw>
+	name_I18N <Claw>
 	recharge 1
 	type <ArmorPiercing Poison>
 end
 mod leg
+	name_I18N <Leg>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 end
 
 ARCH Red Bear
+	name <Red Bear>
+	name_I18N <Red Bear>
 roguechar <B>
 SDL_SPRITE <monster_bear.png>
 SDL_COLORS <125 60 0 150 120 89 244 210 28>
@@ -883,37 +1076,48 @@ skill 10 2
 % Bears have the talent HARD AS NAILS
 NAtt 16 8 1
 mod head
+	name_I18N <Head>
 armor 2
 sub
 	melee 7
 	name <Bite>
+	name_I18N <Bite>
 	recharge 1
 end
 mod body
+	name_I18N <Body>
 armor 3
 mod arm
+	name_I18N <Arm>
 armor 2
 sub
 	melee 5
 	name <Claw>
+	name_I18N <Claw>
 	recharge 1
 	type <ArmorPiercing>
 end
 mod arm
+	name_I18N <Arm>
 armor 2
 sub
 	melee 5
 	name <Claw>
+	name_I18N <Claw>
 	recharge 1
 	type <ArmorPiercing>
 end
 mod leg
+	name_I18N <Leg>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 end
 
 ARCH Sea Dragon
+	name <Sea Dragon>
+	name_I18N <Sea Dragon>
 roguechar <D>
 genepool <DRAGON>
 SDL_SPRITE <monster_seadragon.png>
@@ -945,47 +1149,59 @@ skill 10 5
 skill 12 1
 skill 13 3
 mod head
+	name_I18N <Head>
 armor 5
 sub
 	Melee 12
 	name <Jaws>
+	name_I18N <Jaws>
 	recharge 1
 
 	BeamGun 7
 	name <Flame Breath>
+	name_I18N <Flame Breath>
 	range 4
 	recharge 1
 	type <BURN SCATTER>
 end
 mod body
+	name_I18N <Body>
 armor 5
 mod tail
 name <Tentacle>
+name_I18N <Tentacle>
 armor 5
 sub
 	Melee 4
 	name <Hook>
+	name_I18N <Hook>
 	type <ArmorPiercing Poison>
 end
 mod tail
 name <Tentacle>
+name_I18N <Tentacle>
 armor 5
 sub
 	Melee 4
 	name <Hook>
+	name_I18N <Hook>
 	type <ArmorPiercing Poison>
 end
 mod tail
 name <Tentacle>
+name_I18N <Tentacle>
 armor 5
 sub
 	Melee 4
 	name <Hook>
+	name_I18N <Hook>
 	type <ArmorPiercing Poison>
 end
 end
 
 ARCH Dune Dragon
+	name <Dune Dragon>
+	name_I18N <Dune Dragon>
 roguechar <D>
 sdl_sprite <monster_triceratops.png>
 sdl_colors <160 130 90 240 190 100 51 90 161>
@@ -1017,39 +1233,51 @@ skill 10 4
 skill 12 1
 skill 13 3
 mod head
+	name_I18N <Head>
 armor 5
 sub
 	Melee 5
 	name <Jaws>
+	name_I18N <Jaws>
 	recharge 1
 	type <POISON>
 
 	Melee 5
 	name <Horns>
+	name_I18N <Horns>
 	recharge 1
 	type <ARMORPIERCING>
 
 	BeamGun 4
 	name <Flame Breath>
+	name_I18N <Flame Breath>
 	range 4
 	type <BURN SCATTER>
 end
 mod body
+	name_I18N <Body>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod tail
+	name_I18N <Tail>
 armor 3
 end
 
 
 ARCH Fire Worm
+	name <Fire Worm>
+	name_I18N <Fire Worm>
 roguechar <f>
 sdl_sprite <monster_fireworm.png>
 sdl_colors <127 45 35 250 50 100 244 244 30>
@@ -1061,30 +1289,40 @@ skill 8 2
 skill 9 4
 skill 10 3
 mod body
+	name_I18N <Body>
 	sub
 		gear 4 0 3
 		name <Fangs>
+		name_I18N <Fangs>
 		Recharge 1
 
 		BeamGun 1
 		name <Flaming Spittle>
+		name_I18N <Flaming Spittle>
 		type <BURN>
 		Range 2
 	end
 mod wing
+	name_I18N <Wing>
 	sub
 		Melee 1
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod wing
+	name_I18N <Wing>
 	sub
 		Melee 1
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod tail
+	name_I18N <Tail>
 end
 
 Arch Androbot
+	name <Androbot>
+	name_I18N <Androbot>
 statline 12 19 12 13 12 12 12 1
 size 13
 roguechar <R>
@@ -1115,24 +1353,31 @@ skill 10 3
 skill 11 5
 skill 33 30
 mod head
+	name_I18N <Head>
 armor 5
 inv
 	HeadArmor 7
 	name <Androbot Helmet>
+	name_I18N <Androbot Helmet>
 end
 mod body
+	name_I18N <Body>
 armor 6
 inv
 	BodyArmor 9
 	name <Androbot Armor>
+	name_I18N <Androbot Armor>
 end
 mod arm
+	name_I18N <Arm>
 armor 7
 sub
 	Hand
+	name_I18N <Hand>
 	inv
 		gun 6
 		name <Hand Cannon>
+		name_I18N <Hand Cannon>
 		Range 4
 		Acc 1
 		Recharge 1
@@ -1144,22 +1389,29 @@ sub
 	end
 end
 mod arm
+	name_I18N <Arm>
 armor 7
 sub
 	Hand
+	name_I18N <Hand>
 end
 inv
 	Shield 8
 	DefBonus 3
 	name <Androbot Shield>
+	name_I18N <Androbot Shield>
 end
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 end
 
 Arch Iron Monkey
+	name <Iron Monkey>
+	name_I18N <Iron Monkey>
 statline 7 9 6 7 6 5 5 8
 Size 2
 DomTarget 14
@@ -1171,22 +1423,31 @@ skill 9 5
 skill 10 1
 skill 30 5
 mod head
+	name_I18N <Head>
 armor 1
 mod body
+	name_I18N <Body>
 armor 2
 mod arm
+	name_I18N <Arm>
 armor 2
 mod arm
+	name_I18N <Arm>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 mod tail
+	name_I18N <Tail>
 armor 2
 end
 
 Arch Toxic Chameleon
+	name <Toxic Chameleon>
+	name_I18N <Toxic Chameleon>
 statline 13 10 6 9 5 3 1 2
 sdl_sprite <monster_chameleon.png>
 sdl_colors <220 100 170 60 70 60 230 30 50>
@@ -1200,27 +1461,37 @@ skill 10 3
 skill 11 5
 skill 25 15
 mod head
+	name_I18N <Head>
 armor 2
 sub
 	Melee 2
 	name <Tongue>
+	name_I18N <Tongue>
 	type <thrown return stone>
 end
 mod body
+	name_I18N <Body>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 mod leg
+	name_I18N <Leg>
 armor 2
 mod tail
+	name_I18N <Tail>
 armor 2
 end
 
 Arch Chameleon
+	name <Chameleon>
+	name_I18N <Chameleon>
 statline 12 8 6 9 5 3 1 3
 Size 1
 DomTarget 16
@@ -1243,27 +1514,37 @@ skill 10 1
 skill 11 5
 skill 25 15
 mod head
+	name_I18N <Head>
 armor 1
 sub
 	Melee 1
 	name <Tongue>
+	name_I18N <Tongue>
 	type <thrown return>
 end
 mod body
+	name_I18N <Body>
 armor 1
 mod leg
+	name_I18N <Leg>
 armor 1
 mod leg
+	name_I18N <Leg>
 armor 1
 mod leg
+	name_I18N <Leg>
 armor 1
 mod leg
+	name_I18N <Leg>
 armor 1
 mod tail
+	name_I18N <Tail>
 armor 1
 end
 
 Arch Cyclops Progenitor
+	name <Cyclops Progenitor>
+	name_I18N <Cyclops Progenitor>
 statline 15 21 13 12 11 13 9 8
 Biotech
 scale 1
@@ -1281,42 +1562,56 @@ skill 10 6
 skill 36 10
 skill 12 10
 mod head
+	name_I18N <Head>
 armor 4
 mod body
+	name_I18N <Body>
 armor 4
 sub
 	Mount
 	name <Right Shoulder Mount>
+	name_I18N <Right Shoulder Mount>
 	inv
 		BeamGun 6
 		name <Bio-Laser>
+		name_I18N <Bio-Laser>
 		recharge 4
 	end
 	Mount
 	name <Left Shoulder Mount>
+	name_I18N <Left Shoulder Mount>
 	inv
 		BeamGun 6
 		name <Bio-Laser>
+		name_I18N <Bio-Laser>
 		recharge 4
 	end
 end
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	hand
+	name_I18N <Hand>
 end
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 end
 
 Arch Cyclops Guard
+	name <Cyclops Guard>
+	name_I18N <Cyclops Guard>
 statline 15 21 13 12 11 13 9 8
 Size 19
 Biotech
@@ -1335,66 +1630,84 @@ skill 10 6
 skill 36 10
 skill 12 10
 mod head
+	name_I18N <Head>
 armor 4
 mod body
+	name_I18N <Body>
 armor 4
 sub
 	Mount
 	name <Right Shoulder Mount>
+	name_I18N <Right Shoulder Mount>
 	inv
 		Gun 4
 		name <Pin Cannon>
+		name_I18N <Pin Cannon>
 		BV 4
 		range 7
 		magazine 120
 		mass -7
 		sub
 			ammo 4
+			name_I18N <>
 		end
 	end
 	Mount
 	name <Left Shoulder Mount>
+	name_I18N <Left Shoulder Mount>
 	inv
 		Gun 4
 		name <Pin Cannon>
+		name_I18N <Pin Cannon>
 		BV 4
 		range 7
 		magazine 120
 		mass -7
 		sub
 			ammo 4
+			name_I18N <>
 		end
 	end
 end
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	hand
+	name_I18N <Hand>
 	inv
 		Melee 16
 		name <BioSword>
+		name_I18N <BioSword>
 		Mass -10
 		type <ARMORPIERCING>
 	end
 end
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	hand
+	name_I18N <Hand>
 	inv
 		Melee 16
 		name <BioSword>
+		name_I18N <BioSword>
 		Mass -10
 		type <ARMORPIERCING>
 	end
 end
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 end
 
 Arch Cyclops
+	name <Cyclops>
+	name_I18N <Cyclops>
 statline 14 19 13 10 13 7 9 8
 Size 10
 Biotech
@@ -1409,26 +1722,36 @@ Skill 8 4
 skill 9 4
 skill 10 4
 mod head
+	name_I18N <Head>
 armor 4
 mod body
+	name_I18N <Body>
 armor 4
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	hand
+	name_I18N <Hand>
 end
 mod arm
+	name_I18N <Arm>
 armor 4
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 end
 
 Arch Rock Lizard
+	name <Rock Lizard>
+	name_I18N <Rock Lizard>
 statline 12 15 16 10 2 9 2 2
 size 10
 DomTarget 18
@@ -1453,28 +1776,38 @@ skill 13 6
 skill 25 7
 skill 26 7
 mod head
+	name_I18N <Head>
 armor 4
 sub
 	Melee 10
 	name <Jaws>
+	name_I18N <Jaws>
 	recharge 3
 	type <SICKNESS>
 end
 mod body
+	name_I18N <Body>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod tail
+	name_I18N <Tail>
 armor 7
 end
 
 Arch Albino Alligator
+	name <Albino Alligator>
+	name_I18N <Albino Alligator>
 statline 13 20 10 7 2 9 2 2
 size 12
 DomTarget 22
@@ -1501,27 +1834,37 @@ skill 26 7
 skill 30 10
 skill 36 2
 mod head
+	name_I18N <Head>
 armor 7
 sub
 	Melee 15
 	name <Crushing Jaws>
+	name_I18N <Crushing Jaws>
 	recharge 3
 end
 mod body
+	name_I18N <Body>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod leg
+	name_I18N <Leg>
 armor 7
 mod tail
+	name_I18N <Tail>
 armor 7
 end
 
 ARCH Ravager
+	name <Ravager>
+	name_I18N <Ravager>
 statline 12 14 12 13 7 9 6 8
 size 5
 roguechar <R>
@@ -1533,20 +1876,26 @@ skill 9 6
 skill 10 4
 skill 13 2
 mod head
+	name_I18N <Head>
 armor 2
 inv
 	HeadArmor 3
 	name <Steel Mask>
+	name_I18N <Steel Mask>
 end
 mod body
+	name_I18N <Body>
 armor 1
 mod arm
+	name_I18N <Arm>
 armor 1
 sub
 	Hand
+	name_I18N <Hand>
 	inv
 		gear 4 2 12
 		name <Shotgun>
+		name_I18N <Shotgun>
 		scale 0
 		mass -4
 		stat 1 5
@@ -1556,23 +1905,30 @@ sub
 			% Ammunition
 			gear 5 2 12
 			name <Shotgun Clip>
+			name_I18N <Shotgun Clip>
 			type <SCATTER>
 		end
 
 	end
 end
 mod arm
+	name_I18N <Arm>
 armor 1
 sub
 	Hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 armor 1
 mod leg
+	name_I18N <Leg>
 armor 1
 end
 
 ARCH Hunter-Destroyer
+	name <Hunter-Destroyer>
+	name_I18N <Hunter-Destroyer>
 roguechar <H>
 sdl_sprite <monster_hx3.png>
 sdl_colors <152 70 97 122 88 193 208 228 21>
@@ -1588,46 +1944,59 @@ skill 10 7
 skill 12 3
 skill 13 5
 mod arm
+	name_I18N <Arm>
 armor 6
 sub
 	BeamGun 6
 	name <Bio-Plasma>
+	name_I18N <Bio-Plasma>
 	range 10
 	BV 3
 	type <SCATTER>
 end
 mod arm
+	name_I18N <Arm>
 armor 6
 sub
 	BeamGun 6
 	name <Bio-Plasma>
+	name_I18N <Bio-Plasma>
 	range 10
 	BV 3
 	type <SCATTER>
 end
 mod body
+	name_I18N <Body>
 armor 5
 sub
 	BeamGun 4
 	name <Multi-Blaster>
+	name_I18N <Multi-Blaster>
 	range 5
 	BV 5
 
 	Melee 9
 	name <Extendable Jaws>
+	name_I18N <Extendable Jaws>
 	type <EXTEND>
 end
 mod leg
+	name_I18N <Leg>
 armor 6
 mod leg
+	name_I18N <Leg>
 armor 6
 mod leg
+	name_I18N <Leg>
 armor 6
 mod leg
+	name_I18N <Leg>
 armor 6
 end
 
 ARCH Hunter-Berserker
+	name <Hunter-Berserker>
+	name_I18N <Hunter-Berserker>
 Size 21
 Biotech
 roguechar <H>
@@ -1644,31 +2013,41 @@ skill 10 8
 skill 12 5
 skill 13 8
 mod head
+	name_I18N <Head>
 armor 5
 sub
 	Melee 10
 	name <Extendable Jaws>
+	name_I18N <Extendable Jaws>
 	type <EXTEND POISON>
 end
 mod body
+	name_I18N <Body>
 armor 5
 sub
 	BeamGun 7
 	name <Multi-Blaster>
+	name_I18N <Multi-Blaster>
 	range 5
 	BV 5
 end
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 end
 
 ARCH Hunter-Slayer
+	name <Hunter-Slayer>
+	name_I18N <Hunter-Slayer>
 roguechar <H>
 sdl_sprite <monster_hx2.png>
 sdl_colors <152 70 97 122 88 193 208 39 51>
@@ -1685,33 +2064,42 @@ skill 12 2
 skill 13 4
 skill 18 7
 mod body
+	name_I18N <Body>
 armor 4
 sub
 	Melee 9
 	name <Extendable Jaws>
+	name_I18N <Extendable Jaws>
 	type <EXTEND>
 
 	BeamGun 7
 	name <Bio-Plasma>
+	name_I18N <Bio-Plasma>
 	range 10
 	BV 3
 	type <SCATTER>
 end
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod tail
+	name_I18N <Tail>
 armor 4
 sub
 	Melee 7
 	recharge 6
 	name <Tail Scythe>
+	name_I18N <Tail Scythe>
 	Type <ArmorPiercing>
 end
 end
 
 ARCH Hunter-Killer
+	name <Hunter-Killer>
+	name_I18N <Hunter-Killer>
 Size 15
 Biotech
 genepool <HUNTER-X>
@@ -1727,29 +2115,39 @@ skill 10 6
 skill 12 1
 skill 13 2
 mod head
+	name_I18N <Head>
 armor 4
 sub
 	Melee 6
 	name <Jaws>
+	name_I18N <Jaws>
 end
 mod body
+	name_I18N <Body>
 armor 4
 sub
 	BeamGun 5
 	name <Bio-Laser>
+	name_I18N <Bio-Laser>
 	range 5
 end
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 mod leg
+	name_I18N <Leg>
 armor 4
 end
 
 ARCH Hunter-Drone
+	name <Hunter-Drone>
+	name_I18N <Hunter-Drone>
 Size 13
 Biotech
 roguechar <H>
@@ -1763,24 +2161,33 @@ skill 8 7
 skill 9 4
 skill 10 8
 mod head
+	name_I18N <Head>
 armor 3
 sub
 	Melee 5
 	name <Jaws>
+	name_I18N <Jaws>
 end
 mod body
+	name_I18N <Body>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 end
 
 ARCH Hunter-Scout
+	name <Hunter-Scout>
+	name_I18N <Hunter-Scout>
 Size 9
 Biotech
 roguechar <H>
@@ -1796,24 +2203,33 @@ skill 10 7
 skill 11 5
 skill 25 7
 mod head
+	name_I18N <Head>
 armor 3
 sub
 	Melee 4
 	name <Jaws>
+	name_I18N <Jaws>
 end
 mod body
+	name_I18N <Body>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 mod leg
+	name_I18N <Leg>
 armor 3
 end
 
 ARCH Hunter-Larva
+	name <Hunter-Larva>
+	name_I18N <Hunter-Larva>
 Size 3
 Biotech
 roguechar <H>
@@ -1828,21 +2244,27 @@ skill 8 4
 skill 9 4
 skill 10 5
 mod head
+	name_I18N <Head>
 armor 2
 sub
 	Melee 4
 	name <Jaws>
+	name_I18N <Jaws>
 	type <STONE>
 	recharge 4
 end
 mod body
+	name_I18N <Body>
 armor 2
 mod tail
+	name_I18N <Tail>
 armor 2
 end
 
 
 ARCH Sentinel
+	name <Sentinel>
+	name_I18N <Sentinel>
 Size 40
 metal
 type <Robot Ruins>
@@ -1869,22 +2291,28 @@ skill 13 10
 skill 26 10
 skill 30 10
 mod turret
+	name_I18N <Turret>
 armor 5
 sub
 	mount
+	name_I18N <Mounting Point>
 	inv
 		gear 4 3 25
 		name <Laser Cannon>
+		name_I18N <Laser Cannon>
 		stat 2 1
 	end
 end
 mod turret
+	name_I18N <Turret>
 armor 5
 sub
 	mount
+	name_I18N <Mounting Point>
 	inv
 		gear 4 3 15
 		name <Plasma Cannon>
+		name_I18N <Plasma Cannon>
 		scale 0
 		mass 5
 		stat 1 10
@@ -1894,12 +2322,15 @@ sub
 	end
 end
 mod turret
+	name_I18N <Turret>
 armor 5
 sub
 	mount
+	name_I18N <Mounting Point>
 	inv
 		gear 4 3 15
 		name <Plasma Cannon>
+		name_I18N <Plasma Cannon>
 		scale 0
 		mass 5
 		stat 1 10
@@ -1909,14 +2340,18 @@ sub
 	end
 end
 mod body
+	name_I18N <Body>
 armor 5
 sub
 	HoverJet 10
+	name_I18N <>
 end
 end
 
 
 Arch Dark Dragon
+	name <Dark Dragon>
+	name_I18N <Dark Dragon>
 statline 22 27 21 23 17 28 12 14
 type <Exotic Cave Dark Ruins Reptile>
 roguechar <D>
@@ -1934,30 +2369,41 @@ skill 26 15
 skill 30 15
 skill 36 15
 mod head
+	name_I18N <Head>
 armor 5
 sub
 	Melee 17
 	name <Jaws>
+	name_I18N <Jaws>
 	BeamGun 5
 	name <Plasma Breath>
+	name_I18N <Plasma Breath>
 	BV 7
 	type <ArmorPiercing>
 end
 mod body
+	name_I18N <Body>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod leg
+	name_I18N <Leg>
 armor 5
 mod tail
+	name_I18N <Tail>
 armor 5
 end
 
 Arch Emperor Fire Penguin
+	name <Emperor Fire Penguin>
+	name_I18N <Emperor Fire Penguin>
 statline 14 10 16 15 6 7 2 10
 type <Fire Exotic Light>
 roguechar <p>
@@ -1974,23 +2420,29 @@ skill 9 8
 skill 10 10
 skill 12 8
 mod head
+	name_I18N <Head>
 sub
 	emelee 12
 	name <Flaming Peck>
+	name_I18N <Flaming Peck>
 	type <ArmorPiercing BURN>
 end
 mod body
+	name_I18N <Body>
 sub
 	BeamGun 8
 	name <Searing Flame>
+	name_I18N <Searing Flame>
 	type <Hyper BURN>
 	range 4
 end
 mod arm
 name <Wing>
+name_I18N <Wing>
 sub
 	MLauncher 1
 	name <Burning Feathers>
+	name_I18N <Burning Feathers>
 	type <Swarm>
 	range 9
 	magazine 20
@@ -2000,9 +2452,11 @@ sub
 end
 mod arm
 name <Wing>
+name_I18N <Wing>
 sub
 	MLauncher 1
 	name <Burning Feathers>
+	name_I18N <Burning Feathers>
 	type <Swarm>
 	range 9
 	magazine 20
@@ -2011,10 +2465,14 @@ sub
 	end
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Fire Penguin
+	name <Fire Penguin>
+	name_I18N <Fire Penguin>
 statline 13 8 14 14 5 7 2 12
 type <Fire Exotic Mutant>
 SDL_SPRITE <monster_penguin.png>
@@ -2030,21 +2488,30 @@ skill 8 5
 skill 9 3
 skill 10 3
 mod head
+	name_I18N <Head>
 sub
 	emelee 3
 	name <Flaming Peck>
+	name_I18N <Flaming Peck>
 	type <ArmorPiercing>
 end
 mod body
+	name_I18N <Body>
 mod arm
 name <Wing>
+name_I18N <Wing>
 mod arm
 name <Wing>
+name_I18N <Wing>
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Street Punk
+	name <Street Punk>
+	name_I18N <Street Punk>
 statline 9 9 9 9 8 8 8 8
 size 6
 roguechar <P>
@@ -2060,13 +2527,18 @@ skill 8 1
 skill 9 1
 skill 10 1
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 	inv
 		gear 4 2 12
 		name <Shotgun>
+		name_I18N <Shotgun>
 		mass -4
 		stat 1 5
 		stat 2 1
@@ -2075,19 +2547,26 @@ sub
 		sub
 			gear 5 2 12
 			name <Shotgun Clip>
+			name_I18N <Shotgun Clip>
 			type <SCATTER>
 		end
 	end
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Street Punk
+	name <Street Punk>
+	name_I18N <Street Punk>
 statline 9 9 9 9 8 8 8 8
 size 3
 roguechar <P>
@@ -2103,13 +2582,18 @@ skill 8 1
 skill 9 1
 skill 10 1
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 	inv
 		gear 4 2 2
 		name <Fallback Pistol>
+		name_I18N <Fallback Pistol>
 		mass -1
 		stat 1 2
 		stat 3 3
@@ -2120,14 +2604,20 @@ sub
 	end
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Street Punk
+	name <Street Punk>
+	name_I18N <Street Punk>
 statline 9 9 9 9 8 8 8 8
 size 2
 roguechar <P>
@@ -2143,27 +2633,38 @@ skill 8 1
 skill 9 1
 skill 10 1
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 	inv
 		gear 4 0 3
 		name <Steel Pipe>
+		name_I18N <Steel Pipe>
 		mass 2
 		stat 2 -2
 		stat 3 3
 	end
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Street Punk
+	name <Street Punk>
+	name_I18N <Street Punk>
 statline 9 9 9 9 8 8 8 8
 size 1
 roguechar <P>
@@ -2179,20 +2680,30 @@ skill 8 1
 skill 9 1
 skill 10 1
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 Arch Bandit
+	name <Bandit>
+	name_I18N <Bandit>
 statline 13 13 14 12 8 8 8 8
 size 12
 roguechar <B>
@@ -2208,16 +2719,21 @@ skill 8 6
 skill 9 5
 skill 10 4
 mod head
+	name_I18N <Head>
 	armor 1
 mod body
+	name_I18N <Body>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 	sub
 		Hand
+		name_I18N <Hand>
 		inv
 			gear 4 2 6
 			name <Assault Rifle>
+			name_I18N <Assault Rifle>
 			mass -2
 			stat 1 7
 			stat 2 -1
@@ -2232,18 +2748,24 @@ mod arm
 		end
 	end
 mod arm
+	name_I18N <Arm>
 	armor 1
 	sub
 		Hand
+		name_I18N <Hand>
 	end
 mod leg
+	name_I18N <Leg>
 	armor 1
 mod leg
+	name_I18N <Leg>
 	armor 1
 end
 
 
 Arch Bandit
+	name <Bandit>
+	name_I18N <Bandit>
 statline 13 13 14 12 8 8 8 8
 size 8
 roguechar <B>
@@ -2259,17 +2781,22 @@ skill 8 6
 skill 9 5
 skill 10 5
 mod head
+	name_I18N <Head>
 	armor 1
 mod body
+	name_I18N <Body>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 	sub
 		% Hand
 		gear 7 0 0
+		name_I18N <Hand>
 		inv
 			gear 4 2 2
 			name <Autogun>
+			name_I18N <Autogun>
 			scale 0
 			stat 1 5
 			stat 4 2
@@ -2281,23 +2808,30 @@ mod arm
 		end
 	end
 mod arm
+	name_I18N <Arm>
 	armor 1
 	sub
 		% Hand
 		gear 7 0 0
+		name_I18N <Hand>
 		inv
 			gear 4 0 6
 			name <Hand Axe>
+			name_I18N <Hand Axe>
 			scale 0
 		end
 	end
 mod leg
+	name_I18N <Leg>
 	armor 1
 mod leg
+	name_I18N <Leg>
 	armor 1
 end
 
 Arch Bandit
+	name <Bandit>
+	name_I18N <Bandit>
 statline 13 13 14 12 8 8 8 8
 size 4
 roguechar <B>
@@ -2313,32 +2847,43 @@ skill 8 5
 skill 9 5
 skill 10 5
 mod head
+	name_I18N <Head>
 	armor 1
 mod body
+	name_I18N <Body>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 	sub
 		% Hand
 		Hand
+		name_I18N <Hand>
 	end
 mod arm
+	name_I18N <Arm>
 	armor 1
 	sub
 		Hand
+		name_I18N <Hand>
 		inv
 			gear 4 0 6
 			name <Hand Axe>
+			name_I18N <Hand Axe>
 			scale 0
 		end
 	end
 mod leg
+	name_I18N <Leg>
 	armor 1
 mod leg
+	name_I18N <Leg>
 	armor 1
 end
 
 ARCH Morlock
+	name <Morlock>
+	name_I18N <Morlock>
 roguechar <M>
 type <mutant ruins devo>
 statline 13 15 12 13 10 11 7 10
@@ -2352,35 +2897,47 @@ skill 9 4
 skill 10 5
 skill 11 7
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
 	name <Right Arm>
+	name_I18N <Right Arm>
 	sub
 		hand
+		name_I18N <Hand>
 		inv
 			melee 11
 			mass 3
 			name <Stone Axe>
+			name_I18N <Stone Axe>
 			type <EXTEND BRUTAL>
 		end
 	end
 mod arm
 	name <Left Arm>
+	name_I18N <Left Arm>
 	sub
 		hand
+		name_I18N <Hand>
 	end
 	inv
 		Shield 2
 		name <Leather Shield>
+		name_I18N <Leather Shield>
 		mass 2
 	end
 mod leg
 	name <Right Leg>
+	name_I18N <Right Leg>
 mod leg
 	name <Left Leg>
+	name_I18N <Left Leg>
 end
 
 ARCH Morlock
+	name <Morlock>
+	name_I18N <Morlock>
 roguechar <M>
 type <mutant ruins devo>
 statline 13 15 12 13 10 11 7 10
@@ -2394,35 +2951,47 @@ skill 9 4
 skill 10 5
 skill 11 7
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
 	name <Right Arm>
+	name_I18N <Right Arm>
 	sub
 		hand
+		name_I18N <Hand>
 		inv
 			melee 8
 			mass 2
 			name <Stone Spear>
+			name_I18N <Stone Spear>
 			type <THROWN>
 		end
 	end
 mod arm
 	name <Left Arm>
+	name_I18N <Left Arm>
 	sub
 		hand
+		name_I18N <Hand>
 	end
 	inv
 		Shield 2
 		name <Leather Shield>
+		name_I18N <Leather Shield>
 		mass 2
 	end
 mod leg
 	name <Right Leg>
+	name_I18N <Right Leg>
 mod leg
 	name <Left Leg>
+	name_I18N <Left Leg>
 end
 
 ARCH Morlock
+	name <Morlock>
+	name_I18N <Morlock>
 roguechar <M>
 type <mutant ruins devo>
 sdl_sprite <monster_morlock.png>
@@ -2436,24 +3005,34 @@ skill 9 4
 skill 10 5
 skill 11 7
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
 	name <Right Arm>
+	name_I18N <Right Arm>
 	sub
 		hand
+		name_I18N <Hand>
 	end
 mod arm
 	name <Left Arm>
+	name_I18N <Left Arm>
 	sub
 		hand
+		name_I18N <Hand>
 	end
 mod leg
 	name <Right Leg>
+	name_I18N <Right Leg>
 mod leg
 	name <Left Leg>
+	name_I18N <Left Leg>
 end
 
 ARCH Corpse Eater
+	name <Corpse Eater>
+	name_I18N <Corpse Eater>
 SDL_SPRITE <monster_leech.png>
 SDL_COLORS <84 97 85  191 205 229  244 206 48>
 roguechar <C>
@@ -2466,17 +3045,23 @@ skill 13 6
 skill 11 4
 skill 18 3
 mod head
+	name_I18N <Head>
 	armor 3
 	sub
 		EMelee 2
 		name <Tendrils>
+		name_I18N <Tendrils>
 		Melee 4
 		name <Beak>
+		name_I18N <Beak>
 	end
 mod body
+	name_I18N <Body>
 end
 
 ARCH Fire Toad
+	name <Fire Toad>
+	name_I18N <Fire Toad>
 SDL_SPRITE <monster_frog.png>
 SDL_COLORS <172 61 97 228 34 51 50 200 0>
 roguechar <F>
@@ -2504,33 +3089,43 @@ skill 10 1
 skill 18 6
 skill 13 5
 mod head
+	name_I18N <Head>
 	armor 1
 	sub
 		gear 4 0 7
 		name <Bite>
+		name_I18N <Bite>
 		beamgun 6
 		name <Fire Breath>
+		name_I18N <Fire Breath>
 		type <BURN>
 		range 6
 		Recharge 1
 	end
 mod body
+	name_I18N <Body>
 	armor 2
 mod leg
 	armor 1
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	armor 1
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	armor 1
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	armor 1
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 end
 
 ARCH Spike Toad
+	name <Spike Toad>
+	name_I18N <Spike Toad>
 SDL_SPRITE <monster_frog.png>
 SDL_COLORS <101 72 42  245 200 170  34 216 244>
 roguechar <F>
@@ -2554,28 +3149,37 @@ skill 10 2
 skill 18 5
 skill 13 5
 mod head
+	name_I18N <Head>
 	armor 1
 	sub
 		gear 4 0 6
 		name <Bite>
+		name_I18N <Bite>
 	end
 mod body
+	name_I18N <Body>
 	armor 4
 mod leg
 	armor 3
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	armor 3
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	armor 4
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	armor 4
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 end
 
 ARCH Giant Frog
+	name <Giant Frog>
+	name_I18N <Giant Frog>
 SDL_SPRITE <monster_frog.png>
 SDL_COLORS <45 85 80  112 127 98  244 216 35>
 roguechar <F>
@@ -2598,22 +3202,31 @@ skill 10 2
 skill 18 1
 skill 13 5
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 6
 		name <Bite>
+		name_I18N <Bite>
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 end
 
 ARCH Giant Leech
+	name <Giant Leech>
+	name_I18N <Giant Leech>
 SDL_SPRITE <monster_leech.png>
 SDL_COLORS <140 105 81 136 141 101 130 143 114>
 roguechar <l>
@@ -2623,15 +3236,19 @@ size 1
 skill 8 2
 skill 12 15
 mod body
+	name_I18N <Body>
 sub
 	melee 1
 	name <Bite>
+	name_I18N <Bite>
 	ACC 2
 	recharge 7
 end
 end
 
 ARCH Marsh Lobster
+	name <Marsh Lobster>
+	name_I18N <Marsh Lobster>
 roguechar <L>
 SDL_SPRITE <monster_lobster.png>
 SDL_COLORS <134 141 101  144 161 111  168 153 230>
@@ -2653,16 +3270,21 @@ skill 9 4
 skill 10 2
 skill 13 3
 mod body
+	name_I18N <Body>
 	armor 2
 mod arm
 	armor 1
 	name <Right Claw>
+	name_I18N <Right Claw>
 mod arm
 	armor 1
 	name <Left Claw>
+	name_I18N <Left Claw>
 end
 
 ARCH Rock Lobster
+	name <Rock Lobster>
+	name_I18N <Rock Lobster>
 roguechar <L>
 SDL_SPRITE <monster_lobster.png>
 SDL_COLORS <150 112 89  80 80 85  234 180 88>
@@ -2687,16 +3309,21 @@ skill 9 4
 skill 10 1
 skill 13 8
 mod body
+	name_I18N <Body>
 	armor 4
 mod arm
 	armor 4
 	name <Right Claw>
+	name_I18N <Right Claw>
 mod arm
 	armor 4
 	name <Left Claw>
+	name_I18N <Left Claw>
 end
 
 ARCH Deep Lobster
+	name <Deep Lobster>
+	name_I18N <Deep Lobster>
 roguechar <L>
 SDL_SPRITE <monster_lobster.png>
 SDL_COLORS <45 26 91 6 42 120 77 121 119>
@@ -2722,24 +3349,30 @@ skill 9 4
 skill 10 3
 skill 13 12
 mod body
+	name_I18N <Body>
 	armor 5
 	sub
 		BeamGun 3
 		name <Electric Jolt>
+		name_I18N <Electric Jolt>
 		Range 5
 		type <INTERCEPT STUN>
 	end
 mod arm
 	armor 5
 	name <Right Claw>
+	name_I18N <Right Claw>
 	type <SCATTER BRUTAL>
 mod arm
 	armor 5
 	name <Left Claw>
+	name_I18N <Left Claw>
 	type <SCATTER BRUTAL>
 end
 
 ARCH BioSentry
+	name <BioSentry>
+	name_I18N <BioSentry>
 SDL_SPRITE <monster_drone.png>
 SDL_COLORS <225 136 170 242 110 25 220 0 240>
 roguechar <b>
@@ -2751,25 +3384,34 @@ skill 6 3
 skill 10 3
 skill 11 3
 mod head
+	name_I18N <Head>
 	armor 2
 	sub
 		BeamGun 5
 		name <Bio-Laser>
+		name_I18N <Bio-Laser>
 		acc 1
 	end
 mod body
+	name_I18N <Body>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 end
 
 ARCH Guardbot
+	name <Guardbot>
+	name_I18N <Guardbot>
 roguechar <R>
 sdl_sprite <monster_guardbot.png>
 sdl_colors <199 188 162 157 173 182 200 150 50>
@@ -2791,16 +3433,20 @@ skill 6 2
 skill 8 2
 skill 10 2
 mod body
+	name_I18N <Body>
 	armor 3
 	sub
 	Melee 8
 	name <Shock Baton>
+	name_I18N <Shock Baton>
 	special <EXTEND HAYWIRE>
 	recharge 1
 	mount
+	name_I18N <Mounting Point>
 		inv
 			gear 4 2 6
 			name <Assault Rifle>
+			name_I18N <Assault Rifle>
 			mass -2
 			stat 1 7
 			stat 2 -1
@@ -2815,6 +3461,8 @@ mod body
 end
 
 ARCH Murder Machine
+	name <Murder Machine>
+	name_I18N <Murder Machine>
 roguechar <R>
 SDL_SPRITE <monster_workbot.png>
 SDL_COLORS <166 47 32 201 205 225 210 0 100>
@@ -2839,14 +3487,17 @@ skill 33 10
 Talent 8
 Talent 7
 mod body
+	name_I18N <Body>
 	armor 5
 	sub
 	mount
+	name_I18N <Mounting Point>
 		inv
 		melee 16
 		acc 1
 		speed 3
 		name <Buzzsaw>
+		name_I18N <Buzzsaw>
 		mass 4
 		type <BRUTAL>
 		end
@@ -2854,6 +3505,8 @@ mod body
 end
 
 ARCH Workbot
+	name <Workbot>
+	name_I18N <Workbot>
 roguechar <R>
 SDL_SPRITE <monster_workbot.png>
 SDL_COLORS <157 172 183 130 143 114 230 60 0>
@@ -2875,19 +3528,24 @@ metal
 size 2
 skill 8 1
 mod body
+	name_I18N <Body>
 	armor 2
 	sub
 	mount
+	name_I18N <Mounting Point>
 		inv
 		melee 14
 		acc 1
 		name <Buzzsaw>
+		name_I18N <Buzzsaw>
 		mass 4
 		end
 	end
 end
 
 ARCH Arachnoid Drone
+	name <Arachnoid Drone>
+	name_I18N <Arachnoid Drone>
 SDL_SPRITE <monster_drone.png>
 SDL_COLORS <72 104 136 150 150 150 220 0 0>
 roguechar <s>
@@ -2909,12 +3567,15 @@ skill 6 1
 skill 8 1
 skill 10 1
 mod body
+	name_I18N <Body>
 	armor 2
 	sub
 		mount
+		name_I18N <Mounting Point>
 		inv
 			gear 4 4 1
 			name <Calliope Rocket Launcher>
+			name_I18N <Calliope Rocket Launcher>
 			stat 1 8
 			stat 3 5
 			stat 8 64
@@ -2924,16 +3585,22 @@ mod body
 		end
 	end
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 end
 
 ARCH Arachnoid Drone
+	name <Arachnoid Drone>
+	name_I18N <Arachnoid Drone>
 SDL_SPRITE <monster_drone.png>
 SDL_COLORS <72 104 136 150 150 150 220 0 0>
 roguechar <s>
@@ -2955,12 +3622,15 @@ skill 6 1
 skill 8 1
 skill 10 1
 mod body
+	name_I18N <Body>
 	armor 2
 	sub
 		mount
+		name_I18N <Mounting Point>
 		inv
 			gear 4 2 6
 			name <Assault Rifle>
+			name_I18N <Assault Rifle>
 			mass -2
 			stat 1 7
 			stat 2 -1
@@ -2969,22 +3639,29 @@ mod body
 			sub
 				% Ammunition
 				gear 5 2 6
+				name_I18N <>
 			end
 
 		end
 	end
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 end
 
 
 ARCH Arachnoid Drone
+	name <Arachnoid Drone>
+	name_I18N <Arachnoid Drone>
 roguechar <s>
 SDL_SPRITE <monster_drone.png>
 SDL_COLORS <72 104 136 150 150 150 220 0 0>
@@ -3006,12 +3683,15 @@ skill 6 1
 skill 8 1
 skill 10 1
 mod body
+	name_I18N <Body>
 	armor 2
 	sub
 		mount
+		name_I18N <Mounting Point>
 		inv
 			gear 4 2 2
 			name <Autogun>
+			name_I18N <Autogun>
 			stat 1 5
 			stat 2 1
 			stat 4 2
@@ -3019,20 +3699,27 @@ mod body
 			sub
 				% Ammunition
 				gear 5 2 2
+				name_I18N <>
 			end
 		end
 	end
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 end
 
 ARCH Gremlin
+	name <Gremlin>
+	name_I18N <Gremlin>
 roguechar <g>
 sdl_sprite <monster_monkey.png>
 sdl_colors <70 121 119 49 91 159 244 215 28>
@@ -3046,20 +3733,30 @@ skill 15 1
 skill 23 1
 DomTarget 17
 mod head
+	name_I18N <Head>
 mod body
+	name_I18N <Body>
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod arm
+	name_I18N <Arm>
 sub
 	hand
+	name_I18N <Hand>
 end
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 end
 
 ARCH Archaeopteryx
+	name <Archaeopteryx>
+	name_I18N <Archaeopteryx>
 roguechar <v>
 type <exotic forest plains air>
 sdl_sprite <monster_eagle.png>
@@ -3071,19 +3768,29 @@ skill 9 2
 skill 10 1
 DomTarget 16
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 1
 		name <Bite>
+		name_I18N <Bite>
 	end
 mod body
+	name_I18N <Body>
 mod wing
+	name_I18N <Wing>
 mod wing
+	name_I18N <Wing>
 mod leg
+	name_I18N <Leg>
 mod leg
+	name_I18N <Leg>
 mod tail
+	name_I18N <Tail>
 end
 
 ARCH Velociraptor
+	name <Velociraptor>
+	name_I18N <Velociraptor>
 roguechar <D>
 type <exotic cave desert reptile>
 SDL_SPRITE <monster_raptor.png>
@@ -3106,28 +3813,38 @@ skill 9 4
 skill 10 2
 skill 13 2
 mod head
+	name_I18N <Head>
 	armor 1
 mod body
+	name_I18N <Body>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 mod leg
+	name_I18N <Leg>
 	armor 1
 	sub
 		gear 4 0 5
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod leg
+	name_I18N <Leg>
 	armor 1
 	sub
 		gear 4 0 5
 		name <Claw>
+		name_I18N <Claw>
 	end
 end
 
 ARCH Oviraptor
+	name <Oviraptor>
+	name_I18N <Oviraptor>
 roguechar <D>
 type <exotic cave desert reptile>
 SDL_SPRITE <monster_raptor.png>
@@ -3149,28 +3866,38 @@ skill 8 2
 skill 9 2
 skill 12 2
 mod head
+	name_I18N <Head>
 	armor 1
 mod body
+	name_I18N <Body>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 mod arm
+	name_I18N <Arm>
 	armor 1
 mod leg
+	name_I18N <Leg>
 	armor 1
 	sub
 		gear 4 0 3
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod leg
+	name_I18N <Leg>
 	armor 1
 	sub
 		gear 4 0 3
 		name <Claw>
+		name_I18N <Claw>
 	end
 end
 
 ARCH Iron Crab
+	name <Iron Crab>
+	name_I18N <Iron Crab>
 SDL_SPRITE <monster_crab.png>
 SDL_COLORS <136 191 225  170 178 187  179 0 210>
 roguechar <w>
@@ -3194,30 +3921,41 @@ skill 12 7
 skill 13 6
 skill 18 5
 mod body
+	name_I18N <Body>
 	armor 5
 mod arm
+	name_I18N <Arm>
 	armor 5
 	sub
 		gear 4 0 5
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod arm
+	name_I18N <Arm>
 	armor 5
 	sub
 		gear 4 0 5
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod leg
+	name_I18N <Leg>
 	armor 5
 mod leg
+	name_I18N <Leg>
 	armor 5
 mod leg
+	name_I18N <Leg>
 	armor 5
 mod leg
+	name_I18N <Leg>
 	armor 5
 end
 
 ARCH Crab
+	name <Crab>
+	name_I18N <Crab>
 SDL_SPRITE <monster_crab.png>
 SDL_COLORS <204 51 85  200 144 64  208 93 8>
 roguechar <w>
@@ -3240,30 +3978,41 @@ skill 12 4
 skill 13 1
 skill 18 2
 mod body
+	name_I18N <Body>
 	armor 3
 mod arm
+	name_I18N <Arm>
 	armor 2
 	sub
 		gear 4 0 3
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod arm
+	name_I18N <Arm>
 	armor 2
 	sub
 		gear 4 0 3
 		name <Claw>
+		name_I18N <Claw>
 	end
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 mod leg
+	name_I18N <Leg>
 	armor 2
 end
 
 ARCH Dragon Viper
+	name <Dragon Viper>
+	name_I18N <Dragon Viper>
 SDL_SPRITE <monster_serpent.png>
 roguechar <S>
 type <swamp water dark exotic reptile>
@@ -3290,28 +4039,35 @@ skill 10 7
 skill 12 3
 skill 36 7
 mod head
+	name_I18N <Head>
 	armor 4
 	sub
 		gear 4 0 7
 		name <Fangs>
+		name_I18N <Fangs>
 		type <POISON>
 		Recharge 5
 		Acc 2
 
 		BeamGun 8
 		name <Venom Spray>
+		name_I18N <Venom Spray>
 		type <Line POISON>
 		BV 1
 		recharge 3
 		range 6
 	end
 mod body
+	name_I18N <Body>
 	armor 4
 mod tail
+	name_I18N <Tail>
 	armor 4
 end
 
 ARCH Swamp Viper
+	name <Swamp Viper>
+	name_I18N <Swamp Viper>
 SDL_SPRITE <monster_serpent.png>
 SDL_COLORS <84 97 85  191 205 229  244 206 48>
 roguechar <S>
@@ -3323,21 +4079,27 @@ skill 8 3
 skill 9 4
 skill 10 2
 mod head
+	name_I18N <Head>
 	armor 2
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 		type <POISON>
 		Acc 1
 	end
 mod body
+	name_I18N <Body>
 	armor 2
 mod tail
+	name_I18N <Tail>
 	armor 2
 end
 
 
 ARCH Dragon Serpent
+	name <Dragon Serpent>
+	name_I18N <Dragon Serpent>
 SDL_SPRITE <monster_serpent.png>
 SDL_COLORS <36 46 22  200 50 0  56 28 81>
 genepool <DRAGON>
@@ -3367,25 +4129,32 @@ skill 10 1
 skill 13 2
 skill 36 3
 mod head
+	name_I18N <Head>
 	armor 1
 	sub
 		gear 4 3 4
 		name <Flame Breath>
+		name_I18N <Flame Breath>
 		stat 1 4
 		stat 3 1
 		stat 4 2
 
 		gear 4 0 5
 		name <Fangs>
+		name_I18N <Fangs>
 		stat 3 5
 	end
 mod body
+	name_I18N <Body>
 	armor 1
 mod tail
+	name_I18N <Tail>
 	armor 1
 end
 
 ARCH Flying Polyp
+	name <Flying Polyp>
+	name_I18N <Flying Polyp>
 roguechar <j>
 SDL_SPRITE <monster_jelly.png>
 SDL_COLORS <235 150 0 208 30 90 0 0 0>
@@ -3399,23 +4168,29 @@ skill 13 3
 skill 36 4
 type <Air Mutant>
 mod body
+	name_I18N <Body>
 	sub
 		BeamGun 1
 		name <Brain Beam>
+		name_I18N <Brain Beam>
 		range 6
 		type <STONE STUN LINE ARMORIGNORE MYSTERY>
 
 		EMelee 7
 		name <Tendril>
+		name_I18N <Tendril>
 		Type <FLAIL RUST EXTEND>
 
 		EMelee 7
 		name <Tendril>
+		name_I18N <Tendril>
 		Type <FLAIL RUST EXTEND>
 	end
 end
 
 ARCH Stinger
+	name <Stinger>
+	name_I18N <Stinger>
 roguechar <j>
 SDL_SPRITE <monster_jelly.png>
 SDL_COLORS <170 150 235 122 88 199 0 0 0>
@@ -3427,22 +4202,28 @@ skill 13 8
 skill 36 4
 type <Water Sea Mutant>
 mod body
+	name_I18N <Body>
 	sub
 		EMelee 7
 		name <Tendril>
+		name_I18N <Tendril>
 		Type <POISON EXTEND>
 
 		EMelee 7
 		name <Tendril>
+		name_I18N <Tendril>
 		Type <POISON EXTEND>
 
 		EMelee 7
 		name <Tendril>
+		name_I18N <Tendril>
 		Type <POISON EXTEND>
 	end
 end
 
 ARCH Green Jelly
+	name <Green Jelly>
+	name_I18N <Green Jelly>
 SDL_SPRITE <monster_blob.png>
 SDL_COLORS <136 141 80  244 216 28  244 216 28>
 roguechar <j>
@@ -3455,24 +4236,30 @@ skill 12 3
 skill 13 10
 skill 36 29
 mod body
+	name_I18N <Body>
 	sub
 		% The tentacles act like EMWs since they go through armor
 		gear 4 1 5
 		stat 1 2
 		name <Tendril>
+		name_I18N <Tendril>
 		type <POISON>
 		gear 4 1 5
 		stat 1 2
 		name <Tendril>
+		name_I18N <Tendril>
 		type <POISON>
 		gear 4 1 5
 		stat 1 2
 		name <Tendril>
+		name_I18N <Tendril>
 		type <POISON>
 	end
 end
 
 ARCH Icky Slime
+	name <Icky Slime>
+	name_I18N <Icky Slime>
 SDL_SPRITE <monster_blob.png>
 SDL_COLORS <168 153 230  166 47 32  166 47 32>
 roguechar <j>
@@ -3482,18 +4269,24 @@ size 2
 skill 8 1
 skill 36 15
 mod body
+	name_I18N <Body>
 	sub
 		% The tentacles act like EMWs since they go through armor
 		gear 4 1 1
 		name <Tendril>
+		name_I18N <Tendril>
 		gear 4 1 1
 		name <Tendril>
+		name_I18N <Tendril>
 		gear 4 1 1
 		name <Tendril>
+		name_I18N <Tendril>
 	end
 end
 
 ARCH Dragon Rat
+	name <Dragon Rat>
+	name_I18N <Dragon Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <55 153 93 174 68 42 221 0 132>
@@ -3521,50 +4314,64 @@ skill 12 4
 skill 13 10
 skill 36 7
 mod head
+	name_I18N <Head>
 	armor 3
 	sub
 		gear 4 0 5
 		name <Fangs>
+		name_I18N <Fangs>
 		stat 3 1
 
 		gear 4 3 2
 		name <Flame Breath>
+		name_I18N <Flame Breath>
 		type <SCATTER BURN>
 		stat 1 2
 		stat 3 1
 		stat 4 4
 	end
 mod body
+	name_I18N <Body>
 	armor 3
 mod leg
 	armor 3
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 	sub
 		gear 4 0 4
 		name <Claws>
+		name_I18N <Claws>
 	end
 mod leg
 	armor 3
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 	sub
 		gear 4 0 4
 		name <Claws>
+		name_I18N <Claws>
 	end
 mod leg
 	armor 3
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	armor 3
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 	armor 3
 	sub
 		gear 4 0 5
 		name <Tail Spike>
+		name_I18N <Tail Spike>
 	end
 end
 
 ARCH Death Rat
+	name <Death Rat>
+	name_I18N <Death Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <119 123 178 234 195 0 217 103 126>
@@ -3587,40 +4394,52 @@ skill 9 4
 skill 10 6
 skill 12 2
 mod head
+	name_I18N <Head>
 	armor 1
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 	end
 mod body
+	name_I18N <Body>
 	armor 1
 mod leg
 	armor 1
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 	sub
 		gear 4 0 3
 		name <Claws>
+		name_I18N <Claws>
 		stat 3 1
 	end
 mod leg
 	armor 1
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 	sub
 		gear 4 0 3
 		name <Claws>
+		name_I18N <Claws>
 		stat 3 1
 	end
 mod leg
 	armor 1
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	armor 1
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 	armor 1
 end
 
 ARCH Two Headed Rat
+	name <Two Headed Rat>
+	name_I18N <Two Headed Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <174 68 42 234 195 0 217 123 166>
@@ -3644,29 +4463,41 @@ skill 10 2
 skill 12 6
 skill 13 5
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 	end
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 end
 
 
 ARCH Plague Rat
+	name <Plague Rat>
+	name_I18N <Plague Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <167 144 59 110 133 62 217 132 217>
@@ -3689,29 +4520,39 @@ skill 10 2
 skill 12 1
 skill 13 5
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 6
 		name <Fangs>
+		name_I18N <Fangs>
 		type <Sickness>
 		recharge 1
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 	type <Sickness>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 	type <Sickness>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 	type <Sickness>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 	type <Sickness>
 mod tail
+	name_I18N <Tail>
 end
 
 ARCH Radioactive Rat
+	name <Radioactive Rat>
+	name_I18N <Radioactive Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <65 174 42 65 174 42 220 250 26>
@@ -3720,27 +4561,37 @@ statline 8 1 9 8 6 5 2 2
 size 2
 skill 8 3
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 9
 		name <Self-Destruct>
+		name_I18N <Self-Destruct>
 		Acc 1
 		recharge 5
 		mass -15
 		type <ArmorPiercing Blast 3>
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 end
 
 ARCH Thunder Rat
+	name <Thunder Rat>
+	name_I18N <Thunder Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <234 195 0 125 120 110 217 123 166>
@@ -3757,16 +4608,20 @@ skill 10 6
 skill 12 5
 skill 13 3
 mod head
+	name_I18N <Head>
 armor 1
 	sub
 		gear 4 0 5
 		name <Fangs>
+		name_I18N <Fangs>
 	end
 mod body
+	name_I18N <Body>
 armor 1
 	sub
 		gear 4 3 9
 		name <Lightning Storm>
+		name_I18N <Lightning Storm>
 		Range 8
 		Recharge 1
 		BV 5
@@ -3775,20 +4630,26 @@ armor 1
 mod leg
 armor 1
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 armor 1
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 armor 1
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 armor 1
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 armor 1
 	sub
 		gear 4 3 7
 		name <Lightning Bolt>
+		name_I18N <Lightning Bolt>
 		Range 6
 		Recharge 3
 		type <HAYWIRE>
@@ -3796,6 +4657,8 @@ armor 1
 end
 
 ARCH Electric Rat
+	name <Electric Rat>
+	name_I18N <Electric Rat>
 roguechar <r>
 genepool <E-RAT>
 EvolveAt 3000
@@ -3823,24 +4686,33 @@ skill 10 2
 skill 13 1
 skill 27 3
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 1
 		name <Fangs>
+		name_I18N <Fangs>
 		stat 3 1
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 	sub
 		gear 4 3 2
 		name <Lightning Bolt>
+		name_I18N <Lightning Bolt>
 		Range 2
 		Recharge 3
 		type <HAYWIRE>
@@ -3849,6 +4721,8 @@ end
 
 
 ARCH Rat
+	name <Rat>
+	name_I18N <Rat>
 roguechar <r>
 SDL_SPRITE <monster_rat.png>
 SDL_COLORS <174 68 42 174 68 42 217 123 166>
@@ -3871,20 +4745,28 @@ skill 9 2
 skill 10 1
 skill 12 1
 mod head
+	name_I18N <Head>
 	sub
 		gear 4 0 2
 		name <Fangs>
+		name_I18N <Fangs>
 		stat 3 1
 	end
 mod body
+	name_I18N <Body>
 mod leg
 	name <Right Front Leg>
+	name_I18N <Right Front Leg>
 mod leg
 	name <Left Front Leg>
+	name_I18N <Left Front Leg>
 mod leg
 	name <Right Rear Leg>
+	name_I18N <Right Rear Leg>
 mod leg
 	name <Left Rear Leg>
+	name_I18N <Left Rear Leg>
 mod tail
+	name_I18N <Tail>
 end
 

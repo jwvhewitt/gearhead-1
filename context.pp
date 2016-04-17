@@ -32,6 +32,8 @@ var
 	Text_Messages: SAttPtr;
 	Console_History: SAttPtr;
 
+Procedure WriteMBCharStr( const arg_msg: String; Xwidth: Integer );
+
 Function RPGKey: Char;
 Function DirKey: Integer;
 Procedure EndOfGameMoreKey;
@@ -47,7 +49,87 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 
 implementation
 
-uses crt,texutil,ui4gh,congfx;
+uses crt,termenc,texutil,ui4gh,congfx;
+
+Procedure WriteMBCharStr( const arg_msg: String; Xwidth: Integer );
+	{ NOTE: In CJK, there are many charctors, one charactor have double size for one ANK charactor and data length is 3 or 4 bytes. }
+	{ NOTE: But, a function Write() clipped by data length. }
+	{ NOTE: FPC's unicode functions is not stable, is its? }
+const
+	tmsgLen = 288; { 254; }
+
+var
+	msg: String;
+	tmsg: Array[0..tmsgLen] of Char;
+	pmsg, ptmsg: PChar;
+	MaxLen: Integer;
+	P, lastP: Integer;
+	X, Y: Integer;
+	Len: Integer;
+
+begin
+	if SYSTEM_CHARSET = TERMINAL_CHARSET then begin
+		if TERMINAL_bidiRTL then begin
+			msg := Conv_bidiRTL(arg_msg);
+		end else begin
+			msg := arg_msg;
+		end;
+	end else begin
+		ptmsg := tmsg;
+		if TERMINAL_bidiRTL then begin
+			pmsg := QuickPCopy(Conv_bidiRTL(arg_msg));
+		end else begin
+			pmsg := QuickPCopy(arg_msg);
+		end;
+		Conv_ToTenc( pmsg, Length(arg_msg), ptmsg, tmsgLen );
+		Dispose( pmsg );
+		msg := StrPas( tmsg );
+	end;
+
+	MaxLen := Length(msg);
+	P := 1;	lastP := 1;
+	X := WhereX;	Y := WhereY;
+	if TERMINAL_bidiRTL and (0 < Xwidth) then begin
+		X := X + Xwidth - WidthMBCharStr(msg);
+		if X < GOTOXY_MIN then begin
+			X := GOTOXY_MIN;
+		end;
+		GotoXY(X,Y);
+	end;
+
+{$IF DEFINED(PASCAL_WRITE_BUG_HACK)}
+	while (P <= MaxLen) do begin
+		Len := LengthMBChar( msg[P], TENC );
+		if 0 < Len then begin
+			if Len <= 2 then begin
+				{ BUG: Display width is mistook if use JISx0201-KANA. }
+				P := P + Len;
+				X := X + Len;
+			end else begin
+				Write(Copy(msg,lastP,P-lastP+len));
+				P := P + Len;
+				lastP := P;
+				X := X + 2;
+				GotoXY(X,Y+1);
+				if (Y+1) <> WhereY then begin
+					GotoXY(X,Y-1);
+					if (Y-1) <> WhereY then begin
+						GotoXY(X+2,Y);
+					end;
+				end;
+				GotoXY(X,Y);
+			end;
+		end else begin
+			Inc(P);
+			Inc(X);
+		end;
+	end;
+	if lastP < P then Write(Copy(msg,lastP,MaxLen-lastP+1));
+{$ELSE PASCAL_WRITE_BUG_HACK}
+	Write( msg );
+{$ENDIF PASCAL_WRITE_BUG_HACK}
+end;
+
 
 Function RPGKey: Char;
 	{Read a keypress from the keyboard. Convert it into a form}
@@ -137,7 +219,7 @@ var
 	X,Y: Integer;
 begin
 	{ Figure out the coordinates for centered display. }
-	X := ( ScreenZone[Z,3] + ScreenZone[Z,1] ) div 2 - ( Length( msg ) div 2 ) + 1;
+	X := ( ScreenZone[Z,3] + ScreenZone[Z,1] ) div 2 - ( WidthMBCharStr( msg ) div 2 ) + 1;
 	Y := ( ScreenZone[Z,4] + ScreenZone[Z,2] ) div 2;
 
 	{ Actually do the output. }
@@ -146,7 +228,7 @@ begin
 	if Y < 1 then Y := 1;
 	GotoXY( X , Y );
 	TextColor( C );
-	Write(msg);
+	WriteMBCharStr(msg,0);
 end;
 
 Procedure GameMSG( msg: string; X1,Y1,X2,Y2,C: Byte );  {not const-able}
@@ -156,6 +238,9 @@ var
 	NextWord: String;
 	THELine: String;	{The line under construction.}
 	LC: Boolean;		{Loop Condition.}
+	LW_I18N: Boolean;	{Is the last word I18N character?}
+	CW_I18N: Boolean;	{Is the current word I18N character?}
+	DItS: Boolean;		{Do insert the space, or not.}
 begin
 	{ CLean up the message a bit. }
 	DeleteWhiteSpace( msg );
@@ -170,7 +255,8 @@ begin
 	Width := X2 - X1;
 
 	{THELine = The first word in this iteration}
-	THELine := ExtractWord( msg );
+	LW_I18N := False;
+	THELine := ExtractWordForPrint( msg, DItS, CW_I18N );
 
 	{Start the main processing loop.}
 	while TheLine <> '' do begin
@@ -179,12 +265,22 @@ begin
 
 		{ Start building the line. }
 		repeat
-			NextWord := ExtractWord( Msg );
+			NextWord := ExtractWordForPrint( Msg, DItS, CW_I18N );
 
-			if Length(THEline + ' ' + NextWord) < Width then
-				THEline := THEline + ' ' + NextWord
-			else
+			if (False = LW_I18N) and (False = CW_I18N) then begin
+				DItS := True;
+			end;
+			LW_I18N := CW_I18N;
+			if DItS then begin
+				if WidthMBCharStr(THEline + ' ') <= Width then begin
+					THEline := THEline + ' ';
+				end;
+			end;
+			if WidthMBCharStr(THEline + NextWord) <= Width then begin
+				THEline := THEline + NextWord;
+			end else begin
 				LC := False;
+			end;
 
 		until (not LC) or (NextWord = '') or ( TheLine[Length(TheLine)] = #13 );
 
@@ -192,14 +288,15 @@ begin
 		if ( TheLine[Length(TheLine)] = #13 ) then begin
 			{ Display the line break as a space. }
 			TheLine[Length(TheLine)] := ' ';
-			NextWord := ExtractWord( msg );
+			NextWord := ExtractWordForPrint( msg, DItS, CW_I18N );
 		end;
 
 		{ Output the line. }
 		if NextWord = '' then begin
-			Write(THELine);
+			WriteMBCharStr(THELine,Width);
 		end else begin
-			WriteLn(THELine);
+			WriteMBCharStr(THELine,Width);
+			WriteLn;
 		end;
 
 		{ Prepare for the next iteration. }
@@ -225,6 +322,10 @@ var
 	THELine: String;	{The line under construction.}
 	LC: Boolean;		{Loop Condition.}
 	SA: SAttPtr;
+	LW_I18N: Boolean;	{Is the last word I18N ?}
+	CW_I18N: Boolean;	{Is the current word I18N ?}
+	DItS: Boolean;		{Do insert the space, or not.}
+	SL: SAttPtr;
 begin
 	{ CLean up the message a bit. }
 	DeleteWhiteSpace( msg );
@@ -242,7 +343,8 @@ begin
 	Width := ScreenZone[ZONE_Dialog,3] - ScreenZone[ZONE_Dialog,1];
 
 	{THELine = The first word in this iteration}
-	THELine := ExtractWord( msg );
+	LW_I18N := False;
+	THELine := ExtractWordForPrint( msg, DItS, CW_I18N );
 
 	{Start the main processing loop.}
 	while TheLine <> '' do begin
@@ -251,12 +353,22 @@ begin
 
 		{ Start building the line. }
 		repeat
-			NextWord := ExtractWord( Msg );
+			NextWord := ExtractWordForPrint( Msg, DItS, CW_I18N );
 
-			if Length(THEline + ' ' + NextWord) < Width then
-				THEline := THEline + ' ' + NextWord
-			else
+			if (False = LW_I18N) and (False = CW_I18N) then begin
+				DItS := True;
+			end;
+			LW_I18N := CW_I18N;
+			if DItS then begin
+				if WidthMBCharStr(THEline + ' ') <= Width then begin
+					THEline := THEline + ' ';
+				end;
+			end;
+			if WidthMBCharStr(THEline + NextWord) <= Width then begin
+				THEline := THEline + NextWord;
+			end else begin
 				LC := False;
+			end;
 
 		until (not LC) or (NextWord = '') or ( TheLine[Length(TheLine)] = #13 );
 
@@ -264,13 +376,11 @@ begin
 		if ( TheLine[Length(TheLine)] = #13 ) then begin
 			{ Display the line break as a space. }
 			TheLine[Length(TheLine)] := ' ';
-			NextWord := ExtractWord( msg );
+			NextWord := ExtractWordForPrint( msg, DItS, CW_I18N );
 		end;
 
 		{ Output the line. }
 		if TheLine <> '' then begin
-			writeln;
-			write( TheLine );
 			if NumSAtts( Console_History ) >= Console_History_Length then begin
 				SA := Console_History;
 				RemoveSAtt( Console_History , SA );
@@ -283,26 +393,65 @@ begin
 
 	end; { while msg <> '' }
 
-	{Restore the clip window to its maximum size.}
+	{ NOTE: In CJK, there are many charctors, one charactor have double size for one ANK charactor and data length is 3 or 4 bytes. }
+	{ NOTE: But, a function Writeln() fail scrolling these charactors. }
+	{ NOTE: FPC's unicode functions is not stable, is its? }
+
+	ClrZone( ZONE_Dialog );
 	MaxClipZone;
+
+	{ Restore the console display. }
+	GotoXY( ScreenZone[ ZONE_Dialog , 1 ] , ScreenZone[ ZONE_Dialog , 2 ] -1 );
+	TextColor( Green );
+	SL := RetrieveSAtt( Console_History , NumSAtts( Console_History ) - ScreenRows + ScreenZone[ ZONE_Dialog , 2 ] );
+	if SL = Nil then SL := Console_History;
+	while SL <> Nil do begin
+		writeln;
+		WriteMBCharStr( SL^.Info, Width );
+		SL := SL^.Next;
+	end;
 end;
 
 Function GetStringFromUser( const Prompt: String ): String;
 	{ Does what it says. }
 var
 	it: String;
+	RK: Char;
+	state: ShortInt = 0;
+	mbchar_work: String = '';
+	MaxInputWidth: Integer = 0;
+	X: Integer;
 begin
 	DrawZoneBorder( ScreenZone[ ZONE_TextInput , 1 ] - 1 , ScreenZone[ ZONE_TextInput , 2 ] -1 , ScreenZone[ ZONE_TextInput , 3 ] + 1 , ScreenZone[ ZONE_TextInput , 4 ] + 1 , LightCyan );
 	ClrZone( ZONE_TextInput );
-	GotoXY( ( ScreenZone[ZONE_TextInput,3] + ScreenZone[ZONE_TextInput,1] ) div 2 - ( Length( Prompt ) div 2 ) + 1 , ScreenZone[ ZONE_TextInput , 4 ] );
+	X := ( ScreenZone[ZONE_TextInput,3] + ScreenZone[ZONE_TextInput,1] ) div 2 - ( WidthMBCharStr( Prompt ) div 2 ) + 1;
+	if X < GOTOXY_MIN then begin
+		X := GOTOXY_MIN;
+	end;
+	GotoXY( X, ScreenZone[ ZONE_TextInput , 4 ] );
 	TextColor( InfoGreen );
-	Write( Prompt );
+	WriteMBCharStr( Prompt, 0 );
 	TextColor( InfoHilight );
 	CursorOn;
 	ClipZone( ZONE_TextInput );
 
-	GotoXY( 1 , 1 );
-	ReadLn( it );
+	it := '';
+	MaxInputWidth := ScreenZone[ ZONE_TextInput , 3 ] - ScreenZone[ ZONE_TextInput , 1 ];
+	if 127 < MaxInputWidth then MaxInputWidth := 127;
+	repeat
+		if TERMINAL_bidiRTL then begin
+			GotoXY( 1, 1 );
+		end else begin
+			GotoXY( 1 + WidthMBCharStr(it) , 1 );
+		end;
+		repeat
+			RK := ReadKey;
+			RK := EditMBCharStr( it, 127, MaxInputWidth, RK, NIL, state, mbchar_work );
+		until not(RK = #255);
+		GotoXY( 1 , 1 );
+		ClrEOL;
+		WriteMBCharStr( it, MaxInputWidth );
+	until (RK = #10) or (RK = #13) or (RK = #27);
 
 	CursorOff;
 	ClrZone( ZONE_Map );
@@ -335,6 +484,7 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 	Procedure DisplayTextHere;
 	var
 		CLine: SAttPtr;	{ Current Line }
+		trimedlength: integer;
 	begin
 		{ Error check. }
 		if FirstLine < 1 then FirstLine := 1
@@ -345,7 +495,11 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer );
 		while ( WhereY < ( ScreenRows - 1 ) ) do begin
 			ClrEOL;
 			if CLine <> Nil then begin
-				writeln( Copy( CLine^.Info , 1 , ScreenColumns - 2 ) );
+				trimedlength := MBCharTrimedLength( CLine^.Info, ScreenColumns - 2 );
+				if (0 < trimedlength) then begin
+					WriteMBCharStr( Copy(CLine^.Info,1,trimedlength), ScreenColumns );
+				end;
+				WriteLn;
 				CLine := CLine^.Next;
 			end else begin
 				writeln;
@@ -359,7 +513,7 @@ begin
 	GotoXY( 1 , ScreenROws );
 	TextColor( LightGreen );
 	TextBackground( Black );
-	Write( MsgString( 'MORETEXT_Prompt' ) );
+	WriteMBCharStr( MsgString( 'MORETEXT_Prompt' ), ScreenColumns );
 
 	{ Display the screen. }
 	TextColor( LightGray );

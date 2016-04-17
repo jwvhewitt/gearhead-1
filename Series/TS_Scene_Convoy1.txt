@@ -125,6 +125,7 @@ end
 inv
 	GroundHugger 8
 	name <Heavy Transport>
+	name_I18N <>
 	MidX
 	MidY
 	update <if= V1 0 GrabSource GSetNAtt 4 2 L2 V= 1 1>
@@ -132,18 +133,24 @@ inv
 	SetTeam 3
 	sub
 		mod Body
+		name_I18N <>
 		armor 8
 		mass 81
 		sub
 			Gyro 1
+			name_I18N <>
 			Engine 8
+			name_I18N <>
 			Sensor 1
+			name_I18N <>
 			CPIT
+			name_I18N <>
 			sub
 				NPC Trucker
 				SetPersona -1
 			end
 			hoverjet 6
+			name_I18N <>
 		end
 	end
 

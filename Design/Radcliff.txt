@@ -1,28 +1,40 @@
 Battroid 6
 Name <Radcliff>
 Desig <GHA-05b>
+Desig_I18N <GHA-05b>
 SDL_Sprite <btr_radcliff.png>
 desc <An artillery battroid.>
 
 Mod Head
+	Name_I18N <>
 	Size 5
 	Armor 4
 	Mass -1
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
 		Sensor 6
+		Name_I18N <>
 
 		ECM 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 6
 	sub
+
+		Engine 6
+		Name_I18N <>
+
 		TarComp 4
+		Name_I18N <>
 
 		Gyro 3
+		Name_I18N <>
 
 		STC LAS-5
 
@@ -31,6 +43,7 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 5
 	Armor 6
 	sub
@@ -38,21 +51,25 @@ Mod Arm
 
 		MLauncher 10
 		Name <Superheavy Missile>
+		Name_I18N <>
 		Type <BLAST 5 BRUTAL>
 		Range 10
 		Acc 2
 		Magazine 1
 		sub
 			Rockets 10
+			Name_I18N <>
 		end
 	end
 	inv
 		ArmArmor 3
+		Name_I18N <>
 		Mass -2
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 5
 	Armor 6
 	sub
@@ -60,25 +77,30 @@ Mod Arm
 
 		MLauncher 10
 		Name <Superheavy Missile>
+		Name_I18N <>
 		Type <BLAST 5 BRUTAL>
 		Range 10
 		Acc 2
 		Magazine 1
 		sub
 			Rockets 10
+			Name_I18N <>
 		end
 	end
 	inv
 		ArmArmor 3
+		Name_I18N <>
 		Mass -2
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 6
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 		inv
 			STC LRL-32
 		end
@@ -86,10 +108,12 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 6
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 		inv
 			STC LRL-32
 		end
@@ -97,29 +121,35 @@ Mod Leg
 
 Mod Storage
 	Name <Right Pod>
+	Name_I18N <>
 	Armor 5
 	sub
 		MLauncher 5
 		Name <Heavy Missiles>
+		Name_I18N <>
 		Type <SWARM>
 		Range 6
 		Magazine 24
 		sub
 			Rockets 5
+			Name_I18N <>
 		end
 	end
 
 Mod Storage
 	Name <Left Pod>
+	Name_I18N <>
 	Armor 5
 	sub
 		MLauncher 5
 		Name <Heavy Missiles>
+		Name_I18N <>
 		Type <SWARM>
 		Range 6
 		Magazine 24
 		sub
 			Rockets 5
+			Name_I18N <>
 		end
 	end
 end

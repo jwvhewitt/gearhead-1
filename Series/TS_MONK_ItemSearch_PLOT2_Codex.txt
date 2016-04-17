@@ -56,6 +56,7 @@ end
 inv
 	STC BOOKSHELF-1
 	name <The Codex>
+	name_I18N <The Codex>
 	% V1 = SkXP to award
 	% V2 = Skill to improve
 	use <ifYesNo 102 103 104 Goto GoPickSkill>

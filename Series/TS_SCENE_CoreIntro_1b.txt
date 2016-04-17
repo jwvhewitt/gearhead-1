@@ -12,7 +12,7 @@ Scene 0 0
 	GoCheckL3 <if= L3 1 TORD 3 FOL PCUID L= 3 2>
 
 	% L2 = Got XP for science skill
-	% L3 = Have discovered cannister
+	% L3 = Have discovered canister
 	% L10 = NPC CID
 
 sub
@@ -57,46 +57,51 @@ sub
 end
 inv
 	STC BIOTANK
-	name <Storage Cannister>
+	name <Storage Canister>
+	name_I18N <Storage Canister>
 	home <Storage 2>
 	use <Print 1 L= 3 1>
-	Msg1 <It's a strange metal cannister of some kind.>
+	Msg1 <It's a strange metal canister of some kind.>
 	Clue29 <L= 3 1 if= L2 0 else GoSeenBefore if= V1 1 else GoSeenBefore V= 1 1 ifG Skroll 29 7 else GoSeenBefore XPV 100 Print 2 L= 2 1>
 	GoSeenBefore <Print 1>
 	Msg2 <This is a bio-stasis chamber, generally used for transporting dangerous life-forms. Whatever is inside of it could not possibly be good.>
 
 	STC BIOTANK
-	name <Storage Cannister>
+	name <Storage Canister>
+	name_I18N <Storage Canister>
 	home <Storage 2>
 	use <Print 1 L= 3 1>
-	Msg1 <It's a strange metal cannister of some kind.>
+	Msg1 <It's a strange metal canister of some kind.>
 	Clue29 <L= 3 1 if= L2 0 else GoSeenBefore if= V1 1 else GoSeenBefore V= 1 1 ifG Skroll 29 7 else GoSeenBefore XPV 100 Print 2 L= 2 1>
 	GoSeenBefore <Print 1>
 	Msg2 <This is a bio-stasis chamber, generally used for transporting dangerous life-forms. Whatever is inside of it could not possibly be good.>
 
 	STC BIOTANK
-	name <Storage Cannister>
+	name <Storage Canister>
+	name_I18N <Storage Canister>
 	home <Storage 2>
 	use <Print 1 L= 3 1>
-	Msg1 <It's a strange metal cannister of some kind.>
+	Msg1 <It's a strange metal canister of some kind.>
 	Clue29 <L= 3 1 if= L2 0 else GoSeenBefore if= V1 1 else GoSeenBefore V= 1 1 ifG Skroll 29 7 else GoSeenBefore XPV 100 Print 2 L= 2 1>
 	GoSeenBefore <Print 1>
 	Msg2 <This is a bio-stasis chamber, generally used for transporting dangerous life-forms. Whatever is inside of it could not possibly be good.>
 
 	STC BIOTANK
-	name <Storage Cannister>
+	name <Storage Canister>
+	name_I18N <Storage Canister>
 	home <Storage 1>
 	use <Print 1 L= 3 1>
-	Msg1 <It's a strange metal cannister of some kind.>
+	Msg1 <It's a strange metal canister of some kind.>
 	Clue29 <L= 3 1 if= L2 0 else GoSeenBefore if= V1 1 else GoSeenBefore V= 1 1 ifG Skroll 29 6 else GoSeenBefore XPV 100 Print 2 L= 2 1>
 	GoSeenBefore <Print 1>
 	Msg2 <This is a bio-stasis chamber, generally used for transporting dangerous life-forms. Whatever is inside of it could not possibly be good.>
 
 	STC BIOTANK
-	name <Storage Cannister>
+	name <Storage Canister>
+	name_I18N <Storage Canister>
 	home <Storage 1>
 	use <Print 1 L= 3 1>
-	Msg1 <It's a strange metal cannister of some kind.>
+	Msg1 <It's a strange metal canister of some kind.>
 	Clue29 <L= 3 1 if= L2 0 else GoSeenBefore if= V1 1 else GoSeenBefore V= 1 1 ifG Skroll 29 7 else GoSeenBefore XPV 100 Print 2 L= 2 1>
 	GoSeenBefore <Print 1>
 	Msg2 <This is a bio-stasis chamber, generally used for transporting dangerous life-forms. Whatever is inside of it could not possibly be good.>

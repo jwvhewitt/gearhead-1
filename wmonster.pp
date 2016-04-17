@@ -241,7 +241,7 @@ begin
 	{ process them. }
 	While DosError = 0 do begin
 		{ Load this mecha design file from disk. }
-		Assign( F , Design_Directory + SRec.Name );
+		Assign( F , Design_Directory + TextDecode(SRec.Name) );
 		reset(F);
 		DList := ReadGear(F);
 		Close(F);
@@ -253,9 +253,9 @@ begin
 			if ( Mek^.G = GG_Mecha ) then begin
 				if ( GearValue( Mek ) <= MPV ) then begin
 					Current := CreateSAtt( it );
-					Current^.Info := BStr( GearValue( Mek ) ) + ' ' + BStr( N ) + ' <' + SRec.Name + '>';
+					Current^.Info := BStr( GearValue( Mek ) ) + ' ' + BStr( N ) + ' <' + TextDecode(SRec.Name) + '>';
 				end else if ( GearValue( Mek ) < MinValFound ) or ( MinValFound = 0 ) then begin
-					MVInfo := BStr( GearValue( Mek ) ) + ' ' + BStr( N ) + ' <' + SRec.Name + '>';
+					MVInfo := BStr( GearValue( Mek ) ) + ' ' + BStr( N ) + ' <' + TextDecode(SRec.Name) + '>';
 					MinValFound := GearValue( Mek );
 				end;
 			end;

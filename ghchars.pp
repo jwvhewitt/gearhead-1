@@ -53,6 +53,7 @@ Const
 	NAG_StatImprovementLevel = 11;	{ Counts how many times a stat has been }
 					{ improved through experience. }
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	StatName: Array [1..NumGearStats] of String = (
 		'Reflexes','Body','Speed','Perception',
 		'Craft','Ego','Knowledge','Charm'
@@ -82,6 +83,7 @@ Const
     NAV_Nonbinary = 2;
     NAV_Undefined = 3;
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	GenderName: Array[0..3] of String = ( 'Male' , 'Female', 'Nonbinary', 'Undefined' );
 
 	NAS_DAge = 1;	{ CharDescription/Delta age - Offset from 20. }
@@ -111,6 +113,7 @@ Const
 	NAS_Pragmatic = -7;	{ CharDescription/ Pragmatic <-> Spiritual }
 
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	PTraitName: Array [1..Num_Personality_Traits,1..2] of String = (
 	(	'Heroic','Villainous'		),
 	(	'Lawful','Chaotic'		),
@@ -166,6 +169,7 @@ Const
 	USAGE_DominateAnimal = 5;	{ Yet another unique skill. }
 	USAGE_PickPockets = 6;		{ The same. }
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	SkillMan: Array [1..NumSkill] of SkillDesc = (
 		(	name: 'Mecha Gunnery';
 			stat: STAT_Reflexes;
@@ -429,6 +433,7 @@ Function SkillAdvCost( PC: GearPtr; CurrentLevel: Integer ): LongInt;
 
 function IsLegalCharSub( SPC, Part: GearPtr ): Boolean;
 
+Function PersonalityTraitDesc( Trait,Level: Integer; I18N: Boolean ): String;
 Function PersonalityTraitDesc( Trait,Level: Integer ): String;
 Function NPCTraitDesc( NPC: GearPtr ): String;
 
@@ -438,7 +443,7 @@ Procedure ApplyTalent( PC: GearPtr; T: Integer );
 
 implementation
 
-uses texutil;
+uses i18nmsg,texutil;
 
 Procedure InitChar(Part: GearPtr);
 	{PART is a newly created Character record.}
@@ -803,22 +808,31 @@ begin
 end;
 
 Function PersonalityTraitDesc( Trait,Level: Integer ): String;
+begin
+	PersonalityTraitDesc := PersonalityTraitDesc( Trait, Level, False );
+end;
+
+Function PersonalityTraitDesc( Trait,Level: Integer; I18N: Boolean ): String;
 	{ Return a string which describes the nature & intensity of this }
 	{ personality trait. }
 var
 	msg: String;
+	msg_pt, msg_lv: String;
 begin
 	if ( Level = 0 ) or ( Trait < 1 ) or ( Trait > Num_Personality_Traits ) then msg := ''
 	else begin
 		if Level > 0 then begin
-			msg := PTraitName[ Trait , 1 ];
+			msg_pt := I18N_Name( 'PTraitName', PTraitName[ Trait , 1 ], I18N );
 		end else begin
-			msg := PTraitName[ Trait , 2 ];
+			msg_pt := I18N_Name( 'PTraitName', PTraitName[ Trait , 2 ], I18N );
 		end;
 
-		if Abs( Level ) < 25 then msg := 'Slightly ' + msg
-		else if Abs( Level ) >= 75 then msg := 'Extremely ' + msg
-		else if Abs( Level ) >= 50 then msg := 'Very ' + msg;
+		msg_lv := I18N_MsgString( 'PersonalityTraitDesc', '', I18N );
+		if Abs( Level ) < 25 then msg_lv := I18N_MsgString( 'PersonalityTraitDesc', 'Slightly', I18N )
+		else if Abs( Level ) >= 75 then msg_lv := I18N_MsgString( 'PersonalityTraitDesc', 'Extremely', I18N )
+		else if Abs( Level ) >= 50 then msg_lv := I18N_MsgString( 'PersonalityTraitDesc', 'Very', I18N );
+
+		msg := ReplaceHash( msg_lv, msg_pt );
 	end;
 	PersonalityTraitDesc := msg;
 end;
@@ -838,6 +852,7 @@ begin
 	if ( NPC = Nil ) or ( NPC^.G <> GG_Character ) then begin
 		NPCTraitDesc := '';
 	end else begin
+		{ PATCH_I18N: Don't translate it. }
 		it := 'GENDER:' + GenderName[ NATtValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ];
 
 		T := NATtValue( NPC^.NA , NAG_CharDescription , NAS_Dage );

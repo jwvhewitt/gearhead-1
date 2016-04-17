@@ -23,6 +23,14 @@ Const
 {$ENDIF}
 {$ENDIF}
 
+	BoxUpperLeft_I18N = '+';
+	BoxUpperRight_I18N = '+';
+	BoxLowerLeft_I18N = '+';
+	BoxLowerRight_I18N = '+';
+	BoxHorizontal_I18N = '-';
+	BoxVertical_I18N = '|';
+	BoxSeperator_I18N = '~';
+
 {$IFDEF use_cp437}
 	BoxUpperLeft = #218;
 	BoxUpperRight = #191;

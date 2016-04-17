@@ -86,7 +86,7 @@ Function SelectFile( RPM: RPGMenuPtr ): String;
 
 implementation
 
-uses crt,dos,congfx,context;
+uses crt,dos,texutil,congfx,context;
 
 Function LastMenuItem(MIList: RPGMenuItemPtr): RPGMenuItemPtr;
 	{This procedure will find the last item in the linked list.}
@@ -375,6 +375,7 @@ var
 	a: RPGMenuItemPtr;		{A pointer to be used while printing.}
 	t: integer;
 	width,height: integer;		{The width of the menu display.}
+	maxwidth, trimedlength: integer;
 begin
 	{Error check- make sure the menu has items in it.}
 	if RPM^.FirstItem = Nil then Exit;
@@ -402,10 +403,15 @@ begin
 
 		GotoXY(1,t);
 
-		if T = Height then begin
-			write(Copy(a^.msg,1,width - 1));
-		end else begin
-			write(Copy(a^.msg,1,width));
+		maxwidth := width;
+		if T = Height then maxwidth := (width - 1);
+		trimedlength := MBCharTrimedLength( a^.msg, maxwidth );
+		if (0 < trimedlength) then begin
+			if (1 < Length(a^.msg)) and (#$0 = a^.msg[1]) then begin
+				WriteMBCharStr(Copy(a^.msg,2,trimedlength), maxwidth );
+			end else begin
+				WriteMBCharStr(Copy(a^.msg,1,trimedlength), maxwidth );
+			end;
 		end;
 
 		a := a^.next;
@@ -461,6 +467,7 @@ Procedure RPMUpKey(RPM: RPGMenuPtr);
 	{  displayed on the screen.}
 var
 	width: integer;		{The width of the menu window}
+	maxwidth, trimedlength: integer;
 begin
 	{Lets set up the window.}
 	SetMenuClipZone( RPM );
@@ -473,10 +480,11 @@ begin
 	TextColor(RPM^.itemcolor);
 	{Then reprint the text of the previously selected item.}
 	GotoXY(1,RPM^.selectitem - RPM^.topitem + 1);
-	if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then begin
-		write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width - 1));
-	end else begin
-		write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width));
+	maxwidth := width;
+	if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then maxwidth := (width - 1);
+	trimedlength := MBCharTrimedLength( RPMLocateByPosition(RPM,RPM^.selectitem)^.msg, maxwidth );
+	if (0 < trimedlength) then begin
+		WriteMBCharStr(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,trimedlength), maxwidth );
 	end;
 
 	{Decrement the selected item by one.}
@@ -498,10 +506,11 @@ begin
 	else begin
 		TextColor(RPM^.selcolor);
 		GotoXY(1,RPM^.selectitem - RPM^.topitem + 1);
-		if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then begin
-			write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width-1));
-		end else begin
-			write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width));
+		maxwidth := width;
+		if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then maxwidth := (width - 1);
+		trimedlength := MBCharTrimedLength( RPMLocateByPosition(RPM,RPM^.selectitem)^.msg, maxwidth );
+		if (0 < trimedlength) then begin
+			WriteMBCharStr(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,trimedlength), maxwidth );
 		end;
 
 		MaxClipZone;
@@ -520,6 +529,7 @@ Procedure RPMDownKey(RPM: RPGMenuPtr);
 	{  displayed on the screen.}
 var
 	width: integer;		{The width of the menu window}
+	maxwidth, trimedlength: integer;
 begin
 	{Lets set up the window.}
 	SetMenuClipZone( RPM );
@@ -531,10 +541,11 @@ begin
 	{Change color to the normal text color, then reprint the item's message.}
 	TextColor(RPM^.itemcolor);
 	GotoXY(1,RPM^.selectitem - RPM^.topitem + 1);
-	if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then begin
-		write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width - 1));
-	end else begin
-		write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width));
+	maxwidth := width;
+	if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then maxwidth := (width - 1);
+	trimedlength := MBCharTrimedLength( RPMLocateByPosition(RPM,RPM^.selectitem)^.msg, maxwidth );
+	if (0 < trimedlength) then begin
+		WriteMBCharStr(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,trimedlength), maxwidth );
 	end;
 
 	{Increment the selected item.}
@@ -556,10 +567,11 @@ begin
 	else begin
 		TextColor(RPM^.selcolor);
 		GotoXY(1,RPM^.selectitem - RPM^.topitem + 1);
-		if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then begin
-			write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width-1));
-		end else begin
-			write(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,width));
+		maxwidth := width;
+		if ( RPM^.selectitem - RPM^.topitem + 1 ) = MenuHeight( RPM ) then maxwidth := (width - 1);
+		trimedlength := MBCharTrimedLength( RPMLocateByPosition(RPM,RPM^.selectitem)^.msg, maxwidth );
+		if (0 < trimedlength) then begin
+			WriteMBCharStr(Copy(RPMLocateByPosition(RPM,RPM^.selectitem)^.msg,1,trimedlength), maxwidth );
 		end;
 
 		{Restore the window to its regular size.}
@@ -776,7 +788,7 @@ begin
 	FindFirst( SearchPattern , AnyFile , F );
 
 	While DosError = 0 do begin
-		AddRPGMenuItem( RPM , F.Name , N );
+		AddRPGMenuItem( RPM , TextDecode(F.Name) , N );
 		Inc(N);
 		FindNext( F );
 	end;

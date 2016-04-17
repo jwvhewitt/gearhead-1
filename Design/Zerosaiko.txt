@@ -1,133 +1,170 @@
 Battroid 5
 Name <Zerosaiko>
 Desig <Z45-60>
+Desig_I18N <Z45-60>
 SDL_Sprite <btr_zerosaiko.png>
 SDL_Portrait <mecha_zerosaiko.png>
 desc <The Zerosaiko is known as the favorite mecha of professional duelists.>
 
 Mod Head
+	Name_I18N <>
 	Size 4
 	Armor 5
 	sub
 		Sensor 5
+		Name_I18N <>
 
 		TarComp 3
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 2
+		Name_I18N <>
 		Mass -1
 		Fits <Battroid>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 5
+		Name_I18N <>
+
 		Gyro 4
+		Name_I18N <>
 		Armor 1
 
 		STC LRL-24
 
 		ArcJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Right Collar Mount>
+		Name_I18N <>
 		inv
 			STC LAS-5
 			Name <Point Cannon>
+			Name_I18N <>
 			Type <INTERCEPT>
 			Speed 1
 		end
 
 		Mount
 		Name <Left Collar Mount>
+		Name_I18N <>
 		inv
 			STC LAS-5
 			Name <Point Cannon>
+			Name_I18N <>
 			Type <INTERCEPT>
 			Speed 1
 		end
 	end
 	inv
 		BodyArmor 4
+		Name_I18N <>
 		Mass -2
 		Fits <Battroid>
 		sub
 			ArcJet 4
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 5
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 6
 			Name <Massdriver>
+			Name_I18N <>
 			Range 5
 			Magazine 20
 			sub
 				Ammo 6
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		Shield 2
+		Name_I18N <>
 		DefBonus -4
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 5
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			EMelee 9
 			Speed 3
 			Name <Beam Sword>
+			Name_I18N <>
 		end
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		Shield 2
+		Name_I18N <>
 		DefBonus -4
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 5
 	sub
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 		Mass -2
 		sub
 			ArcJet 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 5
 	sub
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 		Mass -2
 		sub
 			ArcJet 2
+			Name_I18N <>
 		end
 	end
 end

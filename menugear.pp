@@ -45,7 +45,7 @@ Procedure AlphaKeyMenu( RPM: RPGMenuPtr );
 
 implementation
 
-uses damage,effects,gearutil,ghswag,ghweapon,texutil;
+uses i18nmsg,damage,effects,gearutil,ghswag,ghweapon,texutil;
 
 Procedure BuildGearMenu( RPM: RPGMenuPtr; Master: GearPtr; G: Integer );
 	{ Search through MASTER, adding to menu RPM any part which }
@@ -127,7 +127,7 @@ var
 					if FindMaster(Part)^.Parent <> Nil then msg := msg + GearName( FindMaster( Part ) ) + ':';
 					msg := msg + GearName( Part^.Parent ) + ']';
 				end;
-				AddRPGMenuItem( RPM , msg , N , SAttValue( Part^.SA , 'DESC' ) );
+				AddRPGMenuItem( RPM, msg, N, FormatDescString(Part) );
 			end;
 			CheckAlongPath( Part^.InvCom , True );
 			CheckAlongPath( Part^.SubCom , False );
@@ -186,7 +186,7 @@ begin
 
 	while Part <> Nil do begin
 		Inc( N );
-		AddRPGMenuItem( RPM , IMString( Part ) , N , SAttValue( Part^.SA , 'DESC' ) );
+		AddRPGMenuItem( RPM, IMString(Part), N, FormatDescString(Part) );
 		if Part^.InvCom <> Nil then CountTheKids( Part^.InvCom );
 		if Part^.SubCom <> Nil then CountTheKids( Part^.SubCom );
 		Part := Part^.Next;

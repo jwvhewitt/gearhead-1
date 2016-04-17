@@ -750,6 +750,7 @@ begin
 	if ( C = Nil ) or ( C^.G <> GG_Character ) then Exit;
 
 	while TheLine <> '' do begin
+		{ PATCH_I18N: Don't translate it. }
 		CCD_Cmd := ExtractWord( TheLine );
 
 		{ Check to see if this is a gender command. }

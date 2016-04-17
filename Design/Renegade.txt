@@ -1,56 +1,74 @@
 GroundHugger 4
 Name <Renegade>
 Desig <DF-A>
+Desig_I18N <DF-A>
 SDL_Sprite <ghu_renegade.png>
 
 Mod Turret
+	Name_I18N <>
 	Armor 1
 	sub
 		Gun 2
 		Name <Chain Gun>
-        Range 4
+		Name_I18N <>
+		Range 4
 		Speed 3
 		BV 4
 		Magazine 50
 		sub
 			Ammo 2
+			Name_I18N <>
 		end
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 1
 	sub
+
+		Engine 4
+		Name_I18N <>
+
 		CPit
+		Name_I18N <>
 		Armor 1
 
 		Melee 4
 		Name <Spiked Bumper>
+		Name_I18N <>
 		Acc 1
 		Speed 1
 
 		Sensor 4
+		Name_I18N <>
 
 		Wheels 6
+		Name_I18N <>
 
 		Gyro 3
 		Name <Advanced Suspension>
+		Name_I18N <>
 	end
 
 Mod Storage
 	Name <Right Pod>
+	Name_I18N <>
 	Size 2
 	Armor 1
 	sub
 		BeamGun 4
 		Name <Laser Cannon>
+		Name_I18N <>
 	end
 
 Mod Storage
 	Name <Left Pod>
+	Name_I18N <>
 	Size 2
 	Armor 1
 	sub
 		BeamGun 4
 		Name <Laser Cannon>
+		Name_I18N <>
 	end
 end

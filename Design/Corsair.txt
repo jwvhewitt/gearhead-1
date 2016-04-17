@@ -1,29 +1,45 @@
 Battroid 4
 Name <Corsair>
 Desig <SDH-22>
+Desig_I18N <SDH-22>
 SDL_Sprite <btr_corsair.png>
 desc <At one time the Federation Defense Force mainline combat unit, the Corsair is being phased out in favor of more specialized combat units such as the Kojedo.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 
 		Sensor 5
+		Name_I18N <>
+
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Mount
+		Name_I18N <>
 		inv
 			MLauncher 5
 			Name <Rocket Launcher>
+			Name_I18N <>
 			Range 7
 			Speed 1
 			Magazine 12
 			sub
 				Rockets 5
+				Name_I18N <>
 				Type <BLAST 1>
 			end
 		end
@@ -31,9 +47,11 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			STC LAS-10
 		end
@@ -41,34 +59,42 @@ Mod Arm
 	inv
 		Shield 2
 		Name <Shoulder Shield>
+		Name_I18N <>
 		DefBonus -4
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 	end
 	inv
 		Shield 2
 		Name <Shoulder Shield>
+		Name_I18N <>
 		DefBonus -4
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	sub
 		Wheels 5
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	sub
 		Wheels 5
+		Name_I18N <>
 	end
 end

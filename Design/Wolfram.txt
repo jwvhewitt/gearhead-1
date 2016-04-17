@@ -1,36 +1,51 @@
 Battroid 5
 Name <Wolfram>
 Desig <HMC-6>
+Desig_I18N <HMC-6>
 SDL_Sprite <btr_wolfram.png>
 SDL_Portrait <mecha_wolfram.png>
 Desc <A mining robot developed from the Claymore design. The Wolfram is not designed for combat, but is often used by arena fighters who can't afford anything better yet.>
 
 Mod Head
+	Name_I18N <>
 	Armor 3
 	mass 1
 	sub
 		Sensor 3
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 3
 		Name <Mining Helmet>
+		Name_I18N <>
 		mass 1
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	mass 1
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		Mount
 		Name <Right Hardpoint>
+		Name_I18N <>
 
 		Mount
 		Name <Left Hardpoint>
+		Name_I18N <>
 		inv
 			BeamGun 7
 			Name <Mining Laser>
+			Name_I18N <>
 			Range 4
 			Acc -1
 			Speed 1
@@ -40,32 +55,39 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	mass 1
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 14
 			Name <Pick-Axe>
+			Name_I18N <>
 			Acc 1
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	mass 1
 	sub
 		Hand
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	mass 1
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	mass 1
 end

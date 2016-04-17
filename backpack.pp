@@ -70,11 +70,11 @@ Procedure FHQ_ThisWargearWasSelected( GB: GameBoardPtr; var LList: GearPtr; PC,M
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
+uses i18nmsg,ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
      sdlinfo,sdlmap,sdlmenus,ghweapon,ghintrinsic,colormenu,sdl;
 {$ELSE}
-uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
+uses i18nmsg,ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
      congfx,coninfo,conmap,conmenus,context,ghweapon,ghintrinsic;
 {$ENDIF}
@@ -404,7 +404,7 @@ begin
 			{ - The PC has the required skill. }
 			{ - The item is in need of repair (using this skill). }
 			if ( NAttValue( PC^.NA , NAG_Skill , RepairSkillIndex[N] ) > 0 ) and ( TotalRepairableDamage( Item , RepairSkillIndex[N] ) > 0 ) then begin
-				AddRPGMenuItem( RPM , MsgString( 'BACKPACK_Repair' ) + SkillMan[ RepairSkillIndex[N] ].Name , 100 + N );
+				AddRPGMenuItem( RPM , ReplaceHash( I18N_MsgString('BACKPACK_Repair'), I18N_Name('SkillMan',SkillMan[ RepairSkillIndex[N] ].Name) ), 100 + N );
 			end;
 		end;
 	end;
@@ -622,7 +622,7 @@ begin
 	if Handless( PC ) then begin
 		{ Start by checking something that other RPGs would }
 		{ just assume- does the PC have any hands? }
-		DialogMsg( 'You need hands in order to use this command.' );
+		DialogMsg( I18N_MsgString('PCGetItem','you need hands') );
 
 	end else begin
 		P := GearCurrentLocation( PC );
@@ -655,7 +655,7 @@ begin
 				DialogMsg( ReplaceHash( MsgString( 'CANT_GET_?' ) , GearName( Item ) ) );
 			end;
 		end else if Cash = 0 then begin
-			DialogMSG( 'No item found.' );
+			DialogMSG( I18N_MsgString('PCGetItem','No item found') );
 		end;
 
 		if Cash > 0 then begin
@@ -681,7 +681,7 @@ begin
 	RPMSortAlpha( InvRPM );
 
 	{ If the menu is empty, add a message saying so. }
-	If InvRPM^.NumItem < 1 then AddRPGMenuItem( InvRPM , '[no inventory items]' , -1 )
+	If InvRPM^.NumItem < 1 then AddRPGMenuItem( InvRPM , I18N_MsgString('CreateInvMenu','no inventory items') , -1 )
 	else AlphaKeyMenu( InvRPM );
 
 	{ Add the menu keys. }
@@ -707,7 +707,7 @@ begin
 	BuildEquipmentMenu( EqpRPM , PC );
 
 	{ If the menu is empty, add a message saying so. }
-	If EqpRPM^.NumItem < 1 then AddRPGMenuItem( EqpRPM , '[no equipped items]' , -1 );
+	If EqpRPM^.NumItem < 1 then AddRPGMenuItem( EqpRPM , #$0 + I18N_MsgString('CreateEqpMenu','no equipped items') , -1 );
 
 	{ Add the menu keys. }
 	AddRPGMenuKey(EqpRPM,'/',-2);
@@ -769,7 +769,7 @@ Procedure UnequipFrontend( GB: GameBoardPtr; PC , Item: GearPtr );
 	{ Simply unequip the provided item. }
 	{ PRECOND: PC and ITEM had better be correct, dagnabbit... }
 begin
-	DialogMsg( 'You unequip ' + GearName( Item ) + '.' );
+	DialogMsg( ReplaceHash( I18N_MsgString('UnequipFrontend','You unequip'), GearName(Item) ) );
 	UnequipItem( GB , PC , Item );
 end;
 
@@ -899,7 +899,7 @@ begin
 	{ Build the slot selection menu. }
 	EI_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
 	BuildSlotMenu( EI_Menu , PC , Item );
-	if EI_Menu^.NumItem < 1 then AddRPGMenuItem( EI_Menu , '[cannot equip ' + GearName( Item ) + ']' , -1 );
+	if EI_Menu^.NumItem < 1 then AddRPGMenuItem( EI_Menu , ReplaceHash( I18N_MsgString('EquipItemFrontend','cannot equip'), GearName(Item) ) , -1 );
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
@@ -913,7 +913,7 @@ begin
 
 	{ If a slot was selected, pass that info on to the workhorse. }
 	if N <> -1 then begin
-		DialogMsg( 'You equip ' + GearName( Item ) + '.' );
+		DialogMsg( ReplaceHash( I18N_MsgString('EquipItemFrontend','You equip'), GearName(Item) ) );
 		EquipItem( GB , PC , LocateGearByNumber( PC , N ) , Item );
 	end;
 end;
@@ -1001,7 +1001,7 @@ begin
 	{ Build the slot selection menu. }
 	EI_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
 	BuildSubMenu( EI_Menu , PC , Item , True );
-	if EI_Menu^.NumItem < 1 then AddRPGMenuItem( EI_Menu , '[cannot install ' + GearName( Item ) + ']' , -1 );
+	if EI_Menu^.NumItem < 1 then AddRPGMenuItem( EI_Menu , ReplaceHash( I18N_MsgString('InstallFrontend','cannot install'), GearName(Item) ) , -1 );
 
 	{ Select a slot for the item to go into. }
 	DialogMsg( GearName( Item ) + ' cmx:' + BStr( ComponentComplexity( Item ) ) + '. ' + MsgSTring( 'BACKPACK_InstallInfo' ) );
@@ -1074,7 +1074,7 @@ begin
 	{ Build the slot selection menu. }
 	IA_Menu := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InvMenu );
 	BuildSubMenu( IA_Menu , PC , Item , False );
-	if IA_Menu^.NumItem < 1 then AddRPGMenuItem( IA_Menu , '[no weapon for ' + GearName( Item ) + ']' , -1 );
+	if IA_Menu^.NumItem < 1 then AddRPGMenuItem( IA_Menu , ReplaceHash( I18N_MsgString('InstallAmmoFrontend','no weapon'), GearName(Item) ) , -1 );
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
@@ -1089,7 +1089,7 @@ begin
 	{ If a slot was selected, pass that info on to the workhorse. }
 	if N <> -1 then begin
 		Gun := LocateGearByNumber( PC , N );
-		DialogMsg( 'You load ' + GearName( Item ) + ' into ' + GearName( Gun ) + '.' );
+		DialogMsg( ReplaceHash( I18N_MsgString('InstallAmmoFrontend','You load'), GearName(Gun), GearName(Item) ) );
 		InstallAmmo( GB , PC , Gun , Item );
 	end;
 end;
@@ -1117,7 +1117,7 @@ begin
 	PC^.Next := Item;
 
 	{ Do display stuff. }
-	DialogMsg( 'You drop ' + GearName( Item ) + '.' );
+	DialogMsg( ReplaceHash( I18N_MsgString('DropFrontEnd','You drop'), GearName(Item) ) );
 end;
 
 Procedure TradeFrontend( GB: GameBoardPtr; PC , Item, LList: GearPtr );
@@ -1184,7 +1184,7 @@ begin
 	end;
 	AlphaKeyMenu( TI_Menu );
 
-	if TI_Menu^.NumItem < 1 then AddRPGMenuItem( TI_Menu , '[cannot trade ' + GearName( Item ) + ']' , -1 );
+	if TI_Menu^.NumItem < 1 then AddRPGMenuItem( TI_Menu , ReplaceHash( I18N_MsgString('TradeFrontend','cannot trade'), GearName(Item) ) , -1 );
 
 	{ Select a slot for the item to go into. }
 {$IFDEF SDLMODE}
@@ -1447,12 +1447,12 @@ begin
 		{ In order to be usable, it must be a CLUE type skill, }
 		{ and the PC must have ranks in it. }
 		if ( SkillMan[ T ].Usage = USAGE_Clue ) and ( TeamHasSkill( GB , NAV_DefPlayerTeam , T ) or HasTalent( TruePC , NAS_JackOfAll ) ) then begin
-			msg := ReplaceHash( MsgString( 'BACKPACK_ClueSkillPrompt' ) , SkillMan[ T ].Name );
-			msg := ReplaceHash( msg , GearName( Item ) );
+			msg := ReplaceHash( I18N_MsgString('BACKPACK','ClueSkillPrompt'), I18N_Name('SkillMan',SkillMan[ T ].Name), GearName(Item) );
 			AddRPGMenuItem( SkMenu , msg , T );
 		end;
 	end;
-	RPMSortAlpha( SkMenu );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( SkMenu );}
 	AddRPGMenuItem( SkMenu , MsgSTring( 'BACKPACK_CancelSkillUse' ) , -1 );
 
 {$IFDEF SDLMODE}
@@ -1485,7 +1485,7 @@ begin
 
 	end else if ( NAttValue( TruePC^.NA , NAG_Condition , NAS_Hunger ) > ( Item^.V div 2 ) ) or ( Item^.V = 0 ) then begin
 		{ Show a message. }
-		DialogMsg( ReplaceHash( ReplaceHash( MsgString( 'BACKPACK_YouAreEating' ) , GearName( TruePC ) ) , GearName( Item ) ) );
+		DialogMsg( ReplaceHash( I18N_MsgString('BACKPACK','YouAreEating'), GearName(TruePC), GearName(Item) ) );
 
 		{ Eating takes time... }
 		WaitTime := ReactionTime( TruePC ) * GearMass( Item ) + 1;
@@ -1548,17 +1548,17 @@ begin
 	if Item^.G = GG_Ammo then AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_LoadAmmo' ) , -5 );
 	if IsInvCom( Item ) then begin
 		if Item^.Parent = PC then begin
-			AddRPGMenuItem( TIWS_Menu , 'Equip ' + GearName( Item ) , -2 );
+			AddRPGMenuItem( TIWS_Menu , ReplaceHash( I18N_MsgString('ThisItemWasSelected','Equip'), GearName(Item) ), -2 );
 			if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) then begin
-				AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Install' ) + GearName( Item ) , -8 );
+				AddRPGMenuItem( TIWS_Menu , ReplaceHash( I18N_MsgString('BACKPACK','Install'), GearName(Item) ) , -8 );
 			end;
 		end else begin
-			AddRPGMenuItem( TIWS_Menu , 'Unequip ' + GearName( Item ) , -3 );
+			AddRPGMenuItem( TIWS_Menu , ReplaceHash( I18N_MsgString('ThisItemWasSelected','Unequip'), GearName(Item) ), -3 );
 		end;
 		if ( LList <> Nil ) and ( GB <> Nil ) then AddRPGMenuItem ( TIWS_Menu , MsgString( 'BACKPACK_TradeItem' ) , -6 );
 		AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_DropItem' ) , -4 );
 	end else if ( FindMaster( Item ) <> Nil ) and ( FindMaster( Item )^.G = GG_Mecha ) and CanBeExtracted( Item ) then begin
-		AddRPGMenuItem( TIWS_Menu , MsgString( 'BACKPACK_Remove' ) + GearName( Item ) , -7 );
+		AddRPGMenuItem( TIWS_Menu , ReplaceHash( I18N_MsgString('BACKPACK','Remove'), GearName(Item) ) , -7 );
 	end;
 	AddRepairOptions( TIWS_Menu , TruePC , Item );
 
@@ -1809,7 +1809,7 @@ begin
         {$ENDIF}
 		BuildGearMenu( RPM , Mek );
 		if I > 0 then SetItemByPosition( RPM , I );
-		AddRPGMenuItem( RPM , 'Exit Editor' , -1 );
+		AddRPGMenuItem( RPM , I18N_MsgString('MechaPartEditor','Exit Editor') , -1 );
 
 {$IFNDEF SDLMODE}
 		GameMsg( FullGearName( Mek ) + ' '  + MechaDescription( Mek ) , ZONE_EqpMenu , InfoGreen );
@@ -1880,7 +1880,7 @@ begin
 {$ENDIF}
 
 	BuildGearMenu( RPM , Mek );
-	AddRPGMenuItem( RPM , 'Exit Browser' , -1 );
+	AddRPGMenuItem( RPM , I18N_MsgString('MechaPartBrowser','Exit Browser') , -1 );
 
 	Repeat
 {$IFDEF SDLMODE}

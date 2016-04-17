@@ -152,6 +152,7 @@ end
 inv
 	Treasure 50
 	name <Data Slate>
+	name_I18N <Data Slate>
 	place <3>
 	use <Print 1 MoreText .txt>
 	.txt <TS_TEXT_Ladon1.txt>
@@ -159,6 +160,7 @@ inv
 
 	Treasure 10
 	name <Tattered Diary>
+	name_I18N <Tattered Diary>
 	use <Print 1 MoreText .txt>
 	.txt <TS_TEXT_Ladon2.txt>
 	Msg1 <You read the diary.>

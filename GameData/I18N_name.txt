@@ -1,0 +1,428 @@
+%%% GEARHEAD I18N NAME TABLE %%%
+
+% coninfo.pp DirStr[]
+DIR_E                           <E>
+DIR_SE                          <SE>
+DIR_S                           <S>
+DIR_SW                          <SW>
+DIR_W                           <W>
+DIR_NW                          <NW>
+DIR_N                           <N>
+DIR_NE                          <NE>
+
+% ghchars.pp StatName[]
+STATNAME_REFLEXES               <Reflexes>
+STATNAME_BODY                   <Body>
+STATNAME_SPEED                  <Speed>
+STATNAME_PERCEPTION             <Perception>
+STATNAME_CRAFT                  <Craft>
+STATNAME_EGO                    <Ego>
+STATNAME_KNOWLEDGE              <Knowledge>
+STATNAME_CHARM                  <Charm>
+
+% ghchars.pp GenderName[]
+GENDERNAME_MALE                 <Male>
+GENDERNAME_FEMALE               <Female>
+GENDERNAME_NONBINARY            <Nonbinary>
+GENDERNAME_UNDEFINED            <Undefined>
+GENDERNAME_                     <>
+
+% ghchars.pp PTraitName[]
+PTRAITNAME_HEROIC               <Heroic>
+PTRAITNAME_VILLAINOUS           <Villainous>
+PTRAITNAME_LAWFUL               <Lawful>
+PTRAITNAME_CHAOTIC              <Chaotic>
+PTRAITNAME_SOCIABLE             <Sociable>
+PTRAITNAME_SHY                  <Shy>
+PTRAITNAME_EASYGOING            <Easygoing>
+PTRAITNAME_PASSIONATE           <Passionate>
+PTRAITNAME_CHEERFUL             <Cheerful>
+PTRAITNAME_MELANCHOLY           <Melancholy>
+PTRAITNAME_RENOWNED             <Renowned>
+PTRAITNAME_WANGTTA              <Wangtta>
+PTRAITNAME_PRAGMATIC            <Pragmatic>
+PTRAITNAME_SPIRITUAL            <Spiritual>
+
+% ghchars.pp SkillMan[].name
+SKILLMAN_UNKNOWN_SKILL          <Unknown Skill>
+SKILLMAN_MECHA_GUNNERY          <Mecha Gunnery>
+SKILLMAN_MECHA_ARTILLERY        <Mecha Artillery>
+SKILLMAN_MECHA_WEAPONS          <Mecha Weapons>
+SKILLMAN_MECHA_FIGHTING         <Mecha Fighting>
+SKILLMAN_MECHA_PILOTING         <Mecha Piloting>
+SKILLMAN_SMALL_ARMS             <Small Arms>
+SKILLMAN_HEAVY_WEAPONS          <Heavy Weapons>
+SKILLMAN_ARMED_COMBAT           <Armed Combat>
+SKILLMAN_MARTIAL_ARTS           <Martial Arts>
+SKILLMAN_DODGE                  <Dodge>
+SKILLMAN_AWARENESS              <Awareness>
+SKILLMAN_INITIATIVE             <Initiative>
+SKILLMAN_VITALITY               <Vitality>
+SKILLMAN_SURVIVAL               <Survival>
+SKILLMAN_MECHA_REPAIR           <Mecha Repair>
+SKILLMAN_MEDICINE               <Medicine>
+SKILLMAN_ELECTRONIC_WARFARE     <Electronic Warfare>
+SKILLMAN_SPOT_WEAKNESS          <Spot Weakness>
+SKILLMAN_CONVERSATION           <Conversation>
+SKILLMAN_FIRST_AID              <First Aid>
+SKILLMAN_SHOPPING               <Shopping>
+SKILLMAN_BIO_TECHNOLOGY         <Bio Technology>
+SKILLMAN_GENERAL_REPAIR         <General Repair>
+SKILLMAN_CYBERTECH              <Cybertech>
+SKILLMAN_STEALTH                <Stealth>
+SKILLMAN_ATHLETICS              <Athletics>
+SKILLMAN_FLIRTATION             <Flirtation>
+SKILLMAN_INTIMIDATION           <Intimidation>
+SKILLMAN_SCIENCE                <Science>
+SKILLMAN_CONCENTRATION          <Concentration>
+SKILLMAN_MECHA_ENGINEERING      <Mecha Engineering>
+SKILLMAN_CODE_BREAKING          <Code Breaking>
+SKILLMAN_WEIGHT_LIFTING         <Weight Lifting>
+SKILLMAN_MYSTICISM              <Mysticism>
+SKILLMAN_PERFORMANCE            <Performance>
+SKILLMAN_RESISTANCE             <Resistance>
+SKILLMAN_INVESTIGATION          <Investigation>
+SKILLMAN_ROBOTICS               <Robotics>
+SKILLMAN_LEADERSHIP             <Leadership>
+SKILLMAN_DOMINATE_ANIMAL        <Dominate Animal>
+SKILLMAN_PICK_POCKETS           <Pick Pockets>
+
+% ghweapon.pp DefaultWeaponName[]
+DefaultWeaponName_Melee_Weapon          <Melee Weapon>
+DefaultWeaponName_Energy_Weapon         <Energy Weapon>
+DefaultWeaponName_Gun                   <Gun>
+DefaultWeaponName_Beam_Gun              <Beam Gun>
+DefaultWeaponName_Missile_Launcher      <Missile Launcher>
+DefaultWeaponName_Other                 <Other>
+
+% Series/RCJobs.txt
+%			Player Jobs
+JOBS_                           <Another job>
+JOBS_ARCHITECT                  <Architect>
+JOBS_FIREFIGHTER                <Firefighter>
+JOBS_CONSTRUCTION_WORKER        <Construction worker>
+JOBS_JOURNALIST                 <Journalist>
+JOBS_BANKER                     <Banker>
+JOBS_LAWYER                     <Lawyer>
+JOBS_POLITICIAN                 <Politician>
+JOBS_EXPLORER                   <Explorer>
+JOBS_BOUNTY_HUNTER              <Bounty hunter>
+JOBS_MERCENARY                  <Mercenary>
+JOBS_CYBERDOC                   <Cyberdoc>
+JOBS_GUARDIAN                   <Guardian>
+JOBS_BANDIT                     <Bandit>
+JOBS_RAVAGER                    <Ravager>
+JOBS_PIRATE                     <Pirate>
+JOBS_THIEF                      <Thief>
+JOBS_MARTIAL_ARTIST             <Martial artist>
+JOBS_MONK                       <Monk>
+JOBS_CORPORATE_EXECUTIVE        <Corporate executive>
+JOBS_CORPORATE_PILOT            <Corporate pilot>
+JOBS_CELEBRITY                  <Celebrity>
+JOBS_MECHANIC                   <Mechanic>
+JOBS_SHOPKEEPER                 <Shopkeeper>
+JOBS_COMBAT_PILOT               <Combat pilot>
+JOBS_ARENA_PILOT                <Arena pilot>
+JOBS_RECON_PILOT                <Recon pilot>
+JOBS_PARAMEDIC                  <Paramedic>
+JOBS_COMMERCIAL_PILOT           <Commercial pilot>
+JOBS_ATHLETE                    <Athlete>
+JOBS_SOLDIER                    <Soldier>
+JOBS_NINJA                      <Ninja>
+JOBS_DOCTOR                     <Doctor>
+JOBS_NURSE                      <Nurse>
+JOBS_TEST_PILOT                 <Test pilot>
+JOBS_TRUCKER                    <Trucker>
+JOBS_SCIENTIST                  <Scientist>
+JOBS_PROFESSOR                  <Professor>
+JOBS_MECHA_DESIGNER             <Mecha designer>
+JOBS_ENGINEER                   <Engineer>
+JOBS_ACTOR                      <Actor>
+JOBS_TEACHER                    <Teacher>
+JOBS_COMPUTER_PROGRAMMER        <Computer programmer>
+JOBS_HACKER                     <Hacker>
+%			NPC Jobs
+JOBS_ACE_PILOT                  <Ace Pilot>
+JOBS_AMBASSADOR                 <Ambassador>
+JOBS_ANIMAL                     <Animal>
+JOBS_ARCHAEOLOGIST              <Archaeologist>
+JOBS_ARENA_MANAGER              <Arena Manager>
+JOBS_ARTIST                     <Artist>
+JOBS_BARTENDER                  <Bartender>
+JOBS_COOK                       <Cook>
+JOBS_CAMPUS_SECURITY            <Campus Security>
+JOBS_CHIEFTAN                   <Chieftan>
+JOBS_CITIZEN                    <Citizen>
+JOBS_CORPORATE_PRESIDENT        <Corporate President>
+JOBS_CURATOR                    <Curator>
+JOBS_CYCLOPS_EXPLORER           <Cyclops Explorer>
+JOBS_CYCLOPS_GUARD              <Cyclops Guard>
+JOBS_CYCLOPS_PROTECTOR          <Cyclops Protector>
+JOBS_DEALER                     <Dealer>
+JOBS_ELDER                      <Elder>
+JOBS_EXECUTIVE_ASSISTANT        <Executive Assistant>
+JOBS_FARMER                     <Farmer>
+JOBS_FISHERMAN                  <Fisherman>
+JOBS_GARU                       <GARU>
+JOBS_GANGER                     <Ganger>
+JOBS_GRAD_STUDENT               <Grad Student>
+JOBS_GUARDIAN_CHIEF             <Guardian Chief>
+JOBS_GUARDIAN_COMMANDER         <Guardian Commander>
+JOBS_GUILDMASTER                <Guildmaster>
+JOBS_HARVESTER                  <Harvester>
+JOBS_HERBALIST                  <Herbalist>
+JOBS_HERMIT                     <Hermit>
+JOBS_HOSTESS                    <Hostess>
+JOBS_KEEPER_OF_THE_LAW          <keeper of the law>
+JOBS_LEADER                     <Leader>
+JOBS_MECHA_PILOT                <Mecha Pilot>
+JOBS_MANAGER                    <Manager>
+JOBS_MONK_LEADER                <Monk Leader>
+JOBS_MONK_LIBRARIAN             <Monk Librarian>
+JOBS_PRIEST                     <Priest>
+JOBS_PRESIDENT                  <President>
+JOBS_PRINCESS                   <Princess>
+JOBS_ROBOT                      <Robot>
+JOBS_REFORMED_PIRATE            <Reformed Pirate>
+JOBS_SECURITY_GUARD             <Security Guard>
+JOBS_SHAMAN                     <Shaman>
+JOBS_SISTER                     <Sister>
+JOBS_SLAVE_TRADER               <Slave Trader>
+JOBS_STUDENT                    <Student>
+JOBS_TALENT_AGENT               <Talent Agent>
+JOBS_TANTRIC_MECHANIC           <Tantric Mechanic>
+JOBS_BUS_DISPATCHER             <Bus Dispatcher>
+JOBS_TRAPPER                    <Trapper>
+JOBS_TRUCK_DISPATCHER           <Truck Dispatcher>
+JOBS_VILLAGER                   <Villager>
+JOBS_WARLORD                    <Warlord>
+JOBS_WARRIOR_MONK               <Warrior Monk>
+JOBS_WARRIOR                    <Warrior>
+
+% arenascript.pp , Series/ADV_FederatedTerritories.txt FACRANK
+%                               <the Solar Navy>
+FACRANK_1_0                     <Recruit>
+FACRANK_1_1                     <Private>
+FACRANK_1_2                     <Corporal>
+FACRANK_1_3                     <Sergeant>
+FACRANK_1_4                     <Lieutenant>
+FACRANK_1_5                     <Captain>
+FACRANK_1_6                     <Major>
+FACRANK_1_7                     <Colonel>
+FACRANK_1_8                     <Admiral>
+%                               <the Federation Defense Force>
+FACRANK_2_0                     <Recruit>
+FACRANK_2_1                     <Private>
+FACRANK_2_2                     <Corporal>
+FACRANK_2_3                     <Sergeant>
+FACRANK_2_4                     <Lieutenant>
+FACRANK_2_5                     <Captain>
+FACRANK_2_6                     <Major>
+FACRANK_2_7                     <Colonel>
+FACRANK_2_8                     <General>
+%                               <the Guardians>
+FACRANK_3_0                     <Recruit>
+FACRANK_3_1                     <Patrolman>
+FACRANK_3_2                     <Ranger>
+FACRANK_3_3                     <Detective>
+FACRANK_3_4                     <Sergeant>
+FACRANK_3_5                     <Junior Inspector>
+FACRANK_3_6                     <Inspector>
+FACRANK_3_7                     <Superintendent>
+FACRANK_3_8                     <Commissioner>
+%                               <Kettel Industries>
+FACRANK_4_0                     <Wage Slave>
+FACRANK_4_1                     <Employee of the Month>
+FACRANK_4_2                     <Committee Head>
+FACRANK_4_3                     <Assistant Junior Manager>
+FACRANK_4_4                     <Junior Manager>
+FACRANK_4_5                     <Manager>
+FACRANK_4_6                     <Senior Manager>
+FACRANK_4_7                     <Branch Director>
+FACRANK_4_8                     <Vice President>
+%                               <BioCorp>
+FACRANK_5_0                     <Wage Slave>
+FACRANK_5_1                     <Employee of the Month>
+FACRANK_5_2                     <Committee Head>
+FACRANK_5_3                     <Assistant Junior Manager>
+FACRANK_5_4                     <Junior Manager>
+FACRANK_5_5                     <Manager>
+FACRANK_5_6                     <Senior Manager>
+FACRANK_5_7                     <Branch Director>
+FACRANK_5_8                     <Vice President>
+%                               <RegEx Corporation>
+FACRANK_6_0                     <Wage Slave>
+FACRANK_6_1                     <Employee of the Month>
+FACRANK_6_2                     <Committee Head>
+FACRANK_6_3                     <Assistant Junior Manager>
+FACRANK_6_4                     <Junior Manager>
+FACRANK_6_5                     <Manager>
+FACRANK_6_6                     <Senior Manager>
+FACRANK_6_7                     <Branch Director>
+FACRANK_6_8                     <Vice President>
+%                               <Aegis Overlord Luna>
+FACRANK_7_0                     <Recruit>
+FACRANK_7_1                     <Private>
+FACRANK_7_2                     <Corporal>
+FACRANK_7_3                     <Sergeant>
+FACRANK_7_4                     <Lieutenant>
+FACRANK_7_5                     <Captain>
+FACRANK_7_6                     <Major>
+FACRANK_7_7                     <Colonel>
+FACRANK_7_8                     <General>
+%
+FACRANK_8_0                     <Recruit>
+FACRANK_8_1                     <Private>
+FACRANK_8_2                     <Corporal>
+FACRANK_8_3                     <Sergeant>
+FACRANK_8_4                     <Lieutenant>
+FACRANK_8_5                     <Captain>
+FACRANK_8_6                     <Major>
+FACRANK_8_7                     <Colonel>
+FACRANK_8_8                     <General>
+%                               <Clan Ironwind>
+FACRANK_9_0                     <Recruit>
+FACRANK_9_1                     <Private>
+FACRANK_9_2                     <Corporal>
+FACRANK_9_3                     <Sergeant>
+FACRANK_9_4                     <Lieutenant>
+FACRANK_9_5                     <Captain>
+FACRANK_9_6                     <Major>
+FACRANK_9_7                     <Colonel>
+FACRANK_9_8                     <General>
+%                               <the Bone Devil gang>
+FACRANK_10_0                    <Recruit>
+FACRANK_10_1                    <Private>
+FACRANK_10_2                    <Corporal>
+FACRANK_10_3                    <Sergeant>
+FACRANK_10_4                    <Lieutenant>
+FACRANK_10_5                    <Captain>
+FACRANK_10_6                    <Major>
+FACRANK_10_7                    <Colonel>
+FACRANK_10_8                    <General>
+%                               <the Federation Council>
+FACRANK_11_0                    <Recruit>
+FACRANK_11_1                    <Private>
+FACRANK_11_2                    <Corporal>
+FACRANK_11_3                    <Sergeant>
+FACRANK_11_4                    <Lieutenant>
+FACRANK_11_5                    <Captain>
+FACRANK_11_6                    <Major>
+FACRANK_11_7                    <Colonel>
+FACRANK_11_8                    <General>
+%                               <HwangSa Temple>
+FACRANK_12_0                    <Neophyte>
+FACRANK_12_1                    <Initiate>
+FACRANK_12_2                    <Devotee>
+FACRANK_12_3                    <Adept>
+FACRANK_12_4                    <Master of the Four Winds>
+FACRANK_12_5                    <Master of the World Tree>
+FACRANK_12_6                    <Master of the Silver Waves>
+FACRANK_12_7                    <Master of the Dragon's Flame>
+FACRANK_12_8                    <Master of the Sun and Moon>
+%                               <the Thieves Guild>
+FACRANK_13_0                    <Delinquent>
+FACRANK_13_1                    <Pickpocket>
+FACRANK_13_2                    <Thief>
+FACRANK_13_3                    <Rogue>
+FACRANK_13_4                    <Scoundrel>
+FACRANK_13_5                    <Pirate>
+FACRANK_13_6                    <Expert Thief>
+FACRANK_13_7                    <Master Thief>
+FACRANK_13_8                    <Criminal Mastermind>
+
+% locale.pp TerrMan[].name
+TerrMan_Open_Ground             <Open Ground>
+TerrMan_Light_Forest            <Light Forest>
+TerrMan_Heavy_Forest            <Heavy Forest>
+TerrMan_Water                   <Water>
+TerrMan_Rubble                  <Rubble>
+TerrMan_Pavement                <Pavement>
+TerrMan_Swamp                   <Swamp>
+TerrMan_Hill                    <Hill>
+TerrMan_Rough_Ground            <Rough Ground>
+TerrMan_Low_Wall                <Low Wall>
+TerrMan_Residential_Wall        <Residential Wall>
+TerrMan_Stone_Floor             <Stone Floor>
+TerrMan_Stone_Wall              <Stone Wall>
+TerrMan_Floor                   <Floor>
+TerrMan_Dirt                    <Dirt>
+TerrMan_Hospital_Wall           <Hospital Wall>
+TerrMan_Threshold               <Threshold>
+TerrMan_Blue_Carpet             <Blue Carpet>
+TerrMan_Deep_Water              <Deep Water>
+TerrMan_Very_Deep_Water         <Very Deep Water>
+TerrMan_Wall                    <Wall>
+TerrMan_Gold_Wall               <Gold Wall>
+TerrMan_Red_Carpet              <Red Carpet>
+TerrMan_Wooden_Floor            <Wooden Floor>
+TerrMan_Wooden_Wall             <Wooden Wall>
+TerrMan_Tile_Floor              <Tile Floor>
+TerrMan_Steel_Wall              <Steel Wall>
+TerrMan_Marble_Floor            <Marble Floor>
+TerrMan_Earth_Wall              <Earth Wall>
+TerrMan_Commercial_Wall         <Commercial Wall>
+TerrMan_Fortress_Wall           <Fortress Wall>
+TerrMan_Stainless_Steel_Wall    <Stainless Steel Wall>
+TerrMan_Industrial_Wall         <Industrial Wall>
+TerrMan_Neon_Wall               <Neon Wall>
+TerrMan_Restaurant_Wall         <Restaurant Wall>
+TerrMan_Garage_Wall             <Garage Wall>
+TerrMan_Sand                    <Sand>
+TerrMan_Wreckage                <Wreckage>
+TerrMan_Organic_Floor           <Organic Floor>
+TerrMan_Organic_Wall            <Organic Wall>
+
+% movement.pp MoveModeName[]
+MoveModeName_Walk               <Walk>
+MoveModeName_Roll               <Roll>
+MoveModeName_Skim               <Skim>
+MoveModeName_Fly                <Fly>
+% movement.pp MoveActionName[]
+MoveActionName_Stop             <Stop>
+MoveActionName_Cruise_Speed     <Cruise Speed>
+MoveActionName_Full_Speed       <Full Speed>
+MoveActionName_Turn_Left        <Trun Left>
+MoveActionName_Turn_Right       <Turn Right>
+MoveActionName_Reverse          <Reverse>
+
+
+
+% GearName()
+_Body                           <Body>
+_Head                           <Head>
+_Arm                            <Arm>
+_Leg                            <Leg>
+_Wing                           <Wing>
+_Tail                           <Tail>
+_Turret                         <Turret>
+_Storage                        <Storage>
+_Conversion                     <Conversion>
+%
+_Laser_Cannon                   <Laser Cannon>
+_Light_Autocannon               <Light Autocannon>
+%
+_Old_Mobile_Phone               <Old Mobile Phone>
+%
+
+% FormatMessageString(), FormatDescString()
+%
+%	Area Name
+_The_Federated_Territories      <The Federated Territories>
+_The_Dead_Zone                  <The Dead Zone>
+_Mecha_Sporch                   <Mecha Sporch>
+_Snake_Lake                     <Snake Lake>
+_Factory                        <Factory>
+_The_Factory                    <The Factory>
+%
+%	Person/People Name
+_Solar_Navy                     <the Solar Navy>
+_Navy                           <the Navy>
+_Navy_Academy                   <Navy Academy>
+_Clan_Ironwind                  <Clan Ironwind>
+_Clan_Markheim                  <Clan Markheim>
+_Clan_of_Scorcher_Khan          <the Clan of Scorcher Khan>
+%
+
+
+%%% [ End of File ] %%%

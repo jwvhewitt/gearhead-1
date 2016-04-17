@@ -89,7 +89,7 @@ Procedure FinalizeMapDisplay;
 
 implementation
 
-uses texutil,menugear,ghchars,sdlinfo;
+uses i18nmsg,texutil,menugear,ghchars,sdlinfo;
 
 Type
 	Overlay_Description = Record
@@ -1025,7 +1025,7 @@ begin
 	H := ( ComTime div AP_Hour ) mod 24;
 	D := ComTime div AP_Day;
 
-	msg := Bstr( H ) + ':' + WideStr( M , 2 ) + ':' + WideStr( S , 2 ) + MsgString( 'CLOCK_days' ) + BStr( D );
+	msg := ReplaceHash( I18N_MsgString('TIMESTRING'), BStr( D ), WideStr( H, 2 ), WideStr( M , 2 ), WideStr( S , 2 ) );
 	TimeString := msg;
 end;
 
@@ -1364,7 +1364,7 @@ begin
 		if OnTheMap( NAttValue( Mek^.NA , NAG_Location , NAS_X ) , NAttValue( Mek^.NA , NAG_Location , NAS_Y ) ) then VisionCheck( GB , Mek )
 		{ Print message if mek has fled the battle. }
 		else begin
-			DialogMSG( PilotName( Mek ) + ' has left this area.');
+			DialogMSG( ReplaceHash( I18N_MsgString('ProcessMovement','Left'), PilotName(Mek)) );
 
 			{ Set trigger here. }
 			Team := NAttValue( Mek^.NA , NAG_Location , NAS_Team );
@@ -1373,11 +1373,11 @@ begin
 
 	end else if result = EMR_Crash then begin
 		if Mek^.G = GG_Character then begin
-			msg := ReplaceHash( MsgString( 'PROCESSMOVEMENT_Fall' ) , GearName( Mek ) );
+			msg := I18N_MsgString('ProcessMovement','Fall');
 		end else begin
-			msg := ReplaceHash( MsgString( 'PROCESSMOVEMENT_Crash' ) , GearName( Mek ) );
+			msg := I18N_MsgString('ProcessMovement','Crash');
 		end;
-		DialogMsg( ReplaceHash( msg , BStr( DAMAGE_DamageDone ) ) );
+		DialogMsg( ReplaceHash( msg, GearName(Mek), BStr(DAMAGE_DamageDone) ) );
 	end;
 	ProcessMovement := ( Result <> 0 ) and ( MSV or ( OnTheScreen( Mek ) and MekVisible( GB , Mek ) ) );
 end;

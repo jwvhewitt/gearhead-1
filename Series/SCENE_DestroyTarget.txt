@@ -57,6 +57,7 @@ sub
 	sub
 		Fortress
 		name <The Fortress>
+		Name_I18N <>
 		Height 12
 		Width 12
 	end

@@ -305,6 +305,7 @@ inv
 
 	Treasure 500
 	name <Data Cartridge>
+	name_I18N <Data Cartridge>
 	place <5>
 	Clue37 <Print 1>
 	Msg1 <This data cartridge holds a map which appears to lead somewhere outside of Snake Lake.>

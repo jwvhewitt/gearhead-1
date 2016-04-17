@@ -45,6 +45,7 @@ end
 inv
 	Treasure 1500
 	name <Wallet>
+	name_I18N <Wallet>
 	% We'll be placing the wallet manually so as to handle
 	% initialization of its variables.
 	% V1 = Reputation of NPC to whom wallet belongs;

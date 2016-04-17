@@ -145,6 +145,7 @@ end
 inv
 	STC Monolith
 	name <Tomb>
+	name_I18N <Tomb>
 	%   instead of investigation you can use Science(29), Mysticism(34),
 	%    CodeBreaking(32) or Survival(14)
 	% V1 = Location of next encounter

@@ -1,33 +1,47 @@
 GroundHugger 1
 Name <Vespa>
 Desig <FLC-1>
+Desig_I18N <FLC-1>
 Scale 1
 SDL_Sprite <ghu_vespa.png>
 desc <Also known as the body bag on wheels, the vespa is a combat bike piloted only by those too poor or too suicidal to use anything else.>
 
 Mod Body
+	Name_I18N <>
 	Armor 1
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 1
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 2
+		Name_I18N <>
 
 		Wheels 2
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 4
 		Name <Combat Canopy>
+		Name_I18N <>
 		Fits <Groundhugger>
 		Mass -5
 		sub
 			Gun 4
 			Name <Light Cannon>
+			Name_I18N <>
 			Mass -2
 			Range 3
 			Magazine 24
 			sub
 				Ammo 4
+				Name_I18N <>
 			end
 		end
 	end
