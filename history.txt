@@ -1,3 +1,5 @@
+- Mecha Part Editor crash fixed (sdlinfo.pp)
+- Tech Vulture can't remove integral parts (arenascript.pp)
 - In ASCII mode, cursor should indicate position of PC (conmap.pp)
 - Fixed AutoTraining overspending bug (pcaction.pp)
 - Renamed ifPersona ASL command to ifNPCOK
