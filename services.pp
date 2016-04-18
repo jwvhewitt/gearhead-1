@@ -1343,10 +1343,11 @@ begin
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PCChar;
+        SERV_Customer := PCChar;
         SERV_NPC := NPC;
-        SERV_Info := PCInv^.InvCom;
+        SERV_Info := PCInv;
         SERV_Menu := RPM;
-		N := SelectMenu( RPM , @BrowseListRedraw );
+		N := SelectMenu( RPM , @BrowseTreeRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}

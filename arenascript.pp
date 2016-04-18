@@ -205,10 +205,12 @@ var
 		msg: String;
 	begin
 		while Part <> Nil do begin
-			msg := SAttValue( Part^.SA , Tag );
-			if msg <> '' then StoreSAtt( MemoList , msg );
-			CreateMemoList( Part^.SubCom , Tag );
-			CreateMemoList( Part^.InvCom , Tag );
+            if Part^.G <> GG_AbsolutelyNothing then begin
+			    msg := SAttValue( Part^.SA , Tag );
+			    if msg <> '' then StoreSAtt( MemoList , msg );
+			    CreateMemoList( Part^.SubCom , Tag );
+			    CreateMemoList( Part^.InvCom , Tag );
+            end;
 			Part := Part^.Next;
 		end;
 	end;

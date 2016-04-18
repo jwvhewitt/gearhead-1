@@ -49,6 +49,7 @@ uses gearutil,ghchars,texutil,ui4gh,congfx,coninfo,conmenus,context;
 var
 	RCPC: GearPtr;
 	RCPromptMessage,RCDescMessage,RCCaption,RCHintMessage: String;
+    RC_NumPickedSkills: Integer;
 
 Procedure RandCharRedraw;
 	{ Redraw the screen for SDL. }
@@ -63,6 +64,27 @@ begin
         CMessage( RCHintMessage , ZONE_CharGenHint.GetRect() , InfoGreen );
     end;
 end;
+
+Procedure SkillsRedraw;
+	{ Redraw the screen for skill selection. }
+begin
+	DrawCharGenBorder;
+	if RCPC <> Nil then begin
+        CharacterDisplay( RCPC , Nil, ZONE_CharGenChar );
+		if TooManySkillsPenalty( RCPC , RC_NumPickedSkills ) > 0 then begin
+            CMessage( RCCaption , ZONE_CharGenCaption.GetRect() , EnemyRed );
+		end else begin
+            CMessage( RCCaption , ZONE_CharGenCaption.GetRect() , InfoGreen );
+        end;
+    end;
+	GameMsg( RCDescMessage , ZONE_CharGenDesc.GetRect() , InfoGreen );
+	CMessage( RCPromptMessage , ZONE_CharGenPrompt.GetRect() , InfoGreen );
+    if RCHintMessage <> '' then begin
+    	InfoBox( ZONE_CharGenHint.GetRect() );
+        CMessage( RCHintMessage , ZONE_CharGenHint.GetRect() , InfoGreen );
+    end;
+end;
+
 {$ENDIF}
 
 Function SkillDesc( N: Integer ): String;
@@ -668,7 +690,8 @@ begin
 	repeat
 {$IFDEF SDLMODE}
 		RCCaption := MsgString( 'RANDCHAR_ASPCaption' ) + BStr( SkillPt );
-		T := SelectMenu( RPM , @RandCharRedraw );
+        RC_NumPickedSkills := NumPickedSkills;
+		T := SelectMenu( RPM , @SkillsRedraw );
 {$ELSE}
 		if TooManySkillsPenalty( PC , NumPickedSkills ) > 0 then begin
 			CMessage( MsgString( 'RANDCHAR_ASPCaption' ) + BStr( SkillPt ) , ZONE_CharGenPrompt , EnemyRed );
