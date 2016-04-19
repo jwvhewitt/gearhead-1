@@ -8,7 +8,7 @@ Plot 0
 
 
 	% Time limit - this plot will fade after a short time.
-	START <ifPersona E1 else GoDelete ifPersona E2 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10000>
+	START <ifNPCOK E1 else GoDelete ifNPCOK E2 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 10000>
 	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -71,7 +71,7 @@ sub
 
 		% Mortality Check - If either of the elements have
 		% been removed, delete this plot.
-		START <ifPersona E1 else GoDelete ifPersona E2 else GoDelete>
+		START <ifNPCOK E1 else GoDelete ifNPCOK E2 else GoDelete>
 		GoDelete <AdvancePlot 0>
 	sub
 		Persona 1
@@ -108,7 +108,7 @@ sub
 
 		Plot 2
 			% Time Limit
-			START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 72000>
+			START <ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 72000>
 			GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
 			GoDelete <AdvancePlot 0>
 		sub

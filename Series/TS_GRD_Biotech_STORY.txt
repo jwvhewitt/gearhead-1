@@ -28,7 +28,7 @@ Story
 	%  S202 = Relay victory count; load conclusion when S202>3
 
 	% At the START trigger, check for the end of the story
-	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 FacVar N1 1000>
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 PCRenown>
 	GoCheckTime <ifG ComTime V1 else GoCheckMemo EndStory>
 
 	% If the PC has taken part in the relay, store a memo.

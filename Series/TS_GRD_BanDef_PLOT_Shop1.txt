@@ -8,7 +8,7 @@ Plot 0
 	% V1 = Time Limit
 
 	% This plot will last for around 24 hours.
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 V+ 1 d86400>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 V+ 1 d86400>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

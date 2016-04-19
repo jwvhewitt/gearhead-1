@@ -38,7 +38,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <if= V2 0 ifG ComTime V1 ifG V4 0 else GoDelete AdvancePlot 1>
 	GoDelete <AdvancePlot 0>
 
@@ -142,7 +142,7 @@ sub
 	% of the other templates and see if you can get it to work.
 	GoAway <V= 2 15 V+ 2 d5 Say V2>
 
-	GoStartMission <V= 2 FacVar E1 1000 V+ 2 d10 P= 4 Threat V2 75 V= 4 Reward P4 175 V= 5 10 V+ 5 d5 Say V5 Memo 27>
+	GoStartMission <V= 2 PCRenown V+ 2 d10 P= 4 Threat V2 75 V= 4 Reward P4 175 V= 5 10 V+ 5 d5 Say V5 Memo 27>
 
 	result1 <NewChat Goto GoStartMission>
 	result2 <Goto result1>
@@ -212,7 +212,7 @@ sub
 
 		% Time limit. This plot will conclude in one day, or immediately
 		% if NPC E2 is killed.
-		start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+		start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 		GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 		GoDelete <AdvancePlot 0>
 

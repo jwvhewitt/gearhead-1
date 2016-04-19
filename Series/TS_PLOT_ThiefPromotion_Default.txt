@@ -22,7 +22,7 @@ Plot 0
 	% This plot will remain active until the PC collects his
 	% reward, until the NPC dies, or until the PC is no longer
 	% a member of the calling faction.
-	start <ifPersona E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d1 V= 1 1>
+	start <ifNPCOK E2 else GoReschedule if= PCFac E1 else GoDelete if= V1 0 Email d1 V= 1 1>
 	GoReschedule <FacVar+ E1 1 1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

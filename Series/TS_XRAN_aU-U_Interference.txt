@@ -25,7 +25,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 dies, load a new plot.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTalk V= 1 1 ifPersona N1 else GoReplaceN1 DeleteChar E4 E= 4 N1>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTalk V= 1 1 ifNPCOK N1 else GoReplaceN1 DeleteChar E4 E= 4 N1>
 	% AT start of first combat, start a conversation with E4...
 	GoCheckTalk <if= V2 1 if= V1 1 ForceChat E4 V= 1 2>
 	GoReplaceN1 <N= 1 E4>

@@ -24,7 +24,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <if= V2 0 ifG ComTime V1 if= d2 1 else GoDelete S+ 101 1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0 if# V3 0 Reputation 6 -1>
 
@@ -74,12 +74,12 @@ sub
 	% The first time the PC meets the NPC, the PC will be given the
 	% mission automatically if he's part of the same faction, or if
 	% he is a friend of the NPC, or if he's already been sent email.
-	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 FacVar E1 1000 V+ 3 d6 V= 3 Threat V3 75 V= 4 Reward V3 99 if= PCFac E1 else GoCE V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRenown V+ 3 d6 V= 3 Threat V3 75 V= 4 Reward V3 99 if= PCFac E1 else GoCE V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	GoCE <if= P3 1 else GoCheckFriend V= 2 10 V+ 2 d5 Say V2 Goto GoAddComOps>
 	% If the reaction score is greater than 40, PC will automatically
 	% be offered the job, but unlike above will not be automatically
 	% expected to accept it,
-	GoCheckFriend <ifG PCRep 6 FacVar E1 1000 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
+	GoCheckFriend <ifG PCRep 6 20 else GoNoAutomatic V= 2 15 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
 	% If the PC is not automatically offered the job, there's still
 	% a chance to get the job... as long as the NPC doesn't hate him.
 	GoNoAutomatic <ifG React d10 else GoDenied V= 2 20 V+ 2 d5 Say V2 V= 2 10 V+ 2 d3 AddChat V2 V= 2 13 V+ 2 d3 AddChat V2 V= 2 16 V+ 2 d3 Say V2>
@@ -131,9 +131,6 @@ sub
 	% The PC tries to get the job via "PLAN A"- be friendly.
 	% This is done with the Conversation skill.
 	result14 <NewChat ifG Conversation 20 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
-
-	% The PC will impress the NPC with RENOWNED reputation...
-	% result14 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
 
 	% The PC will impress the NPC with HEROIC reputation...
 	% result14 <NewChat ifG PCRep 1 30 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>

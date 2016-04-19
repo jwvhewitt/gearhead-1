@@ -1343,10 +1343,11 @@ begin
 {$IFDEF SDLMODE}
         SERV_GB := GB;
         SERV_PC := PCChar;
+        SERV_Customer := PCChar;
         SERV_NPC := NPC;
-        SERV_Info := PCInv^.InvCom;
+        SERV_Info := PCInv;
         SERV_Menu := RPM;
-		N := SelectMenu( RPM , @BrowseListRedraw );
+		N := SelectMenu( RPM , @BrowseTreeRedraw );
 {$ELSE}
 		N := SelectMenu( RPM );
 {$ENDIF}
@@ -1390,7 +1391,7 @@ begin
 
 		{ Add options, depending on the mek. }
 		if not OnTheMap( Mek ) then AddRPGMenuItem( RPM , MsgString( 'SERVICES_Sell' ) + GearName( Mek ) , 1 );
-		if TotalRepairableDamage( Mek , 15 ) > 0 then AddRPGMenuItem( RPM , MsgString( 'SERVICES_OSRSP1' ) + ' [$' + BStr( RepairMasterCost( Mek , 15 ) ) + ']' , 2 );
+		if TotalRepairableDamage( Mek , 15 ) > 0 then AddRPGMenuItem( RPM , MsgString( 'SERVICES_OSRSP1' ) + ' [$' + BStr( ScalePrice(PC,NPC,RepairMasterCost( Mek , 15 )) ) + ']' , 2 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_SellMekInv' ) , 4 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_BrowseParts' ) , 3 );
 		AddRPGMenuItem( RPM , MsgString( 'SERVICES_Exit' ) , -1 );

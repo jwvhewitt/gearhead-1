@@ -1,3 +1,19 @@
+1.301	April 19 2016
+- Added accessibility option for ASCII mode (ui4gh.pp)
+- View Mecha should show correct repair cost (services.pp)
+- Shrine prop sturdier (STCdefault.txt)
+- Exceeding skill number limit indicated in SDL chargen (randchar.pp)
+- Fixed faulty SDL info display when selling items (services.pp)
+- Fixed memos from deleted plots bug (arenascript.pp)
+- Mecha Part Editor crash fixed (sdlinfo.pp)
+- Tech Vulture can't remove integral parts (arenascript.pp)
+- In ASCII mode, cursor should indicate position of PC (conmap.pp)
+- Fixed AutoTraining overspending bug (pcaction.pp)
+- Renamed ifPersona ASL command to ifNPCOK
+- Removed faction difficulty counter (ADV_FederatedTerritories.txt)
+- Robotics adjusted (skilluse.pp)
+- Fixed heroism pecking in series folder
+
 1.300	April 4 2016
 - Fixed bug in Hermit Hop (SCENE_MeetingPath.txt)
 - Fixed DirKey screen refresh (sdlgfx.pp)

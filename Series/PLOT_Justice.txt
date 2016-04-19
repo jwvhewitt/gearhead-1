@@ -6,7 +6,7 @@ Plot 0
 	% V1 = Time Limit
 	% V2 = Encounter PV
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 Compose ENC 1 .encounter>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 Compose ENC 1 .encounter>
 	GoCheckTime <ifG ComTime V1 if= L2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

@@ -36,7 +36,7 @@ uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
-	Version = '1.300';
+	Version = '1.301';
 
 var
 	RPM: RPGMenuPtr;

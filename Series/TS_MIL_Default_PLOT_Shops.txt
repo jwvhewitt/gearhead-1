@@ -5,7 +5,7 @@ Plot 0
 	element1 <Grab 3>
 	element2 <Character Shopkeeper !Near 1>
 
-	start <ifPersona E2 else CleanUp if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 15000>
+	start <ifNPCOK E2 else CleanUp if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 15000>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 	CleanUp <AdvancePlot 0>
 

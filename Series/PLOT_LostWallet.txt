@@ -11,7 +11,7 @@ Plot 0
 	% V2 = Have picked up item
 
 	% This plot will last for 6 hours.
-	start <ifPersona E1 else GoDelete ifItemOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 19800 Goto GoInit>
+	start <ifNPCOK E1 else GoDelete ifItemOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 19800 Goto GoInit>
 	GoInit <MoveKeyItem E2 EScene 1 ItemVar= E2 1 E1 compose GET E2 .getitem compose KEY E2 .useitem>
 	GoCheckTime <ifG ComTime V1 if= V2 0 else GoCheckHas DeleteKeyItem E2 AdvancePlot 0>
 	% If time has run out, remove this plot if the PC doesn't have

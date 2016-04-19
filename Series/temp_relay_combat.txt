@@ -51,7 +51,7 @@ Plot 0
 	cleanup <if= V2 0 S= 201 0 AdvancePlot 0>
 
 	% This plot will conclude immediately if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 	GoDelete <S= 201 0 AdvancePlot 0>
 
 	% Combat check. If combat has been entered, V2=1.
@@ -166,9 +166,6 @@ sub
 	% The PC tries to get the job via "PLAN B"- be friendly.
 	% This is done with the Conversation skill.
 	result14 <NewChat ifG Conversation 15 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
-
-	% The PC will impress the NPC with RENOWNED reputation...
-	% result14 <NewChat ifG PCRep 6 FacVar E1 1000 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>
 
 	% The PC will impress the NPC with HEROIC reputation...
 	% result14 <NewChat ifG PCRep 1 30 else GoR14Lose V= 2 30 V+ 2 d5 Say V2 V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2>

@@ -37,7 +37,7 @@ Story
 	% V104 = Number of victories when difficulcy last increased...
 
 	% End the story immediately if the NPC dies...
-	start <ifPersona N2 else GoDelete>
+	start <ifNPCOK N2 else GoDelete>
 	GoDelete <EndStory>
 
 	quarter <if= S101 0 if= d4 1 if= S102 0 else GoLoadEpisode StoryLine .first S= 101 1 S= 103 5 S+ 103 d6>

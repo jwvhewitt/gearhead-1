@@ -33,10 +33,10 @@ sub
 	result7 <NewChat Say 8 AddChat 4 AddChat 3>
 	result8 <NewChat AdvancePlot 0 DeleteKeyItem E4 History 17 V= 1 2 Say 12 XPV 100 AddReact 5 AddChat 10 AddChat 11>
 	result9 <NewChat Say 13>
-	result10 <EndChat ifPersona E3 else GoReallyDead Reputation 2 -5 Say 14 DeleteChar E3>
+	result10 <EndChat ifNPCOK E3 else GoReallyDead Reputation 2 -5 Say 14 DeleteChar E3>
 	GoReallyDead <Reputation 2 1 Say 14>
-	result11 <NewChat ifPersona E3 else GoFluffyDied  NewChat Reputation 1 1 Say 15 CashPrize d100 DeleteChar E3>
-	GoFluffyDied <Reputation 1 -1 Reputation 2 -10 Say 16>
+	result11 <NewChat ifNPCOK E3 else GoFluffyDied  NewChat Reputation 1 1 Say 15 CashPrize d100 DeleteChar E3>
+	GoFluffyDied <Reputation 2 -2 Say 16>
 	result12 <NewChat Say 8>
 
 	msg2 <Hello again. Um... I don't want to impose, but... I know that you've done all kinds of adventurous things. I have a favor to ask of you.>

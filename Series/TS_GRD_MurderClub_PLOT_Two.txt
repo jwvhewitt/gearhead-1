@@ -49,7 +49,7 @@ sub
 	Persona 3
 	% V1 = Have given reward
 	% V2 = Message Randomizer
-	greeting <NewChat if= P1 2 else GoNothing if= V1 0 else GoNothing V= 1 1 CashPrize Reward Threat PCRep 6 100 100 ifPersona S7 else GoNoS7 ifG React d30 else GoNoS7 ifG PCRep 2 -1 else GoNoS7 Say d3 S+ 103 1 Memo 7>
+	greeting <NewChat if= P1 2 else GoNothing if= V1 0 else GoNothing V= 1 1 CashPrize Reward Threat PCRep 6 100 100 ifNPCOK S7 else GoNoS7 ifG React d30 else GoNoS7 ifG PCRep 2 -1 else GoNoS7 Say d3 S+ 103 1 Memo 7>
 	GoNoS7 <V= 2 3 V+ 2 d3 Say V2>
 	GoNothing <SayAnything>
 	Msg1 <You've done well in protecting the city. If you're interested in helping more, contact \PERSONA S7 in \SCENE S8 . Here's a reward for you.>

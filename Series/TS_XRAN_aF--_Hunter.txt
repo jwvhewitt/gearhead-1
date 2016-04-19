@@ -24,11 +24,11 @@ Plot 0
 	cleanup <AdvancePlot 0>
 
 	% At startup, check for victory or failure.
-	start <if= P2 3 else GoCheckLoss S= 101 1 S+ 102 1 S= 105 -1 N= 3 E3 ifPersona E4 else cleanup Alert 2 S= 105 1 AdvancePlot 0>
-	GoCheckLoss <if= P2 2 else GoRealStart S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0 ifPersona E4 Alert 3>
+	start <if= P2 3 else GoCheckLoss S= 101 1 S+ 102 1 S= 105 -1 N= 3 E3 ifNPCOK E4 else cleanup Alert 2 S= 105 1 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoRealStart S= 101 1 N= 3 E3 S= 105 -1 AdvancePlot 0 ifNPCOK E4 Alert 3>
 
 	% The first start, initialize everything.
-	GoRealStart <ifPersona E2 else GoDelete if= V1 0 else GoCheckCombat V= 1 1 MoveChar E2 E1 ifPersona N1 else GoInsertE4 DeleteChar E4 E= 4 N1>
+	GoRealStart <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckCombat V= 1 1 MoveChar E2 E1 ifNPCOK N1 else GoInsertE4 DeleteChar E4 E= 4 N1>
 	GoInsertE4 <N= 1 E4 P= 4 1>
 	GoCheckCombat <if= V1 2 if= SceneID 1 Goto GoStartCombat>
 	GoDelete <S= 101 1 N= 3 E3 AdvancePlot 0>

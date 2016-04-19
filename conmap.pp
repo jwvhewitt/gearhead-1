@@ -472,6 +472,7 @@ begin
 		DisplayMap( gb );
 	end;
 	RedrawTileX( GB , X , Y , True );
+    GotoXY( ScreenX( X ), ScreenY( Y ) );
 end;
 
 procedure IndicateTile( GB: GameBoardPtr; Mek: GearPtr );

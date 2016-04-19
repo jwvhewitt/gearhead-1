@@ -20,7 +20,7 @@ Plot 0
 	% V1 = Phase indicator
 	% V2 = Time limit
 
-	start <ifPersona E3 else GoEndPlot if= V1 0 else GoCheckMove N= 3 E2  if= SceneID E1 Print 1 V= 1 1>
+	start <ifNPCOK E3 else GoEndPlot if= V1 0 else GoCheckMove N= 3 E2  if= SceneID E1 Print 1 V= 1 1>
 	GoEndPlot <S= 101 1 S= 105 -1 AdvancePlot 0>
 	Msg1 <Something about this town is strangely familiar... You feel like there is a lost memory hiding just beneath the surface of your mind.>
 
@@ -62,7 +62,7 @@ sub
 
 		% V1 = Phase indicator
 
-		start <ifPersona E3 else GoEndPlot if= V1 0 V= 1 1 Memo 1 N= 3 E2>
+		start <ifNPCOK E3 else GoEndPlot if= V1 0 V= 1 1 Memo 1 N= 3 E2>
 		GoEndPlot <N= 3 E2 S= 101 1 S= 105 -1 AdvancePlot 0>
 		Msg1 <\ELEMENT 3 asked to meet in \ELEMENT 2 to tell you more about your past. It's time to go.>
 
@@ -132,7 +132,7 @@ sub
 		start <if= V1 0 else GoCheckTime  V= 1 1 Memo 1 Compose EWM E2 .ambush N= 3 E2>
 		Msg1 <\ELEMENT 3 asked to meet in \ELEMENT 2 to tell you more about your past. It's time to go.>
 
-		GoCheckTime <if= V2 3 ifPersona E3 else GoEndPlot>
+		GoCheckTime <if= V2 3 ifNPCOK E3 else GoEndPlot>
 		GoEndPlot <N= 3 E2 S= 101 1 S= 105 -1 AdvancePlot 0>
 
 		% V2=1 during combat, V2=3 if won the combat or 2 if lost.

@@ -8,7 +8,7 @@ Plot 0
 	% P3 = Have been given email
 	% P4 = Have picked up the skull
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 21600 Compose GET E2 .get>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 21600 Compose GET E2 .get>
 	GoCheckTime <ifG ComTime V1 if= P2 0 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 	.get <if= P4 0 P= 4 1 XPV 100>

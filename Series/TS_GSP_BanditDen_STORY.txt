@@ -13,7 +13,7 @@ Story
 	% S2 = Number of wins
 
 	% If the guardian gets killed, delete this story.
-	start <ifPersona N2 else GoDelete if= S1 0 S= 1 15 Compose EWM N1 .entry>
+	start <ifNPCOK N2 else GoDelete if= S1 0 S= 1 15 Compose EWM N1 .entry>
 	GoDelete <EndStory>
 
 	% There's no guarantee that this scene has access to the world map. It could be the

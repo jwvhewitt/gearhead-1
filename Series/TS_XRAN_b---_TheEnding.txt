@@ -59,7 +59,7 @@ Plot 0
 
 	% At the start, check to see whether or not to advance.
 	start <if= V1 2 else GoCheckInit if# SceneID E6 Goto GoAlertEnemy>
-	GoCheckInit <if= V1 0 V= 1 1 FreezeChar E2 FreezeChar E3 FreezeChar E4 ifPersona N1 else GoReplaceEnemy DeleteChar E5 E= 5 N1>
+	GoCheckInit <if= V1 0 V= 1 1 FreezeChar E2 FreezeChar E3 FreezeChar E4 ifNPCOK N1 else GoReplaceEnemy DeleteChar E5 E= 5 N1>
 	GoReplaceEnemy <FreezeChar E5>
 
 	% Every half hour, check the location.
@@ -72,7 +72,7 @@ Plot 0
 
 	% Depending on who the PC's enemy is, print a different message.
 	GoAlertEnemy <if= XRE NAV_XRECharacter else GoCheckFaction Alert 101 AdvancePlot 2>
-	GoCheckFaction <ifFaction N2 else GoMisc ifPersona N1 else GoFactionNoEnemy Alert 102 AdvancePlot 2>
+	GoCheckFaction <ifFaction N2 else GoMisc ifNPCOK N1 else GoFactionNoEnemy Alert 102 AdvancePlot 2>
 	GoFactionNoEnemy <Alert 103 AdvancePlot 2>
 	GoMisc <Alert 104 AdvancePlot 2>
 
@@ -193,7 +193,7 @@ sub
 
 Plot 3
 	%  PHASE 3 - "Segue to the Apocalypse"
-	start <if= V1 0 else GoErrorCheck V= 1 1 Time 7200 Alert 1 ifPersona E2 else GoNoE2 ForceChat E2>
+	start <if= V1 0 else GoErrorCheck V= 1 1 Time 7200 Alert 1 ifNPCOK E2 else GoNoE2 ForceChat E2>
 	GoErrorCheck <AdvancePlot 4  G= 1004 1>
 	GoNoE2 <AdvancePlot 4  G= 1004 1>
 	Msg1 <You awake some time later in \ELEMENT 6 . Your body is bruised and sore but your wounds have been tended.>
@@ -219,7 +219,7 @@ Plot 4
 	rumor <hostile mecha have set up a fortress south of Snake Lake.>
 
 	start <if= G1004 0 else GoSecondStart G= 1004 1  News 3>
-	GoSecondStart <ifPersona E4 else GoTyphonDead ifNPCInPlay E4 if= V2 0 ForceChat E5 V= 2 1>
+	GoSecondStart <ifNPCOK E4 else GoTyphonDead ifNPCInPlay E4 if= V2 0 ForceChat E5 V= 2 1>
 	GoTyphonDead <Alert 1 History 2 Victory AdvancePlot 0>
 
 	% if the PC tries to enter the enemy fortress, go to the fight instead.

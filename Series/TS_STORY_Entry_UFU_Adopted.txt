@@ -54,7 +54,7 @@ inv
 	% very bad form...
 	name <PLOT: Temporary Personas>
 
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 	GoDelete <AdvancePlot 0>
 
 	% Element 1 is Hyolee.

@@ -16,10 +16,13 @@ Plot 0
 
 	rumor <!2 has been looking for you.>
 
+    start <ifNPCOK E2 else GoEndPlot>
+    GoEndPlot <AdvancePlot 0>
+
 sub
 	Persona 2
 
-	Greeting <NewChat if= V1 0 else GoMetBefore Say 1 AddChat 1 AddChat 2 AddChat 3>
+	Greeting <NewChat if= V1 0 else GoMetBefore Say 1 AddChat 1 AddChat 2 AddChat 3 Memo 8>
 	GoMetBefore <Say 5 AddChat 4 AddChat 5>
 	result1 <NewChat V= 1 -1 Say 2 AddChat 4 AddChat 5>
 	result2 <NewChat V= 1 -1 Say 3 AddChat 4 AddCHat 5>
@@ -33,6 +36,7 @@ sub
 	Msg5 <Hello again. My offer is still good... How'd you like to be my partner in crime?>
 	Msg6 <Very good... There's a wide world of oppurtunity and vice out there for sharp young entrepreneurs like you and me. Meet me back here in a few minutes, I'll fill you in on the details then.>
 	Msg7 <That's too bad. I could really use someone with your obvious talents on my side... If you ever change your mind, be sure to come back.>
+    Msg8 <\ELEMENT 2 in Hogye offered to help you make some illicit cash.>
 	prompt1 <Megi really can't take a joke.>
 	prompt2 <Yes, I am.>
 	prompt3 <If I was, would I be so obvious!?>
@@ -45,10 +49,13 @@ sub
 		% Gosh, that sounds like The Sims, doesn't it?
 		% Var 1 = Has received parking ticket briefing.
 
+        start <ifNPCOK E2 else GoEndPlot>
+        GoEndPlot <AdvancePlot 0>
+
 	sub
 		Persona 2
 		greeting <NewChat if= P1 0 else GoMissionStarted P= 1 1 Say 1 AddChat 1 AddChat 2 AddChat 3>
-		GoMissionStarted <ifPersona E3 else GoGuardDead if= P1 2 else GoNotComplete Say 6 AddChat 4>
+		GoMissionStarted <ifNPCOK E3 else GoGuardDead if= P1 2 else GoNotComplete Say 6 AddChat 4>
 		GoGuardDead <Say 7 AddChat 4>
 		GoNotComplete <NewChat Say 5>
 
@@ -120,7 +127,8 @@ sub
 
 
 		Plot 2
-
+        start <ifNPCOK E2 else GoEndPlot>
+        GoEndPlot <AdvancePlot 0>
 		sub
 			Persona 2
 			greeting <NewChat ifG PCRep 6 35 else GoMedRep Say 7 AddReact 10 MechaPrize .BMek2 AdvancePlot 0>

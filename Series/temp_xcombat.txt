@@ -21,7 +21,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 dies, load a new plot.
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	% Combat check. If combat has been entered, V2=1.
@@ -133,7 +133,7 @@ sub
 	Plot 1
 		% The PC doesn't want to perform the mission himself...
 		% must go and contact E5 about it.
-		start <ifPersona E2 else GoDelete ifPersona E5 else GoDelete memo 101>
+		start <ifNPCOK E2 else GoDelete ifNPCOK E5 else GoDelete memo 101>
 		GoDelete <S= 101 1 AdvancePlot 0>
 
 		Msg101 <\ELEMENT 2 in \ELEMENT 1 asked you to contact \ELEMENT 5 in \SCENE EScene 5 to help investigate \NARRATIVE 2 .>

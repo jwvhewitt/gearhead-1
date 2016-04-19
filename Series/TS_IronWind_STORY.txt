@@ -6,7 +6,7 @@ Story
 	element1 <Character>
 	stat 1 4315
 
-	start <ifPersona N1 else GoEndStory>
+	start <ifNPCOK N1 else GoEndStory>
 	GoEndStory <EndStory>
 
 	% At the 30Min interval, try to load a plot if appropriate.

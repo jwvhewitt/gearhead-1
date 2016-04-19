@@ -8,7 +8,7 @@ Story
 	Element2 <Character>
 	Stat 2 17
 
-	start <ifPersona N2 else GoDelete>
+	start <ifNPCOK N2 else GoDelete>
 	GoDelete <EndStory>
 
 	memo <You discovered impervium ore in the Hogye Mines.>

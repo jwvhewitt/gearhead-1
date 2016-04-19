@@ -10,7 +10,7 @@ Plot 0
 
 	% V101 = Email phase thing
 
-	start <ifPersona E2 else GoCleanDelete>
+	start <ifNPCOK E2 else GoCleanDelete>
 
 	% If the master of this plot has died, better load a new
 	% investigative plot.

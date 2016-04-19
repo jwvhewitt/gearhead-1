@@ -28,7 +28,7 @@ plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 or E4 or E5 dies, load a new plot.
-	start <ifPersona E4 else GoDelete ifPersona E2 else GoDelete ifPersona E5 else GoDelete>
+	start <ifNPCOK E4 else GoDelete ifNPCOK E2 else GoDelete ifNPCOK E5 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 
@@ -131,7 +131,7 @@ sub
 		% V2 = Combat Counter
 
 		% If Persona E4 dies, load a new plot.
-		start <ifPersona E4 else GoDelete ifPersona E5 else GoDelete if= V1 0 V= 1 1 Memo 101>
+		start <ifNPCOK E4 else GoDelete ifNPCOK E5 else GoDelete if= V1 0 V= 1 1 Memo 101>
 		GoDelete <S= 101 1 AdvancePlot 0>
 
 		% 101 :  Memo
@@ -171,7 +171,7 @@ sub
 
 	Plot 2
 		% If Persona E5 dies, load a new plot.
-		start <ifPersona E5 else GoDelete if= V1 0 V= 1 1 Memo 101 Time 3600>
+		start <ifNPCOK E5 else GoDelete if= V1 0 V= 1 1 Memo 101 Time 3600>
 		GoDelete <S= 101 1 S= 105 -1 N= 3 E3 AdvancePlot 0>
 		Msg101 <Doctor Kim in Hogye has to tell you about your medical records.>
 	sub
@@ -183,7 +183,7 @@ sub
 		greeting <NewChat Say 1 AddChat 1>
 
 		result1 <NewChat  if= d6 1 else GoR2CheckEnemy  Say 2 History 52 AddChat 2  XRMystery NAV_XRMNotHuman Goto GoEndPlot>
-		GoR2CheckEnemy <if= d3 1 else GoR2Faction ifPersona N1 else GoR2Faction Say 5 History 55 AddChat 4 XREnemy NAV_XRECharacter Goto GoEndPlot>
+		GoR2CheckEnemy <if= d3 1 else GoR2Faction ifNPCOK N1 else GoR2Faction Say 5 History 55 AddChat 4 XREnemy NAV_XRECharacter Goto GoEndPlot>
 		GoR2Faction <Say 7 History 57 AddChat 5 XREnemy NAV_XREFaction Goto GoEndPlot>
 		result2 <NewChat Say 3 AddChat 3>
 		result3 <NewChat Say 4>

@@ -10,7 +10,7 @@ Story
 
 	% The story ends once Cetus has been destroyed, however that
 	% happens.
-	start <ifPersona N1 else GoEndStory if= S1 0 SToryLine .FirstStory S= 1 1>
+	start <ifNPCOK N1 else GoEndStory if= S1 0 SToryLine .FirstStory S= 1 1>
 	.FirstStory <TS_STORY_Cetus_PLOT_1.txt>
 	GoEndStory <EndStory>
 

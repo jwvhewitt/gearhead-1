@@ -17,7 +17,7 @@ Plot 0
 
 	% V1 = Phase Counter
 
-	start <ifPersona E3 else GoEndPlot ifPersona E4 else GoEndPlot if= V1 0 else GoSetOrder V= 1 1 Compose UTD E3 .killerdies FreezeItem E6 NPCLevel E3 S103 Goto GoSetOrder>
+	start <ifNPCOK E3 else GoEndPlot ifNPCOK E4 else GoEndPlot if= V1 0 else GoSetOrder V= 1 1 Compose UTD E3 .killerdies FreezeItem E6 NPCLevel E3 S103 Goto GoSetOrder>
 	GoEndPlot <S= 101 1 AdvancePlot 0>
 	.killerdies <Reputation 6 1 History 2 AdvancePlot 1>
 	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
@@ -47,7 +47,7 @@ sub
 	Plot 1
 		% The PC has stopped the killer, and may now take a mission
 		% from the local guardian.
-		start <ifPersona E4 else GoEndPlot if= V1 0 Compose KEY E6 .usecomp>
+		start <ifNPCOK E4 else GoEndPlot if= V1 0 Compose KEY E6 .usecomp>
 		GoEndPlot <AdvancePlot 0 S= 101 1>
 		.usecomp <if= P3 0 XPV 100 P= 3 1>
 
@@ -103,7 +103,7 @@ sub
 
 		GoExposition <Say 5 AddChat 6 AddChat 7 AddChat 8>
 
-		result17 <NewChat ifPersona N1 else GoR17NoEnemy Say 101 History 151 XREnemy NAV_XRECharacter Goto GoEndStory>
+		result17 <NewChat ifNPCOK N1 else GoR17NoEnemy Say 101 History 151 XREnemy NAV_XRECharacter Goto GoEndStory>
 		Msg101 <The assassin was hired by \NARRATIVE 1 . Does that name ring any bells? The deal was made in \ELEMENT 2 .>
 		Msg151 <You discovered the assassin was hired by \NARRATIVE 1 .>
 

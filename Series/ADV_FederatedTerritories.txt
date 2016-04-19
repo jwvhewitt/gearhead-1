@@ -8472,12 +8472,12 @@ Scene 57 0
 		Persona 5705
 		greeting <NewChat AddChat 1 AddCHat 2 AddChat 3 if= V1 0 else GoSecondTime V= 1 1 Say 1>
 		GoSecondTime <Say 2>
-		result1 <NewChat AddChat 2 AddChat 3 if= G6 3 else GoR1Nothing ifPersona 5706 else GoR1Dead Say 3>
+		result1 <NewChat AddChat 2 AddChat 3 if= G6 3 else GoR1Nothing ifNPCOK 5706 else GoR1Dead Say 3>
 		GoR1Dead <Say 8>
 		GoR1Nothing <Say 6>
 		result2 <NewChat Say 4 AddChat 4>
 		result3 <NewChat Say 5 AddChat 1 AddChat 2>
-		result4 <NewChat AddChat 1 AddChat 3 ifPersona 5704 else GoR4Dead Say 7>
+		result4 <NewChat AddChat 1 AddChat 3 ifNPCOK 5704 else GoR4Dead Say 7>
 		GoR4Dead <Say 9>
 		Msg1 <Hello, welcome to the fortress. You look like you're a greenzoner... we don't get many of those around here. Well, what can I do for you today?>
 		Msg2 <Good to see you again, \PC . What can I do for you today?>
@@ -8752,6 +8752,7 @@ Scene 58 0
 		Persona 5801
 		% Forager
 		% V1 = Have offered quest; =cash reward
+        % V2 = Have threatened Forager before
 		greeting <NewChat if= G4 1 else GoNoComplete Say 3>
 		GoNoComplete <ifG V1 0 else GoFirstTime Say 1 AddChat 1 AddChat 2>
 		GoFirstTime <ifG PCRep 1 10 else GoNoChance ifItemOK 36 else GoNoChance Say 4 AddChat 3 AddChat 6 AddChat 5>
@@ -8759,7 +8760,7 @@ Scene 58 0
 		result1 <NewChat Say 2 DeleteKeyItem 36 Reputation 1 1 CashPrize V1 XPV 250 Memo 0 G= 4 1>
 		result2 <NewChat Say 3>
 		result3 <NewChat V= 1 Reward Threat PCRep 6 100 500 Say 9 Memo 10>
-		result4 <EndChat Say 6 Reputation 1 -1 Reputation 4 -20>
+		result4 <EndChat Say 6 Reputation 1 -1 Reputation 4 -20 V= 2 1>
 		result5 <NewChat Say 7 ifG PCRep 1 10 AddChat 3 AddChat 6>
 		result6 <NewChat Say 8 Reputation 4 -5>
 		Msg1 <Have you liberated the primal genome from Ipshil?>
@@ -8778,6 +8779,7 @@ Scene 58 0
 		Prompt2 <I'm still looking for it.>
 		Prompt3 <Tell me what you want.>
 		Prompt4 <Now you'll die, monster!>
+        CPrompt4 <if= V2 0 Accept>
 		Prompt5 <What exactly are you?>
 		Prompt6 <Why should I help you, monster?>
 
@@ -9536,7 +9538,6 @@ end
 
 inv
 	% FACTIONS
-	% For all factions, V1000 is the core difficulcy number.
 
 	% the Federation Council
 	%  +- the Solar Navy
@@ -9559,7 +9560,7 @@ inv
 		%    used so if the PC goes up two levels at once,
 		%    he still won't get the same gift twice.
 
-		quarter <iffaction 1 if= d4 1 ifStoryless StartStory .milstory ifG 70 V1000 V+ 1000 15 V+ 1000 d10>
+		quarter <iffaction 1 if= d4 1 ifStoryless StartStory .milstory>
 		.milstory <TS_MIL_*_STORY.txt>
 
 		start <if= PCFac 1 else GoNoMember  ifFactionEnemy 1 else GoPro1 StartStory .fired>
@@ -9582,7 +9583,7 @@ inv
 
 		% RECRUITMENT: Must be renowned
 		% STORIES:     Threats to FT from terrestrial sources
-		quarter <iffaction 2 if= d5 1 ifStoryless StartStory .milstory ifG 70 V1000 V+ 1000 15 V+ 1000 d10>
+		quarter <iffaction 2 if= d5 1 ifStoryless StartStory .milstory>
 		.milstory <TS_MIL_*_STORY.txt>
 		start <if= PCFac 2 else GoNoMember   ifFactionEnemy 2 else GoPro1 StartStory .fired>
 		.fired <TS_PLOT_Fired.txt>
@@ -9594,7 +9595,7 @@ inv
 	Faction 3
 		name <the Guardians>
 		type <Police>
-		quarter <ifFaction 3  ifStoryless if# d3 1 StartStory .crime ifG 70 V1000 V+ 1000 15 V+ 1000 d10>
+		quarter <ifFaction 3  ifStoryless if# d3 1 StartStory .crime>
 		.crime <TS_GRD_*_STORY.txt>
 		SetAlly 1 2 11
 		% RECRUITMENT: Must be lawful and nonvillainous
@@ -9621,7 +9622,7 @@ inv
 		SetEnemy 5 6
 		% Upon loading a new story, increase the faction's
 		% difficulcy rating.
-		quarter <ifFaction 4  ifStoryless if# d3 1 StartStory .corp ifG 70 V1000 V+ 1000 15 V+ 1000 d10>
+		quarter <ifFaction 4  ifStoryless if# d3 1 StartStory .corp>
 		.corp <TS_CORP_*_STORY.txt>
 		% RECRUITMENT: Must be lawful and pragmatic
 		% STORIES:     Business stuff
@@ -9648,7 +9649,7 @@ inv
 		SetEnemy 4 6
 		% Upon loading a new story, increase the faction's
 		% difficulcy rating.
-		quarter <ifFaction 5  ifStoryless if# d3 1 StartStory .corp ifG 70 V1000 V+ 1000 15 V+ 1000 d10>
+		quarter <ifFaction 5  ifStoryless if# d3 1 StartStory .corp>
 		.corp <TS_CORP_*_STORY.txt>
 		% RECRUITMENT: Must be _very_ pragmatic
 		% STORIES:     Business stuff
@@ -9675,7 +9676,7 @@ inv
 		SetEnemy 4 5
 		% Upon loading a new story, increase the faction's
 		% difficulcy rating.
-		quarter <ifFaction 6  ifStoryless if# d3 1 StartStory .corp ifG 70 V1000 V+ 1000 15 V+ 1000 d10>
+		quarter <ifFaction 6  ifStoryless if# d3 1 StartStory .corp>
 		.corp <TS_CORP_*_STORY.txt>
 		% RECRUITMENT: Must be pragmatic
 		% STORIES:     Business stuff

@@ -31,7 +31,7 @@ Story
 	%  S204 = # of clues when memo last updated
 
 	% At the START trigger, check for the end of the story
-	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 FacVar N1 1000>
+	start <if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 172800 V+ 1 d172800 V= 2 PCRenown>
 	GoCheckTime <ifG ComTime V1 else GoCheckMemo FacXP+ N1 * 3 S202 EndStory>
 	GoDelete <FacXP+ N1 S202 EndStory>
 

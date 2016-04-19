@@ -13,7 +13,7 @@ Plot 0
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
 	GoCheckTime <ifG ComTime V1 S+ 103 1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -76,7 +76,7 @@ sub
 	Prompt6 <\NARRATIVE 2 attacked us, the criminals...>
 	Prompt7 <\NARRATIVE 1 has been attacking us.>
 	Prompt8 <We're going to defeat them!>
-	Prompt9 <You shouldn't ask difficult questions.>
+	Prompt9 <Bad things will happen if you keep asking questions.>
 	Prompt10 <It's a fun time to be a pilot.>
 	Prompt11 <We strictly obey the law.>
 	Prompt12 <Of course we have.>

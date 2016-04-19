@@ -10,7 +10,7 @@ Plot 0
 	% P101 = PC's initial HEROISM
 	% P102 = PC's initial LAWFULNESS
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10000 V= 101 PCRep 1 V= 102 PCRep 2>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 10000 V= 101 PCRep 1 V= 102 PCRep 2>
 	GoDelete <AdvancePlot 0>
 	GoCheckTime <ifG ComTime V1 ifG NPCRep E1 1 -1 else GoCheckChaos ifG -10 PCRep 1 else GoCheckMinor ifG PCRep 1 V101 else GoQuit Goto  GoWarn>
 	GoCheckMinor <ifG 0 PCRep 1 else GoCheckChaos  ifG V101 PCRep 1 else GoWarn Goto  GoQuit>
@@ -21,7 +21,7 @@ Plot 0
 
 sub
 	Plot 1
-	start <ifPersona E1 else GoDelete ifNPCInPlay E1 else GoEmail ifScene .scenedesc ForceChat E1>
+	start <ifNPCOK E1 else GoDelete ifNPCInPlay E1 else GoEmail ifScene .scenedesc ForceChat E1>
 	GoDelete <AdvancePlot 0>
 	GoEmail <PCNoRelation E1 advanceplot 3  NPCQuitLance E1>
 	.scenedesc <Town>
@@ -71,7 +71,7 @@ sub
 	end
 
 	Plot 2
-	start <ifPersona E1 else GoDelete ifScene .scenedesc ForceChat E1>
+	start <ifNPCOK E1 else GoDelete ifScene .scenedesc ForceChat E1>
 	GoDelete <AdvancePlot 0>
 	.scenedesc <Town>
 	sub

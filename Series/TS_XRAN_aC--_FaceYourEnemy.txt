@@ -40,8 +40,8 @@ plot 0
 
 	GoStartCombat <Print 101 Block FreezeChar E2 SavePos P= 2 1 Dynamic 2 Threat S103 100 .nu1 .nu2 DynaNPC E2 2 ComposeD Start .start PassVar 1 E2>
 	.start <if= L2 0 ForceChat L1 L= 2 1>
-	.nu1 <if= T1 0 Return if= L3 0 L= 3 1 ifPersona L1 ForceChat L1>
-	.nu2 <if= T2 0 if= L3 0 L= 3 1 Salvage Reputation 6  1 ifPersona L1 XPV 100 ForceChat L1>
+	.nu1 <if= T1 0 Return if= L3 0 L= 3 1 ifNPCOK L1 ForceChat L1>
+	.nu2 <if= T2 0 if= L3 0 L= 3 1 Salvage Reputation 6  1 ifNPCOK L1 XPV 100 ForceChat L1>
 
 	% Combat check. If combat has been entered, V2=1.
 	% Combat ends in victory if the number of active masters on

@@ -517,7 +517,7 @@ SDL_SPRITE <prop_default.png>
 Frame 12
 
 
-Prop 10
+Prop 60
 name <Shrine>
 desig <SHRINE-1>
 SDL_SPRITE <prop_default.png>

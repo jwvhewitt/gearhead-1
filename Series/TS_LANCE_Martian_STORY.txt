@@ -16,7 +16,7 @@ Story
 	% S3 = Have won combat exactly once
 
 	% At startup, set the potential lancemate's skill level and reputation.
-	start <ifPersona N2 else GoDelete if= S1 1 else GoInit S= 1 2 MoveChar N2 N1>
+	start <ifNPCOK N2 else GoDelete if= S1 1 else GoInit S= 1 2 MoveChar N2 N1>
 	GoInit <if= S1 0 S= 1 d50 S+ 1 10 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 Compose ENC 2 .encounter>
 	GoDelete <EndStory>
 	.encounter <if= S2 0 if= d3 1 ifG PCScale 0 Block ifYesNo 1 2 3 else GoRefuse Goto GoStartCombat>

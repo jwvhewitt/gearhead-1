@@ -8,7 +8,7 @@ Plot 0
 	% P2 = Have recovered treasure
 	% P3 = Mission given indicator
 
-	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200  Compose GET E2 .get SetItemFudge E2 Reward Threat PCRep 6 100 5000>
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200  Compose GET E2 .get SetItemFudge E2 Reward Threat PCRep 6 100 5000>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

@@ -19,7 +19,7 @@ Plot 0
 	cleanup <AdvancePlot 0>
 
 	% If Persona E2 dies, load a new plot.
-	start <ifPersona E2 else GoDelete if# V1 0 ifG ComTime V1 MoveCHar E2 E4 N= 3 E4 AdvancePlot 1>
+	start <ifNPCOK E2 else GoDelete if# V1 0 ifG ComTime V1 MoveCHar E2 E4 N= 3 E4 AdvancePlot 1>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	5Min <if= V2 0 if= d200 1 ifG PCCharm d40 Email 1 P= 2 1>
@@ -115,7 +115,7 @@ sub
 
 		% If Persona E2 dies, load a new plot.
 		% Perform initialization here as well.
-		start <ifPersona E2 else GoDelete if= V1 0 V= 1 1 Memo 1 Compose EWM E4 .startcombat>
+		start <ifNPCOK E2 else GoDelete if= V1 0 V= 1 1 Memo 1 Compose EWM E4 .startcombat>
 		GoDelete <S= 101 1 S= 105 -1 N= 3 E3 AdvancePlot 0>
 		.startcombat <Block ifYesNo 101 102 103 SavePos P= 2 1 Dynamic 2 Threat S103 150 .nu1 .nu2 Encounter 0 25 .nodesc PassVar 1 E4>
 		.nu1 <if= T1 0 Return>
@@ -132,7 +132,7 @@ sub
 		greeting <NewChat  Say 1 AddChat 1 AddChat 2>
 
 		result1 <Reputation 4 -d8 Goto result2>
-		result2 <NewChat if= d3 1 else GoR1Faction ifPersona N1 else GoR1Faction  XREnemy NAV_XRECharacter Say 2 History 4 AddChat 3 Goto GoEndMission>
+		result2 <NewChat if= d3 1 else GoR1Faction ifNPCOK N1 else GoR1Faction  XREnemy NAV_XRECharacter Say 2 History 4 AddChat 3 Goto GoEndMission>
 		GoR1Faction <ifFaction N2 else GoSetNewFaction Goto GoFinishFaction>
 		GoSetNewFaction <N= 2 E5 Goto GoFinishFaction>
 		GoFinishFaction <XREnemy NAV_XREFaction Say 3 History 5 AddChat 3 Goto GoEndMission>

@@ -41,6 +41,7 @@ Procedure SelectSprite( M: GearPtr; Redrawer: RedrawProcedureType );
 Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
 Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
 
+Function CanBeExtracted( Item: GearPtr ): Boolean;
 
 Procedure GivePartToPC( GB: GameBoardPtr; Part, PC: GearPtr );
 

@@ -47,7 +47,7 @@ sub
 	rumor <!3 is the last survivor of his dead-zone tribe.>
 	greeting <NewChat if= S3 3 else GoCheckWin SayAnything>
 	GoCheckWin <if= S3 2 else GoCheckSlaver Say 1 AddReact 30 Reputation 1 3 CashPrize 25000 Memo 0 History 11 S= 3 3 if= S4 0 EndStory>
-	GoCheckSlaver <ifPersona N4 else GoNoHope Goto GoCheckFirst>
+	GoCheckSlaver <ifNPCOK N4 else GoNoHope Goto GoCheckFirst>
 	GoNoHope <Say 2 EndStory>
 	GoCheckFirst <if= S3 1 else GoFirstTime Say 3>
 	GoFirstTime <ifG React 10 else GoNothing Say 4 AddChat 1 AddChat 2>

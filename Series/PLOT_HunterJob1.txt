@@ -10,7 +10,7 @@ Plot 0
 	Element3 <Prefab>
 
 	% Time limit - this plot will fade after a short time.
-	START <ifPersona E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17000>
+	START <ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17000>
 	GotoCheckTime <ifG ComTime V1  if= V2 0  AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -22,7 +22,7 @@ sub
 	rumor <!1 needs a hunter to make a dungeon run.>
 	greeting <NewChat if= P2 0 else GoBeenBefore  P= 2 1  ifG React d100 else GoNoJob  ifG PCRep 6 d100 else GoNoJob  Say 6  AddChat 9 AddChat 7 AddChat 8>
 
-	GoBeenBefore <if= P2 2 else GoDelete  Say d5  ifPersona E3 else GoBanditDead  AddChat d2 V= 2 2 V+ 2 d2  AddChat V2>
+	GoBeenBefore <if= P2 2 else GoDelete  Say d5  ifNPCOK E3 else GoBanditDead  AddChat d2 V= 2 2 V+ 2 d2  AddChat V2>
 	GoBanditDead <V= 2 4 V+ 2 d2  AddChat V2>
 	GoNoJob <V= 2 6 V+ 2 d4  Say V2  AdvancePlot 0>
 	GoDelete <SayAnything  AdvancePlot 0>

@@ -18,7 +18,7 @@ Plot 0
 
 	% The only way for this plot to end before the tutorial
 	% has been completed is for Quentin or the manager to die.
-	start <ifPersona E1 else GoDelete ifPersona E2 else GoDelete>
+	start <ifNPCOK E1 else GoDelete ifNPCOK E2 else GoDelete>
 	GoDelete <AdvancePlot 0>
 
 sub
@@ -104,7 +104,7 @@ sub
 		% The continuation of the tutorial.
 		% The only way for this plot to end before the tutorial
 		% has been completed is for Quentin to die.
-		start <ifPersona E1 else GoDelete>
+		start <ifNPCOK E1 else GoDelete>
 		GoDelete <AdvancePlot 0>
 	sub
 		Persona 1

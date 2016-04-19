@@ -13,7 +13,7 @@ Scene
 	Msg1 <\PERSONA V2 has left the area.>
 
 	nu1 <if= T1 0 Return>
-	nu2 <if= T2 0 ifPersona V2 MoveChar V2 V1>
+	nu2 <if= T2 0 ifNPCOK V2 MoveChar V2 V1>
 
 	Clue14 <Print 2>
 	Msg2 <The animals probably have their breeding ground in a swamp around here.>

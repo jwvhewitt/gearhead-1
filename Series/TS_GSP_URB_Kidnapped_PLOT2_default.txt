@@ -20,7 +20,7 @@ Plot 0
 
 	% If the NPC with the clue gets killed, we're gonna need
 	% a different conclusion.
-	start <ifPersona E2 else GoDelete if= V1 0 Compose KEY E4 .usekey V= 1 1>
+	start <ifNPCOK E2 else GoDelete if= V1 0 Compose KEY E4 .usekey V= 1 1>
 	GoDelete <S= 101 1  AdvancePlot 0>
 
 	.usekey <S= 201 1 V= 2 2 MoveChar E3 E1 AdvancePlot 1 DeleteKeyItem E4 Return>

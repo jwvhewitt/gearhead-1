@@ -13,7 +13,7 @@ sub
 	greeting <AdvancePlot 0 NewChat Say 1 AddChat 1 AddChat 2 AddChat 3>
 	result1 <Reputation 1 1 NewChat Say 2>
 	result2 <NewChat Say 3>
-	result3 <Reputation 1 -1 NewChat Say 4>
+	result3 <LoseRenown NewChat Say 4>
 	Msg1 <I have a rhetorical question for you. If a child was lost in \ELEMENT 2 would you travel there to save him?>
 	Msg2 <I'd like to think that any person would do the same, but I fear that there are many who wouldn't. I try hard to lead a virtuous life.>
 	Msg3 <Well, I certainly hope that you never have a reason to find out what you'd do in that situation!>

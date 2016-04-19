@@ -68,7 +68,7 @@
 	EXIT [code]		Leave current scene with exit code
 	EXPRESSDELIVERY		Have shopkeeper ship mecha from another town
 	FORCECHAT [CID]		Force conversation with NPC
-	FREEZENPC [CID]		Remove NPC from play; store as global
+	FREEZECHAR [CID]		Remove NPC from play; store as global
 	G= [idnum] [value]	Set global variable
 	G+ [idnum] [value]	Add global variable
 	GLOBALSTORYPATTERN [scene label] [story label] loads as many stories

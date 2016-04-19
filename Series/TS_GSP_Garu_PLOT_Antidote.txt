@@ -6,7 +6,7 @@ Plot 0
 	element1 <Grab 1>
 	element2 <Character Scientist !Far 1>
 
-	start <ifPersona E2 else cleanup>
+	start <ifNPCOK E2 else cleanup>
 	cleanup <AdvancePlot 0>
 
 sub

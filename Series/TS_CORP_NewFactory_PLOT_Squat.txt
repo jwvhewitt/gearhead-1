@@ -33,7 +33,7 @@ Plot 0
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E2 is killed.
 	% At this startup, move the NPC to the factory site.
-	start <ifPersona E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 V= 4 EScene 2 MoveChar E2 N2>
+	start <ifNPCOK E2 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400 V= 4 EScene 2 MoveChar E2 N2>
 	GoCheckTime <if= V2 0 ifG ComTime V1 MoveChar E2 V4 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 

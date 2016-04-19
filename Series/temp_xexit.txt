@@ -30,7 +30,7 @@ Plot 0
 	start <if= V1 1 else GoCheckPersona if= SceneID 1 Goto GoStartCombat>
 
 	% If Persona E2 dies, load a new plot.
-	GoCheckPersona <ifPersona E2 else GoDelete>
+	GoCheckPersona <ifNPCOK E2 else GoDelete>
 	GoDelete <S= 101 1 AdvancePlot 0>
 
 	GoStartCombat <Block Print 101 SavePos P= 2 1 Dynamic 2 Threat S103 140 .nu1 .nu2>

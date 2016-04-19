@@ -10,7 +10,7 @@ Plot 0
 	element4 <Faction GoodEnemy>
 	element5 <Scene Target Town !Far 1>
 
-	start <ifPersona E2 else GoDelete ifFaction N2 else GoReplaceFaction>
+	start <ifNPCOK E2 else GoDelete ifFaction N2 else GoReplaceFaction>
 	GoReplaceFaction <N= 2 E4>
 	GoDelete <S= 101 1 AdvancePlot 0>
 	cleanup <AdvancePlot 0>
@@ -40,7 +40,7 @@ sub
 	% V11 = PC was difficult...
 
 	Greeting <NewChat P= 3 1 if= P2 3 else GoCheckLoss if= V11 1 else GoEP2 if= d2 1 else GoEP2 Say 101 History 151 XRBadThing NAV_XRBIncriminated Goto GoEndPlot>
-	GoEP2 <XRBAdThing NAV_XRBSeekingRevenge ifPersona N1 else GoEP3 if# XRE NAV_XREFaction else GoEP3 Say 102 History 152 XREnemy NAV_XRECharacter Goto GoEndPlot>
+	GoEP2 <XRBAdThing NAV_XRBSeekingRevenge ifNPCOK N1 else GoEP3 if# XRE NAV_XREFaction else GoEP3 Say 102 History 152 XREnemy NAV_XRECharacter Goto GoEndPlot>
 	GoEP3 <Say 103 History 153 XREnemy NAV_XREFaction Goto GoEndPlot>
 
 	GoEndPlot <S= 101 1 S+ 102 1 N= 3 E3 S= 105 1 AdvancePlot 0>

@@ -25,8 +25,8 @@ Story
 	% S3 = Combat Indicator
 
 	start <if= S1 0 S= 1 1 Compose UTD N2 .N2dies Compose UTD N3 .N3Dies>
-	.n2dies <ifPersona N3 else GoDelete>
-	.n3dies <ifPersona N2 else GoDelete>
+	.n2dies <ifNPCOK N3 else GoDelete>
+	.n3dies <ifNPCOK N2 else GoDelete>
 	GoDelete <EndStory>
 
 	NU1 <if= S3 1 if= T1 0 LoseRenown S= 3 2>

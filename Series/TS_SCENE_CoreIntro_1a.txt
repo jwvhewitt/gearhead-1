@@ -14,7 +14,7 @@ Scene 0 2
 	start <if= V1 0 V= 1 1 ForceChat V10>
 
 	nu1 <if= t1 0 Return>
-	nu2 <if= T2 0 ifPersona V10 else GoV10Dead if= V2 0 V= 2 1 ForceChat V10>
+	nu2 <if= T2 0 ifNPCOK V10 else GoV10Dead if= V2 0 V= 2 1 ForceChat V10>
 	GoV10Dead <Retreat 1>
 
 sub

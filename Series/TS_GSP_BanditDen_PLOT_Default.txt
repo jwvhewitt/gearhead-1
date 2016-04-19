@@ -7,7 +7,7 @@ Plot 0
 
 	% On a cleanup request, just get rid of the plot.
 	% If E1 dies we'll get a cleanup request anyways.
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 	cleanup <AdvancePlot 0>
 
 	nu1 <if= T1 0 if= V2 1  if= L2 0 else GoPCWon V= 2 2  LoseRenown>

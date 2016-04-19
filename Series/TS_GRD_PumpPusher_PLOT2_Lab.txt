@@ -9,7 +9,7 @@ Plot 0
 
 	% V2 = Combat Indicator
 
-	start <ifPersona E2 else GoDelete>
+	start <ifNPCOK E2 else GoDelete>
 
 	GoDelete <EndStory AdvancePlot 0>
 

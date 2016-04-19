@@ -5,7 +5,7 @@ Plot 0
 	Element1 <Character>
 	stat 1 2407
 
-	start <ifPersona E1 else GoDelete>
+	start <ifNPCOK E1 else GoDelete>
 	GoDelete <AdvancePlot 0>
 
 sub

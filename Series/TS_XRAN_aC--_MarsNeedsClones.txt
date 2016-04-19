@@ -21,7 +21,7 @@ plot 0
 	element7 <Prefab>
 
 	% Stage One: The initial fight
-	start <ifPersona E3 else GoEndPlot  if= V1 0 else GoSetOrder V= 1 1 Compose UTD E3 .killerdies MoveChar E3 E1 Goto GoSetOrder>
+	start <ifNPCOK E3 else GoEndPlot  if= V1 0 else GoSetOrder V= 1 1 Compose UTD E3 .killerdies MoveChar E3 E1 Goto GoSetOrder>
 	GoEndPlot <S= 101 1 S= 105 -1 XREnemy NAV_XREUnknown AdvancePlot 0>
 	.killerdies <if# V1 5 V= 1 5 ForceChat E3 Print 3 History 2>
 	GoSetOrder <ifNPCInPlay E3 NPCGoPC E3>
@@ -35,7 +35,7 @@ sub
 	Persona 3
 	rumor <!3 will take a contract to kill anybody, as long as the price is right.>
 	% V2 = Message Randomizer
-	greeting <NewChat ifPersona E3 else GoE3Dead ifG Range PCUID NPCUID E3 6 else GoNoPhone EndChat Say 5> 
+	greeting <NewChat ifNPCOK E3 else GoE3Dead ifG Range PCUID NPCUID E3 6 else GoNoPhone EndChat Say 5> 
 	GoNoPhone <P= 1 2 Say 1 AddChat 1 AddChat 2 AddChat 3>
 	result1 <EndChat Say 2 Reputation 4 -d10 Goto GoStartFight>
 	result2 <EndChat Say 3 Reputation 1 1 Goto GoStartFight>
@@ -227,7 +227,7 @@ Plot 2
 	% If the player goes to E1 and uses the crystal key, he will be
 	% able to enter the dungeon.
 
-	start <ifPersona E7 else GoWinMission ifItemExists E5 else GoEndMission if= V1 0 V= 1 1 Compose Key E5 .usekey ifFaction N2 else GoSetFaction>
+	start <ifNPCOK E7 else GoWinMission ifItemExists E5 else GoEndMission if= V1 0 V= 1 1 Compose Key E5 .usekey ifFaction N2 else GoSetFaction>
 	GoSetFaction <N= 2 E6>
 	.usekey <ifYesNo 1 2 3 SavePos MStaged .keyscene S103 .mdesc NPCLevel E7 S103 DynaNPC E7 3 PassVar 1 E3 PassVar 2 E7 SeekGate -1>
 	.keyscene <TS_XRAN_SCENE_MarsNeedsClones.txt>
@@ -276,7 +276,7 @@ sub
 Plot 3
 	% The plot is finished, but the PC can speak with the former
 	% enemy if he survived.
-	start <if= EScene 3 E1 else GoNoAlly ifPersona E3 else GoDelete Memo 1>
+	start <if= EScene 3 E1 else GoNoAlly ifNPCOK E3 else GoDelete Memo 1>
 	GoDelete <AdvancePlot 0>
 	GoNoAlly <DeleteChar E3 AdvancePlot 0>
 	Msg1 <Your old enemy \ELEMENT 3 wanted to speak with you in \ELEMENT 1 .>

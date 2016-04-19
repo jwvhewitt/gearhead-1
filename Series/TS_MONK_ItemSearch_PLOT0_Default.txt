@@ -8,7 +8,7 @@ Plot 0
 	element1 <Grab 1>
 	element2 <Character Monk Knowledge !Comrade 1>
 
-	start <ifPersona E2 else GoCleanDelete>
+	start <ifNPCOK E2 else GoCleanDelete>
 
 	% If the master of this plot has died, better load a new
 	% investigative plot.

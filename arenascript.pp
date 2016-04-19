@@ -205,10 +205,12 @@ var
 		msg: String;
 	begin
 		while Part <> Nil do begin
-			msg := SAttValue( Part^.SA , Tag );
-			if msg <> '' then StoreSAtt( MemoList , msg );
-			CreateMemoList( Part^.SubCom , Tag );
-			CreateMemoList( Part^.InvCom , Tag );
+            if Part^.G <> GG_AbsolutelyNothing then begin
+			    msg := SAttValue( Part^.SA , Tag );
+			    if msg <> '' then StoreSAtt( MemoList , msg );
+			    CreateMemoList( Part^.SubCom , Tag );
+			    CreateMemoList( Part^.InvCom , Tag );
+            end;
 			Part := Part^.Next;
 		end;
 	end;
@@ -3311,7 +3313,7 @@ begin
 			until M2 = Nil;
 
 			M2 := SelectRandomGear( Mek^.SubCom );
-			if NotDestroyed( M2 ) and ( M2^.S <> GS_Body ) and ( RollStep( SkillValue( PC , 15 ) ) > 15 ) then begin
+			if NotDestroyed( M2 ) and CanBeExtracted( M2 ) and ( RollStep( SkillValue( PC , 15 ) ) > 15 ) then begin
 				DelinkGear( Mek^.SubCom , M2 );
 				SetNAtt( M2^.NA , NAG_Location , NAS_Team , NAV_DefPlayerTeam );
 				AppendGear( GB^.Meks , M2 );

@@ -95,6 +95,8 @@ const
 
 	UseAdvancedColoring: Boolean = False;
 
+    Accessibility_On: Boolean = False;
+
 	{ *** SCREEN DIMENSIONS *** }
 	ScreenRows: Byte = 25;
 	ScreenColumns: Byte = 80;
@@ -473,6 +475,9 @@ uses dos,ability,gears,texutil;
 					end else if cmd = 'AdvancedColors' then begin
 						UseAdvancedColoring := True;
 
+                    end else if cmd = 'ACCESSIBILITY_ON' then begin
+                        Accessibility_On := True;
+
 				    end else if cmd[1] = '#' then begin
 					    S := '';
 
@@ -550,6 +555,7 @@ uses dos,ability,gears,texutil;
 	    AddBoolean( 'USETACTICSMODE' , UseTacticsMode );
 
 	    AddBoolean( 'ADVANCEDCOLORS' ,  UseAdvancedColoring );
+	    AddBoolean( 'ACCESSIBILITY_ON' ,  Accessibility_On );
 
 	    Close(F);
     end;

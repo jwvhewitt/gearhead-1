@@ -8,7 +8,7 @@ plot 0
 	element2 <Faction Corporate>
 	element3 <Character Executive !Comrade 2 !Far 1>
 
-	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 News d5>
+	start <ifNPCOK E1 else GoDelete ifNPCOK E3 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 43200 News d5>
 	GoCheckTime <ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
@@ -130,7 +130,7 @@ Plot 1
 	%   if P1=1, PC has arranged a better deal.
 	% P2 = Have told about worse deal...
 
-	start <ifPersona E1 else GoDelete ifPersona E3 else GoDelete Memo 101>
+	start <ifNPCOK E1 else GoDelete ifNPCOK E3 else GoDelete Memo 101>
 	GoDelete <AdvancePlot 0>
 
 	Msg101 <\ELEMENT 1 in \SCENE EScene 1 asked you to speak with \ELEMENT 3 in \SCENE EScene 3 about the city utilities contract.>
@@ -164,7 +164,7 @@ sub
 	% V105 = Have attempted SHOPPING roll
 	% V107 = Have attempted INTIMIDATION roll
 	% V109 = Have attempted trait matching
-	greeting <NewChat if= P2 1 else GoCheckNeg Say 117 AddReact d10 CashPrize Reward Threat PCRep 6 100 1250 AdvancePlot 0 Reputation 1 -1>
+	greeting <NewChat if= P2 1 else GoCheckNeg Say 117 AddReact d10 CashPrize Reward Threat PCRep 6 100 1250 AdvancePlot 0>
 	GoCheckNeg <if# P1 0 else GoDeal SayAnything>
 	GoDeal <ifG NPCRep E3 1 -10 else GoE3Villain ifG React 35 else GoNoFriend Say d3 AddChat d2 V= 2 2 V+ 2 d2 AddChat V2>
 	GoNoFriend <V= 2 3 V+ 2 d3 Say V2  Goto GoAddNegOps>
@@ -289,8 +289,8 @@ sub
 	result201 <NewChat AddReact -d10 P= 1 -1 Say 252>
 	result202 <Goto result201>
 
-	result202 <NewChat P= 1 -2 Say 251 Reputation 1 -1 Reputation 2 -5>
-	result203 <Goto result202>
+	result203 <NewChat P= 1 -2 Say 251 Reputation 1 -1 Reputation 2 -5>
+	result204 <Goto result203>
 
 	Msg201 <Ah, \PC . It's a lucky thing you were the negotiator sent by \ELEMENT 1 . I've decided to raise their sevice rates, and if you go along you can benefit as well.>
 	Msg202 <So \ELEMENT 1 sent you to negotiate, did \SPR E1 ? Well, I've already decided to raise their rates. You can benefit from this too if you play along.>
@@ -306,8 +306,8 @@ sub
 	Prompt201 <No deal.>
 	Prompt202 <I can't accept that.>
 
-	Prompt202 <Alright, I'll help you...>
-	Prompt203 <Okay, I can agree to that...>
+	Prompt203 <Alright, I'll help you...>
+	Prompt204 <Okay, I can agree to that...>
 
 end
 

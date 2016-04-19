@@ -8,7 +8,7 @@ story
 	%  At least we know that there's a scientist in town...
 	Element2 <Character Scientist !Near 1>
 
-	quarter <ifPersona E2 else GoDelete if= d12 1 StoryLine .plot EndStory>
+	quarter <ifNPCOK E2 else GoDelete if= d12 1 StoryLine .plot EndStory>
 	.plot <TS_GSP_WarClub_PLOT_*.txt>
 	GoDelete <EndStory>
 
