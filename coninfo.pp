@@ -41,7 +41,7 @@ Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
 implementation
 
 uses crt,ability,damage,gearutil,ghchars,ghmecha,ghmodule,ghweapon,
-     interact,movement,texutil,congfx,conmap,context;
+     interact,movement,texutil,congfx,conmap,context,ui4gh;
 
 var
 	CX,CY: Byte;			{ Cursor Position }
@@ -617,60 +617,81 @@ Procedure LocationInfo( Part: GearPtr; gb: GameBoardPtr );
 const
 	OX = 3;
 	OY = 2;
+    DirStr: Array [0..7] of String = (
+    'E','SE','S','SW','W','NW','N','NE'
+    );
 var
 	D,Z: Integer;
 begin
 	{ Props are master gears, but they don't get location info. }
 	if OnTheMap( Part ) and IsMasterGear( Part ) and ( Part^.G <> GG_Prop ) then begin
-		{ Clear the compass area. }
-		gotoXY( ZX1 + OX - 1 , ZY1 + OY - 1 );
-		write( '   ' );
-		gotoXY( ZX1 + OX - 1 , ZY1 + OY );
-		write( '   ' );
-		gotoXY( ZX1 + OX - 1 , ZY1 + OY + 1 );
-		write( '   ' );
+        if Accessibility_On then begin
+            { The accessible nav display uses plain text. }
+		    gotoXY( ZX1 , ZY1 + OY - 1 );
+		    write( '      ' );
+		    gotoXY( ZX1 , ZY1 + OY );
+		    write( '      ' );
+		    gotoXY( ZX1 , ZY1 + OY + 1 );
+		    write( '      ' );
 
-		D := NAttValue( Part^.NA , NAG_Location , NAS_D );
-		Z := MekAltitude( gb , Part );
-		if Z >= 0 then begin
-			GotoXY( ZX1 + OX , ZY1 + OY );
-			TextColor( NeutralGrey );
-			Write( BStr ( Z ) );
+		    D := NAttValue( Part^.NA , NAG_Location , NAS_D );
+		    Z := MekAltitude( gb , Part );
+		    gotoXY( ZX1 , ZY1 + OY - 1 );
+            write('Dir:' + DirStr[D]);
+		    gotoXY( ZX1 , ZY1 + OY );
+            write('Alt:' + BStr(Z));
 
-		end else begin
-			GotoXY( ZX1 + OX , ZY1 + OY );
-			TextColor( PlayerBlue );
-			Write( BStr ( Abs( Z ) ) );
+        end else begin
+		    { Clear the compass area. }
+		    gotoXY( ZX1 + OX - 1 , ZY1 + OY - 1 );
+		    write( '   ' );
+		    gotoXY( ZX1 + OX - 1 , ZY1 + OY );
+		    write( '   ' );
+		    gotoXY( ZX1 + OX - 1 , ZY1 + OY + 1 );
+		    write( '   ' );
 
-		end;
+		    D := NAttValue( Part^.NA , NAG_Location , NAS_D );
+		    Z := MekAltitude( gb , Part );
+		    if Z >= 0 then begin
+			    GotoXY( ZX1 + OX , ZY1 + OY );
+			    TextColor( NeutralGrey );
+			    Write( BStr ( Z ) );
 
-		TextColor( White );
-		GotoXY( ZX1 + OX + AngDir[D,1] , ZY1 + OY + AngDir[D,2] );
-		Write( '+' );
-		TextColor( DarkGray );
-		GotoXY( ZX1 + OX - AngDir[D,1] , ZY1 + OY - AngDir[D,2] );
-		Write( '=' );
+		    end else begin
+			    GotoXY( ZX1 + OX , ZY1 + OY );
+			    TextColor( PlayerBlue );
+			    Write( BStr ( Abs( Z ) ) );
 
-		{ Speedometer. }
-		if Speedometer( Part ) > 0 then begin
-			GotoXY( ZX1 + OX - 3 , ZY1 + OY );
-			if NAttValue( Part^.NA , NAG_Action , NAS_MoveAction ) = NAV_FullSPeed then begin
-				TextColor( LightCyan );
-			end else begin
-				TextColor( Cyan );
-			end;
+		    end;
 
-			Write( 'G' );
-			GotoXY( ZX1 + OX - 3 , ZY1 + OY + 1 );
-			TextColor( DarkGray );
-			Write( 'S' );
-		end else begin
-			GotoXY( ZX1 + OX - 3 , ZY1 + OY );
-			TextColor( DarkGray );
-			Write( 'G' );
-			GotoXY( ZX1 + OX - 3 , ZY1 + OY + 1 );
-			TextColor( Cyan );
-			Write( 'S' );
+		    TextColor( White );
+		    GotoXY( ZX1 + OX + AngDir[D,1] , ZY1 + OY + AngDir[D,2] );
+		    Write( '+' );
+		    TextColor( DarkGray );
+		    GotoXY( ZX1 + OX - AngDir[D,1] , ZY1 + OY - AngDir[D,2] );
+		    Write( '=' );
+
+		    { Speedometer. }
+		    if Speedometer( Part ) > 0 then begin
+			    GotoXY( ZX1 + OX - 3 , ZY1 + OY );
+			    if NAttValue( Part^.NA , NAG_Action , NAS_MoveAction ) = NAV_FullSPeed then begin
+				    TextColor( LightCyan );
+			    end else begin
+				    TextColor( Cyan );
+			    end;
+
+			    Write( 'G' );
+			    GotoXY( ZX1 + OX - 3 , ZY1 + OY + 1 );
+			    TextColor( DarkGray );
+			    Write( 'S' );
+		    end else begin
+			    GotoXY( ZX1 + OX - 3 , ZY1 + OY );
+			    TextColor( DarkGray );
+			    Write( 'G' );
+			    GotoXY( ZX1 + OX - 3 , ZY1 + OY + 1 );
+			    TextColor( Cyan );
+			    Write( 'S' );
+            end;
 		end;
 	end;
 end;

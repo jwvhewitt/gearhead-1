@@ -1,3 +1,6 @@
+1.301	April 19 2016
+- Added accessibility option for ASCII mode (ui4gh.pp)
+- View Mecha should show correct repair cost (services.pp)
 - Shrine prop sturdier (STCdefault.txt)
 - Exceeding skill number limit indicated in SDL chargen (randchar.pp)
 - Fixed faulty SDL info display when selling items (services.pp)

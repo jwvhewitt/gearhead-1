@@ -350,6 +350,14 @@ begin
 		end else begin
 			AddRPGMenuItem( RPM , 'Enable Name Display' , 9 );
 		end;
+{$ELSE}
+		if Accessibility_On then begin
+			AddRPGMenuItem( RPM , 'Disable Accessibility+' , 10 );
+		end else begin
+			AddRPGMenuItem( RPM , 'Enable Accessibility+' , 10 );
+		end;
+
+
 {$ENDIF}
 		AddRPGMenuItem( RPM , '  Exit Prefrences' , -1 );
 		SetItemByValue( RPM , N );
@@ -394,6 +402,8 @@ begin
 		end else if N = 9 then begin
 			Names_Above_Heads := Not Names_Above_Heads;
 
+        end else if N = 10 then begin
+            Accessibility_On := Not Accessibility_On;
 		end;
 
 	until N = -1;
