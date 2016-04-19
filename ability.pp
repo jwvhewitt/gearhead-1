@@ -25,7 +25,7 @@ unit ability;
 
 interface
 
-uses gears,ghsensor;
+uses gears,ghsensor,ghintrinsic;
 
 const
 	XPA_AttackHit = 2;
@@ -38,6 +38,13 @@ const
 	XPA_SK_Critical = 2;
 	XPA_SK_Basic = 1;	{ XP for just using a combat skill. }
 	XPA_SK_UseRepair = 3;
+
+	{ PERSONAL COMMUNICATION CAPABILITIES }
+	PCC_Memo = GV_Memo;	{ Can view adventure memos }
+	PCC_EMail = GV_EMail;	{ Can receive emails from NPCs }
+	PCC_Comm = GV_Comm;	{ Can receive communications from NPCs }
+	PCC_Phone = GV_Comm;	{ Can receive communications from NPCs / legacy, same as above}
+	PCC_News = GV_News;	{ Can view internet global news }
 
 	CHAT_EXPERIENCE_TARGET = 20;
 
@@ -54,11 +61,6 @@ const
 	);
 
 
-	{ PERSONAL COMMUNICATION CAPABILITIES }
-	PCC_Memo = GV_Memo;	{ Can view adventure memos }
-	PCC_EMail = GV_EMail;	{ Can receive emails from NPCs }
-	PCC_Comm = GV_Comm;	{ Can receive communications from NPCs }
-	PCC_News = GV_News;	{ Can view internet global news }
 
 	Direct_Skill_Learning: Boolean = False;
 
@@ -72,6 +74,7 @@ Function GearActive( Mek: GearPtr ): Boolean;
 function SkillValue( Master: GearPtr; Skill: Integer ): Integer;
 function ReactionTime( Master: GearPtr ): Integer;
 function PilotName( Part: GearPtr ): String;
+Function LanceMateMenuName( M: GearPtr ): String;
 
 Procedure DoleExperience( Mek: GearPtr; XPV: LongInt );
 Procedure DoleExperience( Mek,Target: GearPtr; XPV: LongInt );
@@ -96,6 +99,7 @@ Function CurrentStamina( PC: GearPtr ): Integer;
 Function MechaDescription( Mek: GearPtr ): String;
 Function HasPCommCapability( PC: GearPtr; C: Integer ): Boolean;
 Function HasTalent( PC: GearPtr; T: Integer ): Boolean;
+Function HasIntrinsic( PC: GearPtr; I: Integer; CasualUse: Boolean ): Boolean;
 
 Function LancematePoints( PC: GearPtr ): Integer;
 
@@ -301,6 +305,20 @@ begin
 	PilotName := Name;
 end;
 
+Function LanceMateMenuName( M: GearPtr ): String;
+var
+	msg,pilot: string;
+begin
+	msg := FullGearName( M );
+
+	if M^.G = GG_Mecha then begin
+		pilot := SAttValue( M^.SA , 'PILOT' );
+		if pilot <> '' then msg := msg + ' (' + pilot + ')';
+	end;
+
+	LanceMateMenuName := msg;
+end;
+
 Procedure DoleExperience( Mek: GearPtr; XPV: LongInt );
 	{ Give XPV experience points to whoever is behind the wheel of }
 	{ master unit Mek. }
@@ -318,9 +336,14 @@ Procedure DoleExperience( Mek,Target: GearPtr; XPV: LongInt );
 	{ Give XPV experience points to whoever is behind the wheel of }
 	{ master unit Mek. Scale the experience points by the relative }
 	{ values of Mek and Target. }
+const
+	XPV_MAX = 2147483647;
+	XPV_MIN = -2147483648;
 var
 	MPV,TPV,MonPV: LongInt;	{ Mek PV, Target PV }
-	XP2: Int64;
+	XPV_TPV: Int64;
+	XPV_TPV_TS: double;
+	XP2: double;
 begin
 	MPV := GearValue( Mek );
 	if MPV < 1 then MPV := 1;
@@ -333,8 +356,17 @@ begin
 			MonPV := Target^.V * Target^.V * 150 - Target^.V * 100;
 			if MonPV > TPV then TPV := MonPV;
 		end;
-		XP2 := ( XPV * TPV * ( Target^.Scale + 1 ) ) div MPV;
-		XPV := XP2;
+		{ To avoid a range overflow of the LongInt. }
+		XPV_TPV := Int64(XPV) * Int64(TPV);
+		XPV_TPV_TS := double(XPV_TPV) * double( Target^.Scale + 1 );
+		XP2 := XPV_TPV_TS / double(MPV);
+		if XP2 < XPV_MIN then begin
+			XPV := XPV_MIN;
+		end else if XPV_MAX < XP2 then begin
+			XPV := XPV_MAX;
+		end else begin
+			XPV := LongInt(Trunc(XP2));
+		end;
 	end;
 	if XPV < 1 then XPV := 1;
 	DoleExperience( Mek , XPV );
@@ -841,6 +873,44 @@ begin
 	PC := LocatePilot( PC );
 	HasTalent := ( PC <> Nil ) and ( NAttValue( PC^.NA , NAG_Talent , T ) <> 0 );
 end;
+
+Function HasIntrinsic( PC: GearPtr; I: Integer; CasualUse: Boolean ): Boolean;
+	{ Return TRUE if the PC has the listed intrinsic, or FALSE otherwise. }
+	{ If this is casual use, search the general inventory. Otherwise }
+	{ just search the subcomponents. }
+	Function IntrinsicFoundAlongTrack( Part: GearPtr ): Boolean;
+		{ Return TRUE if the intrinsic is found along this track. }
+	var
+		WasFound: Boolean;
+	begin
+		{ Begin by assuming FALSE. }
+		WasFound := False;
+
+		{ Search along the track until we run out of parts or find }
+		{ the intrinsic. }
+		while ( Part <> Nil ) and not WasFound do begin
+			if NotDestroyed( Part ) then begin
+				WasFound := NAttValue( Part^.NA , NAG_Intrinsic , I ) <> 0;
+				if not WasFound then WasFound := IntrinsicFoundAlongTrack( Part^.SubCom );
+				if not WasFound then WasFound := IntrinsicFoundAlongTrack( Part^.InvCom );
+			end;
+			Part := Part^.Next;
+		end;
+
+		IntrinsicFoundAlongTrack := WasFound;
+	end;
+var
+	it: Boolean;
+begin
+	{ Start with an error check- if this isn't a regular intrinsic, return FALSE. }
+	if ( PC = Nil ) or ( I < 1 ) or ( I > NumIntrinsic ) then Exit( False );
+
+	it := NAttValue( PC^.NA , NAG_Intrinsic , I ) <> 0;
+	if not it then it := IntrinsicFoundAlongTrack( PC^.SubCom );
+	if CasualUse and not it then it := IntrinsicFoundAlongTrack( PC^.InvCom );
+	HasIntrinsic := it;
+end;
+
 
 Function LancematePoints( PC: GearPtr ): Integer;
 	{ Return however many lancemates the PC can have. }

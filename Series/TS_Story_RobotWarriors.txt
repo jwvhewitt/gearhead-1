@@ -166,6 +166,7 @@ Battroid 7
 name <Gladius>
 desig <RIG-03a>
 SDL_Sprite <btr_savin.png>
+SDL_PORTRAIT <mecha_savin.png>
 mod head
 	Armor 5
 	Size 5

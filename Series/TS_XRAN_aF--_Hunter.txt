@@ -93,7 +93,7 @@ Plot 0
 sub
 	Persona 2
 	rumor <!2 heard something you might need to know.>
-	greeting <NewChat if= P1 1 else GoNoStart Say 1 P= 1 2>
+	greeting <NewChat if= P1 1 else GoNoStart Say 1 Memo 2 P= 1 2>
 	GoNoStart <SayAnything>
 	Msg1 <You should know that \ELEMENT 5 hired a bounty hunter to kill you. Goes by the name of \ELEMENT 4 ; was in town a while back asking questions. Be careful, there may be an ambush waiting when you leave town...>
 	Msg1_1 <I heard that you've been fighting against \NARRATIVE 2 . Word on the street is that they've been watching you very carefully. \ELEMENT 4 was hired to kill you... be careful, okay?>
@@ -106,10 +106,11 @@ sub
 	CMsg1_4 <ifChatNPCPassionate Accept>
 	Msg1_5 <It's good to see you looking so healthy... people say you're the walking dead. I've learned that \NARRATIVE 2 ordered a hit against you and \ELEMENT 4 plans to collect. Keep your eyes open or you'll walk straight into an ambush.>
 	CMsg1_5 <ifChatNPCCheerful Accept>
-	Msg1_6 <You're walking dead... \NARRATIVE 2 ordered \ELEMENT 4 to kill you. Even if \OPR E4 fails it's only a matter of time before someone succeeds... Be careful, there could be an ambush waiting for you anywhere.>
+	Msg1_6 <You're walking dead... \NARRATIVE 2 ordered \ELEMENT 4 to kill you. Even if \SPR E4 fails it's only a matter of time before someone succeeds... Be careful, there could be an ambush waiting for you anywhere.>
 	CMsg1_6 <ifChatNPCMelancholy Accept>
 	Msg1_7 <I'm glad you made it here. There's a contract on your life, funded by \NARRATIVE 2 ... I heard it from my regular source. \ELEMENT 4 has been instructed to not return without your head. Be careful out there, alright?>
 	CMsg1_7 <ifG React 25 Accept>
+    Msg2 <\ELEMENT 2 told you that \NARRATIVE 2 hired \ELEMENT 4 to ambush you.>
 
 	Persona 4
 	greeting <EndChat Say 1>

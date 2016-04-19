@@ -134,6 +134,8 @@ begin
 
 	AddRPGMenuItem( RPM , GenderName[ NAV_Male ] , NAV_Male );
 	AddRPGMenuItem( RPM , GenderName[ NAV_Female ] , NAV_Female );
+	AddRPGMenuItem( RPM , MsgString('SELECTGENDER_NONBINARY') , NAV_Nonbinary );
+
 {$IFDEF SDLMODE}
 	RCDescMessage := MsgString( 'RANDCHAR_SGDesc' );
 	RCPromptMessage := MsgString( 'RANDCHAR_SGPrompt' );
@@ -804,6 +806,47 @@ begin
 	if SkillPt > 0 then AddNAtt( PC^.NA , NAG_Experience , NAS_TotalXP , SkillPt * 100 );
 end;
 
+Procedure SetRomance( PC: GearPtr );
+	{ Decide on the sort of NPCs this PC is interested in (in that way). }
+var
+	RPM: RPGMenuPtr;
+	N: Integer;
+begin
+	{ Create the menu and set up the display. }
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharGenMenu );
+{$IFDEF SDLMODE}
+	RCPromptMessage := MsgString( 'RANDCHAR_RomPrompt' );
+	RCDescMessage := MsgString( 'RANDCHAR_RomDesc' );
+{$ELSE}
+	RPM^.Mode := RPMNoCleanup;
+	GameMsg( MsgString( 'RANDCHAR_RomDesc' ) , ZONE_CharGenDesc , InfoGreen );
+{$ENDIF}
+
+	{ Add the romance options to the menu. }
+	for N := 0 to 3 do begin
+		AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_RomOp' + BStr(N)) , N );
+	end;
+    RPMSortAlpha( RPM );
+
+{$IFDEF SDLMODE}
+	N := SelectMenu( RPM , @RandCharRedraw );
+{$ELSE}
+	N := SelectMenu( RPM );
+{$ENDIF}
+    if N = -1 then N := 0;
+
+    SetNAtt( PC^.NA , NAG_CharDescription, NAS_RomanceType, N );
+
+	{ Get rid of the menu. }
+	DisposeRPGMenu( RPM );
+
+	{ Clear the menu area. }
+{$IFNDEF SDLMODE}
+	ClrZone( ZONE_CharGenMenu );
+{$ENDIF}
+end;
+
+
 Procedure SetTraits( PC: GearPtr );
 	{ Set some personality traits for the PC. }
 var
@@ -882,11 +925,7 @@ begin
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_LastPicture' ) , 2 );
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_AcceptPicture' ) , -1 );
 
-	if NAttValue( PC^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
-		PList := CreateFileList( Graphics_Directory + 'por_m_*.*' );
-	end else begin
-		PList := CreateFileList( Graphics_Directory + 'por_f_*.*' );
-	end;
+	PList := DefaultPortraitList( PC );
 
 	RCDescMessage := '';
 	RCPromptMessage := MsgString( 'RANDCHAR_PicturePrompt' );
@@ -1011,6 +1050,15 @@ begin
 {$ENDIF}
 	end else begin
 		RandomSkillPoints( PC , SkillPt );
+	end;
+
+
+	{ Set romance type. }
+	if M = MODE_Regular then begin
+		SetRomance( PC );
+{$IFNDEF SDLMODE}
+		CharacterDisplay( PC , Nil );
+{$ENDIF}
 	end;
 
 	{ Set personality traits. }

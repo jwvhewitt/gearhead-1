@@ -78,7 +78,7 @@ sub
 	greeting <NewChat Say 1  if# P2 0 AddChat 1>
 	result1 <NewChat Say 2 History 3 DeleteChar E2 CashPrize 400000 Reputation 1 -5 Reputation 2 -15 AdvancePlot 0>
 	Msg1 <There's been some idiots in town who want to stand against the Bone Devils. If you have any info that might lead us to their boss, I could make it worth your while.>
-	Msg2 <No kidding? We can get rid of \SPR E2 right away. Here's a cash reward just like I said... Remember, nobody crosses the Bone Devils and lives to tell about it.>
+	Msg2 <No kidding? We can get rid of \OPR E2 right away. Here's a cash reward just like I said... Remember, nobody crosses the Bone Devils and lives to tell about it.>
 	Msg3 <You helped the Bone Devils kill the resistance leader.>
 	Prompt1 <\ELEMENT 2 is the leader.>
 

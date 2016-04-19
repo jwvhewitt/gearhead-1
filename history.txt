@@ -1,3 +1,13 @@
+1.300	April 4 2016
+- Fixed bug in Hermit Hop (SCENE_MeetingPath.txt)
+- Fixed DirKey screen refresh (sdlgfx.pp)
+- Set correct age for Omega-1004 (TS_LANCE_Z1004_STORY.txt)
+- Added title screen logo (gharena.pas)
+- Jump countdown timer fixed (pcaction.pp)
+- Updated gender and romance options (ghchars.pp)
+- Refactored \SPR and \OPR tags to be correct (arenascript.pp)
+- Added instructions to phone (pcaction.pp)
+- Lancemates may use skill trainers (services.pp)
 - SDL Browse Design Files now works like GH2 version (arenahq.pp)
 - SDL UI reworked all over. Heaps more info shown to the player.
 - Backpack and FieldHQ now save menu position (pcaction.pp,backpack.pp)
@@ -559,7 +569,7 @@
 0.802	December 10 2003
 - \FacRank message bug fixed (arenascript.pp)
 - Reduced number of faction XP points needed (arenascript.pp)
-- Added \OPR, \SPR, \PPR message formatting commands (arenascript.pp)
+- Added \SPR, \OPR, \PPR message formatting commands (arenascript.pp)
 - Disappearing enemy XRAN bug has been fixed (grabgear.pp)
 - Map features may have secret door %, locked door % defined (randmaps.pp)
 - Added Search command (pcaction.pp)

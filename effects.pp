@@ -138,7 +138,8 @@ Procedure HandleEffectString( GB: GameBoardPtr; Target: GearPtr; FX_String,FX_De
 implementation
 
 uses ability,action,damage,gearutil,ghchars,ghmodule,ghguard,ghparser,
-     ghprop,ghsensor,ghsupport,ghweapon,movement,rpgdice,skilluse,texutil;
+     ghprop,ghsensor,ghsupport,ghweapon,movement,rpgdice,skilluse,texutil,
+	ghholder;
 
 Type
 	AttackFlags = Record
@@ -1092,12 +1093,79 @@ begin
 	AttemptDefenses := HiDefRoll;
 end;
 
+Function Firing_Weight( Weapon: GearPtr; AtOp: Integer ): Integer;
+	{ Return the firing weight of this weapon operating at the given AtOp. }
+var
+	bfw: Integer;
+begin
+	bfw := GearMass( Weapon );
+	{ Melee weapons count as larger than they actually are. }
+	if ( Weapon^.G = GG_Weapon ) and (( Weapon^.S = GS_Melee ) or ( Weapon^.S = GS_EMelee )) then begin
+		bfw := bfw * 2;
+	{ Rapid fire also increases the firing weight. }
+	{ Missile launchers don't get a penalty for burst firing; probably recoilless. }
+	end else if ( AtOp > 0 ) and not (( Weapon^.G = GG_Weapon ) and ( Weapon^.S = GS_Missile )) then begin
+		bfw := bfw + ( AtOp * 3 ) div 2;
+	end;
+	Firing_Weight := bfw;
+end;
+
+Function Firing_Weight_Limit( User: GearPtr ): Integer;
+	{ Return the maximum firing weight this user can handle. }
+begin
+	if User^.G = GG_Mecha then begin
+		Firing_Weight_Limit := User^.V * 2 + 2;
+	end else if User^.G = GG_Character then begin
+		Firing_Weight_Limit := CStat( User , STAT_Body );
+	end else begin
+		Firing_Weight_Limit := 100;
+	end;
+end;
 
 Function CalcTotalModifiers( gb: GameBoardPtr; Attacker,Target: GearPtr; AtOp: Integer; AtAt: String ): Integer;
 	{ Calculate the total modifiers to this attack roll. }
 var
 	SkRoll,Spd,ZA,ZT: Integer;
 	AMaster,TMaster,AModule,AShield: GearPtr;
+	Function NotIntegralWeapon( Part: GearPtr ): Boolean;
+		{ Return TRUE if part is an invcom or the descendant of an invcom. }
+	begin
+		NotIntegralWeapon := IsExternalPart( AMaster , Part );
+	end;
+	Function WeaponWeightModifier: Integer;
+		{ Return the targeting modifier caused by the weight of this weapon. }
+		Function HasFreeHand( LList: GearPtr ): Boolean;
+			{ Return TRUE if you can find a hand of equal scale to AMaster }
+			{ along this linked list, or FALSE otherwise. }
+		var
+			HandFound: Boolean;
+		begin
+			HandFound := False;
+			while ( LList <> Nil ) and ( not HandFound ) do begin
+				if ( LList^.G = GG_Holder ) and ( LList^.S = GS_Hand ) and ( LList^.Scale >= AMaster^.Scale ) and ( LList^.InvCom = Nil ) then begin
+					HandFound := True;
+				end else begin
+					HandFound := HasFreeHand( LList^.SubCom );
+				end;
+				LList := LList^.Next;
+			end;
+			HasFreeHand := HandFound;
+		end;
+	var
+		W,L: Integer;
+		Weapon_Module: GearPtr;
+	begin
+		W := Firing_Weight( Attacker , AtOp ) * ( Attacker^.Scale + 1 );
+		L := Firing_Weight_Limit( AMaster ) * ( AMaster^.Scale + 1 );
+		Weapon_Module := FindModule( Attacker );
+		if ( Weapon_Module <> Nil ) and ( Weapon_Module^.S = GS_Body ) then L := L * 2;
+		if HasFreeHand( AMaster^.SubCom ) then L := L * 3;
+		if W > L then begin
+			WeaponWeightModifier := -5 - ( ( W - L ) div ( AMaster^.Scale + 1 ) ) div 2;
+		end else begin
+			WeaponWeightModifier := 0;
+		end;
+	end;
 begin
 	SkRoll := 0;
 	AMaster := FindRoot( Attacker );
@@ -1133,6 +1201,11 @@ begin
 		{ Modules and other non-weapon attacking parts suffer }
 		{ a -2 to their hot rolls. }
 		SkRoll := SkRoll - 2;
+	end;
+
+	{ Modify the attack roll for overheavy weapons. }
+	if NotIntegralWeapon( Attacker ) then begin
+		SkRoll := SkRoll + WeaponWeightModifier;
 	end;
 
 	{ Modify the attack roll for wielded shields. }

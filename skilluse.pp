@@ -56,8 +56,13 @@ Function UseRobotics( GB: GameBoardPtr; PC,Ingredients: GearPtr ): GearPtr;
 
 implementation
 
+{$IFDEF SDLMODE}
+uses ability,action,damage,gearutil,ghchars,ghholder,ghmodule,ghmovers,ghswag,
+     ghweapon,movement,interact,rpgdice,texutil,sdlgfx;
+{$ELSE}
 uses ability,action,damage,gearutil,ghchars,ghholder,ghmodule,ghmovers,ghswag,
      ghweapon,movement,interact,rpgdice,texutil;
+{$ENDIF}
 
 Function TotalRepairableDamage( Target: GearPtr; Skill: Integer ): LongInt;
 	{ Search through TARGET, and calculate how much damage it has }
@@ -118,10 +123,13 @@ end;
 Procedure ApplyRepairPoints( Target: GearPtr; Skill: Integer; var RP: LongInt );
 	{ Search through TARGET, and restore DPs to parts }
 	{ that can be repaired using SKILL. }
+const
+	tmp_MAX = 2147483647;
 var
 	Part: GearPtr;
 	SD,AD,TCom,SCom,ARP,RPNeeded: LongInt;
 	T: Integer;
+	tmp: Int64;
 begin
 	{ Only examine TARGET for damage if it's of a type that can be }
 	{ repaired using SKILL. }
@@ -137,9 +145,22 @@ begin
 				TCom := ComponentComplexity( Target );
 				SCom := SubComComplexity( Target );
 				if SCom > TCom then begin
-					RPNeeded := ( RPNeeded * SCom ) div TCom;
-					ARP := ( ARP * TCom ) div SCom;
-					if ARP < 1 then ARP := 1;
+					tmp := ( Int64(RPNeeded) * Int64(SCom) ) div TCom;
+					if tmp < 0 then begin
+						RPNeeded := 0;
+					end else if tmp_MAX < tmp then begin
+						RPNeeded := tmp_MAX;
+					end else begin
+						RPNeeded := tmp;
+					end;
+					tmp := ( Int64(ARP) * Int64(TCom) ) div SCom;
+					if tmp < 1 then begin
+						ARP := 1;
+					end else if tmp_MAX < tmp then begin
+						ARP := tmp_MAX;
+					end else begin
+						ARP := tmp;
+					end;
 				end;
 			end;
 
@@ -159,9 +180,22 @@ begin
 				TCom := ComponentComplexity( Target );
 				SCom := SubComComplexity( Target );
 				if SCom > TCom then begin
-					RPNeeded := ( RPNeeded * SCom ) div TCom;
-					ARP := ( ARP * TCom ) div SCom;
-					if ARP < 1 then ARP := 1;
+					tmp := ( Int64(RPNeeded) * Int64(SCom) ) div TCom;
+					if tmp < 0 then begin
+						RPNeeded := 0;
+					end else if tmp_MAX < tmp then begin
+						RPNeeded := tmp_MAX;
+					end else begin
+						RPNeeded := tmp;
+					end;
+					tmp := ( Int64(ARP) * Int64(TCom) ) div SCom;
+					if tmp < 1 then begin
+						ARP := 1;
+					end else if tmp_MAX < tmp then begin
+						ARP := tmp_MAX;
+					end else begin
+						ARP := tmp;
+					end;
 				end;
 			end;
 
@@ -443,9 +477,15 @@ Function UseRobotics( GB: GameBoardPtr; PC,Ingredients: GearPtr ): GearPtr;
 	{ adding a GENE BLENDER for the BioTech skill later on... }
 	{ This function returns the robot, or NIL if construction failed. }
 	{ The calling procedure should place the robot on the map or dispose of it. }
+const
+	BP_MAX = 2147483647;
+	BP_MIN = -2147483648;
+	Stat_MAX = 32767;
 var
 	Robot,Part,Part2: GearPtr;
-	BP,SkRk,T,BaseSkill,Sensor,Electronic,Armor,Skill: Integer;
+	BP: LongInt;
+	BP_tmp: Int64;
+	SkRk,T,BaseSkill,Sensor,Electronic,Armor,Skill: Integer;
 	Viable,Good: Boolean;
 
 	Procedure InstallLimb( N,Size: Integer );
@@ -522,7 +562,13 @@ begin
 	SetSAtt( Robot^.SA , 'NAME <' + RandomRobotName + '>' );
 	SetNAtt( Robot^.NA , NAG_CharDescription , NAS_DAge , -19 );
 	SetSAtt( Robot^.SA , 'ROGUECHAR <R>' );
+    SetNAtt( Robot^.NA, NAG_CharDescription, NAS_Gender, NAV_Undefined );
+    SetNAtt( Robot^.NA, NAG_CharDescription, NAS_Sentience, NAV_IsMonster );
+    {$IFDEF SDLMODE}
+    SetSAtt( Robot^.SA, 'SDL_COLORS <' + RandomColorString(CS_Clothing) + ' ' + RandomColorString(CS_PrimaryMecha) + ' ' + RandomColorString(CS_Detailing) + '>' );
+    {$ELSE}
 	SetSAtt( Robot^.SA , 'SDL_COLORS <80 80 85 170 155 230 6 42 120>' );
+    {$ENDIF}
 
 	{ Determine the PC's ROBOTICS skill. }
 	{ The skill rank is penalized by 10 here since it will be given a bonus }
@@ -542,13 +588,26 @@ begin
 		if Part^.G = GG_RepairFuel then begin
 			BP := BP + Part^.V;
 		end else begin
-			BP := BP + GearMaxDamage( Part ) + GearMaxArmor( Part ) + GearMass( Part );
+			BP_tmp := BP;
+			BP_tmp := BP_tmp + GearMaxDamage( Part ) * 5;
+			BP_tmp := BP_tmp + GearMaxArmor( Part ) * 3;
+			BP_tmp := BP_tmp + GearMass( Part );
+			if BP_tmp < BP_MIN then begin
+				BP_tmp := BP_MIN;
+			end else if BP_MAX < BP_tmp then begin
+				BP_tmp := BP_MAX;
+			end;
+			BP := BP_tmp;
 		end;
 		Part := Part^.Next;
 	end;
 
 	{ Use the BP total to calculate the robot's BODY stat. }
-	Robot^.Stat[ STAT_Body ] := BP div 25;
+	if (Stat_MAX < (BP div 25)) then begin
+		Robot^.Stat[ STAT_Body ] := Stat_MAX;
+	end else begin
+		Robot^.Stat[ STAT_Body ] := BP div 25;
+	end;
 	if Robot^.Stat[ STAT_Body ] < 1 then Robot^.Stat[ STAT_Body ] := 1
 	else if Robot^.Stat[ STAT_Body ] > 25 then Robot^.Stat[ STAT_Body ] := 25;
 
@@ -595,7 +654,8 @@ begin
 			{ This robot has become self-aware!!! }
 			{ Give it a CID, a gender, and it likes the PC. }
 			SetNAtt( Robot^.NA , NAG_Personal , NAS_CID , NewCID( GB , FindRoot( GB^.Scene ) ) );
-			SetNAtt( Robot^.NA , NAG_CharDescription , NAS_Gender , Random( 2 ) );
+			SetNAtt( Robot^.NA , NAG_CharDescription , NAS_Gender , Random( 3 ) );
+            SetNAtt( Robot^.NA, NAG_CharDescription, NAS_Sentience, NAV_IsCharacter );
 			AddNAtt( PC^.NA , NAG_ReactionScore , NAttValue( Robot^.NA , NAG_Personal , NAS_CID ) , 50 );
 
 			{ Give the PC some extra XP for a job well done. }
@@ -681,8 +741,7 @@ begin
 			end else if Random( 5 ) = 1 then begin
 				{ Add a specialist skill, maybe. }
 				Skill := Robot_Skill[ Random( Num_Robot_Skill ) + 1 ];
-				if RollStep( SkillValue( PC , Skill ) ) > 10 then AddNAtt( Robot^.NA , NAG_Skill , Skill , Random( BaseSkill ) + 1 )
-				else Inc( Robot^.Stat[ Random( 7 ) + 1 ] );
+				AddNAtt( Robot^.NA , NAG_Skill , Skill , Random( BaseSkill ) + 1 );
 			end else begin
 				{ Improve a stat. }
 				Inc( Robot^.Stat[ Random( 7 ) + 1 ] );

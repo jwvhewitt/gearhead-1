@@ -160,7 +160,7 @@ sub
 		Msg2 <It's very complicated, I don't have enough time to tell you everything, but you should know this: \NARRATIVE 1 is trying to kill you, and will stop at nothing until you're dead. I have to go now but I will help you again.>
 		Msg2_1 <I don't know the reason, but \NARRATIVE 1 wants you dead. It could be that an order came from higher up, it could be a personal grudge, I just don't know. I have to leave soon but when you need me I'll be back to help.>
 		CMsg2_1 <if= XRM NAV_XRMUnknown Accept>
-		Msg2_7 <\NARRATIVE 1 killed your parents. I don't know all the details myself but they knew something about \PPR N1 secret plan, or about the masters \OPR N1 works for. You're something of a loose end, one that they'll try very hard to snip.>
+		Msg2_7 <\NARRATIVE 1 killed your parents. I don't know all the details myself but they knew something about \PPR N1 secret plan, or about the masters \SPR N1 works for. You're something of a loose end, one that they'll try very hard to snip.>
 		CMsg2_7 <if= XRB NAV_XRBFamilyDied Accept>
 		Msg2_8 <\NARRATIVE 1 tried to kill you before, but failed... that's when you lost your memory. I don't know what it is that you used to know but it must be pretty important. I have to go, but I'll help you when it's time to fight.>
 		CMsg2_8 <if= XRM NAV_XRMAmnesia Accept>

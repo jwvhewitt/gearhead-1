@@ -593,6 +593,7 @@ var
 begin
 	{ Calculate the base reward value. }
 	RV := ThreatLevel div 100 * Percent div 100;
+    if RV < 100 then RV := 100;
 
 	{ Modify this for the PC's talents. }
 	if GB <> Nil then begin
@@ -1120,6 +1121,14 @@ begin
 				W := 'ERROR!!!';
 			end;
 
+		end else if UpCase( W ) = '\SOURCE' then begin
+			{ Insert the name of the current source. }
+			if Scene <> Nil then begin
+				W := GearName( Scene );
+			end else begin
+				W := 'SOURCE-ERROR!!!';
+			end;
+
 		end else if UpCase( W ) = '\ELEMENT' then begin
 			{ Insert the name of a specified plot element. }
 			ID := ScriptValue( S0 , GB , Scene );
@@ -1156,22 +1165,22 @@ begin
 			{ The name of the PC. }
 			W := GearName( LocatePilot( GG_LocatePC( GB ) ) );
 
-		end else if UpCase( W ) = '\OPR' then begin
-			{ Object Pronoun }
-			ID := ScriptValue( S0 , GB , Scene );
-			Part := GG_LocateNPC( ID , GB , Scene );
-			if Part <> Nil then begin
-				W := MsgString( 'OPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
-			end else begin
-				W := 'it';
-			end;
-
 		end else if UpCase( W ) = '\SPR' then begin
 			{ Object Pronoun }
 			ID := ScriptValue( S0 , GB , Scene );
 			Part := GG_LocateNPC( ID , GB , Scene );
 			if Part <> Nil then begin
 				W := MsgString( 'SPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
+			end else begin
+				W := 'it';
+			end;
+
+		end else if UpCase( W ) = '\OPR' then begin
+			{ Object Pronoun }
+			ID := ScriptValue( S0 , GB , Scene );
+			Part := GG_LocateNPC( ID , GB , Scene );
+			if Part <> Nil then begin
+				W := MsgString( 'OPR_' + BStr( NAttValue( Part^.NA , NAG_CharDescription , NAS_Gender ) ) );
 			end else begin
 				W := 'it';
 			end;

@@ -5,7 +5,7 @@ Plot 0
 
 	element1 <Character Bartender>
 	element2 <Scene !Near 1>
-	element3 <Character !Near 1 Sex:M Sociable Cheerful>
+	element3 <Character !Near 1 Sociable Cheerful>
 	element4 <Prefab>
 
 	start <ifPersona E1 else GoDelete if= V1 0 else GoCheckE3 V= 1 ComTime V+ 1 86400 FreezeChar E3>
@@ -22,21 +22,21 @@ sub
 	GoNoRescue <Say 1 AddChat 1>
 	GoFalseStart <SayAnything>
 	GoE3Died <Say 4 AdvancePlot 0>
-	% The PC will be offered the mission only if he _isn't_ renowned.
+	% The PC will be offered the mission only if not renowned.
 	result1 <NewChat ifG PCRep 6 15 else GoR1NoRep Say 7>
 	GoR1NoRep <Say 3 AddChat 2 AddChat 3>
 	result2 <NewChat Say 6>
 	result3 <EndChat Say 5 SavePos LoadD .dname PassVar 1 E2 PassVar 2 E3 DynaNPC E3 2>
 	.dname <SCENE_F2Hooch.txt>
-	Msg1 <I gave \ELEMENT 3 $50 to go refuel my whisky still in the woods outside town, but he hasn't returned yet. I hope nothing bad has happened to him... or to my whisky.>
+	Msg1 <I gave \ELEMENT 3 $50 to go refuel my whisky still in the woods outside town, but \SPR E3 hasn't returned yet. I hope nothing bad has happened to \OPR E3 ... or to my whisky.>
 	Msg2 <Thanks for returning \ELEMENT 3 .>
-	Msg3 <Could you? I'd offer a reward for doing so, but I already gave the $50 to him. Eh, I'm sure he'll be alright, he's just being lazy as usual.>
-	Msg4 <So he died while delivering firewood to my whisky still... Well, I'm sure that's the way he would have wanted to go. Let's toast his memory.>
+	Msg3 <Could you? I'd offer a reward for doing so, but I already gave the $50 to \OPR E3 . Eh, I'm sure \SPR E3 'll be alright, \SPR E3 's just being lazy as usual.>
+	Msg4 <So \SPR E3 died while delivering firewood to my whisky still... Well, I'm sure that's the way \SPR E3 would have wanted to go. Let's toast \PPR E3 memory.>
 	Msg5 <Off you go, then.>
-	Msg6 <I'm sure he'll turn up. He probably just sampled a bit of the merchandise, and is sleeping it off on the cabin floor.>
-	Msg7 <Nah, it's not worth concerning yourself over. He's done this before, he'll be back by morning.>
+	Msg6 <I'm sure \SPR E3 'll turn up. \SPR E3 probably just sampled a bit of the merchandise, and is sleeping it off on the cabin floor.>
+	Msg7 <Nah, it's not worth concerning yourself over. \SPR E3 's done this before, \SPR E3 'll be back by morning.>
 	Msg8 <My whisky still is running fine... stop by for a drink!>
-	Prompt1 <I'll go check up on him.>
+	Prompt1 <I'll go check up on \OPR E3 .>
 	Prompt2 <On second thought, I'll just stay here.>
 	Prompt3 <No matter, I better go check.>
 

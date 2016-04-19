@@ -3,6 +3,7 @@ Name <Daum>
 Desig <SAN-D1>
 SDL_Sprite <btr_daum.png>
 desc <In NT100, RegEx corporation and the Federation Defense Force began a project to update the BuruBuru design using modern technology. This mecha was the result.>
+SDL_PORTRAIT <mecha_daum.png>
 
 Mod Head
 	Armor 3
@@ -15,6 +16,7 @@ Mod Head
 		Range 4
 		Acc 1
 		BV 6
+		Integral
 	end
 	inv
 		HeadArmor 2

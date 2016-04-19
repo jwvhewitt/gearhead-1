@@ -36,24 +36,29 @@ uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
-	Version = '1.201';
+	Version = '1.300';
 
 var
 	RPM: RPGMenuPtr;
 	N: Integer;
 
 {$IFDEF SDLMODE}
+    MyLogo: SensibleSpritePtr;
+
 Procedure MainMenuRedraw;
     { Draw the opening screen, and add the infobox + logo. }
 begin
     RedrawOpening();
     InfoBox( ZONE_TitleScreenMenu.GetRect() );
+    DrawSprite( MyLogo, ZONE_TitleScreenLogo.GetRect(), 0 );
+    QuickTinyText( Version, ZONE_TitleScreenVersion.GetRect(), BrightYellow );
 end;
 {$ENDIF}
 
 begin
 {$IFDEF SDLMODE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_TitleScreenMenu );
+    MyLogo := ConfirmSprite( 'sys_logo.png', '', 500, 218 );
 {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 {$ENDIF}

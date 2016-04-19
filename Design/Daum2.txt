@@ -3,6 +3,7 @@ Name <Daum>
 Desig <SAN-D2 Zeta>
 SDL_Sprite <btr_daum.png>
 desc <Fifty years after the release of the original Daum, RegEx corporation has once again updated the design.>
+SDL_PORTRAIT <mecha_daum.png>
 
 Mod Head
 	Armor 4
@@ -17,6 +18,7 @@ Mod Head
 		Range 3
 		Acc 1
 		BV 4
+		Integral
 	end
 	inv
 		HeadArmor 3

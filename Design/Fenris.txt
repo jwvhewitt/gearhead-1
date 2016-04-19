@@ -14,10 +14,13 @@ Mod Head
 
 		Sensor 3
 
-		Melee 8
+		Melee 9
 		Name <Jaws>
+		type <BRUTAL>
 		Acc 1
 		Speed 1
+		Integral
+		mass -4
 	end
 
 Mod Body
@@ -48,10 +51,13 @@ Mod Leg
 			STC MAC-4
 		end
 
-		Melee 4
+		Melee 5
 		Acc 2
 		Speed 3
 		Name <Claw>
+		mass -2
+		Integral
+
 	end
 
 Mod Leg
@@ -66,14 +72,18 @@ Mod Leg
 			STC MAC-4
 		end
 
-		Melee 4
+		Melee 5
 		Acc 2
 		Speed 3
 		Name <Claw>
+		mass -2
+		Integral
+
 	end
 
 Mod Tail
 	Size 3
 	Armor 4
 	Mass -3
+	Integral
 end

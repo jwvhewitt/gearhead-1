@@ -38,9 +38,8 @@ Procedure SelectColors( M: GearPtr; Redrawer: RedrawProcedureType );
 Procedure SelectSprite( M: GearPtr; Redrawer: RedrawProcedureType );
 {$ENDIF}
 
-Function LanceMateMenuName( M: GearPtr ): String;
-Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
-Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
+Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
 
 
 Procedure GivePartToPC( GB: GameBoardPtr; Part, PC: GearPtr );
@@ -72,11 +71,11 @@ implementation
 {$IFDEF SDLMODE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
-     sdlinfo,sdlmap,sdlmenus,ghweapon,colormenu,sdl;
+     sdlinfo,sdlmap,sdlmenus,ghweapon,ghintrinsic,colormenu,sdl;
 {$ELSE}
 uses ability,action,arenacfe,arenascript,damage,gearutil,ghchars,ghholder,
      ghmodule,ghprop,ghswag,interact,menugear,rpgdice,skilluse,texutil,
-     congfx,coninfo,conmap,conmenus,context,ghweapon;
+     congfx,coninfo,conmap,conmenus,context,ghweapon,ghintrinsic;
 {$ENDIF}
 
 var
@@ -232,8 +231,10 @@ begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharViewMenu );
 	if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Female then begin
 		BuildFileMenu( RPM , Graphics_Directory + 'cha_f_*.*' );
-	end else begin
+	end else if NAttValue( M^.NA , NAG_CharDescription , NAS_Gender ) = NAV_Male then begin
 		BuildFileMenu( RPM , Graphics_Directory + 'cha_m_*.*' );
+	end else begin
+		BuildFileMenu( RPM , Graphics_Directory + 'cha_*_*.*' );
 	end;
 	AddRPGMenuItem( RPM , MsgString( 'EXIT' ) , -1 );
 
@@ -249,26 +250,22 @@ end;
 {$ENDIF}
 
 
-Function LanceMateMenuName( M: GearPtr ): String;
-var
-	msg,pilot: string;
-begin
-	msg := FullGearName( M );
 
-	if M^.G = GG_Mecha then begin
-		pilot := SAttValue( M^.SA , 'PILOT' );
-		if pilot <> '' then msg := msg + ' (' + pilot + ')';
-	end;
-
-	LanceMateMenuName := msg;
-end;
-
-Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindNextPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
     { Locate the next player character on the gameboard. }
     Function IsPC( PC: GearPtr ): Boolean;
         { Return True if this is a PC, or False otherwise. }
+    var
+        team: Longint;
+        Pilot: GearPtr;
     begin
-        IsPC := IsMasterGear( PC ) and GearActive(PC) and ((NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_LancemateTeam));
+        if IsMasterGear( PC ) and GearActive(PC) then begin
+            team := NAttValue( PC^.NA , NAG_Location, NAS_Team );
+            Pilot := LocatePilot( PC );
+            if team = NAV_DefPlayerTeam then IsPC := True
+            else if team = NAV_LancemateTeam then IsPC := AllowPets or ( NAttValue( Pilot^.NA , NAG_Personal , NAS_CID ) <> 0 )
+            else IsPC := False;
+        end else IsPC := False;
     end;
 var
     PC,NextPC,FirstPC: GearPtr;
@@ -293,12 +290,21 @@ begin
 	end else FindNextPC := NextPC;
 end;
 
-Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr ): GearPtr;
+Function FindPrevPC( GB: GameBoardPtr; CurrentPC: GearPtr; AllowPets: Boolean ): GearPtr;
     { Locate the previous player character on the gameboard. }
     Function IsPC( PC: GearPtr ): Boolean;
         { Return True if this is a PC, or False otherwise. }
+    var
+        team: Longint;
+        Pilot: GearPtr;
     begin
-        IsPC := IsMasterGear( PC ) and GearActive(PC) and ((NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( PC^.NA , NAG_Location, NAS_Team ) = NAV_LancemateTeam));
+        if IsMasterGear( PC ) and GearActive(PC) then begin
+            team := NAttValue( PC^.NA , NAG_Location, NAS_Team );
+            Pilot := LocatePilot( PC );
+            if team = NAV_DefPlayerTeam then IsPC := True
+            else if team = NAV_LancemateTeam then IsPC := AllowPets or ( NAttValue( Pilot^.NA , NAG_Personal , NAS_CID ) <> 0 )
+            else IsPC := False;
+        end else IsPC := False;
     end;
 var
     PC,PrevPC,LastPC: GearPtr;
@@ -459,8 +465,11 @@ end;
 Function ShakeDown( GB: GameBoardPtr; Part: GearPtr; X,Y: Integer ): LongInt;
 	{ This is the workhorse for this function. It does the }
 	{ dirty work of separating inventory from (former) owner. }
+const
+	V_MAX = 2147483647;
+	V_MIN = -2147483648;
 var
-	cash: LongInt;
+	Cash: Int64;
 	SPart: GearPtr;		{ Sub-Part }
 begin
 	{ Start by removing the cash from this part. }
@@ -489,6 +498,12 @@ begin
 	while SPart <> Nil do begin
 		if SPart^.G <> GG_Cockpit then cash := cash + ShakeDown( GB , SPart , X , Y );
 		SPart := SPart^.Next;
+	end;
+
+	if (V_MAX < Cash) then begin
+		Cash := V_MAX;
+	end else if (Cash < V_MIN) then begin
+		Cash := V_MIN;
 	end;
 
 	ShakeDown := Cash;
@@ -546,6 +561,7 @@ end;
 	Procedure GetItemRedraw;
 	begin
 		SDLCombatDisplay( InfoGB );
+        InfoBox( ZONE_CenterMenu.GetRect() );
 		{DisplayGearInfo( InfoGear , InfoGB );}
 	end;
 {$ENDIF}
@@ -571,7 +587,11 @@ begin
 	{ pick one. }
 	end else if N > 1 then begin
 		DialogMsg( MsgString( 'GET_WHICH_ITEM?' ) );
+        {$IFDEF SDLMODE}
+		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CenterMenu );
+        {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
+        {$ENDIF}
 		for t := 1 to N do begin
 			AddRPGMenuItem( RPM , GearName( GetVisibleItemAtSpot( GB , X , Y , T ) ) , T );
 		end;
@@ -761,8 +781,11 @@ begin
 		CanBeExtracted := False;
 	end else if ( Item^.G = GG_Module ) and ( Item^.S = GS_Body ) then begin
 		CanBeExtracted := False;
+	end else if SeekGear( Item , GG_Cockpit , 0 , False ) <> Nil then begin
+		{ If the item contains the cockpit, it can't be extracted. }
+		CanBeExtracted := False;
 	end else begin
-		CanBeExtracted := True;
+		CanBeExtracted := Not PartHasIntrinsic( Item , NAS_Integral );
 	end;
 end;
 
@@ -1448,8 +1471,11 @@ end;
 
 Procedure EatItem( GB: GameBoardPtr; TruePC , Item: GearPtr );
 	{ The PC wants to eat this item. Give it a try. }
+const
+	WaitTime_Max = 32767;
 var
 	effect: String;
+	WaitTime: Int64;
 begin
 	TruePC := LocatePilot( TruePC );
 
@@ -1461,7 +1487,12 @@ begin
 		DialogMsg( ReplaceHash( ReplaceHash( MsgString( 'BACKPACK_YouAreEating' ) , GearName( TruePC ) ) , GearName( Item ) ) );
 
 		{ Eating takes time... }
-		WaitAMinute( GB , TruePC , ReactionTime( TruePC ) * GearMass( Item ) + 1 );
+		WaitTime := ReactionTime( TruePC ) * GearMass( Item ) + 1;
+		while (WaitTime_Max < WaitTime) do begin
+			WaitAMinute( GB, TruePC, WaitTime_Max );
+			WaitTime := WaitTime - WaitTime_Max;
+		end;
+		WaitAMinute( GB, TruePC, WaitTime );
 
 		{ ...and also exits the backpack. }
 		ForceQuit := True;
@@ -1603,7 +1634,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -3 then begin
-            M := FindNextPC( GB, M );
+            M := FindNextPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1611,7 +1642,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -4 then begin
-            M := FindPrevPC( GB, M );
+            M := FindPrevPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1657,7 +1688,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -3 then begin
-            M := FindNextPC( GB, M );
+            M := FindNextPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1665,7 +1696,7 @@ begin
 			DisplayGearInfo( M );
             {$ENDIF}
         end else if N = -4 then begin
-            M := FindPrevPC( GB, M );
+            M := FindPrevPC( GB, M, True );
             N := 0;
 			{ Restore the display. }
 			UpdateBackpack( M );
@@ -1885,7 +1916,11 @@ begin
     {$ENDIF}
 
 	{ Create the menu. }
+    {$IFDEF SDLMODE}
+	RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_FHQMenu );
+    {$ELSE}
 	RPM := CreateRPGMenu( MenuItem, MenuSelect, ZONE_Menu );
+    {$ENDIF}
 	M := LList;
 	N := 1;
 	Team := NAttValue( PC^.NA , NAG_LOcation , NAS_Team );

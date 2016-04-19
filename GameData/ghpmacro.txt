@@ -218,3 +218,11 @@ SkillModRobotics          <Stat 1 38>
 SkillModLeadership        <Stat 1 39>
 SkillModDominateAnimal    <Stat 1 40>
 SkillModPickPockets       <Stat 1 41>
+IsCharacter <NAtt 3 4 0>
+Memo                      <NAtt 18 1 1>
+Email                     <NAtt 18 2 1>
+News                      <NAtt 18 3 1>
+Phone                     <NAtt 18 4 1>
+Sealed                    <NAtt 18 5 1>
+Integral                  <NAtt 18 6 1>
+Personadex                <NAtt 18 7 1>

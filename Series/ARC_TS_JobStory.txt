@@ -62,7 +62,7 @@ sub
 	GoStage2 <if= P1 2 else GoStage3 Say 8 AddChat 7 AddChat 6>
 	GoStage3 <if= P1 3 else GoStage4 Say 13 AddChat 8>
 	GoStage4 <AdvancePlot 1 Say 14 MechaPrize .DocWagon AddChat 8 AddChat 9>
-	.DocWagon <Rover.txt>
+	.DocWagon <Renegade.txt>
 
 	result1 <Say 5 Goto GoStartMission>
 	result2 <Say 5 Goto GoStartMission>

@@ -3,6 +3,7 @@ Name <Savin>
 Desig <RIG-01 Zero>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Zero Savin is a general purpose fighter.>
+SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
 	Armor 5
@@ -164,6 +165,7 @@ Name <Savin>
 Desig <RIG-02 Overkill>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Overkill Savin is a heavy artillery platform.>
+SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
 	Armor 5
@@ -311,6 +313,7 @@ Name <Savin>
 Desig <RIG-03 Reaper>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Reaper Savin is a close combat fighter.>
+SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
 	Armor 5
@@ -472,6 +475,7 @@ Name <Savin>
 Desig <RIG-04 Fortress>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Fortress Savin is a long range sniper.>
+SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
 	Armor 5
@@ -635,6 +639,7 @@ Name <Savin>
 Desig <RIG-05 Dragon>
 SDL_Sprite <btr_savin.png>
 Desc <Maquise Spinner's premier mecha suit. The Dragon Savin is a short range assault platform.>
+SDL_PORTRAIT <mecha_savin.png>
 
 Mod Head
 	Armor 5

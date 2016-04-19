@@ -59,7 +59,8 @@ Procedure WaitAMinute( GB: GameBoardPtr; Mek: GearPtr; D: Integer );
 
 implementation
 
-uses ability,damage,gearutil,ghchars,ghmodule,ghweapon,interact,movement,rpgdice,texutil;
+uses ability,damage,gearutil,ghchars,ghmodule,ghweapon,interact,movement,rpgdice,texutil,
+	ghintrinsic;
 
 const
 	EjectDamage = 10;	{ The damage step to roll during an ejection attempt. }
@@ -185,7 +186,7 @@ begin
 					TakeDamage( GB , Part , RollStep(EjectDamage) );
 				end;
 
-				if ERoll > EMod then begin
+				if ( ERoll > EMod ) and not PartHasIntrinsic( Part , NAS_Integral ) then begin
 					{ Delink the chaacter, then attach as a sibling of the master gear. }
 					DelinkGear( Part^.Parent^.SubCom , Part );
 					Part^.Next := Master^.Next;
@@ -990,14 +991,19 @@ end;
 Function TeamPV( MList: GearPtr; Team: Integer ): LongInt;
 	{ Calculate the total point value of active models belonging }
 	{ to TEAM which are present on the map. }
+const
+	it_MAX = 2147483647;
 var
-	it: LongInt;
+	it: Int64;
 begin
 	it := 0;
 
 	while MList <> Nil do begin
 		if GearActive( MList ) and ( NAttValue( MList^.NA , NAG_Location , NAS_TEam ) = Team ) then begin
 			it := it + GearValue( MList );
+			if it_MAX < it then begin
+				it := it_MAX;
+			end;
 		end;
 		MList := MList^.Next;
 	end;

@@ -220,7 +220,8 @@ end;
 function CalcWalk( Mek: GearPtr ): Integer;
 	{ Calculate the base walking rate for this mecha. }
 var
-	mass,spd: Integer;
+	mass: LongInt;
+	spd: Integer;
 	ActualLegPoints,MinLegPoints,NumLegs,MaxLegs: Integer;
 begin
 	if Mek^.G = GG_Mecha then begin
@@ -228,7 +229,11 @@ begin
 		{ movement rate. }
 		mass := GearMass( Mek );
 		if mass < 20 then mass := 20;
-		spd := (TMWalkSpeed - mass) div 3;
+		if (0 < ((TMWalkSpeed - mass) div 3)) then begin
+			spd := (TMWalkSpeed - mass) div 3;
+		end else begin
+			spd := 0;
+		end;
 
 		if Mek^.S = GS_Zoanoid then spd := spd + ZoaWalkBonus;
 
@@ -304,7 +309,8 @@ end;
 function CalcRoll( Mek: GearPtr ): Integer;
 	{ Calculate the base ground movement rate for this mecha. }
 var
-	mass,spd: Integer;
+	mass: LongInt;
+	spd: Integer;
 	ActualWheelPoints,MinWheelPoints: Integer;
 begin
 	{ Find the mass of the mecha. This will give the basic }
@@ -312,7 +318,11 @@ begin
 	if Mek^.G = GG_Mecha then begin
 		mass := GearMass( Mek );
 		if mass < 20 then mass := 20;
-		spd := ( TMRollSpeed - mass ) div 3;
+		if (0 < ((TMRollSpeed - mass) div 3)) then begin
+			spd := (TMRollSpeed - mass) div 3;
+		end else begin
+			spd := 0;
+		end;
 		if spd < MinWalkSpeed then spd := MinWalkSpeed;
 
 		if Mek^.S = GS_GroundCar then begin
@@ -345,8 +355,12 @@ end;
 
 function CalcSkim( Mek: GearPtr ): LongInt;
 	{ Calculate the base hovering speed for this mecha. }
+const
+	spd_MAX = 2147483647;
 var
-	mass,thrust,spd: LongInt;
+	mass: Int64;
+	thrust: Int64;
+	spd: LongInt;
 begin
 	if Mek^.G = GG_Mecha then begin
 		{ Calculate the mass... }
@@ -369,7 +383,11 @@ begin
 		{ Speed is equal to Thrust divided by Mass. }
 		{ Multiply by 10 since we want it expressed in }
 		{ decihexes per round. }
-		spd := (thrust * 10) div mass;
+		if (spd_MAX < ((thrust * 10) div mass)) then begin
+			spd := spd_MAX;
+		end else begin
+			spd := (thrust * 10) div mass;
+		end;
 
 		{ Check the gyroscope. Lacking one will slow down the mek. }
 		if ( SeekActiveIntrinsic( Mek , GG_Support , GS_Gyro ) = Nil ) and ( Mek^.G = GG_Mecha ) then spd := spd div 2;
@@ -423,8 +441,13 @@ function CalcFly( Mek: GearPtr; TrueSpeed: Boolean ): LongInt;
 	{ Set TRUESPEED to TRUE if you want the actual speed of the }
 	{ mecha, or to FALSE if you want its projected speed (needed }
 	{ to calculate jumpjet time- see below. }
+const
+	spd_MAX = 2147483647;
 var
-	mass,thrust,spd,WingPoints: LongInt;
+	mass: Int64;
+	thrust: Int64;
+	spd: LongInt;
+	WingPoints: Integer;
 begin
 	if Mek^.G = GG_Mecha then begin
 		{ Calculate the mass... }
@@ -443,7 +466,11 @@ begin
 		{ Speed is equal to Thrust divided by Mass. }
 		{ Multiply by 10 since we want it expressed in }
 		{ decihexes per round. }
-		spd := (thrust * 10) div mass;
+		if (spd_MAX < ((thrust * 10) div mass)) then begin
+			spd := spd_MAX;
+		end else begin
+			spd := (thrust * 10) div mass;
+		end;
 
 		{ The speed will not drop below the minimum flight speed, }
 		{ so long as it's above the minimum jump speed. }
@@ -465,8 +492,13 @@ end;
 
 Function OverchargeBonus( Master: GearPtr ): LongInt;
 	{ Overchargers add a bonus to a mek's FULLSPEED action. }
+const
+	it_MAX = 2147483647;
 var
-	mass,thrust,it,T,SF: LongInt;
+	mass: LongInt;
+	thrust: LongInt;
+	it: Int64;
+	T,SF: Integer;
 begin
 	mass := GearMass( Master );
 	thrust := CountActivePoints( Master , GG_MoveSys , GS_Overchargers );
@@ -481,6 +513,10 @@ begin
 		end;
 	end;
 
+	if (it_MAX < it) then begin
+		it := it_MAX;
+	end;
+
 	OverchargeBonus := it;
 end;
 
@@ -489,8 +525,11 @@ function BaseMoveRate( Master: GearPtr ; MoveMode: Integer ): Integer;
 	{move using movement rate MOVEMODE. If the mecha is not}
 	{capable of using this movemode, return 0.}
 	{The movement rate is givin in decihexes per round.}
+const
+	it_MAX = 32767;
 var
-	it,SF,t: Integer;
+	it: LongInt;
+	SF,t: Integer;
 begin
 	{Error check- make sure we have a valid master here.}
 	if not IsMasterGear(Master) then Exit( 0 );
@@ -527,6 +566,10 @@ begin
 		end;
 	end;
 
+	if (it_MAX < it) then begin
+		it := it_MAX;
+	end;
+
 	BaseMoveRate := it;
 end;
 
@@ -542,14 +585,19 @@ function CalcMaxTurnRate( Mek: GearPtr ): Integer;
 	{ The actual turn rate will be limited by the mecha's actual }
 	{ movement rate. }
 var
-	mass,spd: Integer;
+	mass: LongInt;
+	spd: Integer;
 begin
 	if Mek^.G = GG_Mecha then begin
 		{ Find the mass of the mecha. This will give the basic }
 		{ movement rate. }
 		mass := GearMass( Mek );
 		if mass < 20 then mass := 20;
-		spd := (TMWalkSpeed - mass) div 3;
+		if (0 < ((TMWalkSpeed - mass) div 3)) then begin
+			spd := (TMWalkSpeed - mass) div 3;
+		end else begin
+			spd := 0;
+		end;
 
 		if Mek^.S = GS_Zoanoid then spd := spd + ZoaWalkBonus;
 

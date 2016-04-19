@@ -531,7 +531,7 @@ begin
 	else msg := '-';
 	AI_PrintFromRight( msg + ' DP' , CX , HitsColor( Part ) );
 
-	N := ( GearMass( Part ) + 1 ) div 2;
+	N := ( Int64(GearMass( Part )) + 1 ) div 2;
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , ZX2 - ZX1 + 2 , LightGray );
 
 	GameMsg( ExtendedDescription( Part ) , ZX1 , ZY1 + 3 , ZX2 , ZY2 , LightGray );
@@ -567,12 +567,12 @@ Procedure RepairFuelInfo( Part: GearPtr );
 	{ Display info for any gear that doesn't have its own info }
 	{ procedure. }
 var
-	N: Integer;
+	N: LongInt;
 begin
 	{ Show the part's name. }
 	AI_Title( GearName(Part) , White );
 
-	N := ( GearMass( Part ) + 1 ) div 2;
+	N := ( Int64(GearMass( Part )) + 1 ) div 2;
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , ZX2 - ZX1 + 2 , LightGray );
 
 	AI_NextLine;
@@ -705,8 +705,10 @@ Function JobAgeGenderDesc( NPC: GearPtr ): String;
 var
 	msg,job: String;
 begin
-	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 );
-	msg := msg + ' year old ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
+	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ) + ' year old';
+    if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
+    	msg := msg + ' ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
+    end;
 	job := SAttValue( NPC^.SA , 'JOB' );
 	if job <> '' then msg := msg + ' ' + LowerCase( job );
 	msg := msg + '.';

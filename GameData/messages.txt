@@ -55,8 +55,8 @@ TALENT9 <Stunt Driving>
 TALENTDESC9 <As long as you're going fast, you can find a way to avoid most attacks. (may reroll dodge if traveling at full speed)>
 TALENT10 <Savant>
 TALENTDESC10 <You have more skills than is normal for a person with your intelligence. (can learn 5 more skills without penalty)>
-TALENT11 <Bishounen>
-TALENTDESC11 <You are androgynously beautiful. (may use Flirtation skill with all NPCs, regardless of gender)>
+TALENT11 <Beautiful One>
+TALENTDESC11 <You are so good looking that it's literally impossible to hate you. (reaction score never drops below 0, may use Flirtation skill with all NPCs)>
 TALENT12 <Diplomatic>
 TALENTDESC12 <In conversation, you can avoid controversial topics. (may avoid reaction loss due to personality clash)>
 TALENT13 <Born To Fly>
@@ -128,12 +128,18 @@ PHONE_NotFound <No person named # can be found in the local dialing area.>
 PHONE_Prompt <You get out your telephone.>
 PHONE_GetName <Who do you want to call?>
 PHONE_NoPhone <You don't have a telephone!>
-OPR_0 <he>
-OPR_1 <she>
-SPR_0 <him>
-SPR_1 <her>
+SPR_0 <he>
+SPR_1 <she>
+SPR_2 <ze>
+SPR_3 <it>
+OPR_0 <him>
+OPR_1 <her>
+OPR_2 <zem>
+OPR_3 <it>
 PPR_0 <his>
 PPR_1 <her>
+PPR_2 <zir>
+PPR_3 <its>
 EXTRACT_OK <You remove the #.>
 EXTRACT_FAIL <You fail to remove the #.>
 EXTRACT_WRECK <You remove the #, but completely destroy it in the process.>
@@ -231,10 +237,16 @@ SCHOOL_Learn2 <You feel that you are a better warrior than before.>
 SCHOOL_Learn3 <You think you leaned something.>
 SCHOOL_Learn4 <You feel like Bruce Lee with a giant robot.>
 SCHOOL_Learn5 <You feel like you aced the test.>
+SCHOOL_NPCLearn1 <# has learned something.>
+SCHOOL_NPCLearn2 <# has improved.>
+SCHOOL_NPCLearn3 <# aces the test.>
+SCHOOL_NPCLearn4 <# learns some new tricks.>
+SCHOOL_NPCLearn5 <# achieves illumination.>
 SCHOOL_TeachingInProgress <Let's get started on your training right away.>
 SCHOOL_HowMuch <How much do you want to spend on your training?>
 SCHOOL_ExitCostSelector <  [No thanks.]>
 SCHOOL_Exit <  [Stop Learning]>
+SCHOOL_Switch <# will do training.>
 SHOPPING_SkillAdvance <You feel like a wise consumer.>
 STAT_1 <Reflexes measures grace and accuracy. It determines most combat rolls.>
 STAT_2 <Body measures your character's size and strength. It determines your health and stamina levels.>
@@ -270,7 +282,7 @@ SKILL_23 <Ability to repair personal scale equipment. Using this skill costs MP.
 SKILL_24 <Ability to resist cybernetic side effects.>
 SKILL_25 <Determines chances of remaining unseen when moving within cover.>
 SKILL_26 <Increases the number of Stamina Points available to your character.>
-SKILL_27 <Improves the rate at which members of the opposite sex will befriend your character.>
+SKILL_27 <Gives a bonus to chat rolls when speaking with someone who may be attracted to you.>
 SKILL_28 <Ability to make a NPC feel very, very afraid.>
 SKILL_29 <Knowledge of scientific matters.>
 SKILL_30 <Increases the number of Mental Points available to your character.>
@@ -371,6 +383,12 @@ RANDCHAR_NextPicture <Next Portrait>
 RANDCHAR_LastPicture <Previous Portrait>
 RANDCHAR_AcceptPicture <Accept Portrait>
 RANDCHAR_PicturePrompt <Select a portrait for your character.>
+RANDCHAR_RomPrompt <Select Romantic Interest>
+RANDCHAR_RomDesc <What kind of romantic relationship is your character interested in finding?>
+RANDCHAR_RomOp0 <Not looking at all>
+RANDCHAR_RomOp1 <Looking for a man>
+RANDCHAR_RomOp2 <Looking for a woman>
+RANDCHAR_RomOp3 <Looking for anyone>
 RANDMAPS_DoorSign <Door of >
 BACKPACK_EngageSafety <Engage Safety Switch>
 BACKPACK_DisengageSafety <Disengage Safety Switch>
@@ -610,6 +628,21 @@ MEI_SkimThrust <Skim Thrust: >
 MEI_FlyThrust <Flight Thrust: >
 MEI_OverChargeBonus <Full Speed Bonus: >
 TRANSFER_GiveTo <Who should get #?>
+INTRINSIC_1 <Memo>
+INTRINSIC_2 <Email>
+INTRINSIC_3 <News>
+INTRINSIC_4 <Phone>
+INTRINSIC_5 <Sealed>
+INTRINSIC_6 <Integral>
+INTRINSIC_7 <Personadex>
+GENDER_0 <Male>
+GENDER_1 <Female>
+GENDER_2 <Nonbinary>
+GENDER_3 <Undefined>
+MAX_SPEED <Max: #>
+PHONE_INSTRUCTIONS <Enter name or job of person to contact; * for redial.>
+SELECTGENDER_NONBINARY <Don't try to define me>
+
 
 
 

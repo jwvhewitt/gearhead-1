@@ -68,6 +68,15 @@ begin
 	SDLCombatDisplay( PCACTIONRD_GB );
 end;
 
+Procedure PhoneRedraw;
+	{ Redraw the map and the PC's info. }
+begin
+	SDLCombatDisplay( PCACTIONRD_GB );
+    InfoBox( ZONE_PhoneInstructions.GetRect() );
+    CMessage( MsgString( 'PHONE_INSTRUCTIONS' ), ZONE_PhoneInstructions.GetRect(), InfoGreen );
+end;
+
+
 Procedure MenuControlRedraw;
 	{ Redraw the map and the PC's info. }
 begin
@@ -102,6 +111,13 @@ begin
     	InfoBox( ZONE_CharViewCaption.GetRect() );
         CMessage( PCACTIONRD_CAPTION , ZONE_CharViewCaption.GetRect() , InfoGreen );
     end;
+end;
+
+Procedure ThisLancemateWasSelectedRedraw;
+    { Redraw for the character browser. }
+begin
+    CharViewRedraw();
+    DisplayTargetInfo( PCACTIONRD_PC, PCACTIONRD_GB, ZONE_CharViewDesc );
 end;
 
 Procedure FieldHQRedraw;
@@ -262,8 +278,10 @@ end;
 Procedure FHQ_Disassemble( GB: GameBoardPtr; PC,NPC: GearPtr );
 	{ Robot NPC is no longer desired. Disassemble it into spare parts, delete the NPC, }
 	{ then give the parts to PC. }
+const
+	V_MAX = 32767;
 var
-	M: Integer;
+	M: LongInt;
 begin
 	{ Error check- NPC must be on the gameboard. }
 	if not IsFoundAlongTrack( GB^.Meks , NPC ) then Exit;
@@ -282,7 +300,11 @@ begin
 
 	{ Get the spare parts. }
 	NPC := LoadNewSTC( 'SPAREPARTS-1' );
-	NPC^.V := M * 5;
+	if (V_MAX < (Int64(M) * 5)) then begin
+		NPC^.V := V_MAX;
+	end else begin
+		NPC^.V := M * 5;
+	end;
 	InsertInvCom( PC , NPC );
 end;
 
@@ -455,7 +477,7 @@ begin
 		PCACTIONRD_PC := NPC;
         PCACTIONRD_GB := GB;
         PCACTIONRD_CAPTION := '';
-		n := SelectMenu( RPM , @CharViewRedraw );
+		n := SelectMenu( RPM , @ThisLancemateWasSelectedRedraw );
 {$ELSE}
 		DisplayGearInfo( NPC , GB );
 		n := SelectMenu( RPM );
@@ -534,6 +556,7 @@ begin
 			Inc( N );
 		end;
 		RPMSortAlpha( RPM );
+        AlphaKeyMenu( RPM );
 		AddRPGMenuItem( RPM , MSgString( 'EXIT' ) , -1 );
         SetItemByPosition( RPM, OldPos );
 
@@ -625,6 +648,12 @@ end;
 Procedure MemoBrowser( GB: GameBoardPtr; PC: GearPtr );
 	{ Find all the memos that the player has accumulated, then allow }
 	{ them to be browsed through, then restore the display afterwards. }
+const
+	m_email = 1;
+	m_memo = 2;
+	m_rumor = 3;
+	m_news = 4;
+	m_Personadex = 5;
 var
 	MainMenu: RPGMenuPtr;
 	CRating,A: Integer;
@@ -752,10 +781,10 @@ var
 	Name: String;
 	NPC: GearPtr;
 begin
-	if HasPCommCapability( PC , PCC_Comm ) then  begin
+	if HasPCommCapability( PC , PCC_Phone ) then  begin
 		DialogMsg( MsgString( 'PHONE_Prompt' ) );
 {$IFDEF SDLMODE}
-		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PCActionRedraw );
+		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) , @PhoneRedraw );
 {$ELSE}
 		Name := GetStringFromUser( MsgString( 'PHONE_GetName' ) );
 {$ENDIF}
@@ -2446,7 +2475,7 @@ end;
 
 
 
-procedure ShiftGears( Mek: GearPtr );
+procedure ShiftGears( GB: GameBoardPtr; Mek: GearPtr );
 	{ Set the mek's MoveMode attribute to the next }
 	{ active movemode that this mek has. }
 var
@@ -2459,7 +2488,11 @@ begin
 		MM := MM mod NumMoveMode + 1;
 	end;
 
-	if MM <> 0 then SetNAtt( Mek^.NA , NAG_Action , NAS_MoveMode , MM);
+	if MM <> 0 then begin
+        SetNAtt( Mek^.NA , NAG_Action , NAS_MoveMode , MM);
+        PrepAction( GB, Mek, NAV_Stop );
+		SetNAtt( Mek^.NA , NAG_Action , NAS_CallTime , GB^.ComTime + 1 );
+    end;
 end;
 
 Procedure KeyMapDisplay;
@@ -3016,8 +3049,8 @@ begin
 
 		end else if ( S div 100 ) = 1 then begin
 			{ A movemode switch has been selected. }
-			SetNAtt( Mek^.NA , NAG_Action , NAS_MoveAction , NAV_Stop );
 			SetNAtt( Mek^.NA , NAG_Action , NAS_MoveMode , S mod 100 );
+            PrepAction( GB, Mek, NAV_Stop );
 			SetNAtt( Mek^.NA , NAG_Action , NAS_CallTime , GB^.ComTime + 1 );
 
 		end else if S = -1 then begin
@@ -3264,7 +3297,7 @@ begin
 
 
 			end else if KP = KeyMap[ KMC_ShiftGears ].KCode then begin
-				ShiftGears( Mek );
+				ShiftGears( Camp^.GB, Mek );
 			end else if KP = KeyMap[ KMC_ExamineMap ].KCode then begin
 				LookAround( Camp^.GB , Mek );
 			end else if KP = KeyMap[ KMC_AttackMenu ].KCode then begin
@@ -3397,7 +3430,7 @@ begin
 
 	{ Check the player for jumping. }
 	TL := NAttValue( Mek^.NA , NAG_Action , NAS_TimeLimit );
-	if ( TL > 0 ) then begin
+	if ( TL > 0 ) and ( NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode ) = MM_Fly ) then begin
 		DialogMsg( BStr( Abs( TL - Camp^.GB^.ComTime ) ) + ' seconds jump time left.' );
 	end;
 

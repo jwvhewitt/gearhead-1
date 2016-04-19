@@ -2,6 +2,7 @@ Battroid 3
 Name <Luna II>
 Desig <AEF>
 desc <This is Aegis Overlord's elite commando mecha.>
+SDL_PORTRAIT <mecha_luna2.png>
 
 Mod Head
 	Size 2
@@ -43,6 +44,12 @@ Mod Arm
 			Range 8
 			Acc 3
 		end
+
+		Melee 10
+		name <Chain Claw>
+		type <EXTEND BRUTAL>
+		mass -6
+		Integral
 	end
 
 Mod Arm
@@ -66,6 +73,11 @@ Mod Arm
 			Acc 2
 			Speed 5
 		end
+		Melee 10
+		name <Chain Claw>
+		type <EXTEND BRUTAL>
+		mass -6
+		Integral
 	end
 
 Mod Leg

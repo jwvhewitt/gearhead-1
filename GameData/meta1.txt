@@ -1,5 +1,5 @@
 % DEFAULT DOOR USAGE SCRIPT FILE %
-name <Door>
+name <door>
 USE <ifG -99 MetaPass else GoCloseDoor  if= StatVal STAT_Lock 0 else GoDoorLocked Print 1  SetStat STAT_Pass 0  Transform 1>
 GoDoorLocked <Print 6>
 GoCloseDoor <Print 2 SetStat STAT_Pass -100  Transform 2>
@@ -12,8 +12,8 @@ CLUE32 <if# StatVal STAT_Lock 0 else GoNotLocked Mental ifG CodeBreaking StatVal
 GoNoUnlock <Print 4>
 GoNotLocked <Print 5>
 REVEAL <DrawTerr SelfX SelfY 19 Print 7>
-Msg1 <You open the door.>
-Msg2 <You close the door.>
+Msg1 <You open the \SOURCE .>
+Msg2 <You close the \SOURCE .>
 Msg3 <You unlock the door.>
 Msg4 <You do not manage to unlock the door.>
 Msg5 <The door does not appear to be locked.>

@@ -48,19 +48,19 @@ sub
 	Msg101 <By the time our crews arrived on the scene, the computer core was destroyed... apparently by heavy weapons fire. You wouldn't know anything about that, would you? Of course I don't suspect you, but others in the department...>
 	Msg151 <You were falsely implicated in the death of your parents.>
 	Msg102 <Ever hear the name \NARRATIVE 1 before? According to the files, he's the one who staged the hit on your parents. The Guardian's office in \ELEMENT 3 has started an investigation of their own. You may want to head there.>
-	Msg102_1 <Now that we have the data core, we should be able to connect all the big figures of the criminal underworld. \NARRATIVE 1 is the name of the person who murdered your parents; our surveillance indicates that \OPR N1 's hiding in \ELEMENT 3 .>
+	Msg102_1 <Now that we have the data core, we should be able to connect all the big figures of the criminal underworld. \NARRATIVE 1 is the name of the person who murdered your parents; our surveillance indicates that \SPR N1 's hiding in \ELEMENT 3 .>
 	CMsg102_1 <ifChatNPCSociable Accept>
-	Msg102_2 <The assassin who killed your parents was \NARRATIVE 1 . The office in \ELEMENT 3 has been investigating \SPR N1 already; you may want to head there.>
+	Msg102_2 <The assassin who killed your parents was \NARRATIVE 1 . The office in \ELEMENT 3 has been investigating \OPR N1 already; you may want to head there.>
 	CMsg102_2 <ifChatNPCShy Accept>
-	Msg102_3 <That went well. We've learned that it was \NARRATIVE 1 who murdered your parents, though we don't yet know why or on whose orders. It's thought that \OPR N1 's currently hiding out in \ELEMENT 3 . The guardians are now looking for \SPR N1 .>
+	Msg102_3 <That went well. We've learned that it was \NARRATIVE 1 who murdered your parents, though we don't yet know why or on whose orders. It's thought that \SPR N1 's currently hiding out in \ELEMENT 3 . The guardians are now looking for \OPR N1 .>
 	CMsg102_3 <ifChatNPCEasygoing Accept>
-	Msg102_4 <Their operation has been shut down perminantly! We've learned from the data core that \NARRATIVE 1 is the one who murdered your parents. It's thought that \OPR N1 's currently operating out of \ELEMENT 3 .>
+	Msg102_4 <Their operation has been shut down perminantly! We've learned from the data core that \NARRATIVE 1 is the one who murdered your parents. It's thought that \SPR N1 's currently operating out of \ELEMENT 3 .>
 	CMsg102_4 <ifChatNPCPassionate Accept>
 	Msg102_5 <The information from that database will piece together a lot of crimes. We've already confirmed that \NARRATIVE 1 is the one who killed your parents. The guardians in \ELEMENT 3 will be following up on this investigation.>
 	CMsg102_5 <ifChatNPCCheerful Accept>
 	Msg102_6 <There wasn't as much in the database as we'd hoped. We did confirm that your parents were killed by \NARRATIVE 1 ... though the financing and reasons behind the killing remain elusive. The guardians in \ELEMENT 3 are investigating.>
 	CMsg102_6 <ifChatNPCMelancholy Accept>
-	Msg102_7 <Our suspicions have been confirmed... \NARRATIVE 1 is the person who carried out the murder of your parents. It's quite likely that \OPR N1 was hired by someone else. The guardian office in \ELEMENT 3 is doing their own investigation.>
+	Msg102_7 <Our suspicions have been confirmed... \NARRATIVE 1 is the person who carried out the murder of your parents. It's quite likely that \SPR N1 was hired by someone else. The guardian office in \ELEMENT 3 is doing their own investigation.>
 	CMsg102_7 <if= XRE NAV_XRECharacter Accept>
 
 	Msg152 <You discovered that \NARRATIVE 1 killed your parents.>

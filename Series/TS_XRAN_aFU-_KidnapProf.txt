@@ -61,19 +61,19 @@ sub
 	result4 <EndChat Say 8 ForceChat E6>
 	result5 <NewChat Say 11 AddChat 4 ifG SkRoll 37 10 AddChat 6>
 	result6 <NewChat Say 12 Memo 10>
-	Msg1 <We're still interrogating the pilot from \ELEMENT 7 . Hopefully \OPR E6 will give us some information. It'll probably take a few hours. My only fear is, by that time it might be too late...>
+	Msg1 <We're still interrogating the pilot from \ELEMENT 7 . Hopefully \SPR E6 will give us some information. It'll probably take a few hours. My only fear is, by that time it might be too late...>
 	Msg2 <The pilot we captured finally spilled! They are taking the kidnapped professor to \SCENE EScene 4 ; \ELEMENT 4 there is leading the investigation.>
 	Msg3 <Our town was just attacked by mecha. They appeared to belong to \ELEMENT 7 , but we can't be sure yet... The worst thing is, while they were here they kidnapped Professor \ELEMENT 5 from the university!>
-	Msg4 <We don't know. They're using some kind of ECM gear... we haven't been able to track them. We did manage to capture one of their pilots who was forced to eject, though, and might be able to get some answers from \SPR E6 .>
-	Msg5 <\ELEMENT 5 is an expert on archeology. Maybe they think \OPR E5 can lead them to a buried treasure. We did manage to capture one of their pilots who was forced to eject, though, so maybe we can get some answers from \SPR E6 .>
+	Msg4 <We don't know. They're using some kind of ECM gear... we haven't been able to track them. We did manage to capture one of their pilots who was forced to eject, though, and might be able to get some answers from \OPR E6 .>
+	Msg5 <\ELEMENT 5 is an expert on archeology. Maybe they think \SPR E5 can lead them to a buried treasure. We did manage to capture one of their pilots who was forced to eject, though, so maybe we can get some answers from \OPR E6 .>
 	Msg6 <I know that you and \ELEMENT 7 have been enemies... maybe you could help us on this case. We captured one of their pilots and hope to find out soon where they've taken the professor, and for what purpose.>
-	Msg7 <We don't know what they're plotting yet. We did capture one of their pilots who was forced to eject during the raid, though... maybe \OPR E6 can tell us something.>
-	Msg8 <Alright, you can do that, but we've already tried getting \SPR E6 to talk... I don't know what good it'll do.>
+	Msg7 <We don't know what they're plotting yet. We did capture one of their pilots who was forced to eject during the raid, though... maybe \SPR E6 can tell us something.>
+	Msg8 <Alright, you can do that, but we've already tried getting \OPR E6 to talk... I don't know what good it'll do.>
 	Msg9 <Good job with that pilot. \ELEMENT 4 in \SCENE EScene 4 is working on the case now. We better hurry; once they get the information they want out of the professor, they aren't likely to leave any witnesses.>
 	Msg10 <\ELEMENT 4 in \SCENE EScene 4 is investigating the kidnapped professor.>
 	Msg11 <We're still analyzing the data from the encounter site. Here, take a look through these pictures... It'll take hours of analysis to learn anything useful.>
-	Msg12 <Ah, I see what you're getting at... If they followed the \ELEMENT 1 Trench to \SCENE EScene 4 , they'd escape most of the surveillance radar. I'll call \ELEMENT 4 and get \SPR E4 on the case right away!>
-	Prompt1 <Where did they take \SPR E5 ?>
+	Msg12 <Ah, I see what you're getting at... If they followed the \ELEMENT 1 Trench to \SCENE EScene 4 , they'd escape most of the surveillance radar. I'll call \ELEMENT 4 and get \OPR E4 on the case right away!>
+	Prompt1 <Where did they take \OPR E5 ?>
 	Prompt2 <Who is this professor they took?>
 	Prompt3 <They must be plotting something evil...>
 	Prompt4 <I want to speak with this pilot.>
@@ -141,10 +141,10 @@ sub
 	GoProfDead <Say 103 S= 101 1 S+ 102 1 N= 3 E3 S= 105 -1 History 105 AdvancePlot 0>
 	GoCheckLoss <if= P2 2 else GoCheckMission Say 101 S= 101 1 N= 3 E3 AdvancePlot 0>
 	Msg101 <The professor was killed. Now we may never learn what they were up to.>
-	Msg102 <You did it! The gang has been stopped and \ELEMENT 5 rescued. We discovered that they were hoping the professor would lead them to an ancient weapon system... \OPR E5 will get out of the hospital in a while, you should visit later.>
+	Msg102 <You did it! The gang has been stopped and \ELEMENT 5 rescued. We discovered that they were hoping the professor would lead them to an ancient weapon system... \SPR E5 will get out of the hospital in a while, you should visit later.>
 	Msg103 <The mecha gang was stopped, but they had already killed \ELEMENT 5 . Now we might never learn what they were planning... but at least they'll never get a chance to complete it.>
 	Msg104 <You rescued Professor \ELEMENT 5 from \ELEMENT 7 .>
-	Msg105 <Professor \ELEMENT 5 died before you could rescue \SPR E5 .>
+	Msg105 <Professor \ELEMENT 5 died before you could rescue \OPR E5 .>
 	Msg106 <You learned \ELEMENT 7 is searching for an ancient weapon.>
 
 	GoCheckMission <if= V1 1 else GoFirstTime Say 4 AddChat 1 AddChat 2 AddChat 3>
@@ -183,7 +183,7 @@ sub
 	Msg6 <Some mecha marked like \ELEMENT 7 just rolled in from \ELEMENT 1 . They've holed up out of town, and it appears that they have a hostage... a kidnapped professor by the name of \ELEMENT 5 .>
 
 	% 7 : PC needs some time to get ready
-	Msg7 <You better hurry up. The best guess is they kidnapped the professor because \OPR E5 has some information they need... Once they get it, \OPR E5 will almost certainly be killed.>
+	Msg7 <You better hurry up. The best guess is they kidnapped the professor because \SPR E5 has some information they need... Once they get it, \SPR E5 will almost certainly be killed.>
 
 	% 8 : How many points? Use "\VAL V3 " for that
 	Msg8 <They have around \VAL V3 tactical threat points worth of mecha.>

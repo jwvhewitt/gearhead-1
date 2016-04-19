@@ -46,7 +46,7 @@ sub
 	name <Down SPot>
 	sub
 		Sign
-		use <ifYesNo 1 2 3 Print 4 L+ 3 10 L+ 3 d10 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 SeekGate -1 ifG L3 L2 DynaNPC L1 3>
+		use <ifYesNo 1 2 3 Print 4 L+ 3 10 L+ 3 d10 LoadD .sitename PassVar 1 L1 PassVar 2 L2 PassVar 3 L3 SeekGate -1 ifG L3 L2 if# L1 0 DynaNPC L1 3>
 		.sitename <SCENE_MeetingPath.txt>
 		update <if# L1 0 ifNPCinPlay L1 GrabSource DeleteGG>
 		Msg1 <This sign indicates the continuation of the trail. Do you want to go on?>

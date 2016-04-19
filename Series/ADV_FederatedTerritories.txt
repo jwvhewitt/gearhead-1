@@ -67,6 +67,7 @@ Scene 2 0
 	name <Hogye>
 	type <Target Town Village Destination>
     desc <Hogye is a small village in the mountains north of Snake Lake. It is home to the Mecha Sporch arena.>
+    sdl_portrait <scene_hogye.png>
 	wildmap
 	GAPFILL <-4 -9 -4 -4>
 	SetFaction 11
@@ -143,7 +144,7 @@ Scene 2 0
 			room 5 5
 			name <Mayor's House>
 			FloorType 25
-			BorderType 23
+			BorderType 13
 
 			room 3 3
 			name <Bus Terminal>
@@ -1075,6 +1076,7 @@ Scene 10 0
 	name <Downtown Snake Lake>
     desc <Snake Lake is the capital of the Federated Territories of Earth. It is a sprawling metropolis whose neighborhoods range from the gleaming towers of the corporate zone to the crime-infested warrens of the spaceport.>
 	type <City Town Target URB_STORY Destination>
+    sdl_portrait <scene_snakelake.png>
 	SetFaction 11
 
 	CityMap
@@ -1520,6 +1522,7 @@ Scene 11 0
 	name <Gyori>
     desc <Gyori is an industrial town controlled by Kettel Industries. Most of the factories are placed underground in the ruins of the city that once sat here. It is home to the Warhammer Arena.>
 	type <Town Target URB_STORY LANCEMATE_HERE DESTINATION>
+    sdl_portrait <scene_gyori.png>
 	SetFaction 11
 
 	CityMap
@@ -2029,6 +2032,7 @@ Scene 13 0
 	name <Ipshil>
     desc <Ipshil is a small port town. Traditionally it has been a haven for pirates and renegades.>
 	type <Town Target URB_STORY LANCEMATE_HERE  DESTINATION>
+    sdl_portrait <scene_ipshil.png>
 	special <ShowAll>
 	SetFaction 11
 
@@ -2969,6 +2973,7 @@ Scene 16 0
     desc <Namok is a prosperous island city. It is home to the Colosseum Arena and the headquarters of the Solar Navy.>
 	type <City Town Target URB_STORY  DESTINATION>
 	special <ShowAll>
+    sdl_portrait <scene_namok.png>
 
 	CityMap
 
@@ -3411,6 +3416,7 @@ Scene 17 0
 	name <Wujung>
     desc <Wujung is an old fortress-city. From here the Federation Defense Force patrols the edge of the deadzone.>
 	type <Target City Town URB_STORY LANCEMATE_HERE DESTINATION>
+    sdl_portrait <scene_wujung.png>
 
 	CityMap
 	special <ShowAll>
@@ -6532,6 +6538,7 @@ Scene 39 0
     desc <Last Hope is a deadzone village that has only recently joined the Federation. Biocorp maintains a research lab here.>
 	type <Target Town Village URB_STORY DESTINATION>
 	special <ShowAll>
+    sdl_portrait <scene_lasthope.png>
 	citymap
 	SetFaction 11
 	FloorType 39
@@ -7242,6 +7249,7 @@ Scene 44 0
 	name <Mauna>
     desc <Mauna is a quaint resort town nestled in the mountains. It is famous for its hot springs and traditional cuisine.>
 	type <Target Town Village Resort URB_STORY DESTINATION>
+    sdl_portrait <scene_mauna.png>
 	wildmap
 	gapfill <-1 -8 -8 -4 -4 -4 -9>
 	SetFaction 11
@@ -7862,6 +7870,7 @@ Scene 49 0
 		job <Cyclops Guard>
 		SetPersona 4901
 		SetTeam 2
+        IsCharacter
 
 		Monster Cyclops Guard
 		name <Nolbu>
@@ -7869,9 +7878,11 @@ Scene 49 0
 		job <Cyclops Guard>
 		SetPersona 4902
 		SetTeam 2
+        IsCharacter
 
 		Monster Cyclops Progenitor
 		SetTeam 2
+        IsCharacter
 	end
 
 scene 50 0
@@ -7940,26 +7951,32 @@ scene 50 0
 		roguechar <P>
 		SetTeam 2
 		SetPersona 5001
+        IsCharacter
 
 		Monster Cyclops Guard
 		SetTeam 2
 		SetPersona 5002
+        IsCharacter
 
 		Monster Cyclops Guard
 		SetTeam 2
 		SetPersona 5003
+        IsCharacter
 
 		Monster Cyclops
 		SetTeam 2
 		SetPersona 5004
+        IsCharacter
 
 		Monster Cyclops
 		SetTeam 2
 		SetPersona 5005
+        IsCharacter
 
 		Monster Cyclops
 		SetTeam 2
 		SetPersona 5006
+        IsCharacter
 
 		STC COMPUTER-2
 		home <Computer Cell>
@@ -8805,6 +8822,7 @@ Scene 58 0
 		SetPersona 5801
 		chardesc sociable heroic
 		DAge 12
+        IsCharacter
 	end
 
 Scene 59 0

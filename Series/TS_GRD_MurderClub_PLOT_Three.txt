@@ -71,7 +71,7 @@ sub
 	result7 <EndChat Reputation 1 -5 Say 11 DeleteChar E4 DeleteChar E5 AdvancePlot 0>
 	result8 <goto result7>
 
-	Msg1 <You did it! The killer has been stopped, and \PERSONA E5 has been rescued. Here's the money you earned. When \OPR E5 gets out of the hospital, you should go visit \SPR E5 . Also you should visit \PERSONA S7 in \SCENE S8 .>
+	Msg1 <You did it! The killer has been stopped, and \PERSONA E5 has been rescued. Here's the money you earned. When \SPR E5 gets out of the hospital, you should go visit \OPR E5 . Also you should visit \PERSONA S7 in \SCENE S8 .>
 	Msg2 <You rescued \ELEMENT 5 ! The killer has been taken out of action, and we're hopefully one step closer to ending this "Murder Club" once and for all. Here's your reward.>
 	Msg3 <The killer has been stopped, but not before taking one last victim... You did the best you could. Here's the reward I promised you.>
 	Msg4 <You stopped the murderer, just unfortunately not in time. At least he won't be able to kill again. Here's your reward.>
@@ -138,7 +138,7 @@ inv
 	Msg1 <You can't do anything for \PERSONA V2 while \PERSONA V4 is still fighting you!>
 	Msg2 <\PERSONA V2 will be fine, thanks to you.>
 	Msg3 <You arrived here in time. \PERSONA V2 has been drugged but doesn't appear to have been harmed.>
-	Msg4 <\PERSONA V2 looks as if \OPR V2 has been operated upon. You may need to use Medical skill to save \PPR V2 life.>
+	Msg4 <\PERSONA V2 looks as if \SPR V2 has been operated upon. You may need to use Medical skill to save \PPR V2 life.>
 	Msg5 <Attempt medical aid.>
 	Msg6 <I'm not qualified.>
 	Msg7 <\PERSONA V2 dies.>

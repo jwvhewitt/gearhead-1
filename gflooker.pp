@@ -320,6 +320,7 @@ begin
 	end;
 
 	LOOKER_LastGearSelected := Nil;
+    LOOKER_Gear := Nil;
 
 	if LOOKER_Origin <> Nil then P := GearCurrentLocation( LOOKER_Origin );
 
@@ -328,9 +329,6 @@ begin
 		{ Display info on the selected tile. }
         {$IFNDEF SDLMODE}
 		DisplayTileInfo( GB , X , Y, True );
-        {$ENDIF}
-
-{$IFNDEF SDLMODE}
 		if ( LOOKER_Origin <> Nil ) and OnTheMap( LOOKER_Origin ) then begin
 			if LOOKER_Gear = Nil then begin
 				CMessage( 'Range: ' + BStr( ScaleRange( Range(LOOKER_Origin,X,Y) , GB^.Scale ) ) + '   Cover: '+CoverDesc( CalcObscurement( LOOKER_Origin , X , Y , gb )) , ZONE_Clock , InfoGreen );

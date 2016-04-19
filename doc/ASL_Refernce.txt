@@ -649,6 +649,9 @@
 	This formatting command will be replaced by the name of the
 	specified location.
 
+    \SOURCE
+    The name of the gear containing this script.
+
 	\VAL [value]
 	This formatting command will be replaced by the value
 	indicated.
@@ -739,7 +742,8 @@
 	This was initially filed under ELEMENT above, but it has
 	become a more general utility so I've moved it here.
 
-	CHARACTER: Sex:M, Sex:F, Young, Old, Heroic, Villainous, Lawful,
+	CHARACTER: Gender:M, Gender:F, Gender:N, Gender:U,
+    Young, Old, Heroic, Villainous, Lawful,
 	Chaotic, Sociable, Shy, Easygoing, Passionate, Cheerful, Melancholy,
 	Reflexes, Body, Speed, Perception, Craft, Ego, Knowledge, Charm,
 	Job Description (see ANPCdefault.txt),
