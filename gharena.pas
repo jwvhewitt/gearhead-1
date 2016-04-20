@@ -59,6 +59,7 @@ begin
 {$IFDEF SDLMODE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_TitleScreenMenu );
     MyLogo := ConfirmSprite( 'sys_logo.png', '', 500, 218 );
+    RPM^.mode := RPMNoCancel;
 {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 {$ENDIF}
