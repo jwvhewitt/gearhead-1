@@ -110,18 +110,19 @@ const
 		0, 0
 	);
 
-	NumThinWalls = 6;
+	NumThinWalls = 7;
 	ThinWall_Earth = 1;
 	ThinWall_RustySteel = 2;
 	ThinWall_Stone = 3;
 	ThinWall_Industrial = 4;
 	ThinWall_Residential = 5;
     ThinWall_Wood = 6;
+    ThinWall_Default = 7;
 
 	Terrain_Image: Array [1..NumTerr] of SmallInt = (
 		 1, 2, 3, 4, 5,  6, 7, 8, 9,10,
 		11,12,-5,14,-3, 16,17,18,19,20,
-		21,22,23,24,25, 26,-ThinWall_Wood,28,-ThinWall_RustySteel,30,
+		21,22,-Thinwall_Default,24,25, 26,-ThinWall_Wood,28,-ThinWall_RustySteel,30,
 		-1,32,33,34,-4, 36,37,38,39,40,
 		41,42
 	);
@@ -689,11 +690,14 @@ begin
 					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , HillFrame( X , Y ) , Hill_3 );
 					Overlay_Map[ X , Y , 0 , OVERLAY_Terrain ].UseAlpha := True;
 				end else if Terrain_Image[ GB^.Map[ X , Y ].terr ] < 0 then begin
-					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , WallFloorFrame( X , Y ) , Terrain_Sprite );
-					AddInstantOverlay( X , Y , 0 , OVERLAY_ThinWall , WallFrame( X , Y ) , Thin_Wall_Sprites[ -Terrain_Image[ GB^.Map[ X , Y ].terr ] ] );
-					AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , WallCapFrame( X , Y ) , Thin_Wall_Cap );
-					Overlay_Map[ X , Y , 0 , OVERLAY_ThinWall ].UseAlpha := True;
-					Overlay_Map[ X , Y , 0 , OVERLAY_Toupee ].UseAlpha := True;
+                    T := WallCapFrame( X , Y );
+                    if T < 15 then begin
+				        AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , WallFloorFrame( X , Y ) , Terrain_Sprite );
+				        AddInstantOverlay( X , Y , 0 , OVERLAY_ThinWall , WallFrame( X , Y ) , Thin_Wall_Sprites[ -Terrain_Image[ GB^.Map[ X , Y ].terr ] ] );
+				        AddInstantOverlay( X , Y , 0 , OVERLAY_Toupee , T , Thin_Wall_Cap );
+				        Overlay_Map[ X , Y , 0 , OVERLAY_ThinWall ].UseAlpha := True;
+				        Overlay_Map[ X , Y , 0 , OVERLAY_Toupee ].UseAlpha := True;
+                    end;
 
                 end else if GB^.Map[ X , Y ].terr = 4 then begin
 					AddInstantOverlay( X , Y , 0 , OVERLAY_Terrain , (Animation_Phase div 5 + ( (x+y) mod 2 ) * 4 ) mod 8 , Water_Sprite1 );
@@ -1589,9 +1593,11 @@ initialization
 	Thin_Wall_Sprites[ ThinWall_Industrial ] := ConfirmSprite( 'wall_industrial.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_residential.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Wood ] := ConfirmSprite( 'wall_wood.png' , '' , 64 , 96 );
-{	Thin_Wall_Sprites[ ThinWall_Default ] := ConfirmSprite( 'wall_extra_a.png' , '' , 64 , 96 );}
+	Thin_Wall_Sprites[ ThinWall_Default ] := ConfirmSprite( 'wall_default.png' , '' , 64 , 96 );
 
 	Thin_wall_Cap := ConfirmSprite( 'wall_cap.png' , '' , 64 , 96 );
+    {SDL_SetAlpha( Thin_wall_Cap^.Img , SDL_SRCAlpha , 128 );}
+
 	Hill_1 := ConfirmSprite( 'hill_1.png' , '' , 64 , 96 );
 	Hill_2 := ConfirmSprite( 'hill_2.png' , '' , 64 , 96 );
 	Hill_3 := ConfirmSprite( 'hill_3.png' , '' , 64 , 96 );
