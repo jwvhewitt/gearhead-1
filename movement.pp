@@ -78,7 +78,9 @@ const
 	(	75,	10	),	{ Hover Jets }
 	(	0,	90	),	{ Flight Jets }
 	(	80,	80	),	{ Arc Jets }
-	(	7,	7	)	{ Overchargers }
+	(	7,	7	),	{ Overchargers }
+	(	0,	0	),	{ Space Flight } //Not used yet...
+	(	0,	0	)	{ Heavy Actuator }
 	);
 
 	MinWalkSpeed = 20;
@@ -219,10 +221,12 @@ end;
 
 function CalcWalk( Mek: GearPtr ): Integer;
 	{ Calculate the base walking rate for this mecha. }
+const
+	ThrustPerHM = 25;
 var
 	mass: LongInt;
 	spd: Integer;
-	ActualLegPoints,MinLegPoints,NumLegs,MaxLegs: Integer;
+	ActualLegPoints,MinLegPoints,NumLegs,MaxLegs,HM: Integer;
 begin
 	if Mek^.G = GG_Mecha then begin
 		{ Find the mass of the mecha. This will give the basic }
@@ -249,6 +253,12 @@ begin
 		if Mek^.S = GS_Zoanoid then begin
 			{ Zoanoids count legs as arms. This may come in handy for transformers. }
 			ActualLegPoints := ActualLegPoints + CountActivePoints( Mek , GG_Module , GS_Arm );
+		end;
+
+		{ Add a bonus for heavy Actuator. }
+		HM := CountActivePoints( Mek , GG_MoveSys , GS_HeavyActuator ) * ThrustPerHM;
+		if HM > Mass then begin
+			spd := spd + ( HM * 10 ) div mass;
 		end;
 
 		if ActualLegPoints < MinLegPoints then begin

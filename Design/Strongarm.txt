@@ -25,7 +25,7 @@ Mod Body
 Mod Arm
 	Name <Right Arm>
 	Armor 2
-	Mass 3
+	Mass 2
 	sub
 		Hand
 
@@ -37,19 +37,22 @@ Mod Arm
 		sub
 			Ammo 8
 		end
+		HeavyActuator 1
 	end
 
 Mod Arm
 	Name <Left Arm>
 	Armor 2
-	Mass 3
+	Mass 2
 	sub
 		Hand
 		inv
 			Melee 7
 			Name <Mace>
 			Speed 1
+			mass 1
 		end
+		HeavyActuator 1
 	end
 
 Mod Leg

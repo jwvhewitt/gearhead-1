@@ -22,7 +22,8 @@ Mod Body
 		sub
 			Ammo 1
 		end
-
+		HeavyActuator 2
+		
 		BeamGun 4
 		Name <Scourge Laser Cannon>
 		Range 6
