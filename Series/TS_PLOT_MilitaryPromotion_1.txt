@@ -60,10 +60,12 @@ end
 inv
 	BodyArmor 7
 	name <Military Uniform>
+	name_I18N <Military Uniform>
 	mass -11
 
 	Melee 18
 	name <Command Sabre>
+	name_I18N <Command Sabre>
 	mass -14
 	type <ArmorPiercing>
 	ACC 2
@@ -71,6 +73,7 @@ inv
 
 	BeamGun 10
 	name <Nova Carbine>
+	name_I18N <Nova Carbine>
 	Range 5
 	ACC 3
 	BV 4

@@ -1,93 +1,124 @@
 Battroid 3
 Name <Ice Wind>
 Desig <CBG-87>
+Desig_I18N <CBG-87>
 SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
+	Name_I18N <>
 	Size 1
 	Armor 3
 	sub
 		Sensor 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		HoverJet 3
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 1
 			Name <Sliver Rifle>
+			Name_I18N <>
 			BV 5
 			Magazine 120
 			Acc -1
 			Range 7
 			sub
 				Ammo 1
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 end
@@ -95,102 +126,135 @@ end
 Battroid 3
 Name <Ice Wind>
 Desig <CBG-87b>
+Desig_I18N <CBG-87b>
 SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
+	Name_I18N <>
 	Size 1
 	Armor 3
 	sub
 		Sensor 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		HoverJet 3
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			EMelee 5
 			Name <Beam Sabre>
+			Name_I18N <>
 			Acc 1
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			Gun 1
 			Name <Sliver Gun>
+			Name_I18N <>
 			Acc -1
 			Range 3
 			BV 5
 			Magazine 60
 			sub
 				Ammo 1
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		EShield 3
+		Name_I18N <>
 		DefBonus 1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 end
@@ -198,54 +262,74 @@ end
 Battroid 3
 Name <Ice Wind>
 Desig <CBG-88d>
+Desig_I18N <CBG-88d>
 SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
+	Name_I18N <>
 	Size 1
 	Armor 3
 	sub
 		Sensor 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		HoverJet 3
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 2
+		Name_I18N <>
 		Fits <Battroid>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 8
 			Name <Rail Rifle>
+			Name_I18N <>
 			Magazine 30
 			Acc 1
 			Range 5
 			Speed 3
 			sub
 				Ammo 8
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
@@ -253,12 +337,15 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
@@ -266,13 +353,16 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
@@ -280,13 +370,16 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
@@ -296,148 +389,189 @@ end
 Battroid 3
 Name <Ice Fox>
 Desig <CBG-99>
+Desig_I18N <CBG-99>
 SDL_PORTRAIT <mecha_icewind.png>
 
 Mod Head
+	Name_I18N <>
 	Size 1
 	Armor 3
 	sub
 		Sensor 5
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 2
+		Name_I18N <>
 		Mass -3
 		Fits <Battroid>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		BeamGun 5
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 
 		Gyro 2
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 
 		ArcJet 2
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 4
+		Name_I18N <>
 		Mass -5
 		Fits <Battroid>
 		sub
 			ArcJet 3
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 1
 			Name <Sliver Rifle>
+			Name_I18N <>
 			BV 5
 			Magazine 120
 			Acc -1
 			Range 7
 			sub
 				Ammo 1
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
 
 		ArcJet 1
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		Mass -2
 		Fits <Battroid>
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
 
 		ArcJet 1
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		Mass -2
 		Fits <Battroid>
 
 		EShield 3
+		Name_I18N <>
 		DefBonus 1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		ArcJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 		inv
 			MLauncher 9
 			Name <Rocket Pod>
+			Name_I18N <>
 			Acc -1
 			Magazine 12
 			sub
 				Rockets 9
+				Name_I18N <>
 			end
 		end
 	end
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -3
 		Fits <Battroid>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		ArcJet 3
+		Name_I18N <>
 
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 		inv
 			MLauncher 9
 			Name <Rocket Pod>
+			Name_I18N <>
 			Acc -1
 			Magazine 12
 			sub
 				Rockets 9
+				Name_I18N <>
 			end
 		end
 	end
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -3
 		Fits <Battroid>
 	end

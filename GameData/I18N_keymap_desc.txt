@@ -1,0 +1,84 @@
+% Help Messages for Showing keymap
+NormSpeed               <Travel foreword at normal speed.>
+FullSpeed               <Travel foreword at maximum speed>
+TurnLeft                <Turn to the left.>
+TurnRight               <Turn to the right.>
+Stop                    <Stop moving, wait in place.>
+
+Dir-SouthWest           <Move southwest.>
+Dir-South               <Move south.>
+Dir-SouthEast           <Move southeast.>
+Dir-West                <Move west.>
+Dir-East                <Move east.>
+Dir-NorthWest           <Move northwest.>
+Dir-North               <Move north.>
+Dir-NorthEast           <Move northeast.>
+
+Dir-UpLeft              <Move up-left.>
+Dir-Up                  <Move up.>
+Dir-UpRight             <Move up-right.>
+Dir-Left                <Move left.>
+Dir-Right               <Move right.>
+Dir-DownLeft            <Move down-left.>
+Dir-Down                <Move down.>
+Dir-DownRight           <Move down-right.>
+
+Menu-Up                 <Move up.>
+Menu-Down               <Move down.>
+Menu-Left               <Decrease.>
+Menu-Right              <Increase.>
+Menu-PageUp             <Scroll-up page.>
+Menu-PageDown           <Scroll-down page.>
+Menu-ScrollUp           <Scroll-up line.>
+Menu-ScrollDown         <Scroll-down line.>
+
+ShiftGears              <Change movement mode.>
+Transformation          <Change form mode.>
+PurgeParts              <Purge parts from mecha.>
+Look                    <Look around the map.>
+AttackMenu              <Access the attack menu.>
+QuitGame                <Exit the game.>
+Talk                    <Initiate conversation with a NPC.>
+Help                    <View these helpful messages.>
+SwitchWeapon            <Change the active weapon while selecting a target.>
+CalledShot              <Toggle the Called Shot option while selecting a target.>
+Recenter                <Recenter the display on the currently active character.>
+Get                     <Pick up an item lying on the ground.>
+Inventory               <Access all carried items.>
+Equipment               <Access all equipped items.>
+Enter                   <Use a stairway or portal.>
+PartBrowser             <Examine the individual components of your PC.>
+LearnSkills             <Spend accumulated experience points.>
+Attack                  <Perform an attack.>
+SelectMecha             <Choose the mecha that will be used by this PC in combat.>
+UseScenery              <Activate a stationary item, such as a door or a computer.>
+Messages                <Review all current adventure memos, email, and news.>
+SaveGame                <Write the game data to disk, so you can come back and waste time later.>
+Enter2                  <Use a stairway or portal.>
+CharInfo                <View detailed information about your character, access option menus.>
+FirstAid                <Use the first aid skill to restore health points.>
+ApplySkill              <Select and use a skill that the PC knows.>
+Eject                   <Eject from your mecha and abandon it on the field.>
+Rest                    <Take a break for one hour of game time.>
+History                 <Display past messages.>
+FieldHQ                 <Examine and edit your personal wargear.>
+Search                  <Check the area for enemies and secrets.>
+Telephone               <Place a telephone call to a local NPC.>
+SwitchBV                <Switch the Burst Fire option while selecting a target.>
+Reverse                 <Travel backward at normal speed.>
+SwitchTarget            <Switch to next visible enemy when selecting a target.>
+RunToggle               <Toggle running on or off.>
+AddressBook             <Use AddressBook.>
+ToggleDrawWall          <Toggle Draw Wall.>
+ForcePlot               <(DEBUG COMMAND)>
+MechaPartBrowser        <(DEBUG COMMAND)>
+ShowRep                 <(DEBUG COMMAND)>
+DirectScript            <(DEBUG COMMAND)>
+WheelClick		<Do the key event when a mouse wheel is clicked.>
+WheelUp			<Do the key event when a mouse wheel is rolled to up.>
+WheelDown		<Do the key event when a mouse wheel is rolled to down.>
+WheelLeft		<Do the key event when a mouse wheel is rolled to left.>
+WheelRight		<Do the key event when a mouse wheel is rolled to right.>
+SelectPortrait		<(CHEAT COMMAND)>
+RenameMecha		<(CHEAT COMMAND)>
+EditMenuOrder		<(CHEAT COMMAND)>

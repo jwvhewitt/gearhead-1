@@ -1,55 +1,75 @@
 Arachnoid 2
 Name <Razer>
 Desig <TR-92>
+Desig_I18N <TR-92>
 SDL_Sprite <ara_razer.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
 		Sensor 7
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
+
+		Engine 2
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -1
 		BV 2
 		Magazine 30
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -1
 		BV 2
 		Magazine 30
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
 Mod Turret
+	Name_I18N <>
 	Armor 2
 	sub
 		BeamGun 3
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 		Speed 5
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 3
 	Armor 2
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 3
 	Armor 2
 end
@@ -57,51 +77,70 @@ end
 Arachnoid 2
 Name <Razer>
 Desig <TR-93 XS>
+Desig_I18N <TR-93 XS>
 SDL_Sprite <ara_razer.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
 		Sensor 7
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
+
+		Engine 2
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		BeamGun 1
 		Name <Pulse Laser>
+		Name_I18N <>
 		Range 2
 		Acc 1
 		BV 2
 
 		BeamGun 1
 		Name <Pulse Laser>
+		Name_I18N <>
 		Range 2
 		Acc 1
 		BV 2
 
 		Sensor 7
+		Name_I18N <>
 	end
 
 Mod Turret
+	Name_I18N <>
 	Armor 2
 	sub
 		BeamGun 3
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 		Speed 5
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 3
 	Armor 2
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 3
 	Armor 2
 end
@@ -109,53 +148,73 @@ end
 Arachnoid 2
 Name <Razer>
 Desig <TR-92-C Hitman>
+Desig_I18N <TR-92-C Hitman>
 SDL_Sprite <ara_razer.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
 		Sensor 7
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
+
+		Engine 2
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		MLauncher 9
 		Name <Rocket Launcher>
+		Name_I18N <>
 		Speed 1
 		Magazine 3
 		sub
 			Rockets 9
+			Name_I18N <>
 		end
 
 		MLauncher 9
 		Name <Rocket Launcher>
+		Name_I18N <>
 		Speed 1
 		Magazine 3
 		sub
 			Rockets 9
+			Name_I18N <>
 		end
 	end
 
 Mod Turret
+	Name_I18N <>
 	Armor 2
 	sub
 		BeamGun 3
 		Name <Combat Laser>
+		Name_I18N <>
 		Acc 1
 		Speed 5
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 3
 	Armor 2
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 3
 	Armor 2
 end

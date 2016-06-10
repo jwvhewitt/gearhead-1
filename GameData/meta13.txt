@@ -1,5 +1,6 @@
 % Default Sign - Also used for bus stops %
 name <Sign>
+name_I18N <>
 use <if= StatVal STAT_MetaVisibility 0 if# StatVal 4 0 else GoNoDest ifYesNo 3 4 5 Time d1800 Print 2 Exit StatVal 4>
 GoNoDest <Print 1>
 roguechar <?>

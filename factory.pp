@@ -45,7 +45,7 @@ Function SelectMechaForm: Integer;
 		msg: String;
 	begin
 		msg := FormName[ T ];
-		while Length( msg ) < 15 do msg := msg + ' ';
+		while WidthMBCharStr( msg ) < 15 do msg := msg + ' ';
 		FormMenuItem := msg + '  [ ' + SgnStr( FormMVBonus[ T ] ) + ' MV / '  + SgnStr( FormTRBonus[ T ] ) + ' TR ]';
 	end;
 var

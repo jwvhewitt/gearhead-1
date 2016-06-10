@@ -39,6 +39,7 @@ sub
 
 	room 5 5
 	name <Data Center>
+	name_I18N <Data Center>
 	bordertype 29
 	sub
 		Door 10

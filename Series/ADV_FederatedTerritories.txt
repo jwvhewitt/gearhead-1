@@ -65,6 +65,7 @@ sub
 
 Scene 2 0
 	name <Hogye>
+	name_I18N <Hogye>
 	type <Target Town Village Destination>
     desc <Hogye is a small village in the mountains north of Snake Lake. It is home to the Mecha Sporch arena.>
     sdl_portrait <scene_hogye.png>
@@ -108,6 +109,7 @@ Scene 2 0
 		width 30
 		height 30
 		name <Town Center>
+		name_I18N <Town Center>
 		special <ShowAll>
 		gapfill <-8 -4 -4>
 		sub
@@ -127,31 +129,37 @@ Scene 2 0
 
 			room 7 5
 			name <Hogye Clinic>
+			name_I18N <Hogye Clinic>
 			BorderType 18
 			FloorType 26
 
 			room 6 6
 			name <Ki Rin MegaMart>
+			name_I18N <Ki Rin MegaMart>
 			FloorType 14
 			BorderType 27
 			rumor <KiRin MegaMart is the best place to buy things around here.>
 
 			room 5 7
 			name <Mecha Sporch>
+			name_I18N <Mecha Sporch>
 			FloorType 26
 			BorderType 27
 
 			room 5 5
 			name <Mayor's House>
+			name_I18N <Mayor's House>
 			FloorType 25
 			BorderType 13
 
 			room 3 3
 			name <Bus Terminal>
+			name_I18N <Bus Terminal>
 			BorderType 27
 
 			room 5 5
 			name <Diner>
+			name_I18N <Diner>
 			BorderType 37
 			FloorType 26
 		end
@@ -161,6 +169,7 @@ Scene 2 0
 
 		room 5 5
 		name <Hogye Mine>
+		name_I18N <Hogye Mine>
 		rumor <when the mine closed a lot of heavy machinery got left behind.>
 		FloorType 26
 		BorderType 15
@@ -395,6 +404,7 @@ Scene 2 0
 		% Inv components. Add NPCs & contents here.
 		NPC Scientist
 		name <Hyolee>
+		name_I18N <Hyolee>
 		home <Entry Grid>
 		SetTeam 2
 		SetPersona 1
@@ -409,6 +419,7 @@ Scene 2 0
 
 		NPC Shopkeeper
 		name <Quentin>
+		name_I18N <Quentin>
 		rumor <Quentin is very helpful.>
 		home <Ki Rin MegaMart>
 		chardesc Male Easygoing Sociable Cheerful
@@ -427,12 +438,14 @@ Scene 2 0
 
 		NPC Doctor
 		name <Doctor Kim>
+		name_I18N <Doctor Kim>
 		home <Hogye Clinic>
 		SetTeam 2
 		SetPersona 3
 
 		NPC Nurse
 		name <Nurse Park>
+		name_I18N <Nurse Park>
 		home <Hogye Clinic>
 		SetTeam 2
 		SetPersona 2
@@ -446,6 +459,7 @@ Scene 2 0
 
 		NPC Mecha Pilot
 		name <Vikki>
+		name_I18N <Vikki>
 		mecha <Thorshammer.txt>
 		SDL_PORTRAIT <por_f_ladi_vikki(JAY).png>
 		SDL_COLORS <201 205 229 255 212 195 245 213 160>
@@ -458,6 +472,7 @@ Scene 2 0
 
 		NPC Leader
 		name <Megi>
+		name_I18N <Megi>
 		home <Mayor's House>
 		rumor <Megi is well known for her wisdom and compassion.>
 		chardesc Female Old Lawful Heroic Renowned
@@ -492,7 +507,8 @@ Scene 2 0
 		SetPersona 202
 
 		PCS 3
-		Name <Old Mobile Phone>
+		name <Old Mobile Phone>
+		name_I18N <Old Mobile Phone>
 		mass -1
 		SetKeyItem 7
 	end
@@ -504,6 +520,7 @@ Scene 1 5
 	% V3 = Encounter Modified Rep
 
 	name <World Map>
+	name_I18N <World Map>
 	type <World>
 	WildMap
 	special <NoExit>
@@ -573,6 +590,7 @@ Scene 1 5
 
 		Village
 		name <Hogye Village>
+		name_I18N <Hogye Village>
 		Destination 2
 		XPos 25
 		YPos 25
@@ -580,6 +598,7 @@ Scene 1 5
 
 		City
 		name <Snake Lake City>
+		name_I18N <Snake Lake City>
 		Destination 10
 		XPos 26
 		YPos 29
@@ -587,6 +606,7 @@ Scene 1 5
 
 		Town
 		name <Gyori Village>
+		name_I18N <Gyori Village>
 		destination 11
 		XPos 29
 		YPos 18
@@ -594,6 +614,7 @@ Scene 1 5
 
 		Village
 		name <Mauna Village>
+		name_I18N <Mauna Village>
 		Destination 44
 		XPos 18
 		YPos 17
@@ -601,6 +622,7 @@ Scene 1 5
 
 		City
 		name <Wujung City>
+		name_I18N <Wujung City>
 		Destination 17
 		XPos 16
 		YPos 26
@@ -608,6 +630,7 @@ Scene 1 5
 
 		Town
 		name <Ipshil Village>
+		name_I18N <Ipshil Village>
 		Destination 13
 		XPos 22
 		YPOs 32
@@ -615,6 +638,7 @@ Scene 1 5
 
 		City
 		name <Namok City>
+		name_I18N <Namok City>
 		Destination 16
 		XPos 43
 		YPos 16
@@ -622,6 +646,7 @@ Scene 1 5
 
 		Cave
 		name <A dark cave>
+		name_I18N <A dark cave>
 		Destination 9
 		XPos 23
 		YPos 23
@@ -629,6 +654,7 @@ Scene 1 5
 
 		Village
 		name <Kist Village>
+		name_I18N <Kist Village>
 		Destination 14
 		XPos 24
 		YPos 11
@@ -636,6 +662,7 @@ Scene 1 5
 
 		Village
 		name <Pirate's Point>
+		name_I18N <Pirate's Point>
 		Destination 38
 		XPos 16
 		YPos 40
@@ -643,6 +670,7 @@ Scene 1 5
 
 		Village
 		name <Last Hope>
+		name_I18N <Last Hope>
 		Destination 39
 		XPos 5
 		YPos 27
@@ -650,6 +678,7 @@ Scene 1 5
 
 		City
 		name <Ironwind Fortress>
+		name_I18N <Ironwind Fortress>
 		Destination 43
 		XPos 28
 		YPos 48
@@ -657,6 +686,7 @@ Scene 1 5
 
 		Temple
 		name <Hwang-Sa Temple>
+		name_I18N <Hwang-Sa Temple>
 		Destination 15
 		XPos 5
 		YPos 38
@@ -664,6 +694,7 @@ Scene 1 5
 
 		Cave
 		name <Enemy Fortress>
+		name_I18N <Enemy Fortress>
 		Destination 47
 		XPos 27
 		YPos 33
@@ -673,6 +704,7 @@ Scene 1 5
 
 		Village
 		name <Nara Ruins>
+		name_I18N <Nara Ruins>
 		Destination 48
 		XPos 39
 		YPos 4
@@ -680,6 +712,7 @@ Scene 1 5
 
 		Village
 		name <The Ziggurat>
+		name_I18N <The Ziggurat>
 		Destination 51
 		Scale 5
 		XPos 6
@@ -687,6 +720,7 @@ Scene 1 5
 
 		Town
 		name <Markheim Fortress>
+		name_I18N <Markheim Fortress>
 		Destination 57
 		Scale 5
 		XPos 12
@@ -694,6 +728,7 @@ Scene 1 5
 
 		Village
 		name <Tokto>
+		name_I18N <Tokto>
 		Destination 60
 		Scale 5
 		XPos 45
@@ -701,6 +736,7 @@ Scene 1 5
 
 		Cave
 		name <Slimy Cave>
+		name_I18N <Slimy Cave>
 		Destination -1
 		scale 5
 		xpos 47
@@ -712,6 +748,7 @@ Scene 1 5
 
 Scene 3 0
 	name <Hogye Mines L1>
+	name_I18N <Hogye Mines L1>
 	special <NoExit>
 	Type <Dungeon Mine Open>
 	NU1 <if= T1 0 Exit 2>
@@ -749,6 +786,7 @@ Scene 3 0
 
 Scene 4 0
 	name <Hogye Mines L2>
+	name_I18N <Hogye Mines L2>
 	Type <Dungeon Mine Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 2>
@@ -787,6 +825,7 @@ Scene 4 0
 
 Scene 5 0
 	name <Hogye Mines L3>
+	name_I18N <Hogye Mines L3>
 	Type <Dungeon Mine Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 2>
@@ -825,6 +864,7 @@ Scene 5 0
 	inv
 		gear 4 0 5
 		name <Pick>
+		name_I18N <Pick>
 		scale 0
 		mass 2
 		stat 3 1
@@ -832,6 +872,7 @@ Scene 5 0
 
 Scene 6 0
 	name <Hogye Mines L4>
+	name_I18N <Hogye Mines L4>
 	Type <Dungeon Mine Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 2>
@@ -870,18 +911,21 @@ Scene 6 0
 	inv
 		gear 4 0 5
 		name <Pick>
+		name_I18N <Pick>
 		scale 0
 		mass 2
 		stat 3 1
 
 		gear 4 0 5
 		name <Pick>
+		name_I18N <Pick>
 		scale 0
 		mass 2
 		stat 3 1
 
 		gear 4 1 19
 		name <Laser Drill>
+		name_I18N <Laser Drill>
 		scale 0
 		stat 2 -2
 		stat 3 1
@@ -905,6 +949,7 @@ Scene 6 0
 
 Scene 7 0
 	name <Hogye Mines L5>
+	name_I18N <Hogye Mines L5>
 	Type <Dungeon Mine Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 2>
@@ -948,6 +993,7 @@ Scene 7 0
 	inv
 		gear 4 0 5
 		name <Pick>
+		name_I18N <Pick>
 		scale 0
 		mass 2
 		stat 3 1
@@ -979,6 +1025,7 @@ Scene 7 0
 
 scene 8 0
 	name <Calmegie Research Station>
+	name_I18N <Calmegie Research Station>
 	NU1 <if= T1 0 Exit 2>
 	Type <Dungeon Closed>
 	start <print 1>
@@ -993,6 +1040,7 @@ scene 8 0
 	sub
 		room 7 7
 		name <Lab>
+		name_I18N <Lab>
 		special <ShowAll>
 		sub
 			StairsUp
@@ -1003,6 +1051,7 @@ scene 8 0
 		Width 7
 		Height 5
 		name <Meadow>
+		name_I18N <Meadow>
 		FloorType 1
 
 		team 1
@@ -1031,6 +1080,7 @@ scene 8 0
 	end
 Scene 9 0
 	name <Dark Cave>
+	name_I18N <Dark Cave>
 	Type <Dungeon Open>
 	% V102 -> Use SCIENCE
 	special <NoExit>
@@ -1074,6 +1124,7 @@ Scene 9 0
 
 Scene 10 0
 	name <Downtown Snake Lake>
+	name_I18N <Downtown Snake Lake>
     desc <Snake Lake is the capital of the Federated Territories of Earth. It is a sprawling metropolis whose neighborhoods range from the gleaming towers of the corporate zone to the crime-infested warrens of the spaceport.>
 	type <City Town Target URB_STORY Destination>
     sdl_portrait <scene_snakelake.png>
@@ -1131,46 +1182,55 @@ Scene 10 0
 
 			Sign
 			name <Bus Stop: City Park>
+			name_I18N <Bus Stop: City Park>
 			Destination 23
 
 			Sign
 			name <Bus Stop: Corp Sector>
+			name_I18N <Bus Stop: Corp Sector>
 			Destination 24
 
 			Sign
 			name <Bus Stop: Waterfront>
+			name_I18N <Bus Stop: Waterfront>
 			Destination 25
 		end
 
 		room 12 8
 		name <Snake Lake Mall>
+		name_I18N <Snake Lake Mall>
 		FloorType 28
 		BorderType 32
 
 		room 5 7
 		name <Monkey Wrench>
+		name_I18N <Monkey Wrench>
 		FloorType 14
 		BorderType 38
 
 		room 5 5
 		name <Snake Lake Clinic>
+		name_I18N <Snake Lake Clinic>
 		FloorType 28
 		BorderType 18
 
 		room 8 7
 		name <Robot Warriors>
+		name_I18N <Robot Warriors>
 		rumor <Robot Warriors is the most prestigious mecha competition in all the federated territories.>
 		FloorType 28
 		BorderType 24
 
 		room 9 5
 		name <Guardians HQ>
+		name_I18N <Guardians HQ>
 		FloorType 28
 
 		Complex
 		Height 8
 		Width 6
 		name <Federation Hall>
+		name_I18N <Federation Hall>
 
 		Complex
 		Height 5
@@ -1178,6 +1238,7 @@ Scene 10 0
 		BorderType 13
 		FloorType 20
 		name <Mansion>
+		name_I18N <Mansion>
 		sub
 			Door
 			Lock 12
@@ -1186,20 +1247,24 @@ Scene 10 0
 
 		room 6 5
 		name <Hunter's Guild>
+		name_I18N <Hunter's Guild>
 		FloorType 25
 
 		room 5 6
 		name <Soju Haus>
+		name_I18N <Soju Haus>
 		FloorType 26
 		BorderType 36
 
 		room 5 7
 		name <Bus Terminal>
+		name_I18N <Bus Terminal>
 
 		rect
 		width 2
 		height 2
 		name <Hot Dog Stand>
+		name_I18N <Hot Dog Stand>
 
 		rect
 		height 3
@@ -1208,6 +1273,7 @@ Scene 10 0
 		sub
 			TrapDoor
 			name <Manhole>
+			name_I18N <Manhole>
 			Destination 32
 			Msg1 <You go down the manhole.>
 		end
@@ -1350,6 +1416,7 @@ Scene 10 0
 
 		NPC Soldier
 		name <Elric>
+		name_I18N <Elric>
 		mecha <>
 		home <Snake Lake Mall>
 		% SDL_Portrait <por_m_elric.png>
@@ -1395,6 +1462,7 @@ Scene 10 0
 		NPC Celebrity
 		home <Robot Warriors>
 		name <Craig>
+		name_I18N <Craig>
 		chardesc Male Chaotic Sociable
 		SetPersona 26
 		SetTeam 2
@@ -1402,6 +1470,7 @@ Scene 10 0
 		NPC Celebrity
 		home <Robot Warriors>
 		name <Philippa>
+		name_I18N <Philippa>
 		chardesc Female Easygoing Cheerful
 		SetPersona 27
 		SetTeam 2
@@ -1411,6 +1480,7 @@ Scene 10 0
 		NPC Celebrity
 		home <Robot Warriors>
 		name <Johnathan>
+		name_I18N <Johnathan>
 		chardesc Male Passionate Pragmatic
 		SetPersona 28
 		SetTeam 2
@@ -1493,6 +1563,7 @@ Scene 10 0
 
 		STC Kiosk
 		name <Hot Dog Cart>
+		name_I18N <Hot Dog Cart>
 		home <Hot Dog Stand>
 		use <ifYesNo 1 2 3 ifG PC$ 29 Cash+ -30 GiveSTC .desc Print 4>
 		.desc <FOOD-2>
@@ -1506,12 +1577,14 @@ Scene 10 0
 
 		Treasure 500
 		name <Amethyst Geode>
+		name_I18N <Amethyst Geode>
 		mass 20
 		type <STOLEN>
 		home <Mansion>
 
 		Treasure 1000
 		name <Golden Statue>
+		name_I18N <Golden Statue>
 		mass 8
 		type <STOLEN>
 		home <Mansion>
@@ -1520,6 +1593,7 @@ Scene 10 0
 
 Scene 11 0
 	name <Gyori>
+	name_I18N <Gyori>
     desc <Gyori is an industrial town controlled by Kettel Industries. Most of the factories are placed underground in the ruins of the city that once sat here. It is home to the Warhammer Arena.>
 	type <Town Target URB_STORY LANCEMATE_HERE DESTINATION>
     sdl_portrait <scene_gyori.png>
@@ -1581,6 +1655,7 @@ Scene 11 0
 		% The stairs down to the factory.
 		room 3 3
 		name <Factory>
+		name_I18N <Factory>
 		FloorType 14
 		BorderType 35
 		sub
@@ -1593,24 +1668,29 @@ Scene 11 0
 
 		room 12 7
 		name <Warhammer Arena>
+		name_I18N <Warhammer Arena>
 		FloorType 28
 
 		room 20 5
 		name <Warehouse>
+		name_I18N <Warehouse>
 		FloorType 14
 		BorderType 29
 
 		room 6 9
 		name <Trading Post>
+		name_I18N <Trading Post>
 		BorderType 29
 
 		room 15 5
 		name <Stuckey's Truck Stop>
+		name_I18N <Stuckey's Truck Stop>
 		FloorType 14
 		BorderType 38
 
 		room 9 5
 		name <Hospital>
+		name_I18N <Hospital>
 		FloorType 30
 		BorderType 18
 
@@ -1769,6 +1849,7 @@ Scene 11 0
 
 		NPC Trucker
 	    name <Carter>
+	    name_I18N <Carter>
 	    CharDesc Male Old Shy Easygoing Lawful
 	    mecha <Corsair.txt>
 	    StatLine 14 16 12 15 14 11 13 9
@@ -1818,6 +1899,7 @@ Scene 11 0
 
 Scene 12 0
 	name <The Factory>
+	name_I18N <The Factory>
 	special <NoExit>
 	NU1 <if= T1 0 Exit -1>
 	Start <Print 1>
@@ -1856,28 +1938,34 @@ Scene 12 0
 		sub
 			Room 7 7
 			name <Workroom 1>
+			name_I18N <Workroom 1>
 			FloorType 28
 			BorderType 29
 
 			Room 7 7
 			name <Workroom 2>
+			name_I18N <Workroom 2>
 			FloorType 28
 			BorderType 29
 
 			Room 6 12
 			name <The Showroom>
+			name_I18N <The Showroom>
 			FloorType 28
 
 			Room 9 6
 			FloorType 20
 			name <The Office>
+			name_I18N <The Office>
 
 			room 5 5
 			name <Human Resources>
+			name_I18N <Human Resources>
 			FloorType 28
 
 			rect
 			name <Way Up>
+			name_I18N <Way Up>
 			FloorType 17
 			width 6
 			height 6
@@ -1947,6 +2035,7 @@ Scene 12 0
 		% organization.
 		NPC Leader
 		name <Elisha Kettel>
+		name_I18N <Elisha Kettel>
 		job <Corporate President>
 		sdl_portrait <por_f_joe_elisha(AA-).png>
 		sdl_colors <80 40 120 255 230 200 166 47 32>
@@ -2030,6 +2119,7 @@ Scene 12 0
 
 Scene 13 0
 	name <Ipshil>
+	name_I18N <Ipshil>
     desc <Ipshil is a small port town. Traditionally it has been a haven for pirates and renegades.>
 	type <Town Target URB_STORY LANCEMATE_HERE  DESTINATION>
     sdl_portrait <scene_ipshil.png>
@@ -2075,26 +2165,31 @@ Scene 13 0
 
 		Room 6 6
 		name <Guns and Stuff>
+		name_I18N <Guns and Stuff>
 		BorderType 36
 		FloorType 16
 
 		room 7 5
 		name <Denomolos>
+		name_I18N <Denomolos>
 		BorderType 36
 		FloorType 25
 
 		room 7 7
 		name <Metal Psychosis>
+		name_I18N <Metal Psychosis>
 		BorderType 33
 		FloorType 16
 
 		room 5 5
 		name <Skip Tracer>
+		name_I18N <Skip Tracer>
 		FloorType 25
 		BorderType 24
 
 		Room 11 8
 		name <Wayward Pub>
+		name_I18N <Wayward Pub>
 		FloorType 26
 		BorderType 15
 		sub
@@ -2106,11 +2201,13 @@ Scene 13 0
 
 		room 7 8
 		name <Extropia Health>
+		name_I18N <Extropia Health>
 		BorderType 32
 		FloorType 25
 
 		room 5 5
 		name <Deli Noodles>
+		name_I18N <Deli Noodles>
 		BorderType 37
 		FloorType 25
 
@@ -2118,9 +2215,11 @@ Scene 13 0
 		width 8
 		height 8
 		name <City Hall>
+		name_I18N <City Hall>
 
 		room 5 5
 		name <Ipshil Bus Terminal>
+		name_I18N <Ipshil Bus Terminal>
 
 		rect
 		width 2
@@ -2330,6 +2429,7 @@ Scene 13 0
 		NPC Bartender
 		SetPersona 59
 		name <Brock>
+		name_I18N <Brock>
 		home <Wayward Pub>
 		rumor <Brock is always wiping glasses.>
 		SetTeam 2
@@ -2392,6 +2492,7 @@ Scene 13 0
 		SetPersona 1306
 		home <Skip Tracer>
 		name <Skippy>
+		name_I18N <Skippy>
 		chardesc Male Cheerful Easygoing Chaotic
 		SetTeam 2
 
@@ -2415,6 +2516,7 @@ Scene 13 0
 
 Scene 14 0
 	name <Kist>
+	name_I18N <Kist>
 	type <Village Town Target>
 	WildMap
 	SetFaction 10
@@ -2448,6 +2550,7 @@ Scene 14 0
 		team 3
 		% Occupying Force
 		name <Bone Devils>
+		name_I18N <Bone Devils>
 		SetAlly 2
 
 		rect
@@ -2461,6 +2564,7 @@ Scene 14 0
 			width 10
 			height 6
 			name <Town Square>
+			name_I18N <Town Square>
 			FloorType 17
 			MarbleType 1
 			sub
@@ -2472,11 +2576,13 @@ Scene 14 0
 
 			room 8 5
 			name <General Store>
+			name_I18N <General Store>
 			FloorType 26
 			BorderType 15
 
 			room 5 8
 			name <Kist Hospital>
+			name_I18N <Kist Hospital>
 			FloorType 28
 			BorderType 18
 
@@ -2618,6 +2724,7 @@ Scene 14 0
 
 Scene 15 0
 	name <Hwang-Sa Temple>
+	name_I18N <Hwang-Sa Temple>
 	type <Town Temple LANCEMATE_HERE>
 	special <ShowAll>
 
@@ -2661,6 +2768,7 @@ Scene 15 0
 
 		room 9 12
 		name <Enlightenment Hall>
+		name_I18N <Enlightenment Hall>
 		stat 5 26
 		stat 7 24
 		sub
@@ -2674,21 +2782,25 @@ Scene 15 0
 
 		room 9 12
 		name <Legacy Hall>
+		name_I18N <Legacy Hall>
 		stat 5 26
 		stat 7 24
 
 		room 9 12
 		name <Practice Hall>
+		name_I18N <Practice Hall>
 		stat 5 26
 		stat 7 24
 
 		room 5 6
 		name <Gift Shop>
+		name_I18N <Gift Shop>
 		stat 5 14
 		stat 7 24
 
 		room 10 5
 		name <Zen Mechanics>
+		name_I18N <Zen Mechanics>
 		stat 5 30
 		stat 7 24
 
@@ -2696,6 +2808,7 @@ Scene 15 0
 		Width 7
 		Height 7
 		name <Shrine Hill>
+		name_I18N <Shrine Hill>
 
 		rect
 		width 2
@@ -2846,6 +2959,7 @@ Scene 15 0
 
 		NPC Warrior Monk
 	    name <Aspis>
+	    name_I18N <Aspis>
         mecha <Phoenix.txt>
 	    CharDesc Male Heroic Sociable Passionate Cheerful Spiritual
 	    StatLine 17 14 15 14 10 15 16 24
@@ -2880,6 +2994,7 @@ Scene 15 0
 
 		NPC Leader
 		name <Kaema>
+		name_I18N <Kaema>
 		home <Enlightenment Hall>
 		job <Monk Leader>
 		SetTeam 2
@@ -2892,6 +3007,7 @@ Scene 15 0
 		STC SHRINE-1
 		home <Enlightenment Hall>
 		name <Shrine of Ascension>
+		name_I18N <Shrine of Ascension>
 		clue34 <ifG ComTime V1 else GoBeenBefore V= 1 ComTime V+ 1 86400 Reputation 7 -d4 MENTAL ifG SkRoll 34 12 else GoNoDice ifG d150 PCRep 7 else GoNoDice if= L2 1 else GoNoOpen Print 2 XPV 50>
 		GoNoOpen <if= V10 1 else GoFirstTime Print 2 Trigger LOCAL 1>
 		GoFirstTime <V= 10 1 Print 5 XPV 50>
@@ -2956,6 +3072,7 @@ Scene 15 0
 		STC SHRINE-1
 		% V2 = Have gotten the "big prize" at this shrine.
 		name <Wind Shrine>
+		name_I18N <Wind Shrine>
 		home <Shrine Hill>
 		rumor <there are five shrines to the elements scattered throughout the world.>
 		clue34 <ifG ComTime V1 else GoBeenBefore V= 1 ComTime V+ 1 86400 Reputation 7 -d4 MENTAL FacXP+ 12 1 ifG SkRoll 34 15 else GoNoDice Goto GoCheckElements>
@@ -2970,6 +3087,7 @@ Scene 15 0
 
 Scene 16 0
 	name <Namok>
+	name_I18N <Namok>
     desc <Namok is a prosperous island city. It is home to the Colosseum Arena and the headquarters of the Solar Navy.>
 	type <City Town Target URB_STORY  DESTINATION>
 	special <ShowAll>
@@ -3011,25 +3129,30 @@ Scene 16 0
 
 		room 8 8
 		name <Colosseum>
+		name_I18N <Colosseum>
 		FloorType 30
 
 		room 10 6
 		name <Duelist's Hall>
+		name_I18N <Duelist's Hall>
 		FloorType 26
 		BorderType 33
 
 		room 7 7
 		name <City Hall>
+		name_I18N <City Hall>
 		FloorType 25
 		BorderType 23
 
 		room 6 5
 		name <Namok Oil>
+		name_I18N <Namok Oil>
 		FloorType 14
 		BorderType 38
 
 		room 8 5
 		name <Mercy Hospital>
+		name_I18N <Mercy Hospital>
 		FloorType 30
 		BorderType 18
 
@@ -3043,14 +3166,17 @@ Scene 16 0
 
 		room 5 5
 		name <Bus Terminal>
+		name_I18N <Bus Terminal>
 
 		room 7 5
 		name <Typhoon Restaurant>
+		name_I18N <Typhoon Restaurant>
 		FloorType 20
 		BorderType 37
 
 		room 8 8
 		name <Regex Building>
+		name_I18N <Regex Building>
 		BorderType 35
 
 		rect
@@ -3315,6 +3441,7 @@ Scene 16 0
 
 		NPC Bounty Hunter
 		name <Turing>
+		name_I18N <Turing>
 		rumor <Turing had an exciting career as a bounty hunter, and now has the cybernetic parts to prove it.>
 		home <Duelist's Hall>
 		mecha <Longman.txt>
@@ -3414,6 +3541,7 @@ Scene 16 0
 
 Scene 17 0
 	name <Wujung>
+	name_I18N <Wujung>
     desc <Wujung is an old fortress-city. From here the Federation Defense Force patrols the edge of the deadzone.>
 	type <Target City Town URB_STORY LANCEMATE_HERE DESTINATION>
     sdl_portrait <scene_wujung.png>
@@ -3456,20 +3584,24 @@ Scene 17 0
 
 		room 9 6
 		name <Elite Armaments>
+		name_I18N <Elite Armaments>
 		FloorType 20
 
 		room 10 12
 		name <Blue Fortress>
+		name_I18N <Blue Fortress>
 		FloorType 20
 		BorderType 29
 
 		room 8 8
 		name <Wujung Tires>
+		name_I18N <Wujung Tires>
 		FloorType 26
 		BorderType 38
 
 		room 8 5
 		name <Wujung Hospital>
+		name_I18N <Wujung Hospital>
 		FloorType 28
 		sub
 			StairsDown
@@ -3483,11 +3615,13 @@ Scene 17 0
 
 		room 5 5
 		name <Allied Armor>
+		name_I18N <Allied Armor>
 		FloorType 26
 		BorderType 29
 
 		room 7 7
 		name <Black Isle Pub>
+		name_I18N <Black Isle Pub>
 		FloorType 20
 		BorderType 15
 
@@ -3496,9 +3630,11 @@ Scene 17 0
 
 		room 5 5
 		name <Bus Terminal>
+		name_I18N <Bus Terminal>
 
 		room 5 5
 		Name <Barbecue Nara>
+		Name_I18N <Barbecue Nara>
 		FloorType 20
 		BorderType 37
 
@@ -3515,6 +3651,7 @@ Scene 17 0
 			Sign
 			Destination 35
 			name <Bus Stop: University>
+			name_I18N <Bus Stop: University>
 		end
 
 		Persona 1712
@@ -3639,6 +3776,7 @@ Scene 17 0
 
 		NPC Soldier
         name <Evan>
+        name_I18N <Evan>
         mecha <Esher.txt>
     	SDL_PORTRAIT <por_m_ladi_ahnuld(O-Y).png>
     	SDL_COLORS <166 47 32 184 124 81 136 141 101>
@@ -3755,6 +3893,7 @@ Scene 17 0
 
 Scene 18 0
 	name <Kist Ruins L1>
+	name_I18N <Kist Ruins L1>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 14>
 	start <if= V1 0 else GoBeenBefore V= 1 1 Print 2>
@@ -3767,6 +3906,7 @@ Scene 18 0
 	sub
 		Rect
 		name <Entrance>
+		name_I18N <Entrance>
 		Width 7
 		Height 7
 		FloorType 14
@@ -3779,6 +3919,7 @@ Scene 18 0
 		width 8
 		height 8
 		name <Way Down>
+		name_I18N <Way Down>
 		FloorType 16
 		sub
 			StairsDown
@@ -3803,6 +3944,7 @@ Scene 18 0
 		roguechar <%>
 		home <Entrance>
 		name <Skeleton>
+		name_I18N <Skeleton>
 		use <if= V1 0 else GoUBefore V= 1 1 Print 1>
 		GoUBefore <Print 2>
 		Msg1 <It's a skeleton. He looks like he's been here for quite a long time. A dusty fedora and tattered leather whip lie close to the body.>
@@ -3825,6 +3967,7 @@ Scene 18 0
 
 Scene 19 0
 	name <Kist Ruins L2>
+	name_I18N <Kist Ruins L2>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 14>
 	% V1 = Message Counter
@@ -3875,6 +4018,7 @@ Scene 19 0
 			rect
 			FloorType 16
 			name <Machine Room>
+			name_I18N <Machine Room>
 		end
 
 		CFiller
@@ -3924,6 +4068,7 @@ Scene 19 0
 
 Scene 20 0
 	name <Brock's Wine Cellar>
+	name_I18N <Brock's Wine Cellar>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 13>
 	start <Print 1>
@@ -3962,6 +4107,7 @@ Scene 20 0
 	inv
 		Food 5
 		name <Fine Wine>
+		name_I18N <Fine Wine>
 		% Status Effect (1), Duration Step2, Stoned(4), Skill4 to resist
 		effect <1  2 4 4 CanResist>
 		FoodXValue 100
@@ -3969,24 +4115,28 @@ Scene 20 0
 
 		Food 5
 		name <Fine Wine>
+		name_I18N <Fine Wine>
 		effect <1  2 4 4 CanResist>
 		FoodXValue 100
 		FoodMorale 5
 
 		Food 5
 		name <Fine Wine>
+		name_I18N <Fine Wine>
 		effect <1  2 4 4 CanResist>
 		FoodXValue 100
 		FoodMorale 5
 
 		Food 5
 		name <Nasty Wine>
+		name_I18N <Nasty Wine>
 		effect <1  6 4 6 CanResist>
 		FoodXValue 50
 		FoodMorale -1
 
 		Food 5
 		name <Golden Rum>
+		name_I18N <Golden Rum>
 		effect <1  3 4 9 CanResist>
 		FoodMorale 8
 
@@ -3994,6 +4144,7 @@ Scene 20 0
 
 Scene 21 0
 	name <Ipshil Sewers>
+	name_I18N <Ipshil Sewers>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 13>
 	start <Print 1>
@@ -4032,6 +4183,7 @@ Scene 21 0
 
 Scene 22 0
 	name <Ipshil Catacombs>
+	name_I18N <Ipshil Catacombs>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 13>
 	start <Print 1>
@@ -4072,6 +4224,7 @@ Scene 22 0
 	inv
 		Prop 20
 		name <Cryogenics Tank>
+		name_I18N <Cryogenics Tank>
 		roguechar <=>
 		use <Print 1>
 		clue34 <Print 2>
@@ -4080,6 +4233,7 @@ Scene 22 0
 
 		Prop 20
 		name <Cryogenics Tank>
+		name_I18N <Cryogenics Tank>
 		roguechar <=>
 		use <Print 1>
 		clue34 <Print 2>
@@ -4088,6 +4242,7 @@ Scene 22 0
 
 		Prop 20
 		name <Cryogenics Tank>
+		name_I18N <Cryogenics Tank>
 		roguechar <=>
 		use <Print 1>
 		clue34 <Print 2>
@@ -4098,6 +4253,7 @@ Scene 22 0
 
 Scene 23 0
 	name <Snake Lake Park>
+	name_I18N <Snake Lake Park>
 
 	WildMap
 	
@@ -4135,6 +4291,7 @@ Scene 23 0
 
 		rect
 		name <Zoo>
+		name_I18N <Zoo>
 		width 35
 		height 25
 		FloorType 1
@@ -4142,18 +4299,21 @@ Scene 23 0
 		sub
 			rect
 			name <Penguin Exhibit>
+			name_I18N <Penguin Exhibit>
 			width 6
 			height 6
 			PARAM <Fill 30 0 Ellipse 30 8 9 Wall 21>
 
 			rect
 			name <Marsh Exhibit>
+			name_I18N <Marsh Exhibit>
 			width 6
 			height 6
 			PARAM <Fill 7 2 Wall 21>
 
 			rect
 			name <Dragon Exhibit>
+			name_I18N <Dragon Exhibit>
 			width 5
 			height 5
 			PARAM <Fill 14 9 Wall 21>
@@ -4165,6 +4325,7 @@ Scene 23 0
 
 			rect
 			name <Zoo Sign>
+			name_I18N <Zoo Sign>
 			width 5
 			height 5
 			FloorType 17
@@ -4177,10 +4338,12 @@ Scene 23 0
 
 		room 7 12
 		name <Mecha Museum>
+		name_I18N <Mecha Museum>
 		WallType 13
 		sub
 			Sign
 			name <Model Display>
+			name_I18N <Model Display>
 			Use <ifYesNo 1 2 3 Print 4 moretext .signtext>
 			.signtext <TS_Text_SLMM1.txt>
 			Msg1 <You stand before a display of mecha models, lovingly crafted in 1/144 scale. Do you want to read the plaque?>
@@ -4190,6 +4353,7 @@ Scene 23 0
 
 			Sign
 			name <Model Display>
+			name_I18N <Model Display>
 			Use <ifYesNo 1 2 3 Print 4 moretext .signtext>
 			.signtext <TS_Text_SLMM2.txt>
 			Msg1 <You stand before a model of a strangely organic flying mecha. Do you want to read the plaque?>
@@ -4209,11 +4373,13 @@ Scene 23 0
 
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		sub
 			Sign
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4>
 			Msg1 <This sign points the way to the Snake Lake Nature Trail. At the bottom of the sign is a warning message, but the text has been gnawed off by some kind of animal.>
 			Msg2 <Follow the trail.>
@@ -4303,6 +4469,7 @@ Scene 23 0
 
 Scene 24 0
 	name <Snake Lake Corporate Zone>
+	name_I18N <Snake Lake Corporate Zone>
 	type <TOWN URB_STORY>
 	CityMap
 
@@ -4358,17 +4525,20 @@ Scene 24 0
 		Height 15
 		Width 10
 		name <Factory>
+		name_I18N <Factory>
 		BorderType 35
 		FloorType 14
 
 
 		room 7 5
 		name <BioCorp Building>
+		name_I18N <BioCorp Building>
 		BorderType 34
 		FloorType 30
 
 		Complex
 		name <BioCorp Labs>
+		name_I18N <BioCorp Labs>
 		BorderType 34
 		FloorType 30
 		width 10
@@ -4377,10 +4547,12 @@ Scene 24 0
 			rect
 			FloorType 30
 			name <BioCorp Labs Scientist Room>
+			name_I18N <BioCorp Labs Scientist Room>
 
 			rect
 			FloorType 14
 			name <Holding Cell>
+			name_I18N <Holding Cell>
 			special <Cell>
 			sub
 				Door
@@ -4397,24 +4569,29 @@ Scene 24 0
 
 		room 7 5
 		name <Regex Corporation>
+		name_I18N <Regex Corporation>
 		BorderType 35
 
 		room 7 7
 		name <Kettel Building>
+		name_I18N <Kettel Building>
 		BorderType 29
 		FloorType 28
 
 		room 7 5
 		name <Twilingate's>
+		name_I18N <Twilingate's>
 		BorderType 37
 
 		room 5 5
 		name <Leiji Hospital>
+		name_I18N <Leiji Hospital>
 		BorderType 18
 		FloorType 28
 
 		room 5 5
 		name <Automata>
+		name_I18N <Automata>
 		BorderType 38
 		FloorType 28
 
@@ -4633,6 +4810,7 @@ Scene 24 0
 
 Scene 25 0
 	name <Snake Lake Waterfront>
+	name_I18N <Snake Lake Waterfront>
 
 	CityMap
 	type <TOWN URB_STORY>
@@ -4670,19 +4848,23 @@ Scene 25 0
 
 		room 8 5
 		name <Guardian Station>
+		name_I18N <Guardian Station>
 		BorderType 29
 
 		room 5 5
 		name <Lakeside Chapel>
+		name_I18N <Lakeside Chapel>
 		BorderType 15
 		FloorType 30
 
 		room 8 8
 		name <Spaceport Authority>
+		name_I18N <Spaceport Authority>
 		FloorType 26
 
 		complex
 		name <Boarding Party>
+		name_I18N <Boarding Party>
 		Width 7
 		Height 7
 		BorderType 36
@@ -4690,11 +4872,13 @@ Scene 25 0
 
 		room 5 5
 		name <Honest Weasel>
+		name_I18N <Honest Weasel>
 		BorderType 38
 		FloorType 28
 
 		room 6 5
 		name <Pirate's Den>
+		name_I18N <Pirate's Den>
 		BorderType 35
 		FloorType 14
 
@@ -4796,6 +4980,7 @@ Scene 25 0
 		SetPersona 2502
 		SetFaction 3
 		name <Britaine>
+		name_I18N <Britaine>
 		job <Guardian Commander>
 		home <Guardian Station>
 		Skill 2 16
@@ -4848,6 +5033,7 @@ Scene 25 0
 
 		NPC Bandit
 		name <Weasely Crusher>
+		name_I18N <Weasely Crusher>
 		mecha <>
 		sdl_portrait <por_m_punk(J-Y).png>
 		sdl_colors <152 61 97 255 212 195 136 141 101>
@@ -4859,6 +5045,7 @@ Scene 25 0
 
 		NPC Shopkeeper
 		name <Miaga>
+		name_I18N <Miaga>
 		home <Pirate's Den>
 		job <Reformed Pirate>
 		sdl_portrait <por_f_ladi_miaga(YU-).png>
@@ -4891,6 +5078,7 @@ Scene 25 0
 
 Scene 26 0
 	name <Kist Ruins L3>
+	name_I18N <Kist Ruins L3>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 14>
 	start <Print 1>
@@ -4930,6 +5118,7 @@ Scene 26 0
 		sub
 			rect
 			name <Storage Cell>
+			name_I18N <Storage Cell>
 			special <Cell>
 			FloorType 16
 			SecretDoorChance 90
@@ -4965,6 +5154,7 @@ Scene 26 0
 	inv
 		Treasure 10000
 		name <Mecha Blueprints>
+		name_I18N <Mecha Blueprints>
 		SetKeyItem 2
 		home <Storage Cell>
 		use <Print 3>
@@ -4977,6 +5167,7 @@ Scene 26 0
 
 Scene 27 0
 	name <Snake Lake Nature Trail L1>
+	name_I18N <Snake Lake Nature Trail L1>
 	NU1 <if= T1 0 Exit 1 SeekGate 10>
 	start <Print 1>
 	Msg1 <You follow the Snake Lake Nature Trail.>
@@ -4987,11 +5178,13 @@ Scene 27 0
 	sub
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		sub
 			Sign
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4>
 			Msg1 <This sign points the way back to Snake Lake Park.>
 			Msg2 <Return to the park.>
@@ -5001,11 +5194,13 @@ Scene 27 0
 
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		sub
 			Sign
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4>
 			Msg1 <This sign points the way to second part of the nature trail. The text is partly obscured by what appear to be blood stains.>
 			Msg2 <Follow the trail.>
@@ -5026,6 +5221,7 @@ Scene 27 0
 
 Scene 28 0
 	name <Snake Lake Nature Trail L2>
+	name_I18N <Snake Lake Nature Trail L2>
 	NU1 <if= T1 0 Exit 1 SeekGate 10>
 	start <Print 1>
 	Msg1 <You follow the Snake Lake Nature Trail.>
@@ -5036,11 +5232,13 @@ Scene 28 0
 	sub
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		sub
 			Sign
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4>
 			Msg1 <This sign points the way back to Snake Lake Park.>
 			Msg2 <Return to the park.>
@@ -5050,11 +5248,13 @@ Scene 28 0
 
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		sub
 			Sign
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4>
 			Msg1 <This sign indicates the continuation of the nature trail. A pile of skulls sits at the base.>
 			Msg2 <Follow the trail.>
@@ -5075,6 +5275,7 @@ Scene 28 0
 
 Scene 29 0
 	name <Snake Lake Nature Trail L3>
+	name_I18N <Snake Lake Nature Trail L3>
 	NU1 <if= T1 0 Exit 1 SeekGate 10>
 	start <Print 1>
 	Msg1 <You follow the Snake Lake Nature Trail.>
@@ -5085,12 +5286,14 @@ Scene 29 0
 	sub
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		MarbleType 2
 		sub
 			Sign
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4>
 			Msg1 <This sign points the way back to Snake Lake Park.>
 			Msg2 <Return to the park.>
@@ -5100,6 +5303,7 @@ Scene 29 0
 
 		rect
 		name <Nature Trail>
+		name_I18N <Nature Trail>
 		width 5
 		height 5
 		MarbleType 2
@@ -5107,6 +5311,7 @@ Scene 29 0
 			Sign
 			% V1 = XP Award for completing the nature trail
 			name <Snake Lake Nature Trail>
+			name_I18N <Snake Lake Nature Trail>
 			use <IfYesNo 1 2 3 Time d600 Exit StatVal 4 SeekGate 27 if= V1 0 V= 1 1 Print 4 XPV 500>
 			Msg1 <This sign indicates the end of the Snake Lake Nature Trail. You can follow it directly back to the park.>
 			Msg2 <Return to the park.>
@@ -5133,6 +5338,7 @@ Scene 29 0
 		STC SHRINE-1
 		% V2 = Have gotten the "big prize" at this shrine.
 		name <Earth Shrine>
+		name_I18N <Earth Shrine>
 		home <Clearing>
 		clue34 <ifG ComTime V1 else GoBeenBefore V= 1 ComTime V+ 1 86400 Reputation 7 -d4 MENTAL FacXP+ 12 1 ifG SkRoll 34 15 else GoNoDice Goto GoCheckElements>
 		GoCheckElements <if= V2 0 else GoSmallPrize ifG G11 0 else GoSmallPrize ifG G12 0 else GoSmallPrize ifG G13 0 else GoSmallPrize ifG G14 0 else GoSmallPrize ifG G15 0 else GoSmallPrize Goto GoBigPrize>
@@ -5146,6 +5352,7 @@ Scene 29 0
 
 Scene 30
 	name <BioCorp Basement L1>
+	name_I18N <BioCorp Basement L1>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 24>
 	start <Print 1>
@@ -5187,6 +5394,7 @@ Scene 30
 
 Scene 31
 	name <BioCorp Basement L2>
+	name_I18N <BioCorp Basement L2>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 24>
 	start <Print 1>
@@ -5212,6 +5420,7 @@ Scene 31
 		FloorType 28
 		MarbleType 5
 		name <Spawning Pit>
+		name_I18N <Spawning Pit>
 
 		team 1
 		setenemy 2
@@ -5225,6 +5434,7 @@ Scene 31
 	inv
 		Prop 30
 		name <Spawning Vat>
+		name_I18N <Spawning Vat>
 		home <Spawning Pit>
 		SetTeam 2
 		SetKeyItem 4
@@ -5237,6 +5447,7 @@ Scene 31
 
 Scene 32 0
 	name <Snake Lake Sewer L1>
+	name_I18N <Snake Lake Sewer L1>
 	Type <Dungeon Sewer Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 10>
@@ -5277,6 +5488,7 @@ Scene 32 0
 
 Scene 33 0
 	name <Snake Lake Sewer L2>
+	name_I18N <Snake Lake Sewer L2>
 	Type <Dungeon Sewer Open ISOLATED>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 10>
@@ -5312,6 +5524,7 @@ Scene 33 0
 		sub
 			Room 5 5
 			name <Research Station>
+			name_I18N <Research Station>
 		end
 
 		team 1
@@ -5400,6 +5613,7 @@ Scene 33 0
 
 Scene 34 0
 	name <Snake Lake Sewer L3>
+	name_I18N <Snake Lake Sewer L3>
 	Type <Dungeon Sewer Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 10>
@@ -5433,6 +5647,7 @@ Scene 34 0
 		width 7
 		height 7
 		name <Lair>
+		name_I18N <Lair>
 		FloorType 7
 		MarbleType 17
 
@@ -5440,6 +5655,7 @@ Scene 34 0
 	inv
 		Monster Albino Alligator
 		name <BONE-CRACKER>
+		name_I18N <BONE-CRACKER>
 		statline 15 23 13 9 3 15 2 2
 		skill 8 11
 		skill 13 15
@@ -5475,6 +5691,7 @@ Scene 34 0
 
 Scene 35 0
 	name <Wujung University>
+	name_I18N <Wujung University>
 	type <Town University URB_STORY>
 
 	CityMap
@@ -5521,25 +5738,30 @@ Scene 35 0
 
 		room 8 12
 		name <Humanities Building>
+		name_I18N <Humanities Building>
 		FloorType 30
 		BorderType 24
 
 		room 8 12
 		name <Sciences Building>
+		name_I18N <Sciences Building>
 		FloorType 30
 		BorderType 24
 
 		room 8 12
 		name <Technicum Building>
+		name_I18N <Technicum Building>
 		FloorType 30
 		BorderType 24
 
 		room 6 6
 		name <Regex Co-Op>
+		name_I18N <Regex Co-Op>
 		BorderType 35
 
 		room 5 5
 		name <Chaplain's Office>
+		name_I18N <Chaplain's Office>
 		FloorType 30
 
 		room 5 5
@@ -5653,6 +5875,7 @@ Scene 35 0
 
 		NPC Citizen
 		name <Patch>
+		name_I18N <Patch>
 		Chardesc Young Passionate Heroic
 		SetTeam 2
 		job <Student>
@@ -5719,6 +5942,7 @@ Scene 35 0
 
 Scene 36 0
 	name <Ipshil Sump>
+	name_I18N <Ipshil Sump>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 13>
 	start <Print 1>
@@ -5785,6 +6009,7 @@ Scene 36 0
 	inv
 		Monster ASSASSIN LORD
 		name <Jjang Bogo>
+		name_I18N <Jjang Bogo>
 		chardesc Old Chaotic Shy Easygoing Renowned
 		job <Guildmaster>
 		sdl_colors <208 80 30 240 215 195 200 200 230>
@@ -5805,6 +6030,7 @@ Scene 36 0
 
 		Monster Assassin
 		name <Jiro>
+		name_I18N <Jiro>
 		sdl_portrait <por_m_ninja(Y-Y).png>
 		chardesc Melancholy Melancholy Melancholy Melancholy Melancholy Male
 		roguechar <J>
@@ -5854,6 +6080,7 @@ Scene 36 0
 		inv
 			BigTreasure 45
 			name <Primal Genome>
+			name_I18N <Primal Genome>
 			SetKeyItem 36
 			use <Print 4>
 			clue37 <print 1>
@@ -5980,6 +6207,7 @@ Scene 36 0
 
 Scene 37 0
 	name <Namok Spaceport>
+	name_I18N <Namok Spaceport>
 	type <Town Spaceport LANCEMATE_HERE URB_STORY>
 
 	CityMap
@@ -6024,44 +6252,53 @@ Scene 37 0
 
 		room 10 10
 		name <Navy Academy>
+		name_I18N <Navy Academy>
 		FloorType 25
 		BorderType 33
 
 		room 8 8
 		name <Maquise Consulate>
+		name_I18N <Maquise Consulate>
 		FloorType 30
 		BorderType 24
 
 		room 7 5
 		name <Silver Virtue>
+		name_I18N <Silver Virtue>
 		FloorType 30
 		BorderType 34
 
 		room 5 5
 		name <Campaign Outfitter>
+		name_I18N <Campaign Outfitter>
 		BorderType 32
 
 		room 5 5
 		name <Fourth Horseman>
+		name_I18N <Fourth Horseman>
 		BorderType 32
 		FloorType 25
 
 		room 8 6
 		name <BioCorp Building>
+		name_I18N <BioCorp Building>
 		BorderType 34
 		FloorType 25
 
 		room 7 7
 		name <Kettel Building>
+		name_I18N <Kettel Building>
 		BorderType 29
 		FloorType 28
 
 		room 5 5
 		name <Delta Arcade>
+		name_I18N <Delta Arcade>
 		BorderType 36
 
 		room 5 5
 		name <Frigate Up>
+		name_I18N <Frigate Up>
 		BorderType 38
 		FloorType 25
 
@@ -6179,6 +6416,7 @@ Scene 37 0
 
 		NPC Shopkeeper
 		name <Okko>
+		name_I18N <Okko>
 		sdl_portrait <por_f_allisonnewver(J--).png>
 		sdl_colors <201 205 229 255 212 195 199 188 162>
 		chardesc Female Heroic Shy
@@ -6246,6 +6484,7 @@ Scene 37 0
 
 Scene 38 0
 	name <Pirate's Point>
+	name_I18N <Pirate's Point>
 	type <Target Town Village LANCEMATE_HERE URB_STORY>
 	Special <ShowAll>
 	citymap
@@ -6291,36 +6530,43 @@ Scene 38 0
 
 		room 6 5
 		name <Kira's Tattoos>
+		name_I18N <Kira's Tattoos>
 		BorderType 27
 		FloorType 26
 
 		room 7 7
 		name <Aegis Consulate>
+		name_I18N <Aegis Consulate>
 		BorderType 34
 		FloorType 25
 
 		room 8 5
 		name <Armor Forge>
+		name_I18N <Armor Forge>
 		BorderType 15
 		FloorType 26
 
 		room 7 5
 		name <Fafnir Pub>
+		name_I18N <Fafnir Pub>
 		BorderType 37
 		FloorType 14
 
 		room 5 5
 		name <The Doctor's Lair>
+		name_I18N <The Doctor's Lair>
 		BorderType 18
 		FloorType 26
 
 		room 7 6
 		name <Rowdy Repairs>
+		name_I18N <Rowdy Repairs>
 		BorderType 38
 		FloorType 26
 
 		room 5 5
 		name <Ye Olde Bazooka>
+		name_I18N <Ye Olde Bazooka>
 		BorderType 32
 		FloorType 26
 
@@ -6421,6 +6667,7 @@ Scene 38 0
 		NPC Celebrity
 		job <Artist>
 		name <Kira>
+		name_I18N <Kira>
 		home <Kira's Tattoos>
 		SDL_POrtrait <por_f_ladi_punk(JA-).png>
 		SDL_Colors <112 28 28 245 213 160 99 181 175>
@@ -6535,6 +6782,7 @@ Scene 38 0
 
 Scene 39 0
 	name <Last Hope>
+	name_I18N <Last Hope>
     desc <Last Hope is a deadzone village that has only recently joined the Federation. Biocorp maintains a research lab here.>
 	type <Target Town Village URB_STORY DESTINATION>
 	special <ShowAll>
@@ -6582,26 +6830,31 @@ Scene 39 0
 
 		room 8 7
 		name <BioCorp Head Office>
+		name_I18N <BioCorp Head Office>
 		BorderType 34
 		FloorType 28
 
 		room 9 5
 		name <Frontier Service>
+		name_I18N <Frontier Service>
 		BorderType 38
 		FloorType 28
 
 		room 5 5
 		name <Busgang Transit>
+		name_I18N <Busgang Transit>
 		BorderType 31
 		FloorType 28
 
 		room 5 5
 		name <General Provisioner>
+		name_I18N <General Provisioner>
 		BorderType 32
 		FloorType 28
 
 		room 6 5
 		name <Hope Hospital>
+		name_I18N <Hope Hospital>
 		BorderType 18
 		FloorType 28
 
@@ -6618,6 +6871,7 @@ Scene 39 0
 
 			Sign
 			name <Road Sign>
+			name_I18N <Road Sign>
             use <Alert 3>
 			Msg3 <You stand before an ancient road sign. The original text has faded away, but over it someone has written "You have reached the end of the sidewalk. Turn back while you still can.">
 		end
@@ -6714,6 +6968,7 @@ Scene 39 0
 
 		room 5 5
 		name <Cave Entrance>
+		name_I18N <Cave Entrance>
 		rumor <you can't climb the mesa to the BioCorp lab, but you can get there through the caves.>
 		sub
 			Door 30
@@ -6793,6 +7048,7 @@ Scene 39 0
 
         NPC Mecha Pilot
 	    name <Onawa>
+	    name_I18N <Onawa>
         mecha <Scylla.txt>
 	    CharDesc Female Shy Easygoing Melancholy
 	    StatLine 15 14 14 15 12 15 12 11
@@ -6815,6 +7071,7 @@ Scene 39 0
 
 Scene 40 0
 	name <Sandstone Cave L1>
+	name_I18N <Sandstone Cave L1>
 	special <NoExit>
 	Type <Dungeon>
 	NU1 <if= T1 0 Exit 39>
@@ -6837,6 +7094,7 @@ Scene 40 0
 
 		Rect
 		name <Exit Grid>
+		name_I18N <Exit Grid>
 		Width 3
 		Height 3
 		FloorType 17
@@ -6865,6 +7123,7 @@ Scene 40 0
 
 Scene 41 0
 	name <Sandstone Cave L2>
+	name_I18N <Sandstone Cave L2>
 	special <NoExit>
 	Type <Dungeon>
 	NU1 <if= T1 0 Exit 39>
@@ -6886,6 +7145,7 @@ Scene 41 0
 
 		Rect
 		name <Exit Grid>
+		name_I18N <Exit Grid>
 		Width 3
 		Height 3
 		FloorType 17
@@ -6906,6 +7166,7 @@ Scene 41 0
 
 Scene 42 0
 	name <Anubis Lab Site>
+	name_I18N <Anubis Lab Site>
 	special <NoExit>
 	Type <Dungeon Lab>
 	NU1 <if= T1 0 Exit 39>
@@ -6920,6 +7181,7 @@ Scene 42 0
 	sub
 		Rect
 		name <Exit Grid>
+		name_I18N <Exit Grid>
 		Width 3
 		Height 3
 		FloorType 17
@@ -6930,10 +7192,12 @@ Scene 42 0
 
 		room 5 5
 		name <Lab>
+		name_I18N <Lab>
 		BorderType 31
 
 		room 5 5
 		name <Data Center>
+		name_I18N <Data Center>
 		BorderType 31
 
 		team 1
@@ -6977,6 +7241,7 @@ Scene 42 0
 
 Scene 43 0
 	name <Ironwind Fortress>
+	name_I18N <Ironwind Fortress>
 	type <Target Town Fortress Wasteland LANCEMATE_HERE>
 	CityMap
 	special <ShowAll>
@@ -7027,26 +7292,31 @@ Scene 43 0
 
 		room 8 5
 		name <Iron Lodge>
+		name_I18N <Iron Lodge>
 		BorderType 33
 		FloorType 28
 
 		room 5 5
 		name <The Flesh Pit>
+		name_I18N <The Flesh Pit>
 		BorderType 15
 		FloorType 17
 
 		room 7 7
 		name <Desert City Service>
+		name_I18N <Desert City Service>
 		BorderType 38
 		FloorType 17
 
 		room 5 5
 		name <Fortress Hospital>
+		name_I18N <Fortress Hospital>
 		BorderType 18
 		FloorType 28
 
 		room 5 5
 		name <The Tomb>
+		name_I18N <The Tomb>
 		BorderType 15
 		FloorType 14
 		LockedDoorChance 50
@@ -7235,6 +7505,7 @@ Scene 43 0
 
 		STC MONOLITH
 		name <The Rock of Prophecy>
+		name_I18N <The Rock of Prophecy>
 		home <The Tomb>
 		use <ifG PCSkillVal 34 4 else GoCantRead Print 1 Alert 2>
 		GoCantRead <Print 3 Alert 4>
@@ -7247,6 +7518,7 @@ Scene 43 0
 
 Scene 44 0
 	name <Mauna>
+	name_I18N <Mauna>
     desc <Mauna is a quaint resort town nestled in the mountains. It is famous for its hot springs and traditional cuisine.>
 	type <Target Town Village Resort URB_STORY DESTINATION>
     sdl_portrait <scene_mauna.png>
@@ -7298,6 +7570,7 @@ Scene 44 0
 		sub
 			room 5 5
 			name <Natural Spa>
+			name_I18N <Natural Spa>
 			BorderType 27
 			FloorType 30
 
@@ -7321,21 +7594,25 @@ Scene 44 0
 
 		room 5 5
 		name <Mauna Clinic>
+		name_I18N <Mauna Clinic>
 		BorderType 18
 		FloorType 30
 
 		room 6 5
 		name <Far Traveller>
+		name_I18N <Far Traveller>
 		BorderType 32
 		FloorType 30
 
 		room 5 5
 		FloorType 30
 		name <Town Hall>
+		name_I18N <Town Hall>
 
 		room 5 5
 		FloorType 30
 		name <Tourist Center>
+		name_I18N <Tourist Center>
 
 		rect
 		width 3
@@ -7506,6 +7783,7 @@ Scene 44 0
 
 Scene 45
 	name <Mauna Cavern>
+	name_I18N <Mauna Cavern>
 	special <NoExit>
 	Type <Dungeon Open>
 	NU1 <if= T1 0 Exit 44>
@@ -7540,6 +7818,7 @@ Scene 45
 		STC SHRINE-1
 		% V2 = Have gotten the "big prize" at this shrine.
 		name <Fire Shrine>
+		name_I18N <Fire Shrine>
 		% move around the shrine, to prevent it being trapped in a pool.
 		update <ifG ComTime V103 V= 103 ComTime V+ 103 20000 GrabSource GSetNAtt NAG_Location NAS_X 0>
 		clue34 <ifG ComTime V1 else GoBeenBefore V= 1 ComTime V+ 1 86400 Reputation 7 -d4 MENTAL FacXP+ 12 1 ifG SkRoll 34 15 else GoNoDice Goto GoCheckElements>
@@ -7636,6 +7915,7 @@ Scene 45
 
 Scene 46
 	name <Garu Fight>
+	name_I18N <Garu Fight>
 	nu1 <if= T1 0 Exit 1 SeekGate G1001>
 	WildMap
 	special <ShowAll>
@@ -7649,6 +7929,7 @@ Scene 46
 	sub
 		room 7 5
 		name <Ruin Entrance>
+		name_I18N <Ruin Entrance>
 		MFX 22
 		MFY 10
 		sub
@@ -7665,6 +7946,7 @@ Scene 46
 		FloorType 6
 		MarbleType 5
 		name <Garu Grid>
+		name_I18N <Garu Grid>
 		MFX 17
 		MFY 22
 
@@ -7695,20 +7977,24 @@ Scene 46
 		SetTeam 2
 		EquipChar 30000
 		name <GARU SuperSoldier>
+		name_I18N <GARU SuperSoldier>
 
 		NPC GARU
 		SetTeam 2
 		EquipChar 30000
 		name <GARU SuperSoldier>
+		name_I18N <GARU SuperSoldier>
 
 		NPC GARU
 		SetTeam 2
 		EquipChar 30000
 		name <GARU SuperSoldier>
+		name_I18N <GARU SuperSoldier>
 	end
 
 Scene 47 2
 	name <Enemy Fortress>
+	name_I18N <Enemy Fortress>
 	nu1 <if= T1 0 Exit 1>
 	WildMap
 	map <TS_MAP_Fortress.txt>
@@ -7718,6 +8004,7 @@ Scene 47 2
 
 Scene 48 0
 	name <the ruins of Nara>
+	name_I18N <the ruins of Nara>
 	type <Dungeon Ruins>
 	Special <ShowAll>
 	citymap
@@ -7773,6 +8060,7 @@ Scene 48 0
 
 Scene 49 0
 	name <Cave of the Progenitors>
+	name_I18N <Cave of the Progenitors>
 	Stat 1 -16
 	FloorType 14
 	gapfill <-25>
@@ -7818,6 +8106,7 @@ Scene 49 0
 
 			rect
 			name <Guard Post>
+			name_I18N <Guard Post>
 			width 3
 			height 3
 			floortype 14
@@ -7866,6 +8155,7 @@ Scene 49 0
 	inv
 		Monster Cyclops Guard
 		name <Guyjes>
+		name_I18N <Guyjes>
 		home <Guard Post>
 		job <Cyclops Guard>
 		SetPersona 4901
@@ -7874,6 +8164,7 @@ Scene 49 0
 
 		Monster Cyclops Guard
 		name <Nolbu>
+		name_I18N <Nolbu>
 		home <Guard Post>
 		job <Cyclops Guard>
 		SetPersona 4902
@@ -7887,6 +8178,7 @@ Scene 49 0
 
 scene 50 0
 	name <Cyclops City>
+	name_I18N <Cyclops City>
 	ComplexMap
 	BorderType 15
 	FloorType 14
@@ -7930,6 +8222,7 @@ scene 50 0
 			rect
 			FloorType 16
 			name <Storage Cell>
+			name_I18N <Storage Cell>
 		end
 
 		CFiller
@@ -7941,6 +8234,7 @@ scene 50 0
 			rect
 			FloorType 16
 			name <Computer Cell>
+			name_I18N <Computer Cell>
 		end
 
 	end
@@ -7948,6 +8242,7 @@ scene 50 0
 		Monster Cyclops Guard
 		job <Cyclops Protector>
 		name <Praetor>
+		name_I18N <Praetor>
 		roguechar <P>
 		SetTeam 2
 		SetPersona 5001
@@ -7993,6 +8288,7 @@ scene 50 0
 
 Scene 51 0
 	name <the Poisonous Swamp>
+	name_I18N <the Poisonous Swamp>
 	% V1 = Been here before
 	% V2 = First time poisoned
 
@@ -8056,6 +8352,7 @@ Scene 51 0
 
 Scene 52 0
 	name <the Ziggurat L1>
+	name_I18N <the Ziggurat L1>
 
 	NU1 <if= T1 0 Exit 57>
 	start <Print 1>
@@ -8099,6 +8396,7 @@ Scene 52 0
 
 Scene 53 0
 	name <the Ziggurat L2>
+	name_I18N <the Ziggurat L2>
 	% V2 = First time not choking
 
 	NU1 <if= T1 0 Exit 57>
@@ -8143,6 +8441,7 @@ Scene 53 0
 		rect
 		FloorType 14
 		name <Research Room 1>
+		name_I18N <Research Room 1>
 		sub
 			STC CHEST-2
 			Lock 25
@@ -8153,6 +8452,7 @@ Scene 53 0
 				Acc 2
 				Recharge 5
 				name <Bonesword>
+				name_I18N <Bonesword>
 				type <ArmorPiercing Mystery>
 			end
 		end
@@ -8161,6 +8461,7 @@ Scene 53 0
 
 Scene 54 0
 	name <the Ziggurat L3>
+	name_I18N <the Ziggurat L3>
 	NU1 <if= T1 0 Exit 57>
 	start <Print 1>
 	Msg1 <You enter the Ziggurat, level three.>
@@ -8201,6 +8502,7 @@ Scene 54 0
 		rect
 		FloorType 14
 		name <Research Room 2>
+		name_I18N <Research Room 2>
 		sub
 			STC CHEST-2
 			Lock 25
@@ -8209,6 +8511,7 @@ Scene 54 0
 				mass -12
 				Biotech
 				name <Chitin Helm>
+				name_I18N <Chitin Helm>
 			end
 
 			STC CHEST-2
@@ -8218,6 +8521,7 @@ Scene 54 0
 				mass -9
 				Biotech
 				name <Chitin Breastplate>
+				name_I18N <Chitin Breastplate>
 			end
 		end
 
@@ -8225,6 +8529,7 @@ Scene 54 0
 
 Scene 55 0
 	name <the Ziggurat L4>
+	name_I18N <the Ziggurat L4>
 	NU1 <if= T1 0 Exit 57>
 	start <Print 1>
 	Msg1 <You enter the Ziggurat, level four.>
@@ -8274,6 +8579,7 @@ Scene 55 0
 
 Scene 56 0
 	name <the Ziggurat L5>
+	name_I18N <the Ziggurat L5>
 	NU1 <if= T1 0 Exit 57>
 	start <Print 1>
 	Msg1 <You enter the Ziggurat, level five.>
@@ -8297,11 +8603,13 @@ Scene 56 0
 		rect
 		FloorType 14
 		name <Altar Room>
+		name_I18N <Altar Room>
 		SecretDoorChance 100
 
 		rect
 		FloorType 28
 		name <Computer Room>
+		name_I18N <Computer Room>
 
 		team 1
 		setenemy 2
@@ -8321,6 +8629,7 @@ Scene 56 0
 		STC SHRINE-1
 		% V2 = Have gotten the "big prize" at this shrine.
 		name <Heaven's Shrine>
+		name_I18N <Heaven's Shrine>
 		home <Altar Room>
 		clue34 <ifG ComTime V1 else GoBeenBefore V= 1 ComTime V+ 1 86400 Reputation 7 -d4 MENTAL FacXP+ 12 1 ifG SkRoll 34 15 else GoNoDice Goto GoCheckElements>
 		GoCheckElements <if= V2 0 else GoSmallPrize ifG G11 0 else GoSmallPrize ifG G12 0 else GoSmallPrize ifG G13 0 else GoSmallPrize ifG G14 0 else GoSmallPrize ifG G15 0 else GoSmallPrize Goto GoBigPrize>
@@ -8355,6 +8664,7 @@ Scene 56 0
 
 Scene 57 0
 	name <Markheim Fortress>
+	name_I18N <Markheim Fortress>
 	type <Town Target Fortress LANCEMATE_HERE>
 
 	CityMap
@@ -8403,11 +8713,13 @@ Scene 57 0
 		sub
 			room 5 5
 			name <Mushroom Farm>
+			name_I18N <Mushroom Farm>
 
 			Clearing
 			width 3
 			height 5
 			name <Patch>
+			name_I18N <Patch>
 		end
 
 		GroundZero
@@ -8420,24 +8732,29 @@ Scene 57 0
 
 		room 7 5
 		name <Legion Hall>
+		name_I18N <Legion Hall>
 		BorderType 27
 		FloorType 39
 
 		room 6 6
 		name <Provisioner>
+		name_I18N <Provisioner>
 		BorderType 37
 		FloorType 28
 
 		room 5 5
 		name <DeadZone Health>
+		name_I18N <DeadZone Health>
 		BorderType 18
 
 		room 5 5
 		name <Garage>
+		name_I18N <Garage>
 		BorderType 38
 
 		room 5 5
 		name <Fortress Center>
+		name_I18N <Fortress Center>
 		borderType 33
 		FloorType 39
 
@@ -8687,6 +9004,7 @@ Scene 57 0
 
 Scene 58 0
 	name <Cesar Wreckage L1>
+	name_I18N <Cesar Wreckage L1>
 	Type <Dungeon Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 57>
@@ -8730,11 +9048,13 @@ Scene 58 0
 		Width 7
 		Height 7
 		name <Patch1>
+		name_I18N <Patch1>
 
 		Dirt
 		Width 5
 		Height 5
 		name <Patch2>
+		name_I18N <Patch2>
 
 		team 1
 		setenemy 2
@@ -8819,6 +9139,7 @@ Scene 58 0
 
 		Monster Cyclops
 		name <Forager>
+		name_I18N <Forager>
 		job <Cyclops Explorer>
 		SetTeam 3
 		SetPersona 5801
@@ -8829,6 +9150,7 @@ Scene 58 0
 
 Scene 59 0
 	name <Cesar Wreckage L2>
+	name_I18N <Cesar Wreckage L2>
 	Type <Dungeon Open>
 	special <NoExit>
 	NU1 <if= T1 0 Exit 57>
@@ -8865,6 +9187,7 @@ Scene 59 0
 				rect
 				floortype 16
 				name <Weapon Room>
+				name_I18N <Weapon Room>
 			end
 		end
 
@@ -8884,6 +9207,7 @@ Scene 59 0
 				rect
 				floortype 16
 				name <Control Room>
+				name_I18N <Control Room>
 			end
 		end
 
@@ -8903,6 +9227,7 @@ Scene 59 0
 				rect
 				floortype 16
 				name <Engine Room>
+				name_I18N <Engine Room>
 			end
 		end
 
@@ -8918,6 +9243,7 @@ Scene 59 0
 	inv
 		STC MACHINE-1
 		name <Fusion Engine>
+		name_I18N <Fusion Engine>
 		home <Engine Room>
 		Clue15 <Goto Use>
 		use <if= V1 1 else GoCheckRepair Print 1>
@@ -8935,6 +9261,7 @@ Scene 59 0
 
 		STC MACHINE-2
 		name <Plasma Condenser>
+		name_I18N <Plasma Condenser>
 		home <Weapon Room>
 		Clue15 <Goto Use>
 		use <if= V1 1 else GoCheckRepair Print 1>
@@ -8952,6 +9279,7 @@ Scene 59 0
 
 		STC COMPUTER-2
 		name <Command Console>
+		name_I18N <Command Console>
 		home <Control Room>
 		Clue15 <Goto Use>
 		use <if= V1 1 else GoCheckRepair Print 1>
@@ -8970,6 +9298,7 @@ Scene 59 0
 
 Scene 60 0
 	name <Tokto Village>
+	name_I18N <Tokto Village>
 	Special <ShowAll>
 	type <ISOLATED>
 	wildmap
@@ -9022,14 +9351,17 @@ Scene 60 0
 		Height 30
 		Width 70
 		name <Lagoon>
+		name_I18N <Lagoon>
 
 		room 5 6
 		name <Shaman's Hut>
+		name_I18N <Shaman's Hut>
 		BorderType 15
 		FloorType 26
 
 		room 5 5
 		name <Explorer's Hut>
+		name_I18N <Explorer's Hut>
 		FloorType 14
 		BorderType 27
 		LockedDoorChance 90
@@ -9127,11 +9459,13 @@ Scene 60 0
 		inv
 			TreaSure 1
 			name <Printout>
+			name_I18N <Printout>
 			use <print 1>
 			Msg1 <It's a printout of some chemical analysis. The sample tested negative for psychoreactive compounds, but did contain anomalous microbes which could possibly be genetically engineered lifeforms.>
 
 			Treasure 1
 			name <Sample Jar>
+			name_I18N <Sample Jar>
 			use <if= V1 0 else GoUsed ifYesNo 1 2 3 else GoNoUse Print 6 if= G9 0 else GoNoEffect if= SceneID 60 else GoNoEffect Goto GoUseIt>
 			GoUseIt <V= 1 1 Alert 4 GrabPCPilot GAddNAtt NAG_StatusEffect NAS_Stoned 5 Trigger Local 1>
 			GoNoEffect <V= 1 1 Print 5 GrabPCPilot GAddNAtt NAG_StatusEffect NAS_Sickness -1>
@@ -9151,6 +9485,7 @@ Scene 60 0
 
 		TrapDoor
 		name <Metal Plate>
+		name_I18N <Metal Plate>
 		roguechar <%>
 		hide 20
 		home <Lagoon>
@@ -9175,6 +9510,7 @@ Scene 60 0
 
 Scene 61 0
 	name <Inside Ladon>
+	name_I18N <Inside Ladon>
 	map <TS_MAP_Ladon.txt>
 	type <NORESCUE SOLO>
 	special <NOEXIT>
@@ -9260,6 +9596,7 @@ Scene 61 0
 
 		rect
 		name <Womb>
+		name_I18N <Womb>
 		width 4
 		height 4
 		MFX 35
@@ -9281,6 +9618,7 @@ Scene 61 0
 
 		Prop 50
 		name <Organic Mass>
+		name_I18N <Organic Mass>
 		sdl_sprite <prop_default.png>
 		frame 5
 		XPos 13
@@ -9299,6 +9637,7 @@ Scene 61 0
 
 		Prop 50
 		name <Organic Mass>
+		name_I18N <Organic Mass>
 		sdl_sprite <prop_default.png>
 		frame 5
 		XPos 41
@@ -9336,32 +9675,38 @@ Scene 61 0
 
 		FirstAidFuel 100
 		name <First Aid Kit>
+		name_I18N <First Aid Kit>
 		SetKeyItem 61
 		home <Entry Spot>
 
 		Food 30
 		mass -2
 		name <Bananas>
+		name_I18N <Bananas>
 		home <Entry Spot>
 
 		Food 30
 		mass -2
 		name <Bananas>
+		name_I18N <Bananas>
 		home <Entry Spot>
 
 		Food 30
 		mass -2
 		name <Bananas>
+		name_I18N <Bananas>
 		home <Entry Spot>
 
 		Melee 10
 		name <Ceremonial Blade>
+		name_I18N <Ceremonial Blade>
 		home <Entry Spot>
 		Recharge 4
 		Acc 1
 
 		ARCH LADON-2
 		name <LADON-2>
+		name_I18N <LADON-2>
 		roguechar <L>
 		SDL_SPRITE <monster_ladon2.png>
 		SDL_COLORS <143 143 114 122 88 170 255 107 83>
@@ -9378,50 +9723,66 @@ Scene 61 0
 		skill 13 9
 		skill 25 8
 		mod head
+		name_I18N <>
 		armor 4
 		sub
 		emelee 5
 		name <Tendrils>
+		name_I18N <Tendrils>
 		type <Poison>
 		BeamGun 8
 		name <Acid Spray>
+		name_I18N <Acid Spray>
 		type <SCATTER BRUTAL>
 		range 4
 		recharge 1
 		end
 		mod body
+		name_I18N <>
 		armor 4
 		mod arm
+		name_I18N <>
 		armor 4
 		sub
 		melee 6
 		name <Claw>
+		name_I18N <Claw>
 		end
 		mod arm
+		name_I18N <>
 		armor 4
 		sub
 		melee 6
 		name <Claw>
+		name_I18N <Claw>
 		end
 		mod arm
+		name_I18N <>
 		armor 4
 		sub
 		melee 6
 		name <Claw>
+		name_I18N <Claw>
 		end
 		mod arm
+		name_I18N <>
 		armor 4
 		sub
 		melee 6
 		name <Claw>
+		name_I18N <Claw>
 		end
 		mod wing
+		name_I18N <>
 		armor 2
 		mod wing
+		name_I18N <>
 		armor 2
 		mod leg
+		name_I18N <>
 		armor 4
 		mod leg
+		name_I18N <>
 		armor 4
 		end
 
@@ -9463,6 +9824,7 @@ Scene 61 0
 
 Scene 62 0
 	name <the Proving Ground>
+	name_I18N <the Proving Ground>
 	special <NoExit>
 	type <SOLO>
 	NU1 <if= T1 0 Exit 15>
@@ -9496,10 +9858,12 @@ Scene 62 0
 		Rect
 		FloorType 14
 		name <Rest Area>
+		name_I18N <Rest Area>
 
 		Rect
 		FloorType 14
 		name <Monolith Room>
+		name_I18N <Monolith Room>
 
 		team 1
 		setenemy 2
@@ -9551,6 +9915,7 @@ inv
 
 	Faction 1
 		name <the Solar Navy>
+		name_I18N <the Solar Navy>
 		type <Military>
 		SetEnemy 7
 		SetAlly 2 3 11
@@ -9577,6 +9942,7 @@ inv
 
 	Faction 2
 		name <the Federation Defense Force>
+		name_I18N <the Federation Defense Force>
 		type <Military>
 		SetEnemy 9 10
 		SetAlly 1 3 11
@@ -9594,6 +9960,7 @@ inv
 
 	Faction 3
 		name <the Guardians>
+		name_I18N <the Guardians>
 		type <Police>
 		quarter <ifFaction 3  ifStoryless if# d3 1 StartStory .crime>
 		.crime <TS_GRD_*_STORY.txt>
@@ -9618,6 +9985,7 @@ inv
 
 	Faction 4
 		name <Kettel Industries>
+		name_I18N <Kettel Industries>
 		type <CORPORATE GoodEnemy>
 		SetEnemy 5 6
 		% Upon loading a new story, increase the faction's
@@ -9645,6 +10013,7 @@ inv
 
 	Faction 5
 		name <BioCorp>
+		name_I18N <BioCorp>
 		type <CORPORATE GoodEnemy>
 		SetEnemy 4 6
 		% Upon loading a new story, increase the faction's
@@ -9672,6 +10041,7 @@ inv
 
 	Faction 6
 		name <RegEx Corporation>
+		name_I18N <RegEx Corporation>
 		type <CORPORATE>
 		SetEnemy 4 5
 		% Upon loading a new story, increase the faction's
@@ -9701,18 +10071,21 @@ inv
 	Faction 7
 		% NPC Faction... doesn't need much detail.
 		name <Aegis Overlord Luna>
+		name_I18N <Aegis Overlord Luna>
 		type <Military GoodEnemy>
 		SetEnemy 1 3 11
 
 	Faction 9
 		% NPC Faction... doesn't need much detail.
 		name <Clan Ironwind>
+		name_I18N <Clan Ironwind>
 		type <Military GoodEnemy>
 		SetEnemy 2
 
 	Faction 10
 		% NPC Faction... doesn't need much detail.
 		name <the Bone Devil gang>
+		name_I18N <the Bone Devil gang>
 		type <Military GoodEnemy>
 		SetEnemy 2 3 11
 
@@ -9721,11 +10094,13 @@ inv
 
 	Faction 11
 		name <the Federation Council>
+		name_I18N <the Federation Council>
 		SetAlly 1 2 3
 		SetEnemy 7 8 9 10
 
 	Faction 12
 		name <HwangSa Temple>
+		name_I18N <HwangSa Temple>
 		SetAlly 1 2 3 11
 		type <RELIGION SCIENCE>
 		quarter <ifFaction 12  ifStoryless if= d2 1 StartStory .monk ifG 70 V1000 V+ 1000 10 V+ 1000 d10>
@@ -9749,6 +10124,7 @@ inv
 
 	Faction 13
 		name <the Thieves Guild>
+		name_I18N <the Thieves Guild>
 		type <CRIMINAL>
 		hour <ifFaction 13  if= d6 1 Storyline .thief>
 		.thief <TS_GTH_*_PLOT.txt>
@@ -9799,10 +10175,12 @@ inv
 	Treasure 1000
 	SetKeyItem 39
 	name <BioCorp Labs Passcard>
+	name_I18N <BioCorp Labs Passcard>
 
 	Melee 20
 	SetKeyItem 43
 	name <Golden Chainsword>
+	name_I18N <Golden Chainsword>
 	Recharge 6
 	Acc 3
 	mass -14
@@ -9810,6 +10188,7 @@ inv
 
 	Treasure 150
 	name <Rusty Scepter>
+	name_I18N <Rusty Scepter>
 	SetKeyItem 44
 	clue37 <Print 1>
 	Msg1 <Maybe this scepter could be valuable to someone who cares about history.>
@@ -9817,16 +10196,19 @@ inv
 
 	Treasure 25000
 	name <Fuel Rod>
+	name_I18N <Fuel Rod>
 	SetKeyItem 55
 	desc <This is an antique fuel processor, probably for a large biotech machine of some type.>
 
 	Treasure 10000
 	name <Crystal Disk>
+	name_I18N <Crystal Disk>
 	SetKeyItem 35
 	desc <This is an antique style datachip. It appears to be military grade.>
 
 	Treasure 20
 	name <Old City Key>
+	name_I18N <Old City Key>
 	SetKeyItem 17
 	Clue29 <Print 2>
 	Clue37 <Print 1>
@@ -9838,6 +10220,7 @@ inv
 	% V2 = Have gotten the "big prize" at this shrine.
 	SetKeyItem 6
 	name <Water Shrine>
+	name_I18N <Water Shrine>
 	type <ARTIFACT>
 	clue34 <ifG ComTime V1 else GoBeenBefore V= 1 ComTime V+ 1 86400 Reputation 7 -d4 MENTAL FacXP+ 12 1 ifG SkRoll 34 15 else GoNoDice Goto GoCheckElements>
 	GoCheckElements <if= V2 0 else GoSmallPrize ifG G11 0 else GoSmallPrize ifG G12 0 else GoSmallPrize ifG G13 0 else GoSmallPrize ifG G14 0 else GoSmallPrize ifG G15 0 else GoSmallPrize Goto GoBigPrize>
@@ -9850,18 +10233,21 @@ inv
 
 hoverfighter 8
 name <Argoseyer>
+name_I18N <Argoseyer>
 sdl_sprite <hov_argoseyer.png>
 sdl_colors <65 135 120 201 205 229 160 0 100>
 SetKeyItem 26
 Biotech
 mod turret
 name <Right Cannon Housing>
+name_I18N <Right Cannon Housing>
 size 7
 armor 8
 mass -10
 sub
 	Gun 6
 	name <Nuclear Cannon>
+	name_I18N <Nuclear Cannon>
 	Acc -1
 	range 8
 	Magazine 24
@@ -9874,6 +10260,7 @@ sub
 
 	Mount
 	name <Right Cannon Mount>
+	name_I18N <Right Cannon Mount>
 	inv
 		STC VC-5
 		mass -13
@@ -9881,17 +10268,20 @@ sub
 end
 inv
 	TurretArmor 7
+	name_I18N <>
 	METAL
 	mass -7
 end
 mod turret
 name <Left Cannon Housing>
+name_I18N <Left Cannon Housing>
 size 7
 armor 8
 mass -10
 sub
 	Gun 6
 	name <Nuclear Cannon>
+	name_I18N <Nuclear Cannon>
 	Acc -1
 	range 8
 	Magazine 24
@@ -9904,6 +10294,7 @@ sub
 
 	Mount
 	name <Left Cannon Mount>
+	name_I18N <Left Cannon Mount>
 	inv
 		STC VC-5
 		mass -13
@@ -9911,80 +10302,102 @@ sub
 end
 inv
 	TurretArmor 7
+	name_I18N <>
 	METAL
 	mass -7
 end
 mod body
+name_I18N <>
 armor 8
 mass -14
 sub
 	CPit
+	name_I18N <>
 	Armor 2
 	mass -1
 	Gyro 8
+	name_I18N <>
 	armor 2
 	mass -1
 	Engine 8
+	name_I18N <>
 	armor 2
 	HighOutput
 	mass -1
 	Sensor 8
+	name_I18N <>
 	TarComp 2
+	name_I18N <>
 	ECM 9
+	name_I18N <>
 
 	BeamGun 22
 	name <Phase Bubble>
+	name_I18N <Phase Bubble>
 	type <BRUTAL ARMORPIERCING BLAST 5 MYSTERY COMPLEX>
 	recharge 1
 	Range 14
 	mass -15
 
 	ArcJet 12
+	name_I18N <>
 end
 inv
 	BodyArmor 8
+	name_I18N <>
 	Metal
 	mass -8
 	fits <hoverfighter>
 	sub
 		OverCharger 8
+		name_I18N <>
 	end
 end
 mod wing
 name <Right Wing>
+name_I18N <Right Wing>
 size 9
 armor 8
 mass -10
 sub
 	ArcJet 7
+	name_I18N <>
 	EMelee 5
 	name <Beam Tendril>
+	name_I18N <Beam Tendril>
 	Type <INTERCEPT OVERLOAD MYSTERY FLAIL>
 
 	Mount
 	name <Right Wing Mount>
+	name_I18N <Right Wing Mount>
 end
 inv
 	WingArmor 9
+	name_I18N <>
 	METAL
 	mass -5
 end
 mod wing
 name <Left Wing>
+name_I18N <Left Wing>
 size 9
 armor 8
 mass -10
 sub
 	ArcJet 7
+	name_I18N <>
 	EMelee 5
 	name <Beam Tendril>
+	name_I18N <Beam Tendril>
 	Type <INTERCEPT OVERLOAD MYSTERY FLAIL>
 
 	Mount
 	name <Left Wing Mount>
+	name_I18N <Left Wing Mount>
 end
 inv
 	WingArmor 9
+	name_I18N <>
 	METAL
 	mass -5
 end

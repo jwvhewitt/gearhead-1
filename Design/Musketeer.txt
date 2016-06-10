@@ -1,25 +1,38 @@
 battroid 4
 name <Musketeer>
 desig <TD-4>
+desig_I18N <TD-4>
 desc <>
 sdl_sprite <btr_musketeer.png>
 
 
 mod head
+Name_I18N <>
 armor 4
 sub
 	Cpit
+	Name_I18N <>
 	Sensor 4
+	Name_I18N <>
 end
 
 mod body
+Name_I18N <>
 armor 4
 sub
+
+	Engine 4
+	Name_I18N <>
+
+	Gyro 1
+	Name_I18N <>
+
 	STC LRL-32
 end
 
 mod arm
 name <Right Arm>
+Name_I18N <>
 size 5
 armor 3
 sub
@@ -29,6 +42,7 @@ end
 
 mod arm
 name <Left Arm>
+Name_I18N <>
 size 5
 armor 3
 sub
@@ -37,28 +51,34 @@ sub
 end
 
 mod leg
+Name_I18N <>
 armor 3
 sub
 	MLauncher 5
 	name <Smoke Launcher>
+	Name_I18N <>
 	type <SMOKE BLAST 4>
 	range 8
 	magazine 1
 	sub
 		Rockets 5
+		Name_I18N <>
 	end
 end
 
 mod leg
+Name_I18N <>
 armor 3
 sub
 	MLauncher 5
 	name <Smoke Launcher>
+	Name_I18N <>
 	type <SMOKE BLAST 4>
 	range 8
 	magazine 1
 	sub
 		Rockets 5
+		Name_I18N <>
 	end
 end
 

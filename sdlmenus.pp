@@ -93,6 +93,8 @@ Function SelectFile( RPM: RPGMenuPtr; ReDrawer: RedrawProcedureType ): String;
 
 implementation
 
+uses termenc;
+
 Function LastMenuItem(MIList: RPGMenuItemPtr): RPGMenuItemPtr;
 	{This procedure will find the last item in the linked list.}
 begin
@@ -350,7 +352,7 @@ var
 	height: integer;		{The width of the menu display.}
 	NextColor: PSDL_Color;
 	Item_Image: PSDL_Surface;
-	Item_PText: PChar;
+	MyDestRTL: TSDL_Rect;
 	MyRect,MyDest: TSDL_Rect;
 	Y,DY: Integer;
 begin
@@ -373,6 +375,7 @@ begin
 	Y := MyRect.Y;
 	DY := TTF_FontLineSkip( game_font );
 	MyDest.W := RPM^.Menu_Zone.W;
+	MyDestRTL := MyDest;
 
 	a := topitem;
 	for t := 1 to Height do begin
@@ -385,12 +388,14 @@ begin
 		else
 			NextColor := @RPM^.itemcolor;
 
-		Item_PText := QuickPCopy( a^.msg );
-		Item_Image := TTF_RenderText_Solid( game_font , Item_PText , NextColor^ );
-		Dispose( Item_PText );
-        {$IFDEF LINUX}
-	    if Item_Image <> Nil then SDL_SetColorKey( Item_Image , SDL_SRCCOLORKEY , SDL_MapRGB( Item_Image^.Format , 0 , 0, 0 ) );
-        {$ENDIF}
+		if (1 < Length(a^.msg)) and (#$0 = a^.msg[1]) then begin
+			Item_Image := I18N_TTF_RenderText( game_font, Copy(a^.msg,2,Length(a^.msg)-1), NextColor^ );
+		end else begin
+			Item_Image := I18N_TTF_RenderText( game_font , a^.msg , NextColor^ );
+		end;
+		if TERMINAL_bidiRTL then begin
+			MyDest.X := MyDestRTL.X + MyDestRTL.W - Item_Image^.W;
+		end;
 
 		SDL_BlitSurface( Item_Image , Nil , Game_Screen , @MyDest );
 		SDL_FreeSurface( Item_Image );
@@ -735,7 +740,7 @@ begin
 	FindFirst( SearchPattern , AnyFile , F );
 
 	While DosError = 0 do begin
-		AddRPGMenuItem( RPM , F.Name , N );
+		AddRPGMenuItem( RPM , TextDecode(F.Name) , N );
 		Inc(N);
 		FindNext( F );
 	end;

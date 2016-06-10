@@ -286,17 +286,22 @@ skill 26 5
 skill 33 5
 sub
 	mod head
+		Name_I18N <>
 		armor 3
 	mod body
+		Name_I18N <>
 		armor 3
 	mod arm
+		Name_I18N <>
 		armor 3
 		sub
 			% Hand
 			gear 7 0 0
+			Name_I18N <>
 			inv
 				gear 4 2 6
 				name <Peacemaker>
+				Name_I18N <>
 				scale 0
 				Range 4
 				Accuracy 1
@@ -307,19 +312,23 @@ sub
 				sub
 					% Ammunition
 					gear 5 2 6
+					Name_I18N <>
 					mass -2
 				end
 
 			end
 		end
 	mod arm
+		Name_I18N <>
 		armor 3
 		sub
 			% Hand
 			gear 7 0 0
+			Name_I18N <>
 			inv
 				gear 4 1 8
 				name <Power Maul>
+				Name_I18N <>
 				scale 0
 			end
 		end
@@ -327,13 +336,16 @@ sub
 			% Shield
 			gear 10 0 5
 			name <Riot Shield>
+			Name_I18N <>
 			scale 0
 			stat 1 1
 
 		end
 	mod leg
+		Name_I18N <>
 		armor 3
 	mod leg
+		Name_I18N <>
 		armor 3
 end
 
@@ -355,17 +367,22 @@ skill 13 5
 skill 33 5
 sub
 	mod head
+		Name_I18N <>
 		armor 1
 	mod body
+		Name_I18N <>
 		armor 1
 	mod arm
+		Name_I18N <>
 		armor 1
 		sub
 			% Hand
 			gear 7 0 0
+			Name_I18N <>
 			inv
 				gear 4 2 2
 				name <Autogun>
+				Name_I18N <>
 				scale 0
 				stat 1 5
 				stat 4 2
@@ -373,22 +390,28 @@ sub
 				sub
 					% Ammunition
 					gear 5 2 2
+					Name_I18N <>
 				end
 			end
 		end
 	mod arm
+		Name_I18N <>
 		armor 1
 		sub
 			% Hand
 			gear 7 0 0
+			Name_I18N <>
 			inv
 				gear 4 0 6
 				name <Hand Axe>
+				Name_I18N <>
 				scale 0
 			end
 		end
 	mod leg
+		Name_I18N <>
 		armor 1
 	mod leg
+		Name_I18N <>
 		armor 1
 end

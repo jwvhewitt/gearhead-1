@@ -1,67 +1,90 @@
 Battroid 4
 Name <Century>
 Desig <CNA-15>
+Desig_I18N <CNA-15>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
 		BeamGun 5
 		Name <Medium Laser>
+		Name_I18N <>
 		Range 3
 		Acc 1
 		Integral
 
 		Sensor 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		MLauncher 2
 		Name <Long Range Missiles>
+		Name_I18N <>
 		Range 7
 		Speed 1
 		Magazine 40
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Gun 10
 		Name <Autocannon>
+		Name_I18N <>
 		Range 5
 		Speed 3
 		Integral
 		Magazine 20
 		sub
 			Ammo 10
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 
 		BeamGun 5
 		Name <Medium Laser>
+		Name_I18N <>
 		Range 3
 		Acc 1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 end

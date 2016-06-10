@@ -40,9 +40,9 @@ Procedure GenerateNewPC;
 implementation
 
 {$IFDEF SDLMODE}
-uses gearutil,ghchars,texutil,ui4gh,sdlgfx,sdlinfo,sdlmenus;
+uses i18nmsg,gearutil,ghchars,texutil,ui4gh,sdlgfx,sdlinfo,sdlmenus;
 {$ELSE}
-uses gearutil,ghchars,texutil,ui4gh,congfx,coninfo,conmenus,context;
+uses i18nmsg,gearutil,ghchars,texutil,ui4gh,congfx,coninfo,conmenus,context;
 {$ENDIF}
 
 {$IFDEF SDLMODE}
@@ -99,7 +99,7 @@ begin
 	{ Error check- only provide description for a legal skill }
 	{ number. Otherwise just return an empty string. }
 	if ( N >= 1 ) and ( N <= NumSkill ) then begin
-		msg := '[' + UpCase( StatName[SkillMan[N].Stat] ) + '] ' + MsgString( 'SKILL_' + BStr( N ) );
+		msg := '[' + I18N_Name( 'StatName', StatName[SkillMan[N].Stat] ) + '] ' + MsgString( 'SKILL_' + BStr( N ) );
 	end;
 	SkillDesc := msg;
 end;
@@ -115,7 +115,7 @@ begin
 	while ( Leader <> Nil ) and ( ( Leader^.G <> GG_Character ) or ( NAttValue( Leader^.NA , NAG_CharDescription , NAS_CharType ) <> 0 ) ) do Leader := Leader^.Next;
 	if Leader = Nil then Exit;
 
-	FName := Save_Character_Base + GearName(Leader) + Default_File_Ending;
+	FName := Save_Character_Base + TextEncode(GearName(Leader) + Default_File_Ending);
 	Assign( F , FName );
 	Rewrite( F );
 	WriteCGears( F , PC );
@@ -154,8 +154,8 @@ var
 begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharGenMenu );
 
-	AddRPGMenuItem( RPM , GenderName[ NAV_Male ] , NAV_Male );
-	AddRPGMenuItem( RPM , GenderName[ NAV_Female ] , NAV_Female );
+	AddRPGMenuItem( RPM , I18N_Name('GenderName',GenderName[ NAV_Male ]) , NAV_Male );
+	AddRPGMenuItem( RPM , I18N_Name('GenderName',GenderName[ NAV_Female ]) , NAV_Female );
 	AddRPGMenuItem( RPM , MsgString('SELECTGENDER_NONBINARY') , NAV_Nonbinary );
 
 {$IFDEF SDLMODE}
@@ -187,7 +187,7 @@ begin
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CharGenMenu );
 
 	for t := -4 to 10 do begin
-		AddRPGMenuItem( RPM , BStr( T + 20 ) + ' years old' , T );
+		AddRPGMenuItem( RPM , ReplaceHash( I18N_MsgString('SelectAge','years old'), BStr(T + 20) ), T );
 	end;
 
 {$IFDEF SDLMODE}
@@ -272,20 +272,20 @@ begin
 		if ( F <> Nil ) and ( M <> Nil ) then begin
 			{ Both father and mother had jobs worth mentioning. }
 			if F = M then begin
-				Bio1 := MsgString( 'RANDCHAR_FHBothParents1' ) + RetrieveAPreamble( F^.Info ) + MsgString( 'RANDCHAR_FHBothParents2' );
+				Bio1 := MsgString( 'RANDCHAR_FHBothParents1' ) + I18N_Name('Jobs',RetrieveAPreamble( F^.Info )) + MsgString( 'RANDCHAR_FHBothParents2' );
 			end else if Random( 2 ) = 1 then begin
-				Bio1 := MsgString( 'RANDCHAR_FM1' ) + RetrieveAPreamble( F^.Info );
-				Bio1 := Bio1 + MsgString( 'RANDCHAR_FM2' ) + RetrieveAPreamble( M^.Info ) + MsgString( 'RANDCHAR_FM3' );
+				Bio1 := MsgString( 'RANDCHAR_FM1' ) + I18N_Name('Jobs',RetrieveAPreamble( F^.Info ));
+				Bio1 := Bio1 + MsgString( 'RANDCHAR_FM2' ) + I18N_Name('Jobs',RetrieveAPreamble( M^.Info )) + MsgString( 'RANDCHAR_FM3' );
 			end else begin
-				Bio1 := MsgString( 'RANDCHAR_MF1' ) + RetrieveAPreamble( M^.Info );
-				Bio1 := Bio1 + MsgString( 'RANDCHAR_MF2' ) + RetrieveAPreamble( F^.Info ) + MsgString( 'RANDCHAR_MF3' );
+				Bio1 := MsgString( 'RANDCHAR_MF1' ) + I18N_Name('Jobs',RetrieveAPreamble( M^.Info ));
+				Bio1 := Bio1 + MsgString( 'RANDCHAR_MF2' ) + I18N_Name('Jobs',RetrieveAPreamble( F^.Info )) + MsgString( 'RANDCHAR_MF3' );
 			end;
 		end else if F <> Nil then begin
 			{ Father had a special job; Mother didn't. }
-			Bio1 := MsgString( 'RANDCHAR_F1' ) + RetrieveAPreamble( F^.Info ) + MsgString( 'RANDCHAR_F2' );
+			Bio1 := MsgString( 'RANDCHAR_F1' ) + I18N_Name('Jobs',RetrieveAPreamble( F^.Info )) + MsgString( 'RANDCHAR_F2' );
 		end else if M <> Nil then begin
 			{ Mother had a special job; Father didn't. }
-			Bio1 := MsgString( 'RANDCHAR_M1' ) + RetrieveAPreamble( M^.Info ) + MsgString( 'RANDCHAR_M2' );
+			Bio1 := MsgString( 'RANDCHAR_M1' ) + I18N_Name('Jobs',RetrieveAPreamble( M^.Info )) + MsgString( 'RANDCHAR_M2' );
 		end else begin
 			{ Neither father nor mother had a special job. }
 			Bio1 := MsgString( 'RANDCHAR_WCF' );
@@ -332,11 +332,11 @@ var
 	var
 		msg: String;
 	begin
-		msg := StatName[ N ];
+		msg := I18N_Name( 'StatName', StatName[ N ] );
 {$IFDEF SDLMODE}
 		while TextLength( Game_Font , msg ) < ( ZONE_CharGenMenu.W - 50 ) do msg := msg + ' ';
 {$ELSE}
-		while Length( msg ) < 12 do msg := msg + ' ';
+		while WidthMBCharStr( msg ) < 12 do msg := msg + ' ';
 {$ENDIF}
 		msg := msg + BStr( PCStats[ N ] + PC^.Stat[ N ] );
 		StatSelectorMsg := msg;
@@ -584,11 +584,12 @@ begin
 	N := 1;
 	Job := JobList;
 	while Job <> Nil do begin
-		AddRPGMenuItem( RPM , RetrieveAPreamble( Job^.Info ) , N, JobDescription( Job^.Info ) );
+		AddRPGMenuItem( RPM , I18N_Name('Jobs',RetrieveAPreamble( Job^.Info )) , N, JobDescription( Job^.Info ) );
 		Inc( N );
 		Job := Job^.Next;
 	end;
-	RPMSortAlpha( RPM );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( RPM );}
 
 {$IFDEF SDLMODE}
 	N := SelectMenu( RPM , @RandCharRedraw );
@@ -623,11 +624,11 @@ var
 	var
 		msg: String;
 	begin
-		msg := SkillMan[ N ].Name;
+		msg := I18N_Name('SkillMan',SkillMan[ N ].Name);
 {$IFDEF SDLMODE}
 		while TextLength( Game_Font , msg ) < ( ZONE_CharGenMenu.W - 50 ) do msg := msg + ' ';
 {$ELSE}
-		while Length( msg ) < 20 do msg := msg + ' ';
+		while WidthMBCharStr( msg ) < 20 do msg := msg + ' ';
 {$ENDIF}
 		msg := msg + BStr( NAttValue( PC^.NA , NAG_Skill , N ) + PCSkills[ N ] );
 		SkillSelectorMsg := msg;
@@ -667,7 +668,8 @@ begin
 	for t := 1 to NumSkill do begin
 		AddRPGMenuItem( RPM , SkillSelectorMsg( T ) , T , SkillDesc( T ) );
 	end;
-	RPMSortAlpha( RPM );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( RPM );}
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_ASPDone' ) , -2 );
 
 	RPM^.dtexcolor := InfoGreen;
@@ -849,7 +851,8 @@ begin
 	for N := 0 to 3 do begin
 		AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_RomOp' + BStr(N)) , N );
 	end;
-    RPMSortAlpha( RPM );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( RPM );}
 
 {$IFDEF SDLMODE}
 	N := SelectMenu( RPM , @RandCharRedraw );
@@ -893,11 +896,12 @@ begin
 		if N <> Abs( NAS_Renowned ) then begin
 			{ Store the positive traits as 1... , }
 			{ the negative ones as 1+Num_Personality_Traits... }
-			AddRPGMenuItem( RPM , PTraitName[ N , 1 ] , N );
-			AddRPGMenuItem( RPM , PTraitName[ N , 2 ] , N + Num_Personality_Traits );
+			AddRPGMenuItem( RPM , I18N_Name('PTraitName',PTraitName[ N , 1 ]) , N );
+			AddRPGMenuItem( RPM , I18N_Name('PTraitName',PTraitName[ N , 2 ]) , N + Num_Personality_Traits );
 		end;
 	end;
-	RPMSortAlpha( RPM );
+	{ PATCH_I18N: In I18N, the character cord order sort causes an unpleasant result. }
+	{RPMSortAlpha( RPM );}
 	AddRPGMenuItem( RPM , MsgString( 'RANDCHAR_STCancel' ) , -1 );
 
 	Traits := 3;

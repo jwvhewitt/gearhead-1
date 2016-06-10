@@ -186,6 +186,7 @@ inv
 
 	Treasure 500
 	name <Wallet>
+	name_I18N <Wallet>
 	place <4>
 	% V1 = Location of next encounter
 	% V2 = Clue number for this item

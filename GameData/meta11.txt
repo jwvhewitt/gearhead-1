@@ -1,5 +1,6 @@
 % Default Trap Door %
 name <Trapdoor>
+name_I18N <>
 use <if= StatVal STAT_MetaVisibility 0 if= StatVal STAT_Lock 0 else GoLocked Print 1 Exit StatVal 4>
 GoLocked <Print 3>
 REVEAL <Print 2>

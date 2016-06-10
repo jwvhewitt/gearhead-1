@@ -1,17 +1,21 @@
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9>
+Desig_I18N <SAN-X9>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <One of the oldest mecha designs still in common use, the BuruBuru is the dependable workhorse of the mecha world.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -20,85 +24,112 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 9
 			Name <Shaka Cannon>
+			Name_I18N <>
 			Magazine 15
 			sub
 				Ammo 9
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 5
 			Name <Axe>
+			Name_I18N <>
 			Acc 1
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 end
 
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X12 Assault>
+Desig_I18N <SAN-X12 Assault>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the ubiquitous BuruBuru. This version is optimized for short range fighting.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -107,90 +138,119 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	sub
+
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 1
 		Name <Missile Pod>
+		Name_I18N <>
 		Range 3
 		Speed 1
 		Magazine 48
 		sub
 			Rockets 1
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 6
 			Name <Repeater Cannon>
+			Name_I18N <>
 			BV 1
 			Magazine 30
 			sub
 				Ammo 6
+				Name_I18N <>
 			end
 		end
 
 		Melee 3
 		Name <Shoulder Spike>
+		Name_I18N <>
 		Acc 1
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 10
 			Name <War-Hammer>
+			Name_I18N <>
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 5
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 5
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 end
 
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9b Armored>
+Desig_I18N <SAN-X9b Armored>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version features heavier armor and more weapons than the standard model.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -199,124 +259,161 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 	inv
 		BodyArmor 2
+		Name_I18N <>
 		sub
 			Gun 2
 			Name <Autocannon>
+			Name_I18N <>
 			Range 5
 			BV 3
 			Magazine 80
 			sub
 				Ammo 2
+				Name_I18N <>
 			end
 
 			Gun 2
 			Name <Autocannon>
+			Name_I18N <>
 			Range 5
 			BV 3
 			Magazine 80
 			sub
 				Ammo 2
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 9
 			Name <Shaka Cannon>
+			Name_I18N <>
 			Magazine 15
 			sub
 				Ammo 9
+				Name_I18N <>
 			end
 		end
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		sub
 			Melee 2
 			Name <Arm Spike>
+			Name_I18N <>
 			Acc -1
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		sub
 			Melee 2
 			Name <Arm Spike>
+			Name_I18N <>
 			Acc -1
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 	end
 end
 
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9c Urban>
+Desig_I18N <SAN-X9c Urban>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version features a shield and improved short range weapons.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -325,90 +422,118 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 6
 			Name <Repeater Cannon>
+			Name_I18N <>
 			BV 1
 			Magazine 30
 			sub
 				Ammo 6
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 5
 			Name <Axe>
+			Name_I18N <>
 			Acc 1
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 	inv
 		Shield 5
+		Name_I18N <>
 		DefBonus 1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 end
 
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9d Nova Storm>
+Desig_I18N <SAN-X9d Nova Storm>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <The BuruBuru's powerplant is known as being very dependable. This variant uses that powerplant to fuel an array of energy weapons.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -417,24 +542,36 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 	inv
 		BodyArmor 2
+		Name_I18N <>
 		sub
 			BeamGun 15
 			Name <Nova Cannon>
+			Name_I18N <>
 			Range 12
 			Acc -1
 			Speed 1
@@ -443,12 +580,15 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 5
 			Name <Storm Pistol>
+			Name_I18N <>
 			Range 5
 			Acc 1
 			BV 4
@@ -457,12 +597,15 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 5
 			Name <Storm Pistol>
+			Name_I18N <>
 			Range 5
 			Acc 1
 			BV 4
@@ -470,37 +613,47 @@ Mod Arm
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		sub
 			HoverJet 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		sub
 			HoverJet 2
+			Name_I18N <>
 		end
 	end
 end
@@ -508,17 +661,21 @@ end
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9e Phalanx>
+Desig_I18N <SAN-X9e Phalanx>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version features a shield.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -527,84 +684,111 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 9
 			Name <Shaka Cannon>
+			Name_I18N <>
 			Magazine 15
 			sub
 				Ammo 9
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 	inv
 		Shield 5
+		Name_I18N <>
 		DefBonus 1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 end
 
 Battroid 5
 Name <Buru Buru>
 Desig <SAN-X9g HeavyFoot>
+Desig_I18N <SAN-X9g HeavyFoot>
 SDL_Sprite <btr_buruburu.png>
 SDL_Portrait <mecha_buruburu.png>
 desc <A variant on the BuruBuru design. This version is equipped with a powerful gauss cannon.>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Beam Gun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 2
@@ -613,68 +797,91 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 24
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 18
 			Name <Heavy Gauss Cannon>
+			Name_I18N <>
 			Magazine 10
 			Acc 1
 			Speed 1
 			sub
 				Ammo 18
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 4
 	sub
 		Hand
+		Name_I18N <>
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Acc -2
 		BV 5
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 	end
 	inv
 		Shield 2
+		Name_I18N <>
 		DefBonus -1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 5
+		Name_I18N <>
 	end
 end

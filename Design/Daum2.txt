@@ -1,19 +1,24 @@
 Battroid 5
 Name <Daum>
 Desig <SAN-D2 Zeta>
+Desig_I18N <SAN-D2 Zeta>
 SDL_Sprite <btr_daum.png>
 desc <Fifty years after the release of the original Daum, RegEx corporation has once again updated the design.>
 SDL_PORTRAIT <mecha_daum.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	mass -3
 	sub
 		Sensor 6
+		Name_I18N <>
 		TarComp 1
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Defensive Beamgun>
+		Name_I18N <>
 		type <INTERCEPT>
 		Range 3
 		Acc 1
@@ -22,114 +27,144 @@ Mod Head
 	end
 	inv
 		HeadArmor 3
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	mass -5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
 		Gyro 2
+		Name_I18N <>
 		Armor 1
 
 		Engine 5
+		Name_I18N <>
 		Armor 1
 
 		Sensor 3
+		Name_I18N <>
 
 		Mount
 		Name <Right Torso Mount>
+		Name_I18N <>
 
 		Mount
 		Name <Left Torso Mount>
+		Name_I18N <>
 		inv
 			STC SWML-40
 		end
 
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 4
+		Name_I18N <>
 		Mass -4
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	mass -3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			STC RG-8
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			Melee 7
 			name <Dueling Lance>
+			Name_I18N <>
 			mass -3
 		end
 	end
 	inv
 		ArmArmor 3
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	Mass -3
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 3
+		Name_I18N <>
 		Mass -3
 
 		EShield 4
+		Name_I18N <>
 		DefBonus 2
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	mass -3
 	sub
 		ArcJet 4
+		Name_I18N <>
 
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -2
 		sub
 			ArcJet 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	mass -3
 	sub
 		ArcJet 4
+		Name_I18N <>
 
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -2
 		sub
 			ArcJet 2
+			Name_I18N <>
 		end
 	end
 end

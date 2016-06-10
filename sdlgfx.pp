@@ -23,7 +23,7 @@ unit sdlgfx;
 
 interface
 
-uses SDL,SDL_TTF,SDL_Image,texutil,gears,dos,ui4gh;
+uses strings,SDL,SDL_TTF,SDL_Image,texutil,gears,dos,ui4gh;
 
 Type
 	SensibleSpritePtr = ^SensibleSprite;
@@ -62,8 +62,6 @@ const
 
 	ScreenWidth = 800;
 	ScreenHeight = 600;
-	BigFontSize = 13;
-	SmallFontSize = 11;
 	Right_Column_Width = 220;
 	Dialog_Area_Height = 110;
 
@@ -199,6 +197,8 @@ procedure DrawSprite( Spr: SensibleSpritePtr; MyDest: TSDL_Rect; Frame: Integer 
 procedure DrawAlphaSprite( Spr: SensibleSpritePtr; MyDest: TSDL_Rect; Frame: Integer );
 Function ConfirmSprite( Name: String; const Color: String; W,H: Integer ): SensibleSpritePtr;
 
+function RPGKey( var Unicode: Word; const UnicodeMode: Boolean ): Char;
+function RPGKey( var Unicode: Word ): Char;
 function RPGKey: Char;
 Procedure ClrZone( var Z: TSDL_Rect );
 Procedure ClrScreen;
@@ -236,9 +236,14 @@ Procedure SetupYesNoDisplay;
 Procedure SetupInteractDisplay( TeamColor: TSDL_Color );
 Procedure SetupMemoDisplay;
 
+Function New_Conv_ToUni16( const arg_msg: String ): PUInt16;
+Function I18N_TTF_RenderText(var font: PTTF_Font; const pline: String; var fg: TSDL_Color ): PSDL_Surface;
+
 Procedure SetupWizardDisplay();
 
 implementation
+
+uses i18nmsg,termenc;
 
 const
 	WindowName: PChar = 'GearHead Arena SDL Version';
@@ -246,6 +251,7 @@ const
 
 var
 	Infobox_Border,Infobox_Backdrop: SensibleSpritePtr;
+	I18N_Width_Of_One_Character: String = 'M';
 
 Function DynamicRect.GetRect: TSDL_Rect;
     { Return the TSDL_Rect described by this DynamicRect, given the current }
@@ -638,7 +644,19 @@ begin
 end;
 
 
+function RPGKey( var Unicode: Word ): Char;
+begin
+	RPGKey := RPGKey( Unicode, True );
+end;
+
 function RPGKey: Char;
+var
+	dummy: Word;
+begin
+	RPGKey := RPGKey( dummy, False );
+end;
+
+function RPGKey( var Unicode: Word; const UnicodeMode: Boolean ): Char;
 	{ Read a readable key from the keyboard and return its ASCII value. }
 var
 	a: String;
@@ -648,6 +666,7 @@ var
     pmsg: PChar;
 begin
 	a := '';
+	Unicode := 0;
 	repeat
 		{ Wait for events. }
 		if SDL_PollEvent( @event ) = 1 then begin
@@ -674,6 +693,9 @@ begin
 				else
 					if( event.key.keysym.unicode <  $80 ) and ( event.key.keysym.unicode > 0 ) then begin
 						a := Char( event.key.keysym.unicode );
+					end else if (True = UnicodeMode) and (event.key.keysym.unicode > 0) then begin
+						Unicode := event.key.keysym.unicode;
+						a := #$80;
 					end;
 				end;
 
@@ -733,17 +755,12 @@ end;
 Function TextLength( F: PTTF_Font; const msg: String ): LongInt;
 	{ Determine how long "msg" will be using the default "game_font". }
 var
-	pmsg: PChar;	{ Gotta convert to pchar, pain in the ass... }
+	pWC: PUInt16;
 	W,Y: LongInt;	{ W means width I guess... Y is anyone's guess. Height? }
 begin
-	{ Convert the string to a pchar. }
-	pmsg := QuickPCopy( msg );
-
-	{ Call the alleged size calculation function. }
-	TTF_SizeText( F , pmsg , W , Y );
-
-	{ get rid of the PChar, since it's served its usefulness. }
-	Dispose( pmsg );
+	pWC := New_Conv_ToUni16( msg );
+	TTF_SizeUnicode( F , pWC , W , Y );
+	Dispose( pWC );
 
 	TextLength := W;
 end;
@@ -752,28 +769,89 @@ Procedure GetNextLine( var TheLine , msg , NextWord: String; Width: Integer; MyF
 	{ Get a line of text of maximum width "Width". }
 var
 	LC: Boolean;	{ Loop Condition. So I wasn't very creative when I named it, so what? }
+	BW: String;
+	CW_I18N: Boolean;	{Is the current word I18N ?}
+	DItS: Boolean;		{Do insert the space, or not.}
 begin
 	{ Loop condition starts out as TRUE. }
 	LC := True;
+	if TheLine = ' ' then TheLine := '';
 
 	{ Start building the line. }
 	repeat
-		NextWord := ExtractWord( Msg );
+		NextWord := ExtractWordForPrint( Msg, DItS, CW_I18N );
 
-		if TextLength( MyFont , THEline + ' ' + NextWord) < Width then
-			THEline := THEline + ' ' + NextWord
-		else
-			LC := False;
+		if '' <> NextWord then
+			if False = CW_I18N then begin
+				if TextLength( MyFont , TheLine + ' ' + NextWord) < Width then
+					if DItS then TheLine := TheLine + ' ' + NextWord
+					else TheLine := TheLine + NextWord
+				else
+					LC := False;
+			end else begin
+				if TextLength( MyFont , TheLine + NextWord + I18N_Width_Of_One_Character) < Width then
+					if DItS then TheLine := TheLine + ' ' + NextWord
+					else TheLine := TheLine + NextWord
+				else begin
+					LC := False;
 
+					if Pos(NextWord, ProhibitationHead) > 0 then begin
+						TheLine := TheLine + NextWord + #13;
+					end else begin
+						BW := TailMBChar(TheLine);
+						if (0 < Length(BW)) and (0 < Pos(BW, ProhibitationTrail)) then begin
+							TheLine := Copy(TheLine,1,Length(TheLine)-Length(BW));
+							NextWord := BW + NextWord;
+						end;
+					end;
+				end;
+			end;
 	until (not LC) or (NextWord = '') or ( TheLine[Length(TheLine)] = #13 );
 
 	{ If the line ended due to a line break, deal with it. }
 	if ( TheLine[Length(TheLine)] = #13 ) then begin
 		{ Display the line break as a space. }
 		TheLine[Length(TheLine)] := ' ';
-		NextWord := ExtractWord( msg );
+		NextWord := ExtractWordForPrint( Msg, DItS, CW_I18N );
 	end;
 
+end;
+
+Function New_Conv_ToUni16( const arg_msg: String ): PUInt16;
+const
+	WCLen = 576; { 512; }
+var
+	pmsg: PChar;
+	pdst: PWord;
+begin
+	pmsg := QuickPCopy(arg_msg);
+	pdst := PWord(StrAlloc(WCLen));
+	Conv_ToUni16( pmsg, Length(arg_msg), pdst, WCLen );
+	New_Conv_ToUni16 := pdst;
+	Dispose( pmsg );
+end;
+
+Function I18N_TTF_RenderText(var font: PTTF_Font; const pline: String; var fg: TSDL_Color ): PSDL_Surface;
+var
+	pWC: PUInt16;
+	bg: TSDL_Color;
+begin
+	if TERMINAL_bidiRTL then begin
+		pWC := New_Conv_ToUni16( Conv_bidiRTL(pline) );
+	end else begin
+		pWC := New_Conv_ToUni16( pline );
+	end;
+	if not(SDL_AAFont) and not(SDL_AAFont_Shaded) then begin
+		I18N_TTF_RenderText := TTF_RenderUnicode_Solid( font, pWC, fg );
+	end else if SDL_AAFont_Shaded then begin
+		bg.r := 0;
+		bg.b := 0;
+		bg.g := 0;
+		I18N_TTF_RenderText := TTF_RenderUnicode_Shaded( font, pWC, fg, bg );
+	end else begin
+		I18N_TTF_RenderText := TTF_RenderUnicode_Blended( font, pWC, fg );
+	end;
+	Dispose( pWC );
 end;
 
 {Can't const}
@@ -785,7 +863,6 @@ var
 	SList,SA: SAttPtr;
 	S_Total,S_Temp: PSDL_Surface;
 	MyDest: SDL_Rect;
-	pline: PChar;
 	NextWord: String;
 	THELine: String;	{The line under construction.}
 begin
@@ -794,7 +871,7 @@ begin
 	if msg = '' then Exit( Nil );
 
 	{THELine = The first word in this iteration}
-	THELine := ExtractWord( msg );
+	TheLine := ' ';
 	NextWord := '';
 	SList := Nil;
 
@@ -821,19 +898,16 @@ begin
 		{ Add each stored string to the bitmap. }
 		SA := SList;
 		while SA <> Nil do begin
-			pline := QuickPCopy( SA^.Info );
-			S_Temp := TTF_RenderText_Solid( MyFont , pline , fg );
-{$IFDEF LINUX}
-			SDL_SetColorKey( S_Temp , SDL_SRCCOLORKEY , SDL_MapRGB( S_Temp^.Format , 0 , 0, 0 ) );
-{$ENDIF}
-
-			Dispose( pline );
+			S_Temp := I18N_TTF_RenderText( MyFont , SA^.Info , fg );
 
 			{ We may or may not be required to do centering of the text. }
 			if DoCenter then begin
 				MyDest.X := ( Width - TextLength( MyFont , SA^.Info ) ) div 2;
 			end else begin
 				MyDest.X := 0;
+				if TERMINAL_bidiRTL then begin
+					MyDest.X := Width - S_Temp^.W;
+				end;
 			end;
 
 			SDL_BlitSurface( S_Temp , Nil , S_Total , @MyDest );
@@ -855,15 +929,9 @@ Procedure QuickText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 	{ Quickly draw some text to the screen, without worrying about }
 	{ line-splitting or justification or anything. }
 var
-	pline: PChar;
 	MyText: PSDL_Surface;
 begin
-	pline := QuickPCopy( msg );
-	MyText := TTF_RenderText_Solid( game_font , pline , Color );
-{$IFDEF LINUX}
-	if MyText <> Nil then SDL_SetColorKey( MyText , SDL_SRCCOLORKEY , SDL_MapRGB( MyText^.Format , 0 , 0, 0 ) );
-{$ENDIF}
-	Dispose( pline );
+	MyText := I18N_TTF_RenderText( game_font , msg , Color );
 	SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
 	SDL_FreeSurface( MyText );
 end;
@@ -872,12 +940,9 @@ Procedure QuickTinyText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color
 	{ Quickly draw some text to the screen, without worrying about }
 	{ line-splitting or justification or anything. }
 var
-	pline: PChar;
 	MyText: PSDL_Surface;
 begin
-	pline := QuickPCopy( msg );
-	MyText := TTF_RenderText_Solid( info_font , pline , Color );
-	Dispose( pline );
+	MyText := I18N_TTF_RenderText( info_font , msg , Color );
 	MyDest.X := MyDest.X - ( MyText^.W div 2 );
 	SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
 	SDL_FreeSurface( MyText );
@@ -1025,7 +1090,7 @@ begin
 	msg := '> ' + Msg;
 
 	{THELine = The first word in this iteration}
-	THELine := ExtractWord( msg );
+	THELine := ' ';
 	NextWord := '';
 
 	{Start the main processing loop.}
@@ -1146,12 +1211,17 @@ end;
 Function GetStringFromUser(const Prompt: String; ReDrawer: RedrawProcedureType ): String;
 	{ Does what it says. }
 const
-	AllowableCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890()-=_+,.?"*';
-	MaxInputLength = 80;
+	MaxInputWidth = 80;
+	WCLen = 16;
 var
 	A: Char;
 	it: String;
 	MyBigBox,MyInputBox,MyDest: TSDL_Rect;
+	Unicode: Word;
+	work_dst: Array[0..WCLen] of Char;
+	work_pdst: PChar;
+	state: ShortInt = 0;
+	mbchar_work: String = '';
 begin
 	{ Initialize string. }
 	it := '';
@@ -1169,16 +1239,22 @@ begin
 		CMessage( Prompt , ZONE_TextInputPrompt.GetRect() , StdWhite );
 		CMessage( it , MyInputBox , InfoGreen );
 		MyDest.Y := MyInputBox.Y + 2;
-		MyDest.X := MyInputBox.X + ( MyInputBox.W div 2 ) + ( TextLength( Game_Font , it ) div 2 );
+		if TERMINAL_bidiRTL then begin
+			MyDest.X := MyInputBox.X + ( MyInputBox.W div 2 ) - ( TextLength( Game_Font , it ) div 2 ) - Cursor_Sprite^.W;
+		end else begin
+			MyDest.X := MyInputBox.X + ( MyInputBox.W div 2 ) + ( TextLength( Game_Font , it ) div 2 );
+		end;
 		DrawSprite( Cursor_Sprite , MyDest , ( Animation_Phase div 2 ) mod 4 );
 
 		GHFlip;
-		A := RPGKey;
+		A := RPGKey( Unicode );
 
-		if ( A = #8 ) and ( Length( it ) > 0 ) then begin
-			it := Copy( it , 1 , Length( it ) - 1 );
-		end else if ( Pos( A , AllowableCharacters ) > 0 ) and ( Length( it ) < MaxInputLength ) then begin
-			it := it + A;
+		if (0 < Unicode) then begin
+			work_pdst := work_dst;
+			Conv_FromUni16( @Unicode, 2, work_pdst, WCLen );
+			A := EditMBCharStr( it, 127, MaxInputWidth, #0, work_pdst, state, mbchar_work );
+		end else if RPK_TimeEvent <> A then begin
+			A := EditMBCharStr( it, 127, MaxInputWidth, A, NIL, state, mbchar_work );
 		end;
 	until ( A = #13 ) or ( A = #27 );
 
@@ -1212,7 +1288,6 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer; ReDrawer: RedrawProcedur
 		MyDest: TSDL_Rect;
 		MyImage: PSDL_Surface;
 		CLine: SAttPtr;	{ Current Line }
-		PLine: PChar;
 	begin
 		{ Set the clip area. }
 		SDL_SetClipRect( Game_Screen , @MyZone );
@@ -1225,12 +1300,10 @@ Procedure MoreText( LList: SAttPtr; FirstLine: Integer; ReDrawer: RedrawProcedur
 		CLine := RetrieveSATt( LList , FirstLine );
 		for t := 1 to ( MyZone.H  div  TTF_FontLineSkip( game_font ) ) do begin
 			if CLine <> Nil then begin
-				pline := QuickPCopy( CLine^.Info );
-				MyImage := TTF_RenderText_Solid( game_font , pline , NeutralGrey );
-				Dispose( pline );
-                {$IFDEF LINUX}
-		        SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
-                {$ENDIF}
+				MyImage := I18N_TTF_RenderText( game_font , CLine^.Info , NeutralGrey );
+				if TERMINAL_bidiRTL then begin
+					MyDest.X := MyDest.X + MyDest.W - MyImage^.W;
+				end;
 
 				SDL_BlitSurface( MyImage , Nil , Game_Screen , @MyDest );
 				SDL_FreeSurface( MyImage );
@@ -1361,6 +1434,41 @@ begin
 	ClearExtendedBorder( ZONE_InteractInfo.GetRect() );
 end;
 
+
+Function SearchAndOpenFont( const FontInfo: PFontSearchNameDesc; arg_ptsize: integer ): PTTF_Font;
+const
+	TmpLen = 255;
+var
+	i, j: Integer;
+	FontFile: String;
+	tmp: array[0..TmpLen] of Char;
+	ptsize: Integer;
+begin
+	SearchAndOpenFont := NIL;
+	for j := 0 to (MaxFontSearchNameNum-1) do begin
+		for i := 1 to MaxFontSearchDirNum do begin
+			if 0 < Length(FontSearchDir[i]) then begin
+				FontFile := FontSearchDir[i] + OS_Dir_Separator + FontInfo[j].FontFile;
+			end else begin
+				FontFile := FontInfo[j].FontFile;
+			end;
+			ptsize := arg_ptsize;
+			if ptsize <= 0 then begin
+				ptsize := FontInfo[j].FontSize;
+			end;
+			if 0 < Length(FontInfo[j].FontFile) then begin
+				StrPCopy( tmp, FontFile );
+				SearchAndOpenFont := TTF_OpenFontIndex( @tmp, ptsize, FontInfo[j].FontFace );
+				if (NIL <> SearchAndOpenFont) then
+					break;
+			end;
+		end;
+		if (NIL <> SearchAndOpenFont) then
+			break;
+	end;
+end;
+
+
 Procedure SetupWizardDisplay();
     { This procedure will set the Wizard display decorations and resize all }
     { the relevant game zones. Yay? }
@@ -1452,6 +1560,8 @@ end;
 
 
 initialization
+begin
+	I18N_Width_Of_One_Character := I18N_Settings('SDLGFX_I18N_WIDTH_OF_ONE_CHARACTER','M');
 
 	SDL_Init( SDL_INIT_VIDEO or SDL_INIT_AUDIO );
 
@@ -1473,12 +1583,16 @@ initialization
 	Cursor_Sprite := ConfirmSprite( 'cursor.png' , '' , 8 , 16 );
 
 	TTF_Init;
-	Game_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraBd.ttf' , BigFontSize );
-	Info_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraMoBd.ttf' , SmallFontSize );
+	Game_Font := SearchAndOpenFont( @FontSearchName_Big, FontSize_Big );
+	Info_Font := SearchAndOpenFont( @FontSearchName_Small, FontSize_Small );
 
 	Text_Messages := LoadStringList( Standard_Message_File );
 	Console_History := Nil;
 
+	if (NIL = Game_Font) or (NIL = Info_Font) then begin
+		WriteLn('ERROR- No fonts were found.');
+		halt(1);
+	end;
 	SDL_WM_SetCaption( WindowName , IconName );
 
 	Animation_Phase := 0;
@@ -1495,8 +1609,10 @@ initialization
 	Music_List := LoadStringList( 'music.cfg' );
 	MyMusic := Nil;
 }
-finalization
+end;
 
+finalization
+begin
 {	if MyMusic <> Nil then MIX_FreeMusic( MyMusic );
 	MIX_CloseAudio;
 	DisposeSAtt( Music_List );
@@ -1514,6 +1630,8 @@ finalization
 	DisposeSAtt( Text_Messages );
 	DisposeSAtt( Console_History );
 
-    DisposeSAtt( MasterColorList )
+	DisposeSAtt( MasterColorList )
+
+end;
 
 end.

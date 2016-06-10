@@ -171,6 +171,7 @@ inv
 
 	Treasure 1500
 	name <Bracelet>
+	name_I18N <Bracelet>
 	place <4>
 	% V1 = Location of next encounter
 	% V2 = Clue number for this item

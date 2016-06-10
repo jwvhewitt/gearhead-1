@@ -96,7 +96,7 @@ Procedure BeginTurn( GB: GameBoardPtr; M: GearPtr );
 
 implementation
 
-uses ability,action,damage,effects,gearutil,ghprop,menugear,movement,
+uses i18nmsg,ability,action,damage,effects,gearutil,ghprop,menugear,movement,
      texutil,ui4gh,congfx,context;
 
 const
@@ -304,7 +304,7 @@ begin
 			end else if ( NAttValue( Mek^.NA , NAG_Location , NAS_Team ) = NAV_DefPlayerTeam ) and ( NumActiveMasters( GB , NAV_DefPlayerTeam ) = 1 ) then begin
 				Gfx := '@';
 			end else begin
-				Gfx := GearName( Mek )[1];
+				Gfx := InitialGearName( Mek );
 			end;
 			if Mek^.G = GG_MetaTerrain then begin
 				case Mek^.S of
@@ -664,7 +664,7 @@ begin
 	H := ( ComTime div AP_Hour ) mod 24;
 	D := ComTime div AP_Day;
 
-	msg := Bstr( H ) + ':' + WideStr( M , 2 ) + ':' + WideStr( S , 2 ) + MsgString( 'CLOCK_days' ) + BStr( D );
+	msg := ReplaceHash( I18N_MsgString('TIMESTRING'), BStr( D ), WideStr( H, 2 ), WideStr( M , 2 ), WideStr( S , 2 ) );
 	TimeString := msg;
 end;
 
@@ -880,6 +880,7 @@ Procedure DisplayConsoleHistory( GB: GameBoardPtr );
 	{ Display the console history, then restore the display. }
 var
 	SL: SAttPtr;
+	MaxWidth: Integer;
 begin
 	MoreText( Console_History , MoreHighFirstLine( Console_History ) );
 	GFCombatDisplay( GB );
@@ -887,11 +888,12 @@ begin
 	{ Restore the console display. }
 	GotoXY( ScreenZone[ ZONE_Dialog , 1 ] , ScreenZone[ ZONE_Dialog , 2 ] -1 );
 	TextColor( Green );
+	MaxWidth := ScreenZone[ZONE_Dialog,3] - ScreenZone[ZONE_Dialog,1];
 	SL := RetrieveSAtt( Console_History , NumSAtts( Console_History ) - ScreenRows + ScreenZone[ ZONE_Dialog , 2 ] );
 	if SL = Nil then SL := Console_History;
 	while SL <> Nil do begin
 		writeln;
-		write( SL^.Info );
+		WriteMBCharStr( SL^.Info, MaxWidth );
 		SL := SL^.Next;
 	end;
 end;
@@ -921,7 +923,7 @@ begin
 		if OnTheMap( NAttValue( Mek^.NA , NAG_Location , NAS_X ) , NAttValue( Mek^.NA , NAG_Location , NAS_Y ) ) then VisionCheck( GB , Mek )
 		{ Print message if mek has fled the battle. }
 		else begin
-			DialogMSG( PilotName( Mek ) + ' has left this area.');
+			DialogMSG( ReplaceHash( I18N_MsgString('ProcessMovement','Left'), PilotName(Mek)) );
 
 			{ Set trigger here. }
 			Team := NAttValue( Mek^.NA , NAG_Location , NAS_Team );
@@ -935,11 +937,11 @@ begin
 		RedrawTile( GB , Mek );
 
 		if Mek^.G = GG_Character then begin
-			msg := ReplaceHash( MsgString( 'PROCESSMOVEMENT_Fall' ) , GearName( Mek ) );
+			msg := I18N_MsgString('ProcessMovement','Fall');
 		end else begin
-			msg := ReplaceHash( MsgString( 'PROCESSMOVEMENT_Crash' ) , GearName( Mek ) );
+			msg := I18N_MsgString('ProcessMovement','Crash');
 		end;
-		DialogMsg( ReplaceHash( msg , BStr( DAMAGE_DamageDone ) ) );
+		DialogMsg( ReplaceHash( msg, GearName(Mek), BStr(DAMAGE_DamageDone) ) );
 	end;
 end;
 

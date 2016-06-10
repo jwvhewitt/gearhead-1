@@ -1,21 +1,28 @@
 Ornithoid 4
 Name <Wasp>
 Desig <JMS-40>
+Desig_I18N <JMS-40>
 SDL_Sprite <orn_wasp.png>
 
 Mod Head
+	Name_I18N <>
 	Size 3
 	Armor 3
 	sub
+
 		CPit
+		Name_I18N <>
 
 		Sensor 7
+		Name_I18N <>
 
 		Mount
 		Name <Head Weapon Mount>
+		Name_I18N <>
 		inv
 			BeamGun 1
 			Name <Pulse Laser>
+			Name_I18N <>
 			Range 3
 			BV 4
 			Speed 4
@@ -23,66 +30,88 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			MLauncher 2
 			Name <Swarm Rockets>
+			Name_I18N <>
 			Type <SWARM>
 			Range 9
 			Acc -1
 			Magazine 24
 			sub
 				Rockets 2
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Left Weapon Mount>
+		Name_I18N <>
 		inv
 			MLauncher 2
 			Name <Swarm Rockets>
+			Name_I18N <>
 			Type <SWARM>
 			Range 9
 			Acc -1
 			Magazine 24
 			sub
 				Rockets 2
+				Name_I18N <>
 			end
 		end
 
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Right Wing>
+	Name_I18N <>
 	Armor 2
 	sub
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Left Wing>
+	Name_I18N <>
 	Armor 2
 	sub
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Tail
+	Name_I18N <>
 	Size 3
 	Armor 2
 	sub
 		BeamGun 7
 		Name <Sting Blaster>
+		Name_I18N <>
 		Acc 1
 		Range 6
 		Speed 3
 
 		Melee 4
 		Name <Tail Spike>
+		Name_I18N <>
 
 		Flight 1
+		Name_I18N <>
 	end
 end

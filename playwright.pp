@@ -816,6 +816,8 @@ var
 	R0,R1,W,C: String;
 	S: GearPtr;
 	N: Integer;
+	DItS: Boolean;		{Do insert the space, or not.}
+	CW_I18N: Boolean;	{Is the current word I18N ?}
 begin
 	{ Locate the rumor string. }
 	R0 := SAttValue( RBase^.SA , 'RUMOR' );
@@ -825,7 +827,7 @@ begin
 	{ the actual element names. }
 	if R0 <> '' then begin
 		while R0 <> '' do begin
-			W := ExtractWord( R0 );
+			W := ExtractWordForParse( R0, DItS, CW_I18N );
 
 			{ If a string begins with !, it's to be replaced. }
 			if W[1] = '!' then begin
@@ -836,7 +838,11 @@ begin
 				W := ElementName( Adventure , Plot , N , GB ) + W;
 			end;
 
-			R1 := R1 + ' ' + W;
+			if DItS then begin
+				R1 := R1 + ' ' + W;
+			end else begin
+				R1 := R1 + W;
+			end;
 		end;
 
 		DeleteWhiteSpace( R1 );

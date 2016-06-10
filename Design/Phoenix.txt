@@ -1,21 +1,26 @@
 Battroid 4
 Name <Phoenix>
 Desig <PL-911>
+Desig_I18N <PL-911>
 Desc <>
 sdl_sprite <btr_phoenix.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 4
 	Mass -2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Sensor 6
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 2
+		Name_I18N <>
 		Mass -1
 		sub
 			STC SML-5
@@ -23,25 +28,30 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	Mass -4
 	sub
 		Gyro 1
+		Name_I18N <>
 		Armor 1
 		Mass -1
 
 		Engine 4
+		Name_I18N <>
 		Armor 1
 		Mass -1
 
 		Mount
 		Name <Collar Mount>
+		Name_I18N <>
 		inv
 			STC HRP-6
 		end
 	end
 	inv
 		BodyArmor 4
+		Name_I18N <>
 		Mass -4
 	end
 
@@ -49,93 +59,114 @@ Mod Storage
 	Armor 4
 	Mass -2
 	Name <Backpack>
+	Name_I18N <>
 	sub
 		Flight 7
+		Name_I18N <>
 
 		Mount
 		Name <Side Mount>
+		Name_I18N <>
 		inv
 			Gun 6
 			Range 8
 			Name <L-Cannon>
+			Name_I18N <>
 			Magazine 20
 			Mass -3
 			sub
 				Ammo 6
 				Name <L-Cannon Clip (EMP)>
+				Name_I18N <>
 				Type <HAYWIRE>
 			end
 		end
 	end
 	inv
 		StorageArmor 3
+		Name_I18N <>
 		Mass -2
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	Mass -2
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC LAS-5
 		end
 	end
 	inv
 		ArmArmor 3
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	Mass -2
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 3
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	Mass -4
 	sub
 		Flight 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 4
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	Mass -4
 	sub
 		Flight 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 4
+		Name_I18N <>
 		Mass -5
 	end
 end
 inv
 	Ammo 6
 	Name <L-Cannon Clip (HE)>
+	Name_I18N <>
 	AmmoCount 20
 	Type <BLAST 1 BRUTAL>
 end

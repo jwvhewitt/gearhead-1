@@ -1,25 +1,38 @@
 GroundCar 4
 Name <Osprey>
 Desig <PL-780>
+Desig_I18N <PL-780>
 SDL_Sprite <gca_osprey.png>
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		Wheels 5
+		Name_I18N <>
+
+		Engine 4
+		Name_I18N <>
 
 		Sensor 6
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		Mount
 		Name <Body Weapon Mount>
+		Name_I18N <>
 		inv
 			STC AC-2
 		end
 	end
 
 Mod Turret
+	Name_I18N <>
 	Size 5
 	Armor 4
 	sub
@@ -27,5 +40,6 @@ Mod Turret
 
 		Mount
 		Name <Turret Weapon Mount>
+		Name_I18N <>
 	end
 end

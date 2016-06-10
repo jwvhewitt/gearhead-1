@@ -43,6 +43,7 @@ Const
 	GS_GroundCar = 8;	{ Land Vehicle - High Speed }
 
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	FormName: Array[ 0 .. ( NumForm - 1 ) ] of String = (
 		'Battroid','Zoanoid','GroundHugger','Arachnoid','AeroFighter',
 		'Ornithoid','Gerwalk','HoverFighter','GroundCar'
@@ -83,6 +84,7 @@ Function MechaName(Part: GearPtr): String;
 	{Figure out a default name for a mecha.}
 begin
 	{Error Check - if the thing isn't a mecha, return smartass answer.}
+	{ PATCH_I18N: Don't translate it. }
 	if Part^.G <> GG_Mecha then Exit('Not A Mecha');
 
 	MechaName := FormName[Part^.S];

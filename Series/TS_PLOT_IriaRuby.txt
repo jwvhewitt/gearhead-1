@@ -164,6 +164,7 @@ inv
 	Treasure 30000
 	home <Storage Cell>
 	name <IRIA Ruby>
+	name_I18N <IRIA Ruby>
 	clue29 <if= V1 0 else GoDone ifYesNo 1 2 3 Mental ifG SkRoll 29 15 else GoNoDice Mental ifG SkRoll 32 10 else GoNoDice Mental ifG SkRoll 30 12 else GoNoDice Goto GoAccess>
 	GoDone <Print 4>
 	GoNoDice <Print 5>

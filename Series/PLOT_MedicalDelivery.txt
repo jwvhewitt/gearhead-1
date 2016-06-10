@@ -95,6 +95,7 @@ end
 inv
 	Treasure 100
 	name <Medicine>
+	name_I18N <Medicine>
 	type <STOLEN>
 	place <1>
 end

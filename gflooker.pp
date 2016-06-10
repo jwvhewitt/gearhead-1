@@ -45,10 +45,10 @@ Function SelectTarget( GB: GameBoardPtr; Mek: GearPtr; var Wpn: GearPtr; var Cal
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,damage,gearutil,ghweapon,menugear,texutil,ui4gh,
+uses i18nmsg,ability,damage,gearutil,ghweapon,menugear,texutil,ui4gh,
      sdlgfx,sdlinfo,sdlmap,sdlmenus;
 {$ELSE}
-uses ability,damage,gearutil,ghweapon,menugear,texutil,ui4gh,
+uses i18nmsg,ability,damage,gearutil,ghweapon,menugear,texutil,ui4gh,
      congfx,coninfo,conmap,conmenus,context;
 {$ENDIF}
 
@@ -89,13 +89,16 @@ var
 	msg: String;
 begin
 	{ Generate instructions. }
-	msg := '[' + KeyMap[ KMC_SwitchWeapon ].KCode + '] Change Weapon' + #13;
-	msg := msg + ' [' + KeyMap[ KMC_CalledShot ].KCode + '] Called Shot: ';
-	if LOOKER_CallShot then msg := msg + 'On'
-	else msg := msg + 'Off';
-	msg := msg + #13 + ' [' + KeyMap[ KMC_SwitchBV ].KCode + '] Burst Value: ';
+	msg := ReplaceHash( I18N_MsgString('WeaponDisplay_KeyMap','SwitchWeapon'), KeyMap[ KMC_SwitchWeapon ].KCode );
+	msg := msg + #13 + ' ' + ReplaceHash( I18N_MsgString('WeaponDisplay_KeyMap','CalledShot'), KeyMap[ KMC_CalledShot ].KCode );
+	if LOOKER_CallShot then begin
+		msg := msg + I18N_MsgString('WeaponDisplay_KeyMap','CalledShot_On');
+	end else begin
+		msg := msg + I18N_MsgString('WeaponDisplay_KeyMap','CalledShot_Off');
+	end;
+	msg := msg + #13 + ' ' + ReplaceHash( I18N_MsgString('WeaponDisplay_KeyMap','SwitchBV'), KeyMap[ KMC_SwitchBV ].KCode );
 	msg := msg + BVTypeName[ WeaponBVSetting( LOOKER_Weapon ) ];
-	msg := msg + #13 + ' [' + KeyMap[ KMC_SwitchTarget ].KCode + '] Switch Target';
+	msg := msg + #13 + ' ' + ReplaceHash( I18N_MsgString('WeaponDisplay_KeyMap','SwitchTarget'), KeyMap[ KMC_SwitchTarget ].KCode );
 
 	{ Print instructions. }
     {$IFDEF SDLMODE}
@@ -147,27 +150,24 @@ begin
 		if PName <> msg then msg := msg + ' - ' + PName;
 		if not GearOperational( Mek ) then begin
 
-		    if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Gutted) = 1
-		    then begin
-			if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Flayed) = 1
-			then
-			    msg := msg + ' (stripped'
-			else
-			    msg := msg + ' (gutted';
-			end
-		    else begin
-			if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Flayed) = 1
-			then
-			    msg := msg + ' (flayed'
-			else
-			    msg := msg + ' (X';
+			if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Gutted) = 1 then begin
+				if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Flayed) = 1 then begin
+					msg := msg + I18N_MsgString('CreateTileMechaMenu', 'stripped');
+				end else begin
+					msg := msg + I18N_MsgString('CreateTileMechaMenu', 'gutted');
+				end;
+			end else begin
+				if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Flayed) = 1 then begin
+					msg := msg + I18N_MsgString('CreateTileMechaMenu', 'flayed');
+				end else begin
+					msg := msg + I18N_MsgString('CreateTileMechaMenu', 'X');
+				end;
 			end;
-			
-		    if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Ransacked) = 1
-		    then
-			msg := msg + ', looted)'
-		    else
-			msg := msg + ')';
+			if NAttValue( Mek^.NA , NAG_EpisodeData , NAS_Ransacked) = 1 then begin
+				msg := msg + I18N_MsgString('CreateTileMechaMenu', 'looted');
+			end else begin
+				msg := msg + I18N_MsgString('CreateTileMechaMenu', '');
+			end;
 		end;
 		if ShowAll or GearOperational( Mek ) then begin
 			AddRPGMenuItem( TMM , msg , T );
@@ -190,10 +190,11 @@ begin
 	{ Display info for target square. }
 	N := NumVisibleGears( GB , X , Y );
 	if not OnTheMap( X , Y ) then begin
+		msg := I18N_MsgString('DisplayTileInfo','Off The Map');
 {$IFDEF SDLMODE}
-		GameMSG( 'Off The Map' , ZONE_TargetInfo.GetRect() , StdWhite );
+		GameMSG( msg , ZONE_TargetInfo.GetRect() , StdWhite );
 {$ELSE}
-		GameMSG( 'Off The Map' , ZONE_Info , StdWhite );
+		GameMSG( msg , ZONE_Info , StdWhite );
 {$ENDIF}
 		LOOKER_Gear := Nil;
 
@@ -201,7 +202,7 @@ begin
 		if GB^.Map[X,Y].Visible then begin
 			msg := '';
 			if GB^.Scene <> Nil then msg := SAttValue( GB^.Scene^.SA , 'LOOKER' + BStr( X ) + '%' + BStr( Y ) );
-			if msg = '' then msg := TerrMan[GB^.map[X,Y].Terr].Name;
+			if msg = '' then msg := I18N_Name('TerrMan',TerrMan[GB^.map[X,Y].Terr].Name);
 {$IFDEF SDLMODE}
 			CMessage( msg , ZONE_TargetInfo.GetRect() , InfoGreen );
 {$ELSE}
@@ -209,9 +210,9 @@ begin
 {$ENDIF}
 		end else begin
 {$IFDEF SDLMODE}
-			CMessage( 'UNKNOWN' , ZONE_TargetInfo.GetRect() , InfoGreen );
+			CMessage( I18N_MsgString('DisplayTileInfo','UNKNOWN') , ZONE_TargetInfo.GetRect() , InfoGreen );
 {$ELSE}
-			CMessage( 'UNKNOWN' , ZONE_Info , TerrainGreen );
+			CMessage( I18N_MsgString('DisplayTileInfo','UNKNOWN') , ZONE_Info , TerrainGreen );
 {$ENDIF}
 		end;
 

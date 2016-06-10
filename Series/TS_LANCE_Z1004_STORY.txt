@@ -49,6 +49,7 @@ inv
 
 	Prop 65
 	name <Robot>
+	name_I18N <Robot>
 	sdl_sprite <monster_androbot.png>
 	sdl_colors <130 143 114 116 100 13 0 230 0>
 	Clue15 <Mental ifG SkRoll 15 15 else GoFail Print 1 XPV 75 Trigger KEY SELFNID>
@@ -65,6 +66,7 @@ inv
 
 	Monster Androbot
 	name <Omega-1004>
+	name_I18N <Omega-1004>
 	job <ROBOT>
 	sdl_colors <130 143 114 116 100 13 0 230 0>
     IsCharacter

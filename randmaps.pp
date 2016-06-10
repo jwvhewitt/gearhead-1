@@ -61,9 +61,9 @@ function RandomMap( Scene: GearPtr ): GameBoardPtr;
 implementation
 
 {$IFDEF SDLMODE}
-uses gearutil,ghprop,rpgdice,texutil,sdlgfx;
+uses i18nmsg,gearutil,ghprop,rpgdice,texutil,sdlgfx;
 {$ELSE}
-uses gearutil,ghprop,rpgdice,texutil,context;
+uses i18nmsg,gearutil,ghprop,rpgdice,texutil,context;
 {$ENDIF}
 
 var
@@ -330,6 +330,7 @@ Procedure AddDoor( GB: GameBoardPtr; MF,DoorPrototype: GearPtr; X,Y: Integer );
 var
 	NewDoor: GearPtr;
 	Name: String;
+	Name_I18N: String;
 	Roll,Chance: Integer;
 begin
 	if DoorPrototype <> Nil then begin
@@ -347,8 +348,13 @@ begin
 
 	if MF <> Nil then begin
 		Name := SAttValue( MF^.SA , 'NAME' );
+		Name_I18N := SAttValue( MF^.SA , 'NAME_I18N' );
+		if Length(Name) <= 0 then begin
+			Name := Name_I18N;
+		end;
 		if Name <> '' then begin
-			SetSAtt( NewDoor^.SA , 'NAME <' + MsgString( 'RANDMAPS_DoorSign' ) + Name + '>' );
+			SetSAtt( NewDoor^.SA , 'NAME <' + ReplaceHash( I18N_MsgString('RANDMAPS_DoorSign'), Name ) + '>' );
+			SetSAtt( NewDoor^.SA , 'NAME_I18N <' + ReplaceHash( I18N_MsgString('RANDMAPS_DoorSign_I18N'), Name_I18N ) + '>' );
 		end;
 
 		{ Possibly make the door either LOCKED or SECRET, }

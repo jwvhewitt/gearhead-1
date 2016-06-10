@@ -41,11 +41,11 @@ Function MOVE_MODEL_TOWARDS_SPOT( Mek: GearPtr; GB: GameBoardPtr; GX,GY: Integer
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,action,arenacfe,damage,effects,movement,gearutil,
+uses i18nmsg,ability,action,arenacfe,damage,effects,movement,gearutil,
      ghchars,ghmodule,ghweapon,ghparser,ghprop,interact,rpgdice,skilluse,
      texutil,ui4gh,sdlmap,sdlgfx;
 {$ELSE}
-uses ability,action,arenacfe,damage,effects,movement,gearutil,
+uses i18nmsg,ability,action,arenacfe,damage,effects,movement,gearutil,
      ghchars,ghmodule,ghweapon,ghparser,ghprop,interact,rpgdice,skilluse,
      texutil,ui4gh,conmap,context;
 {$ENDIF}
@@ -162,7 +162,7 @@ begin
 
 	{ If at least one phrase was found, and the NPC is visible, it can say something. }
 	if ( MList <> Nil ) and ( ( Msg_Label = 'CHAT_EJECT' ) or MekVisible( GB , FindRoot( NPC ) ) ) then begin
-		DialogMsg( '[' + GearName( NPC ) + ']: ' + SelectRandomSAtt( MList )^.Info );
+		DialogMsg( FormatChatStringByGender( '[' + GearName( NPC ) + ']: ' + SelectRandomSAtt( MList )^.Info , NPC ) );
 	end;
 
 	{ Add the chatter recharge time. }
@@ -1071,14 +1071,11 @@ var
 	msg: String;
 begin
 	N := UseRepairSkill( GB , NPC , Target , Skill );
-	msg := MsgString( 'NPCREPAIR_UseSkill' );
-	msg := ReplaceHash( msg , GearName( NPC ) );
-	msg := ReplaceHash( msg , GearName( Target ) );
+	msg := ReplaceHash( I18N_MsgString('NPCREPAIR','UseSkill'), GearName(NPC), GearName(Target) );
 
 	{ Inform the user of the success. }
 	if N > 0 then begin
-		msg := msg + ' ' + MsgString( 'NPCREPAIR_Success' );
-		msg := ReplaceHash( msg , BStr( N ) );
+		msg := msg + ' ' + ReplaceHash( MsgString( 'NPCREPAIR_Success' ) , BStr( N ) );
 	end else begin
 		msg := msg + ' ' + MsgString( 'NPCREPAIR_Failure' );
 	end;
@@ -1175,9 +1172,7 @@ begin
 	SkRoll := RollStep( SkillValue( NPC , 27 ) );
 	if SkRoll > 15 then begin
 		{ Report the success. }
-		msg := MsgString( 'NPCFLIRT_Good' );
-		msg := ReplaceHash( msg , PilotName( NPC ) );
-		msg := ReplaceHash( msg , PilotName( TARGET ) );
+		msg := ReplaceHash( I18N_MsgString('NPCFLIRT','Good'), PilotName(NPC), PilotName(TARGET) );
 		DialogMsg( msg );
 
 		{ Success! Improve the reaction score. }
@@ -1192,16 +1187,12 @@ begin
 		end;
 	end else if SkRoll > 5 then begin
 		{ Okay... neither good nor bad. }
-		msg := MsgString( 'NPCFLIRT_Okay' );
-		msg := ReplaceHash( msg , PilotName( NPC ) );
-		msg := ReplaceHash( msg , PilotName( TARGET ) );
+		msg := ReplaceHash( I18N_MsgString('NPCFLIRT','Okay'), PilotName(NPC), PilotName(TARGET) );
 		DialogMsg( msg );
 	end else begin
 		{ Bad. This is just bad. }
 		AddMoraleDmg( NPC , 15 );
-		msg := MsgString( 'NPCFLIRT_Bad' );
-		msg := ReplaceHash( msg , PilotName( TARGET ) );
-		msg := ReplaceHash( msg , PilotName( NPC ) );
+		msg := ReplaceHash( I18N_MsgString('NPCFLIRT','Bad'), PilotName(NPC), PilotName(TARGET) );
 		DialogMsg( msg );
 	end;
 end;
@@ -1219,22 +1210,17 @@ begin
 		rumors := CreateRumorList( GB , Nil , Target );
 
 		if rumors <> Nil then begin
-			msg := MsgString( 'NPCCHAT_Good' );
-			msg := ReplaceHash( msg , PilotName( NPC ) );
+			msg := ReplaceHash( MsgString( 'NPCCHAT_Good' ) , PilotName( NPC ) );
 			msg := msg + ' ' + SelectRandomSAtt( Rumors )^.info;
 			DisposeSAtt( Rumors );
 		end else begin
-			msg := MsgString( 'NPCCHAT_Okay' );
-			msg := ReplaceHash( msg , PilotName( NPC ) );
-			msg := ReplaceHash( msg , PilotName( TARGET ) );
+			msg := ReplaceHash( I18N_MsgString('NPCCHAT','Okay'), PilotName(NPC), PilotName(TARGET) );
 		end;
 
 		DialogMsg( msg );
 	end else begin
 		{ Okay... neither good nor bad. }
-		msg := MsgString( 'NPCCHAT_Okay' );
-		msg := ReplaceHash( msg , PilotName( NPC ) );
-		msg := ReplaceHash( msg , PilotName( TARGET ) );
+		msg := ReplaceHash( I18N_MsgString('NPCCHAT','Okay'), PilotName(NPC), PilotName(TARGET) );
 		DialogMsg( msg );
 	end;
 end;

@@ -2,65 +2,88 @@ Battroid 2
 Name <Trailblazer>
 SDL_Sprite <btr_trailblazer.png>
 Desig <TR9-01b Beta>
+Desig_I18N <TR9-01b Beta>
 desc <The Trailblazer is Maquise Spinner's scout mecha design.>
 SDL_PORTRAIT <mecha_trailblazer.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 2
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		ECM 1
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 2
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Flight 3
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		Mount
+		Name_I18N <>
 		inv
 			STC PAR-2
 		end
 
 		Hand
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		STC HWML-2
 
 		Hand
+		Name_I18N <>
 		inv
 			EMelee 6
 			Name <Plasma Lance>
+			Name_I18N <>
 			Speed 1
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 2
 	sub
 		Flight 2
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 2
 	sub
 		Flight 2
+		Name_I18N <>
 	end
 end

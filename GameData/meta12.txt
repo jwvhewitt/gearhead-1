@@ -1,5 +1,6 @@
 % Rubble Scripts
 name <Rubble>
+name_I18N <>
 roguechar <%>
 SDL_Sprite <meta_terrain.png>
 Use <Print 1>

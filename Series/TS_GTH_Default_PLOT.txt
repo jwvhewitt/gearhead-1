@@ -137,6 +137,7 @@ end
 inv
 	Treasure 10
 	name <Golden Statue>
+	name_I18N <Golden Statue>
 	type <STOLEN>
 
 end

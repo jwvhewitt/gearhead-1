@@ -1,52 +1,72 @@
 Battroid 3
 Name <Luna II>
 Desig <AEF>
+Desig_I18N <AEF>
 desc <This is Aegis Overlord's elite commando mecha.>
 SDL_PORTRAIT <mecha_luna2.png>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 3
 	sub
 		Sensor 9
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		Sensor 5
+		Name_I18N <>
 
 		HoverJet 4
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		MLauncher 10
 		Name <Longnight Missiles>
+		Name_I18N <>
 		Range 10
 		Acc 1
 		Magazine 3
 		sub
 			Rockets 10
+			Name_I18N <>
 		end
 
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 7
 			Name <Starburst Rifle>
+			Name_I18N <>
 			Range 8
 			Acc 3
 		end
 
 		Melee 10
 		name <Chain Claw>
+		Name_I18N <>
 		type <EXTEND BRUTAL>
 		mass -6
 		Integral
@@ -54,27 +74,33 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		MLauncher 10
 		Name <Longnight Missiles>
+		Name_I18N <>
 		Range 10
 		Acc 1
 		Magazine 3
 		sub
 			Rockets 10
+			Name_I18N <>
 		end
 
 		Hand
+		Name_I18N <>
 		inv
 			EMelee 8
 			Name <Crescent Sabre>
+			Name_I18N <>
 			Acc 2
 			Speed 5
 		end
 		Melee 10
 		name <Chain Claw>
+		Name_I18N <>
 		type <EXTEND BRUTAL>
 		mass -6
 		Integral
@@ -82,17 +108,21 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 3
 	sub
 		HoverJet 4
+		Name_I18N <>
 	end
 end

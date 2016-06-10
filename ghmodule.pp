@@ -209,6 +209,7 @@ Function ModuleName(Part: GearPtr): String;
 	{Determine the geneic name for this particular module.}
 begin
 	{Eliminate all error cases first off...}
+	{ PATCH_I18N: Don't translate it. }
 	if (Part = Nil) or (Part^.G <> GG_Module) or (Part^.S < 1) or (Part^.S > NumModule) then Exit('Unknown');
 
 	ModuleName := CModule[Part^.S].Name;

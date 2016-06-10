@@ -1,0 +1,551 @@
+%
+% A guide to create a language pack for I18N GearHead 1
+%
+
+0. Notices
+
+The I18N GearHead1 (Internationalization GearHead1) supports almost any language.
+However, there are some limitations which will be described below.
+
+
+0.1. "Precomposed Character" and "Combining Character"
+
+The I18N GearHead1 fully supports "Precomposed Character".
+For "Combining Character" (Devanagri, Thai, Japanese, etc.), on the other hand, the implementation is partial and incomplete.
+You may still try to use Combining Character, but in case of any problematic behavior consider using Precomposed Character instead.
+
+
+0.2. Right-to-Left, Top-to-Bottom writings
+
+Right-to-Left written languages (Arabic, Hebrew, etc.) are supported.
+Since the author of I18N GH1 is not an user of those languages, however and unfortunately, the implementation is not fully tested.
+
+Top-to-Bottom written styles (for Mongolian, CJK, etc.) are not supported.
+
+
+0.3. Maximum length of a line
+
+For any text-based data entries (scenario scripts, message definitions, mech/equipment definitions etc.),
+each line of string in such files must be less than 256 bytes in size (maximum of 255bytes).
+This limitation, consequently, means any in-game message string will be less than 255 bytes per chunk, as well.
+
+
+1. Choose an enchoding and related parameters
+
+First, choose what character encoding you are going to use.
+I18N GearHead-1 supports many of them.
+
+Supported:
+    multibyte-euc-jp
+    multibyte-euc-kr
+    multibyte-euc-cn
+    multibyte-euc-tw
+    multibyte-utf-8
+    2byte-sjis
+    2byte-cp932
+    singlebyte-ascii
+    singlebyte-iso646-us
+    singlebyte-iso8859-1
+    singlebyte-iso8859-2
+    singlebyte-iso8859-3
+    singlebyte-iso8859-4
+    singlebyte-iso8859-5
+    singlebyte-iso8859-6
+    singlebyte-iso8859-7
+    singlebyte-iso8859-8
+    singlebyte-iso8859-9
+    singlebyte-iso8859-10
+    singlebyte-iso8859-11
+    singlebyte-iso8859-13
+    singlebyte-iso8859-14
+    singlebyte-iso8859-15
+    singlebyte-iso8859-16
+    singlebyte-koi8-r
+    singlebyte-koi8-u
+    singlebyte-tis620
+    And other single-byte encodings
+
+Unsupported:
+    ISO2022-*
+    UCS-2
+    UTF-16
+    UCS-4
+    UTF-32
+
+For the multibyte-utf-8 encoding, you will have to be extra careful about 255bytes-per-line limitation explained above,
+as non-ascii characters in utf-8 might have more than 2 bytes per character (2 to 4 bytes)
+which will further limit the maximum length for in-game messages (less than 64 characters per chunk, in worst case).
+
+Once you choose an encoding you want to use,
+open GameData/I18N_settings.txt and put the name of the encoding as a parameter for SYSTEM_ENCODING.
+
+You also need to set encoding(s) used in ASCII mode. Just below SYSTEM_ENCODING,
+
+    TERMINAL_ENCODING_DEFAULT_MSWIN
+    TERMINAL_ENCODING_DEFAULT
+
+are the parameters used to set ASCII mode character encoding(s).
+TERMINAL_ENCODING_DEFAULT_MSWIN is used in MS-Windows environment and TERMINAL_ENCODING_DEFAULT is for non-Windows.
+You may need to use different encodings among those three, depending on the language you choose.
+
+There is an another method to set ASCII mode encoding via environment vaiable (of the OS itself that is).
+Setting an environment variable GEARHEAD_LANG with value listed above overrides the settings of
+TERMINAL_ENCODING_DEFAULT and TERMINAL_ENCODING_DEFAULT_MSWIN.
+
+
+1.2. Word-separating white spaces
+
+For languages that uses a white space as word separator (which is true for most languages),
+You need to set <True> for the parameter End_of_Word_Contains_WhiteSpace in GameData/I18N_settings.txt.
+Setting it <True> enables correct word wrapping for such languages,
+othrewise it will going to give a new line mid-word, which usually is not a problem for non whitespace-separated writings.
+
+
+1.3. bidi-RTL (Bi-directional text Right to Left)
+
+For some environments, the drawing APIs might not natively support bidi-RTL.
+If you still want to enable bidi-RTL in such environments,
+you may try the option TERMINAL_ENCODING_CONV_bidiRTL <True> in GameData/I18N_settings.txt.
+
+This enables a pseudo bidi-RTL processing which does following:
+
+   - In a string, If there's a whitespace or any single character defined in the parameter bidiRTL_CONVERT_PUNCTUATION
+     and its next character is an ASCII character(s), it temporarily switches to bidi-LTR (left to right) mode.
+     Then, while in bidi-LTR mode, if it finds a whitespace or a character set by bidiRTL_CONVERT_PUNCTUATION
+     and its next character is non ASCII character(s), it reverts back to bidi-RTL mode.
+
+   - To handle bracket pairs correctly in bidi-RTL mode,
+     the engine uses two parameters bidiRTL_CONVERT_CHAR_PAIR1 and bidiRTL_CONVERT_CHAR_PAIR2 to define bracket pairs
+     and 'swap' them as needed. For example,
+
+     bidiRTL_CONVERT_CHAR_PAIR1      <( [ {>
+     bidiRTL_CONVERT_CHAR_PAIR2      <) ] }>
+
+     this defines most basic bracket set.
+     As you can see, each pair is defined by their order in the parameter strings.
+     If your language uses other kind of brackets, just add them to the list (don't forget to put a whitespace between them).
+
+
+1.4. Fonts
+
+In case you want a little more control over fonts used by the engine,
+following options in GameData/I18N_settings.txt may become useful:
+
+Default_FontFileBig <font filename for big font>
+Default_FontFaceBig <select a font-face within the font file specified above, by a digit(default:0)>
+Default_FontSizeBig <specify a font size for big font>
+Default_FontFileSmall <font filename for small font>
+Default_FontFaceSmall <a font-face number within the small font if needed (default:0)>
+Default_FontSizeSmall <font size for small font>
+
+also, for MS-Windows environment:
+
+MSWIN_Default_FontNameOther <specify a font name, which is NOT a filename but the name of the font recognized by the OS>
+MSWIN_Default_FontWeightOther <specify font weight (default:0)>
+MSWIN_Default_FontSizeOther <specify font size>
+
+finally, to help more precise calculation of width of a glyph/string, the option
+
+SDLGFX_I18N_WIDTH_OF_ONE_CHARACTER <M>
+
+will tell the engine which glyph should be considered to have the largest width.
+For most latin language, it usually is <M>.
+
+
+1.5. Special line-breaking rules
+
+In many language there are often rules, be it strict or loose ones,
+that prohibit certain characters from being placed in the first or last position in a line.
+In GameData/I18N_settings.txt, there are two options available to set up the rule:
+
+ProhibitationHead  <whitespace-separated list of no-first characters>
+ProhibitationTrail <whitespece-separated list of no-last characters>
+
+Common example of ProhibitationHead are punctuation characters and 'closing' brackets,
+and for ProhibitationTrail it is usually 'starting' brackets.
+
+
+2. Translating the message texts
+
+With the related options set up correctly, we can finally start the translation.
+
+
+2.0. Macros and special tokens
+
+
+2.0.1. Comment notation
+
+Any line starts with % is treated as a comment line, and ignored in script processing.
+Note that only full-line comment is available (no partial comments like // in C family).
+
+
+2.0.2. %A %N %T, the random phrase tokens 
+
+In message strings (the strings displayed to the player),
+there are three tokens that can be used to add some random flavor to various in-game messages.
+Each token is tied to a text file that contains many words or expressions in one-per-line format,
+and will be replaced with randomly-chosen one out of them.
+
+    %A - tied to GameData/adjectives.txt, used as random adjectives.
+    %N - tied to GameData/nouns.txt, used as random nouns.
+    %T - tied to GameData/threats.txt, used to give a random threatening expression.
+
+
+2.0.3. %JF %JS %JG %JA, the probably-Japanese-specific tokens
+
+There are also four special tokens primarily intoroduced for Japanese environment.
+Since functionality of these tokens are somewhat specific to characteristics of Japanese language,
+users of other languages may or may not find it useless.
+
+    %JF - This gives a 'first person singular' word based on the player characeter's
+          sex and their 'personality' determined by their social status (renown etc).
+          Tied to either GameData/I18N_pgt_fp_m.txt(male) or GameData/I18N_pgt_fp_f.txt(female).
+
+    %JS - Similar to %JF, this one gives a 'second person singular'.
+          Tied to either GameData/I18N_pgt_sp_m.txt(male) or GameData/I18N_pgt_sp_f.txt(female).
+
+    %JG - This is for a 'sentence-ending' expression (called Gobi in Japanese),
+          again based on the PC's sex and personality.
+          Tied to GameData/I18N_pgt_t_m1.txt(male) or GameData/I18N_pgt_t_f1.txt(female).
+
+    %JA - This one, unlike other three tokens above, works almost identically to the %A token.
+          The only difference is that %JA picks its replacement word from GameData/i18n_modifier.txt
+          *in addition to* GameData/adjectives.txt.
+          As you see, this token is a kind of rebundant one, sitting there because of some historical reason.
+
+While it is difficult or just impossible to use these socially-changing tokens in the same way
+as intended for Japanese language, you may still use it for other kind of grammatical element
+ignoring those original role they are assigned for.
+After all, pure-functionality wise, they are just generic word-replacing tokens.
+
+
+2.1. Script elements to translate
+
+Out of many script commands/macros/variables, following 7 elements are common target for translation.
+
+name_I18N
+desig_I18N
+desc
+rumor*
+msg*
+prompt*
+CHAT_*
+
+While there are some other elements that need translation (which will be covered later),
+these 7 elements are the most common and also most scatterd ones across the data files.
+You are most probably going to use your favorite grep software to search and list them up.
+
+
+2.1.1. name_I18N
+
+As the name suggests, name_I18N tag defines translated name for certain script object.
+It usually comes in pairs with 'name' tag like this:
+
+name <A name for something>
+name_I18N <>
+
+It is pretty obvious what to do with it, right?
+Just give a proper translated name to name_I18N, or you can leave it blank to use the original (English) 'name' as-is.
+
+You may notice that there are many 'name' tags that do not have a name_I18N attached next to it.
+This is because that the 'name' tag is not just for name definition but as well used for object identification by the engine,
+which explains the lack of name_I18N tag for such non-displayed objects. Just look for name_I18N and it will do the job.
+
+Also in some cases, mostly seen in mech/moster definitions, name_I18N tag is used without a matching 'name'.
+The lack of 'name' is because such objects are defined in template-style and do not need to have its 'name' defined in-place
+unless they need an unique name than pre-defined one.
+
+And then, the presence of name_I18N tag without a parent 'name' is that for some languages it might want different terminology
+for vaious object --- for example, a 'head' for human-shaped robot and bird-shaped one might be referred differently,
+so we just have put a blank name_I18N for ALL elements that could use a translated name for the sake of flexibility.
+As mentioned above, just leave it blank for elements that don't need translation.
+
+
+2.1.2. desig_I18N
+
+A desig_I18N tag is used in pairs with a 'desig' tag, similar to the relation between name and name_I18N.
+The 'desig' tag defines certain type of game object, and used as its name as well.
+Again, similar to name_I18N, you can leave desig_I18N blank if you don't need translation for the object.
+
+
+2.1.3. desc
+
+The 'desc' tag defines a description text for wide range of game entities like cities, items, mechs, monsters and sometimes map objects.
+It does not have an I18N counterpart like 'name' and 'desig', so just replace the original english text with translation
+or you might want to duplicate the original line and comment it out for better reference (and do translation on the duplicated line).
+
+
+2.1.4. rumor / msg / prompt
+
+These three tags are used for either a dialog message spoken by in-game characters or a narrative message output.
+They often have some digits at their tail (e.g. rumor0, msg101, prompt5 etc.) that acts as a label within a scope of script unit,
+which means it is not related to translation and those numbers should be kept untouched.
+
+Otheriwise, what to do with them is identical to 'desc' tag --- just replace the message string with translation.
+
+
+2.1.5. CHAT_ATTACK / CHAT_EJECT / CHAT_SAFE
+
+There three tags, possibly with a digit at their tail like rumor/msg/prompt, define some random chatter for NPCs.
+As their name suggests, CHAT_ATTACK is displayed when the NPC attacks, CHAT_EJECT is for ejection from mecha,
+and CHAT_SAFE gives an idle-chatter.
+
+For translation, again, the process is identical to desc/rumor/msg/prompt.
+
+
+3.0. List of files to translate
+
+The data files in I18N GH1 is not, unfortunately, well organized in term of mod-friendliness.
+Part of the reason of that is simply the original GH1 is not created with I18N capability in mind,
+and another reason is that the I18N version has first started as 'Japansese GH1' which is gradually developed
+over years and also did not aim a complete I18N from the beginning, resulting a kind of patchy series of data additions here and there.
+
+So, in this section, we will list and see exactly which files you need to look at for translation,
+and more specific instructions per file if needed (other than points explained above sections, that is).
+
+Before we start, here's three generic rules which basically apply to all related files.
+
+1. Other than random-phrase-pool definitions (e.g. files used by %A %N %T tokens),
+   text that needs to be translated is almost always between angle brackets.
+2. Angle brackets itself is a generic parameter denoter in GH engine,
+   so string between can be a script elements and not always a message string.
+   Fortunately, you should be able to tell it by a glance with ease and avoid translating such script elements.
+3. In some files there is an another kind of special token '#' (a number sign)
+   which marks placement of subject of an action, or its target, or amount of damage inflicted on something.
+   Translation wise there's nothing to be worried about it, just place the # mark on wherever appropriate.
+
+
+3.1. Files in GameData folder
+
+In this section we will see files in the GameData folder.
+
+
+3.1.1. Basic ones
+
+Following 16 files are of most basic form in term of translation work.
+Just see strings in angle bracket and translate it if it is not a kind of script command.
+
+GameData/ability.txt
+GameData/chat_msg.txt
+GameData/damage.txt
+GameData/lmtactics.txt
+GameData/meta1.txt
+GameData/meta3.txt
+GameData/meta4.txt
+GameData/meta5.txt
+GameData/meta6.txt
+GameData/meta7.txt
+GameData/meta8.txt
+GameData/meta9.txt
+GameData/meta10.txt
+GameData/meta11.txt
+GameData/meta12.txt
+GameData/meta13.txt
+
+
+3.1.2. Basic ones with # token
+
+These two files have the '#' token mentioned above.
+Other than that, nothing noteworthy about them.
+
+GameData/effects.txt
+GameData/messages.txt
+
+
+3.1.3. 'Twin parameter' files
+
+Following three files have rather non-ordinary way of parameter definition.
+
+GameData/I18N_keymap_desc.txt
+GameData/I18N_name.txt
+GameData/I18N_messages.txt
+
+The format is:
+
+Parameter-Name      <I18N text>      <English text>
+
+In short, you just translate the middle string and leave the right (english) one untouched.
+
+
+3.1.4. Personality-based strings
+
+The file
+
+GameData/taunts.txt
+
+defines some combat related messages that will be chosen based on 'personality' of speaking character.
+In GH1, a character's personality is determined by 7 social parameter, each one goes both positive and negative.
+
+The 7 parameters and its positive/negative means:
+
+Param 1 positive: Heroic
+Param 1 negative: Villainous
+Param 2 positive: Lawful
+Param 2 negative: Chaotic
+Param 3 positive: Sociable
+Param 3 negative: Shy
+Param 4 positive: Easygoing
+Param 4 negative: Passionate
+Param 5 positive: Cheerful
+Param 5 negative: Melancholy
+Param 6 positive: Renowned
+Param 6 negative: Wangtta(loser)
+Param 7 positive: Pragmatic
+Param 7 negative: Spiritual
+
+Out of there 14 possiblities, one with most highest absolute value will be chosen.
+
+While this mechanics itself is not related to translation,
+knowing the meaning of each parameter should be helpful to give your translation a bit of proper flavour.
+
+
+3.1.5. String-pool files
+
+Following 5 files, as mentioned in section 2.0.2 (%A %N %T token), defines a pool of strings
+in one-expression-per-line fashion which will be used as replacement source for those tokens.
+
+GameData/adjectives.txt
+GameData/I18N_modifier.txt
+GameData/nouns.txt
+GameData/rumors.txt
+GameData/threats.txt
+
+Translation wise, there is nothing special about it --- or, you might want to add/remove certain expression
+if straight-foward translation of the original text would not suit your language very well.
+
+
+3.1.6. Another string pool, for personality system
+
+Following 14 files contain another set of per-line pool of strings (more specifically, nouns), 
+which in this case separated for each of 14 possible personality patterns explained in 3.1.4.
+
+GameData/TC_1_1.txt
+GameData/TC_1_2.txt
+GameData/TC_2_1.txt
+GameData/TC_2_2.txt
+GameData/TC_3_1.txt
+GameData/TC_3_2.txt
+GameData/TC_4_1.txt
+GameData/TC_4_2.txt
+GameData/TC_5_1.txt
+GameData/TC_5_2.txt
+GameData/TC_6_1.txt
+GameData/TC_6_2.txt
+GameData/TC_7_1.txt
+GameData/TC_7_2.txt
+
+
+3.1.7. Yet another string pool, with %A %N tokens
+
+The file
+
+GameData/phrases.txt
+
+contains yet another set of expressions in one-per-line fomat.
+This pool is used for random conversations throughout the game,
+and each expression is further randomized utilizing the %A and %N tokens.
+
+
+3.1.8. JP-introduced token files
+
+Following 5 files
+
+GameData/I18N_pgt_fp_f.txt
+GameData/I18N_pgt_fp_m.txt
+GameData/I18N_pgt_sp_f.txt
+GameData/I18N_pgt_sp_m.txt
+GameData/I18N_pgt_t_f1.txt
+GameData/I18N_pgt_t_m1.txt
+
+contains, as explained in 2.0.3, another pools of personality-based expressions
+which is first implemented for Japanese version of GH1.
+Ignoring them or trying to utilize them, in your own way, is totally up to you.
+
+
+3.1.9. Other files in GameData folder
+
+Other than already listed, there are 6 files in the GameData folder.
+
+5 of them,
+
+GameData/aslmacro.txt
+GameData/asvmacro.txt
+GameData/ghpmacro.txt
+GameData/randmaps.txt
+GameData/sdl_colors.txt
+
+are purely system related and nothing to do with translation, so you just keep them unchanged.
+
+The last one,
+
+GameData/I18N_settings.txt
+
+is already mentioned explained in first part of this manual, right?
+It does not contain any translation strings itself, but you should look into it and give it proper parameters.
+
+
+3.2. Files in 'Design' folder
+
+The game folder 'Design' contains mech definitions, and also equipment definition for both mecha and human-scale characters.
+As mentioned in 2.1.1, you will see a lot of blank name_I18N for almost all name-definable entities.
+Just fill in where you need translation.
+
+
+3.3. Files in 'Series' folder
+
+The game folder 'Series' contains tons of script files that composes the core part of GH1 gameplay, story-wise.
+Unfortunately there are too many files to list them all, so here's again some basic rules to handle them.
+
+1. Few exceptions aside (which will be covered soon), you will look for following tags:
+
+   name_I18N, desc, rumor*, msg*, prompt*
+
+2. These tags are pretty scattered among in a file, and not every file necessarily contains them (i.e. no need to translate).
+   You are going to use grep and/or search function alot to find which file / where in a file those tags exist.
+
+There are few files that does not fit to this procedure, which will be explained below.
+
+
+3.3.1. Series/WMONdefault.txt
+
+The file
+
+Series/WMONdefault.txt
+
+contains monster definitions and also their chatter.
+The structure of their definition is very similar to those in 'Design' folder,
+so you will see what to do with them without a trouble.
+
+Tags to expect for translation: 'desc' 'name_I18N' 'CHAT_ATTACK' 'CHAT_SAFE'
+
+
+3.3.2. TS_TEXT_*.txt
+
+Folloing 17 files
+
+TS_TEXT_Cesus.txt
+TS_TEXT_Entry_1.txt
+TS_TEXT_Entry_Family.txt
+TS_TEXT_Entry_Luna.txt
+TS_TEXT_Entry_Luna2.txt
+TS_TEXT_Entry_UFU_Adopted.txt
+TS_TEXT_HwangSa_1.txt
+TS_TEXT_HwangSa_2.txt
+TS_TEXT_HwangSa_3.txt
+TS_TEXT_Ladon1.txt
+TS_TEXT_Ladon2.txt
+TS_Text_SLMM1.txt
+TS_Text_SLMM2.txt
+TS_TEXT_SLMM3.txt
+TS_TEXT_SnakeLakeFedCon.txt
+TS_TEXT_XRAN_LastWill.txt
+TS_TEXT_Ziggurat.txt
+
+contain a long set of strings that is used for certain event
+such as opening monologue, in-game log for certain story, or other long informational text, etc.
+
+Tranlation wise it is rather simple one --- just translate the whole text (except for comments, of course).
+You probably should be careful for width of each line, not to exceed the width of the original text too much.
+
+
+% [ End of File ]

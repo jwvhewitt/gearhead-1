@@ -1,49 +1,64 @@
 Battroid 3
 Name <Chameleon>
 Desig <CHA-01>
+Desig_I18N <CHA-01>
 desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
 SDL_PORTRAIT <mecha_chameleon.png>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 2
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 3
+		Name_I18N <>
+
 		Gyro 3
+		Name_I18N <>
 		Armor 1
 
 		BeamGun 2
 		Name <Small Laser>
+		Name_I18N <>
 		Range 3
 		Acc 5
 
 		BeamGun 2
 		Name <Small Laser>
+		Name_I18N <>
 		Range 3
 		Acc 5
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		STC GHML-2
 
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 1
 			Name <Pulse Rifle>
+			Name_I18N <>
 			Range 4
 			Acc 1
 			Speed 6
@@ -53,85 +68,108 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		MLauncher 1
 		Name <Sparrow Light Missiles>
+		Name_I18N <>
 		Range 5
 		Acc 2
 		Magazine 30
 		sub
 			Rockets 1
+			Name_I18N <>
 		end
 
 		Hand
+		Name_I18N <>
 	end
 	inv
 		Shield 3
+		Name_I18N <>
 		DefBonus 2
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		Wheels 3
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		Wheels 3
+		Name_I18N <>
 	end
 end
 
 Battroid 3
 Name <Chameleon>
 Desig <CHA-02b Sniper>
+Desig_I18N <CHA-02b Sniper>
 desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
 SDL_PORTRAIT <mecha_chameleon.png>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 2
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 3
+		Name_I18N <>
+
 		Gyro 3
+		Name_I18N <>
 		Armor 1
 
 		BeamGun 2
 		Name <Small Laser>
+		Name_I18N <>
 		Range 3
 		Acc 5
 
 		BeamGun 2
 		Name <Small Laser>
+		Name_I18N <>
 		Range 3
 		Acc 5
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		STC GHML-2
 
 		Hand
+		Name_I18N <>
 		inv
 			STC GR-12
 			Acc 2
@@ -140,91 +178,116 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		MLauncher 1
 		Name <Sparrow Light Missiles>
+		Name_I18N <>
 		Range 5
 		Acc 2
 		Magazine 30
 		sub
 			Rockets 1
+			Name_I18N <>
 		end
 
 		Hand
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		Wheels 3
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		Wheels 3
+		Name_I18N <>
 	end
 end
 
 Battroid 3
 Name <Chameleon>
 Desig <CHA-03 Command>
+Desig_I18N <CHA-03 Command>
 desc <The main battle mecha of Aegis Overlord. Because of Luna's shortage of metals, the Chameleon is made from advanced synthetic materials.>
 SDL_PORTRAIT <mecha_chameleon.png>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 2
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		TarComp 3
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 3
+		Name_I18N <>
+
 		Gyro 4
+		Name_I18N <>
 		Armor 1
 
 		BeamGun 2
 		Name <Small Laser>
+		Name_I18N <>
 		Range 3
 		Acc 5
 
 		BeamGun 2
 		Name <Small Laser>
+		Name_I18N <>
 		Range 3
 		Acc 5
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		MLauncher 8
 		Name <Drone Launcher>
+		Name_I18N <>
 		Range 6
 		Magazine 5
 		sub
 			Rockets 8
+			Name_I18N <>
 			Type <DRONE>
 		end
 
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 3
 			Name <Plasma Pistol>
+			Name_I18N <>
 			Acc 1
 			BV 3
 		end
@@ -232,43 +295,53 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		MLauncher 1
 		Name <Sparrow Light Missiles>
+		Name_I18N <>
 		Range 5
 		Acc 2
 		Magazine 30
 		sub
 			Rockets 1
+			Name_I18N <>
 		end
 
 		Hand
+		Name_I18N <>
 		inv
 			Melee 4
 			Name <Rapier>
+			Name_I18N <>
 			Acc 2
 		end
 	end
 	inv
 		Shield 4
+		Name_I18N <>
 		DefBonus 3
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		Wheels 3
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 4
 	Armor 2
 	sub
 		Wheels 3
+		Name_I18N <>
 	end
 end

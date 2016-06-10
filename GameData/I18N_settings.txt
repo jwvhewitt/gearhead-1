@@ -1,0 +1,28 @@
+%%% GEARHEAD I18N SYSTEM SETTINGS %%%
+
+% Default Settings for I18N
+SYSTEM_ENCODING                 <SINGLEBYTE-ISO8859-1>
+TERMINAL_ENCODING_DEFAULT       <SINGLEBYTE-ISO8859-1>
+TERMINAL_ENCODING_DEFAULT_MSWIN <SINGLEBYTE-ISO8859-1>
+End_of_Word_Contains_WhiteSpace <True>
+TERMINAL_ENCODING_CONV_bidiRTL  <False>
+bidiRTL_CONVERT_PUNCTUATION     <:;,.>
+bidiRTL_CONVERT_CHAR_PAIR1      <( [ {>
+bidiRTL_CONVERT_CHAR_PAIR2      <) ] }>
+
+% A character, to calculate a width of a bitmap graphic for one text character.
+Default_FontFileBig     <VeraBd.ttf>
+Default_FontFaceBig     <0>
+Default_FontSizeBig     <14>
+Default_FontFileSmall   <VeraMoBd.ttf>
+Default_FontFaceSmall   <0>
+Default_FontSizeSmall   <11>
+SDLGFX_I18N_WIDTH_OF_ONE_CHARACTER <M>
+MSWIN_Default_FontNameOther     <Terminal>
+MSWIN_Default_FontWeightOther   <0>
+MSWIN_Default_FontSizeOther     <14>
+
+ProhibitationTrail      <( [ {>
+ProhibitationHead       <! ) , . ? ] }>
+
+%%% [ End of File ] %%%

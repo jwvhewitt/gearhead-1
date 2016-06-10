@@ -1,17 +1,21 @@
 Battroid 5
 Name <Daum>
 Desig <SAN-D1>
+Desig_I18N <SAN-D1>
 SDL_Sprite <btr_daum.png>
 desc <In NT100, RegEx corporation and the Federation Defense Force began a project to update the BuruBuru design using modern technology. This mecha was the result.>
 SDL_PORTRAIT <mecha_daum.png>
 
 Mod Head
+	Name_I18N <>
 	Armor 3
 	sub
 		Sensor 5
+		Name_I18N <>
 
 		BeamGun 3
 		Name <AP Gatling Beamgun>
+		Name_I18N <>
 		Scale 1
 		Range 4
 		Acc 1
@@ -20,51 +24,69 @@ Mod Head
 	end
 	inv
 		HeadArmor 2
+		Name_I18N <>
 		Mass -1
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 5
+		Name_I18N <>
+
 		Gyro 2
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 
 		Sensor 1
+		Name_I18N <>
 
 		Mount
 		Name <Right Torso Mount>
+		Name_I18N <>
 
 		Mount
 		Name <Left Torso Mount>
+		Name_I18N <>
 		inv
 			MLauncher 4
 			Name <Missile Pod>
+			Name_I18N <>
 			Type <SWARM>
 			Magazine 20
 			sub
 				Rockets 4
+				Name_I18N <>
 			end
 		end
 
 		HoverJet 5
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 3
+		Name_I18N <>
 		Mass -2
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Gun 2
 			Name <Bolt Cannon>
+			Name_I18N <>
 			Range 6
 			Magazine 250
 			Speed 4
@@ -72,70 +94,89 @@ Mod Arm
 			Acc -1
 			sub
 				Ammo 2
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		Mass -1
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 7
 			Name <Longsword>
+			Name_I18N <>
 			Acc 1
 		end
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		Mass -1
 
 		EShield 5
+		Name_I18N <>
 		DefBonus -1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 3
 	sub
 		HoverJet 4
+		Name_I18N <>
 
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Mass -1
 		sub
 			HoverJet 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 3
 	sub
 		HoverJet 4
+		Name_I18N <>
 
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 	end
 	inv
 		LegArmor 2
+		Name_I18N <>
 		Mass -1
 		sub
 			HoverJet 2
+			Name_I18N <>
 		end
 	end
 end

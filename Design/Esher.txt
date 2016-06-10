@@ -1,34 +1,49 @@
 Arachnoid 7
 Name <Esher>
 Desig <NEC-04>
+Desig_I18N <NEC-04>
 desc <A very old crabtank design, the Esher remains in service largely due to its brute durability.>
 
 Mod Turret
+	Name_I18N <>
 	Armor 6
 	sub
 		STC PAR-13
 
 		Sensor 1
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 6
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 7
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 4
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			STC LRL-48
 		end
 
 		Mount
 		Name <Left Weapon Mount>
+		Name_I18N <>
 		inv
 			STC LRL-48
 		end
@@ -36,21 +51,25 @@ Mod Body
 
 Mod Leg
 	Name <Right Leg 1>
+	Name_I18N <>
 	Size 4
 	Armor 4
 
 Mod Leg
 	Name <Right Leg 2>
+	Name_I18N <>
 	Size 4
 	Armor 4
 
 Mod Leg
 	Name <Left Leg 1>
+	Name_I18N <>
 	Size 4
 	Armor 4
 
 Mod Leg
 	Name <Left Leg 2>
+	Name_I18N <>
 	Size 4
 	Armor 4
 end

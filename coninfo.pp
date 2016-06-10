@@ -40,7 +40,7 @@ Procedure MapEditInfo( Pen,Palette,X,Y: Integer );
 
 implementation
 
-uses crt,ability,damage,gearutil,ghchars,ghmecha,ghmodule,ghweapon,
+uses crt,i18nmsg,ability,damage,gearutil,ghchars,ghmecha,ghmodule,ghweapon,
      interact,movement,texutil,congfx,conmap,context,ui4gh;
 
 var
@@ -100,11 +100,11 @@ Procedure AI_Title( msg: String; C: Byte );
 var
 	X: Integer;
 begin
-	X := ( ( ZX2 - ZX1 ) div 2 ) - ( Length( msg ) div 2 ) + 1;
+	X := ( ( ZX2 - ZX1 ) div 2 ) - ( WidthMBCharStr( msg ) div 2 ) + 1;
 	if X < 1 then X := 1;
 	GotoXY( X , CY );
 	TextColor( C );
-	Write( msg );
+	WriteMBCharStr( msg, 0 );
 	CX := 1;
 	CY := CY + 1;
 end;
@@ -114,7 +114,7 @@ Procedure AI_Line( msg: String; C: Byte );
 begin
 	GotoXY( ZX1 , CY );
 	TextColor( C );
-	Write( msg );
+	WriteMBCharStr( msg, (ZX2-ZX1) );
 	CX := 1;
 	Inc( CY );
 end;
@@ -124,7 +124,7 @@ Procedure AI_PrintFromRight( msg: String; Tab,C: Byte );
 begin
 	GotoXY( Tab , CY );
 	TextColor( C );
-	Write( msg );
+	WriteMBCharStr( msg, 0 );
 	CX := WhereX;
 end;
 
@@ -133,11 +133,11 @@ Procedure AI_PrintFromLeft( msg: String; Tab,C: Byte );
 var
 	TP: Integer;
 begin
-	TP := Tab - Length( msg );
+	TP := Tab - WidthMBCharStr( msg );
 	if TP < 1 then TP := 1;
 	GotoXY( TP , CY );
 	TextColor( C );
-	Write( msg );
+	WriteMBCharStr( msg, 0 );
 	CX := WhereX;
 end;
 
@@ -147,7 +147,7 @@ Procedure AI_PrintChar( msg: Char; C: Byte );
 begin
 	if WhereX < ( ZX2 - ZX1 - 1 ) then begin
 		TextColor( C );
-		Write( msg );
+		WriteMBCharStr( msg, 0 );
 		CX := WhereX;
 	end;
 end;
@@ -398,11 +398,11 @@ begin
 
 	DisplayModules( Mek );
 
-	AI_PrintFromRight( 'MV:' + SgnStr(MechaManeuver(Mek)) , ZX2 - ZX1 - 5 , LightGray );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('MekStatDisplay','MV:') , SgnStr(MechaManeuver(Mek)) ) , ZX2 - ZX1 - 5 , LightGray );
 	AI_NextLine;
-	AI_PrintFromRight( 'TR:' + SgnStr(MechaTargeting(Mek)) , ZX2 - ZX1 - 5 , LightGray );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('MekStatDisplay','TR:') , SgnStr(MechaTargeting(Mek)) ) , ZX2 - ZX1 - 5 , LightGray );
 	AI_NextLine;
-	AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Mek)) , ZX2 - ZX1 - 5 , LightGray );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('MekStatDisplay','SE:') , SgnStr(MechaSensorRating(Mek)) ) , ZX2 - ZX1 - 5 , LightGray );
 	AI_NextLine;
 
 	{ Pilot Information - Name, health, rank }
@@ -433,9 +433,9 @@ begin
 	{ Movement information. }
 	MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
 	if MM > 0 then begin
-		msg := MoveModeName[ MM ];
+		msg := I18N_Name('MoveModeName',MoveModeName[ MM ]);
 		msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
-	end else msg := 'Immobile';
+	end else msg := I18N_MsgString('MekStatDisplay','Immobile');
 	AI_PrintFromRight( msg , ZX2 - ZX1 - 25 , DarkGray );
 
 	{ Encumbrance information. }
@@ -446,7 +446,7 @@ begin
 	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
 	MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
 
-	AI_PrintFromRight( 'Enc:' , ZX2 - ZX1 - 14 , NeutralGrey );
+	AI_PrintFromRight( I18N_MsgString('MekStatDisplay','Enc:') , ZX2 - ZX1 - 14 , NeutralGrey );
 	AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ZX2 - ZX1 - 9 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
 
 	AI_NextLine;
@@ -483,7 +483,7 @@ begin
 	MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
 
 	AI_PrintFromLeft( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , ZX2 - ZX1 - 2 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
-	AI_PrintFromRight( 'Enc' , ZX2 - ZX1 - 1 , NeutralGrey );
+	AI_PrintFromRight( I18N_MsgString('CharacterInfo','Enc:') , ZX2 - ZX1 - 1 , NeutralGrey );
 	AI_NextLine;
 
 
@@ -493,7 +493,7 @@ begin
 	{ Show the character's stats. }
 	for t := 1 to ( NumGearStats div 4 ) do begin
 		for tt := 1 to 4 do begin
-			AI_PrintFromRight( StatName[ T * 4 + TT - 4 ][1] + StatName[ T * 4 + TT - 4 ][2] + ':' , ( TT-1 ) * Width + 1 , LightGray );
+			AI_PrintFromRight( HeadMBChar( I18N_Name('StatName', StatName[ T * 4 + TT - 4 ]) ) + ':' , ( TT-1 ) * Width + 1 , LightGray );
 
 			{ Determine the stat value. This may be higher or lower than natural... }
 			S := CStat( Part , T * 4 + TT - 4 );
@@ -576,7 +576,7 @@ begin
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , ZX2 - ZX1 + 2 , LightGray );
 
 	AI_NextLine;
-	AI_Title( SkillMan[ Part^.S ].Name , Yellow );
+	AI_Title( I18N_Name( 'SkillMan', SkillMan[ Part^.S ].Name ) , Yellow );
 	AI_Title( BStr( Part^.V ) + ' DP' , Green );
 end;
 
@@ -622,6 +622,8 @@ const
     );
 var
 	D,Z: Integer;
+	dir_msg: String;
+	alt_msg: String;
 begin
 	{ Props are master gears, but they don't get location info. }
 	if OnTheMap( Part ) and IsMasterGear( Part ) and ( Part^.G <> GG_Prop ) then begin
@@ -636,10 +638,12 @@ begin
 
 		    D := NAttValue( Part^.NA , NAG_Location , NAS_D );
 		    Z := MekAltitude( gb , Part );
+		    dir_msg := I18N_MsgString('LocationInfo','Dir:') + I18N_Name('DIR',DirStr[D]);
+		    alt_msg := I18N_MsgString('LocationInfo','Alt:') + BStr(Z);
 		    gotoXY( ZX1 , ZY1 + OY - 1 );
-            write('Dir:' + DirStr[D]);
+		    write(dir_msg);
 		    gotoXY( ZX1 , ZY1 + OY );
-            write('Alt:' + BStr(Z));
+		    write(alt_msg);
 
         end else begin
 		    { Clear the compass area. }
@@ -724,16 +728,16 @@ Function JobAgeGenderDesc( NPC: GearPtr ): String;
 	{ Return the Job, Age, and Gender of the provided character in }
 	{ a nicely formatted string. }
 var
-	msg,job: String;
+	gender: String;
 begin
-	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ) + ' year old';
-    if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
-    	msg := msg + ' ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
-    end;
-	job := SAttValue( NPC^.SA , 'JOB' );
-	if job <> '' then msg := msg + ' ' + LowerCase( job );
-	msg := msg + '.';
-	JobAgeGenderDesc := msg;
+	gender := '';
+	if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
+		gender := GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ];
+	end;
+	JobAgeGenderDesc := ReplaceHash( I18N_MsgString('JobAgeGenderDesc'),
+				BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ),
+				I18N_Name('GenderName',gender),
+				I18N_Name('Jobs',SAttValue( NPC^.SA , 'JOB' )) );
 end;
 
 Procedure DisplayInteractStatus( GB: GameBoardPtr; NPC: GearPtr; React,Endurance: Integer );
@@ -832,7 +836,7 @@ begin
 		else C := Green;
 
 		{ Do the output. }
-		AI_PrintFromRight( StatName[ T ] , 2 , LightGray );
+		AI_PrintFromRight( I18N_Name( 'StatName', StatName[ T ] ), 2 , LightGray );
 		AI_PrintFromLeft( BStr( S ) , 15 , C );
 		AI_PrintFromRight( MsgString( 'STATRANK' + BStr( R ) ) , 16 , C );
 
@@ -995,7 +999,7 @@ begin
 	TextColor( TerrColor[ Pen ] );
 	Write( TerrGfx[ Pen ] );
 	TextColor( White );
-	Write( '] ' + TerrMan[ Pen ].Name );
+	WriteMBCharStr( '] ' + I18N_Name('TerrMan',TerrMan[Pen].Name), 0 );
 
 	CMessage( BStr( X ) + ',' + BStr( Y ) , ZONE_Clock , White );
 end;

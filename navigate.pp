@@ -45,10 +45,10 @@ Procedure RestoreCampaign;
 implementation
 
 {$IFDEF SDLMODE}
-uses arenaplay,arenascript,damage,interact,gearutil,
+uses i18nmsg,texutil,arenaplay,arenascript,damage,interact,gearutil,
      ghchars,ghweapon,movement,randchar,ui4gh,sdlmap,sdlmenus;
 {$ELSE}
-uses arenaplay,arenascript,damage,interact,gearutil,
+uses i18nmsg,texutil,arenaplay,arenascript,damage,interact,gearutil,
      ghchars,ghweapon,movement,randchar,ui4gh,congfx,conmap,conmenus,context;
 {$ENDIF}
 
@@ -175,14 +175,14 @@ begin
 	{ If any units are found, allow the player to load one. }
 	if RPM^.NumItem > 0 then begin
 		RPMSortAlpha( RPM );
-		DialogMSG('Select campaign file to load.');
+		DialogMSG( I18N_MsgString('RestoreCampaign','Select campaign') );
 {$IFDEF SDLMODE}
 		rpgname := SelectFile( RPM , Redrawer );
 {$ELSE}
 		rpgname := SelectFile( RPM );
 {$ENDIF}
 		if rpgname <> '' then begin
-			Assign(F, Save_Game_Directory + rpgname );
+			Assign(F, Save_Game_Directory + TextEncode(rpgname) );
 			reset(F);
 			Camp := ReadCampaign(F);
 			Close(F);

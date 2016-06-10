@@ -1,72 +1,95 @@
 AeroFighter 4
 Name <Wraith>
 Desig <WR-106>
+Desig_I18N <WR-106>
 SDL_Sprite <aer_wraith.png>
 desc <The Wraith is a general purpose aerofighter produced by RegEx Corporation.>
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		Sensor 5
+		Name_I18N <>
 
 		Mount
 		Name <Right Body Mount>
+		Name_I18N <>
 		inv
 			Gun 6
 			Name <Gyro Cannon>
+			Name_I18N <>
 			Range 8
 			Magazine 8
 			sub
 				Ammo 6
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Left Body Mount>
+		Name_I18N <>
 		inv
 			STC HRP-12
 		end
 
 		Gun 1
 		Name <Machine Gun>
+		Name_I18N <>
 		Range 4
 		Acc -1
 		BV 4
 		Magazine 300
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 
 		Flight 2
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Right Wing>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	sub
 		Mount
 		Name <Right Wing Mount>
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Left Wing>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	sub
 		Mount
 		Name <Left Wing Mount>
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		Flight 4
+		Name_I18N <>
 	end
 end

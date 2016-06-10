@@ -1,28 +1,40 @@
 Gerwalk 3
 Name <Neko>
 Desig <MCI-74>
+Desig_I18N <MCI-74>
 SDL_Sprite <ger_neko.png>
 desc <Originally from Mars, the Neko is now a popular hybrid fighter throughout the solar system.>
 
 Mod Body
+	Name_I18N <>
 	Armor 3
 	Mass -3
 	sub
 		Mount
 		Name <Torso Mount>
+		Name_I18N <>
 
 		CPit
+		Name_I18N <>
+
+		Engine 3
+		Name_I18N <>
 
 		Gyro 3
+		Name_I18N <>
 
 		Sensor 7
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 
 		ArcJet 2
+		Name_I18N <>
 
 		BeamGun 1
 		Name <AM Beamgun>
+		Name_I18N <>
 		BV 4
 		Range 2
 		Type <INTERCEPT>
@@ -30,12 +42,14 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	sub
 		Hand
 		Name <Right Hand>
+		Name_I18N <>
 		inv
 			STC PAR-6
 		end
@@ -43,65 +57,80 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 2
 	Armor 3
 	Mass -2
 	sub
 		Hand
 		Name <Left Hand>
+		Name_I18N <>
 	end
 	inv
 		Shield 3
+		Name_I18N <>
 		DefBonus -1
 	end
 
 Mod Wing
 	Name <Right Wing>
+	Name_I18N <>
 	Armor 2
 	Mass -3
 	sub
 		Mount
 		Name <Right Wing Mount>
+		Name_I18N <>
 		inv
 			STC ICML-12
 		end
 
 		ArcJet 3
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Left Wing>
+	Name_I18N <>
 	Armor 2
 	Mass -3
 	sub
 		Mount
 		Name <Left Wing Mount>
+		Name_I18N <>
 		inv
 			STC ICML-12
 		end
 
 		ArcJet 3
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 2
 	Mass -2
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 
 		Flight 2
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 2
 	Mass -2
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 
 		Flight 2
+		Name_I18N <>
 	end
 end

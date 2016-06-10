@@ -55,7 +55,7 @@ Procedure MechaEngineeringInfo( Mek: GearPtr; GB: GameBoardPtr; Z: DynamicRect )
 
 implementation
 
-uses ghmodule,ghweapon,ghmecha,ghchars,ghsupport,ghmovers,ui4gh;
+uses i18nmsg,termenc,ghmodule,ghweapon,ghmecha,ghchars,ghsupport,ghmovers,ui4gh;
 
 const
 	StatusPerfect:TSDL_Color =	( r:  0; g:255; b: 65 );
@@ -101,16 +101,16 @@ Function JobAgeGenderDesc( NPC: GearPtr ): String;
 	{ Return the Job, Age, and Gender of the provided character in }
 	{ a nicely formatted string. }
 var
-	msg,job: String;
+	gender: String;
 begin
-	msg := BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ) + ' year old';
-    if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
-    	msg := msg + ' ' + LowerCase( GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ] );
-    end;
-	job := SAttValue( NPC^.SA , 'JOB' );
-	if job <> '' then msg := msg + ' ' + LowerCase( job );
-	msg := msg + '.';
-	JobAgeGenderDesc := msg;
+	gender := '';
+	if NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) <> NAV_Undefined then begin
+		gender := GenderName[ NAttValue( NPC^.NA , NAG_CharDescription , NAS_Gender ) ];
+	end;
+	JobAgeGenderDesc := ReplaceHash( I18N_MsgString('JobAgeGenderDesc'),
+				BStr( NAttValue( NPC^.NA , NAG_CharDescription , NAS_DAge ) + 20 ),
+				I18N_Name('GenderName',gender),
+				I18N_Name('Jobs',SAttValue( NPC^.SA , 'JOB' )) );
 end;
 
 
@@ -155,14 +155,8 @@ Procedure AI_Title( msg: String; C: TSDL_Color );
 	{ Draw a centered message on the current line. }
 var
 	MyImage: PSDL_Surface;
-	PLine: PChar;
 begin
-	pline := QuickPCopy( msg );
-	MyImage := TTF_RenderText_Solid( Game_Font , pline , C );
-	Dispose( pline );
-{$IFDEF LINUX}
-	if MyImage <> Nil then SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
-{$ENDIF}
+	MyImage := I18N_TTF_RenderText( Game_Font , msg , C );
 
 	if MyImage <> Nil then CDest.X := CZone.X + ( ( CZone.W - MyImage^.W ) div 2 );
 
@@ -176,15 +170,8 @@ Procedure AI_SmallTitle( msg: String; C: TSDL_Color );
 	{ Draw a centered message on the current line. }
 var
 	MyImage: PSDL_Surface;
-	PLine: PChar;
 begin
-	pline := QuickPCopy( msg );
-	MyImage := TTF_RenderText_Solid( Info_Font , pline , C );
-	Dispose( pline );
-
-{$IFDEF LINUX}
-	if MyImage <> Nil then SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
-{$ENDIF}
+	MyImage := I18N_TTF_RenderText( Info_Font , msg , C );
 
 	CDest.X := CZone.X + ( ( CZone.W - MyImage^.W ) div 2 );
 
@@ -199,13 +186,16 @@ Procedure AI_Text( msg: String; C: TSDL_Color );
 	{ Draw a text message starting from the current line. }
 var
 	MyText: PSDL_Surface;
-	PLine: PChar;
 begin
-    MyText := PrettyPrint( msg , CDest.W, C, True, Info_Font );
+	MyText := PrettyPrint( msg , CDest.W, C, True, Info_Font );
 	if MyText <> Nil then begin
 		SDL_SetClipRect( Game_Screen , @CZone );
 		SDL_BlitSurface( MyText , Nil , Game_Screen , @CDest );
-        CDest.Y := CDest.Y + MyText^.H + 8;
+		CDest.X := CZone.X;
+		if TERMINAL_bidiRTL then begin
+			CDest.X := CDest.X + CZone.W - MyText^.W;
+		end;
+		CDest.Y := CDest.Y + MyText^.H + 8;
 		SDL_FreeSurface( MyText );
 		SDL_SetClipRect( Game_Screen , Nil );
 	end;
@@ -215,15 +205,8 @@ Procedure AI_PrintFromRight( msg: String; Tab: Integer; C: TSDL_Color );
 	{ Draw a left justified message on the current line. }
 var
 	MyImage: PSDL_Surface;
-	PLine: PChar;
 begin
-	pline := QuickPCopy( msg );
-	MyImage := TTF_RenderText_Solid( Info_Font , pline , C );
-	Dispose( pline );
-
-{$IFDEF LINUX}
-	if MyImage <> Nil then SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
-{$ENDIF}
+	MyImage := I18N_TTF_RenderText( Info_Font , msg , C );
 
 	CDest.X := CZone.X + Tab;
 
@@ -235,15 +218,8 @@ Procedure AI_PrintFromLeft( msg: String; Tab: Integer; C: TSDL_Color );
 	{ Draw a left justified message on the current line. }
 var
 	MyImage: PSDL_Surface;
-	PLine: PChar;
 begin
-	pline := QuickPCopy( msg );
-	MyImage := TTF_RenderText_Solid( Info_Font , pline , C );
-	Dispose( pline );
-
-{$IFDEF LINUX}
-	if MyImage <> Nil then SDL_SetColorKey( MyImage , SDL_SRCCOLORKEY , SDL_MapRGB( MyImage^.Format , 0 , 0, 0 ) );
-{$ENDIF}
+	MyImage := I18N_TTF_RenderText( Info_Font , msg , C );
 
 	CDest.X := CZone.X + Tab - MyImage^.W;
 
@@ -529,11 +505,11 @@ begin
 	LocationInfo( Mek , GB );
 
 	{ Print MV, TR, and SN. }
-	AI_PrintFromRight( 'MV:' + SgnStr(MechaManeuver(Mek)) , ( CZone.W * 3 ) div 4 , InfoGreen );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('MekStatDisplay','MV:') , SgnStr(MechaManeuver(Mek)) ) , ( CZone.W * 3 ) div 4 , InfoGreen );
 	AI_NextLine;
-	AI_PrintFromRight( 'TR:' + SgnStr(MechaTargeting(Mek)) , ( CZone.W * 3 ) div 4 , InfoGreen );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('MekStatDisplay','TR:') , SgnStr(MechaTargeting(Mek)) ) , ( CZone.W * 3 ) div 4 , InfoGreen );
 	AI_NextLine;
-	AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Mek)) , ( CZone.W * 3 ) div 4 , InfoGreen );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('MekStatDisplay','SE:') , SgnStr(MechaSensorRating(Mek)) ) , ( CZone.W * 3 ) div 4 , InfoGreen );
 	AI_NextLine;
 
     MyDest := CDest;
@@ -562,32 +538,34 @@ begin
 
 		AI_PrintFromRight( msg , 2 , C );
 
-		AI_PrintFromLeft( BStr( GearCurrentDamage( MD ) ) + 'HP' , ( CZone.W * 3 ) div 4 , HitsColor( MD ) );
+		AI_PrintFromLeft( ReplaceHash( I18N_MsgString('MekStatDisplay','HP') , BStr( GearCurrentDamage( MD ) ) ) , ( CZone.W * 3 ) div 4 , HitsColor( MD ) );
 		AI_NextLine;
 	end;
 
-    { Movement information. }
-    MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
-    if MM > 0 then begin
-	    msg := MoveModeName[ MM ];
-	    msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
-    end else msg := 'Immobile';
-    AI_SmallTitle( msg , InfoGreen );
+	{ Movement information. }
+	MM := NAttValue( Mek^.NA , NAG_Action , NAS_MoveMode );
+	if MM > 0 then begin
+		msg := I18N_Name('MoveModeName',MoveModeName[ MM ]);
+		msg := msg + ' (' + BStr( Speedometer( Mek ) ) + 'dpr)';
+	end else begin
+		msg := I18N_MsgString('MekStatDisplay','Immobile');
+	end;
+	AI_SmallTitle( msg , InfoGreen );
 
-    if Longform then begin
-	    AI_SmallTitle( MassString( Mek ) + ' ' + FormName[Mek^.S] + '  PV:' + BStr( GearValue( Mek ) ) , InfoHilight );
+	if Longform then begin
+		AI_SmallTitle( MassString( Mek ) + ' ' + FormName[Mek^.S] + '  ' + ReplaceHash( I18N_MsgString('MekStatDisplay','PV:') , BStr( GearValue( Mek ) ) ) , InfoHilight );
 
-	    { Encumbrance information. }
+		{ Encumbrance information. }
 
-	    { Get the current mass of carried equipment. }
-	    CurM := EquipmentMass( Mek );
+		{ Get the current mass of carried equipment. }
+		CurM := EquipmentMass( Mek );
 
-	    { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
-	    MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
+		{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+		MaxM := ( GearEncumberance( Mek ) * 2 ) - 1;
 
-	    AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , InfoGreen );
-	    AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
-    end;
+		AI_PrintFromRight( I18N_MsgString('MekStatDisplay','Enc:') , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , I18N_MsgString('MekStatDisplay','Enc:') + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , InfoGreen );
+		AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+	end;
 end;
 
 Procedure CharacterInfo( Part: GearPtr; GB: GameBoardPtr; LongForm: Boolean );
@@ -604,54 +582,54 @@ begin
 	LocationInfo( Part , GB );
 
 	{ Print HP, ME, and SP. }
-	AI_PrintFromRight( 'HP:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'HP:' ) - 2 , InfoGreen );
+	AI_PrintFromRight( I18N_MsgString('CharacterInfo','HP:') , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'HP:' ) - 2 , InfoGreen );
 	AI_PrintFromRight( BStr( GearCurrentDamage(Part)) + '/' + BStr( GearMaxDamage(Part)) , ( CZone.W * 13 ) div 16 , HitsColor( Part ) );
 	AI_NextLine;
-	AI_PrintFromRight( 'St:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'St:' ) - 2 , InfoGreen );
+	AI_PrintFromRight( I18N_MsgString('CharacterInfo','St:') , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'St:' ) - 2 , InfoGreen );
 	AI_PrintFromRight( BStr( CharCurrentStamina(Part)) + '/' + BStr( CharStamina(Part)) , ( CZone.W * 13 ) div 16 , EnduranceColor( CharStamina(Part) , CharCurrentStamina(Part) ) );
 	AI_NextLine;
-	AI_PrintFromRight( 'Me:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Me:' ) - 2 , InfoGreen );
+	AI_PrintFromRight( I18N_MsgString('CharacterInfo','Me:') , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Me:' ) - 2 , InfoGreen );
 	AI_PrintFromRight( BStr( CharCurrentMental(Part)) + '/' + BStr( CharMental(Part)) , ( CZone.W * 13 ) div 16 , EnduranceColor( CharMental(Part) , CharCurrentMental(Part) ) );
 	AI_NextLine;
 
-    MyDest := CDest;
-    MyDest.X := ( CZone.W * 3 ) div 4 + CZone.X - 12;
+	MyDest := CDest;
+	MyDest.X := ( CZone.W * 3 ) div 4 + CZone.X - 12;
 	DisplayStatusFX( Part, MyDest );
 
-    CDest.Y := CZone.Y + 50 + TTF_FontLineSkip( Game_Font );
+	CDest.Y := CZone.Y + 50 + TTF_FontLineSkip( Game_Font );
 	if LongForm then AI_NextLine;
 
 
-    { Determine the spacing for the character's stats. }
-    Width := CZone.W div 4;
+	{ Determine the spacing for the character's stats. }
+	Width := CZone.W div 4;
 
-    { Show the character's stats. }
-    for t := 1 to ( NumGearStats div 4 ) do begin
-	    for tt := 1 to 4 do begin
-		    AI_PrintFromRight( StatName[ T * 4 + TT - 4 ][1] + StatName[ T * 4 + TT - 4 ][2] + ':' , ( TT-1 ) * Width + 1 , InfoGreen );
+	{ Show the character's stats. }
+	for t := 1 to ( NumGearStats div 4 ) do begin
+		for tt := 1 to 4 do begin
+			AI_PrintFromRight( HeadMBChar( I18N_Name('StatName', StatName[ T * 4 + TT - 4 ]) ) + ':' , ( TT-1 ) * Width + 1 , InfoGreen );
 
-		    { Determine the stat value. This may be higher or lower than natural... }
-		    S := CStat( Part , T * 4 + TT - 4 );
-		    if S > Part^.Stat[ T * 4 + TT - 4 ] then C := StatusPerfect
-		    else if S < Part^.Stat[ T * 4 + TT - 4 ] then C := StatusBad
-		    else C := StatusOK;
-		    AI_PrintFromLeft( BStr( S ) , TT * Width -5 , C );
-	    end;
-	    AI_NextLine;
-    end;
+			{ Determine the stat value. This may be higher or lower than natural... }
+			S := CStat( Part , T * 4 + TT - 4 );
+			if S > Part^.Stat[ T * 4 + TT - 4 ] then C := StatusPerfect
+			else if S < Part^.Stat[ T * 4 + TT - 4 ] then C := StatusBad
+			else C := StatusOK;
+			AI_PrintFromLeft( BStr( S ) , TT * Width -5 , C );
+		end;
+		AI_NextLine;
+	end;
 
-	    { Encumbrance information. }
-    if Longform then begin
+	{ Encumbrance information. }
+	if Longform then begin
 
-	    { Get the current mass of carried equipment. }
-	    CurM := EquipmentMass( Part );
+		{ Get the current mass of carried equipment. }
+		CurM := EquipmentMass( Part );
 
-	    { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
-	    MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+		{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+		MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
 
-	    AI_PrintFromRight( 'Enc:' , 1 , InfoGreen );
-	    AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , 36 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
-    end;
+		AI_PrintFromRight( I18N_MsgString('CharacterInfo','Enc:') , 1 , InfoGreen );
+		AI_PrintFromRight( BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 'kg' , 36 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+	end;
 end;
 
 Procedure MiscInfo( Part: GearPtr );
@@ -718,7 +696,7 @@ begin
 	if N > 0 then AI_PrintFromLeft( MassString( Part ) , CZone.W - 1 , InfoGreen );
 
 	AI_NextLine;
-	AI_SmallTitle( SkillMan[ Part^.S ].Name , BrightYellow );
+	AI_SmallTitle( I18N_Name('SkillMan',SkillMan[ Part^.S ].Name) , BrightYellow );
 	AI_SmallTitle( BStr( Part^.V ) + ' DP' , InfoGreen );
 end;
 
@@ -998,7 +976,7 @@ begin
 
 		{ Do the output. }
 		MyDest.X := MyZone.X + 10;
-		QuickText( StatName[ T ] , MyDest , NeutralGrey );
+		QuickText( I18N_Name( 'StatName', StatName[ T ] ) , MyDest , NeutralGrey );
 		msg := BStr( S );
 		MyDest.X := X0 - 30 - TextLength( Game_Font , msg );
 		QuickText( msg , MyDest , C );
@@ -1198,17 +1176,17 @@ begin
 	N := GearCurrentDamage( Part );
 	if N > 0 then msg := BStr( N )
 	else msg := '-';
-	AI_PrintFromRight( 'Damage: ' + msg, 8 , HitsColor( Part ) );
-    AI_NextLine;
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('LFGI_ForItems','Damage:') , msg ) , 8 , HitsColor( Part ) );
+	AI_NextLine;
 
 	{ Display the part's armor rating. }
 	N := GearCurrentArmor( Part );
 	if N > 0 then msg := BStr( N )
 	else msg := '-';
-	AI_PrintFromRight( 'Armor: ' + msg, 8 , ArmorColor( Part ) );
-    AI_NextLine;
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('LFGI_ForItems','Armor:') , msg ) , 8 , ArmorColor( Part ) );
+	AI_NextLine;
 
-	AI_PrintFromRight( 'Mass: ' + MassString( Part ) , 8 , InfoGreen );
+	AI_PrintFromRight( ReplaceHash( I18N_MsgString('LFGI_ForItems','Mass:') , MassString( Part ) ) , 8 , InfoGreen );
 	AI_NextLine;
 	AI_NextLine;
 
@@ -1222,7 +1200,7 @@ begin
     CDest.X := CZone.X;
     CDest.W := CZone.W;
     AI_Text( ExtendedDescription( Part ) , InfoGreen );
-    msg := SAttValue( Part^.SA , 'DESC' );
+    msg := FormatDescString(Part);
     if msg <> '' then AI_Text( msg, InfoGreen );
 end;
 
@@ -1234,126 +1212,126 @@ var
     n,mm,mspeed,hispeed,CurM,MaxM: Integer;
     SS: SensibleSpritePtr;
 begin
-    msg := TeamColorString( GB , Part );
-    CDest.X := CZone.X;
+	msg := TeamColorString( GB , Part );
+	CDest.X := CZone.X;
 	SS := ConfirmSprite( SAttValue(Part^.SA,'SDL_PORTRAIT') , msg , 160 , 160 );
 	if (SS = Nil) or (SS^.Img = Nil) then SS := ConfirmSprite( 'mecha_noimage.png', msg, 160 , 160 );
 	if SS <> Nil then DrawSprite( SS , CDest , 0 );
-    CDest.X := CDest.X + 173;
-    SS := ConfirmSprite( GearSpriteName(Nil,Part) , msg , 64 , 64 );
+	CDest.X := CDest.X + 173;
+	SS := ConfirmSprite( GearSpriteName(Nil,Part) , msg , 64 , 64 );
 	if SS <> Nil then DrawSprite( SS , CDest , Animation_Phase div 5 mod 8 );
 
-    CDest.X := CZone.X + 160;
-    CDest.Y := CDest.Y + 72;
-    CDest.W := CZone.W - 160;
-    DisplayModules( Part, CDest );
-    CDest.Y := CDest.Y + 50;
-    n := PercentDamaged( Part );
-    msg := BStr(n) + '%';
-    CMessage( msg, CDest, StatusColor( 100, n ) );
+	CDest.X := CZone.X + 160;
+	CDest.Y := CDest.Y + 72;
+	CDest.W := CZone.W - 160;
+	DisplayModules( Part, CDest );
+	CDest.Y := CDest.Y + 50;
+	n := PercentDamaged( Part );
+	msg := BStr(n) + '%';
+	CMessage( msg, CDest, StatusColor( 100, n ) );
 
-    if ReallyLong then begin
-        CDest.Y := CZone.Y + 174;
-	    AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] + '  PV:' + BStr( GearValue( Part ) ) , InfoHilight );
+	if ReallyLong then begin
+		CDest.Y := CZone.Y + 174;
+		AI_SmallTitle( MassString( Part ) + ' ' + FormName[Part^.S] + '  PV:' + BStr( GearValue( Part ) ) , InfoHilight );
 
-        { Get the current mass of carried equipment. }
-        CurM := EquipmentMass( Part );
+		{ Get the current mass of carried equipment. }
+		CurM := EquipmentMass( Part );
 
-        { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
-        MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
-        AI_SmallTitle( 'Enc: ' + MakeMassString( CurM, Part^.Scale ) + '/' + MakeMassString( MaxM, Part^.Scale ), EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+		{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+		MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+		AI_SmallTitle( ReplaceHash( I18N_MsgString('LFGI_ForMecha','Enc:') , MakeMassString( CurM, Part^.Scale ) , MakeMassString( MaxM, Part^.Scale ) ) , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
 
-        CDest.Y := CDest.Y + 5;
-        n := CDest.Y;
-        CDest.X := CZone.X;
-	    AI_PrintFromRight( 'MV:' + SgnStr(MechaManeuver(Part)) , 175, InfoGreen );
-	    AI_NextLine;
-	    AI_PrintFromRight( 'TR:' + SgnStr(MechaTargeting(Part)) , 175, InfoGreen );
-	    AI_NextLine;
-	    AI_PrintFromRight( 'SE:' + SgnStr(MechaSensorRating(Part)) , 175, InfoGreen );
-	    AI_NextLine;
-        hispeed := 0;
-        for mm := 1 to NumMoveMode do begin
-            mspeed := AdjustedMoveRate( Part , MM , NAV_NormSpeed );
-            if mspeed > 0 then begin
-            	AI_PrintFromRight( MoveDesc(Part,MM), 175, InfoGreen );
-            	AI_NextLine;
-            end;
-            if MoveLegal( Part, MM, NAV_FullSpeed, 0 ) then begin
-                mspeed := AdjustedMoveRate( Part , MM , NAV_FullSpeed );
-                if mspeed > hispeed then hispeed := mspeed;
-            end;
-        end;
-    	AI_PrintFromRight( ReplaceHash(MsgString('MAX_SPEED'),BStr(hispeed)), 175, InfoGreen );
-    	AI_NextLine;
+		CDest.Y := CDest.Y + 5;
+		n := CDest.Y;
+		CDest.X := CZone.X;
+		AI_PrintFromRight( ReplaceHash( I18N_MsgString('LFGI_ForMecha','MV:') , SgnStr(MechaManeuver(Part)) ) , 175, InfoGreen );
+		AI_NextLine;
+		AI_PrintFromRight( ReplaceHash( I18N_MsgString('LFGI_ForMecha','TR:') , SgnStr(MechaTargeting(Part)) ) , 175, InfoGreen );
+		AI_NextLine;
+		AI_PrintFromRight( ReplaceHash( I18N_MsgString('LFGI_ForMecha','SE:') , SgnStr(MechaSensorRating(Part)) ) , 175, InfoGreen );
+		AI_NextLine;
+		hispeed := 0;
+		for mm := 1 to NumMoveMode do begin
+			mspeed := AdjustedMoveRate( Part , MM , NAV_NormSpeed );
+			if mspeed > 0 then begin
+				AI_PrintFromRight( MoveDesc(Part,MM), 175, InfoGreen );
+				AI_NextLine;
+			end;
+			if MoveLegal( Part, MM, NAV_FullSpeed, 0 ) then begin
+				mspeed := AdjustedMoveRate( Part , MM , NAV_FullSpeed );
+				if mspeed > hispeed then hispeed := mspeed;
+			end;
+		end;
+		AI_PrintFromRight( ReplaceHash(MsgString('MAX_SPEED'),BStr(hispeed)), 175, InfoGreen );
+		AI_NextLine;
 
-	    MyDest.X := CZone.X;
-	    MyDest.Y := n;
-	    MyDest.W := 170;
-	    MyDest.H := CZone.Y + CZone.H - n;
-	    GameMsg( SAttValue( Part^.SA, 'DESC' ) , MyDest , InfoGreen, Info_Font );
-    end;
+		MyDest.X := CZone.X;
+		MyDest.Y := n;
+		MyDest.W := 170;
+		MyDest.H := CZone.Y + CZone.H - n;
+		GameMsg( FormatDescString(Part) , MyDest , InfoGreen, Info_Font );
+	end;
 end;
 
 Procedure LFGI_ForCharacters( Part: GearPtr; gb: GameBoardPtr );
-    { Longform info for whatever the heck this is. }
+	{ Longform info for whatever the heck this is. }
 var
-    MyDest: TSDL_Rect;
-    msg: String;
-    n,sval,CurM,MaxM: Integer;
-    SS: SensibleSpritePtr;
+	MyDest: TSDL_Rect;
+	msg: String;
+	n,sval,CurM,MaxM: Integer;
+	SS: SensibleSpritePtr;
 begin
-    msg := TeamColorString( GB , Part );
-    CDest.X := CZone.X;
-    DrawPortrait( GB, Part, CDest, False );
+	msg := TeamColorString( GB , Part );
+	CDest.X := CZone.X;
+	DrawPortrait( GB, Part, CDest, False );
 
-    N := CDest.Y;
+	N := CDest.Y;
 	AI_NextLine;
 
 	{ Print HP, ME, and SP. }
-	AI_PrintFromLeft( 'HP:' , 170 , InfoGreen );
+	AI_PrintFromLeft( I18N_MsgString('LFGI_ForCharacters','HP:') , 170 , InfoGreen );
 	AI_PrintFromRight( BStr( GearCurrentDamage(Part)) + '/' + BStr( GearMaxDamage(Part)) , 175 , HitsColor( Part ) );
 	AI_NextLine;
-	AI_PrintFromLeft( 'St:' , 170 , InfoGreen );
+	AI_PrintFromLeft( I18N_MsgString('LFGI_ForCharacters','St:') , 170 , InfoGreen );
 	AI_PrintFromRight( BStr( CharCurrentStamina(Part)) + '/' + BStr( CharStamina(Part)) , 175 , EnduranceColor( CharStamina(Part) , CharCurrentStamina(Part) ) );
 	AI_NextLine;
-	AI_PrintFromLeft( 'Me:' , 170 , InfoGreen );
+	AI_PrintFromLeft( I18N_MsgString('LFGI_ForCharacters','Me:') , 170 , InfoGreen );
 	AI_PrintFromRight( BStr( CharCurrentMental(Part)) + '/' + BStr( CharMental(Part)) , 175 , EnduranceColor( CharMental(Part) , CharCurrentMental(Part) ) );
 	AI_NextLine;
-    { Get the current mass, max mass of carried equipment. }
-    CurM := EquipmentMass( Part );
-    MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
-	AI_PrintFromLeft( 'Enc:' , 170 , InfoGreen );
+	{ Get the current mass, max mass of carried equipment. }
+	CurM := EquipmentMass( Part );
+	MaxM := ( GearEncumberance( Part ) * 2 ) - 1;
+	AI_PrintFromLeft( I18N_MsgString('LFGI_ForCharacters','Enc:') , 170 , InfoGreen );
 	AI_PrintFromRight( MakeMassString( CurM, Part^.Scale ), 175 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
-    AI_NextLine;
+	AI_NextLine;
 
-    CDest.X := CZone.X + 160;
-    CDest.Y := N + 72;
-    CDest.W := CZone.W - 160;
-    DisplayModules( Part, CDest );
-    CDest.Y := CDest.Y + 50;
-    n := PercentDamaged( Part );
-    msg := BStr(n) + '%';
-    CMessage( msg, CDest, StatusColor( 100, n ) );
+	CDest.X := CZone.X + 160;
+	CDest.Y := N + 72;
+	CDest.W := CZone.W - 160;
+	DisplayModules( Part, CDest );
+	CDest.Y := CDest.Y + 50;
+	n := PercentDamaged( Part );
+	msg := BStr(n) + '%';
+	CMessage( msg, CDest, StatusColor( 100, n ) );
 
-    CDest.X := CZone.X;
-    CDest.Y := CZone.Y + 174;
+	CDest.X := CZone.X;
+	CDest.Y := CZone.Y + 174;
 
 
-    for n := 1 to 4 do begin
-	    AI_PrintFromRight( StatName[n] + ':' , 8 , InfoGreen );
-	    AI_PrintFromLeft( BStr( CStat( Part, n ) ) , CZone.W div 2 - 8 , InfoGreen );
-	    AI_PrintFromRight( StatName[n+4] + ':' , CZone.W div 2 + 8 , InfoGreen );
-	    AI_PrintFromLeft( BStr( CStat( Part, n+4 ) ) , CZone.W - 8 , InfoGreen );
-	    AI_NextLine;
-    end;
+	for n := 1 to 4 do begin
+		AI_PrintFromRight( StatName[n] + ':' , 8 , InfoGreen );
+		AI_PrintFromLeft( BStr( CStat( Part, n ) ) , CZone.W div 2 - 8 , InfoGreen );
+		AI_PrintFromRight( StatName[n+4] + ':' , CZone.W div 2 + 8 , InfoGreen );
+		AI_PrintFromLeft( BStr( CStat( Part, n+4 ) ) , CZone.W - 8 , InfoGreen );
+		AI_NextLine;
+	end;
 
-    MyDest := CZone;
-    MyDest.X := MyDest.X + 10;
-    MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font );
-    MyDest.W := MyDest.W - 20;
-    MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
-    GameMsg( SAttValue( Part^.SA, 'BIO1' ) , MyDest , InfoGreen );
+	MyDest := CZone;
+	MyDest.X := MyDest.X + 10;
+	MyDest.Y := CDest.Y + TTF_FontLineSkip( Info_Font );
+	MyDest.W := MyDest.W - 20;
+	MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
+	GameMsg( SAttValue( Part^.SA, 'BIO1' ) , MyDest , InfoGreen );
 end;
 
 Procedure LFGI_ForScenes( Part: GearPtr; gb: GameBoardPtr );
@@ -1373,7 +1351,7 @@ begin
     MyDest.Y := CZone.Y + TTF_FontLineSkip( Info_Font ) + 165;
     MyDest.W := MyDest.W - 20;
     MyDest.H := MyDest.H - ( CDest.Y - CZone.Y ) - 40 - TTF_FontLineSkip( Info_Font );
-    GameMsg( SAttValue( Part^.SA , 'DESC' ) , MyDest , InfoGreen );
+    GameMsg( FormatDescString(Part) , MyDest , InfoGreen );
 end;
 
 
@@ -1397,24 +1375,24 @@ begin
 end;
 
 Procedure DrawBackpackHeader( PC: GearPtr );
-    { Add a header to the backpack display showing the PC's name and }
-    { encumberance status. }
+	{ Add a header to the backpack display showing the PC's name and }
+	{ encumberance status. }
 var
-    MyDest: TSDL_Rect;
-    CurM,MaxM: Integer;
+	MyDest: TSDL_Rect;
+	CurM,MaxM: Integer;
 begin
-    MyDest := ZONE_BPHeader.GetRect();
+	MyDest := ZONE_BPHeader.GetRect();
 	SetInfoZone( MyDest );
 	AI_Title( LanceMateMenuName(PC) , NeutralGrey );
 
-    { Get the current mass of carried equipment. }
-    CurM := EquipmentMass( PC );
+	{ Get the current mass of carried equipment. }
+	CurM := EquipmentMass( PC );
 
-    { Get the maximum mass that can be carried before encumbrance penalties are incurred. }
-    MaxM := ( GearEncumberance( PC ) * 2 ) - 1;
+	{ Get the maximum mass that can be carried before encumbrance penalties are incurred. }
+	MaxM := ( GearEncumberance( PC ) * 2 ) - 1;
 
-    AI_PrintFromRight( 'Enc:' , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , 'Enc:' + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , NeutralGrey );
-    AI_PrintFromRight( MakeMassString( CurM, PC^.Scale ) + '/' + MakeMassString( MaxM, PC^.Scale ) , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
+	AI_PrintFromRight( I18N_MsgString('MekStatDisplay','Enc:') , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , I18N_MsgString('MekStatDisplay','Enc:') + BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , NeutralGrey );
+	AI_PrintFromRight( MakeMassString( CurM, PC^.Scale ) + '/' + MakeMassString( MaxM, PC^.Scale ) , ( CZone.W * 13 ) div 16 - TextLength( Info_Font , BStr( CurM div 2 ) + '.' + BStr( ( CurM mod 2 ) * 5 ) + '/' + BStr( ( MaxM ) div 2 ) + '.' + BStr( ( ( MaxM ) mod 2 ) * 5 ) + 't' ) - 24 , EnduranceColor( ( MaxM + 1  ) , ( MaxM + 1  ) - CurM ) );
 
 end;
 

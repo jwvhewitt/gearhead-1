@@ -105,13 +105,22 @@ end;
 Procedure InitMetaTerrain( Part: GearPtr );
 	{ Initialize this metaterrain gear for a nice default example of }
 	{ the terrain type it's supposed to represent. }
+var
+	Name: String;
+	Name_I18N: String;
 begin
 	{ If this is a part for which we have a standard script, }
 	{ install that script now. }
 	if ( Part^.S >= 1 ) and ( Part^.S <= NumBasicMetaTerrain ) then begin
 		SetNAtt( Part^.NA , NAG_Display , 0 , Meta_Terrain_Sprite[ Part^.S ] );
 		SetSAtt( Part^.SA , 'ROGUECHAR <' + SAttValue( Meta_Terrain_Scripts[ Part^.S ] , 'roguechar' ) + '>' );
-		SetSAtt( Part^.SA , 'NAME <' + SAttValue( Meta_Terrain_Scripts[ Part^.S ] , 'NAME' ) + '>' );
+		Name := SAttValue( Meta_Terrain_Scripts[ Part^.S ] , 'NAME' );
+		Name_I18N := SAttValue( Meta_Terrain_Scripts[ Part^.S ] , 'NAME_I18N' );
+		if Length(Name) <= 0 then begin
+			Name := Name_I18N;
+		end;
+		SetSAtt( Part^.SA , 'NAME <' + Name + '>' );
+		SetSAtt( Part^.SA , 'NAME_I18N <' + Name_I18N + '>' );
 		SetSAtt( Part^.SA , 'SDL_SPRITE <' + SAttValue( Meta_Terrain_Scripts[ Part^.S ] , 'SDL_SPRITE' ) + '>' );
 	end;
 

@@ -125,6 +125,7 @@ Const
 
 	DefaultScale = 2; {The default map scale. 2 = Mecha Scale}
 
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	NumTerr = 42;
 	TerrMan: Array [1..NumTerr] of TerrDesc = (
 	(	name: 'Open Ground';

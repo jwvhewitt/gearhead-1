@@ -1,6 +1,7 @@
 Battroid 7
 Name <Chimentero>
 Desig <CHR-3L>
+Desig_I18N <CHR-3L>
 SDL_Sprite <btr_chimentero.png>
 desc <This mecha is Aegis Overlord's city-smashing siege breaker. It has been nicknamed "The Gargoyle" due to its fearsome appearance.>
 
@@ -8,14 +9,18 @@ Mod Storage
 	Armor 6
 	Mass -1
 	Name <Right Thruster>
+	Name_I18N <>
 	sub
 		HoverJet 13
+		Name_I18N <>
 
 		Mount
 		Name <Right Thruster Mount>
+		Name_I18N <>
 		inv
 			BeamGun 8
 			Name <Heavy Phase Cannon>
+			Name_I18N <>
 			Acc -1
 			Range 7
 			BV 5
@@ -25,14 +30,17 @@ Mod Storage
 	end
 	inv
 		StorageArmor 3
+		Name_I18N <>
 		Mass -5
 		sub
 			MLauncher 20
 			Name <Leveler Missiles>
+			Name_I18N <>
 			Type <BLAST 1>
 			Magazine 2
 			sub
 				Rockets 20
+				Name_I18N <>
 			end
 		end
 	end
@@ -41,14 +49,18 @@ Mod Storage
 	Armor 6
 	Mass -1
 	Name <Left Thruster>
+	Name_I18N <>
 	sub
 		HoverJet 13
+		Name_I18N <>
 
 		Mount
 		Name <Left Thruster Mount>
+		Name_I18N <>
 		inv
 			BeamGun 8
 			Name <Heavy Phase Cannon>
+			Name_I18N <>
 			Acc -1
 			Range 7
 			BV 5
@@ -58,40 +70,50 @@ Mod Storage
 	end
 	inv
 		StorageArmor 3
+		Name_I18N <>
 		Mass -5
 		sub
 			MLauncher 20
 			Name <Leveler Missiles>
+			Name_I18N <>
 			Type <BLAST 1>
 			Magazine 2
 			sub
 				Rockets 20
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -4
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Sensor 9
+		Name_I18N <>
 
 		TarComp 6
+		Name_I18N <>
 
 		Gyro 5
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		BeamGun 15
 		Name <Plasma Core Cannon>
+		Name_I18N <>
 		Range 14
 		Integral
 		Acc 1
@@ -99,24 +121,29 @@ Mod Body
 
 		MLauncher 12
 		Name <Drone Launcher>
+		Name_I18N <>
 		Range 5
 		Magazine 12
 		sub
 			Rockets 12
+			Name_I18N <>
 			Type <DRONE>
 		end
 
 		Mount
 		Name <Top Weapon Mount>
+		Name_I18N <>
 		inv
 			MLauncher 3
 			Name <Hellfire Rocket Pack>
+			Name_I18N <>
 			Type <BURN SWARM>
 			Range 6
 			Acc -1
 			Magazine 60
 			sub
 				Rockets 3
+				Name_I18N <>
 			end
 		end
 	end
@@ -126,14 +153,18 @@ Mod Arm
 	Armor 7
 	Mass -5
 	Name <Right Arm>
+	Name_I18N <>
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			Gun 22
 			Name <Monster Assault Cannon>
+			Name_I18N <>
 			Type <SWARM>
 			Acc -2
 			BV 4
@@ -143,16 +174,19 @@ Mod Arm
 			Mass -7
 			sub
 				Ammo 22
+				Name_I18N <>
 				Mass -3
 			end
 		end
 
 		MLauncher 20
 		Name <Leveler Missiles>
+		Name_I18N <>
 		Type <BLAST 1>
 		Magazine 2
 		sub
 			Rockets 20
+			Name_I18N <>
 		end
 	end
 
@@ -161,14 +195,18 @@ Mod Arm
 	Armor 7
 	Mass -5
 	Name <Left Arm>
+	Name_I18N <>
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			Gun 22
 			Name <Monster Assault Cannon>
+			Name_I18N <>
 			Type <SWARM>
 			Acc -2
 			BV 4
@@ -178,16 +216,19 @@ Mod Arm
 			Mass -7
 			sub
 				Ammo 22
+				Name_I18N <>
 				Mass -3
 			end
 		end
 
 		MLauncher 20
 		Name <Leveler Missiles>
+		Name_I18N <>
 		Type <BLAST 1>
 		Magazine 2
 		sub
 			Rockets 20
+			Name_I18N <>
 		end
 	end
 
@@ -196,15 +237,19 @@ Mod Leg
 	Armor 7
 	Mass -7
 	Name <Right Leg>
+	Name_I18N <>
 	sub
 		HoverJet 6
+		Name_I18N <>
 
 		MLauncher 20
 		Name <Leveler Missiles>
+		Name_I18N <>
 		Type <BLAST 1>
 		Magazine 3
 		sub
 			Rockets 20
+			Name_I18N <>
 		end
 	end
 
@@ -213,25 +258,31 @@ Mod Leg
 	Armor 7
 	Mass -7
 	Name <Left Leg>
+	Name_I18N <>
 	sub
 		HoverJet 6
+		Name_I18N <>
 
 		MLauncher 20
 		Name <Leveler Missiles>
+		Name_I18N <>
 		Type <BLAST 1>
 		Magazine 3
 		sub
 			Rockets 20
+			Name_I18N <>
 		end
 	end
 
 Mod Tail
+	Name_I18N <>
 	Size 3
 	Armor 5
 	Mass -3
 	sub
 		Melee 10
 		Name <Tail Spike>
+		Name_I18N <>
 		Speed 3
 		Acc 2
 		mass -8

@@ -1,22 +1,34 @@
 AeroFighter 7
 Name <Gigas>
 Desig <AET-52>
+Desig_I18N <AET-52>
 SDL_Sprite <aer_gigas.png>
 desc <Aegis Overlord's main bomber.>
 
 Mod Body
+	Name_I18N <>
 	Armor 7
 	Mass -9
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
+		Engine 7
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 6
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 
 		Mount
 		Name <Body Mount>
+		Name_I18N <>
 		inv
 			STC SWML-60
 		end
@@ -24,40 +36,48 @@ Mod Body
 		STC LAS-5
 
 		Flight 8
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Right Wing>
+	Name_I18N <>
 	Size 8
 	Armor 7
 	Mass -10
 	sub
 		Mount
 		Name <Right Wing Mount>
+		Name_I18N <>
 		inv
 			STC NUKE-1
 		end
 
 		Flight 7
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Left Wing>
+	Name_I18N <>
 	Size 8
 	Armor 7
 	Mass -10
 	sub
 		Mount
 		Name <Left Wing Mount>
+		Name_I18N <>
 		inv
 			STC NUKE-1
 		end
 
 		Flight 7
+		Name_I18N <>
 	end
 
 Mod Storage
 	Name <Right Pod>
+	Name_I18N <>
 	Size 5
 	Armor 6
 	Mass -3
@@ -65,10 +85,12 @@ Mod Storage
 		STC PAR-6
 
 		Flight 2
+		Name_I18N <>
 	end
 
 Mod Storage
 	Name <Left Pod>
+	Name_I18N <>
 	Size 5
 	Armor 6
 	Mass -3
@@ -76,5 +98,6 @@ Mod Storage
 		STC PAR-6
 
 		Flight 2
+		Name_I18N <>
 	end
 end

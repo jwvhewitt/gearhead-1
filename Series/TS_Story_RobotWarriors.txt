@@ -165,38 +165,48 @@ inv
 Battroid 7
 name <Gladius>
 desig <RIG-03a>
+desig_I18N <RIG-03a>
 SDL_Sprite <btr_savin.png>
 SDL_PORTRAIT <mecha_savin.png>
 mod head
+	name_I18N <>
 	Armor 5
 	Size 5
 	mass -5
 	sub
 		Sensor 6
+		name_I18N <>
 
 		STC VC-5
 		type <INTERCEPT>
 		name <Vulcan Interceptor>
+		name_I18N <>
 	end
 	inv
 		HeadArmor 4
+		name_I18N <>
 		Mass -5
 	end
 mod body
+	name_I18N <>
 	Armor 7
 	mass -7
 	sub
 		CPit
+		name_I18N <>
 		Armor 2
 		Mass -1
 
 		TarComp 4
+		name_I18N <>
 
 		Gyro 5
+		name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 7
+		name_I18N <>
 		Armor 2
 		Mass -1
 
@@ -204,27 +214,33 @@ mod body
 		STC LAS-5
 
 		ArcJet 8
+		name_I18N <>
 	end
 	inv
 		BodyArmor 5
+		name_I18N <>
 		Mass -6
 		sub
 			ArcJet 4
+			name_I18N <>
 		end
 	end
 
 
 mod arm
 	name <Right Arm>
+	name_I18N <>
 	Size 6
 	Armor 5
 	mass -6
 	sub
 		Hand
 		name <Right Hand>
+		name_I18N <>
 		inv
 			EMelee 20
 			name <Golden Axe>
+			name_I18N <>
 			Acc 2
 			type <Extend Thrown Return Haywire>
 			Mass 5
@@ -232,14 +248,17 @@ mod arm
 
 		Mount
 		NAME <Right Arm Mount>
+		name_I18N <>
 		inv
 			STC LAS-10
 		end
 
 		ArcJet 4
+		name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		name_I18N <>
 		Mass -7
 		sub
 			STC ICML-12
@@ -248,20 +267,25 @@ mod arm
 
 mod arm
 	name <Left Arm>
+	name_I18N <>
 	Size 6
 	Armor 5
 	mass -6
 	sub
 		Hand
 		name <Left Hand>
+		name_I18N <>
 
 		Mount
 		NAME <Left Arm Mount>
+		name_I18N <>
 
 		ArcJet 4
+		name_I18N <>
 	end
 	inv
 		ArmArmor 6
+		name_I18N <>
 		Mass -7
 		sub
 			STC ICML-12
@@ -270,52 +294,65 @@ mod arm
 		EShield 7
 		DefBonus 2
 		name <Fire Shield>
+		name_I18N <>
 	end
 
 
 mod leg
 	name <Right Leg>
+	name_I18N <>
 	Armor 7
 	mass -7
 	sub
 		Mount
 		name <Right Leg Mount>
+		name_I18N <>
 		inv
 			STC SWML-20
 			name <Glitter Missiles>
+			name_I18N <>
 			type <Overload>
 		end
 
 		ArcJet 6
+		name_I18N <>
 	end
 	inv
 		LegArmor 6
+		name_I18N <>
 		Mass -7
 		sub
 			ArcJet 6
+			name_I18N <>
 		end
 	end
 
 mod leg
 	name <Left Leg>
+	name_I18N <>
 	Armor 7
 	mass -7
 	sub
 		Mount
 		name <Left Leg Mount>
+		name_I18N <>
 		inv
 			STC SWML-20
 			name <Glitter Missiles>
+			name_I18N <>
 			type <Overload>
 		end
 
 		ArcJet 6
+		name_I18N <>
 	end
 	inv
 		LegArmor 6
+		name_I18N <>
 		Mass -7
 		sub
 			ArcJet 6
+			name_I18N <>
 		end
 	end
 

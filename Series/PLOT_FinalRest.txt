@@ -87,6 +87,7 @@ end
 inv
 	Treasure 15000
 	name <Burial Urn>
+	name_I18N <Burial Urn>
 	% This item isn't really stolen, but the PC will get in trouble
 	% if he tries to sell it...
 	type <STOLEN>

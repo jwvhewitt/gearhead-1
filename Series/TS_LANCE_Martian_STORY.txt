@@ -87,6 +87,7 @@ inv
 
 	BigTreasure 25
 	name <Phobos Emerald>
+	name_I18N <Phobos Emerald>
 	mass 1
 	clue29 <Print 1>
 	Msg1 <Emeralds like these are formed on Phobos and Demois during cosmic storms. This one seems unusually large.>

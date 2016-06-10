@@ -1,15 +1,19 @@
 Battroid 8
 Name <Excel>
 Desig <EXC-02a>
+Desig_I18N <EXC-02a>
 SDL_Sprite <btr_excel.png>
 
 Mod Body
+	Name_I18N <>
 	Armor 8
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 
 		Engine 8
+		Name_I18N <>
 
 		STC LAS-10
 		Range 6
@@ -18,21 +22,28 @@ Mod Body
 		Range 6
 
 		Sensor 6
+		Name_I18N <>
 
 		Sensor 1
+		Name_I18N <>
 
 		TarComp 5
+		Name_I18N <>
 
 		Gyro 4
+		Name_I18N <>
 
 		ECM 1
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 5
+		Name_I18N <>
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 7
 	sub
 		STC LAS-10
@@ -42,17 +53,21 @@ Mod Arm
 	inv
 		Shield 3
 		Name <Armor Baffle>
+		Name_I18N <>
 		DefBonus -2
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 7
 	sub
 		Hand
+		Name_I18N <>
 
 		BeamGun 1
 		Name <Pulse Laser>
+		Name_I18N <>
 		Type <INTERCEPT>
 		Range 4
 		Acc 1
@@ -62,14 +77,17 @@ Mod Arm
 	inv
 		Shield 3
 		Name <Armor Baffle>
+		Name_I18N <>
 		DefBonus -2
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 8
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 8
 end

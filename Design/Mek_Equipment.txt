@@ -4,16 +4,19 @@
 
 Melee 2
 Name <Mecha Knife>
+Name_I18N <>
 Scale 2
 Acc 1
 Speed 3
 
 Melee 5
 Name <Mecha Sword>
+Name_I18N <>
 Scale 2
 
 Melee 8
 Name <Mecha Axe>
+Name_I18N <>
 Scale 2
 Acc -1
 
@@ -23,11 +26,13 @@ Acc -1
 
 EMelee 6
 Name <Plasma Lance>
+Name_I18N <>
 Scale 2
 Acc 1
 
 EMelee 15
 Name <Thermal Axe>
+Name_I18N <>
 Scale 2
 Speed 1
 Mass 7
@@ -148,23 +153,29 @@ STC SML-5
 
 MLauncher 10
 Name <Drone Launcher>
+Name_I18N <>
 Desig <DRL-3>
+Desig_I18N <DRL-3>
 Scale 2
 Range 6
 Magazine 3
 sub
 	Rockets 10
+	Name_I18N <>
 	Type <DRONE>
 end
 
 MLauncher 10
 Name <Drone Launcher>
+Name_I18N <>
 Desig <DRL-12>
+Desig_I18N <DRL-12>
 Scale 2
 Range 6
 Magazine 12
 sub
 	Rockets 10
+	Name_I18N <>
 	Type <DRONE>
 end
 
@@ -174,52 +185,63 @@ end
 
 Shield 2
 Name <Small Shield>
+Name_I18N <>
 DefBonus -2
 Scale 2
 
 Shield 4
 Name <Medium Shield>
+Name_I18N <>
 DefBonus -1
 Scale 2
 
 Shield 4
 Name <Medium Shield>
+Name_I18N <>
 DefBonus -1
 Scale 2
 
 Shield 4
 Name <Medium Shield>
+Name_I18N <>
 DefBonus -1
 Scale 2
 
 Shield 6
 Name <Large Shield>
+Name_I18N <>
 Scale 2
 
 Shield 6
 Name <Large Shield>
+Name_I18N <>
 Scale 2
 
 Shield 8
 Name <Body Shield>
+Name_I18N <>
 DefBonus 1
 Scale 2
 
 EShield 3
 Name <Small Beam Shield>
+Name_I18N <>
 DefBonus 1
 Scale 2
 
 EShield 5
 Name <Medium Beam Shield>
+Name_I18N <>
 Scale 2
 
 EShield 5
 Name <Medium Beam Shield>
+Name_I18N <>
 Scale 2
 
 EShield 9
 Name <Large Beam Shield>
+Name_I18N <>
 DefBonus -1
 Scale 2
 
@@ -228,118 +250,163 @@ Scale 2
 %  *****************
 
 Sensor 1
+Name_I18N <>
 
 Sensor 2
+Name_I18N <>
 
 Sensor 3
+Name_I18N <>
 
 Sensor 4
+Name_I18N <>
 
 Sensor 5
+Name_I18N <>
 
 Sensor 6
+Name_I18N <>
 
 Sensor 7
+Name_I18N <>
 
 Sensor 8
+Name_I18N <>
 
 Sensor 9
+Name_I18N <>
 
 Sensor 10
+Name_I18N <>
 
 TarComp 1
+Name_I18N <>
 
 TarComp 2
+Name_I18N <>
 
 TarComp 3
+Name_I18N <>
 
 TarComp 5
+Name_I18N <>
 
 TarComp 7
+Name_I18N <>
 
 TarComp 9
+Name_I18N <>
 
 ECM 1
+Name_I18N <>
 
 ECM 2
+Name_I18N <>
 
 ECM 3
+Name_I18N <>
 
 ECM 4
+Name_I18N <>
 
 ECM 5
+Name_I18N <>
 
 ECM 6
+Name_I18N <>
 
 %  **************************
 %  ***  MOVEMENT SYSTEMS  ***
 %  **************************
 
 Wheels 3
+Name_I18N <>
 Scale 2
 
 Wheels 5
+Name_I18N <>
 Scale 2
 
 Wheels 7
+Name_I18N <>
 Scale 2
 
 Tracks 3
+Name_I18N <>
 Scale 2
 
 Tracks 5
+Name_I18N <>
 Scale 2
 
 Tracks 7
+Name_I18N <>
 Scale 2
 
 HoverJet 3
+Name_I18N <>
 Scale 2
 
 HoverJet 5
+Name_I18N <>
 Scale 2
 
 HoverJet 7
+Name_I18N <>
 Scale 2
 
 Flight 2
+Name_I18N <>
 Scale 2
 
 Flight 3
+Name_I18N <>
 Scale 2
 
 Flight 4
+Name_I18N <>
 Scale 2
 
 Flight 5
+Name_I18N <>
 Scale 2
 
 Flight 7
+Name_I18N <>
 Scale 2
 
 ArcJet 1
+Name_I18N <>
 Scale 2
 
 ArcJet 2
+Name_I18N <>
 Scale 2
 
 ArcJet 3
+Name_I18N <>
 Scale 2
 
 ArcJet 5
+Name_I18N <>
 Scale 2
 
 ArcJet 7
+Name_I18N <>
 Scale 2
 
 Overcharger 1
+Name_I18N <>
 Scale 2
 
 Overcharger 3
+Name_I18N <>
 Scale 2
 
 Overcharger 5
+Name_I18N <>
 Scale 2
 
 Overcharger 7
+Name_I18N <>
 Scale 2

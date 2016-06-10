@@ -61,6 +61,7 @@ end
 inv
 	Gun 6
 	name <Peacemaker>
+	name_I18N <Peacemaker>
 	Range 5
 	BV 3
 	Magazine 80
@@ -69,27 +70,32 @@ inv
 	Recharge 7
 	sub
 		ammo 6
+		name_I18N <>
 		type <ARMORPIERCING>
 		mass -1
 	end
 
 	BodyArmor 9
 	name <SWAT Armor>
+	name_I18N <SWAT Armor>
 	Mass -13
 	sub
 		MLauncher 3
 		name <Rocket Pack>
+		name_I18N <Rocket Pack>
 		Acc -1
 		Magazine 30
 		range 8
 		type <SWARM>
 		sub
 			Rockets 3
+			name_I18N <>
 		end
 	end
 
 	Melee 23
 	name <Hammer of Justice>
+	name_I18N <Hammer of Justice>
 	mass -15
 	type <BRUTAL EXTEND THROWN RETURNING>
 	Acc 2
@@ -97,9 +103,11 @@ inv
 
 	HeadArmor 9
 	name <SWAT Helmet>
+	name_I18N <SWAT Helmet>
 	mass -16
 	sub
 		PCS 3
+		name_I18N <>
 		mass -2
 	end
 

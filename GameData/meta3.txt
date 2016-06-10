@@ -1,5 +1,6 @@
 % Default City Scripts %
 name <City>
+name_I18N <>
 use <if= StatVal STAT_MetaVisibility 0 ifNoObjections EWM StatVal 4 ifFactionEnemy SceneFaction StatVal 4 else GoEnter Goto GoFight>
 GoFight <ifG SkRoll 11 15 else GoNoSee ifYesNo 2 3 4 else GoStartCombat Reputation 3 -d3 ifG SkRoll 25 15 else GoStealthFail Print 5 Exit StatVal 4>
 GoNoSee <Alert 1 Goto GoStartCombat>

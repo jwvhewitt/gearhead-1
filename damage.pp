@@ -101,7 +101,7 @@ Procedure ApplyCyberware( PC,Cyber: GearPtr );
 
 implementation
 
-uses gearutil,ghchars,ghguard,ghmecha,ghmodule,ghmovers,ghsensor,
+uses i18nmsg,gearutil,ghchars,ghguard,ghmecha,ghmodule,ghmovers,ghsensor,
      ghsupport,ghswag,ghweapon,texutil,ui4gh;
 
 const
@@ -943,7 +943,7 @@ Function BasicWeaponDesc( Weapon: GearPtr ): String;
 begin
 	{Convert the size of the weapon to a string.}
 	if Weapon^.G = GG_Weapon then begin
-		BasicWeaponDesc := DCName( WeaponDC( Weapon , 0 ) , Weapon^.Scale ) + ' ' + DefaultWeaponName[Weapon^.S];
+		BasicWeaponDesc := DCName( WeaponDC( Weapon , 0 ) , Weapon^.Scale ) + ' ' + I18N_Name('DefaultWeaponName',DefaultWeaponName[Weapon^.S]);
 	end else begin
 		BasicWeaponDesc := DCName( WeaponDC( Weapon , 0 ) , Weapon^.Scale );
 	end;
@@ -1089,14 +1089,14 @@ begin
 		for t := 1 to NumGearStats do begin
 			if Part^.Stat[ T ] <> 0 then begin
 				if it <> '' then it := it + ', ';
-				it := it + SgnStr( Part^.Stat[ T ] ) + ' ' + StatName[ T ];
+				it := it + SgnStr( Part^.Stat[ T ] ) + ' ' + I18N_Name( 'StatName', StatName[ T ] );
 			end;
 		end;
 	end else if Part^.S = GS_SkillModifier then begin
 		if ( Part^.Stat[ STAT_SkillToModify ] >= 1 ) and ( Part^.Stat[ STAT_SkillToModify ] <= NumSkill ) then begin
-			it := SkillMan[ Part^.Stat[ STAT_SkillToModify ] ].Name;
+			it := I18N_Name( 'SkillMan', SkillMan[ Part^.Stat[ STAT_SkillToModify ] ].Name );
 		end else begin
-			it := 'Unknown Skill';
+			it := I18N_Name( 'SkillMan', 'Unknown Skill' );
 		end;
 		it := it + ' ' + SgnStr( Part^.Stat[ STAT_SkillModBonus ] );
 	end;

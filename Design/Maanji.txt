@@ -1,156 +1,196 @@
 Battroid 6
 Name <Maanji>
 Desig <KCF-21a>
+Desig_I18N <KCF-21a>
 SDL_Sprite <btr_maanji.png>
 desc <The Maanji was designed by Kettel Industries to be the companion to the Jos. It provides heavy fire support, and may quite correctly be described as an artillery carrier that flies.>
 
 Mod Head
+	Name_I18N <>
 	Size 5
 	Armor 5
 	Mass -4
 	sub
 		Sensor 9
+		Name_I18N <>
 
 		BeamGun 1
 		Name <AM Beamgun>
+		Name_I18N <>
 		Acc 1
 		BV 5
 		Type <INTERCEPT>
 	end
 	inv
 		HeadArmor 4
+		Name_I18N <>
 		Mass -8
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 6
 	Mass -5
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 6
+		Name_I18N <>
+
 		Sensor 1
+		Name_I18N <>
+
 
 		TarComp 2
+		Name_I18N <>
 
 		Gyro 2
+		Name_I18N <>
 
 		Mount
 		Name <Right Torso Mount>
+		Name_I18N <>
 		inv
 			MLauncher 12
 			Name <Heavy Missiles>
+			Name_I18N <>
 			Range 10
 			Acc 1
 			Type <BLAST 2>
 			Magazine 3
 			sub
 				Rockets 12
+				Name_I18N <>
 			end
 		end
 
 		Mount
 		Name <Left Torso Mount>
+		Name_I18N <>
 		inv
 			MLauncher 12
 			Name <Heavy Missiles>
+			Name_I18N <>
 			Range 10
 			Acc 1
 			Type <BLAST 2>
 			Magazine 3
 			sub
 				Rockets 12
+				Name_I18N <>
 			end
 		end
 
 		Flight 5
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 4
 		Name <Torso Armor>
+		Name_I18N <>
 		Mass -6
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 5
 	Mass -1
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			STC RG-16
 		end
 
 		Mount
 		Name <Right Arm Mount>
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 5
 		Name <Shoulder Plate>
+		Name_I18N <>
 		Mass -8
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 5
 	Mass -1
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Left Arm Mount>
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 5
 		Name <Shoulder Plate>
+		Name_I18N <>
 		Mass -8
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 7
 	Armor 5
 	Mass -6
 	sub
 		Mount
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 5
 		Name <Knee Plate>
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 7
 	Armor 5
 	Mass -6
 	sub
 		Mount
+		Name_I18N <>
 		inv
 			STC SWML-20
 		end
 
 		ArcJet 6
+		Name_I18N <>
 	end
 	inv
 		LegArmor 5
 		Name <Knee Plate>
+		Name_I18N <>
 		Mass -5
 	end
 end

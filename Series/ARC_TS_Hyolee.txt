@@ -80,6 +80,7 @@ inv
 
 	Chara
 	name <"Fluffy" the Styracosaurus>
+	Name_I18N <>
 	job <ANIMAL>
 	place <2 enemy>
 	roguechar <D>
@@ -96,32 +97,41 @@ inv
 	skill 12 8
 	skill 13 5
 	mod head
+		Name_I18N <>
 		Armor 1
 		sub
 			gear 4 0 2
 			name <Horns>
+			Name_I18N <>
 			stat 3 1
 		end
 	mod body
+		Name_I18N <>
 		Armor 5
 	mod leg
 		Armor 3
 		name <Right Front Leg>
+		Name_I18N <>
 	mod leg
 		Armor 3
 		name <Left Front Leg>
+		Name_I18N <>
 	mod leg
 		Armor 3
 		name <Right Rear Leg>
+		Name_I18N <>
 	mod leg
 		Armor 3
 		name <Left Rear Leg>
+		Name_I18N <>
 	mod tail
+		Name_I18N <>
 		Armor 2
 	end
 
 	Gear 12 1 25
 	name <Research Journal>
+	Name_I18N <>
 	scale 0
 	place <2>
 	home <Meadow>

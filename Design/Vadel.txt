@@ -1,59 +1,76 @@
 Battroid 5
 Name <Vadel>
 Desig <AD26>
+Desig_I18N <AD26>
 SDL_Sprite <btr_vadel.png>
 desc <Fast and well-armed, the Vadel is the high end battroid against which all others are measured.>
 SDL_PORTRAIT <mecha_vadel.png>
 
 Mod Head
+	Name_I18N <>
 	Size 3
 	Armor 5
 	Mass -3
 	sub
 		Sensor 5
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	Mass -6
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -1
 
 		Engine 5
+		Name_I18N <>
 
 		Gyro 2
+		Name_I18N <>
 
 		Sensor 1
+		Name_I18N <>
 
 		STC VC-5
 		Name <Twin Vulcan Cannon>
+		Name_I18N <>
 
 		STC VC-5
 		Name <Twin Vulcan Cannon>
+		Name_I18N <>
 
 		HoverJet 4
+		Name_I18N <>
 
 		Overcharger 8
+		Name_I18N <>
 	end
 	inv
 		BodyArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 4
 	Mass -3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			BeamGun 5
 			Name <Plasma Rifle>
+			Name_I18N <>
 			Acc 1
 			Range 6
 			BV 2
@@ -61,84 +78,106 @@ Mod Arm
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		Mass -3
 		sub
 			MLauncher 8
 			Name <Heavy Rocket Pod>
+			Name_I18N <>
 			Integral
 			Magazine 5
 			sub
 				Rockets 8
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 4
 	Mass -3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 7
 			Name <Sword>
+			Name_I18N <>
 		end
 	end
 	inv
 		ArmArmor 2
+		Name_I18N <>
 		Mass -3
 		sub
 			MLauncher 8
 			Name <Heavy Rocket Pod>
+			Name_I18N <>
 			Integral
 			Magazine 5
 			sub
 				Rockets 8
+				Name_I18N <>
 			end
 		end
 
 		Shield 3
+		Name_I18N <>
 		DefBonus -1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	Mass -3
 	sub
 		Mount
 		Name <Right Leg Mount>
+		Name_I18N <>
 
 		HoverJet 4
+		Name_I18N <>
 	end
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 		sub
 			HoverJet 3
+			Name_I18N <>
 
 			Overcharger 4
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	Mass -3
 	sub
 		Mount
 		Name <Left Leg Mount>
+		Name_I18N <>
 
 		HoverJet 4
+		Name_I18N <>
 	end
 	inv
 		LegArmor 3
+		Name_I18N <>
 		Mass -5
 		sub
 			HoverJet 3
+			Name_I18N <>
 
 			Overcharger 4
+			Name_I18N <>
 		end
 	end
 end

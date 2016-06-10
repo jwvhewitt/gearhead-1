@@ -74,5 +74,6 @@ end
 inv
 	Treasure 1500
 	name <Crystal Skull>
+	name_I18N <Crystal Skull>
 end
 

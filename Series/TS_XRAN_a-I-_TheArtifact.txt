@@ -184,6 +184,7 @@ inv
 
 	Treasure 1000
 	name <Magnus Emerald>
+	name_I18N <Magnus Emerald>
 	Clue37 <Print 1>
 	Msg1 <Peering into this gem, you can see faint geometric patterns embedded into the material. It looks like a computer circuit.>
 	Clue29 <Print 2>

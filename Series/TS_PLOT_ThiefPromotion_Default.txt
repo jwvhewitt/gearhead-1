@@ -121,6 +121,7 @@ inv
 	EMelee 9
 	scale 2
 	name <Neutron Lash>
+	name_I18N <Neutron Lash>
 	type <Extend Overload Flail>
 	Speed 6
 	Acc 1
@@ -131,72 +132,92 @@ inv
 	Gun 7
 	scale 2
 	name <Glass Cannon>
+	name_I18N <Glass Cannon>
 	Speed 4
 	range 5
 	magazine 20
 	desc <An experimental mecha weapon.>
 	sub
 		Ammo 7
+		name_I18N <>
 		type <RUST>
 	end
 
 	Battroid 4
 	name <Anubis>
+	name_I18N <Anubis>
 	desig <LH-X13>
+	desig_I18N <LH-X13>
 	SDL_SPRITE <btr_zerosaiko.png>
 	SDL_COLORS <103 3 45 80 90 85 200 150 0>
 	BioTech
 
 	mod head
+		name_I18N <>
 		size 3
 		Armor 4
 		mass -3
 		sub
 			Sensor 8
+			name_I18N <>
 			TarComp 2
+			name_I18N <>
 			STC LAS-5
 			name <Intercept Beam>
+			name_I18N <Intercept Beam>
 			type <INTERCEPT>
 			Speed 5
 		end
 	mod body
+		name_I18N <>
 		Armor 4
 		mass -5
 		sub
 			CPit
+			name_I18N <>
 			Armor 2
 			mass -1
 
 			Gyro 3
+			name_I18N <>
 			Armor 2
 			mass -1
 
 			Engine 4
+			name_I18N <>
 			Armor 2
 			mass -1
 			HighOutput
 
 			Mount
 			name <Right Shoulder Mount>
+			name_I18N <Right Shoulder Mount>
 
 			Mount
 			name <Left Shoulder Mount>
+			name_I18N <Left Shoulder Mount>
 
 			ECM 5
+			name_I18N <>
 
 			ArcJet 4
+			name_I18N <>
 		end
 	mod arm
 		size 3
 		Armor 4
 		mass -4
 		name <Right Arm>
+		name_I18N <Right Arm>
 		sub
 			Hand
+			name_I18N <>
 			Mount
 			name <Right Arm Mount>
+			name_I18N <Right Arm Mount>
 			Melee 6
 			name <Spike Lash>
+			name_I18N <Spike Lash>
 			Recharge 3
 			type <ArmorPiercing Extend Flail>
 		end
@@ -205,12 +226,16 @@ inv
 		Armor 4
 		mass -4
 		name <Left Arm>
+		name_I18N <Left Arm>
 		sub
 			Hand
+			name_I18N <>
 			Mount
 			name <Left Arm Mount>
+			name_I18N <Left Arm Mount>
 			Melee 6
 			name <Spike Lash>
+			name_I18N <Spike Lash>
 			Recharge 3
 			type <ArmorPiercing Extend Flail>
 		end
@@ -219,24 +244,31 @@ inv
 		armor 4
 		mass -5
 		name <Right Leg>
+		name_I18N <Right Leg>
 		sub
 			Mount
 			name <Right Leg Mount>
+			name_I18N <Right Leg Mount>
 			ArcJet 4
+			name_I18N <>
 		end
 	mod leg
 		size 5
 		armor 4
 		mass -5
 		name <Left Leg>
+		name_I18N <Left Leg>
 		sub
 			Mount
 			name <Left Leg Mount>
+			name_I18N <Left Leg Mount>
 			ArcJet 4
+			name_I18N <>
 		end
 
 	SkillModifier 40
 		Name <Active Stealth System>
+		Name_I18N <Active Stealth System>
 		Type <MECHA>
 		CyberSlot <ELECTRONICS>
 		SkillModStealth
@@ -245,6 +277,7 @@ inv
 
 	SkillModifier 40
 		Name <Combat Cortex>
+		Name_I18N <Combat Cortex>
 		Type <MECHA>
 		CyberSlot <PILOT INTERFACE>
 		SkillModMechaFighting

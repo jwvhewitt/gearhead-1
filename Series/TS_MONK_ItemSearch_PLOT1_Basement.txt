@@ -133,6 +133,7 @@ end
 inv
 	treasure 50
 	name <Aerial Photograph>
+	name_I18N <Aerial Photograph>
 	%   instead of investigation you can use Science(29), Mysticism(34),
 	%    CodeBreaking(32) or Survival(14)
 	% V1 = Location of next encounter

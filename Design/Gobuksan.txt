@@ -1,27 +1,34 @@
 GroundHugger 5
 Name <Gobuksan>
 Desig <KSP-12>
+Desig_I18N <KSP-12>
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	Mass -9
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -2
 
 		Sensor 6
+		Name_I18N <>
 
 		Gyro 2
+		Name_I18N <>
 		Armor 2
 		Mass -2
 
 		Engine 5
+		Name_I18N <>
 		Armor 2
 		Mass -2
 
 		Mount
 		Name <Right Body Mount>
+		Name_I18N <>
 		inv
 			STC LAS-10
 			Mass -2
@@ -29,16 +36,19 @@ Mod Body
 
 		Mount
 		Name <Left Body Mount>
+		Name_I18N <>
 		inv
 			STC LAS-10
 			Mass -2
 		end
 
 		Tracks 8
+		Name_I18N <>
 		Mass -8
 	end
 	inv
 		BodyArmor 5
+		Name_I18N <>
 		Fits <Groundhugger>
 		Mass -4
 		sub
@@ -47,16 +57,19 @@ Mod Body
 	end
 
 Mod Turret
+	Name_I18N <>
 	Armor 5
 	Mass -5
 	sub
 		STC GR-24
 		Name <Heavy Massdriver>
+		Name_I18N <>
 		Type <ANTIAIR BRUTAL SCATTER>
 		Integral
 	end
 	inv
 		TurretArmor 5
+		Name_I18N <>
 		Mass -4
 		sub
 			STC SML-5
@@ -64,13 +77,16 @@ Mod Turret
 	end
 
 Mod Storage
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -3
 	sub
 		Sensor 2
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 
 		STC LRL-32
 
@@ -79,6 +95,7 @@ Mod Storage
 	end
 	inv
 		StorageArmor 5
+		Name_I18N <>
 		Mass -5
 	end
 end

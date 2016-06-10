@@ -100,6 +100,7 @@ end
 inv
 	treasure 5000
 	name <Crystal Fragment>
+	name_I18N <Crystal Fragment>
 	%   instead of investigation you can use Science(29), Mysticism(34),
 	%    CodeBreaking(32) or Survival(14)
 	% V1 = Location of next encounter
@@ -117,6 +118,7 @@ inv
 
 	Treasure 1
 	name <Treasure Map>
+	name_I18N <Treasure Map>
 	place <4>
 	% V1 = Scene to be used in.
 	% V2 = E3 item

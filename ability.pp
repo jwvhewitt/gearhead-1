@@ -108,7 +108,7 @@ Function HasSkill( PC: GearPtr; Skill: Integer ): Boolean;
 
 implementation
 
-uses damage,gearutil,ghchars,ghholder,ghmecha,ghmodule,ghsupport,movement,
+uses i18nmsg,damage,gearutil,ghchars,ghholder,ghmecha,ghmodule,ghsupport,movement,
      rpgdice,texutil;
 
 Function LocatePilot( Mecha: GearPtr ): GearPtr;
@@ -290,7 +290,7 @@ begin
 	if not IsMasterGear( Part ) then M := FindMaster( Part );
 
 	if M = Nil then begin
-		if Part = Nil then name := 'Nothing'
+		if Part = Nil then name := I18N_MsgString('PilotName','Nothing')
 		else name := GearName( Part );
 
 	end else if M^.G = GG_Mecha then begin
@@ -830,12 +830,12 @@ begin
 				{ Check to see whether the mecha can }
 				{ fly or just jump. }
 				if JumpTime( Mek ) = 0 then begin
-					it := it + ' ' + MoveModeName[ MM ] + ':' + BStr( MMS );
+					it := it + ' ' + I18N_Name('MoveModeName',MoveModeName[ MM ]) + ':' + BStr( MMS );
 				end else begin
 					it := it + ' ' + SAttValue( ABILITY_MESSAGES , 'MEKDESC_Jump' ) + ':' + BStr( JumpTime( Mek ) ) + 's';
 				end;
 			end else begin
-				it := it + ' ' + MoveModeName[ MM ] + ':' + BStr( MMS );
+				it := it + ' ' + I18N_Name('MoveModeName',MoveModeName[ MM ]) + ':' + BStr( MMS );
 			end;
 		end;
 	end;

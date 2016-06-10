@@ -42,6 +42,8 @@ Function GearMaxArmor(Part: GearPtr): Integer;
 Function GenericName( Part: GearPtr ): String;
 Function GearName(Part: GearPtr): String;
 Function FullGearName(Part: GearPtr): String;
+Function InitialGearName( Part: GearPtr ): Char;
+Function FormatDescString( Part: GearPtr ): String;
 
 Function GearMass( Master: GearPtr ): LongInt;
 Function IntrinsicMass( Master: GearPtr ): LongInt;
@@ -90,7 +92,7 @@ Function IsExternalPart( Master,Part: GearPtr ): Boolean;
 
 implementation
 
-uses ghchars,ghcpit,ghguard,ghholder,ghmecha,ghmodule,ghmovers,
+uses i18nmsg,ui4gh,ghchars,ghcpit,ghguard,ghholder,ghmecha,ghmodule,ghmovers,
      ghintrinsic,ghprop,ghsensor,ghsupport,
      ghswag,ghweapon,texutil;
 
@@ -418,10 +420,21 @@ begin
 	{for nothing.}
 	if Part = Nil then Exit( '' );
 
-	it := SAttValue(Part^.SA,'NAME');
+	if I18N_UseNameORG then begin
+		it := SAttValue(Part^.SA,'NAME');
+		if '' = it then begin
+			it := SAttValue(Part^.SA,'NAME_I18N');
+		end;
+	end else begin
+		it := SAttValue(Part^.SA,'NAME_I18N');
+		if '' = it then begin
+			it := SAttValue(Part^.SA,'NAME');
+		end;
+	end;
 
 	if it = '' then it := GenericName( Part );
 
+	it := I18N_Name_withDefault( it, it );
     if Part^.g = GG_AbsolutelyNothing then it := '~!' + it;
 
 	GearName := it;
@@ -432,10 +445,64 @@ Function FullGearName(Part: GearPtr): String;
 var
 	it: String;
 begin
-	it := SAttValue( Part^.SA , 'DESIG' );
+	it := SAttValue( Part^.SA , 'DESIG_I18N' );
+	if ( '' = it ) then it := SAttValue( Part^.SA , 'DESIG' );
 	if it <> '' then it := it + ' ';
 	FullGearName := it + GearName( Part );
 end;
+
+Function InitialGearName( Part: GearPtr ): Char;
+	{ Return the initial char of GearName. }
+var
+	it: String;
+begin
+	it := GearName( Part );
+	if LengthMBChar(it[1]) <= 1 then Exit(it[1]);
+	it := SAttValue(Part^.SA,'NAME');
+	if '' = it then Exit(#0);
+	InitialGearName := it[1];
+end;
+
+
+Function FormatDescString( Part: GearPtr ): String;
+var
+	S0, S1, W, S1_tail: String;
+	DItS: Boolean;		{Do insert the space, or not.}
+	CW_I18N: Boolean;	{Is the current word I18N ?}
+begin
+	S0 := SAttValue( Part^.SA , 'DESC_I18N' );
+	if ( '' = S0 ) then S0 := SAttValue( Part^.SA , 'DESC' );
+	S1 := '';
+
+	while S0 <> '' do begin
+		W := ExtractWordForParse( S0, DItS, CW_I18N );
+
+		if UpCase( W ) = '\NAME2' then begin
+			W := ExtractWord( S0 );
+			W := I18N_Name( W, ExtractWord( S0 ) );
+		end else if UpCase( W ) = '\NAME' then begin
+			W := I18N_Name( ExtractWord( S0 ) );
+		end;
+
+		S1_tail := '';
+		if ( 1 <= Length(S1) ) then begin
+			S1_tail := Copy( S1, Length( S1 ), 1 );
+		end;
+		if ( ( 1 <= Length(W) ) and IsPunctuation( W[1] ) ) or ( '$' = S1_tail ) or ( '@' = S1_tail ) then begin
+			S1 := S1 + W;
+		end else begin
+			if DItS then begin
+				S1 := S1 + ' ' + W;
+			end else begin
+				S1 := S1 + W;
+			end;
+		end;
+
+	end;
+
+	FormatDescString := S1;
+end;
+
 
 Function ComponentMass( Part: GearPtr ): LongInt;
 	{Calculate the unscaled mas of PART, ignoring for the}
@@ -1411,7 +1478,8 @@ begin
 	it := Nil;
 	Name := UpCase( Name );
 	while LList <> Nil do begin
-		if UpCase( GearName( LList ) ) = Name then it := LList;
+		if UpCase( SAttValue( LList^.SA , 'NAME' ) ) = Name then it := LList;
+		if ( it = Nil ) then if UpCase( GearName( LList ) ) = Name then it := LList;
 		if ( it = Nil ) then it := SeekGearByName( LList^.SubCom , Name );
 		if ( it = Nil ) then it := SeekGearByName( LList^.InvCom , Name );
 		LList := LList^.Next;
@@ -1429,6 +1497,7 @@ begin
 	Name := UpCase( Name );
 	while LList <> Nil do begin
 		if UpCase( SAttValue( LList^.SA , 'DESIG' ) ) = Name then it := LList;
+		if ( it = Nil ) then if UpCase( SAttValue( LList^.SA , 'DESIG_I18N' ) ) = Name then it := LList;
 		if ( it = Nil ) then it := SeekGearByDesig( LList^.SubCom , Name );
 		if ( it = Nil ) then it := SeekGearByDesig( LList^.InvCom , Name );
 		LList := LList^.Next;

@@ -56,6 +56,7 @@ Procedure CheckSupportRange( Part: GearPtr );
 implementation
 
 const
+	{ PATCH_I18N: Don't translate here, use GameData/I18N_name.txt. }
 	SupName: Array [1..NumSupportType] of String = (
 		'Gyroscope','Engine'
 	);

@@ -21,5 +21,6 @@ end
 inv
 	Treasure 10
 	name <Gold Watch>
+	name_I18N <Gold Watch>
 	place <2>
 end

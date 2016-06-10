@@ -1,21 +1,26 @@
 Zoanoid 4
 Name <Fenris>
 Desig <TSD-1078>
+Desig_I18N <TSD-1078>
 SDL_Sprite <zoa_fenris.png>
 desc <One of BioCorp's "Biometrics" line. The structure of this mecha is based partially upon fossils of Tyrranosaurus Rex.>
 
 Mod Head
+	Name_I18N <>
 	Size 5
 	Armor 4
 	Mass -3
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
 		Sensor 3
+		Name_I18N <>
 
 		Melee 9
 		Name <Jaws>
+		Name_I18N <>
 		type <BRUTAL>
 		Acc 1
 		Speed 1
@@ -24,29 +29,43 @@ Mod Head
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	Mass -6
 	sub
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		MLauncher 3
 		Name <Thorn Missiles>
+		Name_I18N <>
 		Magazine 10
 		sub
 			Rockets 3
+			Name_I18N <>
 		end
 
 		TarComp 1
+		Name_I18N <>
 
 		Overcharger 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	Mass -5
 	sub
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			STC MAC-4
 		end
@@ -55,6 +74,7 @@ Mod Leg
 		Acc 2
 		Speed 3
 		Name <Claw>
+		Name_I18N <>
 		mass -2
 		Integral
 
@@ -62,12 +82,14 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 5
 	Armor 4
 	Mass -5
 	sub
 		Mount
 		Name <Left Weapon Mount>
+		Name_I18N <>
 		inv
 			STC MAC-4
 		end
@@ -76,12 +98,14 @@ Mod Leg
 		Acc 2
 		Speed 3
 		Name <Claw>
+		Name_I18N <>
 		mass -2
 		Integral
 
 	end
 
 Mod Tail
+	Name_I18N <>
 	Size 3
 	Armor 4
 	Mass -3

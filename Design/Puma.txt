@@ -1,44 +1,61 @@
 Battroid 4
 Name <Puma>
 Desig <LCA-1S>
+Desig_I18N <LCA-1S>
 desc <This is the main battroid used by the Solar Navy.>
 SDL_PORTRAIT <mecha_puma.png>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 3
 	sub
 		Sensor 6
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Claw Missiles>
+		Name_I18N <>
 		Range 3
 		Magazine 12
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 
-        ECM 3
+		ECM 3
 	end
-    inv
+	inv
 		BodyArmor 3
-        name <Puma Armor>
-    end
+		name <Puma Armor>
+		Name_I18N <>
+	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		Mount
 		Name <Right Weapon Mount>
+		Name_I18N <>
 		inv
 			STC LAS-10
 		end
@@ -46,36 +63,43 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		STC LAS-5
 	end
 	inv
 		EShield 2
-        name <Puma Shield>
+		name <Puma Shield>
+		Name_I18N <>
 		DefBonus 1
 	end
 
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 3
 	sub
 		Flight 5
+		Name_I18N <>
 	end
-    inv
+	inv
 		LegArmor 2
-    end
+	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 3
 	sub
 		Flight 5
+		Name_I18N <>
 	end
-    inv
+	inv
 		LegArmor 2
-    end
+	end
 end

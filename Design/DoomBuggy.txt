@@ -1,49 +1,68 @@
 GroundHugger 5
 Name <Doom Buggy>
 Desig <TPO-X>
+Desig_I18N <TPO-X>
 SDL_Sprite <ghu_doombuggy.png>
 Scale 1
 
 Mod Turret
+	Name_I18N <>
 	Armor 3
 	sub
 		Gun 1
 		Name <Chain Gun>
+		Name_I18N <>
 		Speed 3
 		BV 4
 		Magazine 50
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 
 		Mount
+		Name_I18N <>
 		inv
 			Gun 16
 			Name <Mech Cannon>
+			Name_I18N <>
 			Speed 3
 			Magazine 50
 			sub
 				Ammo 16
+				Name_I18N <>
 			end
 		end
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
+		Engine 5
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Sensor 2
+		Name_I18N <>
 
 		MLauncher 3
 		Name <Missile Pod>
+		Name_I18N <>
 		Speed 1
 		Magazine 16
 		sub
 			Rockets 3
+			Name_I18N <>
 		end
 
 		Wheels 6
+		Name_I18N <>
 	end
 end

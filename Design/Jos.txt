@@ -1,42 +1,56 @@
 Battroid 5
 Name <Jos>
 Desig <KCF-10c>
+Desig_I18N <KCF-10c>
 SDL_Sprite <btr_jos.png>
 desc <The Jos is Kettel Industries's premier battroid suit. They are hoping to land a contract with the Solar Navy for this design to replace the ageing Condor mecha.>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 4
 	Mass -4
 	sub
 		Sensor 5
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 2
 		Name <Helmet>
+		Name_I18N <>
 		Mass -4
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	Mass -3
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 5
+		Name_I18N <>
 
 		Sensor 1
+		Name_I18N <>
 
 		TarComp 1
+		Name_I18N <>
 
 		Gyro 2
+		Name_I18N <>
 
 		EMelee 6
 		Name <Beam Cutter>
+		Name_I18N <>
 		Acc 2
 		Speed 1
 		Type <INTERCEPT>
 
 		EMelee 6
 		Name <Beam Cutter>
+		Name_I18N <>
 		Acc 2
 		Speed 1
 		Type <INTERCEPT>
@@ -44,106 +58,130 @@ Mod Body
 	inv
 		BodyArmor 4
 		Name <Torso Armor>
+		Name_I18N <>
 		Mass -6
 		sub
 			STC VC-5
 			Name <Heavy Vulcan Cannon>
+			Name_I18N <>
 			Range 5
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -1
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 10
 			Name <Trident>
+			Name_I18N <>
 			Type <EXTEND RETURN THROWN>
 			Acc 2
 			Speed 3
 		end
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 4
 		Name <Shoulder Plate>
+		Name_I18N <>
 		Mass -6
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -1
 	sub
 		Hand
+		Name_I18N <>
 
 		ArcJet 4
+		Name_I18N <>
 	end
 	inv
 		ArmArmor 4
 		Name <Shoulder Plate>
+		Name_I18N <>
 		Mass -6
 
 		Shield 5
 		Name <Body Shield>
+		Name_I18N <>
 		DefBonus 1
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -5
 	sub
 		Mount
+		Name_I18N <>
 		inv
 			MLauncher 2
 			Name <Missile Pod>
+			Name_I18N <>
 			Type <SWARM>
 			Range 4
 			Magazine 36
 			sub
 				Rockets 2
+				Name_I18N <>
 			end
 		end
 
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 3
 		Name <Knee Plate>
+		Name_I18N <>
 		Mass -3
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -5
 	sub
 		Mount
+		Name_I18N <>
 		inv
 			MLauncher 2
 			Name <Missile Pod>
+			Name_I18N <>
 			Type <SWARM>
 			Range 4
 			Magazine 36
 			sub
 				Rockets 2
+				Name_I18N <>
 			end
 		end
 
 		ArcJet 5
+		Name_I18N <>
 	end
 	inv
 		LegArmor 3
 		Name <Knee Plate>
+		Name_I18N <>
 		Mass -3
 	end
 end

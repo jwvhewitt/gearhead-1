@@ -20,6 +20,7 @@ Story
 Inv
 	Chara
 	name <Cetus>
+	name_I18N <Cetus>
 	sdl_sprite <monster_cetus.png>
 	sdl_colors <150 112 89 255 212 195 200 80 120>
 	% Cetus is a bioconstruct the size of a mecha, and should be
@@ -47,10 +48,12 @@ Inv
 	skill 36 8
 
 	mod Turret
+	name_I18N <>
 	Armor 5
 	sub
 		BeamGun 1
 		name <Death Wave>
+		name_I18N <Death Wave>
 		Range 4
 		type <HYPER OVERLOAD>
 		Recharge 1
@@ -58,126 +61,155 @@ Inv
 	end
 	inv
 		TurretArmor 7
+		name_I18N <>
 		mass -14
 	end
 
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 3
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 2
 			range 7
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST>
 			magazine 1
 			Acc -1
 			sub
 				Rockets 2
+				name_I18N <Acid Spore>
 			end
 		end
 	end
 
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 3
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 2
 			range 7
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST>
 			magazine 1
 			Acc -1
 			sub
 				Rockets 2
+				name_I18N <Acid Spore>
 			end
 		end
 	end
 
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 3
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 2
 			range 7
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST>
 			magazine 1
 			Acc -1
 			sub
 				Rockets 2
+				name_I18N <Acid Spore>
 			end
 		end
 	end
 
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 3
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 2
 			range 7
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST>
 			magazine 1
 			Acc -1
 			sub
 				Rockets 2
+				name_I18N <Acid Spore>
 			end
 		end
 	end
 
 	Mod Wing
+	name_I18N <>
 	Armor 5
 	sub
 		Flight 3
+		name_I18N <>
 	end
 	inv
 		WingArmor 7
+		name_I18N <>
 		mass -14
 		sub
 			MLauncher 2
 			range 7
 			name <Acid Spore>
+			name_I18N <Acid Spore>
 			type <RUST>
 			magazine 1
 			Acc -1
 			sub
 				Rockets 2
+				name_I18N <Acid Spore>
 			end
 		end
 	end
 
 	Mod Tail
 	name <Tendril>
+	name_I18N <Tendril>
 	Armor 5
 	type <EXTEND ARMORPIERCING OVERLOAD>
 
 	Mod Tail
 	name <Tendril>
+	name_I18N <Tendril>
 	Armor 5
 	type <EXTEND ARMORPIERCING OVERLOAD>
 
 	Mod Tail
 	name <Tendril>
+	name_I18N <Tendril>
 	Armor 5
 	type <EXTEND ARMORPIERCING OVERLOAD>
 

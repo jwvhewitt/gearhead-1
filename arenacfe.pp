@@ -41,10 +41,10 @@ Procedure QuickTime( GB: GameBoardPtr; Time: LongInt );
 implementation
 
 {$IFDEF SDLMODE}
-uses ability,damage,effects,gearutil,ghchars,ghweapon,rpgdice,texutil,
+uses i18nmsg,ability,damage,effects,gearutil,ghchars,ghweapon,rpgdice,texutil,
      sdlinfo,sdlmap,sdlgfx;
 {$ELSE}
-uses ability,damage,effects,gearutil,ghchars,ghweapon,rpgdice,texutil,
+uses i18nmsg,ability,damage,effects,gearutil,ghchars,ghweapon,rpgdice,texutil,
      coninfo,conmap,context;
 {$ENDIF}
 
@@ -212,7 +212,7 @@ begin
 				FX2 := FX^.Next;
 				if ( FX^.G = NAG_StatusEffect ) then begin
 					if SX_Effect_String[ FX^.S ] <> '' then begin
-						EffectFrontEnd( GB , M , SX_Effect_String[ FX^.S ] , MSgString( 'Status_FXDesc' + BStr( FX^.S ) ) );
+						EffectFrontEnd( GB , M , SX_Effect_String[ FX^.S ] , I18N_MsgString( 'Status_FXDesc' + BStr( FX^.S ) ) );
 					end;
 
 					if ( FX^.V > 0 ) and ( SX_ResistTarget[ FX^.S ] = -1 ) then begin

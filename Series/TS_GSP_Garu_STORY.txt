@@ -80,6 +80,7 @@ inv
 
 	Treasure 500
 	name <GARU Serum>
+	name_I18N <GARU Serum>
 	type <STOLEN>
 	place <2>
 	use <ifYeSNo 1 2 3 Print 4 History 5 Trigger KEY SelfNID>

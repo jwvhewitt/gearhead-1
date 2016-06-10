@@ -1,41 +1,55 @@
 Arachnoid 3
 Name <Kojedo>
 Desig <YD-7>
+Desig_I18N <YD-7>
 SDL_Sprite <ara_kojedo.png>
 desc <The Federation Defense Force's main line gun carrier.>
 
 Mod Head
+	Name_I18N <>
 	Armor 2
 	Mass -2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
 		Mass -2
 
 		Sensor 6
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	Mass -2
 	sub
+
+		Engine 3
+		Name_I18N <>
+
 		Gyro 2
+		Name_I18N <>
 
 		STC AC-2
 
 		STC SWML-20
 
 		ECM 2
+		Name_I18N <>
 	end
 
 Mod Turret
+	Name_I18N <>
 	Size 2
 	Armor 2
 	Mass -2
 	sub
 		Sensor 1
+		Name_I18N <>
 
 		Mount
+		Name_I18N <>
 		inv
 			STC GR-12
 		end
@@ -43,37 +57,45 @@ Mod Turret
 
 Mod Leg
 	Name <Right Leg 1>
+	Name_I18N <>
 	Size 3
 	Armor 2
 	Mass -4
 	sub
 		Mount
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg 1>
+	Name_I18N <>
 	Size 3
 	Armor 2
 	Mass -4
 	sub
 		Mount
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg 2>
+	Name_I18N <>
 	Size 3
 	Armor 2
 	Mass -4
 	sub
 		Mount
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg 2>
+	Name_I18N <>
 	Size 3
 	Armor 2
 	Mass -4
 	sub
 		Mount
+		Name_I18N <>
 	end
 end

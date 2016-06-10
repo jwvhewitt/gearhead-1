@@ -1,55 +1,74 @@
 Battroid 6
 Name <Hariseng>
 Desig <MD7>
+Desig_I18N <MD7>
 SDL_Sprite <btr_hariseng.png>
 
 Mod Head
+	Name_I18N <>
 	Size 4
 	Armor 3
 	Mass -2
 	sub
 		Sensor 4
+		Name_I18N <>
 
 		TarComp 2
+		Name_I18N <>
 	end
 	inv
 		HeadArmor 3
+		Name_I18N <>
 		Mass -5
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 6
 	Mass -2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 6
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		Gun 8
 		Mass -2
 		Name <Flame Cannon>
+		Name_I18N <>
 		Type <BURN LINE>
 		Range 4
 		Acc -1
 		Magazine 10
 		sub
 			Ammo 8
+			Name_I18N <>
 		end
 	end
 	inv
 		BodyArmor 6
+		Name_I18N <>
 		Mass -10
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -2
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			Melee 16
 			Name <Naginata>
+			Name_I18N <>
 			Speed 1
 			Type <EXTEND>
 		end
@@ -58,6 +77,7 @@ Mod Arm
 	end
 	inv
 		ArmArmor 4
+		Name_I18N <>
 		Mass -7
 		sub
 			STC GHML-3
@@ -66,20 +86,24 @@ Mod Arm
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 4
 	Armor 5
 	Mass -2
 	sub
 		Hand
+		Name_I18N <>
 
 		STC MAC-4
 	end
 	inv
 		EShield 5
 		Name <Fan>
+		Name_I18N <>
 		DefBonus -1
 
 		ArmArmor 4
+		Name_I18N <>
 		Mass -7
 		sub
 			STC GHML-3
@@ -88,17 +112,21 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 5
 	inv
 		LegArmor 4
+		Name_I18N <>
 		Mass -6
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 5
 	inv
 		LegArmor 4
+		Name_I18N <>
 		Mass -6
 	end
 end

@@ -30,9 +30,9 @@ program GHArena;
 {$IFNDEF DEBUG}
 {$APPTYPE GUI}
 {$ENDIF}
-uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap;
+uses gears,i18nmsg,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap;
 {$ELSE}
-uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
+uses gears,i18nmsg,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
@@ -63,18 +63,18 @@ begin
 {$ELSE}
 	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_Menu );
 {$ENDIF}
-	AddRPGMenuItem( RPM , 'Start RPG Campaign' , 4 );
-	AddRPGMenuItem( RPM , 'Load RPG Campaign' , 5 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'Start RPG Campaign' ) , 4 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'Load RPG Campaign' ) , 5 );
 {$IFNDEF SDLMODE}
-	AddRPGMenuItem( RPM , 'New Arena Unit' , 1 );
-	AddRPGMenuItem( RPM , 'Load Arena Unit' , 2 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'New Arena Unit' ) , 1 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'Load Arena Unit' ) , 2 );
 {$ENDIF}
-	AddRPGMenuItem( RPM , 'Create Character' , 3 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'Create Character' ) , 3 );
 {$IFNDEF SDLMODE}
-	AddRPGMenuItem( RPM , 'Edit Map' , 6 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'Edit Map' ) , 6 );
 {$ENDIF}
-	AddRPGMenuItem( RPM , 'View Design Files' , 7 );
-	AddRPGMenuItem( RPM , 'Quit Game' , -1 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'View Design Files' ) , 7 );
+	AddRPGMenuItem( RPM , I18N_MsgString( 'gharena.pas', 'Quit Game' ) , -1 );
 
 	repeat
         {$IFNDEF SDLMODE}

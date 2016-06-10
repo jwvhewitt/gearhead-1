@@ -1,11 +1,13 @@
 GroundHugger 10
 Name <Monstrous>
 Desig <CYB-13>
+Desig_I18N <CYB-13>
 SDL_Sprite <ghu_monstrous.png>
 desc <A throwback to the previous age, most Monstrouses have been rebuilt several times from the wreckage of their predecessors. This massive hovertank sports more firepower and armor than an entire division of lesser mecha.>
 
 Mod Turret
 	Name <Main Turret>
+	Name_I18N <>
 	Armor 10
 	sub
 		STC PHS-25
@@ -13,11 +15,13 @@ Mod Turret
 
 Mod Turret
 	Name <Right Defense Turret>
+	Name_I18N <>
 	Size 5
 	Armor 10
 	sub
 		Gun 3
 		Name <Anti-Mecha Cannon>
+		Name_I18N <>
 		Type <SWARM>
 		Range 6
 		Acc -1
@@ -25,16 +29,19 @@ Mod Turret
 		Magazine 40
 		sub
 			Ammo 3
+			Name_I18N <>
 		end
 	end
 
 Mod Turret
 	Name <Left Defense Turret>
+	Name_I18N <>
 	Size 5
 	Armor 10
 	sub
 		Gun 3
 		Name <Anti-Mecha Cannon>
+		Name_I18N <>
 		Type <SWARM>
 		Range 6
 		Acc -1
@@ -42,87 +49,114 @@ Mod Turret
 		Magazine 40
 		sub
 			Ammo 3
+			Name_I18N <>
 		end
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 10
 	sub
 		CPit
+		Name_I18N <>
 		Armor 2
+
+		Engine 10
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
 
 		STC NUKE-6
 
 		HoverJet 5
+		Name_I18N <>
 
 		TarComp 10
+		Name_I18N <>
 
 		Sensor 10
+		Name_I18N <>
+
 	end
 
 Mod Storage
 	Name <Right Missile Pod>
+	Name_I18N <>
 	Armor 10
-    MidTier
+	MidTier
 	sub
 		MLauncher 2
 		Name <Plasma Missiles>
+		Name_I18N <>
 		Type <SWARM>
 		Range 10
 		Magazine 100
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Storage
 	Name <Left Missile Pod>
+	Name_I18N <>
 	Armor 10
-    MidTier
+	MidTier
 	sub
 		MLauncher 2
 		Name <Plasma Missiles>
+		Name_I18N <>
 		Type <SWARM>
 		Range 10
 		Magazine 100
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Storage
 	Size 3
 	Armor 10
-    LowTier
+	LowTier
 	Name <Right Front Thruster>
+	Name_I18N <>
 	sub
 		HoverJet 6
+		Name_I18N <>
 	end
 
 Mod Storage
 	Size 3
 	Armor 10
-    LowTier
+	LowTier
 	Name <Left Front Thruster>
+	Name_I18N <>
 	sub
 		HoverJet 6
+		Name_I18N <>
 	end
 
 Mod Storage
 	Size 3
 	Armor 10
-    LowTier
+	LowTier
 	Name <Right Rear Thruster>
+	Name_I18N <>
 	sub
 		HoverJet 6
+		Name_I18N <>
 	end
 
 Mod Storage
 	Size 3
 	Armor 10
-    LowTier
+	LowTier
 	Name <Left Rear Thruster>
+	Name_I18N <>
 	sub
 		HoverJet 6
+		Name_I18N <>
 	end
 end

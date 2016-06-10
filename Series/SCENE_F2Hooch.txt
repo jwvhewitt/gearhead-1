@@ -45,6 +45,7 @@ end
 inv
 	Prop 20
 	name <Whisky Still>
+	name_I18N <>
 	home <Cabin>
 
 	use <Print 1>

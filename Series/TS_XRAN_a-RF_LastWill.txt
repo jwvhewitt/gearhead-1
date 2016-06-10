@@ -216,6 +216,7 @@ inv
 	Treasure 10
 	place <5>
 	name <Letter from Parents>
+	name_I18N <Letter from Parents>
 	% V1 = Location for next episode; printed in message.
 	use <TRIGGER KEY SelfNID Print 1 MoreText .text>
 	.text <TS_TEXT_XRAN_LastWill.txt>

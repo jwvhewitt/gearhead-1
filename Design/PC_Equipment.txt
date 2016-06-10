@@ -6,6 +6,7 @@
 
 Melee 2
 Name <Knife>
+Name_I18N <>
 Type <THROWN>
 desc <A simple knife.>
 Acc 1
@@ -13,6 +14,7 @@ Speed 5
 
 Melee 3
 Name <Survival Knife>
+Name_I18N <>
 Type <THROWN>
 desc <A sturdy knife with a wide variety of uses.>
 Acc 1
@@ -21,6 +23,7 @@ Mass -1
 
 Melee 3
 Name <Sickle>
+Name_I18N <>
 Type <ARMORPIERCING>
 desc <An extremely sharp curved blade.>
 Acc 1
@@ -29,6 +32,7 @@ Mass -2
 
 Melee 5
 Name <Cutlass>
+Name_I18N <>
 desc <A curved short sword.>
 Acc 1
 Speed 4
@@ -36,29 +40,34 @@ Mass -2
 
 Melee 6
 Name <Hand Axe>
+Name_I18N <>
 desc <A small axe, light enough to be wielded with one hand.>
 Type <THROWN>
 Speed 3
 
 Melee 5
 Name <Pick>
+Name_I18N <>
 desc <A tool for digging. Also a passable weapon.>
 Mass 2
 Speed 1
 
 Melee 10
 Name <Battle Axe>
+Name_I18N <>
 desc <A large axe, balanced for combat.>
 Mass -2
 
 Melee 4
 Name <Mace>
+Name_I18N <>
 desc <A steel club.>
 Speed 3
 Mass 2
 
 Melee 8
 Name <Katana>
+Name_I18N <>
 desc <A long sword emphasising sharpness, based on the ancient PreZero Japanese design.>
 Acc 2
 Speed 4
@@ -66,6 +75,7 @@ Mass -5
 
 Melee 7
 Name <Longsword>
+Name_I18N <>
 desc <A long-bladed sword capable of causing large amounts of damage through its swing velocity.>
 Acc 1
 Speed 4
@@ -73,6 +83,7 @@ Mass -4
 
 Melee 5
 Name <Rapier>
+Name_I18N <>
 desc <A light dueling sword with a thin blade. Designed for stabbing and lunging.>
 Acc 3
 Speed 5
@@ -80,6 +91,7 @@ Mass -3
 
 Melee 3
 Name <Steel Pipe>
+Name_I18N <>
 desc <A simple but effective weapon.>
 Mass 2
 Acc -2
@@ -87,16 +99,19 @@ Speed 3
 
 Melee 7
 Name <War Hammer>
+Name_I18N <>
 desc <A big hammer weighted for combat.>
 
 Melee 10
 Name <Spear>
+Name_I18N <>
 Type <EXTEND THROWN>
 Mass -3
 desc <A primitive melee weapon, composed of a long shaft tipped with a metal piercing blade.>
 
 Melee 9
 Name <Trident>
+Name_I18N <>
 Type <EXTEND THROWN>
 Acc 1
 Mass -3
@@ -104,6 +119,7 @@ desc <A primitive melee weapon, consisting of a long handle and a pronged head.>
 
 Melee 2
 Name <Boomerang>
+Name_I18N <>
 Type <RETURN THROWN>
 Mass -1
 Speed 1
@@ -111,6 +127,7 @@ desc <A throwing club that should return to its user, if thrown correctly.>
 
 Melee 6
 Name <Deathwing>
+Name_I18N <>
 Type <POISON RETURN THROWN>
 Mass -5
 Speed 1
@@ -118,12 +135,14 @@ desc <A bladed boomerang with an integrated poison dispenser. This weapon is fav
 
 Melee 15
 Name <Pole-Axe>
+Name_I18N <>
 Type <EXTEND>
 Mass -7
 desc <A primitive melee weapon. It features a wide cutting blade at the end.>
 
 Melee 17
 Name <Scythe>
+Name_I18N <>
 Type <EXTEND>
 Mass -9
 Acc -1
@@ -131,6 +150,7 @@ desc <A primitive melee weapon. Originally used to harvest crops, but these mode
 
 Melee 19
 Name <Chainsaw>
+Name_I18N <>
 Type <BRUTAL>
 Mass -6
 Acc -1
@@ -138,6 +158,7 @@ desc <An energy-cell powered cutting tool. Particularly suited for cutting throu
 
 Melee 14
 Name <Chainsword>
+Name_I18N <>
 Type <ARMORPIERCING>
 Mass -10
 Acc 1
@@ -146,6 +167,7 @@ desc <A sword with a spinning chainsaw for a blade. A trigger on the hilt contro
 
 Melee 12
 Name <Gyro Mace>
+Name_I18N <>
 Type <BRUTAL>
 Mass -7
 Acc 2
@@ -154,6 +176,7 @@ desc <A combat mace with counterspinning contact heads for maximum damage potent
 
 Melee 9
 Name <Night Blade>
+Name_I18N <>
 Type <POISON>
 Acc 2
 Speed 4
@@ -162,6 +185,7 @@ desc <A longsword with an integrated venom dispenser. This weapon is favored by 
 
 Melee 10
 Name <MonoSword>
+Name_I18N <>
 Type <ARMORPIERCING>
 Acc 1
 Speed 6
@@ -170,12 +194,14 @@ desc <A ceram sword with a monomolecularly sharp edge.>
 
 Melee 22
 Name <MonoScythe>
+Name_I18N <>
 Type <ARMORPIERCING EXTEND>
 Mass -15
 desc <A ceram scythe with a monomolecularly sharp edge.>
 
 Melee 11
 Name <Immolator>
+Name_I18N <>
 Type <BURN FLAIL>
 Speed 3
 Mass -3
@@ -183,6 +209,7 @@ desc <A flail whose head disperses an incindiary gel on contact.>
 
 Melee 13
 Name <Thunder Axe>
+Name_I18N <>
 Type <HAYWIRE THROWN>
 Speed 3
 Mass -7
@@ -190,6 +217,7 @@ desc <This axe releases a powerful electric charge on contact.>
 
 Melee 18
 Name <Thunder Star>
+Name_I18N <>
 Type <BRUTAL FLAIL HAYWIRE>
 Speed 3
 Acc -1
@@ -198,6 +226,7 @@ desc <This flail releases a powerful electric charge on contact.>
 
 Melee 20
 Name <Monomolecular Whip>
+Name_I18N <>
 Speed 6
 Acc -2
 Type <ARMORPIERCING EXTEND FLAIL>
@@ -206,6 +235,7 @@ desc <An extremely thin cord of incredibly strong polymer, the monomolecular whi
 
 Melee 2
 Name <Nerve Whip>
+Name_I18N <>
 Acc -2
 Speed 5
 Type <EXTEND FLAIL STONE>
@@ -213,6 +243,7 @@ desc <This whip transmits an electric pulse which can temporarily disrupt the ne
 
 Melee 2
 Name <Whip>
+Name_I18N <>
 Acc -2
 Speed 4
 Type <EXTEND FLAIL>
@@ -224,11 +255,13 @@ desc <A long flexible lash used for hitting people.>
 
 EMelee 3
 Name <Beam Knife>
+Name_I18N <>
 Speed 5
 desc <A small plasma-beam projector, useful for cutting through tough materials.>
 
 EMelee 10
 Name <Laser Axe>
+Name_I18N <>
 Mass 4
 Acc -2
 Speed 3
@@ -236,6 +269,7 @@ desc <An axe with a fiber-optic head. When the blade makes contact, it immediate
 
 EMelee 15
 Name <Solar Spear>
+Name_I18N <>
 Acc 1
 Type <BURN EXTEND THROWN>
 Mass 5
@@ -247,6 +281,7 @@ desc <At the head of this spear is a plasma field generator. When activated, it 
 
 Gun 2
 Name <Autopistol>
+Name_I18N <>
 desc <A small caliber low velocity automatic pistol.>
 Mass -2
 Range 3
@@ -256,11 +291,13 @@ BV 2
 Magazine 30
 sub
 	Ammo 2
+	Name_I18N <>
 	Desc <The compact design of this clip offers a conveniently large ammunition count.>
 end
 
 Gun 2
 Name <Autogun>
+Name_I18N <>
 desc <A small caliber low velocity automatic rifle.>
 Range 5
 Acc 1
@@ -269,11 +306,13 @@ BV 2
 Magazine 90
 sub
 	Ammo 2
+	Name_I18N <>
 	Desc <An ammunition clip designed primarily for use in an Autogun.>
 end
 
 Gun 16
 Name <Sniper Rifle>
+Name_I18N <>
 Type <ARMORPIERCING>
 desc <A large caliber, single firing magnetic rifle. Favored in long-range engagements.>
 Range 15
@@ -282,11 +321,13 @@ Speed 1
 Magazine 8
 sub
 	Ammo 16
+	Name_I18N <>
 	Desc <The heavy metal slugs in this clip mean that reload time is increased somewhat.>
 end
 
 Gun 6
 Name <Assault Rifle>
+Name_I18N <>
 desc <A rapid-firing magnetic rifle.>
 Mass -2
 Range 7
@@ -297,11 +338,13 @@ Magazine 40
 sub
 	Ammo 6
 	Name <Rifle Clip>
+	Name_I18N <>
 	Desc <Standard ammo for Combat Rifles and Assault Rifles>
 end
 
 Gun 6
 Name <Combat Rifle>
+Name_I18N <>
 desc <A single firing magnetic rifle.>
 Mass -3
 Range 7
@@ -310,41 +353,48 @@ Magazine 40
 sub
 	Ammo 6
 	Name <Rifle Clip>
+	Name_I18N <>
 	Desc <Standard ammo for Combat Rifles and Assault Rifles>
 end
 
 Ammo 6
 Name <Rifle Clip (AP)>
+Name_I18N <>
 desc <These bullets have slender tips suited for penetrating armor.>
 AmmoCount 40
 Type <ARMORPIERCING>
 
 Ammo 6
 Name <Rifle Clip (Incendiary)>
+Name_I18N <>
 desc <Flat-tipped bullets which release an incendiary gel that ignites on contact.>
 AmmoCount 40
 Type <BURN>
 
 Ammo 6
 Name <Rifle Clip (Flechette)>
+Name_I18N <>
 desc <Bullets designed to release shrapnel on firing.>
 AmmoCount 40
 Type <SCATTER>
 
 Ammo 6
 Name <Rifle Clip (Assassin)>
+Name_I18N <>
 desc <Ammunition suited for quick elimination of living targets.>
 AmmoCount 40
 Type <POISON>
 
 Ammo 6
 Name <Rifle Clip (EMP)>
+Name_I18N <>
 desc <These bullets explode and cause electromagnetic interference.>
 AmmoCount 40
 Type <BLAST 1 HAYWIRE>
 
 Gun 10
 Name <Snub Rifle>
+Name_I18N <>
 desc <A large caliber single-firing magnetic rifle.>
 Range 8
 Mass -4
@@ -353,29 +403,34 @@ Magazine 25
 sub
 	Ammo 10
 	Name <Snub Rifle Clip>
+	Name_I18N <>
 	desc <Ammunition made specially for the Snub Rifle.>
 end
 
 Ammo 10
 Name <Snub Rifle Clip (Explosive)>
+Name_I18N <>
 desc <These bullets explode on contact.>
 Type <BLAST 1>
 AmmoCount 25
 
 Ammo 10
 Name <Snub Rifle Clip (Grapeshot)>
+Name_I18N <>
 desc <The individual bullets in this clip are actually composed of many smaller bullets, scattering when fired.>
 Type <SCATTER>
 AmmoCount 25
 
 Ammo 10
 Name <Snub Rifle Clip (EMP)>
+Name_I18N <>
 desc <Each bullet encases an electromagnetic pulse device and an explosive charge.>
 Type <BLAST 3 HAYWIRE>
 AmmoCount 25
 
 Gun 17
 Name <Assault Cannon>
+Name_I18N <>
 desc <A heavy gatling-style magnetic cannon.>
 Type <SWARM>
 Mass -9
@@ -386,12 +441,14 @@ BV 7
 Magazine 80
 sub
 	Ammo 17
+	Name_I18N <>
 	desc <This clip is distributed as standard with the Assault Cannon.>
 	Mass -7
 end
 
 Ammo 17
 Name <Assault Cannon Clip (Carbide)>
+Name_I18N <>
 desc <The shots of this clip are sharpened and aerodynamically designed for reaching higher velocities than conventional assault cannon shots.>
 AmmoCount 80
 Type <ARMORPIERCING>
@@ -399,12 +456,14 @@ Mass -7
 
 Ammo 17
 Name <Assault Cannon Clip (Ceram)>
+Name_I18N <>
 desc <Designed from the light, non-metallic ceram material.>
 AmmoCount 80
 Mass -10
 
 Ammo 17
 Name <Assault Cannon Clip (Shard)>
+Name_I18N <>
 desc <These shots burst into shrapnel to damage over a wide area.>
 AmmoCount 80
 Type <BRUTAL SCATTER>
@@ -412,6 +471,7 @@ Mass -7
 
 Gun 3
 Name <Slug Pistol>
+Name_I18N <>
 desc <A low velocity single firing magnetic pistol. Fires solid metal slugs.>
 Mass -1
 Range 3
@@ -420,23 +480,27 @@ Speed 4
 Magazine 12
 sub
 	Ammo 3
+	Name_I18N <>
 	desc <Contains non-explosive heavy metal slugs.>
 end
 
 Gun 4
 Name <Revolver>
+Name_I18N <>
 desc <A low velocity single firing chemically powered pistol.>
 Mass -3
 Range 3
 Magazine 6
 sub
 	Ammo 4
+	Name_I18N <>
 	desc <A departure from the traditional cartridge, this clip comes in the form of a cylinder with the bullets preloaded.>
 	Mass 1
 end
 
 Gun 5
 Name <Long Rifle>
+Name_I18N <>
 desc <The long rifled barrel of this firearm can increase the spin of its bullets, thus increasing its range without decreasing the gun's durability.>
 Mass -1
 Range 10
@@ -446,11 +510,13 @@ Magazine 30
 sub
 	Ammo 5
 	Name <Long Rifle Clip>
+	Name_I18N <>
 	desc <Standard ammunition for Long Rifles and Hunting Rifles>
 end
 
 Gun 5
 Name <Hunting Rifle>
+Name_I18N <>
 desc <A rifle designed for hunting animals.>
 Range 12
 Acc 1
@@ -458,11 +524,13 @@ Magazine 30
 sub
 	Ammo 5
 	Name <Long Rifle Clip>
+	Name_I18N <>
 	desc <Standard ammunition for Long Rifles and Hunting Rifles>
 end
 
 Gun 4
 Name <Pin Rifle>
+Name_I18N <>
 Type <SWARM>
 desc <A magnetic cannon that fires tiny slivers of metal at extreme velocity.>
 Mass -8
@@ -474,12 +542,14 @@ Magazine 450
 sub
 	Ammo 4
 	Name <Pin Rifle Clip>
+	Name_I18N <>
 	desc <This clip contains thousands of tiny slivers for use with the Pin Rifle.>
 	Mass -4
 end
 
 Ammo 4
 Name <Pin Rifle Clip (Carbide)>
+Name_I18N <>
 desc <The material used for these slivers are designed to penetrate armor.>
 Mass -4
 AmmoCount 450
@@ -487,6 +557,7 @@ Type <ARMORPIERCING>
 
 Gun 5
 Name <Headhunter Pistol>
+Name_I18N <>
 desc <A powerful magnetic pistol.>
 Type <ARMORPIERCING>
 Range 4
@@ -494,12 +565,14 @@ Mass -4
 Speed 6
 sub
 	Ammo 5
+	Name_I18N <>
 	desc <These clips come as standard with the Headhunter Pistol.>
 	Mass 1
 end
 
 Ammo 5
 Name <Headhunter Pistol Clip (assassin)>
+Name_I18N <>
 desc <Bullets tipped with poison in order to quickly eliminate living targets.>
 AmmoCount 10
 Type <POISON>
@@ -507,6 +580,7 @@ Mass 1
 
 Gun 2
 Name <Fallback Pistol>
+Name_I18N <>
 desc <A cheaply made chemical pistol. This weapon is generally only kept on hand as a backup.>
 Mass -1
 Range 2
@@ -514,12 +588,14 @@ Speed 3
 Magazine 8
 sub
 	Ammo 2
+	Name_I18N <>
 	desc <An inexpensive bullet clip that provides ammunition to the Fallback Pistol.>
 	Mass 1
 end
 
 Gun 9
 Name <Heavy Slug Pistol>
+Name_I18N <>
 desc <A low velocity single firing magnetic pistol. Relies on the mass of its bullets to cause damage, rather than their velocity.>
 Mass -7
 Range 3
@@ -527,11 +603,13 @@ Speed 3
 Magazine 10
 sub
 	Ammo 9
+	Name_I18N <>
 	desc <This clip contains condensed-mass solid metal slugs that damage through sheer impact force.>
 end
 
 Gun 12
 Name <Shotgun>
+Name_I18N <>
 desc <A large-barrelled firearm that fires shotgun shells.>
 Mass -4
 Range 5
@@ -541,12 +619,14 @@ Magazine 16
 sub
 	Ammo 12
 	Name <Shotgun Clip>
+	Name_I18N <>
 	desc <These shells release shrapnel when fired.>
 	Type <SCATTER>
 end
 
 Gun 12
 Name <Combat Shotgun>
+Name_I18N <>
 desc <A derivative of the conventional shotgun, optimised for heavy combat situations.>
 Mass -4
 Range 5
@@ -556,6 +636,7 @@ Magazine 24
 sub
 	Ammo 12
 	Name <Auto-Shotgun Clip>
+	Name_I18N <>
 	desc <This clip contains more shells than a regular shotgun.>
 	Type <SCATTER>
 end
@@ -563,39 +644,46 @@ end
 Ammo 12
 AmmoCount 16
 Name <Shotgun Clip (Solid)>
+Name_I18N <>
 desc <Unlike conventional shotgun shells, these do not scatter.>
 
 Ammo 12
 AmmoCount 24
 Name <Auto-Shotgun Clip (Solid)>
+Name_I18N <>
 desc <Unlike conventional shotgun shells, these do not scatter.>
 
 Ammo 12
 AmmoCount 16
 Name <Shotgun Clip (Shard)>
+Name_I18N <>
 desc <Shells manufactured with crystalline microfragmentation shrapnel.>
 Type <BRUTAL SCATTER>
 
 Ammo 12
 AmmoCount 24
 Name <Auto-Shotgun Clip (Shard)>
+Name_I18N <>
 desc <Shells manufactured with crystalline microfragmentation shrapnel.>
 Type <BRUTAL SCATTER>
 
 Ammo 12
 AmmoCount 16
 Name <Shotgun Clip (Incendiary)>
+Name_I18N <>
 desc <These shells contain incendiary fluid which releases when the shell itself is fired.>
 Type <BURN LINE>
 
 Ammo 12
 AmmoCount 16
 Name <Shotgun Clip (Explosive)>
+Name_I18N <>
 desc <These shells contain a focused explosive charge, rather than shrapnel.>
 Type <BLAST 2>
 
 Gun 12
 Name <Auto-Shotgun>
+Name_I18N <>
 desc <A shotgun designed to automatically reload and continue firing while the trigger is pulled.>
 Mass -4
 Range 5
@@ -605,22 +693,26 @@ Magazine 24
 sub
 	Ammo 12
 	Name <Auto-Shotgun Clip>
+	Name_I18N <>
 	desc <This clip contains more shells than a regular shotgun.>
 	Type <SCATTER>
 end
 
 Gun 15
 Name <Cone Rifle>
+Name_I18N <>
 desc <A revolutionary rifle design with a balance of range and damage.>
 Range 8
 Magazine 9
 sub
 	Ammo 15
+	Name_I18N <>
 	desc <A rifle clip specifically designed for use with the cone rifle.>
 end
 
 Gun 20
 Name <Thumper>
+Name_I18N <>
 desc <A heavy, low-velocity projectile launcher.>
 Mass -13
 Range 5
@@ -629,18 +721,21 @@ Magazine 24
 sub
 	Ammo 20
 	Name <Thumper Clip>
+	Name_I18N <>
 	desc <These shots explode on impact.>
 	Type <BLAST 1>
 end
 
 Ammo 20
 Name <Thumper Clip (Plasma)>
+Name_I18N <>
 desc <Each shot releases exploding superheated ionised gas.>
 AmmoCount 24
 Type <ARMORPIERCING BLAST 4>
 
 Gun 1
 Name <Light Machinepistol>
+Name_I18N <>
 desc <A light, handheld rapid-fire pistol.>
 Type <SWARM>
 Mass -4
@@ -651,12 +746,14 @@ Magazine 50
 sub
 	Ammo 1
 	Name <Machinepistol Clip>
+	Name_I18N <>
 	desc <Houses a large clip capacity for bursts of fire from the Machinepistol and its variants.>
 	Mass 1
 end
 
 Gun 1
 Name <Machinepistol>
+Name_I18N <>
 desc <A handheld rapid-fire pistol.>
 Type <SWARM>
 Mass -7
@@ -666,12 +763,14 @@ BV 9
 Magazine 50
 sub
 	Ammo 1
+	Name_I18N <>
 	desc <Houses a large clip capacity for bursts of fire from the Machinepistol and its variants.>
 	Mass 1
 end
 
 Gun 9
 Name <Rocket Pistol>
+Name_I18N <>
 desc <This handheld firearm shoots miniature rockets.>
 Mass -8
 Acc 1
@@ -681,30 +780,35 @@ BV 2
 Magazine 60
 sub
 	Ammo 9
+	Name_I18N <>
 	desc <This clip contains miniature rockets.>
 	Type <ARMORPIERCING>
 end
 
 Ammo 9
 Name <Rocket Pistol Clip (HE)>
+Name_I18N <>
 desc <High explosive charges distinguish this clip from other variants.>
 AmmoCount 60
 Type <BLAST 2>
 
 Ammo 9
 Name <Rocket Pistol Clip (SMART)>
+Name_I18N <>
 desc <Each rocket contains a miniature propulsion system and electronic circuitry in order attack multiple parts of the target.>
 AmmoCount 60
 Type <ARMORPIERCING SWARM>
 
 Ammo 9
 Name <Rocket Pistol Clip (Napalm-X)>
+Name_I18N <>
 desc <Contains an acidic napalm derivative used to both ignite and erode metals. The compound is poisonous to living beings.>
 AmmoCount 60
 Type <BURN POISON RUST SCATTER>
 
 Gun 9
 Name <Rocket Rifle>
+Name_I18N <>
 desc <A large-caliber rifle that fires miniature rockets.>
 Mass -10
 Acc 1
@@ -715,12 +819,14 @@ Magazine 120
 sub
 	Ammo 9
 	Name <Rocket Rifle Clip>
+	Name_I18N <>
 	desc <These clips are custom-made to fit all standard rocket rifles.>
 	Type <ARMORPIERCING>
 end
 
 Gun 9
 Name <Heavy Rocket Rifle>
+Name_I18N <>
 desc <A modified version of the rocket rifle with increased range and firing rate.>
 Mass -9
 Acc 1
@@ -731,24 +837,28 @@ Magazine 120
 sub
 	Ammo 9
 	Name <Rocket Rifle Clip>
+	Name_I18N <>
 	desc <These clips are custom-made to fit all standard rocket rifles.>
 	Type <ARMORPIERCING>
 end
 
 Ammo 9
 Name <Rocket Rifle Clip (HE)>
+Name_I18N <>
 desc <These rockets are noted for their highly explosive charge.>
 AmmoCount 120
 Type <BLAST 2>
 
 Ammo 9
 Name <Rocket Rifle Clip (SMART)>
+Name_I18N <>
 desc <Tiny propulsion systems and targeting computers exist within these rockets.>
 AmmoCount 120
 Type <ARMORPIERCING SWARM>
 
 Ammo 9
 Name <Rocket Rifle Clip (Napalm-X)>
+Name_I18N <>
 desc <Contains an acidic napalm derivative used to both ignite and erode metals. The compound is poisonous to living beings.>
 AmmoCount 120
 Type <BURN POISON RUST SCATTER>
@@ -759,6 +869,7 @@ Type <BURN POISON RUST SCATTER>
 
 BeamGun 1
 Name <Shock Pistol>
+Name_I18N <>
 desc <Fires focused electrostatic shocks.>
 Mass 1
 Range 3
@@ -767,6 +878,7 @@ Speed 5
 
 BeamGun 5
 Name <Laser Pistol>
+Name_I18N <>
 desc <A pistol housing a small but powerful laser generator.>
 Mass -4
 Range 3
@@ -775,6 +887,7 @@ Speed 5
 
 BeamGun 7
 Name <Laser Carbine>
+Name_I18N <>
 desc <A laser rifle, featuring improved heatsinks and vents around the laser generator.>
 Mass -4
 Acc 1
@@ -782,6 +895,7 @@ Speed 4
 
 BeamGun 10
 Name <Laser Rifle>
+Name_I18N <>
 desc <An advanced combat rifle, powered by a laser generator.>
 Mass -6
 Acc 1
@@ -789,6 +903,7 @@ Speed 3
 
 BeamGun 15
 Name <Dual Laser Rifle>
+Name_I18N <>
 desc <Two miniature laser generators give this rifle higher range and accuracy over the conventional laser rifle.>
 Mass -8
 Acc 2
@@ -797,12 +912,14 @@ Speed 3
 
 BeamGun 25
 Name <Laser Cannon>
+Name_I18N <>
 desc <A high-energy cannon that fires wide, penetrating laser beams.>
 Mass -5
 Acc 1
 
 BeamGun 5
 Name <Plasma Pistol>
+Name_I18N <>
 desc <A handheld superheated plasma firearm.>
 Type <SCATTER>
 Mass -3
@@ -812,6 +929,7 @@ BV 4
 
 BeamGun 5
 Name <Plasma Rifle>
+Name_I18N <>
 desc <A plasma combat firearm used particularly for breaking enemy lines.>
 Type <SCATTER>
 Range 6
@@ -821,6 +939,7 @@ BV 4
 
 BeamGun 15
 Name <Plasma Cannon>
+Name_I18N <>
 desc <A cannon capable of releasing large and quick bursts of superheated plasma.>
 Type <LINE>
 Mass 5
@@ -834,6 +953,7 @@ BV 8
 
 MLauncher 22
 Name <Anti-Tank Bazooka>
+Name_I18N <>
 desc <A weapon designed for personal-scale defense against heavy artillery such as tanks and mecha.>
 Range 32
 Acc 2
@@ -841,12 +961,14 @@ Magazine 1
 sub
 	Rockets 22
 	Name <Bazooka Clip>
+	Name_I18N <>
 	desc <Causes significant damage to vehicles and light mecha, and is adequate against mid-size meks.>
 	Type <ARMORPIERCING BRUTAL>
 end
 
 MLauncher 22
 Name <Rapid Fire Bazooka>
+Name_I18N <>
 desc <A bazooka specially suited to long-range heavy combat situations.>
 Range 32
 Acc 1
@@ -854,12 +976,14 @@ Speed 4
 Magazine 6
 sub
 	Rockets 22
+	Name_I18N <>
 	desc <Six bazooka rockets>
 	Type <ARMORPIERCING BRUTAL>
 end
 
 MLauncher 14
 Name <Rocket Quad Launcher>
+Name_I18N <>
 desc <Fires medium impact rockets with explosive charges.>
 Range 24
 Acc 1
@@ -867,12 +991,14 @@ Speed 4
 Magazine 4
 sub
 	Rockets 14
+	Name_I18N <>
 	desc <Each rocket contains a highly explosive charge with a considerable blast radius.>
 	Type <BLAST 5>
 end
 
 MLauncher 1
 Name <Calliope Rocket Launcher>
+Name_I18N <>
 desc <A miniature rocket launcher used to fire on personal-scale targets.>
 Type <SWARM>
 Range 8
@@ -880,6 +1006,7 @@ Speed 5
 Magazine 64
 sub
 	Rockets 1
+	Name_I18N <>
 	desc <Although these rockets are less damaging than others, they are nonetheless useful against small-scale targets.>
 end
 
@@ -889,42 +1016,50 @@ end
 
 GunAddOn 0
 Name <Barrel Extension>
+Name_I18N <>
 desc <The increased barrel length provided by this addon will slightly increase range.>
 Range 2
 
 GunAddOn 0
 Name <Red Dot Sight>
+Name_I18N <>
 desc <A low-powered targeting laser.>
 Acc 1
 
 GunAddOn 0
 Name <Gas Vents>
+Name_I18N <>
 desc <Improves heat dissipation in firearms.>
 Speed 1
 
 GunAddOn 0
 Name <Bayonet>
+Name_I18N <>
 desc <Adds close-combat capabilities to a firearm.>
 Mass -1
 sub
 	Melee 3
 	Name <Bayonet>
+	Name_I18N <>
 	desc <A blade designed to be attached to a firearm.>
 	Mass -1
 end
 
 GunAddOn 0
 Name <Aux Grenade Launcher>
+Name_I18N <>
 desc <Provides heavy-weapon support to a firearm.>
 sub
 	MLauncher 5
 	Name <Aux Grenade Launcher>
+	Name_I18N <>
 	desc <A grenade launcher designed as auxiliary support for a lighter firearm.>
 	Range 6
 	Magazine 1
 	sub
 		Rockets 5
 		Name <AGL Clip>
+		Name_I18N <>
 		desc <Explosive grenades designed exclusively for an Aux Grenade Launcher.>
 		Type <BLAST 4 BRUTAL>
 	end
@@ -932,120 +1067,142 @@ end
 
 Rockets 5
 Name <AGL Clip (Smoke)>
+Name_I18N <>
 desc <Allows an Aux Grenade Launcher to fire smoke grenades.>
 AmmoCount 1
 Type <BLAST 6 SMOKE>
 
 Rockets 5
 Name <AGL Clip (Toxin)>
+Name_I18N <>
 desc <Allows an Aux Grenade Launcher to fire toxic gas-releasing grenades.>
 AmmoCount 1
 Type <BLAST 6 GAS>
 
 GunAddOn 0
 Name <Assault Pack>
+Name_I18N <>
 desc <Provides a miniature rocket pack for a firearm.>
 Mass 2
 sub
 	MLauncher 4
 	Name <Rocket Pack>
+	Name_I18N <>
 	desc <Size-reduced in order to fit on a firearm.>
 	Range 6
 	Magazine 12
 	Type <SWARM>
 	sub
 		Rockets 4
+		Name_I18N <>
 		Desc <Provides ammunition for the weapon-mounted Rocket Pack.>
 	end
 end
 
 HeavyAddOn 0
 Name <Laser Guidance System>
+Name_I18N <>
 desc <Provides an improved laser-based targeting system to heavy weapons.>
 Acc 2
 
 HeavyAddOn 0
 Name <Gyro Mount>
+Name_I18N <>
 desc <Reduces recoil in heavy weapons.>
 Acc 1
 Speed 1
 
 HeavyAddOn 0
 Name <Heavy Assault Pack>
+Name_I18N <>
 desc <Adds a rocket-based assault option to heavy weapons.>
 Mass 2
 sub
 	MLauncher 4
 	Name <Heavy Rocket Pack>
+	Name_I18N <>
 	desc <Releases a large number of miniature rockets.>
 	Range 6
 	Magazine 48
 	Type <SWARM>
 	sub
 		Rockets 4
+		Name_I18N <>
 		Desc <Provides ammunition for the heavy weapon-mounted Rocket Pack.>
 	end
 end
 
 MeleeAddOn 0
 Name <Ergonomic Grip>
+Name_I18N <>
 desc <A comfortable handle for close combat weapons.>
 Acc 1
 
 MeleeAddOn 0
 Name <Counterbalance>
+Name_I18N <>
 desc <Reduces overswing in melee weapons.>
 Speed 2
 
 MeleeAddOn 0
 Name <Haft Spike>
+Name_I18N <>
 desc <Adds a spike to the end of a close combat handle.>
 Mass -1
 sub
 	Melee 3
 	Name <Spike>
+	Name_I18N <>
 	desc <A metal spike.>
 	Mass -2
 end
 
 MeleeAddOn 1
 Name <Fire Token>
+Name_I18N <>
 desc <Creates a brief burst of heat along the impact surface of a melee weapon.>
 Type <BURN>
 
 MeleeAddOn 1
 Name <Thunder Token>
+Name_I18N <>
 desc <This token releases an electric shock when the weapon it is attached to impacts.>
 Type <HAYWIRE>
 
 MeleeAddOn 1
 Name <Deadly Token>
+Name_I18N <>
 desc <Releases a deadly poison when attached to a close combat weapon.>
 Type <POISON>
 
 MeleeAddOn 0
 Name <Magnet Token>
+Name_I18N <>
 desc <Allows thrown close combat weapons to return to the wielder.>
 Type <RETURN>
 Acc 1
 
 MeleeAddOn 0
 Name <Eris Token>
+Name_I18N <>
 desc <This token releases a mysterious glow...>
 Type <MYSTERY STONE>
 Speed 1
 
 MeleeAddOn 2
 Name <Rocket Token>
+Name_I18N <>
 desc <Allows a melee weapon to be thrown.>
 Type <THROWN>
 
 MeleeAddOn 0
 Name <Sonic Token>
+Name_I18N <>
 desc <Releases a sonic burst when used in conjunction with a melee weapon.>
 sub
 	BeamGun 8
 	Name <Sonic Wave>
+	Name_I18N <>
 	desc <A sonic burst that damages multiple targets.>
 	Range 5
 	Acc -1
@@ -1058,77 +1215,92 @@ end
 
 Grenade 20
 Name <Heavy Smoke Grenade>
+Name_I18N <>
 desc <A tactical grenade used to provide heavy smoke cover.>
 Type <BLAST 6 SMOKE>
 
 Grenade 10
 Name <Smoke Grenade>
+Name_I18N <>
 desc <A tactical grenade used to provide smoke cover.>
 Type <BLAST 3 SMOKE>
 
 Grenade 20
 Name <Hellstorm Grenade>
+Name_I18N <>
 desc <A grenade that releases a fiery blast.>
 Type <ARMORPIERCING BLAST 2 BURN>
 
 Grenade 18
 Name <Concussion Grenade>
+Name_I18N <>
 desc <Used effectively, an explosion from this can render human targets helpless.>
 Type <BLAST 4>
 
 Grenade 15
 Name <EMP Grenade>
+Name_I18N <>
 desc <A conventional grenade containing thousands of tiny radio frequency emitters to cause electromagnetic interference.>
 Type <BLAST 3 HAYWIRE>
 
 Grenade 12
 Name <Acid Grenade>
+Name_I18N <>
 desc <A grenade containing acid.>
 Type <BLAST 2 RUST>
 
 Grenade 13
 Name <Toxin Grenade>
+Name_I18N <>
 desc <This grenade contains reactants that create toxic fumes when thrown.>
 Type <BLAST 5 GAS>
 
 Grenade 16
 Name <Plasma Grenade>
+Name_I18N <>
 desc <This plasma-based grenade is capable of circumventing armor.>
 Type <ARMORPIERCING BLAST 3>
 
 Grenade 6
 Name <Micro-Grenade>
+Name_I18N <>
 desc <This small grenade packs a punch.>
 Type <BLAST 2>
 Mass -1
 
 Grenade 14
 Name <Heavy Grenade>
+Name_I18N <>
 desc <A grenade with a large blast radius.>
 Type <BLAST 5>
 
 Grenade 12
 Name <Frag Grenade>
+Name_I18N <>
 desc <This grenade is packed with shrapnel.>
 Type <BLAST 3>
 
 Grenade 18
 Name <AntiArmor Grenade>
+Name_I18N <>
 desc <A grenade containing shards designed to penetrate armor.>
 Type <ARMORPIERCING SCATTER>
 
 Grenade 8
 Name <Stick Bomb>
+Name_I18N <>
 desc <A grenade with a thin, cylindrical body.>
 Type <BLAST 1>
 
 Grenade 7
 Name <Oil Bomb>
+Name_I18N <>
 desc <This explosive releases highly volatile oil.>
 Type <BLAST 1 BURN>
 
 Grenade 5
 Name <Shuriken>
+Name_I18N <>
 desc <A PreZero ancient Japanese weapon, literally "thrown blade." The four-bladed shuriken was considered the best in that era, despite the existence of others.>
 GrenadeSkill 3
 Mass -1
@@ -1137,6 +1309,7 @@ Type <SWARM>
 
 Grenade 13
 Name <MonoShuriken>
+Name_I18N <>
 desc <A redesign of the shuriken, this is manufactured with a monomolecularly sharp edge.>
 GrenadeSkill 3
 Mass -1
@@ -1149,210 +1322,253 @@ Type <ARMORPIERCING SWARM>
 
 BodyArmor 1
 Name <Leather Jacket>
+Name_I18N <>
 desc <A comfortable leather jacket with a zipper down the front.>
 Mass 3
 
 BodyArmor 2
 Name <Armorweave Clothes>
+Name_I18N <>
 desc <Armor mesh has been integrated with these clothes, making them a little stiff.>
 Mass -3
 
 BodyArmor 2
 Name <Flak Jacket>
+Name_I18N <>
 desc <This jacket is designed to protect against shrapnel.>
 Mass 1
 
 BodyArmor 3
 Name <Mesh Jacket>
+Name_I18N <>
 desc <This whole jacket is woven with a thick layer of armor mesh.>
 Mass -1
 
 BodyArmor 3
 Name <Armored Vest>
+Name_I18N <>
 desc <This vest contains full armor plates and shock absorbers.>
 Mass -3
 
 BodyArmor 2
 Name <Security Vest>
+Name_I18N <>
 desc <A standard vest issued to security guards.>
 Mass -1
 
 BodyArmor 4
 Name <Flak Suit>
+Name_I18N <>
 desc <A larger and sturdier version of the flak jacket.>
 Mass 11
 
 BodyArmor 5
 Name <Mesh Suit>
+Name_I18N <>
 desc <This armor mesh suit does not contain exposed weak points in its design.>
 Mass 9
 
 BodyArmor 5
 Name <Hazard Vest>
+Name_I18N <>
 desc <Armor used by rescuers traversing hazardous situations.>
 Mass -1
 
 BodyArmor 7
 Name <Heavy Mesh Suit>
+Name_I18N <>
 desc <This mesh suit has been thickened to accept heavier blows.>
 Mass 8
 
 BodyArmor 4
 Name <Breastplate>
+Name_I18N <>
 desc <A solid plate of body armor.>
 Mass -6
 
 BodyArmor 6
 Name <Blast Suit>
+Name_I18N <>
 desc <This suit is designed to resist explosions.>
 Mass 1
 
 BodyArmor 6
 Name <Ceram Breastplate>
+Name_I18N <>
 desc <A strong armor plate made from the light ceram material.>
 Mass -10
 
 BodyArmor 7
 Name <Carapace Suit>
+Name_I18N <>
 desc <A suit of armor made of bonded solid plates.>
 Mass -5
 
 BodyArmor 2
 Name <Wilco Jet Pack>
+Name_I18N <>
 Desc <Due to the harnesses involved, this jet pack can't be worn at the same time as body armor.>
 Mass -1
 sub
 	Flight 20
+	Name_I18N <>
 end
 
 ArmArmor 5
 Name <Carapace Sleeve>
+Name_I18N <>
 desc <Armored sleeve made up of solid plates.>
 Mass -5
 
 LegArmor 5
 Name <Carapace Legging>
+Name_I18N <>
 desc <Armored legging made up of solid plates.>
 Mass -5
 
 HeadArmor 1
 Name <Field Cap>
+Name_I18N <>
 desc <A lightweight cap.>
 Mass -1
 
 HeadArmor 2
 Name <Sports Helmet>
+Name_I18N <>
 desc <A hard polymer helmet more suited to sports than combat.>
 Mass -3
 
 HeadArmor 2
 Name <Light Helmet>
+Name_I18N <>
 desc <A light combat helmet, made from a combination of plastics and shock absorbers.>
 Mass -3
 
 HeadArmor 3
 Name <Combat Helmet>
+Name_I18N <>
 desc <An armored helmet with an integrated objective-storing system.>
 Mass -5
 sub
 	PCS 1
+	Name_I18N <>
 end
 
 HeadArmor 3
 Name <Recce Helmet>
+Name_I18N <>
 desc <Helmet used in reconnaissance missions, capable of transmitting and receiving data.>
 Mass -5
 sub
 	PCS 3
+	Name_I18N <>
 	Mass -2
 end
 
 HeadArmor 4
 Name <Blast Helmet>
+Name_I18N <>
 desc <Helmet used to resist blasts and explosions.>
 Mass -5
 
 HeadArmor 4
 Name <Ceram Helmet>
+Name_I18N <>
 desc <A strong helmet made from the light ceram material.>
 Mass -6
 
 HeadArmor 5
 Name <Heavy Combat Helmet>
+Name_I18N <>
 desc <A helmet typically used in heavy combat situations. It contains an integrated objective-storage system.>
 Mass -7
 sub
 	PCS 1
+	Name_I18N <>
 	Mass -1
 end
 
 ArmArmor 4
 Name <Ceram Plate Sleeve>
+Name_I18N <>
 desc <A strong sleeve made from the light ceram material.>
 Mass -7
 
 LegArmor 4
 Name <Ceram Plate Legging>
+Name_I18N <>
 desc <Strong legging made from the light ceram material.>
 Mass -7
 
 ArmArmor 4
 Name <Blast Sleeve>
+Name_I18N <>
 desc <Sleeve used to resist blasts and explosions.>
 Mass -5
 
 LegArmor 4
 Name <Blast Legging>
+Name_I18N <>
 desc <Leg armor used to resist blasts and explosions.>
 Mass -5
 
 ArmArmor 3
 Name <Plate Sleeve>
+Name_I18N <>
 desc <Arm armor composed of a solid plate.>
 Mass -4
 
 LegArmor 3
 Name <Plate Legging>
+Name_I18N <>
 desc <Legging composed of a solid plate.>
 Mass -4
 
 ArmArmor 2
 Name <Armored Sleeve>
+Name_I18N <>
 desc <Arm armor made from a combination of tough cloths and armor plates.>
 Mass -1
 
 LegArmor 2
 Name <Armored Legging>
+Name_I18N <>
 desc <Leg armor made from a combination of tough cloths and armor plates.>
 Mass -1
 
 ArmArmor 1
 Name <Elbow Pad>
+Name_I18N <>
 desc <Protects elbows from grazes and other accidents.>
 Mass -1
 
 LegArmor 1
 Name <Knee Pad>
+Name_I18N <>
 desc <Protects knees from grazes and other accidents.>
 Mass -1
 
 ArmArmor 2
 Name <Heavy Elbow Pad>
+Name_I18N <>
 desc <Elbow pad that protects some of the forearm as well.>
 Mass -3
 
 LegArmor 2
 Name <Heavy Knee Pad>
+Name_I18N <>
 desc <Knee pad that protects part of the shins as well.>
 Mass -3
 
 ArmArmor 7
 Name <Power Claw>
+Name_I18N <>
 desc <This armor features a sharp claw.>
 Mass -10
 sub
 	Melee 18
 	Name <Claw>
+	Name_I18N <>
 	desc <A sharp claw.>
 	Acc 1
 	Speed 4
@@ -1361,17 +1577,20 @@ end
 
 ArmArmor 2
 Name <Rocket Gauntlet>
+Name_I18N <>
 desc <This gauntlet reaches from the hand to the elbow, and features a tiny rocket launcher.>
 Mass -2
 sub
 	MLauncher 7
 	Name <Wrist Rockets>
+	Name_I18N <>
 	desc <Rockets designed for the Rocket Gauntlet.>
 	Acc -2
 	Magazine 3
 	sub
 		Rockets 7
 		Name <Wrist Rocket Clip>
+		Name_I18N <>
 		Desc <Due to its blast radius, this clip can be useful for clearing out heavy concentrations of targets.>
 		Type <BLAST 1>
 	end
@@ -1379,11 +1598,13 @@ end
 
 ArmArmor 2
 Name <Pistol Gauntlet>
+Name_I18N <>
 desc <This gauntlet contains a small rapid-fire cannon.>
 Mass -2
 sub
 	Gun 1
 	Name <Wrist Cannon>
+	Name_I18N <>
 	desc <This weapon is integrated into the Pistol Gauntlet.>
 	Type <SWARM>
 	Mass -8
@@ -1393,12 +1614,14 @@ sub
 	sub
 		Ammo 1
 		Name <Wrist Cannon Clip>
+		Name_I18N <>
 		Desc <This clip contains small bullets that provide firepower to the Wrist Cannon.>
 	end
 end
 
 ArmArmor 2
 Name <Spiked Bracer>
+Name_I18N <>
 desc <This forearm armor features a sharp spike that functions as a weapon.>
 Mass -1
 sub
@@ -1406,11 +1629,13 @@ sub
 	Mass -4
 	Speed 1
 	Name <Spike>
+	Name_I18N <>
 	desc <A sharp spike.>
 end
 
 LegArmor 2
 Name <Spiked Legging>
+Name_I18N <>
 desc <This leg armor has a spike that can be used as a weapon.>
 Mass -1
 sub
@@ -1418,16 +1643,19 @@ sub
 	Mass -4
 	Speed 1
 	Name <Spike>
+	Name_I18N <>
 	desc <A sharp spike.>
 end
 
 ArmArmor 4
 Name <Blade Bracer>
+Name_I18N <>
 desc <A metal blade runs along this bracer.>
 Mass -5
 sub
 	Melee 12
 	Name <Arm Blade>
+	Name_I18N <>
 	desc <This metal blade can be used as a weapon.>
 	Speed 1
 	Mass -10
@@ -1435,11 +1663,13 @@ end
 
 LegArmor 4
 Name <Blade Legging>
+Name_I18N <>
 desc <A metal blade runs down this legging.>
 Mass -5
 sub
 	Melee 12
 	Name <Knee Blade>
+	Name_I18N <>
 	desc <This metal blade can be used as a weapon.>
 	Speed 1
 	Mass -10
@@ -1447,32 +1677,39 @@ end
 
 ArmArmor 1
 Name <Data Bracelet>
+Name_I18N <>
 desc <This wrist attachment is capable of storing and retrieving notes.>
 Mass -1
 sub
 	PCS 1
+	Name_I18N <>
 end
 
 HeadArmor 6
 Name <Havoc Helmet>
+Name_I18N <>
 desc <Helmet worn by aggressive attackers. Contains a note-storing system.>
 Mass -8
 sub
 	PCS 1
+	Name_I18N <>
 end
 
 BodyArmor 7
 Mass -9
 Name <Havoc Suit>
+Name_I18N <>
 desc <Body armor worn by aggressive attackers.>
 
 ArmArmor 6
 Name <Havoc Sleeve>
+Name_I18N <>
 desc <Sleeve worn by aggressive attackers. Features a gun for offensive tactics.>
 Mass -8
 sub
 	Gun 6
 	Name <Havoc Cannon>
+	Name_I18N <>
 	desc <A gun for offensive tactics.>
 	Mass -4
 	Range 5
@@ -1484,17 +1721,20 @@ sub
 	sub
 		Ammo 6
 		Name <Rifle Clip>
+		Name_I18N <>
 		Desc <Standard ammo for Combat Rifles and Assault Rifles>
 	end
 end
 
 LegArmor 6
 Name <Havoc Legging>
+Name_I18N <>
 desc <Legging worn by aggressive attackers. Features a rocket launcher.>
 Mass -8
 sub
 	MLauncher 5
 	Name <Havoc Rockets>
+	Name_I18N <>
 	desc <These rockets can be used to attack clusters of enemies at once.>
 	Mass -3
 	Acc -1
@@ -1509,24 +1749,29 @@ end
 
 HeadArmor 7
 Name <Maximus Helmet>
+Name_I18N <>
 desc <Maximus gear boasts the highest quality components and construction. This helmet has advanced communications integrated to its design.>
 Mass -12
 sub
 	PCS 3
+	Name_I18N <>
 end
 
 BodyArmor 8
 Name <Maximus Suit>
+Name_I18N <>
 desc <Maximus gear boasts the highest quality components and construction. This body armor is amongst the finest made on Earth.>
 Mass -7
 
 ArmArmor 7
 Name <Maximus Sleeve>
+Name_I18N <>
 desc <Maximus gear boasts the highest quality components and construction. This sleeve is amongst the finest made on Earth.>
 Mass -9
 
 LegArmor 7
 Name <Maximus Legging>
+Name_I18N <>
 desc <Maximus gear boasts the highest quality components and construction. This legging is amongst the finest made on Earth.>
 Mass -9
 
@@ -1536,44 +1781,53 @@ Mass -9
 
 Shield 3
 Name <Plastic Shield>
+Name_I18N <>
 desc <A shield made from plastic.>
 
 Shield 3
 Name <Plastic Buckler>
+Name_I18N <>
 desc <A solid plastic buckler.>
 DefBonus -3
 
 Shield 4
 Name <Small Shield>
+Name_I18N <>
 desc <A small, but sturdy shield.>
 DefBonus -2
 
 Shield 6
 Name <Large Shield>
+Name_I18N <>
 desc <This shield can deflect attacks from multiple heights easily.>
 
 Shield 5
 Name <Riot Shield>
+Name_I18N <>
 desc <A light and transparent polymer shield used by crowd control forces.>
 DefBonus 2
 
 Shield 4
 Name <Spiked Shield>
+Name_I18N <>
 desc <This shield is covered in sharp spikes.>
 DefBonus -1
 sub
 	Melee 8
 	Mass -7
 	Name <Shield Spikes>
+	Name_I18N <>
 	desc <These spikes add offensive capabilities to the Spiked Shield.>
 end
 
 Shield 5
 Name <Gun-Shield>
+Name_I18N <>
 desc <This shield allows the wielder to both defend and attack simultaneously.>
 sub
 	Gun 6
 	Name <Shield Cannon>
+	Name_I18N <>
 	desc <This gun fires just in front of the shield, and so is unaffected by the shield itself in terms of accuracy.>
 	Mass -4
 	Range 4
@@ -1584,6 +1838,7 @@ sub
 	sub
 		Ammo 6
 		Name <Rifle Clip>
+		Name_I18N <>
 		Desc <Standard ammo for Combat Rifles and Assault Rifles>
 	end
 end
@@ -1594,24 +1849,29 @@ end
 
 PCS 2
 Name <Databook>
-desc <A basic data storage and retrieval system. Also sports email retrieval.>
+Name_I18N <>
+desc <A basic data storage and retrieval system. Also supports email retrieval.>
 
 PCS 3
 Name <Mobile Phone>
+Name_I18N <>
 desc <A handheld communication device.>
 Mass -2
 
 PCS 3
 Name <Field Communicator>
+Name_I18N <>
 desc <Originally designed to coordinate field training in the Federation Defense Force, it has entered general circulation due to its success as a training tool.>
 
 PCS 5
 Name <Internet Phone>
+Name_I18N <>
 desc <A high-resolution mobile phone with connectivity options.>
 Mass -4
 
 PCS 5
 Name <Micro PC>
+Name_I18N <>
 desc <A miniturised personal computer. Includes a newsreader and email software.>
 
 %  *****************************
@@ -1620,18 +1880,21 @@ desc <A miniturised personal computer. Includes a newsreader and email software.
 
 Instrument 2
 Name <Guitar>
+Name_I18N <>
 desc <A large, stringed instrument played by plucking the strings.>
 UseBonus 0
 UseRange 6
 
 Instrument 3
 Name <Electric Guitar>
+Name_I18N <>
 desc <A electric guitar featuring an integrated amp and sound adjusting circuitry.>
 UseBonus 1
 UseRange 7
 
 Instrument 4
 Name <Digital Guitar>
+Name_I18N <>
 desc <This instrument has no strings; laser beams record the musician's movements and translate these into sound.>
 Mass -1
 UseBonus 2
@@ -1639,12 +1902,14 @@ UseRange 8
 
 Instrument 2
 Name <Classical Guitar>
+Name_I18N <>
 desc <A guitar constructed from its original materials.>
 UseBonus 3
 UseRange 5
 
 Instrument 5
 Name <Synthesizer>
+Name_I18N <>
 desc <An electronic instrument featuring a wide range of samples and mixing options.>
 Mass -1
 UseBonus 0
@@ -1652,18 +1917,21 @@ UseRange 6
 
 Instrument 2
 Name <Violin>
+Name_I18N <>
 desc <A small, stringed instrument played by drawing a bow across the strings.>
 UseBonus 2
 UseRange 7
 
 Instrument 3
 Name <Accordion>
+Name_I18N <>
 desc <A box-shaped reed instrument, featuring an array of valves and keys.>
 UseBonus 1
 UseRange 7
 
 Instrument 3
 Name <Bagpipes>
+Name_I18N <>
 desc <A wind instrument that produces a loud, shrill, but distinct sound.>
 UseBonus 0
 UseRange 10
@@ -1674,101 +1942,121 @@ UseRange 10
 
 FirstAidFuel 30
 Name <Sticky Band>
+Name_I18N <>
 desc <This can bind wounds.>
 Mass 1
 
 FirstAidFuel 60
 Name <Gauze>
+Name_I18N <>
 desc <Light cloth used for making bandages for wounds.>
 Mass 1
 
 FirstAidFuel 90
 Name <Antiseptic Ointment>
+Name_I18N <>
 desc <An ointment that stops any chance of infection in a wound.>
 Mass 1
 
 FirstAidFuel 120
 Name <Medicated Bandages>
+Name_I18N <>
 desc <Premedicated sterile bandages.>
 Mass 1
 
 FirstAidFuel 300
 Name <First Aid Kit>
+Name_I18N <>
 desc <A kit containing a variety of supplies required for a wide range of injuries.>
 Mass 2
 
 GenRepairFuel 10
 Name <Scotch Tape>
+Name_I18N <>
 desc <Transparent tape used for binding things together.>
 Mass 1
 
 GenRepairFuel 50
 Name <Super Glue>
+Name_I18N <>
 desc <Strong glue capable of joining together cracks of hard materials.>
 Mass 1
 
 GenRepairFuel 75
 Name <Duct Tape>
+Name_I18N <>
 desc <Silvery adhesive tape generally used for binding sheets of metal.>
 Mass 1
 
 GenRepairFuel 100
 Name <Epoxy Putty>
+Name_I18N <>
 desc <A thick paste used as a strong adhesive.>
 Mass 1
 
 GenRepairFuel 170
 Name <Handyman's Kit>
+Name_I18N <>
 desc <Contains everything the modern-day handyman could ever ask for!>
 Mass 1
 
 GenRepairFuel 750
 Name <Basic Repair Kit>
+Name_I18N <>
 desc <Contains various adhesives, screws, nails, tools and other general repair supplies.>
 Mass 3
 
 MechaRepairFuel 100
 Name <Sheet Metal>
+Name_I18N <>
 desc <Plain ol' sheet of metal.>
 Mass 2
 
 MechaRepairFuel 125
 Name <Heavy-Duty Duct Tape>
+Name_I18N <>
 desc <Industrial-strength silvery duct tape.>
 Mass 1
 
 MechaRepairFuel 50
 Name <Scratch Remover>
+Name_I18N <>
 desc <A fiberglass set designed to polish off and seal cracks.>
 Mass 1
 
 MechaRepairFuel 500
 Name <Epoxy Bodyfiller>
+Name_I18N <>
 desc <Epoxy resin used to repair large structural damage.>
 Mass 3
 
 MechaRepairFuel 1500
 Name <Mecha Patch Kit>
+Name_I18N <>
 desc <For the budding mecha engineer wanting to do their own repairs!>
 Mass 4
 
 MechaRepairFuel 3000
 Name <Mecha Welding Set>
+Name_I18N <>
 desc <This heavy-duty mecha repair set is commonly found in mecha garages.>
 Mass 5
 
 MediceneFuel 50
 Name <Sutures>
+Name_I18N <>
 desc <Sterilised string used to bind open wounds and, in less fortunate circumstances, reattach limbs.>
 Mass 1
 
 MediceneFuel 150
 Name <Field Surgery Kit>
+Name_I18N <>
 desc <A kit often found in the possession of combat medics.>
 Mass 2
 
 BiotechFuel 500
 Name <Biotech Lab Set>
+Name_I18N <>
 desc <This contains the equipment needed to perform biotech experiments.>
 Mass 1
 
@@ -1778,44 +2066,52 @@ Mass 1
 
 Food 50
 Name <Adventuring Ration>
+Name_I18N <>
 FoodMorale -2
 Mass -3
 desc <It's not delicious, but it'll keep you alive.>
 
 Food 50
 Name <Standard Ration>
+Name_I18N <>
 Mass -3
 desc <Packaged with survival as a priority.>
 
 Food 50
 Name <Deluxe Ration>
+Name_I18N <>
 Mass -3
 FoodMorale 1
 desc <Contains nuts, chocolate and other high-calorie foods. Used by the military in particularly harsh conditions.>
 
 Food 50
 Name <Standard Meal>
+Name_I18N <>
 desc <A small variety of meats, vegetables and grains.>
 
 Food 40
 Name <Light Meal>
+Name_I18N <>
 Mass -6
 desc <A lightweight source of food.>
 
 Food 40
 Name <Military Ration>
+Name_I18N <>
 Mass -3
 FoodMorale -2
 desc <It's not delicious, but it'll keep you alive.>
 
 Food 20
 Name <Noodle Cup>
+Name_I18N <>
 Mass -2
 FoodMorale -1
 desc <Seems rather ordinary, even for noodles.>
 
 Food 20
 Name <Deluxe Noodle Cup>
+Name_I18N <>
 Mass -2
 FoodMorale 1
 desc <Contains an exciting combination of flavors and spices.>
@@ -1823,15 +2119,18 @@ desc <Contains an exciting combination of flavors and spices.>
 Food 25
 Mass -2
 Name <Sub Sandwich>
+Name_I18N <>
 desc <Three different cheeses and five different meats with lettuce and onions on a whole wheat bun.>
 
 Food 25
 Mass -2
 Name <Rice Roll>
+Name_I18N <>
 desc <Sticky rice and vegetables wrapped in seaweed.>
 
 Food 15
 Name <Survival Bar>
+Name_I18N <>
 Mass -2
 FoodMorale -3
 FoodQuantity 3
@@ -1839,11 +2138,13 @@ desc <It's everything that a human needs to stay alive packaged in a crunchy bar
 
 Food 5
 Name <Chocolate Bar>
+Name_I18N <>
 FoodMorale 2
 desc <Some delicious chocolate.>
 
 Food 60
 Name <Survival Sludge>
+Name_I18N <>
 Mass -11
 FoodMorale -5
 FoodXValue 30
@@ -1851,6 +2152,7 @@ desc <According to the label, this can contains a full day's worth of essential 
 
 Food 35
 Name <Nutrient Pill>
+Name_I18N <>
 FoodMorale -1
 Mass -70
 FoodQuantity 10
@@ -1858,6 +2160,7 @@ desc <Complete nutrition in pill form.>
 
 Food 0
 Name <Quick Fix Pill>
+Name_I18N <>
 FoodQuantity 10
 % Healing (2), restore Step3 damage using skill 20 (First Aid)
 % Effect strings are not user-friendly... read effects.pp for
@@ -1869,6 +2172,7 @@ desc <This medicine promotes rapid cellular regeneration, and can instantly heal
 
 Food 0
 Name <Quick Fix Pill>
+Name_I18N <>
 FoodQuantity 5
 % Healing (2), restore Step3 damage using skill 20 (First Aid)
 Effect <2 3 20 0>
@@ -1877,6 +2181,7 @@ desc <This medicine promotes rapid cellular regeneration, and can instantly heal
 
 Food 0
 Name <Regen Boost Pill>
+Name_I18N <>
 FoodQuantity 10
 % Status Effect (1), Duration Step6, Regen(3), Skill25 but can't
 % resist anyway
@@ -1886,6 +2191,7 @@ desc <This medicine increases the body's ability to repair itself. While it is i
 
 Food 0
 Name <Regen Boost Pill>
+Name_I18N <>
 FoodQuantity 5
 % Status Effect (1), Duration Step6, Regen(3), Skill25 but can't
 % resist anyway
@@ -1895,6 +2201,7 @@ desc <This medicine increases the body's ability to repair itself. While it is i
 
 Food 5
 Name <Xozu>
+Name_I18N <>
 % Status Effect (1), Duration Step3, Stoned(4), Skill7 to resist
 Effect <1 3 4 7 CanResist>
 FoodXValue 10
@@ -1907,6 +2214,7 @@ desc <An alcoholic beverage.>
 
 StatModifier 50
 Name <Reinforced Skeleton>
+Name_I18N <>
 desc <(SKELETON) A structurally-strengthened skeleton.>
 CyberSlot <SKELETON>
 Type <CHARA CYBER>
@@ -1916,6 +2224,7 @@ Mass 25
 
 StatModifier 45
 Name <Lightened Skeleton>
+Name_I18N <>
 desc <(SKELETON) Does away with the weight caused by organically dense bones.>
 CyberSlot <SKELETON>
 Type <CHARA CYBER>
@@ -1926,6 +2235,7 @@ Mass 14
 
 SkillModifier 40
 Name <Heavy Lifting Skeletal Frame>
+Name_I18N <>
 desc <(SKELETON) A skeleton suited to heavy lifting applications.>
 CyberSlot <SKELETON>
 Type <CHARA CYBER>
@@ -1935,6 +2245,7 @@ Mass 25
 
 StatModifier 45
 Name <Armored Spine>
+Name_I18N <>
 desc <(SPINE) Does away with the fragile nature of a human's organic spine.>
 CyberSlot <SPINE>
 Type <CHARA CYBER>
@@ -1945,6 +2256,7 @@ Mass 16
 
 StatModifier 45
 Name <Optical Spine>
+Name_I18N <>
 desc <(SPINE) Replaces many of the spinal nerves with fiber-optic data transmission wires.>
 CyberSlot <SPINE>
 Type <CHARA CYBER>
@@ -1957,6 +2269,7 @@ Mass 10
 
 StatModifier 60
 Name <Predator Reflexes>
+Name_I18N <>
 desc <(BRAIN) Takes advantage of certain predator instincts found in animals of prey.>
 CyberSlot <BRAIN>
 Type <CHARA CYBER>
@@ -1971,6 +2284,7 @@ Mass 15
 
 StatModifier 35
 Name <Heavy Myomer Muscles>
+Name_I18N <>
 desc <(MUSCULATURE) Replaces conventional muscles with a technologically-improved biomaterial.>
 CyberSlot <MUSCULATURE>
 Type <CHARA CYBER>
@@ -1979,6 +2293,7 @@ Mass 20
 
 StatModifier 40
 Name <Rapid Strike Muscles>
+Name_I18N <>
 desc <(MUSCULATURE) Muscles tuned for quick reactions.>
 CyberSlot <MUSCULATURE>
 Type <CHARA CYBER>
@@ -1988,6 +2303,7 @@ Mass 20
 
 StatModifier 20
 Name <Cyber Eyes>
+Name_I18N <>
 desc <(EYES) These eyes include resolution enhancers.>
 CyberSlot <EYES>
 Type <CHARA CYBER>
@@ -1998,6 +2314,7 @@ Mass 1
 
 StatModifier 20
 Name <Fashion Cybereyes>
+Name_I18N <>
 desc <(EYES) A pair of rather charming eyes.>
 CyberSlot <EYES>
 Type <CHARA CYBER>
@@ -2007,6 +2324,7 @@ Mass 1
 
 SkillModifier 25
 Name <Targeter Eye>
+Name_I18N <>
 desc <(EYES) Provides highlighting of personal-scale targets.>
 CyberSlot <EYES>
 Type <CHARA CYBER>
@@ -2016,6 +2334,7 @@ Mass 1
 
 SkillModifier 25
 Name <Sniper Scope Eye>
+Name_I18N <>
 desc <(EYES) These eyes highlight potential heavy weapon targets.>
 CyberSlot <EYES>
 Type <CHARA CYBER>
@@ -2025,6 +2344,7 @@ Mass 1
 
 StatModifier 15
 Name <Cyber Ears>
+Name_I18N <>
 desc <(EARS) Improves the perception of sound.>
 CyberSlot <EARS>
 Type <CHARA CYBER>
@@ -2033,6 +2353,7 @@ Mass 1
 
 SkillModifier 20
 Name <Perfect Pitch Ears>
+Name_I18N <>
 desc <(EARS) Ears used by some performance judges to dissect and analyse music.>
 CyberSlot <EARS>
 Type <CHARA CYBER>
@@ -2042,6 +2363,7 @@ Mass 1
 
 StatModifier 15
 Name <Cyber Heart>
+Name_I18N <>
 desc <(HEART) A heavy-duty replacement for a conventional organic heart.>
 CyberSlot <HEART>
 Type <CHARA CYBER>
@@ -2050,6 +2372,7 @@ Mass 2
 
 SkillModifier 5
 Name <Self-Diagnostic>
+Name_I18N <>
 desc <() Increases the body's acceptance of cybernetic components.>
 Type <CHARA CYBER>
 SkillModCybertech
@@ -2058,6 +2381,7 @@ Mass 1
 
 SkillModifier 30
 Name <Spinal Pilot Link>
+Name_I18N <>
 desc <(BRAINSTEM) Interacts with a piloted mecha and provides neural feedback to the pilot.>
 CyberSlot <BRAINSTEM>
 Type <CHARA CYBER>
@@ -2067,6 +2391,7 @@ Mass 1
 
 StatModifier 10
 Name <Data Link>
+Name_I18N <>
 desc <(BRAIN) Provides direct links between some parts of the brain.>
 CyberSlot <BRAIN>
 Type <CHARA CYBER>
@@ -2075,6 +2400,7 @@ Mass 1
 
 StatModifier 20
 Name <Neural Coprocessor>
+Name_I18N <>
 desc <(BRAIN) Removes some of the processing burden from the human brain.>
 CyberSlot <BRAIN>
 Type <CHARA CYBER>
@@ -2083,6 +2409,7 @@ Mass 1
 
 StatModifier 35
 Name <Sensory Amplifier>
+Name_I18N <>
 desc <(BRAIN) Tunes the mind to detect tiny inputs that would otherwise go unnoticed.>
 CyberSlot <BRAIN>
 Type <CHARA CYBER>
@@ -2091,6 +2418,7 @@ Mass 2
 
 StatModifier 40
 Name <Synaptic Booster>
+Name_I18N <>
 desc <(BRAIN) Works with the existing synapses of the brain to greatly boost data storage and retrieval capabilities.>
 CyberSlot <BRAIN>
 Type <CHARA CYBER>

@@ -1,97 +1,126 @@
 Zoanoid 2
 Name <Aranos>
 Desig <F-2k>
+Desig_I18N <F-2k>
 
 Mod Head
+	Name_I18N <>
 	Armor 2
 	sub
 		CPit
+		Name_I18N <>
 		Armor 1
 
 		Sensor 8
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 2
 	sub
+
+		Engine 2
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		Gun 1
 		Name <Rattler Cannon>
+		Name_I18N <>
 		Acc -1
 		BV 3
 		Magazine 40
 		sub
 			Ammo 1
+			Name_I18N <>
 		end
 
 		BeamGun 4
 		Name <Scourge Laser Cannon>
+		Name_I18N <>
 		Range 6
 		Acc 1
 	end
 
 Mod Leg
 	Name <Right Leg 1>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		Melee 2
 		Name <Claw>
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg 1>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		Melee 2
 		Name <Claw>
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg 2>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		MLauncher 1
 		Name <Swarm Missiles>
+		Name_I18N <>
 		Type <SWARM>
 		Range 7
 		Magazine 10
 		sub
 			Rockets 1
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Left Leg 2>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		MLauncher 1
 		Name <Swarm Missiles>
+		Name_I18N <>
 		Type <SWARM>
 		Range 7
 		Magazine 10
 		sub
 			Rockets 1
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg 3>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		Melee 2
 		Name <Claw>
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg 3>
+	Name_I18N <>
 	Size 1
 	Armor 2
 	sub
 		Melee 2
 		Name <Claw>
+		Name_I18N <>
 	end
 end

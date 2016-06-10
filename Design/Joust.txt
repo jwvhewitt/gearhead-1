@@ -1,75 +1,102 @@
 Battroid 4
 Name <Joust>
 Desig <A2400>
+Desig_I18N <A2400>
 desc <This mecha was designed specifically for arena combat. It has been the first training mecha for many pilots.>
 
 Mod Head
+	Name_I18N <>
 	Size 2
 	Armor 4
 	sub
 		CPit
+		Name_I18N <>
 
 		Sensor 5
+		Name_I18N <>
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 4
 	sub
+
+		Engine 4
+		Name_I18N <>
+
+		Gyro 1
+		Name_I18N <>
+
 		MLauncher 3
 		Name <Rocket Pod>
+		Name_I18N <>
 		Magazine 16
 		sub
 			Rockets 3
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Right Arm>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 		inv
 			EMelee 6
 			Name <Plasma Lance>
+			Name_I18N <>
 		end
 
 		Gun 2
 		Name <Slug Cannon>
+		Name_I18N <>
 		BV 2
 		Magazine 30
 		sub
 			Ammo 2
+			Name_I18N <>
 		end
 	end
 
 Mod Arm
 	Name <Left Arm>
+	Name_I18N <>
 	Size 3
 	Armor 3
 	sub
 		Hand
+		Name_I18N <>
 
 		Gun 2
 		Name <Slug Cannon>
+		Name_I18N <>
 		BV 2
 		Magazine 30
 		sub
 			Ammo 2
+			Name_I18N <>
 		end
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Armor 4
 	sub
 		HoverJet 4
+		Name_I18N <>
 	end
 end

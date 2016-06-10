@@ -1,90 +1,115 @@
 Ornithoid 7
 Name <Swan>
 Desig <S3>
+Desig_I18N <S3>
 Scale 1
 SDL_Sprite <orn_swan.png>
 
 Mod Head
+	Name_I18N <>
 	Size 5
 	Armor 5
 	Mass -10
 	sub
 		Sensor 6
+		Name_I18N <>
 
 		BeamGun 3
 		Name <Brilliant Gaze>
+		Name_I18N <>
 		Range 4
 		Acc 1
 		Speed 3
 	end
 
 Mod Body
+	Name_I18N <>
 	Armor 5
 	Mass -12
 	sub
 		CPit
+		Name_I18N <>
+
+		Engine 7
+		Name_I18N <>
 
 		Sensor 2
+		Name_I18N <>
+
 
 		TarComp 2
+		Name_I18N <>
 
 		Gyro 2
+		Name_I18N <>
 
 		MLauncher 2
 		Name <Thorn Rockets>
+		Name_I18N <>
 		Acc -1
 		Range 9
 		Magazine 28
 		sub
 			Rockets 2
+			Name_I18N <>
 		end
 	end
 
 Mod Wing
 	Name <Right Wing>
+	Name_I18N <>
 	Size 8
 	Armor 5
 	Mass -13
 	sub
 		EMelee 4
 		Name <Shining Edge>
+		Name_I18N <>
 		Acc 2
 		Integral
 
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Wing
 	Name <Left Wing>
+	Name_I18N <>
 	Size 8
 	Armor 5
 	Mass -13
 	sub
 		EMelee 4
 		Name <Shining Edge>
+		Name_I18N <>
 		Acc 2
 		Integral
 
 		Flight 4
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Right Leg>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -11
 	sub
 		Mount
 		Name <Right Hardpoint>
+		Name_I18N <>
 	end
 
 Mod Leg
 	Name <Left Leg>
+	Name_I18N <>
 	Size 6
 	Armor 5
 	Mass -11
 	sub
 		Mount
 		Name <Left Hardpoint>
+		Name_I18N <>
 	end
 end
