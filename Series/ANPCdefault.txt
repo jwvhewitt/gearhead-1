@@ -246,7 +246,7 @@ skill 26 10
 skill 33 9
 
 Arch Mecha Pilot
-statline 16 10 14 13 8 10 7 14
+statline 15 10 13 13 10 10 10 12
 mecha <BuruBuru.txt>
 skill 1 10
 skill 2 10

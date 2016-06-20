@@ -2201,7 +2201,6 @@ Procedure AimThatAttack( Mek,Weapon: GearPtr; CallShot: Boolean; GB: GameBoardPt
 var
 	WPM: RPGMenuPtr;
 	N,AtOp: Integer;
-	WeaponTmp: GearPtr;
 begin
 	if not ReadyToFire( GB , Mek , Weapon ) then begin
 		DialogMsg( ReplaceHash( MsgString( 'ATA_NotReady' ) , GearName( Weapon ) ) );
@@ -2209,8 +2208,7 @@ begin
 	end;
 
 	AtOp := DefaultAtOp( Weapon );
-    WeaponTmp := Weapon;
-    if SelectTarget( GB , Mek , WeaponTmp , CallShot , AtOp ) then begin
+    if SelectTarget( GB , Mek , Weapon , CallShot , AtOp ) then begin
 		{ Check to make sure the target is within maximum range, }
 		{ and that it falls within the correct arc. }
 		AtOp := DefaultAtOp( Weapon );

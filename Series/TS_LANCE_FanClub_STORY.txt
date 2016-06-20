@@ -1,0 +1,83 @@
+Story
+	name <LM: Fan Club>
+	% The PC can potentially get a new lancemate who dreams of being a cavalier.
+
+	% N1 is the scene in which the MLM will be deployed.
+	% N2 is the MLM itself.
+	Element2 <Prefab>
+
+	% S1 = Initialization Counter (Mercenary Reputation)
+	% S2 = PC has hired mercenary
+
+	% At startup, set the potential lancemate's skill level and reputation.
+	start <ifNPCOK N2 else GoDelete if= S1 0 S= 1 d25 S+ 1 15 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1>
+	GoDelete <EndStory>
+
+
+sub
+	% In SubComponents, the persona for the fan.
+	Persona 2
+	% V1 = Chat recharge
+	rumor <!2 is a big fan of cavaliers.>
+	greeting <NewChat if= S2 1 else GoNoHire Say 1>
+	GoNoHire <ifG PCRenown 0 else GoMiscChat ifG ComTime V1 else GoMiscChat Say 2 AddCHat 1 AddChat 2>
+	GoMiscChat <Say 3>
+	result1 <ifG React S1 else GoNotYet PCAlly N2 AddReact 20 NewChat Say 6 S= 2 1>
+    GoNotYet <AddReact d10 BondWithChatNPC NewChat Say 4 V= 1 ComTime V+ 1 86400 ifG ChatNPCRelationship 0 S= 2 1>
+	result2 <NewChat Say 5 AddReact d10 AddReact 10 V= 1 ComTime V+ 1 86400>
+	Msg1 <Hey \PC , how's your adventure going?>
+	Msg1_1 <I've been thinking about looking for a mission I could do by myself but, y'know, not today.>
+	Msg1_2 <When's the mission supposed to start?>
+	Msg1_3 <The Musketeer gets criticized a lot but rationally speaking most high end battroids don't even come equipped with smoke launchers.>
+	Msg2 <Wow, you're a cavalier, aren't you? I'd love for you to tell me about your adventures!>
+    Msg2_1 <Excuse me, but I'm a starting-out cavalier, and I was wondering if you could tell me a bit about your adventures?>
+    Msg2_2 <Could I ask you a few questions about cavalier life for my blog?>
+    Msg2_3 <I heard that you have a real cool mecha. Wanna tell me about it?>
+    Msg2_4 <If you have the time I'd love to hear all about your adventures. Uh, that's if you're not too busy, I mean...>
+    % Miscellaneous Chat
+	Msg3 <A lot of people don't like the Musketeer but objectively speaking it has more energy weapons than a Vadel.>
+    Msg3_1 <I'm a cavalier too, you know. I'm going to go on a mission one of these days.>
+    Msg3_2 <They say that this year's Robot Warriors lineup is the toughest group yet.>
+    Msg4 <I wish I could have exciting adventures like that. Maybe someday.>
+    Msg4_1 <That sounds awesome. I'll let you get back to work.>
+    Msg4_2 <I just can't get enough about cavaliers! I'm gonna be a cavalier myself one of these days.>
+    Msg4_3 <Thanks for talking to me! It's not every day I get the chance to chat with a real live cavalier.>
+    Msg4_4 <Woah. Cool story... I don't know if I'd be able to handle that level of awesomeness.>
+    Msg4_5 <That was so cool. I'd love to hear more stories some time later, if you don't mind.>
+    Msg5 <Yeah, I understand. I've got stuff to do too.>
+    Msg5_1 <Oh, right, you must be really busy. I'm just glad I got a chance to speak with you!>
+    Msg5_2 <You're on a mission right now, aren't you? So cool!>
+    Msg5_3 <I'll bet you've got a mecha battle to go to right now. Awesome!>
+    Msg6 <Well if you're ever looking for a lancemate, I might not have much experience but I'm a fast learner!>
+    Msg6_1 <Thanks for taking the time to chat with a noob like me. I won't bother you about this again.>
+	Prompt1 <Let me tell you about it...>
+    Prompt1_1 <Alright, let me tell you a story.>
+    Prompt1_2 <Did you hear about the time...>
+	Prompt2 <I have no time for chatter today.>
+	Prompt2_1 <Get lost, kid. I have better things to do.>
+	Prompt2_2 <Why don't you read a book instead?>
+end
+inv
+	NPC Citizen
+	chardesc Young Cheerful
+	job <Student>
+    mecha <Musketeer.txt>
+	EquipChar 2000
+	place <1 ally>
+	statline 13 11 11 14 14 13 16 8
+    skill 1 10
+    skill 3 10
+    skill 5 10
+    skill 10 10
+    skill 27 0
+    skill 15 5
+    TALENT_SAVANT
+    Experience 5000
+	CHAT_ATTACK1 <What does the flashing light mean!?>
+	CHAT_ATTACK2 <What time is it? It's cavalier time!>
+	CHAT_ATTACK3 <I am the cavalier that stomps in the night!>
+    CHAT_ATTACK4 <Awesome!>
+	CHAT_EJECT1 <That was AWESOME!!!>
+	CHAT_EJECT1 <Oops... that wasn't right.>
+
+end

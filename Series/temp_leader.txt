@@ -1,6 +1,8 @@
 Plot 0
 	name <Leader Mission Template>
 
+    % v1.302 Standard
+
 	% A leader will offer a combat mission. Yay! So what's different
 	% between this one and the regular combat template? Well, first of
 	% all this one isn't linked to a story, so it's good for making
@@ -15,9 +17,9 @@ Plot 0
 	% ********************
 	% *** SCRIPT BLOCK ***
 	% ********************
-	%  V1 = Time Limit
-	%  V2 = Combat Indicator, if V2=1 combat has been entered
-	%  V3 = Email sent indicator.
+	%  P1 = Time Limit
+	%  P2 = Combat Indicator, if V2=1 combat has been entered
+	%  P3 = Email sent indicator.
 
 	% Time limit. This plot will conclude in one day, or immediately
 	% if NPC E1 is killed.
@@ -34,7 +36,7 @@ Plot 0
 	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50>
 
 	% Email check. The NPC might send the PC email about this mission.
-	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 V= 3 1 Email d5>
+	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 V= 3 1 Email 1>
 
 	% *********************
 	% *** MESSAGE BLOCK ***
@@ -42,11 +44,11 @@ Plot 0
 
 	% 01 - 05 :  Email Messages.
 	%  The NPC is offering the PC a mission via email.
-	Msg1 <\PERSONA E1 @ \SCENE EScene 1 :// >
-	Msg2 <\PERSONA E1 @ \SCENE EScene 1 :// >
-	Msg3 <\PERSONA E1 @ \SCENE EScene 1 :// >
-	Msg4 <\PERSONA E1 @ \SCENE EScene 1 :// >
-	Msg5 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg1   <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg1_2 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg1_3 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg1_4 <\PERSONA E1 @ \SCENE EScene 1 :// >
+	Msg1_5 <\PERSONA E1 @ \SCENE EScene 1 :// >
 
 sub
 	% This next bit is the conversation which will happen when the
@@ -62,24 +64,23 @@ sub
 	% *** SCRIPT BLOCK ***
 	% ********************
 	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
-	%  V2 = Message Randomizer
 	%  V3 = Threat value of enemy mecha
 	%  V4 = Reward offered to PC for the mission
 
-	greeting <NewChat if= P2 3 else GoCheckLoss Say d5 AddReact d5 CashPrize V4 AdvancePlot 0>
-	GoCheckLoss <if= P2 2 else GoCheckMission V= 2 5 V+ 2 d5 Say V2 AdvancePlot 0>
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 AddReact d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission Say 6 AdvancePlot 0>
 	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
 	% The first time the PC speaks to the NPC, initialize everything.
 	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 100 Goto GoCheckOffer>
-	GoCheckOffer <if= P3 1 else GoMakeOffer V= 2 10 V+ 2 d5 Say V2  Goto GoAddAcceptOps>
+	GoCheckOffer <if= P3 1 else GoMakeOffer Say 11  Goto GoAddAcceptOps>
 	% If the PC has "the right stuff", an offer will be made immediately.
 	% If not, no offer will be made at all. In the example provided
 	% below, "the right stuff" is a Lawful reputation + being liked.
-	GoMakeOffer  <ifG React d25 else GoNoOffer ifG PCRep 2 d25 else GoNoOffer V= 2 15 V+ 2 d5 Say V2 Goto GoAddAcceptOps>
+	GoMakeOffer  <ifG React d25 else GoNoOffer ifG PCRep 2 d25 else GoNoOffer Say 16 Goto GoAddAcceptOps>
 
-	GoAddAcceptOps <AddChat d3 V= 2 3 V+ 2 d3 AddChat V2>
-	GoAddComOps <V= 2 6 V+ 2 d2 AddChat V2 V= 2 8 V+ 2 d2 AddChat V2 V= 2 10 V+ 2 d2 AddChat V2>
+	GoAddAcceptOps <AddChat 1 AddChat 4>
+	GoAddComOps <AddChat 7 AddChat 9 AddChat 11>
 
 	GoNoOffer <Say 102 AdvancePlot 0>
 	% If the mission was denied but not previously cleaned up, do
@@ -87,7 +88,7 @@ sub
 	GoDenied <SayAnything AdvancePlot 0>
 
 	% PC will accept the job. Descibe the mission.
-	result1 <NewChat V= 1 1 V= 2 20 V+ 2 d5 Say V2 Memo 103 Goto GoAddComOps>
+	result1 <NewChat V= 1 1 Say 21 Memo 103 Goto GoAddComOps>
 	result2 <Goto Result1>
 	result3 <Goto Result1>
 
@@ -97,14 +98,14 @@ sub
 	result6 <Goto Result4>
 
 	% PC will enter combat now.
-	result7 <EndChat V= 2 25 V+ 2 d5 Say V2 Goto GoStartCombat>
+	result7 <EndChat Say 26 Goto GoStartCombat>
 	GoStartCombat <SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2>
 	.nu1 <if= T1 0 Return>
 	.nu2 <if= T2 0 Salvage Return>
 	result8 <Goto result7>
 
 	% PC will ask how many points the enemy has.
-	result9 <NewChat V= 2 30 V+ 2 d5 Say V2 AddChat 7 AddChat 11>
+	result9 <NewChat Say 31 AddChat 7 AddChat 11>
 	result10 <Goto result9>
 
 	% PC needs some time to get ready.
@@ -115,54 +116,54 @@ sub
 	% *** MESSAGE BLOCK ***
 	% *********************
 
-	% 01 - 05 :  Player has won the battle and is being paid.
+	% 01 :  Player has won the battle and is being paid.
 	Msg1 <>
-	Msg2 <>
-	Msg3 <>
-	Msg4 <>
-	Msg5 <>
+	Msg1_2 <>
+	Msg1_3 <>
+	Msg1_4 <>
+	Msg1_5 <>
 
-	% 06 - 10 :  Player has lost the battle.
+	% 06 :  Player has lost the battle.
 	Msg6 <>
-	Msg7 <>
-	Msg8 <>
-	Msg9 <>
-	Msg10 <>
+	Msg6_7 <>
+	Msg6_8 <>
+	Msg6_9 <>
+	Msg6_10 <>
 
-	% 11 - 15 :  PC got email about mission; asked to accept
+	% 11 :  PC got email about mission; asked to accept
 	Msg11 <>
-	Msg12 <>
-	Msg13 <>
-	Msg14 <>
-	Msg15 <>
+	Msg11_2 <>
+	Msg11_3 <>
+	Msg11_4 <>
+	Msg11_5 <>
 
-	% 16 - 20 :  Player has "the right stuff"; will be offered mission.
+	% 16 :  Player has "the right stuff"; will be offered mission.
 	Msg16 <>
-	Msg17 <>
-	Msg18 <>
-	Msg19 <>
-	Msg20 <>
+	Msg16_7 <>
+	Msg16_8 <>
+	Msg16_9 <>
+	Msg16_0 <>
 
-	% 21 - 25 :  PC has accepted; describe the mission.
+	% 21 :  PC has accepted; describe the mission.
 	Msg21 <>
-	Msg22 <>
-	Msg23 <>
-	Msg24 <>
-	Msg25 <>
+	Msg21_2 <>
+	Msg21_3 <>
+	Msg21_4 <>
+	Msg21_5 <>
 
-	% 26 - 30 :  Combat is starting
+	% 26 :  Combat is starting
 	Msg26 <>
-	Msg27 <>
-	Msg28 <>
-	Msg29 <>
-	Msg30 <>
+	Msg26_7 <>
+	Msg26_8 <>
+	Msg26_9 <>
+	Msg26_10 <>
 
-	% 31 - 35 :  Describe enemy point value
+	% 31 :  Describe enemy point value
 	Msg31 <>
-	Msg32 <>
-	Msg33 <>
-	Msg34 <>
-	Msg35 <>
+	Msg31_2 <>
+	Msg31_3 <>
+	Msg31_4 <>
+	Msg31_5 <>
 
 
 	% 101 :  Player is back from repairs, time to start mission.
@@ -176,26 +177,26 @@ sub
 	% 105 :  PC needs time to get ready.
 	Msg105 <Do whatever you need to do, then come back here and we'll start.>
 
-	% 01 - 03 :  PC will accept the mission.
+	% 01 :  PC will accept the mission.
 	Prompt1 <>
-	Prompt2 <>
-	Prompt3 <>
+	Prompt1_2 <>
+	Prompt1_3 <>
 
-	% 04 - 06 :  PC doesn't want this mission.
+	% 04 :  PC doesn't want this mission.
 	Prompt4 <>
-	Prompt5 <>
-	Prompt6 <>
+	Prompt4_5 <>
+	Prompt4_6 <>
 
-	% 07 - 08 :  Combat is starting.
+	% 07 :  Combat is starting.
 	prompt7 <>
-	prompt8 <>
+	prompt7_8 <>
 
-	% 09 - 10 :  How many points?
+	% 09 :  How many points?
 	prompt9 <>
-	prompt10 <>
+	prompt9_10 <>
 
-	% 11 - 12 :  Just a minute...
+	% 11 :  Just a minute...
 	prompt11 <>
-	prompt12 <>
+	prompt11_2 <>
 
 end

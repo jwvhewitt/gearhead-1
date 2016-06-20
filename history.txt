@@ -1,3 +1,8 @@
+- Added Fanclub lancemate
+- Fixed weapon switch bug (pcaction.pp)
+- Fixed parent's letter bug (arenascript.pp)
+- Fixed Mauna Cavern bug (ADV_FederatedTerritories.txt)
+- Fixed SDL info display for express delivery bug (services.pp)
 - Title screen menu set to RPMNoCancel in SDL (gharena.pas)
 
 1.301	April 19 2016

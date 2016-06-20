@@ -826,6 +826,14 @@ begin
 			SV := GB^.Scene^.S;
 		end;
 
+	end else if ( SMsg = 'GSCENE' ) then begin
+		{ Return the current scene's unique ID. }
+		{ Only do this if we're in the real scene! Return 0 for }
+		{ a temporary or otherwise fake scene. }
+		if ( GB <> Nil ) and ( GB^.Scene <> Nil ) and (Grabbed_Gear <> Nil) then begin
+			SV := FindGearScene( Grabbed_Gear, GB );
+		end;
+
 	end else if ( SMsg = 'FACMEM' ) then begin
 		{ Return the number of members of the requested faction. }
 		if ( GB <> Nil ) and ( GB^.Scene <> Nil ) then begin
@@ -1215,7 +1223,11 @@ begin
 			W := TimeString( ID );
 		end;
 
-		if IsPunctuation( W[1] ) or ( S1[Length(S1)] = '$' ) or ( S1[Length(S1)] = '@' ) then begin
+		if W = '' then begin
+			S1 := S1 + ' ';
+        end else if S1 = '' then begin
+			S1 := W;
+        end else if IsPunctuation( W[1] ) or ( S1[Length(S1)] = '$' ) or ( S1[Length(S1)] = '@' ) then begin
 			S1 := S1 + W;
 		end else begin
 			S1 := S1 + ' ' + W;
@@ -3503,6 +3515,7 @@ begin
 			L := txt;
 			while L <> Nil do begin
 				FormatMessageString( L^.Info , GB , Source );
+                if L^.Info = '' then L^.Info := ' ';
 				L := L^.Next;
 			end;
 
@@ -3815,7 +3828,7 @@ begin
             end;
         end else begin
             { This NPC is not ready to become an ally. Add some like. }
-            if CReact < 0 then AddNAtt( PC^.NA , NAG_ReactionScore, 0, Random(10)+1 );
+            if CReact < 0 then AddNAtt( PC^.NA , NAG_ReactionScore, 0, Random(10)+10 );
             AddNAtt( PC^.NA , NAG_ReactionScore, 0, Random( 6 ) + 1 );
         end;
 	end;

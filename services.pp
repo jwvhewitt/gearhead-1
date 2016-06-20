@@ -2097,17 +2097,16 @@ var
 	Cost: LongInt;
 begin
     SERV_Customer := PC;
-{$IFDEF SDLMODE}
-	SERV_GB := GB;
-	SERV_NPC := NPC;
-	SERV_PC := PC;
-    SERV_Info := FindRoot( GB^.Scene );
-{$ELSE}
+{$IFNDEF SDLMODE}
 	ClrZone( ZONE_Menu );
 {$ENDIF}
 
 	repeat
         {$IFDEF SDLMODE}
+	    SERV_GB := GB;
+	    SERV_NPC := NPC;
+	    SERV_PC := PC;
+        SERV_Info := FindRoot( GB^.Scene );
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_ShopMenu );
         {$ELSE}
 		RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_InteractMenu );

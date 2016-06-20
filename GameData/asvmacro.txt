@@ -1,6 +1,7 @@
 % ArenaScript Value Macros
 SCENEFACTION <GrabScene ?  GNAtt NAG_Personal NAS_FactionID>
 ItemTeam <GrabItem ? GNAtt NAG_Location NAS_Team>
+ItemScene <GrabItem ? GScene>
 PCFac <GrabAdventure  GNAtt NAG_Personal NAS_FactionID>
 PCRep <GrabPCPilot GNAtt NAG_CharDescription - ?>
 PCRenown <GrabPCPilot GNAtt NAG_CharDescription -6>
@@ -73,6 +74,7 @@ NAG_Personal <5>
 NAS_OptMax <6>
 NAS_OptMin <7>
 NAG_ReactionScore <6>
+ChatNPCRelationship <GrabChatNPC GNAtt NAG_Relationship 0>
 NAG_Relationship <10>
 NAS_Credits <2>
 NAS_TotalXP <0>

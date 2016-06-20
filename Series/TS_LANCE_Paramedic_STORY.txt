@@ -53,6 +53,7 @@ inv
 	skill 30 10
 	skill 33 5
 	skill 36 5
+    TALENT_COMBATMEDIC
 	CHAT_ATTACK1 <Someone's gonna need medical help in a second...>
 	CHAT_ATTACK2 <Ouch, that looks like it hurts.>
 	CHAT_ATTACK3 <It's all fun and games until someone loses an eye.>

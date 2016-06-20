@@ -72,6 +72,10 @@ DomTarget     <NATT 2 2 ?10>
 EvolveAt      <NATT 2 3 ?5000>
 Skill         <NAtt 1 ? ?>
 Talent        <NAtt 16 ? 1>
+TALENT_BODYBUILDER <NAtt 16 2 1>
+TALENT_KUNGFU <NAtt 16 5 1>
+TALENT_SAVANT <NAtt 16 10 1>
+TALENT_COMBATMEDIC <NAtt 16 21 1>
 SetTeam       <NAtt -1 4 ?0>
 SetPersona    <NAtt 5 0 ?>
 SetFaction    <NAtt 5 2 ?>
@@ -226,3 +230,4 @@ Phone                     <NAtt 18 4 1>
 Sealed                    <NAtt 18 5 1>
 Integral                  <NAtt 18 6 1>
 Personadex                <NAtt 18 7 1>
+Experience                <NAtt 4 0 ?2000>

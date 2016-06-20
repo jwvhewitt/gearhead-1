@@ -1,0 +1,108 @@
+Story
+	name <LM: Bear Bastard>
+	% Bear Bastard is a bastard of a bandit. He will challenge the PC to a
+    % fight; if the PC wins, then by the ancient laws of Shonen Knife Bushido
+    % then the two must become friends.
+
+	% N1 is the scene in which the BB will be deployed.
+	% N2 is the BB himself.
+	Element2 <Prefab>
+
+	% S1 = Initialization Counter (MP Reputation)
+	%      If S1=1, PC has defeated the attackers
+	% S2 = PC has fought the attackers (1)
+	%      PC has spoken to BB afterwards (2)
+	% S3 = Have won combat exactly once
+
+	% At startup, set the potential lancemate's skill level and reputation.
+	start <ifNPCOK N2 else GoDelete if= S1 1 else GoInit S= 1 2 MoveChar N2 N1>
+	GoInit <if= S1 0 S= 1 d30 S+ 1 20 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 Compose ENC 1 .encounter>
+	GoDelete <EndStory>
+	.encounter <if= S2 0 if= d4 1 ifG PCScale 0 Block ifG PCRenown S1 Alert 1 Goto GoStartCombat>
+	GoStartCombat <SavePos Dynamic 2 Threat S1 90 .nu1 .nu2 S= 2 1 DynaNPC N2 2 ComposeD START .encstart PassVar 1 N2>
+	.nu1 <if= T1 0 if= L3 0 L= 3 1 LoseRenown Return>
+	.nu2 <if= T2 0 if= L3 0 L= 3 1 XPV 100 Reputation 6 1 Return>
+	nu1 <if= T1 0 if= S3 0 S= 2 0>
+	nu2 <if= T2 0 if= S2 1 if= S3 0 S= 3 1 S= 1 1 History 2>
+	.encstart <if= L2 0 ForceChat L1 L= 2 1>
+
+	Msg1 <You are suddenly accosted by a motley gang of bandits. All of the enemy mecha appear to have cardboard bear ears attached to their heads.>
+	Msg2 <You defeated Bear Bastard in dishonorable combat.>
+
+    msg101 <\NARRATIVE 2 is in \NARRATIVE 1 \VAL N1>
+
+sub
+	% In SubComponents, the persona for Bear Bastard.
+	Persona 2
+    # V1 = Have fought at least once before
+	greeting <NewChat ifG S2 1 else GoCheckFirst Say 3>
+	GoCheckFirst <if= S1 2 else GoInCombat AddReact 10 Say 2 AddChat 3 AddChat 4>
+	GoInCombat <EndChat Say 1 AddChat 1 AddChat 2 V+ 1 1>
+
+    result1 <EndChat Say 4>
+    result2 <EndChat Say 5 AddReact d8>
+    result3 <S= 2 2 PCAlly N2 NewChat Say 6>
+    result4 <NewChat Say 7 AddChat 5 AddChat 6>
+    result5 <S= 2 2 PCAlly N2 NewChat Say 8>
+    result6 <NewChat Say 9 ifG d60 react PCEnemy N2 EndStory>
+
+	Msg1 <Listen up, loser, I don't know who you are and I don't care. You're gonna be sorry for picking a fight with Bear Bastard and the Teddy Bandits!>
+    Msg1_1 <You again? If you didn't learn the first time, I'm gonna have to beat some more sense into yer head! Don't challenge the Teddy Bandits unless you want to lose!>
+    CMsg1_1 <ifG V1 0 accept>
+    Msg1_2 <You don't know when to give up, do ya? I told you before, if you challenge the Teddy Bandits to a fight, we're the ones who're gonna end it!>
+    CMsg1_2 <ifG V1 3 accept>
+
+	Msg2 <Hey buddy, that was a great fight out there. Since you've proved yourself I'm gonna let you join the Teddy Bandits.>
+
+    # Speaking after the battle.
+	Msg3 <Hey \PC ! Ready to go beat some heads?>
+	Msg3_1 <>
+	Msg3_2 <>
+
+	Msg4 <Don't try to weasel your way out of it...>
+	Msg4_1 <That ain't nothing but a technicality and you know it. Now prepare to fight!>
+	Msg5 <Hah! I like the cut of your jib.>
+    Msg5_1 <That's the spirit! I could use someone like you in my lance...>
+	Msg6 <Yeah, whatever. Either way, the next time we fight, I plan to make sure it's on the same side!>
+    Msg7 <Don't you know the code of Shonen Knife Bushido? First two cavaliers fight, then they become friends. It's the law!>
+    Msg8 <That's the spirit! I'll see you around, buddy.>
+    Msg9 <Fine, be like that.>
+
+	Prompt1 <Wait, I didn't challenge you...>
+    Prompt1_1 <Can't we talk about this?>
+    Prompt1_2 <You're the one who challenged me!>
+	Prompt2 <Big talk, little man.>
+	Prompt2_1 <Talk is cheap. Let's fight.>
+	Prompt2_2 <Prepare to witness true power.>
+    Prompt3 <Maybe you could join my team instead.>
+    Prompt4 <What!? I don't want to join your stupid team.>
+    Prompt5 <Alright, whatever.>
+    Prompt6 <I have no desire to be your friend.>
+
+end
+inv
+	NPC Mecha Pilot
+    name <Bear Bastard>
+	job <Swashbuckler>
+	chardesc Male Passionate Passionate Passionate Criminal
+	EquipChar 5000
+	statline 12 20 15 13 10 17 10 14
+    SDL_PORTRAIT <por_m_joe_bearbastard(AUY).png>
+	SDL_COLORS <135 30 17 184 124 81 67 73 100>
+	Age 15
+    skill 12 10
+    skill 18 0
+    skill 28 15
+    skill 35 15
+    TALENT_BODYBUILDER
+    TALENT_KUNGFU
+	mecha <Daum.txt>
+	CHAT_ATTACK1 <>
+	CHAT_ATTACK2 <>
+	CHAT_ATTACK3 <>
+	CHAT_SAFE1 <>
+	CHAT_SAFE2 <>
+	CHAT_SAFE3 <>
+	CHAT_EJECT1 <>
+
+end

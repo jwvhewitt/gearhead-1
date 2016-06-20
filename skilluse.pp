@@ -542,6 +542,13 @@ var
 		end;
 	end;
 
+    function StatImprovementCost( CurrentVal: Integer ): Integer;
+        { Return the number of build points needed to improve a stat. }
+    begin
+        if CurrentVal < 10 then StatImprovementCost := 1
+        else StatImprovementCost := CurrentVal - 8;
+    end;
+
     function RobotStats( RobotC: GearPtr; Pts,MaxStat: Integer): Integer;
 	    { Randomly allocate PTS points to all of the robot's }
 	    { stats. }
@@ -556,14 +563,14 @@ var
 	    { Keep processing until we run out of stat points to allocate. }
         Tries := 0;
 	    while ( Pts > 0 ) and ( Tries < 100 ) do begin
-		    Stat := Random( NumGearStats ) + 1;
+		    Stat := Random( 7 ) + 1;
 
 		    { If the stat selected is under the max value, }
 		    { improve it. If it is at or above the max value, }
 		    { there's a one in three chance of improving it. }
 		    if ( STemp[Stat] + RobotC^.Stat[ Stat ] ) < MaxStat then begin
+			    Pts := Pts - StatImprovementCost( STemp[Stat] );
 			    Inc( STemp[Stat] );
-			    Dec( Pts );
 
 		    end else begin
 			    Inc( Tries );

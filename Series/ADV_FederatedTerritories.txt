@@ -7511,7 +7511,7 @@ Scene 45
 	NU1 <if= T1 0 Exit 44>
 	gapfill <-21>
 	start <Print 1>
-    5min <PCMoralDmg -1>
+    5min <PCMoraleDmg -1>
 	Msg1 <You enter Mauna Cavern. The air is hot with geothermal steam.>
 	CaveMap
 	BorderType 31

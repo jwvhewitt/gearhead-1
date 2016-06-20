@@ -110,7 +110,7 @@ const
 		0, 0
 	);
 
-	NumThinWalls = 7;
+	NumThinWalls = 8;
 	ThinWall_Earth = 1;
 	ThinWall_RustySteel = 2;
 	ThinWall_Stone = 3;
@@ -118,12 +118,13 @@ const
 	ThinWall_Residential = 5;
     ThinWall_Wood = 6;
     ThinWall_Default = 7;
+    ThinWall_Fortress = 8;
 
 	Terrain_Image: Array [1..NumTerr] of SmallInt = (
 		 1, 2, 3, 4, 5,  6, 7, 8, 9,10,
 		11,12,-5,14,-3, 16,17,18,19,20,
 		21,22,-Thinwall_Default,24,25, 26,-ThinWall_Wood,28,-ThinWall_RustySteel,30,
-		-1,32,33,34,-4, 36,37,38,39,40,
+		-1,32,-ThinWall_Fortress,34,-4, 36,37,38,39,40,
 		41,42
 	);
 
@@ -1594,6 +1595,7 @@ initialization
 	Thin_Wall_Sprites[ ThinWall_Residential ] := ConfirmSprite( 'wall_residential.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Wood ] := ConfirmSprite( 'wall_wood.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Default ] := ConfirmSprite( 'wall_default.png' , '' , 64 , 96 );
+	Thin_Wall_Sprites[ ThinWall_Fortress ] := ConfirmSprite( 'wall_fortress.png' , '' , 64 , 96 );
 
 	Thin_wall_Cap := ConfirmSprite( 'wall_cap.png' , '' , 64 , 96 );
     {SDL_SetAlpha( Thin_wall_Cap^.Img , SDL_SRCAlpha , 128 );}
