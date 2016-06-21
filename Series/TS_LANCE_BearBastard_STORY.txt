@@ -18,8 +18,8 @@ Story
 	start <ifNPCOK N2 else GoDelete if= S1 1 else GoInit S= 1 2 MoveChar N2 N1>
 	GoInit <if= S1 0 S= 1 d30 S+ 1 20 NPCAbsoluteLevel N2 S1 SetNPCRep N2 6 S1 Compose ENC 1 .encounter>
 	GoDelete <EndStory>
-	.encounter <if= S2 0 if= d4 1 ifG PCScale 0 Block ifG PCRenown S1 Alert 1 Goto GoStartCombat>
-	GoStartCombat <SavePos Dynamic 2 Threat S1 90 .nu1 .nu2 S= 2 1 DynaNPC N2 2 ComposeD START .encstart PassVar 1 N2>
+	.encounter <if= S2 0 if= d6 1 ifG PCScale 0 ifG PCRenown S1 Block Alert 1 Goto GoStartCombat>
+	GoStartCombat <SavePos Dynamic 2 Threat PCRenown 90 .nu1 .nu2 S= 2 1 DynaNPC N2 2 ComposeD START .encstart PassVar 1 N2>
 	.nu1 <if= T1 0 if= L3 0 L= 3 1 LoseRenown Return>
 	.nu2 <if= T2 0 if= L3 0 L= 3 1 XPV 100 Reputation 6 1 Return>
 	nu1 <if= T1 0 if= S3 0 S= 2 0>

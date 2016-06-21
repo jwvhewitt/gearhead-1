@@ -1,169 +1,219 @@
 Plot 0
-	name <PLOT: BanditJob1>
-	% VARIABLES USED
-	% 1 -> Time Limit Timer
-	% 2 -> Combat Indicator
+	name <Bandit Job 1 Mk2>
+
+    % Leader mission template
+    % v1.302 Standard
 
 	element1 <Character Bandit HasMecha>
-	% Element 8 = Difficulcy Level
+
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  P1 = Time Limit
+	%  P2 = Combat Indicator, if V2=1 combat has been entered
+	%  P3 = Email sent indicator.
+
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E1 is killed.
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 21600>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
+	GoDelete <AdvancePlot 0>
+
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Salvage Reputation 6  1  XPV 50>
+
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d80 23 if= V3 0 ifG RReact E1 d100 ifPCChaotic V= 3 1 Email 1>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1   <\PERSONA E1 @ \SCENE EScene 1 :// I have a business proposition for you.>
+	Msg1_2 <\PERSONA E1 @ \SCENE EScene 1 :// Looking for some quick cash? Call me.>
+	Msg1_3 <\PERSONA E1 @ \SCENE EScene 1 :// You do dirty deeds at reasonable prices, right? I may need your services.>
+	Msg1_4 <\PERSONA E1 @ \SCENE EScene 1 :// If you're in the area I could use a partner in crime.>
+	Msg1_5 <\PERSONA E1 @ \SCENE EScene 1 :// Want to help me steal some crap? Give me a call.>
+
+sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E1.
+	Persona 1
 
 	rumor <!1 is looking for a partner in crime.>
 
-	% Time limit - this plot will fade after a short time.
-	START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 12500>
-	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
 
-	% If combat has been entered, V2 = 1. This is important to keep
-	% the events below from activating in scenes other than the
-	% plot's combat...
-	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 LoseRenown         V= 2 2>
-	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1    V= 2 2>
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 AddReact d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission Say 6 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
-sub
-	Persona 1
-	% The NPC who will offer the job.
-	% PCs who don't have mecha will be sent elsewhere...
-	% Only PCs with good reaction score will be offered a job.
-	greeting <NewChat ifG PCMeks 0 else GoNoMeks ifG React 55 else GoMedReact Goto GoJobDesc>
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 Threat PCRep 6 100 V= 4 Reward V3 150 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer Say 11  Goto GoAddAcceptOps>
+	GoMakeOffer  <ifG React d25 else GoNoOffer ifPCNotLawful else GoNoOffer ifG PCMeks 0 else GoNoMeks Say 16 Goto GoAddAcceptOps>
 
-	% PCs with a medium reaction score have a chance to get offered a job,
-	% if they make a good impression on the NPC.
-	GoMedReact <ifG React 20 else GoLowReact Say 3 AddChat 1 AddChat 2 AddChat 3>
+	GoAddAcceptOps <AddChat 1 AddChat 4>
+	GoAddComOps <AddChat 7 AddChat 9 AddChat 11>
 
-	% PCs with a low reaction score will most likely be told to buzz off.
-	GoLowReact <EndChat Say 3>
+    GoNoMeks <Say 106 AdvancePlot 0>
+	GoNoOffer <Say 102 AddChat 201 AddChat 202>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
 
-	% With no meks, the PC won't get offered a job at all, but may be told
-	% about it.
-	GoNoMeks <ifG React 30 else GoNMMedReact Say 1>
-	GoNMMedReact <Say 2>
-	GoNMLowReact <EndChat Say 4>
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 Say 21 Memo 103 Goto GoAddComOps>
 
-	% Result 1 -> The player will try to be a kangpae
-	result1 <ifG 0 PCRep 2 else GoNoChaos NewChat Say 8 AddChat 4 AddChat 5>
-	GoNoChaos <NewChat Say 7>
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
 
-	% Result 2 -> The player will try to impress the NPC with INTIMIDATION
-	result2 <Reputation 2 -1 ifG SkRoll 28 10 else GoNoInt NewChat Say 9 AddChat 4 AddChat 5>
-	GoNoInt <AdvancePlot 0 Reputation 6 -1 Say 6 EndChat>
-
-	% Result 3 -> The player goes quietly away.
-	result3 <NewChat Say 5>
-
-	% Result 4 -> Go straight to the job description.
-	result4 <Goto GoJobDesc>
-
-	% Result 5 -> Go away.
-	result5 <NewChat Say 10>
-
-	% The NPC will describe the job being offered. This will depend upon the
-	% PC's reputation.
-	% V1 = Threat Value of Encounter
-	GoJobDesc <ifG PCRep 6 90 Else GoLvl9 V= 1 10000000 Say 11 E= 8 10 goto GoChoose>
-	GoLvl9 <ifG PCRep 6 80 Else GoLvl8 V= 1 5950000 Say 12 E= 8 9 goto GoChoose>
-	GoLvl8 <ifG PCRep 6 70 Else GoLvl7 V= 1 2670000 Say 13 E= 8 8 goto GoChoose>
-	GoLvl7 <ifG PCRep 6 60 Else GoLvl6 V= 1 1380000 Say 14 E= 8 7 goto GoChoose>
-	GoLvl6 <ifG PCRep 6 50 Else GoLvl5 V= 1  720000 Say 15 E= 8 6 goto GoChoose>
-	GoLvl5 <ifG PCRep 6 40 Else GoLvl4 V= 1  400000 Say 16 E= 8 5 goto GoChoose>
-	GoLvl4 <ifG PCRep 6 30 Else GoLvl3 V= 1  250000 Say 17 E= 8 4 goto GoChoose>
-	GoLvl3 <ifG PCRep 6 20 Else GoLvl2 V= 1  170000 Say 18 E= 8 3 goto GoChoose>
-	GoLvl2 <ifG PCRep 6 10 Else GoLvl1 V= 1   90000 Say 19 E= 8 2 goto GoChoose>
-	GoLvl1 <ifG PCRep 6  0 Else GoLvl0 V= 1   45000 Say 20 E= 8 1 goto GoChoose>
-	GoLvl0 <V= 1  15000 E= 8 1 Say 20 goto GoChoose>
-
-	% The encounter has been described, and a threat rating been set.
-	% See whether or not the PC will accept the job.
-	GoChoose <NewChat AddChat 6>
-
-	Result6 <EndChat Say 21 Reputation 2 -1 P= 2 1 SavePos Dynamic 2 V1 FrzNU1 FrzNU2 Encounter 5 0 .enemydata>
-	FrzNU1 <if= T1 0 Return>
-	FrzNU2 <if= T2 0 Salvage Return>
+	% PC will enter combat now.
+	result7 <EndChat Say 26 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2 Reputation 2 -2 Encounter 5 0 .enemydata>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Salvage Return>
 	.enemydata <Chaotic ArchEnemy +PCRA>
 
-	Msg1 <Let me just tell you, I've got so much stuff going on. You really ought to get a mecha, then you could get a cut of the action.>
-	Msg2 <I'm busy. If you don't have anything important to say, take it elsewhere.>
-	Msg3 <I can't talk now, I've got some business matters going on.>
-	Msg4 <Buzz off.>
-	Msg5 <Catch you then.>
-	Msg6 <I don't think so. Get lost loser.>
-	Msg7 <You didn't hear that from me...>
-	Msg8 <Could be... Are you looking to make a bit of quick cash?>
-	Msg9 <You're agressive... I like that. Interested in making a bit of quick cash?>
-	Msg10 <You don't know what you're missing.>
 
-	Msg11 <I've heard about a big shipment of raw gundamium passing through. The convoy is well guarded, but the goods should be worth the trouble. Pay is $120000 plus any meks that survive your assault.>
-	Msg12 <One of the syndicate bigwigs set up a real nice complex just outside of town. Word is that it's full of loot, but of course it's guarded by some of his cronies. I can offer $65000 plus salvage.>
-	Msg13 <You know what's valuable? Contraband movie discs. I know where we can get our hands on a lot of them... of course we'll have to take them from the bootleggers who made them first. Pay is $33000 plus salvage rights.>
-	Msg14 <Some dumbass went and stole a couple of really nice mecha from the syndicate. There's a reward of $17000 to rub them out, and if any of the meks are still functioning afterwards no-one has to be the wiser about that.>
-	Msg15 <Want to hijack a nanochip shipment? The pay is $9000 and whatever guardian meks you can salvage.>
-	Msg16 <A bunch of hot cellphones are being smuggled across the border. If we get to them first, they could be ours. I can give you $5000 plus any leftover mecha.>
-	Msg17 <All I need you to do is take out the sentry mecha while I do my business. You don't need to know any more than that. Pay is $3000 and salvage.>
-	Msg18 <A rival gang has been moving in on our territory. I need a pilot to take them out before they start getting too comfortable. I can offer $2000 plus salvage rights to their gear.>
-	Msg19 <The plan is, we rob the ramen noodle convoy and sell the goods to my contact. It might not be lucrative but a job's a job. You have to deal with the guards. Pay is $1000 and salvage.>
-	Msg20 <I've got a small job for you. A few young punks need to be taught a lesson. I need you to eliminate their meks. It's worth $500 plus whatever salvage you don't absolutely destroy.>
+	% PC will ask how many points the enemy has.
+	result9 <NewChat Say 31 AddChat 7 AddChat 11>
 
-	Msg21 <Here are the coordinates. Meet me back here after you're done.>
+	% PC needs some time to get ready.
+	result11 <NewChat Say 105>
 
-	prompt1 <Something criminal, I bet.>
-	prompt2 <I want a piece of the action.>
-	prompt3 <I'll come back later.>
-	prompt4 <I'm interested.>
-	prompt5 <I'm not interested.>
-	prompt6 <Let's go.>
+    result201 <ifG SkRoll 28 10 else GoNoInt NewChat Say 201 Goto GoAddAcceptOps>
+	GoNoInt <EndChat Say 203 AddReact -d10 AdvancePlot 0>
+    result202 <NewChat Say 202 AdvancePlot 0>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Player has won the battle and is being paid.
+	Msg1 <Here's your share of the take. You are the best, the absolute best.>
+	Msg1_1 <Amazing. That mission came off so much better than it looked like it was going to. Here's your cash, as promised.>
+	Msg1_2 <You really are worth your rates. Here's your money; I'll call you if I have another mission.>
+	Msg1_3 <It's no wonder that you have such a slick rep. Here's your cash. I hope to do business with you again.>
+	Msg1_4 <It's been a pleasure doing business with you. Here's the money.>
+	Msg1_5 <You actually managed to beat them... I thought for sure you were gonna die. Well, here's the cash I owe you.>
+	Msg1_6 <You could have a very bright future in this business. Here's the cash.>
+	Msg1_7 <Stick with me and we'll both be rich. Here's your cut.>
+	Msg1_8 <That's done. Here's the money I owe you.>
+	Msg1_9 <Will you accept your pay in instant noodles? No? I didn't think so... here you are.>
+
+	% 06 :  Player has lost the battle.
+	Msg6_1 <That was a fiasco! We're lucky to have gotten out alive.>
+	Msg6_2 <How many meks did they have!? That was not good...>
+	Msg6_3 <I can't believe we lost. I don't want to talk about it.>
+	Msg6_4 <I thought you were a big shot pilot!? We lost, big time.>
+	Msg6_5 <That mission really, really sucked. Try not to do so badly ever again.>
+
+	% 11 :  PC got email about mission; asked to accept
+	Msg11 <Hey \PC , I see you got my mail. Want me to tell you about a great money-making opportunity?>
+	Msg11_2 <>
+	Msg11_3 <>
+	Msg11_4 <>
+	Msg11_5 <>
+
+	% 16 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <Are you looking to make a bit of quick cash?>
+	Msg16_7 <>
+	Msg16_8 <>
+	Msg16_9 <>
+	Msg16_0 <>
+
+	% 21 :  PC has accepted; describe the mission.
+	Msg21 <A rival gang has been moving in on our territory. I need a pilot to take them out before they start getting too comfortable. I can offer $ \VAL V4 plus salvage rights to their gear.>
+	Msg21_1 <I've heard about a big shipment of raw gundamium passing through. The convoy is well guarded, but the goods should be worth the trouble. Pay is $ \VAL V4 plus any meks that survive your assault.>
+    CMsg21_1 <ifG PCRenown 75 Accept>
+	Msg21_2 <One of the syndicate bigwigs set up a real nice complex just outside of town. Word is that it's full of loot, but of course it's guarded by some of his cronies. I can offer $ \VAL V4 plus salvage.>
+    CMsg21_2 <ifG PCRenown 60 Accept>
+	Msg21_3 <You know what's valuable? Contraband movie discs. I know where we can get our hands on a lot of them... of course we'll have to take them from the bootleggers who made them first. Pay is $ \VAL V4 plus salvage rights.>
+	Msg21_4 <Some dumbass went and stole a couple of really nice mecha from the syndicate. There's a reward of $ \VAL V4 to rub them out, and if any of the meks are still functioning afterwards no-one has to be the wiser about that.>
+    CMsg21_4 <ifG PCRenown 50 Accept>
+	Msg21_5 <Want to hijack a nanochip shipment? The pay is $ \VAL V4 and whatever guardian meks you can salvage.>
+    CMsg21_5 <ifG PCRenown 40 Accept>
+	Msg21_6 <A bunch of hot cellphones are being smuggled across the border. If we get to them first, they could be ours. I can give you $ \VAL V4 plus any leftover mecha.>
+	Msg21_7 <All I need you to do is take out the sentry mecha while I do my business. You don't need to know any more than that. Pay is $ \VAL V4 and salvage.>
+	Msg21_8 <The plan is, we rob the ramen noodle convoy and sell the goods to my contact. It might not be lucrative but a job's a job. You have to deal with the guards. Pay is $ \VAL V4 and salvage.>
+    CMsg21_8 <ifG 50 PCRenown Accept>
+	Msg21_9 <I've got a small job for you. A few young punks need to be taught a lesson. I need you to eliminate their meks. It's worth $ \VAL V4 plus whatever salvage you don't absolutely destroy.>
+    CMsg21_9 <ifG 30 PCRenown Accept>
+
+	% 26 :  Combat is starting
+	Msg26 <Here are the coordinates. Meet me back here after you're done.>
+	Msg26_7 <>
+	Msg26_8 <>
+	Msg26_9 <>
+	Msg26_10 <>
+
+	% 31 :  Describe enemy point value
+	Msg31 <The other side has \VAL V3 points worth of equipment. I think you can handle that.>
+	Msg31_2 <>
+	Msg31_3 <>
+	Msg31_4 <>
+	Msg31_5 <>
 
 
-	Plot 1
-		% The player lost the battle.
-		% Time limit - this plot will fade after a short time.
-		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
-		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
-	sub
-		Persona 1
-		% The exact message given by the NPC will vary depending on
-		% whether or not the PC is well-liked...
-		greeting <NewChat AdvancePlot 0 ifG React 50 else GoMedReact Say 1>
-		GoMedReact <ifG PCRep 6 75 else GoMedRenown Say 2>
-		GoMedRenown <ifG React 15 else GoLowReact Say 3>
-		GoLowReact <ifG PCRep 6 25 else GoLowRenown Say 4>
-		GoLowRenown <Say 5>
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <Are you ready to start the job yet?>
+	% 102 :  Player doesn't have "the right stuff" for this mission.
+	Msg102 <I'm busy. If you don't have anything important to say, take it elsewhere.>
+    Msg102_1 <I can't talk now, I've got some business matters going on.>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 offered you a criminal mission.>
+	% 104 :  PC didn't want the job.
+	Msg104 <You don't know what you're missing.>
+	% 105 :  PC needs time to get ready.
+	Msg105 <Do whatever you need to do, then come back here and we'll start.>
 
-		Msg1 <That was a fiasco! We're lucky to have gotten out alive.>
-		Msg2 <How many meks did they have!? That was not good...>
-		Msg3 <I can't believe we lost. I don't want to talk about it.>
-		Msg4 <I thought you were a big shot pilot!? We lost, big time.>
-		Msg5 <That mission really, really sucked. Try not to do so badly ever again.>
-	end
+    Msg106 <Let me just tell you, I've got so much stuff going on. You really ought to get a mecha, then you could get a cut of the action.>
 
-	Plot 2
-		% The player won the battle.
-		% Time limit - this plot will fade after a short time.
-		START <if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 17500>
-		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
-	sub
-		Persona 1
-		greeting <NewChat AdvancePlot 0 AddReact 3 if= E8 10 Else GoLvl9 CashPrize 120000 Say 1>
-		GoLvl9 <if= E8 9 Else GoLvl8 CashPrize 65000 Say 2>
-		GoLvl8 <if= E8 8 Else GoLvl7 CashPrize 33000 Say 3>
-		GoLvl7 <if= E8 7 Else GoLvl6 CashPrize 17000 Say 4>
-		GoLvl6 <if= E8 6 Else GoLvl5 CashPrize  9000 Say 5>
-		GoLvl5 <if= E8 5 Else GoLvl4 CashPrize  5000 Say 6>
-		GoLvl4 <if= E8 4 Else GoLvl3 CashPrize  3000 Say 7>
-		GoLvl3 <if= E8 3 Else GoLvl2 CashPrize  2000 Say 8>
-		GoLvl2 <if= E8 2 Else GoLvl1 CashPrize  1000 Say 9>
-		GoLvl1 <CashPrize 500 Say 10>
+    Msg201 <You're agressive... I like that. Interested in making a bit of quick cash?>
+    Msg202 <Don't knock it until you've tried it.>
+    Msg203 <I don't think so. Get lost loser.>
 
-		Msg1 <Here's your share of the take. You are the best, the absolute best.>
-		Msg2 <Amazing. That mission came off so much better than it looked like it was going to. Here's your cash, as promised.>
-		Msg3 <You really are worth your rates. Here's your money; I'll call you if I have another mission.>
-		Msg4 <It's no wonder that you have such a slick rep. Here's your cash. I hope to do business with you again.>
-		Msg5 <It's been a pleasure doing business with you. Here's the money.>
-		Msg6 <You could have a very bright future in this business. Here's the cash.>
-		Msg7 <Stick with me and we'll both be rich. Here's your cut.>
-		Msg8 <That's done. Here's the money I owe you.>
-		Msg9 <Will you accept your pay in instant noodles? No? I didn't think so... here you are.>
-		Msg10 <You actually managed to beat them... I thought for sure you were gonna die. Well, here's the cash I owe you.>
-	end
+	% 01 :  PC will accept the mission.
+	Prompt1 <Tell me more.>
+	Prompt1_2 <Alright, fill me in.>
+	Prompt1_3 <Okay. Sounds like fun.>
 
+	% 04 :  PC doesn't want this mission.
+	Prompt4 <Sorry, I can't help you.>
+	Prompt4_5 <No thanks.>
+	Prompt4_6 <This isn't my kind of work.>
+
+	% 07 :  Combat is starting.
+	prompt7 <Be back when I'm finished.>
+	prompt7_8 <I'm all ready to go.>
+
+	% 09 :  How many points?
+	prompt9 <What am I up against?>
+	prompt9_10 <How many points am I facing?>
+
+	% 11 :  Just a minute...
+	prompt11 <I have to go get supplied first.>
+	prompt11_2 <Not ready to start yet; be back soon.>
+
+    Prompt201 <I want a piece of that action.>
+    Prompt201_1 <Do you need a pilot?>
+    Prompt201_2 <>
+
+    Prompt202 <I don't even want to know.>
+    Prompt202_1 <Something criminal, no doubt.>
+    Prompt202_2 <>
 
 end
-

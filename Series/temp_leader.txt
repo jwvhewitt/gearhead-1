@@ -1,7 +1,7 @@
 Plot 0
 	name <Leader Mission Template>
 
-    % v1.302 Standard
+    % v1.303 Standard
 
 	% A leader will offer a combat mission. Yay! So what's different
 	% between this one and the regular combat template? Well, first of
@@ -77,11 +77,11 @@ sub
 	% If the PC has "the right stuff", an offer will be made immediately.
 	% If not, no offer will be made at all. In the example provided
 	% below, "the right stuff" is a Lawful reputation + being liked.
-	GoMakeOffer  <ifG React d25 else GoNoOffer ifG PCRep 2 d25 else GoNoOffer Say 16 Goto GoAddAcceptOps>
+	GoMakeOffer  <ifG PCMeks 0 else GoNoMeks ifG React d25 else GoNoOffer ifG PCRep 2 d25 else GoNoOffer Say 16 Goto GoAddAcceptOps>
 
 	GoAddAcceptOps <AddChat 1 AddChat 4>
 	GoAddComOps <AddChat 7 AddChat 9 AddChat 11>
-
+    GoNoMeks <Say 106 AdvancePlot 0>
 	GoNoOffer <Say 102 AdvancePlot 0>
 	% If the mission was denied but not previously cleaned up, do
 	% that now.
@@ -89,28 +89,21 @@ sub
 
 	% PC will accept the job. Descibe the mission.
 	result1 <NewChat V= 1 1 Say 21 Memo 103 Goto GoAddComOps>
-	result2 <Goto Result1>
-	result3 <Goto Result1>
 
 	% PC refuses the job.
 	result4 <NewChat Say 104 AdvancePlot 0>
-	result5 <Goto Result4>
-	result6 <Goto Result4>
 
 	% PC will enter combat now.
 	result7 <EndChat Say 26 Goto GoStartCombat>
 	GoStartCombat <SavePos P= 2 1 Dynamic 2 V3 .nu1 .nu2>
 	.nu1 <if= T1 0 Return>
 	.nu2 <if= T2 0 Salvage Return>
-	result8 <Goto result7>
 
 	% PC will ask how many points the enemy has.
 	result9 <NewChat Say 31 AddChat 7 AddChat 11>
-	result10 <Goto result9>
 
 	% PC needs some time to get ready.
 	result11 <NewChat Say 105>
-	result12 <Goto result11>
 
 	% *********************
 	% *** MESSAGE BLOCK ***
@@ -176,6 +169,8 @@ sub
 	Msg104 <That's too bad. I'll have to find someone else to do it, then.>
 	% 105 :  PC needs time to get ready.
 	Msg105 <Do whatever you need to do, then come back here and we'll start.>
+    % 106 : PC doesn't have a mecha.
+    Msg106 <I have a mission for a mecha pilot. Too bad there isn't one around.>
 
 	% 01 :  PC will accept the mission.
 	Prompt1 <>

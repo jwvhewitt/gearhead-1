@@ -21,7 +21,7 @@ sub
 	GoHRNoAth <Say 105  AddChat 1>
 
 	GoMedReact <ifG React d45 else GoLowReact  ifG SkRoll 26 8 else GoMRNoAth  Say 104  AddChat 1>
-	GoMRNoAth <Say d5>
+	GoMRNoAth <Say 1>
 
 	GoLowReact <ifG React 0 else GoReallyLow  SayAnything>
 	GoReallyLow <EndChat  Say 101>
@@ -30,10 +30,10 @@ sub
 	SkList <26 13 12 9 8>
 
 	Msg1 <They say that jogging is great exercise.>
-	Msg2 <The more you work your body the stronger you'll become. They say the same is true of your mind but eh, I don't know about that.>
-	Msg3 <A lot of pilots don't think that they need to be in top physical shape, but if ever they're in combat they'll change their minds in a hurry!>
-	Msg4 <If you find yourself getting tired too often chances are that you need more exercise.>
-	Msg5 <If you want to develop your athletics the fastest, work out until you're absolutely exhausted. No pain, no gain.>
+	Msg1_2 <The more you work your body the stronger you'll become. They say the same is true of your mind but eh, I don't know about that.>
+	Msg1_3 <A lot of pilots don't think that they need to be in top physical shape, but if ever they're in combat they'll change their minds in a hurry!>
+	Msg1_4 <If you find yourself getting tired too often chances are that you need more exercise.>
+	Msg1_5 <If you want to develop your athletics the fastest, work out until you're absolutely exhausted. No pain, no gain.>
 
 	Msg101 <Hey, don't you see that I'm busy? Go bother someone else.>
 	Msg102 <How's it going? Hey, if you're not too busy, how'd you like to join me for some training? I figure there's stuff I can learn from you, and a few things you can learn from me.>

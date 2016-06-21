@@ -69,6 +69,7 @@ inv
     skill 3 10
     skill 5 10
     skill 10 10
+    skill 19 0
     skill 27 0
     skill 15 5
     TALENT_SAVANT
@@ -78,6 +79,6 @@ inv
 	CHAT_ATTACK3 <I am the cavalier that stomps in the night!>
     CHAT_ATTACK4 <Awesome!>
 	CHAT_EJECT1 <That was AWESOME!!!>
-	CHAT_EJECT1 <Oops... that wasn't right.>
+	CHAT_EJECT2 <Oops... that wasn't right.>
 
 end

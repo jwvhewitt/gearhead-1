@@ -1,4 +1,5 @@
-- Added Fanclub lancemate
+- Updated PLOT_BanditJob1.txt, PLOT_BanditJob2.txt, PLOT_BanditJob3.txt
+- Added Fan Club, Bear Bastard lancemates
 - Fixed weapon switch bug (pcaction.pp)
 - Fixed parent's letter bug (arenascript.pp)
 - Fixed Mauna Cavern bug (ADV_FederatedTerritories.txt)

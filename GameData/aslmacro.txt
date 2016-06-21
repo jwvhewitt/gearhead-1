@@ -128,6 +128,7 @@ ifPCHeroic <GrabPCPilot ifG GNAtt NAG_CharDescription -1  0>
 ifPCVillainous <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -1>
 ifPCLawful <GrabPCPilot ifG GNAtt NAG_CharDescription -2  0>
 ifPCChaotic <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -2>
+ifPCNotLawful <GrabPCPilot ifG 1  GNAtt NAG_CharDescription -2>
 ifPCSociable <GrabPCPilot ifG GNAtt NAG_CharDescription -3  0>
 ifPCShy <GrabPCPilot ifG 0  GNAtt NAG_CharDescription -3>
 ifPCEasygoing <GrabPCPilot ifG GNAtt NAG_CharDescription -4  0>
