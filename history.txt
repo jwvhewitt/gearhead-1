@@ -1,4 +1,6 @@
-- Updated PLOT_BanditJob1.txt, PLOT_BanditJob2.txt, PLOT_BanditJob3.txt
+- Fixed lone enemy bug in SCENE_CaptureMecha.txt
+- Updated PLOT_BanditJob1.txt, PLOT_BanditJob2.txt, PLOT_BanditJob3.txt,
+  PLOT_BountyHunt1.txt
 - Added Fan Club, Bear Bastard lancemates
 - Fixed weapon switch bug (pcaction.pp)
 - Fixed parent's letter bug (arenascript.pp)

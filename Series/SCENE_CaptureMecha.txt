@@ -25,7 +25,7 @@ GoNormal <if= T2 0 V= 2 1 Return>
 Msg1 <\PILOT L1 must be forced to surrender. Eliminate all enemy mecha except for \PILOT L1 .>
 Msg2 <\PILOT L1 has been disabled. The mission is a failure.>
 Msg3 <\PILOT L1 has surrendered. The mission is a success.>
-Msg4 <\PILOT ?M1 must be stopped. Disable his mecha.>
+Msg4 <\PILOT ?M2 must be stopped. Disable his mecha.>
 
 % Linking code... assumes that the plot calling this scene sets P2=1
 % when combat is entered, as per the templates...

@@ -1,215 +1,232 @@
 Plot 0
 	name <PLOT: Bounty Hunt 1>
 
-	% VARIABLES USED
-	% 1 -> Time Limit Timer
-	% 2 -> Combat Indicator
+    % v1.303 Standard
 
+	% Element1 is just the leader of some town.
 	element1 <Character Bounty Hunter>
-	% Element 2 = Difficulcy Level
 
-	rumor <!1 just posted a bounty notice for a wanted criminal.>
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  P1 = Time Limit
+	%  P2 = Combat Indicator, if V2=1 combat has been entered
+	%  P3 = Email sent indicator.
 
-	% Time limit - this plot will fade after a short time.
-	START <ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 70000>
-	GotoCheckTime <ifG ComTime V1 if= V2 0 AdvancePlot 0>
+	% Time limit. This plot will conclude in one day, or immediately
+	% if NPC E1 is killed.
+	start <ifNPCOK E1 else GoDelete if= V1 0 else GoCheckTime V= 1 ComTime V+ 1 86400>
+	GoCheckTime <if= V2 0 ifG ComTime V1 AdvancePlot 0>
 	GoDelete <AdvancePlot 0>
 
-	% If combat has been entered, V2 = 1. This is important to keep
-	% the events below from activating in scenes other than the
-	% plot's combat...
-	NU1 <if= T1 0 if= V2 1 AdvancePlot 1 LoseRenown          V= 2 2>
-	NU2 <if= T2 0 if= V2 1 AdvancePlot 2 XPV 50 Reputation 6 1    V= 2 2>
+	% Combat check. If combat has been entered, V2=1.
+	% Combat ends in victory if the number of active masters on
+	% team two drops to zero, or ends in defeat is the number of
+	% active masters on team one drops to zero. After combat, V2=3
+	% if the player was victorious or V2=2 is the player lost.
+	nu1 <if= T1 0 if= V2 1  V= 2 2  LoseRenown>
+	nu2 <if= T2 0 if= V2 1  V= 2 3  Reputation 6  1  XPV 50>
 
+	% Email check. The NPC might send the PC email about this mission.
+	5Min <if= d80 23 if= V3 0 ifG RReact E1 d150 ifPCLawful V= 3 1 Email 1>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 - 05 :  Email Messages.
+	%  The NPC is offering the PC a mission via email.
+	Msg1   <\PERSONA E1 @ \SCENE EScene 1 :// I just posted a bounty on some criminals. Come see me if you want the job.>
+	Msg1_2 <\PERSONA E1 @ \SCENE EScene 1 :// Just posted a bounty notice; check it out if you're in the area.>
+	Msg1_3 <\PERSONA E1 @ \SCENE EScene 1 :// We have some dangerous criminals over this way; I need someone to bring them in.>
+	Msg1_4 <\PERSONA E1 @ \SCENE EScene 1 :// Looking for work? I may have something.>
+	Msg1_5 <\PERSONA E1 @ \SCENE EScene 1 :// I need a hunter to bring in some criminals. Call me if you're interested.>
 
 sub
+	% This next bit is the conversation which will happen when the
+	% PC speaks to E1.
 	Persona 1
-	% V1 = Reputation + d50
-	% V2 = Enemy TV
-	greeting <NewChat ifG E2 0 else GoFirstTime Say 20 AddChat 9 AddChat 10 AddChat 11>
+	rumor <!1 just posted a bounty notice for a wanted criminal.>
 
-	GoFirstTime <ifG PCRep 6 d120 else GoNoRep ifG React 10 else GoNoRep Say 1 AddChat 1 AddChat 2 AddChat 3>
-	GoNoRep <ifG React 50 else GoNoRep2 Say 2 AddChat 1 AddChat 2 AddChat 3>
-	GoNoRep2 <ifG React d45 else GoNoLike ifG PCRep 6 d30 else GoNoLike Say 3 AddChat 1 AddChat 2 AddChat 3>
-	GoNoLike <ifG React d20 else GoNoLike2 Say 4 AddChat 4 AddChat 5>
-	GoNoLike2 <ifG React -5 else GoNoLike3 Say 5 AddChat 4 AddChat 5>
-	GoNoLike3 <Say 6 AddChat 4 AddChat 5>
+	% ********************
+	% *** SCRIPT BLOCK ***
+	% ********************
+	%  V1 = Job offer counter, V1=1 is job offered, V1=-1 if job denied
+	%  V3 = Threat value of enemy mecha
+	%  V4 = Reward offered to PC for the mission
 
-	result1 <Goto GoJobDescription>
-	result2 <NewChat AdvancePlot 0 ifG PCRep 6 45 else GoR2NoRep Say 7>
-	GoR2NoRep <ifG React 38 else GoR2NoLike Say 8>
-	GoR2NoLike <Say 9>
-	result3 <NewChat Say 10 AddChat 6 AddChat 2 ifG PCMeks 0 AddChat 8>
-	result4 <NewChat ifG SkRoll 19 7 else GoR4NoCon Say 11 AddChat 3 AddChat 6 AddChat 7>
-	GoR4NoCon <ifG PCRep 6 d35 else GoR4NoRep Say 12 AddChat 1 AddChat 3>
-	GoR4NoRep <Say 13 AdvancePlot 0>
-	result5 <NewChat Say 14 AdvancePlot 0>
-	result6 <Goto GoJobDescription>
-	result7 <NewChat Say 15 AdvancePlot 0>
-	result8 <NewChat Say 16 AddChat 6 AddChat 2>
+	greeting <NewChat if= P2 3 else GoCheckLoss Say 1 AddReact d5 CashPrize V4 AdvancePlot 0>
+	GoCheckLoss <if= P2 2 else GoCheckMission Say 6 AdvancePlot 0>
+	GoCheckMission <if= V1 1 else GoCheckFirst Say 101 Goto GoAddComOps>
 
-	% V1 determines what job will be offered. It is equal to
-	% the PC's renowned status plus d50.
-	% V2 is the point value of this job.
-	GoJobDescription <NewChat V= 1 PCRep 6 V+ 1 d50 ifG V1 145 else GoLvl29 V= 2 12500 E= 2 30 Say 130 Goto GoChoose>
-	GoLvl29 <ifG V1 140 else GoLvl28 V= 2 12000 E= 2 29 Say 129 Goto GoChoose>
-	GoLvl28 <ifG V1 135 else GoLvl27 V= 2 11500 E= 2 28 Say 128 Goto GoChoose>
-	GoLvl27 <ifG V1 130 else GoLvl26 V= 2 11000 E= 2 27 Say 127 Goto GoChoose>
-	GoLvl26 <ifG V1 125 else GoLvl25 V= 2 11500 E= 2 26 Say 126 Goto GoChoose>
-	GoLvl25 <ifG V1 120 else GoLvl24 V= 2 11000 E= 2 25 Say 125 Goto GoChoose>
-	GoLvl24 <ifG V1 115 else GoLvl23 V= 2 11500 E= 2 24 Say 124 Goto GoChoose>
-	GoLvl23 <ifG V1 110 else GoLvl22 V= 2 11000 E= 2 23 Say 123 Goto GoChoose>
-	GoLvl22 <ifG V1 105 else GoLvl21 V= 2 10500 E= 2 22 Say 122 Goto GoChoose>
-	GoLvl21 <ifG V1 100 else GoLvl20 V= 2 10000 E= 2 21 Say 121 Goto GoChoose>
-	GoLvl20 <ifG V1  95 else GoLvl19 V= 2  9500 E= 2 20 Say 120 Goto GoChoose>
-	GoLvl19 <ifG V1  90 else GoLvl18 V= 2  9000 E= 2 19 Say 119 Goto GoChoose>
-	GoLvl18 <ifG V1  85 else GoLvl17 V= 2  8500 E= 2 18 Say 118 Goto GoChoose>
-	GoLvl17 <ifG V1  80 else GoLvl16 V= 2  8000 E= 2 17 Say 117 Goto GoChoose>
-	GoLvl16 <ifG V1  75 else GoLvl15 V= 2  7500 E= 2 16 Say 116 Goto GoChoose>
-	GoLvl15 <ifG V1  70 else GoLvl14 V= 2  7000 E= 2 15 Say 115 Goto GoChoose>
-	GoLvl14 <ifG V1  65 else GoLvl13 V= 2  6500 E= 2 14 Say 114 Goto GoChoose>
-	GoLvl13 <ifG V1  60 else GoLvl12 V= 2  6000 E= 2 13 Say 113 Goto GoChoose>
-	GoLvl12 <ifG V1  55 else GoLvl11 V= 2  5500 E= 2 12 Say 112 Goto GoChoose>
-	GoLvl11 <ifG V1  50 else GoLvl10 V= 2  5000 E= 2 11 Say 111 Goto GoChoose>
-	GoLvl10 <ifG V1  45 else GoLvl09 V= 2  4500 E= 2 10 Say 110 Goto GoChoose>
-	GoLvl09 <ifG V1  40 else GoLvl08 V= 2  4000 E= 2  9 Say 109 Goto GoChoose>
-	GoLvl08 <ifG V1  35 else GoLvl07 V= 2  3500 E= 2  8 Say 108 Goto GoChoose>
-	GoLvl07 <ifG V1  30 else GoLvl06 V= 2  3000 E= 2  7 Say 107 Goto GoChoose>
-	GoLvl06 <ifG V1  25 else GoLvl05 V= 2  2750 E= 2  6 Say 106 Goto GoChoose>
-	GoLvl05 <ifG V1  20 else GoLvl04 V= 2  2500 E= 2  5 Say 105 Goto GoChoose>
-	GoLvl04 <ifG V1  15 else GoLvl03 V= 2  2250 E= 2  4 Say 104 Goto GoChoose>
-	GoLvl03 <ifG V1  10 else GoLvl02 V= 2  2000 E= 2  3 Say 103 Goto GoChoose>
-	GoLvl02 <ifG V1   5 else GoLvl01 V= 2  1750 E= 2  2 Say 102 Goto GoChoose>
-	GoLvl01 <                        V= 2  1500 E= 2  1 Say 101 Goto GoChoose>
+	% The first time the PC speaks to the NPC, initialize everything.
+	GoCheckFirst <if= V1 0 else GoDenied V= 1 -1 V= 3 PCRep 6 V= 4 Reward Threat V3 100 250 Goto GoCheckOffer>
+	GoCheckOffer <if= P3 1 else GoMakeOffer Say 11  Goto GoAddAcceptOps>
+	% If the PC has "the right stuff", an offer will be made immediately.
+	% If not, no offer will be made at all. In the example provided
+	% below, "the right stuff" is a Lawful reputation + being liked.
+	GoMakeOffer  <ifG React 50 else GoMediumOffer Say 16 Goto GoAddAcceptOps>
+    GoMediumOffer <ifG React d30 else GoBadOffer ifG PCRenown d20 else GoBadOffer Say 17 Goto GoAddAcceptOps>
+    GoBadOffer <Say 18 AddChat 2 AddChat 3>
 
-	GoChoose <Memo 21  AddChat 9 AddChat 10 AddChat 11>
+	GoAddAcceptOps <AddChat 1 AddChat 4>
+	GoAddComOps <AddChat 7 AddChat 11>
+	% If the mission was denied but not previously cleaned up, do
+	% that now.
+	GoDenied <SayAnything AdvancePlot 0>
 
-	result9 <EndChat P= 2 1 SavePos Dynamic 0 V2 FrzNU1 FrzNU2 Say 17>
-	FrzNU1 <if= T1 0 Return>
-	FrzNU2 <if= T2 0 Return>
-	result10 <NewChat Say 18>
-	result11 <NewChat AdvancePlot 0 Say 19 Reputation 6 -1 AddReact -3>
+	% PC will accept the job. Descibe the mission.
+	result1 <NewChat V= 1 1 Say 21 Memo 103 Goto GoAddComOps>
 
-	Msg1 <Hey there, hotshot. How would you be interested in doing some bounty hunting? I've got a contract on a wanted criminal, if you're up for it.>
-	Msg2 <I just got word of a big contract on an escaped criminal. If you were interested in some bounty hunting work, I could let you be the first one on the case.>
-	Msg3 <I'm looking for someone to do some hunting work. There's an escaped criminal with a huge bounty on his head that just moved into town. Are you interested?>
-	Msg4 <Can I help you? I'm pretty busy right now.>
-	Msg5 <What do you want? I'm busy.>
-	Msg6 <Why are you bothering me?>
-	Msg7 <That's really too bad. You've got raw skills, and you could make a lot of money in this business.>
-	Msg8 <In that case, sorry for wasting your time.>
-	Msg9 <In that case, get out of here. I've got to find someone who can complete this contract.>
-	Msg10 <We've got a wanted criminal in this area. Your job would be to bring him and his gang in, dead or alive. Upon completion of the mission I'd present you with a load of money. Does that sound good?>
-	Msg11 <There's almost always bounties available. I just received a contract on a vicious gang of criminals. You interested in being a hunter?>
-	Msg12 <A new contract just arrived today. You look like you might have a bit of talent... Want to hear about the case?>
-	Msg13 <No, nothing at the moment.>
-	Msg14 <Good day to you.>
-	Msg15 <In that case, you should probably go to the library. I'm busy right now.>
-	Msg16 <No, you can't use a mecha for this job. We want the criminals aprehended, not half of the countryside reduced to dust...>
-	Msg17 <This is where you will find the targets. I don't care whether you have to bring them in dead or alive. Return them to me and I'll give you your reward.>
-	Msg18 <Hurry back. Another hunter could very well catch the targets first.>
-	Msg19 <Fine.>
-	Msg20 <So you're back. Are you ready for the mission we discussed earlier? Same details apply.>
+    % If the PC wasn't offered the job immediately, the pay gets cut.
+    result2 <NewChat V= 4 Reward Threat V3 100 150 ifG SkRoll 19 7 else GoR2NoCon Say 3 Goto GoAddAcceptOps>
+	GoR2NoCon <ifG PCRep 6 d35 else GoR2NoRep Say 4 Goto GoAddAcceptOps>
+	GoR2NoRep <Say 5 AdvancePlot 0>
+    result3 <EndChat Say 2 AdvancePlot 0>
 
-	Msg21 <\ELEMENT 1 in \SCENE EScene 1 offered you a bounty hunting mission.>
+	% PC refuses the job.
+	result4 <NewChat Say 104 AdvancePlot 0>
 
-	Msg130 <Your target is a particularly deadly gang of outlaws. You'll be up against overwhelming odds, but if anyone can survive this mission it's gonna be you. Your salary will be $100000.>
-	Msg129 <Your target is a group of deadly terrorists. I think there'll be around 10 hardened criminals facing you. Your fee for the mission will be $50000.>
-	Msg128 <This bounty notice is for a deadly cult of thrill-killers. My instincts tell me that their gang has about 9 really good warriors. Pay will be $30000.>
-	Msg127 <The target this time is a gang of hired killers. There could be as many as 10 well armed enemy fighters. The reward for this job is $27500, payable dead or alive.>
-	Msg126 <This bounty notice is for the organizers of an underground slave trading cartel. You'll be up against around 10 enemies. You'll earn $25000 for this job.>
-	Msg125 <Your target is a violent gang of smugglers. At most they have 11 fighters. Your fee for the mission will be $24000.>
-	Msg124 <This reward is for a violent gang of outlaw bootleggers. You can expect to meet at least 5 very well armed opponents. Pay will be $23000.>
-	Msg123 <Your target is a minor crime lord and his cronies. I think there'll be from 6 to 11 opponents fighting you. Pay will be $22000.>
-	Msg122 <There's a reward available for a renegade army unit. I would expect about 9 or 10 competent enemy fighters. Pay will be $21000.>
-	Msg121 <The target is a violent crime gang. I don't think there will be any more than 10 fighters. Your salary will be $19000.>
-	Msg120 <Your target will be a ring of organ harvesters. You may need to fight anything up to 10 opponents. Pay will be $18000.>
-	Msg119 <This reward is for a drug gang. You'll be up against 8 or 9 opponents. Pay will be $17000, payable dead or alive.>
-	Msg118 <Your target is a high school murder club. I expect a force of around 8 decent combatants to contend with. Your salary will be $16000.>
-	Msg117 <This time you'll be up against a band of religious vigilantes. I think there'll be from 5 to 8 opponents facing you. Pay will be $15000.>
-	Msg116 <There's a reward available for a group of hardened criminals. You could be facing around 6 well equipped fighters. You'll earn $14000 for this job.>
-	Msg115 <This bounty notice is for a gang of hired thugs. I would expect maybe 6 or 7 combat-ready targets. Your fee for the mission will be $13000.>
-	Msg114 <Your target is an up-and-coming crime gang. There could be as many as 7 opponents facing you. Pay will be $12000.>
-	Msg113 <You'll be facing a small band of endorphin harvesters. I expect anywhere from 4 to 6 fighters in the group. Your salary will be $11000.>
-	Msg112 <This bounty notice is for a team of mecha thieves. You may be facing up to 5 bandits. The reward for this job is $10000, payable dead or alive.>
-	Msg111 <Your target is a gang of wannabe terrorists. I would expect around 4 or 5 poorly equipped thugs. Pay will be $9000.>
-	Msg110 <This bounty notice is for a gang of vicious armed robbers. There should be about 4 perps. The reward for this job is $8000.>
-	Msg109 <Your target is a band of outlaws. You'll be facing 3 or 4 hardened criminals. Pay will be $7000.>
-	Msg108 <You'll be facing a den of thieves. I would expect maybe 2 or 3 well equipped targets. The reward is $6000 for the gang, payable dead or alive.>
-	Msg107 <This bounty notice is for a gang of lowlife hoodlums. I would expect maybe 3 moderately well equipped targets. Pay will be $5000.>
-	Msg106 <You'll be going up against a group of poachers. I would expect around 3 poorly equipped targets. Your fee for the mission will be $4500.>
-	Msg105 <There's a reward available for these escaped convicts. You'll probably face around 2 or 3 moderately experienced criminals. Your salary will be $4000.>
-	Msg104 <Your target is a small-time street gang. I would expect up to 3 poorly equipped opponents. The reward for this job is $3500, payable dead or alive.>
-	Msg103 <You'll be facing a group of armed robbers on the run from the law. I would expect maybe 2 or 3 poorly equipped targets. Your salary will be $3000.>
-	Msg102 <Your target is a local protection racket. I would expect from 1 to 3 thugs. The reward for this job is $2400.>
-	Msg101 <You'll be bringing in a group of robbers. I would expect maybe 1 or 2 poorly equipped targets. Pay will be $2000.>
+	% PC will enter combat now.
+	result7 <EndChat Say 26 Goto GoStartCombat>
+	GoStartCombat <SavePos P= 2 1 MDynamic 0 V3 .mon .nu1 .nu2 SetMapType 7  Reputation 2 1>
+	.nu1 <if= T1 0 Return>
+	.nu2 <if= T2 0 Return>
+    .mon <CRIMINAL>
 
+	% PC needs some time to get ready.
+	result11 <NewChat Say 105>
+
+	% *********************
+	% *** MESSAGE BLOCK ***
+	% *********************
+
+	% 01 :  Player has won the battle and is being paid.
+	Msg1 <Good job. Here's your reward.>
+	Msg1_2 <>
+	Msg1_3 <>
+	Msg1_4 <>
+	Msg1_5 <>
+
+    Msg2 <Good day to you.>
+    Msg3 <There's almost always bounties available. I just received a contract on a vicious gang of criminals. You interested in being a hunter?>
+    Msg4 <A new contract just arrived today. You look like you might have a bit of talent... Want to hear about the case?>
+    Msg5 <No, nothing at the moment.>
+
+	% 06 :  Player has lost the battle.
+	Msg6 <Better luck next time.>
+	Msg6_7 <>
+	Msg6_8 <>
+	Msg6_9 <>
+	Msg6_10 <>
+
+	% 11 :  PC got email about mission; asked to accept
+	Msg11 <We've got a wanted criminal in this area. Your job would be to bring him and his gang in, dead or alive. Upon completion of the mission I'd present you with a load of money. Does that sound good?>
+	Msg11_2 <>
+	Msg11_3 <>
+	Msg11_4 <>
+	Msg11_5 <>
+
+	% 16 :  Player has "the right stuff"; will be offered mission.
+	Msg16 <Hey there, hotshot. How would you be interested in doing some bounty hunting? I've got a contract on a wanted criminal, if you're up for it.>
+	Msg16_7 <I just got word of a big contract on an escaped criminal. If you were interested in some bounty hunting work, I could let you be the first one on the case.>
+	Msg16_8 <>
+	Msg16_9 <>
+	Msg16_0 <>
+
+    % 17 :  Player will be offered mission, but unenthusiastically.
+    Msg17 <I'm looking for someone to do some hunting work. There's an escaped criminal with a huge bounty on his head that just moved into town. Are you interested?>
+
+    % 18 :  Player can nose around for a job.
+	Msg18 <Can I help you? I'm pretty busy right now.>
+	Msg18_1 <What do you want? I'm busy.>
+	Msg18_2 <Why are you bothering me?>
+    CMsg18_2 <ifG d20 react Accept>
+
+	% 21 :  PC has accepted; describe the mission.
+	Msg21 <The target is a violent crime gang. Your salary will be $ \VAL V4 .>
+	Msg21_1 <Your target is a group of deadly terrorists. Your fee for the mission will be $ \VAL V4 .>
+    CMsg21_1 <ifG PCRenown 50 Accept>
+	Msg21_2 <This bounty notice is for a deadly cult of thrill-killers. Pay will be $ \VAL V4 .>
+    CMsg21_2 <ifG PCRenown 65 Accept>
+	Msg21_3 <The target this time is a gang of hired killers. The reward for this job is $ \VAL V4 , payable dead or alive.>
+	Msg21_4 <This bounty notice is for the organizers of an underground slave trading cartel. You'll earn $ \VAL V4 for this job.>
+	Msg21_5 <Your target is a violent gang of smugglers. Your fee for the mission will be $ \VAL V4 .>
+	Msg21_6 <This reward is for a violent gang of outlaw bootleggers. Pay will be $ \VAL V4 .>
+	Msg21_7 <Your target is a minor crime lord and his cronies. Pay will be $ \VAL V4 .>
+    CMsg21_7 <ifG PCRenown 25 Accept>
+	Msg21_8 <There's a reward available for a renegade army unit. Pay will be $ \VAL V4 .>
+    CMsg21_8 <ifG PCRenown 35 Accept>
+	Msg21_9 <Your target is a particularly deadly gang of outlaws. You'll be up against overwhelming odds, but if anyone can survive this mission it's gonna be you. Your salary will be $ \VAL V4 .>
+    CMsg21_9 <ifG PCRenown 75 Accept>
+	Msg21_10 <Your target will be a ring of organ harvesters. Pay will be $ \VAL V4 .>
+    CMsg21_10 <ifG PCRenown 20 Accept>
+	Msg21_11 <This reward is for a drug gang. Pay will be $ \VAL V4 , payable dead or alive.>
+	Msg21_12 <Your target is a high school murder club. Your salary will be $ \VAL V4 .>
+	Msg21_13 <This time you'll be up against a band of religious vigilantes. Pay will be $ \VAL V4 .>
+	Msg21_14 <There's a reward available for a group of hardened criminals. You'll earn $ \VAL V4  for this job.>
+	Msg21_15 <This bounty notice is for a gang of hired thugs. Your fee for the mission will be $ \VAL V4 .>
+	Msg21_16 <Your target is an up-and-coming crime gang. Pay will be $ \VAL V4 .>
+	Msg21_17 <You'll be facing a small band of endorphin harvesters. Your salary will be $ \VAL V4 .>
+	Msg21_18 <This bounty notice is for a team of mecha thieves. The reward for this job is $ \VAL V4 , payable dead or alive.>
+	Msg21_19 <Your target is a gang of wannabe terrorists. Pay will be $ \VAL V4 .>
+    CMsg21_19 <ifG 50 PCRenown Accept>
+	Msg21_20 <This bounty notice is for a gang of vicious armed robbers. The reward for this job is $ \VAL V4 .>
+    CMsg21_20 <ifG 40 PCRenown Accept>
+	Msg21_21 <Your target is a band of outlaws. Pay will be $ \VAL V4 .>
+	Msg21_22 <You'll be facing a den of thieves. The reward is $ \VAL V4  for the gang, payable dead or alive.>
+	Msg21_23 <This bounty notice is for a gang of lowlife hoodlums. Pay will be $ \VAL V4 .>
+    CMsg21_23 <ifG 20 PCRenown Accept>
+	Msg21_24 <You'll be going up against a group of poachers. Your fee for the mission will be $ \VAL V4 .>
+	Msg21_25 <There's a reward available for these escaped convicts. Your salary will be $ \VAL V4 .>
+	Msg21_26 <Your target is a small-time street gang. The reward for this job is $ \VAL V4 , payable dead or alive.>
+    CMsg21_26 <ifG 15 PCRenown Accept>
+	Msg21_27 <You'll be facing a group of armed robbers on the run from the law. Your salary will be $ \VAL V4 .>
+	Msg21_28 <Your target is a local protection racket. The reward for this job is $ \VAL V4 .>
+	Msg21_29 <You'll be bringing in a group of robbers. Pay will be $ \VAL V4 .
+
+	% 26 :  Combat is starting
+	Msg26 <This is where you will find the targets. I don't care whether you have to bring them in dead or alive. Return them to me and I'll give you your reward.>
+	Msg26_1 <>
+	Msg26_7 <>
+	Msg26_8 <>
+	Msg26_9 <>
+	Msg26_10 <>
+
+
+	% 101 :  Player is back from repairs, time to start mission.
+	Msg101 <So you're back. Are you ready for the mission we discussed earlier? Same details apply.>
+	% 103 :  Memo
+	Msg103 <\ELEMENT 1 in \SCENE EScene 1 gave you a bounty hunting mission.>
+	% 104 :  PC didn't want the job.
+	Msg104 <In that case, sorry for wasting your time.>
+	Msg104_1 <That's really too bad. You've got raw skills, and you could make a lot of money in this business.>
+    CMsg104_1 <ifG react 20 Accept>
+	Msg104_2 <In that case, get out of here. I've got to find someone who can complete this contract.>
+    CMsg104_2 <ifG d6 react Accept>
+	% 105 :  PC needs time to get ready.
+	Msg105 <Hurry back. Another hunter could very well catch the targets first.>
+
+	% 01 :  PC will accept the mission.
 	Prompt1 <Alright, tell me more.>
-	Prompt2 <I'm not interested.>
-	Prompt3 <What exactly does this job involve?>
-	Prompt4 <Do you have any bounties available?>
-	Prompt5 <I'll come back later.>
-	Prompt6 <I think I'd like that.>
-	Prompt7 <No, I'm just curious about it.>
-	Prompt8 <Can I use my giant robot?>
-	Prompt9 <I'm ready to go.>
-	Prompt10 <Wait... I need time to prepare.>
-	Prompt11 <Uh, I don't think I want this job.>
+	Prompt1_2 <I think I'd like that.>
+	Prompt1_3 <>
 
+    % 02 - 03 :  Player will ask about mission, or not.
+    Prompt2 <Do you have any bounties available?>
+    Prompt3 <I'll come back later.>
 
-	Plot 1
-		% The player lost the battle.
-		% Time limit - this plot will fade after a short time.
-		START <Memo 1 if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 3500>
-		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
-		Msg1 <\ELEMENT 1 in \SCENE EScene 1 offered you a bounty hunting mission.>
-	sub
-		Persona 1
-		greeting <AdvancePlot 0 NewChat Say 1>
-		Msg1 <Better luck next time.>
-	end
+	% 04 :  PC doesn't want this mission.
+	Prompt4 <I'm not interested.>
+	Prompt4_5 <Uh, I don't think I want this job.>
+	Prompt4_6 <>
 
-	Plot 2
-		% The player won the battle.
-		% Time limit - this plot will fade after a short time.
-		START <Memo 1 ifNPCOK E1 else GoDelete if= V1 0 else GotoCheckTime V= 1 ComTime V+ 1 150000>
-		GotoCheckTime <ifG ComTime V1 AdvancePlot 0>
-		GoDelete <AdvancePlot 0>
-		Msg1 <\ELEMENT 1 in \SCENE EScene 1 offered you a bounty hunting mission.>
-	sub
-		Persona 1
-		greeting <AdvancePlot 0 NewChat Say 1 Goto GoC30>
-		Msg1 <Good job. Here's your reward.>
-		GoC30 <if= E2 30 else GoC29 CashPrize 100000>
-		GoC29 <if= E2 29 else GoC28 CashPrize  50000>
-		GoC28 <if= E2 28 else GoC27 CashPrize  30000>
-		GoC27 <if= E2 27 else GoC26 CashPrize  27500>
-		GoC26 <if= E2 26 else GoC25 CashPrize  25000>
-		GoC25 <if= E2 25 else GoC24 CashPrize  24000>
-		GoC24 <if= E2 24 else GoC23 CashPrize  23000>
-		GoC23 <if= E2 23 else GoC22 CashPrize  22000>
-		GoC22 <if= E2 22 else GoC21 CashPrize  21000>
-		GoC21 <if= E2 21 else GoC20 CashPrize  19000>
-		GoC20 <if= E2 20 else GoC19 CashPrize  18000>
-		GoC19 <if= E2 19 else GoC18 CashPrize  17000>
-		GoC18 <if= E2 18 else GoC17 CashPrize  16000>
-		GoC17 <if= E2 17 else GoC16 CashPrize  15000>
-		GoC16 <if= E2 16 else GoC15 CashPrize  14000>
-		GoC15 <if= E2 15 else GoC14 CashPrize  13000>
-		GoC14 <if= E2 14 else GoC13 CashPrize  12000>
-		GoC13 <if= E2 13 else GoC12 CashPrize  11000>
-		GoC12 <if= E2 12 else GoC11 CashPrize  10000>
-		GoC11 <if= E2 11 else GoC10 CashPrize   9000>
-		GoC10 <if= E2 10 else GoC09 CashPrize   8000>
-		GoC09 <if= E2  9 else GoC08 CashPrize   7000>
-		GoC08 <if= E2  8 else GoC07 CashPrize   6000>
-		GoC07 <if= E2  7 else GoC06 CashPrize   5000>
-		GoC06 <if= E2  6 else GoC05 CashPrize   4500>
-		GoC05 <if= E2  5 else GoC04 CashPrize   4000>
-		GoC04 <if= E2  4 else GoC03 CashPrize   3500>
-		GoC03 <if= E2  3 else GoC02 CashPrize   3000>
-		GoC02 <if= E2  2 else GoC01 CashPrize   2500>
-		GoC01 <                     CashPrize   2000>
+	% 07 :  Combat is starting.
+	prompt7 <I'm ready to go.>
+	prompt7_8 <>
 
-	end
+	% 11 :  Just a minute...
+	prompt11 <Wait... I need time to prepare.>
+	prompt11_2 <>
+
 end
