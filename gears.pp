@@ -1231,6 +1231,25 @@ begin
 	end;
 end;
 
+
+Procedure Rescale( Part: GearPtr; SF: Integer );
+	{ Alter the scale of this part and all its subcoms. }
+var
+	S: GearPtr;
+begin
+	Part^.Scale := SF;
+	S := Part^.SubCom;
+	while S <> Nil do begin
+		Rescale( S , SF );
+		S := S^.Next;
+	end;
+	S := Part^.InvCom;
+	while S <> Nil do begin
+		Rescale( S , SF );
+		S := S^.Next;
+	end;
+end;
+
 Procedure CheckDirectoryPresent;
 	{ Make sure that the default save directory exists. If not, }
 	{ create it. }
@@ -1253,23 +1272,6 @@ begin
 {$ENDIF}
 end;
 
-Procedure Rescale( Part: GearPtr; SF: Integer );
-	{ Alter the scale of this part and all its subcoms. }
-var
-	S: GearPtr;
-begin
-	Part^.Scale := SF;
-	S := Part^.SubCom;
-	while S <> Nil do begin
-		Rescale( S , SF );
-		S := S^.Next;
-	end;
-	S := Part^.InvCom;
-	while S <> Nil do begin
-		Rescale( S , SF );
-		S := S^.Next;
-	end;
-end;
 
 initialization
 	{ Make sure we have the required data directories. }
