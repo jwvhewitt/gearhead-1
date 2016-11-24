@@ -1,0 +1,172 @@
+#!/bin/bash
+
+set -e
+
+trap 'echo Configure failed!' EXIT
+
+# Dead-simple hand-written configure script.
+
+die()
+{
+    printf '%s\n' "$@" >&2
+    exit 1
+}
+
+src_dir="$(dirname "$0")"
+
+for arg
+do
+    case "$arg" in
+        -h | --help)
+            cat << EOF
+Usage: $0 [--flags | variables] [...]
+
+Core Flags:
+    --help          this help
+
+Installation directories:
+    --prefix        architecture-independent files [/usr/local]
+    --exec-prefix   architecture-dependent files [PREFIX]
+    --bindir        user executables [EPREFIX/games]
+    --datarootdir   read-only data root [PREFIX/share]
+    --datadir       read-only non-documentation data [DATAROOTDIR]
+    --docdir        documentation [DATAROOTDIR/doc/PACKAGE]
+
+    (other well-known directory options are accepted but ignored)
+
+Variables:
+    FPC             compiler name [fpc]
+    FPCFLAGS        compiler flags [-g -O2]
+
+Optional features:
+    (--enable-FEATURE is a shortcut for --enable-FEATURE=yes)
+    (--disable-FEATURE is a shortcut for --enable-FEATURE=no)
+
+    --enable-xterm-boxdrawing
+                    patch standard library to work with modern terminals [yes]
+
+Optional packages:
+    (--with-PACKAGE is a shortcut for --with-PACKAGE=yes)
+    (--without-PACKAGE is a shortcut for --with-PACKAGE=no)
+
+    --with-sdl      build the SDL frontend rather than the console one [no]
+EOF
+            trap - EXIT
+            exit
+            ;;
+    esac
+done
+
+exec 3>config.make.tmp
+
+for arg
+do
+    case "$arg" in
+        --disable-*=* |\
+        --without-*=*)
+            die "negative options can't have an argument"
+            ;;
+        --disable-*)
+            arg=--enable-"${arg#--disable-}"=no
+            ;;
+        --without-*)
+            arg=--with-"${arg#--without-}"=no
+            ;;
+        --enable-*=* |\
+        --with-*=*)
+            # Just prevent the below from matching.
+            ;;
+        --enable-*)
+            arg="$arg"=yes
+            ;;
+        --with-*)
+            arg="$arg"=yes
+            ;;
+        --*=* |\
+        *=*)
+            # Just prevent the below from matching.
+            ;;
+        --*)
+            die "missing argument: $arg";;
+        -*)
+            die "there are no short options: $arg";;
+        *)
+            die "invalid option $arg";;
+    esac
+    key="${arg%%=*}"
+    val="${arg#*=}"
+    case "$key" in
+        --prefix)
+            key=PREFIX
+            ;;
+        --exec-prefix)
+            key=EPREFIX
+            ;;
+        --bindir)
+            key=BINDIR
+            ;;
+        --datarootdir)
+            key=DATAROOTDIR
+            ;;
+        --datadir)
+            key=DATADIR
+            ;;
+        --docdir)
+            key=DOCDIR
+            ;;
+        FPC | FPCFLAGS)
+            ;;
+        --enable-xterm-boxdrawing)
+            key=ENABLE_XTERM_BOXDRAWING
+            ;;
+        --with-sdl)
+            key=WITH_SDL
+            ;;
+        --sbindir |\
+        --libexecdir |\
+        --sysconfdir |\
+        --sharedstatedir |\
+        --localstatedir |\
+        --libdir |\
+        --includedir |\
+        --oldincludedir |\
+        --infodir |\
+        --localedir |\
+        --mandir |\
+        --htmldir |\
+        --dvidir |\
+        --pdfdir |\
+        --psdir)
+            printf 'Warning: well-unknown but unused option: %s\n' "$key" >&2
+            continue
+            ;;
+        --build | --host | --target | CC | CFLAGS | CXX | CXXFLAGS | LDFLAGS | LIBS)
+            printf 'Warning: FPC is not a C compiler: %s\n' "$key" >&2
+            continue
+            ;;
+        *)
+            printf 'Warning: unknown option: %s\n' "$key" >&2
+            continue
+            ;;
+    esac
+    echo "$key = $val" >&3
+done
+echo "SRC_DIR = $src_dir" >&3
+exec 3>&-
+mv config.make.tmp config.make
+
+exec 3>config.status.tmp
+printf '#!/bin/sh\n' >&3
+printf '# Re-run this script to re-use a saved configuration.\n' >&3
+printf 'exec' >&3
+printf ' %q' "$0" "$@" >&3
+printf '\n' >&3
+exec 3>&-
+chmod +x config.status.tmp
+mv config.status.tmp config.status
+
+cp "$src_dir"/Makefile.in ./Makefile.tmp
+mv Makefile.tmp Makefile
+
+trap - EXIT
+echo 'Successfully (re?)configured!'
