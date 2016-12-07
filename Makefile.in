@@ -1,0 +1,277 @@
+# This is a Makefile, useful for compiling GearHead on Unix platforms.
+
+### CONFIGURATION
+# Running `./configure` will copy `Makefile.in` to `Makefile`,
+# and store options in `config.make`. You can also store your own options
+# in `local.make`.
+
+ENABLE_XTERM_BOXDRAWING = yes
+WITH_SDL = no
+
+# Compiler and flags.
+FPC = fpc
+FPCFLAGS = -g -O2
+PPDEP = ppdep
+PPDEPFLAGS =
+
+# Used for tarballs. Cross-compiling is a little more complicated.
+FPC_ARCH := $(shell ${FPC} ${FPCFLAGS} -iTP)
+FPC_OS := $(shell ${FPC} ${FPCFLAGS} -iTO)
+# Used when applying the xterm-boxdrawing patch.
+FPC_VERSION := $(shell ${FPC} ${FPCFLAGS} -iV)
+FPC_SOURCE := /usr/share/fpcsrc/${FPC_VERSION}/
+
+SRC_MAIN = gharena
+# Allow co-installation
+BIN_MAIN = $(if $(filter yes,${WITH_SDL}),gearhead-sdl,gearhead)
+PACKAGE = ${BIN_MAIN}
+
+# Name of tarballs/zips for distribution, excluding extension.
+SRC_TARBALL=${PACKAGE}-${PACKAGE_VERSION}-src
+BIN_TARBALL=${PACKAGE}-${PACKAGE_VERSION}-${FPC_ARCH}-${FPC_OS}
+
+# Prefix used for installation. Useful for making tarballs.
+DISTDIR =
+
+PREFIX = /usr/local
+EPREFIX = ${PREFIX}
+BINDIR = ${EPREFIX}/games
+DATAROOTDIR = ${PREFIX}/share
+DATADIR = ${DATAROOTDIR}/games
+DOCDIR = ${PREFIX}/doc/${PACKAGE}
+# Other autoconf directories not needed.
+
+.DEFAULT_GOAL = all
+
+include config.make
+ALL_MAIN := $(patsubst ${SRC_DIR}/src/%.pas,bin/%,$(wildcard ${SRC_DIR}/src/*.pas))
+PACKAGE_VERSION := $(shell cd ${SRC_DIR}; if test -e .git; then git describe --dirty; else sed -n "s/^\s*Version = '\(.*\)';\r\?$$/\1/; T; p" src/gharena.pas; fi)
+-include local.make
+
+############################################################
+###     No user-servicable parts beyond this point.      ###
+############################################################
+
+### OVERRIDES
+
+ifeq '${WITH_SDL}' 'yes'
+override FPCFLAGS += -dSDLMODE
+override PPDEPFLAGS += -dSDLMODE
+ENABLE_XTERM_BOXDRAWING = no
+else
+ALL_MAIN := $(filter-out bin/cosplay,${ALL_MAIN})
+endif
+
+ifeq '${ENABLE_XTERM_BOXDRAWING}' 'yes'
+${ALL_MAIN}: maint-apply-xterm-boxdrawing
+override FPCFLAGS += -Fi${SRC_DIR}/xterm-boxdrawing -Fu./patched/
+else
+${ALL_MAIN}: maint-unapply-xterm-boxdrawing
+endif
+override FPCFLAGS += -Fi${SRC_DIR}/inc/
+
+
+### RULES
+
+.SECONDARY:
+.DELETE_ON_ERROR:
+
+# TODO use `ppdep` once it is no longer buggy and/or we apply the workaround.
+.PHONY: all
+all: ${ALL_MAIN}
+.PHONY: clean
+clean:
+	rm -rf bin/ obj/
+.PHONY: distclean
+distclean: clean
+distclean: maint-unapply-xterm-boxdrawing
+distclean: maint-unconfigure
+bin/%: ${SRC_DIR}/src/%.pas
+	mkdir -p bin obj
+	${FPC} ${FPCFLAGS} $< -FE./bin/ -FU./obj/
+
+# If this rule is executed, Make will restart with the *new* makefile
+Makefile: ${SRC_DIR}/Makefile.in
+	./config.status
+
+### CHECK
+.PHONY: test
+test: check
+.PHONY: check
+check: all
+
+### INSTALL
+# Since `install` is (often) run as root, it must *not* depend on `all`
+# (or anything else that might write a file outside of DESTDIR)
+# Also note: we must *not* glob too aggressively, to avoid picking up
+# backup files.
+.PHONY: install
+install: install-bin install-data install-doc
+# This has to be done via a variable to look pretty on output.
+# $1: root directory to copy from
+# $2: directories to copy from, under that root
+# $3: files patterns to copy within those directories
+# $4: directory to create all these under
+x_nothing =
+x_space = ${x_nothing} ${x_nothing}
+define x_newline
+
+
+endef
+nl2sp = $(subst ${x_newline},${x_space},$1)
+define do_install
+$(foreach dir,$(call nl2sp,$2),
+	install -d ${DESTDIR}$4/${dir}
+	$(foreach file,$(call nl2sp,$3),
+		$(if $(wildcard $1/${dir}/${file}),
+			install -m 0644 $1/${dir}/${file} ${DESTDIR}$4/${dir}
+		)
+	)
+)
+endef
+.PHONY: install-bin
+install-bin:
+# not using do_install because it renames and uses +x
+	install -d ${DESTDIR}${BINDIR}
+	install -T bin/${SRC_MAIN} ${DESTDIR}${BINDIR}/${BIN_MAIN}
+define install_data_dirs
+	Design
+	GameData
+	Image
+	Series
+endef
+define install_data_files
+	*.png
+	*.ttf
+	*.txt
+endef
+.PHONY: install-data
+install-data:
+	$(call do_install,${SRC_DIR},${install_data_dirs},${install_data_files},${DATADIR}/${PACKAGE})
+.PHONY: install-doc
+install-doc:
+	$(call do_install,${SRC_DIR},. contrib,*.md *.png *.sh *.txt,${DOCDIR})
+	$(call do_install,${SRC_DIR}/doc,.,*.md *.txt,${DOCDIR})
+
+### DISTRIBUTION
+# Manually list everything from `git ls-files`, without relying on git.
+# The fact that `make dist` can be called from within its own output is
+# an important sanity check.
+define dist_dirs
+	.
+	Design
+	GameData
+	Image
+	Series
+	contrib
+	dist
+	doc
+	inc
+	src
+	xterm-boxdrawing
+endef
+
+define dist_files
+	*.diff
+	*.inc
+	*.md
+	*.pas
+	*.png
+	*.pp
+	*.sh
+	*.ttf
+	*.txt
+	.gitignore
+	Makefile.in
+	README
+	configure
+endef
+
+# This has to be done via a variable to look pretty on output.
+# $1: root directory to copy from
+# $2: directories to copy from, under that root
+# $3: files patterns to copy within those directories
+# $4: directory to create all these under
+define do_copy
+$(foreach dir,$(call nl2sp,$2),
+	mkdir -p $4/${dir}
+	$(foreach file,$(call nl2sp,$3),
+		$(if $(wildcard $1/${dir}/${file}),
+			cp $1/${dir}/${file} $4/${dir}
+		)
+	)
+)
+endef
+
+.PHONY: dist/temp-destdir/${SRC_TARBALL}
+dist/tmp-destdir/${SRC_TARBALL}:
+	rm -rf $@
+	$(call do_copy,${SRC_DIR},${dist_dirs},${dist_files},$@)
+.PHONY: dist
+dist: dist/${SRC_TARBALL}.zip
+dist: dist/${SRC_TARBALL}.tar.gz
+dist: dist/${SRC_TARBALL}.tar.bz2
+dist: dist/${SRC_TARBALL}.tar.xz
+dist:
+	rm -r dist/tmp-destdir/${SRC_TARBALL}
+	rm dist/${SRC_TARBALL}.tar
+.PHONY: dist/tmp-destdir/${BIN_TARBALL}
+dist/tmp-destdir/${BIN_TARBALL}:
+	rm -rf $@
+	${MAKE} all
+	${MAKE} install DESTDIR=$@
+.PHONY: bindist
+bindist: dist/${BIN_TARBALL}.zip
+bindist: dist/${BIN_TARBALL}.tar.gz
+bindist: dist/${BIN_TARBALL}.tar.bz2
+bindist: dist/${BIN_TARBALL}.tar.xz
+bindist:
+	rm -r dist/tmp-destdir/${BIN_TARBALL}
+	rm dist/${BIN_TARBALL}.tar
+
+dist/%.tar: dist/tmp-destdir/%
+	rm -f $@
+	(cd ./dist/tmp-destdir && tar cf ../$*.tar $*)
+dist/%.zip: dist/tmp-destdir/%
+	rm -f $@
+	(cd ./dist/tmp-destdir && zip -q -r ../$*.zip $*)
+dist/%.tar.gz: dist/%.tar
+	gzip -n < $< > $@
+dist/%.tar.bz2: dist/%.tar
+	bzip2 < $< > $@
+dist/%.tar.xz: dist/%.tar
+	xz < $< > $@
+
+distcheck: dist/${SRC_TARBALL}.tar.gz
+	test -e ${SRC_DIR}/.git # `distcheck` is only supported from git clones.
+	(cd ${SRC_DIR} && git ls-files) > obj/files-git
+	tar tf $< | sort | sed '/^\(.*\/\)\?$$/d; s/${SRC_TARBALL}\///' > obj/files-dist
+	diff -u obj/files-git obj/files-dist
+	rm obj/files-git obj/files-dist
+
+# Call this during development if something went wrong previously.
+.PHONY: maint-undist
+maint-undist:
+	rm -f dist/${SRC_TARBALL}.zip dist/${SRC_TARBALL}.tar.*
+	rm -f dist/${BIN_TARBALL}.zip dist/${BIN_TARBALL}.tar.*
+.PHONY: maint-apply-xterm-boxdrawing
+maint-apply-xterm-boxdrawing:
+	mkdir -p patched
+	cp ${FPC_SOURCE}/packages/rtl-console/src/unix/crt.pp patched/
+	cp ${FPC_SOURCE}/packages/rtl-console/src/inc/crth.inc patched/
+	patch patched/crt.pp < ${SRC_DIR}/xterm-boxdrawing/crt.pp.diff
+
+.PHONY: maint-unapply-xterm-boxdrawing
+maint-unapply-xterm-boxdrawing:
+	rm -rf patched/
+
+.PHONY: maint-unconfigure
+maint-unconfigure:
+	rm -f config.status config.make Makefile
+# Table of contents:
+### CONFIGURATION
+### OVERRIDES
+### RULES
+### CHECK
+### INSTALL
+### DISTRIBUTION
