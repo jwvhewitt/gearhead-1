@@ -25,6 +25,18 @@ unit texutil;
 
 interface
 
+uses sysutils, iconv;
+
+Function TextEncode( const src: String ): String;
+Function TextEncode_( const src: String ): String;
+Function TextDecode( const src: String ): String;
+
+Function IsMBCharLeadByte( c: Char; enc: enc_type ): Boolean;
+Function IsMBCharTrailByte( c: Char; enc: enc_type ): Boolean;
+
+Function LengthMBChar( c: Char; enc: enc_type ): Integer;
+Function LengthMBChar( c: Char ): Integer;
+
 Procedure DeleteWhiteSpace(var S: String);
 Procedure DeleteFirstChar(var S: String);
 Function ExtractWord(var S: String): String;
@@ -52,12 +64,246 @@ Function QuickPCopy( const msg: String ): PChar;
 Function IsPunctuation( C: Char ): Boolean;
 
 Procedure ReplacePat( var msg: String; const pat_in,s: String );
+Function ReplaceHash( const msg, S1, S2, S3, S4: String ): String;
+Function ReplaceHash( const msg, S1, S2, S3: String ): String;
+Function ReplaceHash( const msg, S1, S2: String ): String;
 Function ReplaceHash( const msg, s: String ): String;
 
 
 implementation
 
 uses strings;
+
+Function TextEncode( const src: String ): String;
+const
+	AllowableCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()-=_.';
+var
+	Len, P: Integer;
+begin
+	TextEncode := '';
+	Len := Length(src);
+	P := 1;
+	while (P <= Len) do begin
+		if 0 < Pos(src[P], AllowableCharacters) then begin
+			TextEncode := TextEncode + src[P];
+			Inc(P);
+		end else begin
+			TextEncode := TextEncode + '%' + IntToHex(Ord(src[P]),2);
+			Inc(P);
+		end;
+	end;
+end;
+
+Function TextEncode_( const src: String ): String;
+const
+	AllowableCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890()-=_.';
+var
+	Len, P: Integer;
+begin
+	TextEncode_ := '';
+	Len := Length(src);
+	P := 1;
+	while (P <= Len) do begin
+		if 0 < Pos(src[P], AllowableCharacters) then begin
+			TextEncode_ := TextEncode_ + src[P];
+			Inc(P);
+		end else begin
+			TextEncode_ := TextEncode_ + '_';
+			Inc(P);
+		end;
+	end;
+end;
+
+Function TextDecode( const src: String ): String;
+var
+	Len, P: Integer;
+	tmp: String;
+begin
+	TextDecode := '';
+	Len := Length(src);
+	P := 1;
+	while (P <= Len) do begin
+		if '%' = src[P] then begin
+			Inc(P);
+			tmp := '';
+			if (P +1) <= Len then begin
+				tmp := '$' + src[P] + src[P+1];
+				Inc(P);
+				Inc(P);
+			end else if P <= Len then begin
+				tmp := '$' + src[P];
+				Inc(P);
+			end;
+			TextDecode := TextDecode + Chr(StrToInt(tmp));
+		end else begin
+			TextDecode := TextDecode + src[P];
+			Inc(P);
+		end;
+	end;
+end;
+
+
+Function IsEUCCharLeadByte( c: Char ): Boolean;
+begin
+	exit ((#$A1 <= c) and (c <= #$FE) or (c = #$8E) or (c = #$8F));
+end;
+
+Function IsEUCCharTrailByte( c: Char ): Boolean;
+begin
+	exit ((#$A1 <= c) and (c <= #$FE));
+end;
+
+Function IsUTF8CharLeadByte( c: Char ): Boolean;
+begin
+	exit (((#$C0 <= c) and (c <= #$DF)) or ((#$E0 <= c) and (c <= #$EF)) or ((#$F0 <= c) and (c <= #$F7)));
+end;
+
+Function IsUTF8CharTrailByte( c: Char ): Boolean;
+begin
+	exit ((#$80 <= c) and (c <= #$BF));
+end;
+
+Function IsSJISCharLeadByte( c: Char ): Boolean;
+begin
+	exit (((c>=#$81) and (c<=#$9F)) or ((c>=#$E0) and (c<=#$EF)));
+end;
+
+Function IsSJISCharTrailByte( c: Char ): Boolean;
+begin
+	exit (((c>=#$40) and (c<=#$7E)) or ((c>=#$80) and (c<=#$FC)));
+end;
+
+Function IsCP932CharLeadByte( c: Char ): Boolean;
+begin
+	exit (((c>=#$81) and (c<=#$9F)) or ((c>=#$E0) and (c<=#$FC)));
+end;
+
+Function IsCP932CharTrailByte( c: Char ): Boolean;
+begin
+	exit (((c>=#$40) and (c<=#$7E)) or ((c>=#$80) and (c<=#$FC)));
+end;
+
+Function IsMBCharLeadByte( c: Char; enc: enc_type ): Boolean;
+begin
+	case enc of
+	SINGLEBYTE:	IsMBCharLeadByte := False;
+	EUCJP:	IsMBCharLeadByte := IsEUCCharLeadByte(c);
+	EUCKR:	IsMBCharLeadByte := IsEUCCharLeadByte(c);
+	EUCCN:	IsMBCharLeadByte := IsEUCCharLeadByte(c);
+	EUCTW:	IsMBCharLeadByte := IsEUCCharLeadByte(c);
+	UTF8:	IsMBCharLeadByte := IsUTF8CharLeadByte(c);
+	SJIS:	IsMBCharLeadByte := IsSJISCharLeadByte(c);
+	CP932:	IsMBCharLeadByte := IsCP932CharLeadByte(c);
+	end;
+end;
+
+Function IsMBCharTrailByte( c: Char; enc: enc_type ): Boolean;
+begin
+	case enc of
+	SINGLEBYTE:	IsMBCharTrailByte := False;
+	EUCJP:	IsMBCharTrailByte := IsEUCCharTrailByte(c);
+	EUCKR:	IsMBCharTrailByte := IsEUCCharTrailByte(c);
+	EUCCN:	IsMBCharTrailByte := IsEUCCharTrailByte(c);
+	EUCTW:	IsMBCharTrailByte := IsEUCCharTrailByte(c);
+	UTF8:	IsMBCharTrailByte := IsUTF8CharTrailByte(c);
+	SJIS:	IsMBCharTrailByte := IsSJISCharTrailByte(c);
+	CP932:	IsMBCharTrailByte := IsCP932CharTrailByte(c);
+	end;
+end;
+
+
+Function LengthEUCJPChar( c: Char ): Integer;
+begin
+	if IsEUCCharLeadByte(c) then begin
+		if #$8F = c then LengthEUCJPChar := 3
+		else if #$8E = c then LengthEUCJPChar := 2
+		else LengthEUCJPChar := 2;
+	end else if IsEUCCharTrailByte(c) then LengthEUCJPChar := 1
+	else LengthEUCJPChar := 0;
+end;
+
+Function LengthEUCKRChar( c: Char ): Integer;
+begin
+	if IsEUCCharLeadByte(c) then begin
+		if #$8F = c then LengthEUCKRChar := 0
+		else if #$8E = c then LengthEUCKRChar := 0
+		else LengthEUCKRChar := 2;
+	end else if IsEUCCharTrailByte(c) then LengthEUCKRChar := 1
+	else LengthEUCKRChar := 0;
+end;
+
+Function LengthEUCCNChar( c: Char ): Integer;
+begin
+	if IsEUCCharLeadByte(c) then begin
+		if #$8F = c then LengthEUCCNChar := 0
+		else if #$8E = c then LengthEUCCNChar := 0
+		else LengthEUCCNChar := 2;
+	end else if IsEUCCharTrailByte(c) then LengthEUCCNChar := 1
+	else LengthEUCCNChar := 0;
+end;
+
+Function LengthEUCTWChar( c: Char ): Integer;
+begin
+	if IsEUCCharLeadByte(c) then begin
+		if #$8F = c then LengthEUCTWChar := 0
+		else if #$8E = c then LengthEUCTWChar := 4
+		else LengthEUCTWChar := 2;
+	end else if IsEUCCharTrailByte(c) then LengthEUCTWChar := 1
+	else LengthEUCTWChar := 0;
+end;
+
+Function LengthUTF8Char( c: Char ): Integer;
+begin
+	if IsUTF8CharLeadByte(c) then begin
+		if (#$C0 <= c) and (c <= #$DF) then LengthUTF8Char := 2
+		else if (#$E0 <= c) and (c <= #$EF) then LengthUTF8Char := 3
+		else if (#$F0 <= c) and (c <= #$F7) then LengthUTF8Char := 4;
+	end else if IsUTF8CharTrailByte(c) then LengthUTF8Char := 1
+	else LengthUTF8Char := 0;
+end;
+
+Function LengthSJISChar( c: Char ): Integer;
+begin
+	if IsSJISCharLeadByte(c) then LengthSJISChar := 2
+	else if IsSJISCharTrailByte(c) then LengthSJISChar := 1
+	else LengthSJISChar := 0;
+end;
+
+Function LengthCP932Char( c: Char ): Integer;
+begin
+	if IsCP932CharLeadByte(c) then LengthCP932Char := 2
+	else if IsCP932CharTrailByte(c) then LengthCP932Char := 1
+	else LengthCP932Char := 0;
+end;
+
+Function LengthMBChar( c: Char; enc: enc_type ): Integer;
+begin
+	case enc of
+	SINGLEBYTE:	LengthMBChar := 0;
+	EUCJP:	LengthMBChar := LengthEUCJPChar(c);
+	EUCKR:	LengthMBChar := LengthEUCKRChar(c);
+	EUCCN:	LengthMBChar := LengthEUCCNChar(c);
+	EUCTW:	LengthMBChar := LengthEUCTWChar(c);
+	UTF8:	LengthMBChar := LengthUTF8Char(c);
+	SJIS:	LengthMBChar := LengthSJISChar(c);
+	CP932:	LengthMBChar := LengthCP932Char(c);
+	end;
+end;
+
+Function LengthMBChar_bidiRTL( c: Char; enc: enc_type ): Integer;
+begin
+	LengthMBChar_bidiRTL := LengthMBChar(c,enc);
+	if (0 = LengthMBChar_bidiRTL) and (#$80 <= c) then begin
+		LengthMBChar_bidiRTL := 1;	{ May be ISO8859-6. }
+	end;
+end;
+
+
+Function LengthMBChar( c: Char ): Integer;
+begin
+	LengthMBChar := LengthMBChar( c, SENC );
+end;
+
 
 Procedure DeleteWhiteSpace(var S: String);
 	{Delete any whitespace which is at the beginning of}
@@ -376,6 +622,57 @@ begin
 			msg := Copy( msg , 1 , N - 1 ) + S + Copy( msg , N + Length( pat ) , 255 );
 		end;
 	until N = 0;
+end;
+
+Function ReplaceHash( const msg, S1, S2, S3, S4: String ): String;
+var
+	MaxLen: Integer;
+	P: Integer;
+	len: Integer;
+	msg_out: String;
+	tmp: String;
+begin
+	MaxLen := Length( msg );
+	P := 1;
+	msg_out := '';
+	while (P <= MaxLen) do begin
+		len := LengthMBChar( msg[P] );
+		if 0 < len then begin
+			msg_out := msg_out + Copy( msg, P, len );
+			P := P + len;
+		end else if ('#' = msg[P]) and (P+1 <= MaxLen) then begin
+			case msg[P+1] of
+			'1':	tmp := S1;
+			'2':	tmp := S2;
+			'3':	tmp := S3;
+			'4':	tmp := S4;
+			else	tmp := '';
+			end;
+			if 0 < Length(tmp) then begin
+				if #$0 <> tmp[1] then begin
+					msg_out := msg_out + tmp;
+				end;
+				P := P + 2;
+			end else begin
+				msg_out := msg_out + msg[P];
+				Inc(P);
+			end;
+		end else begin
+			msg_out := msg_out + msg[P];
+			Inc(P);
+		end;
+	end;
+	ReplaceHash := msg_out;
+end;
+
+Function ReplaceHash( const msg, S1, S2, S3: String ): String;
+begin
+	ReplaceHash := ReplaceHash( msg, S1, S2, S3, '' );
+end;
+
+Function ReplaceHash( const msg, S1, S2: String ): String;
+begin
+	ReplaceHash := ReplaceHash( msg, S1, S2, '', '' );
 end;
 
 Function ReplaceHash( const msg,s: String ): String;
