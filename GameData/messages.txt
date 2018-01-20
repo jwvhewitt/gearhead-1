@@ -642,7 +642,11 @@ GENDER_3 <Undefined>
 MAX_SPEED <Max: #>
 PHONE_INSTRUCTIONS <Enter name or job of person to contact; * for redial.>
 SELECTGENDER_NONBINARY <Don't try to define me>
-
-
-
+ColorSet_0 <All Colors>
+ColorSet_1 <Clothing>
+ColorSet_2 <Skin>
+ColorSet_3 <Hair>
+ColorSet_4 <Primary>
+ColorSet_5 <Secondary>
+ColorSet_6 <Details>
 

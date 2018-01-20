@@ -54,6 +54,8 @@ Function IsPunctuation( C: Char ): Boolean;
 Procedure ReplacePat( var msg: String; const pat_in,s: String );
 Function ReplaceHash( const msg, s: String ): String;
 
+Procedure SanitizeFilename( var S: String );
+
 
 implementation
 
@@ -392,5 +394,20 @@ begin
 	end;
 	ReplaceHash := msg_out;
 end;
+
+Procedure SanitizeFilename( var S: String );
+	{ Replace all proscribed characters with an underscore. }
+const
+    ProscribedCharacters = ',?"*~#%&{}:<>+|';
+var
+	T: Integer;
+begin
+	for T := 1 to Length( S ) do begin
+        if Pos( S[T] , ProscribedCharacters ) > 0 then begin
+            S[T] := '_';
+        end;
+	end;
+end;
+
 
 end.

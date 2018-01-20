@@ -752,7 +752,6 @@ begin
 	CDest := ZONE_PCInfo;
 
 	{ Error check }
-	{ Note that we want the area cleared, even in case of an error. }
 	if Part = Nil then exit;
 
 	{ Depending upon PART's type, branch to an appropriate procedure. }

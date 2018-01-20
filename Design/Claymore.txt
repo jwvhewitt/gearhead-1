@@ -2,6 +2,7 @@ Battroid 6
 Name <Claymore>
 Desig <ITM-01>
 SDL_Sprite <btr_claymore.png>
+SDL_Portrait <mecha_claymore.png>
 Desc <The Claymore is one of the oldest battroid mecha designs, dating from the Age of Superpowers. Though completely obsolete new Claymores are still being produced in DeadZone workshops.>
 
 Mod Body

@@ -143,7 +143,7 @@ const
     ZONE_ShopText: DynamicRect = ( dx:-225; dy: -230; w: 287; h: 170; anchor: ANC_middle );
     ZONE_ShopPCName: DynamicRect = ( dx:-330; dy: -30; w: 100; h: 32; anchor: ANC_middle );
     ZONE_ShopPCPortrait: DynamicRect = ( dx:-330; dy: -10; w: 100; h: 150; anchor: ANC_middle );
-    ZONE_ShopMenu: DynamicRect = ( dx:-225; dy: -30; w: 287; h: 190; anchor: ANC_middle );
+    ZONE_ShopMenu: DynamicRect = ( dx:-225; dy: -30; w: 287; h: 170; anchor: ANC_middle );
 
 	ZONE_ShopInfo: DynamicRect = (dx:85; dY:-225; W: 250; H: 340; anchor: ANC_middle);
     ZONE_ShopCash: DynamicRect = ( dx:135; dy: 130; w: 150; h: 16; anchor: ANC_middle );
@@ -198,6 +198,10 @@ Procedure CleanSpriteList;
 procedure DrawSprite( Spr: SensibleSpritePtr; MyDest: TSDL_Rect; Frame: Integer );
 procedure DrawAlphaSprite( Spr: SensibleSpritePtr; MyDest: TSDL_Rect; Frame: Integer );
 Function ConfirmSprite( Name: String; const Color: String; W,H: Integer ): SensibleSpritePtr;
+
+Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame,OffX,OffY: Integer );
+Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame: Integer );
+
 
 function RPGKey: Char;
 Procedure ClrZone( var Z: TSDL_Rect );
@@ -1069,7 +1073,7 @@ begin
     GrowRect := MyRect;
 end;
 
-Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame: Integer );
+Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame,OffX,OffY: Integer );
     { Fill this area of the screen perfectly with the provided sprite. }
 var
     MyDest: TSDL_Rect;
@@ -1078,6 +1082,9 @@ begin
 	GridW := MyRect.W div MySprite^.W + 1;
 	GridH := MyRect.H div MySprite^.H + 1;
 	SDL_SetClipRect( Game_Screen , @MyRect );
+
+    MyRect.X := MyRect.X + (OffX mod MySprite^.W) - MySprite^.W;
+    MyRect.Y := MyRect.Y + (OffY mod MySprite^.H) - MySprite^.H;
 
 	{ Draw the backdrop. }
 	for X := 0 to GridW do begin
@@ -1089,6 +1096,12 @@ begin
 	end;
 
 	SDL_SetClipRect( Game_Screen , Nil );
+end;
+
+Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame: Integer );
+    { Do a FillRect with offset 0,0. }
+begin
+    FillRectWithSprite( MyRect, MySprite, MyFrame, 0, 0 );
 end;
 
 Procedure InfoBox( MyBox: TSDL_Rect );

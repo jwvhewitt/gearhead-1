@@ -15,7 +15,8 @@ Story
 	GoDelete <EndStory>
 sub
 	Persona 3
-	greeting <NewChat ifG S2 4 else GoNoMaster Say 9 AddChat 4 Memo 0 History 13>
+    % V99 = History counter
+	greeting <NewChat ifG S2 4 else GoNoMaster Say 9 AddChat 4 Memo 0 if= V99 0 V= 99 1 History 13>
 	GoNoMaster <Say 1 AddChat 1 AddChat 2>
 
 	result1 <NewChat AddChat 3 S+ 2 1 if= d5 5 else GoR1_2 Say 2 SkillXP 1 * S1 100 SkillXP 6 * S1 100   Goto GoResetSign>

@@ -115,7 +115,11 @@ begin
 	while ( Leader <> Nil ) and ( ( Leader^.G <> GG_Character ) or ( NAttValue( Leader^.NA , NAG_CharDescription , NAS_CharType ) <> 0 ) ) do Leader := Leader^.Next;
 	if Leader = Nil then Exit;
 
-	FName := Save_Character_Base + GearName(Leader) + Default_File_Ending;
+    FName := GearName( Leader );
+    SanitizeFilename( FName );
+
+	FName := Save_Character_Base + FName + Default_File_Ending;
+
 	Assign( F , FName );
 	Rewrite( F );
 	WriteCGears( F , PC );

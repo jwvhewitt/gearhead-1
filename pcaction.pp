@@ -1434,7 +1434,9 @@ begin
 	end;
 
 	{ Find the PC's name, open the file, and save. }
-	Name := Save_Campaign_Base + PilotName( PC ) + Default_File_Ending;
+    Name := PilotName( PC );
+    SanitizeFilename( Name );
+	Name := Save_Campaign_Base + Name + Default_File_Ending;
 	Assign( F , Name );
 	Rewrite( F );
 	WriteCampaign( Camp , F );

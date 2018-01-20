@@ -225,7 +225,7 @@ sub
 	Msg16_3 <Our city is under attack! I need a mecha pilot to run a combat mission against \NARRATIVE 2 . How'd you like to help?>
 	Msg16_4 <There are mecha from \NARRATIVE 2 stationed just outside this city. I need a mecha pilot to run a combat mission against them. Interested?>
 	Msg16_5 <How would you like to perform a combat mission for \NARRATIVE 1 ?>
-	Msg16_6 <I should tell you that \NARRATIVE 2 needs a pilot for an upcoming mission. Interested?>
+	Msg16_6 <I should tell you that \NARRATIVE 1 needs a pilot for an upcoming mission. Interested?>
 	CMsg16_6 <ifG 0 NPCRep E2 3 Accept>
 	Msg16_7 <I've got a very important mission for you... \NARRATIVE 2 is at the gates of \NARRATIVE 3 , and we need a pilot to go take them out. Are you interested?>
 	CMsg16_7 <ifG 0 NPCRep E2 4 Accept>

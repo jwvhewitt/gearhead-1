@@ -1,3 +1,8 @@
+- Fixed problem with SanitizeFilename on Windows (pcaction.pp,navigate.pp)
+- Some illegal characters removed from filenames (texutil.pp)
+- FillRectWithSprite can now accept x,y offsets (sdlgfx.pp)
+- ColorMenu is properly centered when screen is resized (colormenu.pp)
+
 1.302	June 26 2016
 - Fixed lone enemy bug in SCENE_CaptureMecha.txt
 - Updated PLOT_BanditJob1.txt, PLOT_BanditJob2.txt, PLOT_BanditJob3.txt,

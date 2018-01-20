@@ -30,7 +30,7 @@ program GHArena;
 {$IFNDEF DEBUG}
 {$APPTYPE GUI}
 {$ENDIF}
-uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap;
+uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap,ghchars;
 {$ELSE}
 uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
@@ -44,6 +44,19 @@ var
 
 {$IFDEF SDLMODE}
     MyLogo: SensibleSpritePtr;
+
+Procedure GenNames;
+var
+    t: Integer;
+    mylist: SAttPtr;
+begin
+    mylist := Nil;
+    for t := 1 to 10000 do begin
+       StoreSAtt( mylist, RandomName );
+    end;
+    SaveStringList( 'names.txt', mylist );
+    DisposeSAtt( mylist );
+end;
 
 Procedure MainMenuRedraw;
     { Draw the opening screen, and add the infobox + logo. }
@@ -75,6 +88,8 @@ begin
 {$ENDIF}
 	AddRPGMenuItem( RPM , 'View Design Files' , 7 );
 	AddRPGMenuItem( RPM , 'Quit Game' , -1 );
+
+    {GenNames();}
 
 	repeat
         {$IFNDEF SDLMODE}
