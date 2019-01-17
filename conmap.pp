@@ -557,7 +557,7 @@ begin
 		M2 := M2^.Next;
 	end;
 
-	if NAttValue( Mek^.NA , NAG_Location , NAS_Team ) = NAV_DefPlayerTeam then begin
+	if (NAttValue( Mek^.NA , NAG_Location , NAS_Team ) = NAV_DefPlayerTeam) or (NAttValue( Mek^.NA , NAG_Location , NAS_Team ) = NAV_LancemateTeam) then begin
 		CheckVisibleArea( GB , Mek );
 	end;
 
