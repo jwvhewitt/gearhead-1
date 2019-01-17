@@ -99,7 +99,7 @@ begin
 		{ Every point of shopping skill that the unit has }
 		{ gives a 2% discount to whatever is being purchased. }
 		ShopRk := ( ShopRk - ShopTr ) * 2;
-		if ShopRk > 50 then ShopRk := 50;
+		if ShopRk > 40 then ShopRk := 40;
 
 		Price := ( Price * (100 - ShopRk ) ) div 100;
 	end;
