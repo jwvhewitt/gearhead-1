@@ -288,6 +288,7 @@ begin
 		if ( CallTime <= Camp^.GB^.ComTime ) and CanTakeTurn( M ) then begin
 			if GearOperational( M ) then begin
 				if IsPlayerMek and not DidBeginTurn then begin
+					FocusOnMek( Camp^.GB, M );
 					BeginTurn( Camp^.GB , M );
 					DidBeginTurn := True;
 				end;
