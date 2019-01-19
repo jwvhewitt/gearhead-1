@@ -289,6 +289,9 @@ begin
 			if GearOperational( M ) then begin
 				if IsPlayerMek and not DidBeginTurn then begin
 					FocusOnMek( Camp^.GB, M );
+					{$IFDEF SDLMODE}
+					InitMapDisplay( Camp^.GB, M );
+					{$ENDIF}
 					BeginTurn( Camp^.GB , M );
 					DidBeginTurn := True;
 				end;
