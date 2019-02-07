@@ -93,6 +93,7 @@ begin
 	end else begin
 		PList := CreateFileList( Graphics_Directory + 'por_m_*.*' );
         ExpandFileList( PList, Graphics_Directory + 'por_f_*.*' );
+        ExpandFileList( PList, Graphics_Directory + 'por_n_*.*' );
 	end;
     DefaultPortraitList := PList;
 end;

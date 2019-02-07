@@ -30,13 +30,13 @@ program GHArena;
 {$IFNDEF DEBUG}
 {$APPTYPE GUI}
 {$ENDIF}
-uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap,ghchars;
+uses gears,sdlgfx,arenahq,sdlmenus,randchar,navigate,sdlmap,ghchars,cosplay;
 {$ELSE}
 uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
-	Version = '1.302';
+	Version = '1.310';
 
 var
 	RPM: RPGMenuPtr;
@@ -87,6 +87,9 @@ begin
 	AddRPGMenuItem( RPM , 'Edit Map' , 6 );
 {$ENDIF}
 	AddRPGMenuItem( RPM , 'View Design Files' , 7 );
+{$IFDEF SDLMODE}
+	AddRPGMenuItem( RPM , 'View Color Selector' , 8 );
+{$ENDIF}
 	AddRPGMenuItem( RPM , 'Quit Game' , -1 );
 
     {GenNames();}
@@ -124,6 +127,7 @@ begin
 {$ENDIF}
 {$IFDEF SDLMODE}
 			7:	DesignDirBrowser( @RedrawOpening );
+            8:  DoCosplay;
 {$ELSE}
 			7:	DesignDirBrowser;
 {$ENDIF}

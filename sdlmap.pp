@@ -110,7 +110,7 @@ const
 		0, 0
 	);
 
-	NumThinWalls = 8;
+	NumThinWalls = 16;
 	ThinWall_Earth = 1;
 	ThinWall_RustySteel = 2;
 	ThinWall_Stone = 3;
@@ -119,13 +119,22 @@ const
     ThinWall_Wood = 6;
     ThinWall_Default = 7;
     ThinWall_Fortress = 8;
+    ThinWall_Hospital = 9;
+    ThinWall_Golden = 10;
+    ThinWall_Commercial = 11;
+    ThinWall_StainlessSteel = 12;
+    ThinWall_Neon = 13;
+    ThinWall_Restaurant = 14;
+    ThinWall_Garage = 15;
+    ThinWall_Organic = 16;
+    
 
 	Terrain_Image: Array [1..NumTerr] of SmallInt = (
 		 1, 2, 3, 4, 5,  6, 7, 8, 9,10,
-		11,12,-5,14,-3, 16,17,18,19,20,
-		21,22,-Thinwall_Default,24,25, 26,-ThinWall_Wood,28,-ThinWall_RustySteel,30,
-		-1,32,-ThinWall_Fortress,34,-4, 36,37,38,39,40,
-		41,42
+		11,12,-ThinWall_Residential,14,-Thinwall_Stone, 16,17,-ThinWall_Hospital,19,20,
+		21,22,-Thinwall_Default,-ThinWall_Golden,25, 26,-ThinWall_Wood,28,-ThinWall_RustySteel,30,
+		-ThinWall_Earth,-ThinWall_Commercial,-ThinWall_Fortress,-ThinWall_StainlessSteel,-ThinWall_Industrial, -ThinWall_Neon,-ThinWall_Restaurant,-ThinWall_Garage,39,40,
+		41,-ThinWall_Organic
 	);
 
 	HalfTileWidth = 32;
@@ -1596,6 +1605,15 @@ initialization
 	Thin_Wall_Sprites[ ThinWall_Wood ] := ConfirmSprite( 'wall_wood.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Default ] := ConfirmSprite( 'wall_default.png' , '' , 64 , 96 );
 	Thin_Wall_Sprites[ ThinWall_Fortress ] := ConfirmSprite( 'wall_fortress.png' , '' , 64 , 96 );
+
+	Thin_Wall_Sprites[ ThinWall_Hospital ] := ConfirmSprite( 'wall_hospital.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_Golden ] := ConfirmSprite( 'wall_gold.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_Commercial ] := ConfirmSprite( 'wall_commercial.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_StainlessSteel ] := ConfirmSprite( 'wall_stainless.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_Neon ] := ConfirmSprite( 'wall_neon.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_Restaurant ] := ConfirmSprite( 'wall_restaurant.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_Garage ] := ConfirmSprite( 'wall_garage.png' , '' , 64 , 64 );
+	Thin_Wall_Sprites[ ThinWall_Organic ] := ConfirmSprite( 'wall_organic.png' , '' , 64 , 64 );
 
 	Thin_wall_Cap := ConfirmSprite( 'wall_cap.png' , '' , 64 , 96 );
     {SDL_SetAlpha( Thin_wall_Cap^.Img , SDL_SRCAlpha , 128 );}

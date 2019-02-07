@@ -1,3 +1,10 @@
+1.310	February 7 2019
+- All old style walls have been replaced by thin walls (sdlmap.pp)
+- Portraits may be assigned as unisex "por_n_*.png" (sdlinfo.pp)
+- Cosplay changed from separate program to main menu option (cosplay.pas)
+- Centers on player, shows active player in info box, at start of tactics turn (arenaplay.pp)
+- Cannot sell items for higher price than you bought them (services.pp)
+- Lancemate field of view also visible (conmap.pp, sdlmap.pp)
 - Fixed problem with SanitizeFilename on Windows (pcaction.pp,navigate.pp)
 - Some illegal characters removed from filenames (texutil.pp)
 - FillRectWithSprite can now accept x,y offsets (sdlgfx.pp)
