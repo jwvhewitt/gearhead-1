@@ -1,4 +1,7 @@
 % Federated Territories Campaign  "Second Empire"
+%                                     ^--- I just realized this is a reference
+%                                          to the Sega Genesis game "Herzog Zwei".
+%                                          Good one, Past Joe.
 % Remember, if you don't want spoilers, don't read this file...
 % but if you do want spoilers, come on in!
 Adventure
