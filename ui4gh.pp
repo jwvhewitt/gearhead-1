@@ -385,22 +385,22 @@ const
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_ApplySkill];),
 		(ConfigName: 'ButtonX';
-		  BCode:3;
+		  BCode:2;
 		  BType:TYPE_BUTTON;
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_Search];),
 		(ConfigName: 'ButtonY';
-		  BCode:2;
+		  BCode:3;
 		  BType:TYPE_BUTTON;
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_AttackMenu];),
 		(ConfigName: 'ButtonStart';
-		  BCode:9;
+		  BCode:7;
 		  BType:TYPE_BUTTON;
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_CharInfo];),
 		(ConfigName: 'ButtonSelect';
-		  BCode:8;
+		  BCode:6;
 		  BType:TYPE_BUTTON;
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_QuitGame];),
@@ -415,44 +415,44 @@ const
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_Get];),
 		(ConfigName: 'ButtonOther1';
-		  BCode:-1;
-		  BType:TYPE_BUTTON;
-		  BDir:0;
+		  BCode:2;
+		  BType:TYPE_AXIS;
+		  BDir:1;
 		  MappedCmd: @KeyMap[KMC_ViewMemo];),
 		(ConfigName: 'ButtonOther2';
-		  BCode:-1;
-		  BType:TYPE_BUTTON;
-		  BDir:0;
+		  BCode:2;
+		  BType:TYPE_AXIS;
+		  BDir:-1;
 		  MappedCmd: @KeyMap[KMC_Telephone];),
 		(ConfigName: 'ButtonOther3';
-		  BCode:-1;
+		  BCode:8;
 		  BType:TYPE_BUTTON;
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_Stop];),
 		(ConfigName: 'ButtonOther4';
-		  BCode:-1;
+		  BCode:9;
 		  BType:TYPE_BUTTON;
 		  BDir:0;
 		  MappedCmd: @KeyMap[KMC_Rest];),
 		(ConfigName: 'ButtonUp';
-		  BCode:13;
-		  BType:TYPE_BUTTON;
-		  BDir:0;
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:1;
 		  MappedCmd: NIL;),
 		(ConfigName: 'ButtonDown';
-		  BCode:14;
-		  BType:TYPE_BUTTON;
-		  BDir:0;
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:4;
 		  MappedCmd: NIL;),
 		(ConfigName: 'ButtonLeft';
-		  BCode:15;
-		  BType:TYPE_BUTTON;
-		  BDir:0;
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:8;
 		  MappedCmd: NIL;),
 		(ConfigName: 'ButtonRight';
-		  BCode:16;
-		  BType:TYPE_BUTTON;
-		  BDir:0;
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:2;
 		  MappedCmd: NIL;));
 	{$ENDIF}
 
