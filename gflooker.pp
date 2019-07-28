@@ -352,7 +352,7 @@ begin
 		IndicateTile( GB , X , Y );
 {$ENDIF}
 
-		A := RPGKey;
+		A := RPGKey{$IFDEF SDLMODE}(CONTEXT_LOOKER){$ENDIF};
 
 		if A = KeyMap[ KMC_North ].KCode then begin
 			RepositionCursor( 6 );

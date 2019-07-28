@@ -1172,7 +1172,7 @@ var
 	A: Char;
 begin
 	repeat
-		A := RPGKey;
+		A := RPGKey(CONTEXT_MENU);
         if A = RPK_TimeEvent then begin
             if Redrawer <> Nil then Redrawer();
     		RealInjuryDisplay;

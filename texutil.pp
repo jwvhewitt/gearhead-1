@@ -52,6 +52,7 @@ Function QuickPCopy( const msg: String ): PChar;
 Function IsPunctuation( C: Char ): Boolean;
 
 Procedure ReplacePat( var msg: String; const pat_in,s: String );
+Function Replace(constref msg, pat_in, s: String): String;
 Function ReplaceHash( const msg, s: String ): String;
 
 Procedure SanitizeFilename( var S: String );
@@ -242,8 +243,7 @@ end;
 function IsAlpha( C: Char ): Boolean;
 	{ Return TRUE if C is a letter, FALSE otherwise. }
 begin
-	if ( UpCase( C ) >= 'A' ) and ( UpCase( C ) <= 'Z' ) then IsAlpha := True
-	else IsAlpha := False;
+	IsAlpha := UpCase(C) in ['A'..'Z'];
 end;
 
 Function Acronym( phrase: String ): String; {can't const}
@@ -359,10 +359,7 @@ Function IsPunctuation( C: Char ): Boolean;
 	{ forgive me if my definition of punctuation in this function }
 	{ is not the same as my own. }
 begin
-	case C of
-		'.',',',':',';','@','!','/','?','''': IsPunctuation := True;
-		else IsPunctuation := False;
-	end;
+	IsPunctuation := C in ['.',',',':',';','@','!','/','?',''''];
 end;
 
 Procedure ReplacePat( var msg: String; const pat_in,s: String );
@@ -378,6 +375,13 @@ begin
 			msg := Copy( msg , 1 , N - 1 ) + S + Copy( msg , N + Length( pat ) , 255 );
 		end;
 	until N = 0;
+end;
+
+Function Replace(constref msg, pat_in, s: String): String;
+	{ Replace a pattern without altering the original string}
+begin
+	Replace := Copy(msg, 0, Length(msg));
+	ReplacePat(Replace, pat_in, s);
 end;
 
 Function ReplaceHash( const msg,s: String ): String;
@@ -398,14 +402,12 @@ end;
 Procedure SanitizeFilename( var S: String );
 	{ Replace all proscribed characters with an underscore. }
 const
-    ProscribedCharacters = ',?"*~#%&{}:<>+|';
+    ProscribedCharacters = [',', '?', '"', '*', '~', '#', '%', '&', '{', '}', ':', '<', '>', '+', '|', ''''];
 var
 	T: Integer;
 begin
 	for T := 1 to Length( S ) do begin
-        if Pos( S[T] , ProscribedCharacters ) > 0 then begin
-            S[T] := '_';
-        end;
+        if S[T] in ProscribedCharacters then S[T] := '_';
 	end;
 end;
 

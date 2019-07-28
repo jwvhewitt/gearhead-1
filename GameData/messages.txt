@@ -649,4 +649,4 @@ ColorSet_3 <Hair>
 ColorSet_4 <Primary>
 ColorSet_5 <Secondary>
 ColorSet_6 <Details>
-
+CONFIG_Prompt <Press the button on your controller that matches the displayed button. Hold any button to skip or press ESC to exit.>

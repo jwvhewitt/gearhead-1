@@ -27,6 +27,10 @@ Open a terminal in the folder with the source code and type:
 
     fpc -dSDLMODE gharena
 
+For controller support in SDL mode, type:
+
+	fpc -dSDLMODE -dJOYSTICK_SUPPORT gharena
+
 For the ASCII version, just type:
 
     fpc gharena
