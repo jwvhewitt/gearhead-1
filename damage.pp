@@ -145,8 +145,14 @@ Function WeaponDC( Attacker: GearPtr ; AtOp: Integer ): Integer;
 var
 	D: Integer;
 	Master: GearPtr;
+
 	Procedure ApplyCCBonus;
 		{ Apply the close combat bonus for weapons. }
+	const
+		HeavyAct_Denominator = 4;
+	var
+		Module: GearPtr;
+		HeavyActuator: Integer;
 	begin
 		if Master <> Nil then begin
 			if Master^.G = GG_Character then begin
@@ -160,7 +166,17 @@ var
 				if D < 1 then D := 1;
 			end else if Master^.G = GG_Mecha then begin
 				D := D + ( Master^.V - 1 ) div 2;
+				
+				{ May also get a bonus from heavy Actuator. }
+				HeavyActuator := CountActivePoints( Master , GG_MoveSys , GS_HeavyActuator );
+				if HeavyActuator > 0 then D := D + ( HeavyActuator div HeavyAct_Denominator );
 
+				{ Having an oversized module gives a +1 bonus to damage. }
+				Module := FindModule( Attacker );
+				if Module <> Nil then begin
+					if Module^.V > Master^.V then Inc( D );
+				end;
+				
 				{ Zoanoids get a CC damage bonus. Apply that here. }
 				if Master^.S = GS_Zoanoid then begin
 					D := D + ZoaDmgBonus;

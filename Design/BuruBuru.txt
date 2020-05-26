@@ -120,6 +120,8 @@ Mod Body
 		sub
 			Rockets 1
 		end
+
+		HeavyActuator 3
 	end
 
 Mod Arm
@@ -136,6 +138,7 @@ Mod Arm
 				Ammo 6
 			end
 		end
+		HeavyActuator 1
 
 		Melee 3
 		Name <Shoulder Spike>
@@ -160,6 +163,7 @@ Mod Arm
 		sub
 			Ammo 1
 		end
+		HeavyActuator 1
 	end
 
 Mod Leg

@@ -22,7 +22,7 @@ unit gearutil;
 
 interface
 
-uses gears;
+uses gears,damage;
 
 Function IsMasterGear(G: GearPtr): Boolean;
 Procedure InitGear(Part: GearPtr);
@@ -1110,12 +1110,16 @@ end;
 Function GearEncumberance( Mek: GearPtr ): Integer;
 	{ Return how many unscaled mass units this gear may carry without }
 	{ incurring a penalty. }
+var
+	HM: Integer;
 begin
 	if Mek = Nil then begin
 		GearEncumberance := 0;
 	end else if Mek^.G = GG_Mecha then begin
-		{ Encumberance value is basic MassPerMV + Size of mecha. }
-		GearEncumberance := MassPerMV + Mek^.V;
+		{ Encumberance value is basic MassPerMV + Size of mecha + bonus for heavy Actuator. }
+		HM := CountActivePoints( Mek , GG_MoveSys , GS_HeavyActuator ) div Mek^.V;
+		if HM > 2 then HM := 2;
+		GearEncumberance := MassPerMV + Mek^.V + HM;
 	end else if Mek^.G = GG_Character then begin
 		{ Encumberance value is BODY stat + 3. }
 		GearEncumberance := CStat( Mek , STAT_Body ) + 2 + CharaSkillRank( Mek , NAS_WeightLifting );

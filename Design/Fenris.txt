@@ -58,6 +58,7 @@ Mod Leg
 		mass -2
 		Integral
 
+		HeavyActuator 4
 	end
 
 Mod Leg
@@ -79,6 +80,7 @@ Mod Leg
 		mass -2
 		Integral
 
+		HeavyActuator 4
 	end
 
 Mod Tail
@@ -86,4 +88,9 @@ Mod Tail
 	Armor 4
 	Mass -3
 	Integral
+
+	sub
+		HeavyActuator 4
+		Integral
+	end
 end

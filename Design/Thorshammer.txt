@@ -78,11 +78,20 @@ Mod Leg
 	Name <Right Leg>
 	Size 6
 	Armor 7
-	Mass -2
+	Mass -1
+	sub
+		HeavyActuator 4
+		mass -1
+	end
 
 Mod Leg
 	Name <Left Leg>
 	Size 6
 	Armor 7
-	Mass -2
+	Mass -1
+	sub
+		HeavyActuator 4
+		mass -1
+	end
+
 end

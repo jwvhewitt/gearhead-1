@@ -25,26 +25,37 @@ Mod Body
 		Gyro 3
 
 		STC LAS-5
+		mass -2
 
 		STC LAS-5
+		mass -2
+
+		ECM 7
 	end
 
 Mod Arm
 	Name <Right Arm>
 	Size 5
 	Armor 6
+	mass -1
 	sub
 		STC PHS-8
 
-		MLauncher 10
-		Name <Superheavy Missile>
-		Type <BLAST 5 BRUTAL>
-		Range 10
-		Acc 2
-		Magazine 1
-		sub
-			Rockets 10
+		mount
+		name <Right Shoulder Mount>
+		inv
+			MLauncher 10	
+			Name <Superheavy Missile>
+			Type <BLAST 5 BRUTAL>
+			Range 10
+			Acc 2
+			Magazine 1
+			sub
+				Rockets 10
+			end
 		end
+
+		HeavyActuator 1
 	end
 	inv
 		ArmArmor 3
@@ -55,18 +66,24 @@ Mod Arm
 	Name <Left Arm>
 	Size 5
 	Armor 6
+	mass -1
 	sub
 		STC PHS-8
 
-		MLauncher 10
-		Name <Superheavy Missile>
-		Type <BLAST 5 BRUTAL>
-		Range 10
-		Acc 2
-		Magazine 1
-		sub
-			Rockets 10
+		mount
+		name <Left Shoulder Mount>
+		inv
+			MLauncher 10
+			Name <Superheavy Missile>
+			Type <BLAST 5 BRUTAL>
+			Range 10
+			Acc 2
+			Magazine 1
+			sub
+				Rockets 10
+			end
 		end
+		HeavyActuator 1
 	end
 	inv
 		ArmArmor 3
@@ -76,28 +93,35 @@ Mod Arm
 Mod Leg
 	Name <Right Leg>
 	Armor 6
+	mass -1
 	sub
 		Mount
 		Name <Right Leg Mount>
 		inv
 			STC LRL-32
 		end
+		HeavyActuator 3
+		Mass -1
 	end
 
 Mod Leg
 	Name <Left Leg>
 	Armor 6
+	mass -1
 	sub
 		Mount
 		Name <Left Leg Mount>
 		inv
 			STC LRL-32
 		end
+		HeavyActuator 3
+		Mass -1
 	end
 
 Mod Storage
 	Name <Right Pod>
 	Armor 5
+	Size 5
 	sub
 		MLauncher 5
 		Name <Heavy Missiles>
@@ -112,6 +136,7 @@ Mod Storage
 Mod Storage
 	Name <Left Pod>
 	Armor 5
+	Size 5
 	sub
 		MLauncher 5
 		Name <Heavy Missiles>

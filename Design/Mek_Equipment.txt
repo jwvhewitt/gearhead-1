@@ -343,3 +343,36 @@ Scale 2
 
 Overcharger 7
 Scale 2
+
+HeavyActuator 1
+Scale 2
+
+HeavyActuator 2
+Scale 2
+
+HeavyActuator 3
+Scale 2
+
+HeavyActuator 4
+Scale 2
+
+HeavyActuator 5
+Scale 2
+
+HeavyActuator 2
+Scale 2
+mass -1
+
+HeavyActuator 3
+Scale 2
+mass -2
+
+
+HeavyActuator 4
+Scale 2
+mass -2
+
+
+HeavyActuator 5
+Scale 2
+mass -3
