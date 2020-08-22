@@ -54,6 +54,12 @@ procedure IndicateTile( GB: GameBoardPtr; X , Y , Z: Integer; Primary: Boolean )
 procedure IndicateTile( GB: GameBoardPtr; Mek: GearPtr; Primary: Boolean );
 procedure IndicateTile( GB: GameBoardPtr; X,Y: Integer );
 Procedure MouseAtTile( GB: GameBoardPtr; X,Y: Integer );
+{$IFDEF JOYSTICK_SUPPORT}
+procedure JoystickIndicate(const Mek: GearPtr);
+{$ENDIF}
+{$IFDEF SDLMODE}
+procedure ClearOverlay;
+{$ENDIF}
 
 Procedure RevealMek( GB: GameBoardPtr; Mek,Spotter: GearPtr );
 Procedure VisionCheck( GB: GameBoardPtr; Mek: GearPtr );
@@ -81,6 +87,10 @@ Procedure RedrawOpening;
 
 Function ScreenToMap( X,Y: Integer ): Point;
 Function MouseMapPos: Point;
+{$IFDEF JOYSTICK_SUPPORT}
+Function JoystickIndicatorPos(M: GearPtr): Point;
+Procedure JoystickIndicatorForRedraw();
+{$ENDIF}
 
 Procedure BeginTurn( GB: GameBoardPtr; M: GearPtr );
 
@@ -432,7 +442,7 @@ begin
 							end else begin
 								DrawSprite( OVERLAY_MAP[ X ,Y , Z , T ].Sprite , MyDest , OVERLAY_MAP[ X ,Y , Z , T ].F );
 							end;
-							if ( OVERLAY_MAP[ X ,Y , Z , T ].name <> '' ) and NAMES_ABOVE_HEADS then begin
+							if NAMES_ABOVE_HEADS and ( OVERLAY_MAP[ X ,Y , Z , T ].name <> '' ) then begin
 								MyDest.X := ScreenX( X , Y ) + HalfTileWidth;
 								MyDest.Y := ScreenY( X , Y ) - Altitude_Height * Z - 10;
 								QuickTinyText( OVERLAY_MAP[ X ,Y , Z , T ].name , MyDest , StdWhite );
@@ -852,14 +862,41 @@ end;
 Procedure MouseAtTile( GB: GameBoardPtr; X,Y: Integer );
 	{ The mouse is apparently hovering over this tile. Draw the mouse cursor here. }
 begin
-	ClearOverlayLayer( OVERLAY_IMAGE );
 	if OnTheMap( X , Y ) then begin
 		Overlay_MAP[ X , Y , 0 , OVERLAY_IMAGE ].Sprite := Targeting_Srpite;
 		Overlay_MAP[ X , Y , 0 , OVERLAY_IMAGE ].F := 1;
-
 	end;
 end;
 
+{$IFDEF JOYSTICK_SUPPORT}
+procedure JoystickIndicate(const Mek: GearPtr);
+var
+	P: Point;
+begin
+	if JoyAxisDir <> [] then begin
+		P := JoystickIndicatorPos(Mek);
+
+		if OnTheMap( P.X , P.Y ) then begin
+			Overlay_MAP[ P.X , P.Y , 0 , OVERLAY_IMAGE ].Sprite := Targeting_Srpite;
+			Overlay_MAP[ P.X , P.Y , 0 , OVERLAY_IMAGE ].F := 0;
+		end;
+	end;
+end;
+
+Procedure JoystickIndicatorForRedraw();
+begin
+	ClearOverlay;
+	if ComDisplay_PC <> NIL then JoystickIndicate(ComDisplay_PC);
+end;
+
+{$ENDIF}
+
+{$IFDEF SDLMODE}
+procedure ClearOverlay;
+begin
+	ClearOverlayLayer( OVERLAY_IMAGE );
+end;
+{$ENDIF}
 
 Procedure RevealMek( GB: GameBoardPtr; Mek,Spotter: GearPtr );
 	{ This mek has been spotted. Light it up. }
@@ -1557,6 +1594,37 @@ Function MouseMapPos: Point;
 begin
 	MouseMapPos := ScreenToMap( Mouse_X , Mouse_Y );
 end;
+
+{$IFDEF JOYSTICK_SUPPORT}
+Function JoystickIndicatorPos(M: GearPtr): Point;
+	{ Return the position the indicator should be drawn at, relative to the gear}
+var
+	P: Point;
+begin
+	P.X := NAttValue(M^.NA, NAG_Location, NAS_X);
+	P.Y := NAttValue(M^.NA, NAG_Location, NAS_Y);
+
+	{my kingdom for a working case statement}
+	if 			JoyAxisDir = [BUTTON_UP] 				 then begin
+		P.Y -= 1;
+		P.X -= 1;
+	end else if JoyAxisDir = [BUTTON_DOWN] 				 then begin
+		P.Y += 1;
+		P.X += 1;
+	end else if JoyAxisDir = [BUTTON_LEFT] 				 then begin
+		P.Y += 1;
+		P.X -= 1;
+	end else if JoyAxisDir = [BUTTON_RIGHT] 			 then begin
+		P.Y -= 1;
+		P.X += 1;
+	end else if JoyAxisDir = [BUTTON_UP, BUTTON_LEFT] 	 then P.X -= 1
+	else if 	JoyAxisDir = [BUTTON_UP, BUTTON_RIGHT] 	 then P.Y -= 1
+	else if 	JoyAxisDir = [BUTTON_DOWN, BUTTON_LEFT]  then P.Y += 1
+	else if 	JoyAxisDir = [BUTTON_DOWN, BUTTON_RIGHT] then P.X += 1;
+
+	JoystickIndicatorPos := P;
+end;
+{$ENDIF}
 
 Procedure BeginTurn( GB: GameBoardPtr; M: GearPtr );
 	{ Time to start the turn. }

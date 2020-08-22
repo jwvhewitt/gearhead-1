@@ -41,6 +41,14 @@ Type
         function GetRect: TSDL_Rect;
     end;
 
+	TSDLMode = packed record
+		Name: String[10];
+		Width, Height: Word;
+	end;
+
+	TSDLModeArray = array of TSDLMode;
+
+	TInputContext = (CONTEXT_NONE, CONTEXT_MENU, CONTEXT_LOOKER);
 
 const
 	StdBlack: TSDL_Color =		( r:  0; g:  0; b:  0 );
@@ -107,6 +115,8 @@ const
 	ZONE_TextInputBigBox: DynamicRect = ( dx:-220; dy:-61; w:440; h:56; anchor: ANC_middle );
     ZONE_PhoneInstructions: DynamicRect = ( dx:-200; dy:15; w:400; h:16; anchor: ANC_middle );
 
+	ZONE_KeyboardInput: DynamicRect = ( dx:-220; dy:20; w:440; h:100; anchor: ANC_middle );
+
 	ZONE_InteractStatus: DynamicRect = ( dx:-250; dy: -210; w: 395; h: 40; anchor: ANC_middle );
 	ZONE_InteractMsg: DynamicRect = ( dx: -250; dy:-120; w:395; h: 110; anchor: ANC_middle );
 	ZONE_InteractMenu: DynamicRect = ( dx: -250; dy:-5; w:500; h: 120; anchor: ANC_middle );
@@ -157,6 +167,11 @@ const
 	ZONE_YesNoPrompt: DynamicRect = ( dx:-175; dy:-150; w:350; h:200; anchor: ANC_middle );
 	ZONE_YesNoMenu: DynamicRect = ( dx:-175; dy:55; w:350; h:50; anchor: ANC_middle );
 
+	{$IFDEF JOYSTICK_SUPPORT}
+	ZONE_ConfigButton: DynamicRect = ( dx:-100; dy:55; w:200; h:25; anchor: ANC_middle );
+	ZONE_ConfigButtonPrompt: DynamicRect = ( dx:-250; dy:0; w:500; h:40; anchor: ANC_middle );
+	{$ENDIF}
+
 	Console_History_Length = 240;
 
 	GH_REPEAT_DELAY = 200;
@@ -170,6 +185,13 @@ const
 	CS_SecondaryMecha = 5;
 	CS_Detailing = 6;
 
+	{Base constant for requesting SDL surfaces}
+	SDL_GHABASE = SDL_HWSURFACE or SDL_DOUBLEBUF;
+
+	{$IFDEF JOYSTICK_SUPPORT}
+	{how far you need to move the stick to make it count}
+	JOY_AxisCutoff = High(SmallInt) / 2;
+	{$ENDIF}
 
 var
 	Game_Screen: PSDL_Surface;
@@ -181,11 +203,17 @@ var
 	Mouse_X, Mouse_Y: LongInt;	{ Current mouse position. }
 	Animation_Phase: Integer;
 	Last_Clock_Update: UInt32;
-
+	AvailableModes: TSDLModeArray;
+	{$IFDEF JOYSTICK_SUPPORT}
+	HasJoystick: Boolean = false;
+	JoyAxisDir: TButtonSet;
+	ButtonState: TButtonSet;
+	{$ENDIF}
+	
     MasterColorList: SAttPtr;
 
-	Music_List: SAttPtr;
-{	MyMusic: P_Mix_Music;}
+{	Music_List: SAttPtr;
+	MyMusic: P_Mix_Music;}
 
 Function RandomColorString( ColorSet: Integer ): String;
 
@@ -203,15 +231,20 @@ Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; My
 Procedure FillRectWithSprite( MyRect: TSDL_Rect; MySprite: SensibleSpritePtr; MyFrame: Integer );
 
 
-function RPGKey: Char;
+function RPGKey: Char inline;
+function RPGKey(context: TInputContext): Char;
 Procedure ClrZone( var Z: TSDL_Rect );
 Procedure ClrScreen;
+Procedure ResizeScreen(width, height: Integer) inline;
+Procedure CheckAnimTicks() inline;
 
 Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean; MyFont: PTTF_Font ): PSDL_Surface;
+Function BlockPrint( const msg: SAttPtr; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean; MyFont: PTTF_Font ): PSDL_Surface;
 
 Procedure QuickText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 Procedure QuickTinyText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
 Procedure CMessage( const msg: String; Z: TSDL_Rect; C: TSDL_Color );
+Procedure BMessage( const msg: SAttPtr; Z: TSDL_Rect; C: TSDL_Color; font: PTTF_Font );
 Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color );
 Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color; MyFont: PTTF_FONT );
 
@@ -247,9 +280,20 @@ implementation
 const
 	WindowName: PChar = 'GearHead Arena SDL Version';
 	IconName: PChar = 'GearHead';
+	{$IFDEF JOYSTICK_SUPPORT}
+	JOY_DirButtons = [BUTTON_UP, BUTTON_DOWN, BUTTON_LEFT, BUTTON_RIGHT];
+	{$ENDIF}
 
 var
 	Infobox_Border,Infobox_Backdrop: SensibleSpritePtr;
+	{$IFDEF JOYSTICK_SUPPORT}
+	Joystick: PSDL_Joystick;
+	PrevState: TButtonSet;
+	PrevTicks: LongWord = 0;
+	PrevHasRepeated: Boolean = false;
+	JoyXAxis, JoyYAxis: SmallInt;
+	{$ENDIF}
+	Key_Font: PTTF_Font;
 
 Function DynamicRect.GetRect: TSDL_Rect;
     { Return the TSDL_Rect described by this DynamicRect, given the current }
@@ -641,15 +685,38 @@ begin
 	ConfirmSprite := S;
 end;
 
+{$IFDEF JOYSTICK_SUPPORT}
+Function GetJoyAxisDir(): TButtonSet;
+{get the direction the control stick is aimed in}
+begin
+	GetJoyAxisDir := [];
 
-function RPGKey: Char;
+	if JoyYAxis < -JOY_AxisCutoff then Include(GetJoyAxisDir, BUTTON_UP)
+	else if JoyYAxis > JOY_AxisCutoff then Include(GetJoyAxisDir, BUTTON_DOWN);
+	if JoyXAxis < -JOY_AxisCutoff then Include(GetJoyAxisDir, BUTTON_LEFT)
+	else if JoyXAxis > JOY_AxisCutoff then Include(GetJoyAxisDir, BUTTON_RIGHT);
+end;
+{$ENDIF}
+
+function RPGKey: Char inline;
 	{ Read a readable key from the keyboard and return its ASCII value. }
+begin
+  RPGKey := RPGKey(CONTEXT_NONE);
+end;
+
+function RPGKey(context: TInputContext): Char;
+	{ Read a readable key from the keyboard and return its ASCII value. }
+	{ Context is only used for gamepad inputs. }
 var
 	a: String;
 	event : TSDL_Event;
 	m2: PChar;
-    width,height: Integer;
     pmsg: PChar;
+	{$IFDEF JOYSTICK_SUPPORT}
+	direction: TButtonSet;
+	adjustedButtons: TButtonSet;
+	button: TJoyButton;
+	{$ENDIF}
 begin
 	a := '';
 	repeat
@@ -690,20 +757,124 @@ begin
 				end;
 
             end else if event.type_ = SDL_VIDEORESIZE then begin
-                width := event.resize.w;
-                if width < 800 then width := 800;
-                height := event.resize.h;
-                if height < 600 then height := 600;
-                Game_Screen := SDL_SetVideoMode(width, height, 0, SDL_HWSURFACE or SDL_DoubleBuf or SDL_RESIZABLE );
+				ResizeScreen(event.resize.w, event.resize.h);
+			
+			{$IFDEF JOYSTICK_SUPPORT}			
+			end else if event.type_ = SDL_JOYBUTTONDOWN then begin
+				Include(ButtonState, FindButton(event.jbutton.button));
+			end else if event.type_ = SDL_JOYBUTTONUP then begin
+				Exclude(ButtonState, FindButton(event.jbutton.button));
+			end else if event.type_ = SDL_JOYAXISMOTION then begin
+				if event.jaxis.axis = JoyXIndex then JoyXAxis := event.jaxis.value
+				else if event.jaxis.axis = JoyYIndex then JoyYAxis := event.jaxis.value
+				else begin
+					ButtonState -= FindButtonSet(event.jaxis.axis, TYPE_AXIS);
+					if abs(event.jaxis.value) > JOY_AxisCutoff then
+						Include(ButtonState, FindButton(event.jaxis.axis, TYPE_AXIS, Sgn(event.jaxis.value)));
+				end;
 
+				JoyAxisDir := GetJoyAxisDir;
+			end else if event.type_ = SDL_JOYHATMOTION then begin
+				ButtonState -= FindButtonSet(event.jhat.hat, TYPE_HAT);
+
+				if (event.jhat.value and SDL_HAT_UP) <> 0 then
+					Include(ButtonState, FindButton(event.jhat.hat, TYPE_HAT, SDL_HAT_UP));
+				if (event.jhat.value and SDL_HAT_DOWN) <> 0 then
+					Include(ButtonState, FindButton(event.jhat.hat, TYPE_HAT, SDL_HAT_DOWN));
+				if (event.jhat.value and SDL_HAT_LEFT) <> 0 then
+					Include(ButtonState, FindButton(event.jhat.hat, TYPE_HAT, SDL_HAT_LEFT));
+				if (event.jhat.value and SDL_HAT_RIGHT) <> 0 then
+					Include(ButtonState, FindButton(event.jhat.hat, TYPE_HAT, SDL_HAT_RIGHT));
+			{$ENDIF}
 			end;
 
 		end else begin
-			if SDL_GetTicks < ( Last_Clock_Update + 20 ) then SDL_Delay( Last_Clock_Update + 30 - SDL_GetTicks );
-			Last_Clock_Update := SDL_GetTicks + 30;
-			Animation_Phase := ( Animation_Phase + 1 ) mod 6000;
-			a := RPK_TimeEvent;
+			{$IFDEF JOYSTICK_SUPPORT}
+			{special handling around the a button and the joystick}
+			{on menus/lookers we just let the joystick work, otherwise it only counts if you hit a}
+			if (JoyAxisDir <> []) and ((context <> CONTEXT_NONE) or (BUTTON_A in ButtonState)) then direction := JoyAxisDir
+			else direction := ButtonState * JOY_DirButtons;
 
+			{mask out the direction from the main state, in case we're using the joystick instead}
+			adjustedButtons := (ButtonState - JOY_DirButtons) + direction;
+
+			{faked button repeat}
+			if PrevState <> adjustedButtons then begin
+				PrevState := adjustedButtons;
+				PrevTicks := SDL_GetTicks;
+				PrevHasRepeated := false;
+			end else begin
+				if not PrevHasRepeated then begin
+					if SDL_GetTicks - PrevTicks <= (GH_REPEAT_DELAY * 2) then adjustedButtons := []
+					else begin
+						PrevTicks := SDL_GetTicks;
+						PrevHasRepeated := true;
+					end;
+				end else begin
+					if SDL_GetTicks - PrevTicks <= GH_REPEAT_INTERVAL then adjustedButtons := []
+					else PrevTicks := SDL_GetTicks;
+				end;
+			end;
+
+			if adjustedButtons <> [] then begin
+				{Use mapped inputs for non-menus only}
+				{thanks, pascal, for not supporting sets in case statements}
+				case context of
+					CONTEXT_NONE, CONTEXT_LOOKER: begin
+						if 		direction = [] 							then a := ''
+						else if direction = [BUTTON_UP] 				then a := KeyMap[KMC_NorthWest].KCode
+						else if direction = [BUTTON_DOWN] 				then a := KeyMap[KMC_SouthEast].KCode
+						else if direction = [BUTTON_LEFT] 				then a := KeyMap[KMC_SouthWest].KCode
+						else if direction = [BUTTON_RIGHT] 				then a := KeyMap[KMC_NorthEast].KCode
+						else if direction = [BUTTON_UP, BUTTON_LEFT] 	then a := KeyMap[KMC_West].KCode
+						else if direction = [BUTTON_UP, BUTTON_RIGHT] 	then a := KeyMap[KMC_North].KCode
+						else if direction = [BUTTON_DOWN, BUTTON_LEFT] 	then a := KeyMap[KMC_South].KCode
+						else if direction = [BUTTON_DOWN, BUTTON_RIGHT] then a := KeyMap[KMC_East].KCode;
+					end;
+					CONTEXT_MENU: begin
+						if 		direction = [] 							then a := ''
+						else if direction = [BUTTON_UP] 				then a := RPK_Up
+						else if direction = [BUTTON_DOWN] 				then a := RPK_Down
+						else if direction = [BUTTON_LEFT] 				then a := RPK_Left
+						else if direction = [BUTTON_RIGHT] 				then a := RPK_Right
+						else if direction = [BUTTON_UP, BUTTON_LEFT] 	then a := RPK_UpLeft
+						else if direction = [BUTTON_UP, BUTTON_RIGHT] 	then a := RPK_UpRight
+						else if direction = [BUTTON_DOWN, BUTTON_LEFT] 	then a := RPK_DownLeft
+						else if direction = [BUTTON_DOWN, BUTTON_RIGHT] then a := RPK_DownRight;
+					end;
+				end;
+
+				{directions take precedence over actions on the field}
+				{otherwise actions take precedence}
+				if (a = '') or (context <> CONTEXT_NONE) then begin
+					{handle non-directional buttons}
+					case context of
+						CONTEXT_NONE: begin
+							{thanks to directions overriding other inputs, we don't need to special case the a button}
+							for button := BUTTON_A to BUTTON_OTHER4 do begin
+								if button in adjustedButtons then begin
+									if ButtonMap[ord(button)].MappedCmd <> NIL then a := ButtonMap[ord(button)].MappedCmd^.KCode;
+									break;
+								end;
+							end;
+						end;
+						CONTEXT_MENU, CONTEXT_LOOKER: begin
+							if 		BUTTON_A in adjustedButtons 	then a:= #10
+							else if BUTTON_B in adjustedButtons 	then a:= #8
+							else if BUTTON_L in adjustedButtons 	then a:= '/'
+							else if BUTTON_R in adjustedButtons 	then a:= '/'
+							else if BUTTON_START in adjustedButtons then a:= #27;
+						end;
+					end;
+				end;
+			end;
+			{$ENDIF}
+
+			if a = '' then begin
+				CheckAnimTicks;
+				a := RPK_TimeEvent;
+
+			end;
 		end;
 
 	{ Keep going until either a character is found, or an error is reported. }
@@ -732,6 +903,25 @@ Procedure ClrScreen;
 	{ Clear the specified screen zone. }
 begin
 	SDL_FillRect( game_screen , Nil , SDL_MapRGB( Game_Screen^.Format , 0 , 0 , 0 ) );
+end;
+
+Procedure ResizeScreen(width, height: Integer) inline;
+	{ resize screen to specified dimensions}
+var
+	flags: LongWord;
+begin
+	flags := SDL_GHABASE;
+	if DoFullScreen then flags := flags or SDL_FULLSCREEN else flags := flags or SDL_RESIZABLE;
+	if width < 800 then width := 800;
+	if height < 600 then height := 600;
+	Game_Screen := SDL_SetVideoMode(width, height, 0, flags);
+end;
+
+Procedure CheckAnimTicks() inline;
+begin
+	if SDL_GetTicks < ( Last_Clock_Update + 20 ) then SDL_Delay( Last_Clock_Update + 30 - SDL_GetTicks );
+	Last_Clock_Update := SDL_GetTicks + 30;
+	Animation_Phase := ( Animation_Phase + 1 ) mod 6000;
 end;
 
 Function TextLength( F: PTTF_Font; const msg: String ): LongInt;
@@ -786,10 +976,8 @@ Function PrettyPrint( msg: string; Width: Integer; var FG: TSDL_Color; DoCenter:
 	{ in lines of no longer than "width" pixels. Sound simple? Mostly just }
 	{ tedious, I'm afraid. }
 var
-	SList,SA: SAttPtr;
-	S_Total,S_Temp: PSDL_Surface;
-	MyDest: SDL_Rect;
-	pline: PChar;
+	SList: SAttPtr;
+	S_Total: PSDL_Surface;
 	NextWord: String;
 	THELine: String;	{The line under construction.}
 begin
@@ -814,16 +1002,31 @@ begin
 		TheLine := NextWord;
 	end; { while TheLine <> '' }
 
+	S_Total := BlockPrint(SList, Width, FG, DoCenter, MyFont);
+
+	DisposeSAtt(SList);
+
+	PrettyPrint := S_Total;
+end;
+
+Function BlockPrint( const msg: SAttPtr; Width: Integer; var FG: TSDL_Color; DoCenter: Boolean; MyFont: PTTF_Font ): PSDL_Surface;
+	{ Create a SDL_Surface containing all the text within "msg". }
+	{ No formatting, just line-by-line }
+var
+	SA: SAttPtr;
+	S_Total,S_Temp: PSDL_Surface;
+	MyDest: SDL_Rect;
+	pline: PChar;
+begin
 	{ Create a bitmap for the message. }
-	if SList <> Nil then begin
+	if msg <> Nil then begin
 		{ Create a big bitmap to hold everything. }
-{		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( MyFont ) * NumSAtts( SList ) , 16 , 0 , 0 , 0 , 0 );
-}		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( MyFont ) * NumSAtts( SList ) , 32 , $FF000000 , $00FF0000 , $0000FF00 , $000000FF );
+		S_Total := SDL_CreateRGBSurface( SDL_SWSURFACE , width , TTF_FontLineSkip( MyFont ) * NumSAtts( msg ) , 32 , $FF000000 , $00FF0000 , $0000FF00 , $000000FF );
 		MyDest.X := 0;
 		MyDest.Y := 0;
 
 		{ Add each stored string to the bitmap. }
-		SA := SList;
+		SA := msg;
 		while SA <> Nil do begin
 			pline := QuickPCopy( SA^.Info );
 			S_Temp := TTF_RenderText_Solid( MyFont , pline , fg );
@@ -845,14 +1048,13 @@ begin
 			MyDest.Y := MyDest.Y + TTF_FontLineSkip( MyFont );
 			SA := SA^.Next;
 		end;
-		DisposeSAtt( SList );
 
 	end else begin
 		S_Total := Nil;
 	end;
 
 
-	PrettyPrint := S_Total;
+	BlockPrint := S_Total;
 end;
 
 Procedure QuickText( const msg: String; MyDest: TSDL_Rect; Color: TSDL_Color );
@@ -881,6 +1083,9 @@ var
 begin
 	pline := QuickPCopy( msg );
 	MyText := TTF_RenderText_Solid( info_font , pline , Color );
+	{$IFDEF LINUX}
+	SDL_SetColorKey( MyText , SDL_SRCCOLORKEY , SDL_MapRGB( MyText^.Format , 0 , 0, 0 ) );
+	{$ENDIF}
 	Dispose( pline );
 	MyDest.X := MyDest.X - ( MyText^.W div 2 );
 	SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
@@ -905,6 +1110,24 @@ begin
 	end;
 end;
 
+Procedure BMessage( const msg: SAttPtr; Z: TSDL_Rect; C: TSDL_Color; font: PTTF_Font );
+	{ Print a list of strings to the screen, centered in the requested rect. }
+	{ Clear the specified zone before doing so. }
+	{ Does not do any processing on the strings. }
+var
+	MyText: PSDL_Surface;
+	MyDest: TSDL_Rect;
+begin
+	MyText := BlockPrint( msg , Z.W , C , True, font );
+	if MyText <> Nil then begin
+		MyDest := Z;
+		MyDest.Y := MyDest.Y + ( Z.H - MyText^.H ) div 2;
+		SDL_SetClipRect( Game_Screen , @Z );
+		SDL_BlitSurface( MyText , Nil , Game_Screen , @MyDest );
+		SDL_FreeSurface( MyText );
+		SDL_SetClipRect( Game_Screen , Nil );
+	end;
+end;
 
 Procedure GameMSG( const msg: string; Z: TSDL_Rect; var C: TSDL_Color; MyFont: PTTF_FONT );
 	{ Print a line-justified message in the requested screen zone. }
@@ -974,7 +1197,7 @@ var
 begin
 	{ Keep reading keypresses until either a space or an ESC/Backspace is found. }
 	repeat
-		A := RPGKey;
+		A := RPGKey(CONTEXT_MENU);
 	until ( A = ' ' ) or ( A = #27 ) or ( A = #8 );
 end;
 
@@ -1161,23 +1384,40 @@ Function GetStringFromUser(const Prompt: String; ReDrawer: RedrawProcedureType )
 const
 	AllowableCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890()-=_+,.?"*';
 	MaxInputLength = 80;
+	AllKeys: array[0..4,0..14] of Char = (('1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '=', '?', '!'),
+										  ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', '"'),
+										  ('O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '(', ')', ','),
+										  ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', '.'),
+										  ('o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '*', '#'));
 var
 	A: Char;
-	it: String;
-	MyBigBox,MyInputBox,MyDest: TSDL_Rect;
+	it: String[MaxInputLength];
+	MyBigBox,MyInputBox,MyDest,KeyboardRect: TSDL_Rect;
+	xPos, yPos, i, j: Integer;
+	keyLine: String[45];
+	keyboard: SAttPtr;
 begin
 	{ Initialize string. }
 	it := '';
+	xPos := 0;
+	yPos := 0;
 
 	repeat
         MyBigBox := ZONE_TextInputBigBox.GetRect();
         MyInputBox := ZONE_TextInput.GetRect();
+		KeyboardRect := ZONE_KeyboardInput.GetRect();
 
 		{ Set up the display. }
 		if ReDrawer <> Nil then ReDrawer;
 		InfoBox( MyBigBox );
+
 		{SDL_FillRect( game_screen , @MyBigBox , SDL_MapRGB( Game_Screen^.Format , BorderBlue.R , BorderBlue.G , BorderBlue.B ) );}
 		SDL_FillRect( game_screen , @MyInputBox , SDL_MapRGB( Game_Screen^.Format , StdBlack.R , StdBlack.G , StdBlack.B ) );
+
+		if OnScreenKeyboard then begin
+			InfoBox( KeyboardRect );
+			SDL_FillRect( game_screen , @KeyboardRect , SDL_MapRGB( Game_Screen^.Format , StdBlack.R , StdBlack.G , StdBlack.B ) );
+		end;
 
 		CMessage( Prompt , ZONE_TextInputPrompt.GetRect() , StdWhite );
 		CMessage( it , MyInputBox , InfoGreen );
@@ -1185,13 +1425,58 @@ begin
 		MyDest.X := MyInputBox.X + ( MyInputBox.W div 2 ) + ( TextLength( Game_Font , it ) div 2 );
 		DrawSprite( Cursor_Sprite , MyDest , ( Animation_Phase div 2 ) mod 4 );
 
-		GHFlip;
-		A := RPGKey;
+		if OnScreenKeyboard then begin
+			{Build keyboard strings}
+			keyboard := nil;
 
-		if ( A = #8 ) and ( Length( it ) > 0 ) then begin
-			it := Copy( it , 1 , Length( it ) - 1 );
-		end else if ( Pos( A , AllowableCharacters ) > 0 ) and ( Length( it ) < MaxInputLength ) then begin
-			it := it + A;
+			for i := 0 to Length(AllKeys) - 1 do begin
+				keyLine := '';
+
+				for j := 0 to Length(AllKeys[0]) - 1 do begin
+					if (i = yPos) and (j = xPos) then begin
+						keyLine := keyLine + ' >' + AllKeys[i, j];
+					end else begin
+						keyLine := keyLine + '  ' + AllKeys[i, j];
+					end;
+				end;
+
+				StoreSAtt(keyboard, keyLine);
+			end;
+
+			BMessage(keyboard, KeyboardRect, StdWhite, Key_Font);
+
+			DisposeSAtt(keyboard);
+		end;
+
+		GHFlip;
+		A := RPGKey(CONTEXT_MENU);
+
+
+		if not OnScreenKeyboard then begin
+			if ( A = #8 ) and ( Length( it ) > 0 ) then begin
+				it := Copy( it , 1 , Length( it ) - 1 );
+			end else if ( Pos( A , AllowableCharacters ) > 0 ) and ( Length( it ) < MaxInputLength ) then begin
+				it := it + A;
+			end;
+		end else begin
+			case A of
+				RPK_Up:		yPos := yPos - 1;
+				RPK_Down:	yPos := (yPos + 1) mod Length(AllKeys);
+				RPK_Left:	xPos := xPos - 1;
+				RPK_Right:	xPos := (xPos + 1) mod Length(AllKeys[0]);
+				#10:		begin
+								if (AllKeys[yPos, xPos] <> '#') and (Length(it) < MaxInputLength) then begin
+									it := it + AllKeys[yPos, xPos];
+								end else begin
+									A := #13;
+								end;
+							end;
+				#8:			if Length( it ) > 0 then it := Copy( it , 1 , Length( it ) - 1 );
+			end;
+
+			{bracket selected position}
+			if (yPos < 0) then yPos := Length(AllKeys) - 1;
+			if (xPos < 0) then xPos := Length(AllKeys[0]) - 1;
 		end;
 	until ( A = #13 ) or ( A = #27 );
 
@@ -1275,7 +1560,7 @@ var
 begin
 	repeat
 		{ Get input from user. }
-		A := RPGKey;
+		A := RPGKey(CONTEXT_MENU);
 
 		{ Possibly process this input. }
 		if A = RPK_Down then begin
@@ -1463,23 +1748,75 @@ begin
 }
 end;
 
+function GetAvailableModes(): TSDLModeArray;
+var
+	modes: PPSDL_Rect;
+	curMode: PSDL_Rect;
+	i, count: Integer;
+begin
+	i := 0;
+	count := 1;
+	modes := SDL_ListModes(NIL, SDL_GHABASE or SDL_FULLSCREEN);
+
+	SetLength(GetAvailableModes, count);
+	GetAvailableModes[0].Name := BStr(ScreenWidth) + 'x' + BStr(ScreenHeight);
+	GetAvailableModes[0].Width := ScreenWidth;
+	GetAvailableModes[0].Height := ScreenHeight;
+
+	if (modes <> NIL) and (modes <> PPSDL_Rect(-1)) then begin
+		while modes[i] <> NIL do begin
+			curMode := modes[i];
+			i += 1;
+			if (curMode^.w > ScreenWidth) or (curMode^.h > ScreenHeight) then begin
+				count += 1;
+				SetLength(GetAvailableModes, count);
+				GetAvailableModes[count - 1].Name := BStr(curMode^.w) + 'x' + BStr(curMode^.h);
+				GetAvailableModes[count - 1].Width := curMode^.w;
+				GetAvailableModes[count - 1].Height := curMode^.h;
+			end;
+		end;
+	end;
+end;
 
 initialization
 
-	SDL_Init( SDL_INIT_VIDEO or SDL_INIT_AUDIO );
+	{$IFDEF JOYSTICK_SUPPORT}
+	SDL_Init( SDL_INIT_VIDEO or SDL_INIT_JOYSTICK );
+	{$ELSE}
+	SDL_Init( SDL_INIT_VIDEO );
+	{$ENDIF}
+
+	AvailableModes := GetAvailableModes;
 
 	if DoFullScreen then begin
-		Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_FULLSCREEN or SDL_DoubleBuf );
-		Mouse_Pointer := IMG_Load( Graphics_Directory + 'cosplay_pointer.png' );
-		SDL_SetColorKey( Mouse_Pointer , SDL_SRCCOLORKEY or SDL_RLEACCEL , SDL_MapRGB( Mouse_Pointer^.Format , 0 , 0, 255 ) );
+		if ModeIndex in [0 .. high(AvailableModes)] then
+			Game_Screen := SDL_SetVideoMode(AvailableModes[ModeIndex].Width, AvailableModes[ModeIndex].Height, 0, SDL_GHABASE or SDL_FULLSCREEN)
+		else Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_GHABASE or SDL_FULLSCREEN);
+
+		if Mouse_Active then begin
+			Mouse_Pointer := IMG_Load( Graphics_Directory + 'cosplay_pointer.png' );
+			SDL_SetColorKey( Mouse_Pointer , SDL_SRCCOLORKEY or SDL_RLEACCEL , SDL_MapRGB( Mouse_Pointer^.Format , 0 , 0, 255 ) );
+		end;
 	end else begin
-		Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_HWSURFACE or SDL_DoubleBuf or SDL_RESIZABLE );
+		if ModeIndex in [0 .. high(AvailableModes)] then
+			Game_Screen := SDL_SetVideoMode(AvailableModes[ModeIndex].Width, AvailableModes[ModeIndex].Height, 0, SDL_GHABASE or SDL_RESIZABLE)
+		else Game_Screen := SDL_SetVideoMode(ScreenWidth, ScreenHeight, 0, SDL_GHABASE or SDL_RESIZABLE);
 		Mouse_Pointer := Nil;
 	end;
 
     SDL_EnableUNICODE( 1 );
 	SDL_EnableKeyRepeat( GH_REPEAT_DELAY , GH_REPEAT_INTERVAL );
 
+	{if there's no cursor or we have our own cursor, just hide the system cursor}
+	if (not Mouse_Active) or DoFullScreen then SDL_ShowCursor(SDL_DISABLE);
+
+	{$IFDEF JOYSTICK_SUPPORT}
+	Joystick := SDL_JoystickOpen(0);
+	HasJoystick := Joystick <> NIL;
+	if HasJoystick then ZONE_TitleScreenMenu.h := 113;
+	{$ENDIF}
+
+	if OnScreenKeyboard then ZONE_PhoneInstructions.dy := -95;
 
 	Game_Sprites := Nil;
 
@@ -1488,6 +1825,7 @@ initialization
 	TTF_Init;
 	Game_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraBd.ttf' , BigFontSize );
 	Info_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraMoBd.ttf' , SmallFontSize );
+	Key_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraMono.ttf' , BigFontSize );
 
 	Text_Messages := LoadStringList( Standard_Message_File );
 	Console_History := Nil;
@@ -1517,11 +1855,14 @@ finalization
 	DisposeSpriteList( Game_Sprites );
 	TTF_CloseFont( Game_Font );
 	TTF_CloseFont( Info_Font );
+	TTF_CloseFont( Key_Font );
 	TTF_Quit;
 
 	if Mouse_Pointer <> Nil then SDL_FreeSurface( Mouse_Pointer );
 
-	SDL_FreeSurface( Game_Screen );
+	{$IFDEF JOYSTICK_SUPPORT}
+	if Joystick <> Nil then SDL_JoystickClose( Joystick );
+	{$ENDIF}
 	SDL_Quit;
 
 	DisposeSAtt( Text_Messages );

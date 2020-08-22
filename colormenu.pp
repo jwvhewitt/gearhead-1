@@ -336,7 +336,7 @@ begin
 		ColorMenuRedraw;
 		GHFlip;
 
-		a := RPGKey;
+		a := RPGKey(CONTEXT_MENU);
 
 		if a = #8 then begin
 			a := #27;

@@ -24,7 +24,7 @@ unit ArenaHQ;
 interface
 
 {$IFDEF SDLMODE}
-uses sdlgfx;
+uses sdlgfx {$IFDEF JOYSTICK_SUPPORT},SDL{$ENDIF};
 {$ENDIF}
 
 const
@@ -37,6 +37,9 @@ Procedure LoadUnit;
 {$IFDEF SDLMODE}
 Procedure StartRPGCampaign( RD: RedrawProcedureType );
 Procedure DesignDirBrowser( RD: RedrawProcedureType );
+{$IFDEF JOYSTICK_SUPPORT}
+Procedure ConfigureController(const RD: RedrawProcedureType);
+{$ENDIF}
 {$ELSE}
 Procedure StartRPGCampaign;
 Procedure DesignDirBrowser;
@@ -1396,6 +1399,114 @@ begin
     DisposeGear( HQRD_Source );
     CleanSpriteList();
 end;
+
+{$IFDEF JOYSTICK_SUPPORT}
+Procedure ConfigRedraw(const RD: RedrawProcedureType; constref button: TButtonMapDesc; constref msg: String);
+	{ Draw the config UI }
+	{ Assumes that button is not null }
+var
+	PromptRect, DisplayRect: TSDL_Rect;
+	S: String;
+begin
+	PromptRect := ZONE_ConfigButtonPrompt.GetRect();
+	DisplayRect := ZONE_ConfigButton.GetRect();
+	S := 'Press ' + Replace(button.ConfigName, 'Button', '');
+	if button.MappedCmd <> NIL then S := S + ' (' + button.MappedCmd^.CmdName + ')';
+
+	RD;
+	InfoBox(PromptRect);
+	InfoBox(DisplayRect);
+	CMessage(S, DisplayRect, StdWhite);
+	CMessage(msg, PromptRect, StdWhite);
+	GHFlip;
+end;
+
+Procedure ConfigureController(const RD: RedrawProcedureType);
+const
+	GHA_SKIP_DELAY = 300;
+	SDL_CARDINAL_DIRS = [SDL_HAT_UP, SDL_HAT_DOWN, SDL_HAT_LEFT, SDL_HAT_RIGHT];
+var
+	i, num: Integer;
+	event: TSDL_Event;
+	prevTicks: LongWord;
+	loop, quit: Boolean;
+	kind: TButtonType;
+	msg: String[150];
+	dir: ShortInt;
+begin
+	msg := MsgString('CONFIG_Prompt');
+	quit := false;
+
+	for i := ord(BUTTON_A) to ord(BUTTON_RIGHT) do begin
+		loop := true;
+		num := -1;
+		kind := TYPE_NONE;
+		prevTicks := 0;
+		dir := 0;
+		while loop do begin
+			ConfigRedraw(RD, ButtonMap[i], msg);
+
+			{Bootleg extra poll event loop, since we need the raw button indexes and not the RPGKey output}
+			if SDL_PollEvent(@event) = 1 then begin
+				case event.type_ of
+					SDL_JOYBUTTONDOWN: begin
+						prevTicks := SDL_GetTicks;
+						num := event.jbutton.button;
+						kind := TYPE_BUTTON;
+					end;
+					SDL_JOYBUTTONUP: if num = event.jbutton.button then loop := false;
+					SDL_JOYHATMOTION: begin
+						if event.jhat.value in SDL_CARDINAL_DIRS then begin
+							prevTicks := SDL_GetTicks;
+							num := event.jhat.hat;
+							dir := event.jhat.value;
+							kind := TYPE_HAT;
+						end else if event.jhat.value = SDL_HAT_CENTERED then begin
+							if num = event.jhat.hat then loop := false;
+						end;
+					end;
+					SDL_JOYAXISMOTION: begin
+						{special case around the main analog stick}
+						if 	(event.jaxis.axis <> JoyXIndex)
+						and (event.jaxis.axis <> JoyYIndex) then begin
+							if abs(event.jaxis.value) > JOY_AxisCutoff then begin
+								prevTicks := SDL_GetTicks;
+								num := event.jaxis.axis;
+								dir := Sgn(event.jaxis.value);
+								kind := TYPE_AXIS;
+							end else if num = event.jaxis.axis then loop := false;
+						end;
+					end;
+					SDL_VIDEORESIZE: ResizeScreen(event.resize.w, event.resize.h);
+					SDL_KEYDOWN: if event.key.keysym.sym = SDLK_ESCAPE then begin
+						quit := true;
+						break;
+					end;
+				end;
+			end else begin
+				{skip button if any button is held down}
+				if (num <> -1) and ((SDL_GetTicks - prevTicks) > GHA_SKIP_DELAY) then begin
+					num := -1;
+					kind := TYPE_BUTTON;
+					dir := 0;
+					loop := false;
+				end;
+
+				CheckAnimTicks;
+			end;
+		end;
+
+		if quit then break;
+
+		ButtonMap[i].BCode := num;
+		ButtonMap[i].BDir := dir;
+		ButtonMap[i].BType := kind;
+	end;
+
+	{here to keep from confusing the main event loop}
+	ButtonState := [];
+end;
+{$ENDIF}
 
 {$ELSE}
 Procedure BrowseDesignFile( List: GearPtr );

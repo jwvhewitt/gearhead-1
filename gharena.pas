@@ -36,7 +36,7 @@ uses gears,congfx,arenahq,conmenus,randchar,navigate,context,mapedit;
 {$ENDIF}
 
 const
-	Version = '1.310';
+	Version = '1.JOY';
 
 var
 	RPM: RPGMenuPtr;
@@ -89,6 +89,9 @@ begin
 	AddRPGMenuItem( RPM , 'View Design Files' , 7 );
 {$IFDEF SDLMODE}
 	AddRPGMenuItem( RPM , 'View Color Selector' , 8 );
+{$IFDEF JOYSTICK_SUPPORT}
+	if HasJoystick then AddRPGMenuItem( RPM , 'Configure Controller' , 9 );
+{$ENDIF}
 {$ENDIF}
 	AddRPGMenuItem( RPM , 'Quit Game' , -1 );
 
@@ -128,6 +131,9 @@ begin
 {$IFDEF SDLMODE}
 			7:	DesignDirBrowser( @RedrawOpening );
             8:  DoCosplay;
+{$IFDEF JOYSTICK_SUPPORT}
+			9:	ConfigureController(@RedrawOpening);
+{$ENDIF}
 {$ELSE}
 			7:	DesignDirBrowser;
 {$ENDIF}

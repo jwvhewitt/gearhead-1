@@ -68,6 +68,15 @@ begin
 	SDLCombatDisplay( PCACTIONRD_GB );
 end;
 
+{$IFDEF JOYSTICK_SUPPORT}
+Procedure PCActionRedrawWithJoystick;
+	{ Redraw the map and the PC's info, adding an indicator for joystick direction. }
+begin
+	JoystickIndicatorForRedraw;
+	SDLCombatDisplay( PCACTIONRD_GB );
+end;
+{$ENDIF}
+
 Procedure PhoneRedraw;
 	{ Redraw the map and the PC's info. }
 begin
@@ -309,6 +318,30 @@ begin
 	InsertInvCom( PC , NPC );
 end;
 
+{$IFDEF SDLMODE}
+Procedure SetResolution();
+var
+	RPM: RPGMenuPtr;
+	N: Integer;
+begin
+	N := 0;
+	RPM := CreateRPGMenu( MenuItem , MenuSelect , ZONE_CenterMenu );
+	
+	for N := 0 to high(AvailableModes) do begin
+		AddRPGMenuItem( RPM , AvailableModes[N].Name , N );
+	end;
+
+	SetItemByValue( RPM , ModeIndex );
+
+	N := SelectMenu( RPM , @CenterMenuRedraw );
+
+	if N in [0 .. high(AvailableModes)] then begin
+		ResizeScreen(AvailableModes[N].Width, AvailableModes[N].Height);
+		ModeIndex := N;
+	end;
+end;
+{$ENDIF}
+
 Procedure SetPlayOptions( GB: GameBoardPtr; Mek: GearPtr );
 	{ Allow the player to set control type, default burst value settings, }
 	{ and whatever other stuff you think is appropriate. }
@@ -350,6 +383,7 @@ begin
 		end else begin
 			AddRPGMenuItem( RPM , 'Enable Name Display' , 9 );
 		end;
+		AddRPGMenuItem(RPM, 'Set Resolution', 11);
 {$ELSE}
 		if Accessibility_On then begin
 			AddRPGMenuItem( RPM , 'Disable Accessibility+' , 10 );
@@ -404,6 +438,10 @@ begin
 
         end else if N = 10 then begin
             Accessibility_On := Not Accessibility_On;
+		{$IFDEF SDLMODE}
+		end else if N = 11 then begin
+			SetResolution();
+		{$ENDIF}
 		end;
 
 	until N = -1;
@@ -912,7 +950,7 @@ begin
 	if PropD < 0 then begin
 		DialogMsg( MsgString( 'PCUS_Prompt' ) );
 {$IFDEF SDLMODE}
-		PropD := DirKey( @PCActionRedraw );
+		PropD := DirKey( @{$IFNDEF JOYSTICK_SUPPORT}PCActionRedraw{$ELSE}PCActionRedrawWithJoystick{$ENDIF} );
 {$ELSE}
 		PropD := DirKey;
 {$ENDIF}
@@ -943,7 +981,7 @@ begin
 	P := GearCurrentLocation( PC );
 	DialogMsg( MsgString( 'PCUSOP_Prompt' ) );
 {$IFDEF SDLMODE}
-	PropD := DirKey( @PCActionRedraw );
+	PropD := DirKey( @{$IFNDEF JOYSTICK_SUPPORT}PCActionRedraw{$ELSE}PCActionRedrawWithJoystick{$ENDIF} );
 {$ELSE}
 	PropD := DirKey;
 {$ENDIF}
@@ -968,7 +1006,7 @@ var
 begin
 	DialogMsg( MsgString( 'PCREPAIR_Prompt' ) );
 {$IFDEF SDLMODE}
-	D := DirKey( @PCActionRedraw );
+	D := DirKey( @{$IFNDEF JOYSTICK_SUPPORT}PCActionRedraw{$ELSE}PCActionRedrawWithJoystick{$ENDIF} );
 {$ELSE}
 	D := DirKey;
 {$ENDIF}
@@ -1115,7 +1153,7 @@ begin
 	if D > 1 then begin
 		DialogMsg( MsgString( 'DOMINATE_Prompt' ) );
 {$IFDEF SDLMODE}
-		D := DirKey( @PCActionRedraw );
+		D := DirKey( @{$IFNDEF JOYSTICK_SUPPORT}PCActionRedraw{$ELSE}PCActionRedrawWithJoystick{$ENDIF} );
 {$ELSE}
 		D := DirKey;
 {$ENDIF}
@@ -1232,7 +1270,7 @@ begin
 	if D > 1 then begin
 		DialogMsg( MsgString( 'PICKPOCKET_Prompt' ) );
 {$IFDEF SDLMODE}
-		D := DirKey( @PCActionRedraw );
+		D := DirKey( @{$IFNDEF JOYSTICK_SUPPORT}PCActionRedraw{$ELSE}PCActionRedrawWithJoystick{$ENDIF} );
 {$ELSE}
 		D := DirKey;
 {$ENDIF}
@@ -3039,6 +3077,7 @@ begin
 		{ Indicate the mek to get the action for, }
 		{ and prepare the display. }
 {$IFDEF SDLMODE}
+		ClearOverlay;
 		IndicateTile( GB , Mek , True );
 {$ELSE}
 		DisplayGearInfo( Mek , gb );
@@ -3239,6 +3278,9 @@ var
 	GotMove: Boolean;
 	Mobile: Boolean;
 	P: Point;
+	{$IFDEF SDLMODE}
+	DidRefresh: Boolean;
+	{$ENDIF}
 begin
 	{ The original comment said "Record where the mek currently is". }
     { But this is obviously checking to see if the mecha is mobile. }
@@ -3394,11 +3436,26 @@ begin
 			    IndicateTile( Camp^.GB , Mek , True );
 
 			    P := MouseMapPos;
-			    if OnTheMap( P.X , P.Y ) and Mouse_Active then begin
+				DidRefresh := Mouse_Active and OnTheMap( P.X , P.Y );
+			    if DidRefresh then begin
+					ClearOverlay;
                     MouseAtTile( Camp^.GB , P.X , P.Y );
                 end;
+
+				{$IFDEF JOYSTICK_SUPPORT}
+				{TODO: make the tile info thing pop up based on this?}
+				if not DidRefresh then ClearOverlay;
+				JoystickIndicate(Mek);
+
+				if not Mouse_Active then P := JoystickIndicatorPos(Mek);
+				{$ENDIF}
+
                 SDLCombatDisplay( Camp^.GB );
+				{$IFNDEF JOYSTICK_SUPPORT}
 			    if OnTheMap( P.X , P.Y ) and Mouse_Active then begin
+				{$ELSE}
+				if (Mouse_Active or ((not Mouse_Active) and (JoyAxisDir <> []))) and OnTheMap( P.X , P.Y ) then begin
+				{$ENDIF}
                     DisplayTileInfo(Camp^.GB, P.X, P.Y, False );
                 end;
     			{ Everybody do the flip. }

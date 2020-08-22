@@ -1,3 +1,11 @@
+1.JOY   X X 2019
+- Somewhat sketchy controller support can be compiled in with -dJOYSTICK_SUPPORT (a lot of files)
+    - Button bindings can be set during play, actions associated with buttons can be set in the config file.
+- Resolution selector added to Play Options (mostly for fullscreen mode) (sdlgfx.pp, ui4gh.pp)
+- NOKEYBOARD option in config file to use on-screen keyboard instead of typing (sdlgfx.pp, ui4gh.pp)
+- Some string utility functions rewritten to use sets (texutil.pp)
+- Fix issue preventing ADVANCEDCOLORS from being enabled [but not any issues with ADVANCEDCOLORS] (ui4gh.pp)
+
 1.310	February 7 2019
 - All old style walls have been replaced by thin walls (sdlmap.pp)
 - Portraits may be assigned as unisex "por_n_*.png" (sdlinfo.pp)

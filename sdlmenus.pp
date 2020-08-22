@@ -521,7 +521,7 @@ begin
 	{or cancels the menu using the ESC key.}
 	repeat
 		{Read the input from the keyboard.}
-		getit := RPGKey;
+		getit := RPGKey(CONTEXT_MENU);
 
 		{Certain keys need processing- if so, process them.}
 		case getit of

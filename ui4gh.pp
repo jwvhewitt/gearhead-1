@@ -32,6 +32,38 @@ type
 		KCode: Char;
 	end;
 
+	{$IFDEF JOYSTICK_SUPPORT}
+	{$PACKENUM 1}
+	TJoyButton = (BUTTON_A,
+				  BUTTON_B,
+				  BUTTON_X,
+				  BUTTON_Y,
+				  BUTTON_START,
+				  BUTTON_SELECT,
+				  BUTTON_L,
+				  BUTTON_R,
+				  BUTTON_OTHER1,
+				  BUTTON_OTHER2,
+				  BUTTON_OTHER3,
+				  BUTTON_OTHER4,
+				  BUTTON_UP,
+			  	  BUTTON_DOWN,
+				  BUTTON_LEFT,
+				  BUTTON_RIGHT,
+				  BUTTON_NONE);
+	TButtonType = (TYPE_BUTTON, TYPE_HAT, TYPE_AXIS, TYPE_NONE);
+
+	TButtonSet = set of TJoyButton;
+
+	TButtonMapDesc = packed record
+		ConfigName: String[12]; {Name for config file}
+		BCode: ShortInt;		{Code for SDL}
+		BType: TButtonType;		{What event to listen to}
+		BDir: ShortInt;			{Which direction (for hat and axis)}
+		MappedCmd: ^KeyMapDesc; {What action this is bound to (directions work differently)}
+	end;
+	{$ENDIF}
+
 const
 	RPK_UpRight = '9';
 	RPK_Up = '8';
@@ -47,6 +79,10 @@ const
 	RPK_TimeEvent = #$91;
 	RPK_RightButton = #$92;
 	FrameDelay: Integer = 50;
+	{$IFDEF JOYSTICK_SUPPORT}
+	JoyXIndex: SmallInt = 0;
+	JoyYIndex: SmallInt = 1;
+	{$ENDIF}
 {$ELSE}
 	FrameDelay: Integer = 100;
 {$ENDIF}
@@ -94,6 +130,10 @@ const
 	UseTacticsMode: Boolean = False;
 
 	UseAdvancedColoring: Boolean = False;
+
+	ModeIndex: Byte = 0;
+
+	OnScreenKeyboard: Boolean = False;
 
     Accessibility_On: Boolean = False;
 
@@ -332,6 +372,96 @@ const
 	KMC_SwitchTarget = 44;
 	KMC_RunToggle = 45;
 
+	{$IFDEF JOYSTICK_SUPPORT}
+	ButtonMap: array [ord(BUTTON_A)..ord(BUTTON_RIGHT)] of TButtonMapDesc =
+		((ConfigName: 'ButtonA';
+		  BCode:0;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_Enter];),
+		(ConfigName: 'ButtonB';
+		  BCode:1;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_ApplySkill];),
+		(ConfigName: 'ButtonX';
+		  BCode:2;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_Search];),
+		(ConfigName: 'ButtonY';
+		  BCode:3;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_AttackMenu];),
+		(ConfigName: 'ButtonStart';
+		  BCode:7;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_CharInfo];),
+		(ConfigName: 'ButtonSelect';
+		  BCode:6;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_QuitGame];),
+		(ConfigName: 'ButtonL';
+		  BCode:4;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_Talk];),
+		(ConfigName: 'ButtonR';
+		  BCode:5;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_Get];),
+		(ConfigName: 'ButtonOther1';
+		  BCode:2;
+		  BType:TYPE_AXIS;
+		  BDir:1;
+		  MappedCmd: @KeyMap[KMC_ViewMemo];),
+		(ConfigName: 'ButtonOther2';
+		  BCode:2;
+		  BType:TYPE_AXIS;
+		  BDir:-1;
+		  MappedCmd: @KeyMap[KMC_Telephone];),
+		(ConfigName: 'ButtonOther3';
+		  BCode:8;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_Stop];),
+		(ConfigName: 'ButtonOther4';
+		  BCode:9;
+		  BType:TYPE_BUTTON;
+		  BDir:0;
+		  MappedCmd: @KeyMap[KMC_Rest];),
+		(ConfigName: 'ButtonUp';
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:1;
+		  MappedCmd: NIL;),
+		(ConfigName: 'ButtonDown';
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:4;
+		  MappedCmd: NIL;),
+		(ConfigName: 'ButtonLeft';
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:8;
+		  MappedCmd: NIL;),
+		(ConfigName: 'ButtonRight';
+		  BCode:0;
+		  BType:TYPE_HAT;
+		  BDir:2;
+		  MappedCmd: NIL;));
+	{$ENDIF}
+
+{$IFDEF JOYSTICK_SUPPORT}
+Function FindButton(val: Integer) : TJoyButton;
+Function FindButton(val: Integer; kind: TButtonType; dir: ShortInt) : TJoyButton;
+Function FindButtonSet(val: Integer; kind: TButtonType) : TButtonSet;
+{$ENDIF}
+
 implementation
 
 uses dos,ability,gears,texutil;
@@ -343,6 +473,9 @@ uses dos,ability,gears,texutil;
 		F: Text;
 		S,CMD,C: String;
 		T: Integer;
+		{$IFDEF JOYSTICK_SUPPORT}
+		U: Integer;
+		{$ENDIF}
 	begin
 		{See whether or not there's a configuration file.}
 		S := FSearch(Config_File,'.');
@@ -364,8 +497,49 @@ uses dos,ability,gears,texutil;
 							if Length(C) = 1 then begin
 								KeyMap[t].KCode := C[1];
 							end;
+							break;
 						end;
 					end;
+
+					{$IFDEF JOYSTICK_SUPPORT}
+					{loading button mapping from the config}
+					for t := Low(ButtonMap) to High(ButtonMap) do begin
+						if UpCase(ButtonMap[t].ConfigName) = cmd then begin
+							C := ExtractWord(S);
+
+							if Length(C) = 1 then begin
+								case C[1] of
+									'H': ButtonMap[t].BType := TYPE_HAT;
+									'A': ButtonMap[t].BType := TYPE_AXIS;
+								else
+									ButtonMap[t].BType := TYPE_BUTTON;
+								end;
+							end;
+
+							ButtonMap[t].BCode := ExtractValue(S);
+							if ButtonMap[t].BType <> TYPE_BUTTON then ButtonMap[t].BDir := ExtractValue(S);
+							C := UpCase(ExtractWord(S));
+							ButtonMap[t].MappedCmd := NIL;
+
+							if C <> '' then begin
+								for U := Low(KeyMap) to High(KeyMap) do begin
+									if UpCase(KeyMap[U].CmdName) = C then begin
+										ButtonMap[t].MappedCmd := @KeyMap[U];
+										break;
+									end;
+								end;
+							end;
+
+							break;
+						end;
+					end;
+
+					if cmd = 'BUTTONANALOGX' then begin
+						JoyXIndex := ExtractValue(S);
+					end else if cmd = 'BUTTONANALOGY' then begin
+						JoyYIndex := ExtractValue(S);
+					end;
+					{$ENDIF}
 
 					{ Check to see if CMD is the animation speed throttle. }
 					if cmd = 'ANIMSPEED' then begin
@@ -472,8 +646,17 @@ uses dos,ability,gears,texutil;
 					end else if cmd = 'USETACTICSMODE' then begin
 						UseTacticsMode := True;
 
-					end else if cmd = 'AdvancedColors' then begin
+					end else if cmd = 'ADVANCEDCOLORS' then begin
 						UseAdvancedColoring := True;
+
+					end else if cmd = 'MODE' then begin
+						T := ExtractValue( S );
+						if T > 255 then T := 255
+						else if T < 0 then T := 0;
+						ModeIndex := T;
+
+					end else if cmd = 'NOKEYBOARD' then begin
+						OnScreenKeyboard := True;
 
                     end else if cmd = 'ACCESSIBILITY_ON' then begin
                         Accessibility_On := True;
@@ -497,6 +680,9 @@ uses dos,ability,gears,texutil;
     var
 	    F: Text;
 	    T: Integer;
+		{$IFDEF JOYSTICK_SUPPORT}
+		S: String;
+		{$ENDIF}
 	    Procedure AddBoolean( const OpTag: String; IsOn: Boolean );
 		    { Add one of the boolean options to the file. }
 	    begin
@@ -508,7 +694,7 @@ uses dos,ability,gears,texutil;
 	    end;
     begin
 	    { If we've found a configuration file, }
-	    { open it up and start reading. }
+	    { open it up and start writing. }
 	    Assign( F , Config_File );
 	    Rewrite( F );
 
@@ -521,6 +707,22 @@ uses dos,ability,gears,texutil;
 	    for t := 1 to NumMappedKeys do begin
 		    WriteLn( F, KeyMap[t].CmdName + ' ' + KeyMap[t].KCode );
 	    end;
+
+		{$IFDEF JOYSTICK_SUPPORT}
+		for t := Low(ButtonMap) to High(ButtonMap) do begin
+			S := ButtonMap[t].ConfigName + ' ';
+			case ButtonMap[t].BType of
+				TYPE_BUTTON: 	S += 'B ' + BStr(ButtonMap[t].BCode);
+				TYPE_HAT: 		S += 'H ' + BStr(ButtonMap[t].BCode) + ' ' + BStr(ButtonMap[t].BDir);
+				TYPE_AXIS: 		S += 'A ' + BStr(ButtonMap[t].BCode) + ' ' + BStr(ButtonMap[t].BDir);
+			end;
+			if ButtonMap[t].MappedCmd <> NIL then S += ' ' + ButtonMap[t].MappedCmd^.CmdName;
+			WriteLn(F, S);
+		end;
+
+		writeln(F, 'ButtonAnalogX ' + BStr(JoyXIndex));
+		writeln(F, 'ButtonAnalogY ' + BStr(JoyYIndex));
+		{$ENDIF}
 
 	    writeln( F, 'ANIMSPEED ' + BStr( FrameDelay ) );
 
@@ -551,14 +753,54 @@ uses dos,ability,gears,texutil;
 
 	    AddBoolean( 'FULLSCREEN' , DoFullScreen );
 	    AddBoolean( 'NOMOUSE' , not Mouse_Active );
+		AddBoolean( 'NOKEYBOARD', OnScreenKeyboard );
 	    AddBoolean( 'NOPILLAGE' , not Pillage_On );
 	    AddBoolean( 'USETACTICSMODE' , UseTacticsMode );
 
 	    AddBoolean( 'ADVANCEDCOLORS' ,  UseAdvancedColoring );
+		writeln( F , 'MODE ' + BStr( ModeIndex ) );
 	    AddBoolean( 'ACCESSIBILITY_ON' ,  Accessibility_On );
 
 	    Close(F);
     end;
+
+	{$IFDEF JOYSTICK_SUPPORT}
+	Function FindButton(val: Integer) : TJoyButton;
+		{ Returns the mapped button for the entered button index }
+	var
+		i: TJoyButton;
+	begin
+		for i := BUTTON_A to BUTTON_RIGHT do begin
+			if (ButtonMap[ord(i)].BType = TYPE_BUTTON) and (ButtonMap[ord(i)].BCode = val) then Exit(i);
+		end;
+		
+		FindButton := BUTTON_NONE;
+	end;
+
+	Function FindButton(val: Integer; kind: TButtonType; dir: ShortInt) : TJoyButton;
+		{FindButton, but for hats and axis}
+	var
+		i: TJoyButton;
+	begin
+		for i := BUTTON_A to BUTTON_RIGHT do begin
+			if (ButtonMap[ord(i)].BType = kind) and (ButtonMap[ord(i)].BDir = dir) and (ButtonMap[ord(i)].BCode = val) then Exit(i);
+		end;
+		
+		FindButton := BUTTON_NONE;
+	end;
+
+	Function FindButtonSet(val: Integer; kind: TButtonType) : TButtonSet;
+		{Return a set of all buttons associated with an index}
+	var
+		i: TJoyButton;
+	begin
+		FindButtonSet := [];
+
+		for i := BUTTON_A to BUTTON_RIGHT do begin
+			if (ButtonMap[ord(i)].BType = kind) and (ButtonMap[ord(i)].BCode = val) then Include(FindButtonSet, i);
+		end;
+	end;
+	{$ENDIF}
 
 
 initialization
