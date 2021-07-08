@@ -275,7 +275,7 @@ Procedure Rescale( Part: GearPtr; SF: Integer );
 implementation
 
 { "sysutils" has to come before "dos" }
-uses sysutils,dos,texutil;
+uses sysutils,dos,texutil,math;
 
 Function LastSAtt( LList: SAttPtr ): SAttPtr;
 	{ Find the last SAtt in this particular list. }
@@ -1274,6 +1274,23 @@ end;
 
 
 initialization
+    { Workaround bug in the FPC units SDL_ttf and SDL_image 
+      (see FPC sources, in packages/sdl/src/ ).
+      They miss these $linklib declarations for Mac OS X,
+      and the linker cannot find the appropriate symbols (IMG_Load, various TTF_xxx). }
+    {$if defined(SDLMODE) and defined(DARWIN)}
+    {$linklib SDL_image}
+    {$linklib SDL_ttf}
+    {$endif}
+    
+    { Looks like SDL on Mac OS X (at least the one installed by HomeBrew) uses OpenGL.
+      As such, it requires the same SetExceptionMask as OpenGL,
+      otherwise it may crash with "invalid floating point operation".
+      Do it here, as early as posssible, before anything can use SDL. }
+    {$if defined(SDLMODE) and defined(DARWIN) and (defined(cpui386) or defined(cpux86_64))}
+    SetExceptionMask([exInvalidOp, exDenormalized, exZeroDivide,exOverflow, exUnderflow, exPrecision]);
+    {$endif}
+
 	{ Make sure we have the required data directories. }
     if paramcount() > 0 then begin
         Config_Directory := IncludeTrailingPathDelimiter( paramstr(1) );
