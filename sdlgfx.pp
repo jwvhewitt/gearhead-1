@@ -1486,8 +1486,8 @@ initialization
 	Cursor_Sprite := ConfirmSprite( 'cursor.png' , '' , 8 , 16 );
 
 	TTF_Init;
-	Game_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraBd.ttf' , BigFontSize );
-	Info_Font := TTF_OpenFont( 'Image' + OS_Dir_Separator + 'VeraMoBd.ttf' , SmallFontSize );
+	Game_Font := TTF_OpenFont( Graphics_Directory + 'VeraBd.ttf' , BigFontSize );
+	Info_Font := TTF_OpenFont( Graphics_Directory + 'VeraMoBd.ttf' , SmallFontSize );
 
 	Text_Messages := LoadStringList( Standard_Message_File );
 	Console_History := Nil;
