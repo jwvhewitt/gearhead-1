@@ -39,7 +39,7 @@ Type
 	end;
 
 Const
-	NumMoveSys = 6;
+	NumMoveSys = 8;
 	MovesysMan: Array [1..NumMoveSys] of MoveSysDesc = (
 		(	name: 'Wheels';
 			dmg: 1;
@@ -64,6 +64,14 @@ Const
 		(	name: 'Overchargers';
 			dmg: 0;
 			cost: 30;
+		),
+		(	name: 'Space Flight';  //Not needed, defined to gh2 future compatibility
+			dmg: 0;
+			cost: 44;
+		),
+		(	name: 'Heavy Actuators';
+			dmg: 1;
+			cost: 100;
 		)
 	);
 
@@ -72,6 +80,8 @@ Const
 	GS_HoverJets = 3;
 	GS_FlightJets = 4;
 	GS_Overchargers = 6;
+	GS_SpaceFlight = 7;
+	GS_HeavyActuator = 8;
 
 
 Function MovesysBaseDamage( Part: GearPtr ): Integer;

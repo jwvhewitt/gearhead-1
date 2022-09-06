@@ -76,6 +76,9 @@ Mod Arm
 
 		Mount
 		Name <Right Arm Mount>
+
+		HeavyActuator 4
+		Mass -2
 	end
 	inv
 		Shield 2
@@ -95,6 +98,9 @@ Mod Arm
 
 		Mount
 		Name <Left Arm Mount>
+
+		HeavyActuator 4
+		Mass -2
 	end
 	inv
 		Shield 2
@@ -106,6 +112,7 @@ Mod Leg
 	Armor 5
 	sub
 		ArcJet 5
+		HeavyActuator 1
 	end
 	inv
 		LegArmor 2
@@ -121,6 +128,7 @@ Mod Leg
 	Armor 5
 	sub
 		ArcJet 5
+		HeavyActuator 1
 	end
 	inv
 		LegArmor 2
