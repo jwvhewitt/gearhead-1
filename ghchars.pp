@@ -4,6 +4,7 @@ unit ghchars;
 {
 	GearHead: Arena, a roguelike mecha CRPG
 	Copyright (C) 2005 Joseph Hewitt
+	Copyright (C) 2005 Maxime Devos
 
 	This library is free software; you can redistribute it and/or modify it
 	under the terms of the GNU Lesser General Public License as published by
@@ -438,7 +439,7 @@ Procedure ApplyTalent( PC: GearPtr; T: Integer );
 
 implementation
 
-uses texutil;
+uses gearutil, texutil;
 
 Procedure InitChar(Part: GearPtr);
 	{PART is a newly created Character record.}
@@ -731,7 +732,13 @@ Function NumberOfSkillSlots( PC: GearPtr ): Integer;
 var
 	N: Integer;
 begin
-	N := ( ( PC^.STat[ STAT_Knowledge ] * 6 ) div  5 + 5 );
+	{ A PC might want to upgrade their brain with cyberware to help }
+	{ with learning skills, so use CStat instead of STat to take }
+	{ cyberware in account. This also results in status conditions }
+	{ being taken in account, which seems fitting -- having a bad }
+	{ mood wouldn't help with learning. }
+
+	N := ( ( CStat ( PC, STAT_KNOWLEDGE ) * 6) div 5 + 5 );
 	if NAttValue( PC^.NA , NAG_Talent , NAS_Savant ) <> 0 then N := N + 5;
 	NumberOfSkillSlots := N;
 end;
