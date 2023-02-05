@@ -1,10 +1,14 @@
-The GearHead Universe is Copyright 2005 by Joseph Hewitt.
+The GearHead Universe is mostly Copyright 2005 by Joseph Hewitt,
+with some small contributions by other people under copyrigh by the
+other people.
+
 GearHead: Arena is a computer game set in the GearHead Universe,
 and is distributed under the terms of the GNU Lesser General
 Public License.
 
 GearHead: Arena, a roguelike mecha CRPG
 Copyright (C) 2005 Joseph Hewitt
+Copyright (C) 2023 Maxime Devos
 
 pyrrho12@yahoo.ca
 http://www.gearheadrpg.com
