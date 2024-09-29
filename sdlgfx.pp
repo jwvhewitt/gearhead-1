@@ -60,8 +60,8 @@ const
 	BorderBlue: TSDL_Color =	( r:  0; g:101; b:151 );
 	BrightYellow: TSDL_Color =	( r:255; g:201; b:  0 );
 
-	ScreenWidth = 800;
-	ScreenHeight = 600;
+	ScreenWidth = 1280;
+	ScreenHeight = 720;
 	BigFontSize = 13;
 	SmallFontSize = 11;
 	Right_Column_Width = 220;
@@ -1193,7 +1193,7 @@ begin
 		end else if ( Pos( A , AllowableCharacters ) > 0 ) and ( Length( it ) < MaxInputLength ) then begin
 			it := it + A;
 		end;
-	until ( A = #13 ) or ( A = #27 );
+	until ( A = #13 ) or ( A = #27 ) or ( A = #10 );
 
 	GetStringFromUser := it;
 end;

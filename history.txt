@@ -1,3 +1,5 @@
+- SetSceneFaction will delete NPCs is appropriate new home is not found
+
 1.310	February 7 2019
 - All old style walls have been replaced by thin walls (sdlmap.pp)
 - Portraits may be assigned as unisex "por_n_*.png" (sdlinfo.pp)

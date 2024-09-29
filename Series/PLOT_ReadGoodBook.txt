@@ -9,7 +9,7 @@ sub
 	greeting <Say 1 EndChat AddChat 1 AddChat 2>
 	result1 <Say 2 EndChat>
 	result2 <Say 3 EndChat>
-	msg1 <I can't talk right now... I've almost finished the new Harry Potter novel.>
+	msg1 <I can't talk right now... I've almost finished the new Columbo novel.>
 	msg2 <Sure, I'll give it to you then.>
 	msg3 <Bye bye.>
 	prompt1 <Can I read it after you've finished?>

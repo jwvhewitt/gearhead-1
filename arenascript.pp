@@ -2569,9 +2569,6 @@ const
 		{ scene to send it to. }
 		FID := NAttValue( Part^.NA , NAG_Personal , NAS_FactionID );
 		Scene := SearchForScene( Adv , Nil , GB , New_Home_Type1 + BStr( FID ) );
-		if Scene = Nil then begin
-			Scene := SearchForScene( Adv , Nil , GB , New_Home_Type2 );
-		end;
 
 		{ If a scene was found, move the NPC there. }
 		{ Otherwise delete the NPC. }
