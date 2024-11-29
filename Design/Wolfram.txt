@@ -6,8 +6,9 @@ SDL_Portrait <mecha_wolfram.png>
 Desc <A mining robot developed from the Claymore design. The Wolfram is not designed for combat, but is often used by arena fighters who can't afford anything better yet.>
 
 Mod Head
+	Size 3
 	Armor 3
-	mass 1
+	mass 2
 	sub
 		Sensor 3
 	end
@@ -36,6 +37,8 @@ Mod Body
 			Speed 1
 		 	mass 1
 		end
+
+		HeavyActuator 1
 	end
 
 Mod Arm
@@ -49,6 +52,8 @@ Mod Arm
 			Name <Pick-Axe>
 			Acc 1
 		end
+
+		HeavyActuator 3
 	end
 
 Mod Arm
@@ -57,15 +62,23 @@ Mod Arm
 	mass 1
 	sub
 		Hand
+
+		HeavyActuator 3
 	end
 
 Mod Leg
 	Name <Right Leg>
 	Armor 4
 	mass 1
+	sub
+		HeavyActuator 4
+	end
 
 Mod Leg
 	Name <Left Leg>
 	Armor 4
+	sub
+		HeavyActuator 4
+	end
 	mass 1
 end

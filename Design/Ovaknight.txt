@@ -11,6 +11,7 @@ Mod Head
 	sub
 		CPit
 		Armor 2
+		mass -1
 
 		Sensor 5
 
@@ -56,6 +57,9 @@ Mod Body
 		STC LAS-5
 		Name <Intercept Laser>
 		Type <INTERCEPT>
+		mass -1
+
+		Sensor 3
 	end
 	inv
 		BodyArmor 8
@@ -64,8 +68,9 @@ Mod Body
 
 Mod Arm
 	Name <Right Arm>
+	Size 6
 	Armor 6
-	Mass -2
+	Mass -3
 	sub
 		Hand
 	end
@@ -92,7 +97,7 @@ Mod Arm
 Mod Arm
 	Name <Left Arm>
 	Armor 6
-	Mass -2
+	Mass -3
 	sub
 		Hand
 	end
@@ -118,9 +123,13 @@ Mod Arm
 
 Mod Leg
 	Name <Right Leg 1>
-	Size 2
-	Armor 3
-	Mass -2
+	size 8
+	Armor 4
+	Mass -7
+	sub
+		HeavyActuator 5
+		mass -4
+	end
 	inv
 		LegArmor 3
 		Mass -5
@@ -128,9 +137,13 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg 1>
-	Size 2
-	Armor 3
-	Mass -2
+	size 8
+	Armor 4
+	Mass -7
+	sub
+		HeavyActuator 5
+		mass -4
+	end
 	inv
 		LegArmor 3
 		Mass -5
@@ -138,9 +151,13 @@ Mod Leg
 
 Mod Leg
 	Name <Right Leg 2>
-	Size 3
-	Armor 3
-	Mass -3
+	size 8
+	Armor 4
+	Mass -7
+	sub
+		HeavyActuator 5
+		mass -4
+	end
 	inv
 		LegArmor 3
 		Mass -5
@@ -148,9 +165,13 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg 2>
-	Size 3
-	Armor 3
-	Mass -3
+	size 8
+	Armor 4
+	Mass -7
+	sub
+		HeavyActuator 5
+		mass -4
+	end
 	inv
 		LegArmor 3
 		Mass -5
@@ -158,9 +179,13 @@ Mod Leg
 
 Mod Leg
 	Name <Right Leg 3>
-	Size 2
-	Armor 3
-	Mass -2
+	size 8
+	Armor 4
+	Mass -7
+	sub
+		HeavyActuator 5
+		mass -4
+	end
 	inv
 		LegArmor 3
 		Mass -5
@@ -168,9 +193,13 @@ Mod Leg
 
 Mod Leg
 	Name <Left Leg 3>
-	Size 2
-	Armor 3
-	Mass -2
+	size 8
+	Armor 4
+	Mass -7
+	sub
+		HeavyActuator 5
+		mass -4
+	end
 	inv
 		LegArmor 3
 		Mass -5

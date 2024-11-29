@@ -4,9 +4,9 @@ Desig <MD7>
 SDL_Sprite <btr_hariseng.png>
 
 Mod Head
-	Size 4
-	Armor 3
-	Mass -2
+	Size 3
+	Armor 4
+	Mass -3
 	sub
 		Sensor 4
 
@@ -19,7 +19,7 @@ Mod Head
 
 Mod Body
 	Armor 6
-	Mass -2
+	Mass -3
 	sub
 		CPit
 		Armor 2
@@ -34,6 +34,9 @@ Mod Body
 		sub
 			Ammo 8
 		end
+
+		HeavyActuator 4
+		mass -1
 	end
 	inv
 		BodyArmor 6
@@ -44,13 +47,13 @@ Mod Arm
 	Name <Right Arm>
 	Size 4
 	Armor 5
-	Mass -2
+	Mass -3
 	sub
 		Hand
 		inv
 			Melee 16
-			Name <Naginata>
-			Speed 1
+			Name <Monk's Spade>
+			mass -2
 			Type <EXTEND>
 		end
 
@@ -68,7 +71,7 @@ Mod Arm
 	Name <Left Arm>
 	Size 4
 	Armor 5
-	Mass -2
+	Mass -3
 	sub
 		Hand
 
@@ -89,6 +92,11 @@ Mod Arm
 Mod Leg
 	Name <Right Leg>
 	Armor 5
+	mass -3
+	sub
+		HeavyActuator 7
+		Mass -5
+	end
 	inv
 		LegArmor 4
 		Mass -6
@@ -97,6 +105,11 @@ Mod Leg
 Mod Leg
 	Name <Left Leg>
 	Armor 5
+	mass -3
+	sub
+		HeavyActuator 7
+		Mass -5
+	end
 	inv
 		LegArmor 4
 		Mass -6

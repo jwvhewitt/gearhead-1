@@ -1,7 +1,7 @@
 Battroid 4
 Name <Phoenix>
 Desig <PL-911>
-Desc <>
+Desc <A general purpose battroid from Ceres Robotics. It rose to prominence during the Martian civil war.>
 sdl_sprite <btr_phoenix.png>
 
 Mod Head
@@ -19,6 +19,7 @@ Mod Head
 		Mass -1
 		sub
 			STC SML-5
+			mass -1
 		end
 	end
 
@@ -39,6 +40,9 @@ Mod Body
 		inv
 			STC HRP-6
 		end
+
+		HeavyActuator 4
+		mass -2
 	end
 	inv
 		BodyArmor 4
@@ -85,6 +89,9 @@ Mod Arm
 		inv
 			STC LAS-5
 		end
+
+		HeavyActuator 2
+		mass -1
 	end
 	inv
 		ArmArmor 3
@@ -101,6 +108,9 @@ Mod Arm
 
 		Mount
 		Name <Left Arm Mount>
+
+		HeavyActuator 2
+		mass -1
 	end
 	inv
 		ArmArmor 3

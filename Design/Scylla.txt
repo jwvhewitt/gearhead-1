@@ -34,6 +34,9 @@ Mod Body
 			STC HRP-6
 		end
 
+		HeavyActuator 3
+		Mass -2
+		
 		Flight 4
 	end
 
@@ -47,6 +50,9 @@ Mod Leg
 		Speed 1
 		Acc 1
 		Type <OVERLOAD>
+		
+		HeavyActuator 2
+		Mass -1
 	end
 
 Mod Leg
@@ -59,6 +65,9 @@ Mod Leg
 		Speed 1
 		Acc 1
 		Type <OVERLOAD>
+		
+		HeavyActuator 2
+		Mass -1
 	end
 
 Mod Leg
@@ -73,6 +82,9 @@ Mod Leg
 		end
 
 		Flight 2
+		
+		HeavyActuator 2
+		Mass -1
 	end
 
 Mod Leg
@@ -87,5 +99,8 @@ Mod Leg
 		end
 
 		Flight 2
+		
+		HeavyActuator 2
+		Mass -1
 	end
 end

@@ -26,7 +26,7 @@ unit locale;
 
 interface
 
-uses gears,movement;
+uses gears,movement,ghmovers;
 
 Type
 	TerrDesc = Record
@@ -1987,11 +1987,23 @@ function ThrowingRange( GB: GameBoardPtr; User,Weapon: GearPtr ): Integer;
 	{ If GB=Nil, return the unscaled value. }
 var
 	rng,t: Integer;
+	HeavyActuator: Integer;
 begin
 	rng := 0;
 	if ( Weapon <> Nil ) and ( Weapon^.G = GG_Weapon ) then begin
 		if HasAttackAttribute( WeaponATtackAttributes( Weapon ) , AA_THrown ) then begin
 			rng := MasterSize( User ) + 2;
+
+			{ EXTEND weapons get a longer throwing range. }
+			if HasAttackAttribute( WeaponAttackAttributes( Weapon ) , AA_Extended ) then begin
+				rng := rng + 3;
+			end;
+
+			{ Throwing range may get a bonus from heavy actuators. }
+			HeavyActuator := CountActivePoints( User , GG_MoveSys , GS_HeavyActuator );
+			if HeavyActuator > 0 then begin
+				rng := rng + ( HeavyActuator div 10 );
+			end;
 		end;
 	end else if ( Weapon <> Nil ) and ( Weapon^.G = GG_Ammo ) and ( Weapon^.S = GS_Grenade ) then begin
 		rng := MasterSize( User ) * 2 + 1;

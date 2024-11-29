@@ -39,6 +39,8 @@ HoverJet      <Gear 6 3 ?3>
 Flight        <Gear 6 4 ?3>
 ArcJet        <Gear 6 5 ?3>
 Overcharger   <Gear 6 6 ?3>
+SpaceFlight   <Gear 6 7 ?3>
+HeavyActuator <Gear 6 8 ?3>
 Armor         <Stat 1 ?0>
 HighTier      <Stat 3 1>
 MidTier       <Stat 3 2>
