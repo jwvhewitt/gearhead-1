@@ -376,8 +376,8 @@ begin
 	DrawMapBorder( N , E , S , W );
 
 	{ Display all terrain. }
-	for X := 0 to ( MapDisplayWidth - 1 ) do begin
-		for Y := 0 to ( MapDisplayHeight - 1 ) do begin
+	for Y := 0 to ( MapDisplayHeight - 1 ) do begin
+		for X := 0 to ( MapDisplayWidth - 1 ) do begin
 			PlotTerrain( gb , X + OriginX , Y + OriginY );
 		end;
 	end;
